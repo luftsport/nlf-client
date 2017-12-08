@@ -11,7 +11,7 @@
         <input [(ngModel)]="model.name" name="name" type="text" class="form-control" id="name">
       </div>
       <div class="form-group">
-      Other: {{model.other}}
+      Other: {{message}}
     </div>
 <div class="form-group">
       <a routerLink="/ors/child" class="btn btn-primary">Add other from child</a>
@@ -21,4 +21,3 @@
     </form>
 </div>
 {{diagnostic}}
-<app-app-child (messageEvent)="receiveMessage($event)"></app-app-child>

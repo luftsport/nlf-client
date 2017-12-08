@@ -2,17 +2,18 @@
     <h3>ORS Child Form test</h3>
     <form #appChildForm="ngForm">
       <div class="form-group">
-        <label for="other">Other</label>
-        <input [(ngModel)]="other" name="other" type="text" class="form-control" id="other" required>
+        <label for="message">Other</label>
+        <input [(ngModel)]="message" name="message" type="text" class="form-control" id="message" required>
       </div>
 
-
 <div class="form-group">
-      <a (click)="sendMessage()" routerLink="/ors" class="btn btn-primary">Go to parent</a>
+  <button class="btn btn-success" (click)="newMessage()">Send new message</button>
 </div>
-      <button (click)="sendMessage()" class="btn btn-success">Submit</button>
+<div class="form-group">
+      <a routerLink="/ors" class="btn btn-primary">Go to parent</a>
+</div>
 
     </form>
 
-    {{other}}
+    {{message}}
 </div>

@@ -32,6 +32,8 @@ import { AppChildComponent } from './app-ors/app-child/app-child.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DummyComponent } from './dummy/dummy.component';
 
+import { DataService } from './app-ors/data.service';
+
 
 @NgModule({
   declarations: [
@@ -59,7 +61,7 @@ import { DummyComponent } from './dummy/dummy.component';
     AppRoutingModule
     //NgbModule.forRoot()
   ],
-  providers: [UserService],
+  providers: [UserService, DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,19 +1,25 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-app-child',
   templateUrl: './app-child.component.html',
-  styleUrls: ['./app-child.component.css']
+  styleUrls: ['./app-child.component.css'],
+
 })
 export class AppChildComponent {
-  @Output() messageEvent = new EventEmitter<string>();
 
-  other: string = 'sattan';
 
-  constructor() { }
+  message: string = 'jteirooter';
 
-  public sendMessage() {
-    console.log("Child:" + this.other);
-    this.messageEvent.emit(this.other);
+  constructor(private data: DataService) { }
+
+  ngOnInit() {
+    this.data.currentMessage.subscribe(message => this.message = message)
+  }
+
+  newMessage() {
+    //message is html instance, compiler complains thinks this must be this.message???
+    this.data.changeMessage(message.value)
   }
 }
