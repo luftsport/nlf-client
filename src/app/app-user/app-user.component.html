@@ -1,0 +1,7 @@
+  <ul>
+        <li *ngFor="let user of users">
+          <a href="articles/{{user._id}}">{{user.fullname}}</a> [{{user.birthdate | date: 'fullDate'}}]
+        </li>
+  </ul>
+
+  <button class="btn btn-primary" (click)="getthem()">GET Users</button>

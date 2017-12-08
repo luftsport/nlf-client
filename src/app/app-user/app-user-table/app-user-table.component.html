@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+
+    <ngx-table
+      [configuration]="configuration"
+      [data]="data"
+      [columns]="columns"
+      [detailsTemplate]="detailsTemplateRef"
+      [pagination]="pagination">
+
+
+<!--
+	<ng-template let-row>
+
+    <td>
+			<span class="font-small">{{row.id}}</span>
+			<div class="bar bar-sm">
+				<div class="bar-item" role="progressbar" [style.width]="row.id + '%'" aria-valuenow="row.id" aria-valuemin="0" aria-valuemax="10000"></div>
+			</div>
+		</td>
+
+
+  	<td>
+			<h5 class="color-green font-light">{{row.fullname}}</h5>
+		</td>
+
+
+
+    <td>
+			<div class="font-small">
+				{{row.phone}}
+			</div>
+		</td>
+
+    <td>
+			<strong><a href="mailto:{{row.email}}">{{row.email}}</a></strong>
+		</td>
+
+
+	</ng-template>
+-->
+</ngx-table>
+  <ng-template #detailsTemplate let-row>
+  <div>
+    <h2 class="color-green">{{row.id }}</h2>
+    {{row.fullname }} - {{row.phone}} - {{row.birthdate | date}} - {{row.gender}}
+  </div>
+</ng-template>
+
+
+
+
+  </div>
+</div>
+</div>

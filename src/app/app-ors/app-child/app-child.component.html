@@ -1,0 +1,18 @@
+<div class="container">
+    <h3>ORS Child Form test</h3>
+    <form #appChildForm="ngForm">
+      <div class="form-group">
+        <label for="other">Other</label>
+        <input [(ngModel)]="other" name="other" type="text" class="form-control" id="other" required>
+      </div>
+
+
+<div class="form-group">
+      <a (click)="sendMessage()" routerLink="/ors" class="btn btn-primary">Go to parent</a>
+</div>
+      <button (click)="sendMessage()" class="btn btn-success">Submit</button>
+
+    </form>
+
+    {{other}}
+</div>
