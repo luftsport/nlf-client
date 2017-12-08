@@ -10,7 +10,7 @@ import { DataService } from '../data.service';
 export class AppChildComponent {
 
 
-  message: string = 'jteirooter';
+  message: string = '';
 
   constructor(private data: DataService) { }
 
@@ -20,6 +20,6 @@ export class AppChildComponent {
 
   newMessage() {
     //message is html instance, compiler complains thinks this must be this.message???
-    this.data.changeMessage(message.value)
+    this.data.changeMessage(this.message)
   }
 }
