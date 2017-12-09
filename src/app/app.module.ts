@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { FormsModule, NgModel } from '@angular/forms';
@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AlertModule } from 'ngx-bootstrap';
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { NgProgressHttpClientModule } from '@ngx-progressbar/http-client';
-import {TableModule} from 'ngx-easy-table';
+import { TableModule } from 'ngx-easy-table';
 
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -61,7 +61,9 @@ import { DataService } from './app-ors/data.service';
     AppRoutingModule
     //NgbModule.forRoot()
   ],
-  providers: [UserService, DataService],
+  providers: [UserService,
+              DataService,
+              Title],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
