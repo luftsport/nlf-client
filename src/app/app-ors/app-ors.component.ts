@@ -16,9 +16,8 @@ export class AppOrsComponent implements OnInit {
   constructor(private data: DataService) { }
 
   ngOnInit() {
-      this.data.currentMessage.subscribe(message => this.model.other = message)
+      this.data.currentMessage.subscribe(message => this.model.message = message)
   }
-
   onSubmit() {
     this.submitted = true;
   }
