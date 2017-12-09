@@ -1,0 +1,8 @@
+{
+  "/api/v1/": {
+    "target": "https://fnlfbeta.nlf.no",
+    "secure": false
+  },
+  "changeOrigin": true,
+  "logLevel": "debug"
+}

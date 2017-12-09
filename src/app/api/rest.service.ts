@@ -5,7 +5,8 @@ import {Observable} from 'rxjs/Observable';
 
 export abstract class RestService {
 
-  protected baseUrl: string = 'http://localhost:8081/api/v1';
+  //Api same address
+  protected baseUrl: string = '/api/v1';
 
   constructor(private http: HttpClient
               //, private cookieService: CookieService
