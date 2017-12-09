@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { OrsModel } from './ors-model';
 import { DataService } from "./data.service";
-import { NlfApp } from "../app-routing.module"
 import { Routes } from '@angular/router';
 import { AppChildComponent } from "./app-child/app-child.component";
+
 
 @Component({
   selector: 'app-app-ors',
@@ -11,12 +11,16 @@ import { AppChildComponent } from "./app-child/app-child.component";
   styleUrls: ['./app-ors.component.css'],
 
 })
-export class AppOrsComponent implements OnInit, NlfApp {
+export class AppOrsComponent implements OnInit {
+
+  public static routes:Routes = [{ path: 'ors/child', component: AppChildComponent }];
 
   model = new OrsModel(18, 'Brekt bein');
   message: string;
   submitted = false;
-  constructor(private data: DataService) { }
+  constructor(private data: DataService) {
+
+  }
 
   ngOnInit() {
       this.data.currentMessage.subscribe(message => this.model.other = message)
@@ -27,7 +31,6 @@ export class AppOrsComponent implements OnInit, NlfApp {
 
   get diagnostic() { return JSON.stringify(this.model); }
 
-  public routes : Routes = [{ path: 'ors/child', component: AppChildComponent }];
 
 }
 

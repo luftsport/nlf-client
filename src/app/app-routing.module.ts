@@ -16,7 +16,7 @@ const topRoutes: Routes = [
 
 
 let routes : Routes = [].concat(topRoutes)
-  .concat((<NlfApp> AppOrsComponent).routes);
+  .concat(AppOrsComponent.routes);
 
 @NgModule({
   imports: [ RouterModule.forRoot(routes)],
@@ -28,6 +28,3 @@ export class AppRoutingModule {
 
 }
 
-export interface NlfApp {
-  routes: Routes;
-}
