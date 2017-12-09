@@ -6,14 +6,17 @@ import { AppOrsComponent } from './app-ors/app-ors.component';
 import { AppChildComponent } from './app-ors/app-child/app-child.component';
 import { DummyComponent } from './dummy/dummy.component';
 
-const routes: Routes = [
+const topRoutes: Routes = [
 { path: '', redirectTo: '/home', pathMatch: 'full' },
 { path: 'home', component: DummyComponent },
 { path: 'users', component: AppUserTableComponent },
 { path: 'ors', component: AppOrsComponent },
-{ path: 'ors/child', component: AppChildComponent },
 { path: '**', component: DummyComponent }
 ];
+
+
+let routes : Routes = [].concat(topRoutes)
+  .concat((<NlfApp> AppOrsComponent).routes);
 
 @NgModule({
   imports: [ RouterModule.forRoot(routes)],
@@ -23,4 +26,8 @@ const routes: Routes = [
 export class AppRoutingModule {
 
 
+}
+
+export interface NlfApp {
+  routes: Routes;
 }
