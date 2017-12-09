@@ -1,3 +1,4 @@
+<div class="row">
 <div class="container">
     <h3>ORS Form test</h3>
     <form  #appOrsForm="ngForm">
@@ -11,7 +12,7 @@
         <input [(ngModel)]="model.name" name="name" type="text" class="form-control" id="name">
       </div>
       <div class="form-group">
-      Other: {{message}}
+      Value from child: {{model.other}}
     </div>
 <div class="form-group">
       <a routerLink="/ors/child" class="btn btn-primary">Add other from child</a>
@@ -19,5 +20,11 @@
       <button type="submit" class="btn btn-success">Submit</button>
 
     </form>
+  </div>
 </div>
-{{diagnostic}}
+<div class="row">
+<div class="container">
+
+<alert type="success"><fa [name]="'angellist'" [size]="'2x'" [fixed]="'true'"></fa>{{diagnostic}}</alert>
+</div>
+</div>

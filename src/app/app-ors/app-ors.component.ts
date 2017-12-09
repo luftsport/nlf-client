@@ -6,7 +6,7 @@ import { DataService } from "./data.service";
   selector: 'app-app-ors',
   templateUrl: './app-ors.component.html',
   styleUrls: ['./app-ors.component.css'],
-  
+
 })
 export class AppOrsComponent implements OnInit {
 
@@ -16,7 +16,7 @@ export class AppOrsComponent implements OnInit {
   constructor(private data: DataService) { }
 
   ngOnInit() {
-      this.data.currentMessage.subscribe(message => this.message = message)
+      this.data.currentMessage.subscribe(message => this.model.other = message)
   }
 
   onSubmit() {
