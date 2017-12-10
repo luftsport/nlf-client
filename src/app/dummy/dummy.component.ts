@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-dummy',
@@ -7,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DummyComponent implements OnInit {
 
-  constructor() { }
+
+  constructor(private app:AppComponent) {
+    app.setTitle("Dummy home component");
+  }
 
   ngOnInit() {
   }

@@ -19,7 +19,6 @@ export class AppChildComponent {
   }
 
   newMessage() {
-    //message is html instance, compiler complains thinks this must be this.message???
     this.data.changeMessage(this.message)
   }
 }

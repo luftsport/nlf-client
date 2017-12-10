@@ -16,21 +16,15 @@ import { AppComponent } from "../app.component";
 })
 export class AppOrsComponent implements OnInit {
 
-<<<<<<< HEAD
-=======
-  public static routes:Routes = [{ path: 'ors/child', component: AppChildComponent }];
->>>>>>> c8b0b8407cac6b25e1e5ca37e0602bf5462f4249
+//public static routes:Routes = [{ path: 'ors/child', component: AppChildComponent }];
 
   model = new OrsModel(18, 'Brekt bein');
   message: string;
   submitted = false;
-<<<<<<< HEAD
+
   constructor(private data: DataService, private app:AppComponent) {
     app.setTitle("ORS");
-=======
-  constructor(private data: DataService) {
 
->>>>>>> c8b0b8407cac6b25e1e5ca37e0602bf5462f4249
   }
 
   ngOnInit() {
@@ -44,5 +38,3 @@ export class AppOrsComponent implements OnInit {
 
 
 }
-
-
