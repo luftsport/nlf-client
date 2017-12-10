@@ -3,24 +3,35 @@ import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
 
 import { RestService } from './rest.service'
+
+
 import { UserItem, UserList } from './user.interface';
+
+interface UserAuthItem {
+  success: boolean;
+  token: string;
+  token64: string;
+  message?: string;
+  valid?: any;
+
+}
 
 
 @Injectable()
-export class UserService extends RestService {
+export class UserAuthService extends RestService {
 
   constructor( http: HttpClient
               //, private cookieService: CookieService
             ){super(http);}
 
-  private relativeUrl: string = '/melwin/users/';
+  private relativeUrl: string = '/user/authenticate';
 
-  public getUser(): Observable<UserItem> {
+  public authenticate(username: string, password: string): Observable<any> {
 
-    return this.getItem(this.relativeUrl , 45199, {});
+    return this.post(this.relativeUrl , {username: username, password: password}, {});
   }
 
-  public getUsers(): Observable<UserList> {
+  public getUsers(): Observable<UserAuthItem> {
 
     return this.getList(this.relativeUrl, {});
   }

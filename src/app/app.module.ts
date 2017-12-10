@@ -10,6 +10,7 @@ import { NgProgressModule } from '@ngx-progressbar/core';
 import { NgProgressHttpClientModule } from '@ngx-progressbar/http-client';
 import { TableModule } from 'ngx-easy-table';
 
+// ngx-bootstrap
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PaginationModule } from "ngx-bootstrap/pagination"; //Dependency for ng2-table
@@ -19,7 +20,7 @@ import { FontAwesomeModule } from 'ngx-icons';
 
 // API
 import { UserService } from './api/user.service';
-
+import { UserAuthService } from './api/user-auth.service';
 
 // Our custom components
 import { AppComponent } from './app.component';
@@ -33,7 +34,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { DummyComponent } from './dummy/dummy.component';
 
 import { DataService } from './app-ors/data.service';
-
+import { AuthComponent } from './auth/auth.component';
+import { AuthGuard } from './auth/auth.guard';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { DataService } from './app-ors/data.service';
     UserTableComponent,
     AppOrsComponent,
     AppChildComponent,
-    DummyComponent
+    DummyComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -62,8 +65,10 @@ import { DataService } from './app-ors/data.service';
     //NgbModule.forRoot()
   ],
   providers: [UserService,
+              UserAuthService,
               DataService,
-              Title],
+              Title,
+              ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
