@@ -15,3 +15,14 @@ export interface EveMeta {
   max_results: number;
   total: number;
 }
+
+export interface EveItem {
+  id : string;
+  _id : string;
+}
+
+export interface EveItems {
+  _items : EveItem[];
+  _meta : EveMeta;
+  _links : EveLinks;
+}

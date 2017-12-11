@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 //import {RequestOptions, Request, RequestMethod} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
+import {EveItem} from "./eve.interface";
 
 
 export abstract class RestService {
@@ -56,14 +57,35 @@ export abstract class RestService {
       //}
   }
 
-
-  protected getList(relativeUrl: string, options: any): Observable<any> {
-
-
-    return this.http.get(this.baseUrl + relativeUrl + '?max_results=50000', this.getOptions(options));
+  protected getList(relativeUrl: string, params: QueryParams): Observable<any> {
+    return this.http.get(this.baseUrl + relativeUrl + this.toQuery(params), this.getOptions(params.options));
   }
 
+  toQuery(params: QueryParams) : string{
+    let wherePart = '';
+    if(params.where){
+      wherePart = JSON.stringify(params.where)+'&';
+    }
+    return '?'+wherePart+'page='+params.page+'&max_results='+params.max_results
+  }
 
+  protected getOptions(options?: any) {
+
+    if(options && options.length > 0) {
+      return options.concat({headers: this.getHeaders()});
+    }
+    else {
+      return {headers: this.getHeaders()};
+    }
+  }
+
+  protected getHeaders() {
+
+    let headers = new HttpHeaders();
+    console.log("Test");
+    return headers.set('Content-Type', 'application/json; charset=utf8').set('Accept', 'application/json');
+
+  }
   protected post(relativeUrl: string, data: any, options: any) {
 
     return this.http.post(this.baseUrl + relativeUrl, JSON.stringify(data),
@@ -75,7 +97,12 @@ export abstract class RestService {
   Needs _etag support in Headers
   **/
   protected put(relativeUrl: string, data: any, options: any, etag: any) {}
-
   protected patch(relativeUrl: string, data: any, options: any, etag: any) {}
+export interface QueryParams {
+  where? : {};
+  max_results: number;
+  page: number;
+  options? : any;
 
 }
+

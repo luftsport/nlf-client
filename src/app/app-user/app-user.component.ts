@@ -10,7 +10,7 @@ import { UserService } from '../api/user.service';
 export class AppUserComponent implements OnInit {
 
   constructor(private userService: UserService) {
-    this.getone();
+
   }
 
   fullname: string = 'Loading..';
@@ -20,8 +20,8 @@ export class AppUserComponent implements OnInit {
   ngOnInit() {}
 
 
-  public getone() {
-    this.userService.getUser(45199).subscribe(
+  public getone(id:number) {
+    this.userService.getUser(id).subscribe(
       data => {
 
         //this.data = data;
@@ -41,7 +41,7 @@ export class AppUserComponent implements OnInit {
   public getthem() {
 
     this.users = [];
-    this.userService.getUsers().subscribe(
+    this.userService.getUsers(0,10).subscribe(
       data => {
         console.log(data);
         this.users = data._items;

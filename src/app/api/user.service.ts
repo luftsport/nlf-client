@@ -15,14 +15,13 @@ export class UserService extends RestService {
 
   private relativeUrl: string = '/melwin/users/';
 
-  public getUser(id: number): Observable<UserItem> {
+  public getUser(id:number): Observable<UserItem> {
 
     return this.getItem(this.relativeUrl , id, {});
   }
 
-  public getUsers(): Observable<UserList> {
-
-    return this.getList(this.relativeUrl, {});
+  public getUsers(page: number, max_results:number): Observable<EveItems> {
+    return this.getList(this.relativeUrl, {page:page,max_results:max_results});
   }
 
 /**
