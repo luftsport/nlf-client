@@ -53,7 +53,9 @@ export class AuthComponent implements OnInit {
                 }
               },
               error => {
-                  this.alertService.error(error);
+                  console.log(error);
+                  //This is a HttpErrorResponse should send the whole to alertService and do stuff there
+                  this.alertService.error(error.message);
                   this.loading = false;
               });
   }
