@@ -32,19 +32,5 @@ export class UserAuthService extends RestService {
     return this.post(this.relativeUrl , {username: username, password: password}, {});
   }
 
-  public getUsers(): Observable<UserAuthItem> {
-
-    return this.getList(this.relativeUrl, {});
-  }
-
-
-
-/**
-  public getsomething: Observable<Article> = this.http.get("https://api.github.com/users/seeschweiler");
-
-  public getto(): Observable<Article> {
-    return this.getsomething; //this.http.get<Article>("https://api.github.com/users/seeschweiler");
-  }
-  **/
 
 }

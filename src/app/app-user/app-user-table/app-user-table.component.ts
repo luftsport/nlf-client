@@ -35,9 +35,9 @@ export class AppUserTableComponent implements OnInit {
 
   @ViewChild('detailsTemplate') detailsTemplateRef: TemplateRef<any>;
 
-  configuration: Config;
+
   data;
-  length;
+
   columns = [
    { key: 'id', title: 'ID' },
    { key: 'fullname', title: 'Name' },
@@ -45,51 +45,67 @@ export class AppUserTableComponent implements OnInit {
    { key: 'email', title: 'Email' },
  ];
 
+  pagination = {
+    limit: 10,
+    offset: 0,
+    count: null,
+  };
 
-  //private data:Array<any> = TableData;
+  configuration : Config = {
+    searchEnabled: false,
+    headerEnabled: true,
+    orderEnabled: true,
+    globalSearchEnabled: false,
+    paginationEnabled: true,
+    exportEnabled: true,
+    clickEvent: false,
+    selectRow: true,
+    selectCol: false,
+    selectCell: false,
+    rows: 10,
+    additionalActions: false,
+    serverPagination: false,
+    isLoading: false,
+    detailsTemplate: true,
+    groupRows: false
+  };
 
   public constructor(private userService: UserService) {
 
-    this.configuration = {
-      searchEnabled: false,
-         headerEnabled: true,
-         orderEnabled: true,
-         globalSearchEnabled: false,
-         paginationEnabled: true,
-         exportEnabled: true,
-         clickEvent: false,
-         selectRow: true,
-         selectCol: false,
-         selectCell: false,
-         rows: 10,
-         additionalActions: false,
-         serverPagination: false,
-         isLoading: false,
-         detailsTemplate: true,
-         groupRows: false
-    };
-
-    this.getthem();
-    //this.columns = ['phone', 'age', 'company', 'name', 'isActive'];
   }
 
   public ngOnInit() {
-
+    this.getData();
   }
 
-  public getthem() {
 
-    this.userService.getUsers().subscribe(
+  eventEmitted($event) {
+    this.parseEvent($event);
+  }
+
+  private parseEvent(obj: EventObject) {
+    this.pagination.limit = obj.value.limit ? obj.value.limit : this.pagination.limit;
+    this.pagination.offset = obj.value.page ? obj.value.page : this.pagination.offset;
+    this.pagination = { ...this.pagination };
+    this.getData();
+  }
+
+  public getData() {
+
+    this.userService.getUsers(this.pagination.offset,this.pagination.limit).subscribe(
       data => {
-
+        this.pagination.count = data._meta.total; // this is for pagination
+        this.pagination = { ...this.pagination }; //Need to create new object to make change-detection work
         this.data = data._items;
-        this.length = this.data.length; // this is for pagination
-        console.log(this.data);
       },
       err => console.error(err),
       () => console.log("Done")
       );
     }
+}
 
 
+interface EventObject {
+  event: string;
+  value: any;
 }

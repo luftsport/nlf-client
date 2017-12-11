@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 //import {RequestOptions, Request, RequestMethod} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
+import {EveItem} from "./eve.interface";
 
 
 export abstract class RestService {
@@ -12,15 +13,6 @@ export abstract class RestService {
               //, private cookieService: CookieService
             ){}
 
-  protected get headers(): Headers {
-
-    // for example, add an authorization token to each request,
-    // take it from some CookieService, for example
-
-    //const token: string = this.cookieService.get('token');
-    return new Headers({token: 'abcde'});
-  }
-
 
   /**
   @TODO: needs to have a parameter parser
@@ -30,13 +22,21 @@ export abstract class RestService {
 
   protected getItem(relativeUrl: string, id: number, options: any): Observable<any> {
     return this.http.get(this.baseUrl + relativeUrl + id.toString(), this.getOptions(options));
-    //, new RequestOptions({headers: this.headers})
-      //.subscribe(data => {
-      //  console.log(data);
-      //}
   }
 
-  protected getOptions(options: any) {
+  protected getList(relativeUrl: string, params: QueryParams): Observable<any> {
+    return this.http.get(this.baseUrl + relativeUrl + this.toQuery(params), this.getOptions(params.options));
+  }
+
+  toQuery(params: QueryParams) : string{
+    let wherePart = '';
+    if(params.where){
+      wherePart = JSON.stringify(params.where)+'&';
+    }
+    return '?'+wherePart+'page='+params.page+'&max_results='+params.max_results
+  }
+
+  protected getOptions(options?: any) {
 
     if(options && options.length > 0) {
       return options.concat({headers: this.getHeaders()});
@@ -44,11 +44,6 @@ export abstract class RestService {
     else {
       return {headers: this.getHeaders()};
     }
-  }
-  protected getList(relativeUrl: string, options: any): Observable<any> {
-
-
-    return this.http.get(this.baseUrl + relativeUrl + '?max_results=50000', this.getOptions(options));
   }
 
   protected getHeaders() {
@@ -66,3 +61,12 @@ export abstract class RestService {
   }
 
 }
+
+export interface QueryParams {
+  where? : {};
+  max_results: number;
+  page: number;
+  options? : any;
+
+}
+
