@@ -24,6 +24,9 @@ import { UserService } from './api/user.service';
 import { UserAuthService } from './api/user-auth.service';
 import { AuthInterceptor } from './auth/auth.interceptor';
 
+import { AlertService } from './services/alert.service';
+import { AlertComponent } from './services/alert/alert.component';
+
 // Our custom components
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -49,7 +52,8 @@ import { AuthGuard } from './auth/auth.guard';
     AppOrsComponent,
     AppChildComponent,
     DummyComponent,
-    AuthComponent
+    AuthComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +77,8 @@ import { AuthGuard } from './auth/auth.guard';
               Title,
               { provide: HTTP_INTERCEPTORS,
                 useClass: AuthInterceptor,
-                multi: true}
+                multi: true},
+              AlertService,
               ],
   bootstrap: [AppComponent]
 })

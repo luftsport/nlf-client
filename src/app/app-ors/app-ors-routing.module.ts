@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppChildComponent } from './app-child/app-child.component';
 import { AuthGuard } from '../auth/auth.guard';
 
-const appOrsRoutes:Routes = [{ path: 'ors/child', component: AppChildComponent, canActivate: [AuthGuard]}];
+const appOrsRoutes:Routes = [{ path: 'ors/child/:id', component: AppChildComponent, canActivate: [AuthGuard]}];
 
 
 @NgModule({

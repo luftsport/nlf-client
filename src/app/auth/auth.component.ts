@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { UserAuthService } from '../api/user-auth.service';
+import { AlertService } from '../services/alert.service';
 
 @Component({
   selector: 'app-auth',
@@ -19,6 +20,7 @@ export class AuthComponent implements OnInit {
       private route: ActivatedRoute,
       private router: Router,
       private authenticationService: UserAuthService,
+      private alertService: AlertService
       //private authenticationService: AuthenticationService,
       //private alertService: AlertService
     ) { }
@@ -46,11 +48,12 @@ export class AuthComponent implements OnInit {
                 }
                 else {
                   this.loading = false;
+                  this.alertService.error(data.message);
                   this.message = data.message;
                 }
               },
               error => {
-                  //this.alertService.error(error);
+                  this.alertService.error(error);
                   this.loading = false;
               });
   }
