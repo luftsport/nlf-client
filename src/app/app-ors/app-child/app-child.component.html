@@ -3,12 +3,13 @@
     <form #appChildForm="ngForm">
       <div class="form-group">
         <label for="message">Other</label>
-        <input [(ngModel)]="message" name="message" type="text" class="form-control" id="message" required>
+        <!-- For debounce: https://stackoverflow.com/questions/32051273/angular-and-debounce -->
+        <input (keyup)="newMessage()" [(ngModel)]="message" name="message" type="text" class="form-control" id="message" required>
       </div>
 
 
 <div class="form-group">
-      <a (click)="newMessage()" routerLink="/ors" class="btn btn-primary">Save and go to parent</a>
+      <a routerLink="/ors" class="btn btn-primary">Go to parent</a>
 </div>
 
     </form>

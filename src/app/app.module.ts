@@ -2,7 +2,7 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { FormsModule, NgModel } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // Third party
 import { AlertModule } from 'ngx-bootstrap';
@@ -14,6 +14,7 @@ import { TableModule } from 'ngx-easy-table';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PaginationModule } from "ngx-bootstrap/pagination"; //Dependency for ng2-table
+import { PopoverModule } from 'ngx-bootstrap/popover';
 //import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { FontAwesomeModule } from 'ngx-icons';
@@ -21,6 +22,7 @@ import { FontAwesomeModule } from 'ngx-icons';
 // API
 import { UserService } from './api/user.service';
 import { UserAuthService } from './api/user-auth.service';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 // Our custom components
 import { AppComponent } from './app.component';
@@ -58,6 +60,7 @@ import { AuthGuard } from './auth/auth.guard';
     NgProgressHttpClientModule,
     BsDropdownModule.forRoot(),
     CollapseModule,
+    PopoverModule.forRoot(),
     FontAwesomeModule,
     PaginationModule.forRoot(),
     TableModule,
@@ -68,6 +71,9 @@ import { AuthGuard } from './auth/auth.guard';
               UserAuthService,
               DataService,
               Title,
+              { provide: HTTP_INTERCEPTORS,
+                useClass: AuthInterceptor,
+                multi: true}
               ],
   bootstrap: [AppComponent]
 })

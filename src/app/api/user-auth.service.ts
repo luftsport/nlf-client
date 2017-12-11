@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 
 import { RestService } from './rest.service'
 
@@ -20,6 +20,7 @@ interface UserAuthItem {
 @Injectable()
 export class UserAuthService extends RestService {
 
+
   constructor( http: HttpClient
               //, private cookieService: CookieService
             ){super(http);}
@@ -35,6 +36,8 @@ export class UserAuthService extends RestService {
 
     return this.getList(this.relativeUrl, {});
   }
+
+
 
 /**
   public getsomething: Observable<Article> = this.http.get("https://api.github.com/users/seeschweiler");

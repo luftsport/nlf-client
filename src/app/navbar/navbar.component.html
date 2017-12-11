@@ -1,3 +1,9 @@
+<ng-template #popTemplate>
+  Just another: <strong>strong</strong><br>
+  <button class="btn btn-success">Approve</button>
+  <button class="btn btn-danger">Reject</button>
+</ng-template>
+
 <nav class="navbar navbar-toggleable-sm ">
   <button (click)="isCollapsed = !isCollapsed" class="navbar-toggler navbar-toggler-right" type="button" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <fa [name]="'bars'" [fixed]="'true'"></fa>
@@ -29,11 +35,11 @@
     <!-- Right side items -->
     <div class="navbar-nav">
       <a class="nav-item nav-link" routerLink="/home"><fa [name]="'home-o'" [fixed]="'true'"></fa></a>
-      <a class="nav-item nav-link" href="#"><fa [name]="'user-o'" [fixed]="'true'"></fa></a>
+      <a class="nav-item nav-link" [popover]="popTemplate" placement="bottom" container="body" popoverTitle="Template ref content inside"><fa [name]="'user-o'" [fixed]="'true'"></fa></a>
       <a class="nav-item nav-link" href="#"><fa [name]="'desktop'" [fixed]="'true'"></fa></a>
       <a class="nav-item nav-link" href="#"><fa [name]="'commenting-o'" [fixed]="'true'"></fa></a>
       <a class="nav-item nav-link" href="#"><fa [name]="'envelope-o'" [fixed]="'true'"></fa></a>
-      <a class="nav-item nav-link" (click)="logout()" href="/">Logout</a>
+      <a class="nav-item nav-link" (click)="logout()" routerLink="/">Logout</a>
     </div>
   </div>
 </nav>

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 //import {RequestOptions, Request, RequestMethod} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 
@@ -20,6 +20,7 @@ export abstract class RestService {
     //const token: string = this.cookieService.get('token');
     return new Headers({token: 'abcde'});
   }
+
 
   /**
   @TODO: needs to have a parameter parser
@@ -47,18 +48,13 @@ export abstract class RestService {
   protected getList(relativeUrl: string, options: any): Observable<any> {
 
 
-    return this.http.get(this.baseUrl + relativeUrl, this.getOptions(options));
+    return this.http.get(this.baseUrl + relativeUrl + '?max_results=50000', this.getOptions(options));
   }
 
   protected getHeaders() {
 
     let headers = new HttpHeaders();
     console.log("Test");
-    if(localStorage.getItem('token64')) {
-      console.log("Inside token");
-        return headers.set('Authorization', 'Basic ' + localStorage.getItem('token64')).set('Content-Type', 'application/json; charset=utf8').set('Accept', 'application/json');;
-    }
-    console.log(headers);
     return headers.set('Content-Type', 'application/json; charset=utf8').set('Accept', 'application/json');
 
   }

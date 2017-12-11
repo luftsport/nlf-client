@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 
 @Component({
   selector: 'navbar',
@@ -17,6 +18,6 @@ export class NavbarComponent implements OnInit {
   //Temporary!
   logout() {
     localStorage.clear();
-    
+
   }
 }
