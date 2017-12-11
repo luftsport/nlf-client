@@ -21,7 +21,7 @@ export class AppUserComponent implements OnInit {
 
 
   public getone() {
-    this.userService.getUser().subscribe(
+    this.userService.getUser(45199).subscribe(
       data => {
 
         //this.data = data;

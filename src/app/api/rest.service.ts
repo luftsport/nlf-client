@@ -27,15 +27,6 @@ export abstract class RestService {
   Use typical geojson, where methods to generate the correct parameters.
 
   **/
-
-  protected getItem(relativeUrl: string, id: number, options: any): Observable<any> {
-    return this.http.get(this.baseUrl + relativeUrl + id.toString(), this.getOptions(options));
-    //, new RequestOptions({headers: this.headers})
-      //.subscribe(data => {
-      //  console.log(data);
-      //}
-  }
-
   protected getOptions(options: any) {
 
     if(options && options.length > 0) {
@@ -45,24 +36,46 @@ export abstract class RestService {
       return {headers: this.getHeaders()};
     }
   }
+
+  protected getHeaders() {
+
+    let headers = new HttpHeaders();
+
+    headers.set('Content-Type', 'application/json; charset=utf8');
+    headers.append('Accept', 'application/json');
+
+    return headers;
+
+  }
+
+  protected getItem(relativeUrl: string, id: number, options: any): Observable<any> {
+    return this.http.get(this.baseUrl + relativeUrl + id.toString(), this.getOptions(options));
+    //, new RequestOptions({headers: this.headers})
+      //.subscribe(data => {
+      //  console.log(data);
+      //}
+  }
+
+
   protected getList(relativeUrl: string, options: any): Observable<any> {
 
 
     return this.http.get(this.baseUrl + relativeUrl + '?max_results=50000', this.getOptions(options));
   }
 
-  protected getHeaders() {
 
-    let headers = new HttpHeaders();
-    console.log("Test");
-    return headers.set('Content-Type', 'application/json; charset=utf8').set('Accept', 'application/json');
-
-  }
   protected post(relativeUrl: string, data: any, options: any) {
 
     return this.http.post(this.baseUrl + relativeUrl, JSON.stringify(data),
   {headers: this.getHeaders()});
     // and so on for every http method that your API supports
   }
+
+  /**
+  Needs _etag support in Headers
+  **/
+  protected put(relativeUrl: string, data: any, options: any, etag: any) {}
+
+  protected patch(relativeUrl: string, data: any, options: any, etag: any) {}
 
 }
