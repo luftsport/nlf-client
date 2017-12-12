@@ -39,7 +39,7 @@ export abstract class RestService {
       'Accept': 'application/json',
       'X-Angular-Rules': 'True'
     }
-
+  }
 
   protected getItem(relativeUrl: string, id: number, options: OptionsInterface = {}): Observable<any> {
     return this.http.get(this.baseUrl + relativeUrl + id.toString(), this.getOptions(options));
