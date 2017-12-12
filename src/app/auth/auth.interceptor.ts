@@ -4,13 +4,14 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import { Router, RouterStateSnapshot } from '@angular/router';
 
+//import { AuthComponent } from './auth.component'; // Do not work
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
   cachedRequests: Array<HttpRequest<any>> = [];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) { } //, private auth: AuthComponent) { } Dows not work?
 
   public collectFailedRequest(request): void {
     this.cachedRequests.push(request);
@@ -26,7 +27,7 @@ export class AuthInterceptor implements HttpInterceptor {
     //Request:
     request = request.clone({
     setHeaders: {
-      Authorization: 'Basic ' + localStorage.getItem('token64'),
+      Authorization: 'Basic ' + localStorage.getItem('token'),
 
     }
     });

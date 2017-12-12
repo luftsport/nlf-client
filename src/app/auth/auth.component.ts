@@ -28,9 +28,15 @@ export class AuthComponent implements OnInit {
   ngOnInit() {
       // reset login status
       //this.authenticationService.logout();
-
+      this.logout();
       // get return url from route parameters or default to '/'
       this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+  }
+
+  public logout() {
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('token');
+    localStorage.removeItem('valid');
   }
 
   login() {
@@ -42,8 +48,9 @@ export class AuthComponent implements OnInit {
               data => {
                 if(data.success == true) {
                   console.log(data);
-                  localStorage.setItem('currentUser', data.id );
-                  localStorage.setItem('token64', data.token64);
+                  localStorage.setItem('currentUser', this.model.username );
+                  localStorage.setItem('token', data.token64);
+                  localStorage.setItem('valid', data.valid['$date']);
                   this.router.navigate([this.returnUrl]);
                 }
                 else {
