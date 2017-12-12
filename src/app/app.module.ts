@@ -24,7 +24,7 @@ import { UserService } from './api/user.service';
 import { UserAuthService } from './api/user-auth.service';
 import { AuthInterceptor } from './auth/auth.interceptor';
 
-import { AlertService } from './services/alert.service';
+import { AlertService } from './services/alert/alert.service';
 import { AlertComponent } from './services/alert/alert.component';
 
 // Our custom components
