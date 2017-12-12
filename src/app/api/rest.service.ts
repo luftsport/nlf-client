@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 //import {RequestOptions, Request, RequestMethod} from '@angular/http';
-import {Observable} from 'rxjs/Observable';
-import {EveItem} from "./eve.interface";
+import { Observable } from 'rxjs/Observable';
+import { EveItem, EveList } from "./eve.interface";
+import { OptionsInterface } from './options.interface';
 
 
 export abstract class RestService {
@@ -13,83 +14,47 @@ export abstract class RestService {
               //, private cookieService: CookieService
             ){}
 
-  protected get headers(): Headers {
-
-    // for example, add an authorization token to each request,
-    // take it from some CookieService, for example
-
-    //const token: string = this.cookieService.get('token');
-    return new Headers({token: 'abcde'});
-  }
-
-
   /**
   @TODO: needs to have a parameter parser
   Use typical geojson, where methods to generate the correct parameters.
 
   **/
-  protected getOptions(options: any) {
+  protected getOptions(options: OptionsInterface) {
 
-    if(options && options.length > 0) {
-      return options.concat({headers: this.getHeaders()});
+    if(options.headers) {
+      options.headers = Object.assign(options.headers, this.getDefaultHeaders());
     }
     else {
-      return {headers: this.getHeaders()};
+      options.headers = this.getDefaultHeaders();
     }
+
+    //options.headers = new HttpHeaders().set(options.headers);
+    return options;
   }
 
-  protected getHeaders() {
+  protected getDefaultHeaders() {
 
-    let headers = new HttpHeaders();
+    return {
+      'Content-Type': 'application/json; charset=utf8',
+      'Accept': 'application/json',
+      'X-Angular-Rules': 'True'
+    }
 
-    headers.set('Content-Type', 'application/json; charset=utf8');
-    headers.append('Accept', 'application/json');
 
-    return headers;
-
-  }
-
-  protected getItem(relativeUrl: string, id: number, options: any): Observable<any> {
+  protected getItem(relativeUrl: string, id: number, options: OptionsInterface = {}): Observable<any> {
     return this.http.get(this.baseUrl + relativeUrl + id.toString(), this.getOptions(options));
-    //, new RequestOptions({headers: this.headers})
-      //.subscribe(data => {
-      //  console.log(data);
-      //}
   }
 
-  protected getList(relativeUrl: string, params: QueryParams): Observable<any> {
-    return this.http.get(this.baseUrl + relativeUrl + this.toQuery(params), this.getOptions(params.options));
+  protected getList(relativeUrl: string, options: OptionsInterface = {}): Observable<any> {
+    return this.http.get(this.baseUrl + relativeUrl, this.getOptions(options));
   }
 
-  toQuery(params: QueryParams) : string{
-    let wherePart = '';
-    if(params.where){
-      wherePart = JSON.stringify(params.where)+'&';
-    }
-    return '?'+wherePart+'page='+params.page+'&max_results='+params.max_results
-  }
 
-  protected getOptions(options?: any) {
 
-    if(options && options.length > 0) {
-      return options.concat({headers: this.getHeaders()});
-    }
-    else {
-      return {headers: this.getHeaders()};
-    }
-  }
-
-  protected getHeaders() {
-
-    let headers = new HttpHeaders();
-    console.log("Test");
-    return headers.set('Content-Type', 'application/json; charset=utf8').set('Accept', 'application/json');
-
-  }
-  protected post(relativeUrl: string, data: any, options: any) {
+  protected post(relativeUrl: string, data: any, options: OptionsInterface = {}): Observable<any> {
 
     return this.http.post(this.baseUrl + relativeUrl, JSON.stringify(data),
-  {headers: this.getHeaders()});
+  {headers: this.getDefaultHeaders()});
     // and so on for every http method that your API supports
   }
 
@@ -98,11 +63,5 @@ export abstract class RestService {
   **/
   protected put(relativeUrl: string, data: any, options: any, etag: any) {}
   protected patch(relativeUrl: string, data: any, options: any, etag: any) {}
-export interface QueryParams {
-  where? : {};
-  max_results: number;
-  page: number;
-  options? : any;
 
 }
-

@@ -4,7 +4,9 @@ import { HttpClient } from '@angular/common/http';
 
 import { RestService } from './rest.service'
 import { UserItem, UserList } from './user.interface';
+import { EveItem, EveList } from './eve.interface';
 
+import { OptionsInterface } from './options.interface';
 
 @Injectable()
 export class UserService extends RestService {
@@ -17,11 +19,12 @@ export class UserService extends RestService {
 
   public getUser(id:number): Observable<UserItem> {
 
-    return this.getItem(this.relativeUrl , id, {});
+    return this.getItem(this.relativeUrl, id);
   }
 
-  public getUsers(page: number, max_results:number): Observable<EveItems> {
-    return this.getList(this.relativeUrl, {page:page,max_results:max_results});
+  public getUsers(options?: OptionsInterface): Observable<UserList> {
+
+    return this.getList(this.relativeUrl, options);
   }
 
 /**

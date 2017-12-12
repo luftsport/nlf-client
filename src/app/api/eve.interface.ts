@@ -17,11 +17,11 @@ export interface EveMeta {
 }
 
 export interface EveItem {
-  id : string;
-  _id : string;
+  id?: string;
+  _id: string;
 }
 
-export interface EveItems {
+export interface EveList {
   _items : EveItem[];
   _meta : EveMeta;
   _links : EveLinks;

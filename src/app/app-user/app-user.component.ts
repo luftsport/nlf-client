@@ -19,19 +19,15 @@ export class AppUserComponent implements OnInit {
 
   ngOnInit() {}
 
-
+  /**
   public getone(id:number) {
+
+
     this.userService.getUser(id).subscribe(
       data => {
-
-        //this.data = data;
-        //this.results = data;
-        // item/list <Article[]> _items
         console.log(data);
         this.fullname = data.fullname;
         this.birthdate = data.birthdate;
-        //this.body = data['_items'][0]['body'];
-        //return data.name;
       },
     err => console.error(err),
     () => console.log("Done")
@@ -50,4 +46,5 @@ export class AppUserComponent implements OnInit {
       () => console.log("Done")
       );
     }
+    **/
 }

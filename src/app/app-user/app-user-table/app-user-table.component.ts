@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { UserService } from '../../api/user.service';
-
+import { OptionsInterface } from '../../api/options.interface';
 // Table
 import { TemplateRef, ViewChild } from '@angular/core';
 import {TableModule} from 'ngx-easy-table';
@@ -51,6 +51,9 @@ export class AppUserTableComponent implements OnInit {
     count: null,
   };
 
+  //Initial table sort
+  sort: string = 'id';
+
   configuration : Config = {
     searchEnabled: false,
     headerEnabled: true,
@@ -84,15 +87,42 @@ export class AppUserTableComponent implements OnInit {
   }
 
   private parseEvent(obj: EventObject) {
-    this.pagination.limit = obj.value.limit ? obj.value.limit : this.pagination.limit;
-    this.pagination.offset = obj.value.page ? obj.value.page : this.pagination.offset;
-    this.pagination = { ...this.pagination };
+
+    if(obj.event == 'onPagination') {
+      this.pagination.limit = obj.value.limit ? obj.value.limit : this.pagination.limit;
+      this.pagination.offset = obj.value.page ? obj.value.page : this.pagination.offset;
+      this.pagination = { ...this.pagination };
+
+    }
+    if(obj.event == 'onOrder') {
+      //this.sort = {obj.value.key: obj.value.order == 'asc' ? 1 : -1};
+      //obj.value.order == 'asc' ? this.sort = obj.value.key : '-' + obj.value.key;
+      if(obj.value.order == 'desc') {
+        this.sort = '-'+obj.value.key;
+      }
+      else {
+        this.sort = obj.value.key;
+      }
+      console.log(this.sort);
+    }
+
+    //Always call getData on table event? No only for pagination and order
     this.getData();
   }
 
   public getData() {
 
-    this.userService.getUsers(this.pagination.offset,this.pagination.limit).subscribe(
+    //Using OptionsInterface to build and pass options
+    let options: OptionsInterface = {
+        params: { page: this.pagination.offset,
+                  max_results: this.pagination.limit,
+                  sort: this.sort
+                  //where: '{"": "F"}'
+                },
+        headers: {'X-Something-Stinks': 'Have a fishy day!'},
+    }
+
+    this.userService.getUsers(options).subscribe(
       data => {
         this.pagination.count = data._meta.total; // this is for pagination
         this.pagination = { ...this.pagination }; //Need to create new object to make change-detection work
