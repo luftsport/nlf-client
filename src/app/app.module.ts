@@ -49,7 +49,11 @@ import { AuthGuard } from './auth/auth.guard';
 
 // Resolvers
 import { ResolveComponent } from './resolve/resolve.component';
-import { ResolveUserComponent } from './resolve/resolve-user.component';
+import { ResolveUserComponent } from './resolve/resolve-user.compone;
+import { AppAdminComponent } from './app-admin/app-admin.compone;
+import { AppContentComponent } from './app-content/app-content.compone;
+import { AppConfluenceComponent } from './app-confluence/app-confluence.compone;
+import { AppClubComponent } from './app-club/app-club.component'nt'nt'nt'nt';
 
 @NgModule({
   declarations: [
@@ -64,7 +68,11 @@ import { ResolveUserComponent } from './resolve/resolve-user.component';
     AuthComponent,
     AlertComponent,
     ResolveComponent,
-    ResolveUserComponent
+    ResolveUserCompon,
+    AppAdminComponent,
+    AppContentComponent,
+    AppConfluenceComponent,
+    AppClubComponentent
   ],
   imports: [
     BrowserModule,
