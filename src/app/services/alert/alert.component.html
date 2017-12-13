@@ -1,1 +1,8 @@
-<div *ngIf="message" [ngClass]="{ 'alert': message, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error' }">{{message.text}}</div>
+<alert *ngIf="message" type="{{message.type}}" [dismissible]="dismissible">
+  <i [ngClass]="{'fa fa-fw': message,
+  'fa-check': message.type === 'success',
+  'fa-info-circle': message.type === 'info',
+  'fa-exclamation-circle': message.type === 'warning',
+  'fa-exclamation-triangle': message.type === 'danger'}"></i>
+   {{message.text}}
+</alert>

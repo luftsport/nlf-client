@@ -10,19 +10,14 @@ export class AuthGuard implements CanActivate {
 
         if (localStorage.getItem('currentUser')) {
             // logged in so return true
-            if( Date.now() > +localStorage.getItem('valid') ) {
+            if( Date.now() > +localStorage.getItem('valid')-(1000*60*59) ) {
               this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
               return false;
 
             }
 
-
-            console.log(localStorage.getItem('token'));
-            console.log(localStorage.getItem('valid'));
             return true;
         }
-
-        console.log("AuthGuard! False");
 
         this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
         return false;

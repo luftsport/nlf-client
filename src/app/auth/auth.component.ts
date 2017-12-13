@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { UserAuthService } from '../api/user-auth.service';
-import { AlertService } from '../services/alert.service';
+import { AlertService } from '../services/alert/alert.service';
 
 @Component({
   selector: 'app-auth',
@@ -26,14 +26,15 @@ export class AuthComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-      // reset login status
-      //this.authenticationService.logout();
       this.logout();
       // get return url from route parameters or default to '/'
       this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   public logout() {
+    if(localStorage.getItem('currentUser')) {
+      this.alertService.info("Du har blitt logget ut");
+    }
     localStorage.removeItem('currentUser');
     localStorage.removeItem('token');
     localStorage.removeItem('valid');
@@ -41,7 +42,6 @@ export class AuthComponent implements OnInit {
 
   login() {
       this.loading = true;
-
 
       this.authenticationService.authenticate(this.model.username, this.model.password)
           .subscribe(
@@ -52,10 +52,11 @@ export class AuthComponent implements OnInit {
                   localStorage.setItem('token', data.token64);
                   localStorage.setItem('valid', data.valid['$date']);
                   this.router.navigate([this.returnUrl]);
+                  //this.alertService.success("You logged in, yay!"); //This works after navigate
                 }
                 else {
                   this.loading = false;
-                  this.alertService.error(data.message);
+                  this.alertService.warning(data.message);
                   this.message = data.message;
                 }
               },

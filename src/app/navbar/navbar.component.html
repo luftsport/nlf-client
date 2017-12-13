@@ -31,7 +31,6 @@
       </div>
     </li>
   </ul>
-
     <!-- Right side items -->
     <div class="navbar-nav">
       <a class="nav-item nav-link" routerLink="/home"><fa [name]="'home-o'" [fixed]="'true'"></fa></a>
@@ -39,7 +38,8 @@
       <a class="nav-item nav-link" href="#"><fa [name]="'desktop'" [fixed]="'true'"></fa></a>
       <a class="nav-item nav-link" href="#"><fa [name]="'commenting-o'" [fixed]="'true'"></fa></a>
       <a class="nav-item nav-link" href="#"><fa [name]="'envelope-o'" [fixed]="'true'"></fa></a>
-      <a class="nav-item nav-link" (click)="logout()" routerLink="/">Logout</a>
+      <a *ngIf="isAuth()" class="nav-item nav-link" (click)="logout()" routerLink="/">Logout</a>
+      <a *ngIf="!isAuth()" class="nav-item nav-link" routerLink="/login">Login</a>
     </div>
   </div>
 </nav>

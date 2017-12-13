@@ -24,6 +24,7 @@ import { UserService } from './api/user.service';
 import { UserAuthService } from './api/user-auth.service';
 import { AuthInterceptor } from './auth/auth.interceptor';
 
+// Site wide notifications
 import { AlertService } from './services/alert/alert.service';
 import { AlertComponent } from './services/alert/alert.component';
 
@@ -38,6 +39,7 @@ import { AppChildComponent } from './app-ors/app-child/app-child.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DummyComponent } from './dummy/dummy.component';
 
+// Do not need dataservice
 import { DataService } from './app-ors/data.service';
 import { AuthComponent } from './auth/auth.component';
 import { AuthGuard } from './auth/auth.guard';
@@ -75,9 +77,9 @@ import { AuthGuard } from './auth/auth.guard';
               UserAuthService,
               DataService,
               Title,
-              { provide: HTTP_INTERCEPTORS,
-                useClass: AuthInterceptor,
-                multi: true},
+              {provide: HTTP_INTERCEPTORS,
+               useClass: AuthInterceptor,
+               multi: true},
               AlertService,
               ],
   bootstrap: [AppComponent]
