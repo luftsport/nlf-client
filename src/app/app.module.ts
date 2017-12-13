@@ -4,11 +4,15 @@ import { NgModule } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+import { HttpModule } from '@angular/http'; //NB ONLY FOR ng2-idle until ng5 support for HttpClient
+
 // Third party
 import { AlertModule } from 'ngx-bootstrap';
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { NgProgressHttpClientModule } from '@ngx-progressbar/http-client';
 import { TableModule } from 'ngx-easy-table';
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
+import { MomentModule } from 'angular2-moment'; // optional, provides moment-style pipes for date formatting
 
 // ngx-bootstrap
 import { CollapseModule } from 'ngx-bootstrap/collapse';
@@ -30,7 +34,6 @@ import { AlertService } from './services/alert/alert.service';
 import { AlertComponent } from './services/alert/alert.component';
 
 // Our custom components
-import { AppComponent } from './app.component';
 import { AppUserComponent } from './app-user/app-user.component';
 import { AppUserTableComponent } from './app-user/app-user-table/app-user-table.component';
 import { UserTableComponent } from './app-user/user-table/user-table.component';
@@ -57,6 +60,8 @@ import { AuthGuard } from './auth/auth.guard';
 import { ResolveComponent } from './resolve/resolve.component';
 import { ResolveUserComponent } from './resolve/resolve-user.component';
 
+// APp root component
+import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +85,7 @@ import { ResolveUserComponent } from './resolve/resolve-user.component';
   imports: [
     BrowserModule,
     HttpClientModule,
+    HttpModule, //NB ONLY FOR ng2-idle until ng5 support for HttpClient
     FormsModule,
     AlertModule.forRoot(),
     NgProgressModule.forRoot(),
@@ -90,7 +96,9 @@ import { ResolveUserComponent } from './resolve/resolve-user.component';
     FontAwesomeModule,
     PaginationModule.forRoot(),
     TableModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgIdleKeepaliveModule.forRoot(),
+    MomentModule,
     //NgbModule.forRoot()
   ],
   providers: [UserService,
@@ -98,10 +106,10 @@ import { ResolveUserComponent } from './resolve/resolve-user.component';
               UserAuthService,
               DataService,
               Title,
+              AlertService,
               {provide: HTTP_INTERCEPTORS,
                useClass: AuthInterceptor,
                multi: true},
-              AlertService,
               ],
   bootstrap: [AppComponent]
 })

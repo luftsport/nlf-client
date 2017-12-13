@@ -9,8 +9,10 @@ import { Title } from '@angular/platform-browser';
 export class AppComponent {
 
   readonly title = 'NLF';
-  public constructor(private titleService: Title ) {
-  }
+  //For navbar!
+  isCollapsed = false;
+  
+  public constructor(private titleService: Title) { }
 
   public setTitle( newTitle: string) {
     this.titleService.setTitle( this.title + ' ' + newTitle );
@@ -18,5 +20,5 @@ export class AppComponent {
 
 
 
-  isCollapsed = false;
+
 }

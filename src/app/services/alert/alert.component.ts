@@ -9,6 +9,8 @@ import { AlertService } from './alert.service';
 })
 export class AlertComponent {
     message: any;
+    dismissible = true;
+
     constructor(private alertService: AlertService) { }
 
     ngOnInit() {

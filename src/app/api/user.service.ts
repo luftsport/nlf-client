@@ -15,7 +15,7 @@ export class UserService extends RestService {
               //, private cookieService: CookieService
             ){super(http);}
 
-  private relativeUrl: string = '/melwin/users/';
+  private relativeUrl: string = '/users/';
 
   public getUser(id:number, options?: OptionsInterface): Observable<UserItem> {
 

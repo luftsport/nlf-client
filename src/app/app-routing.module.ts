@@ -16,6 +16,9 @@ import { AppOrsRoutingModule } from './app-ors/app-ors-routing.module';
 /**
   Route object top level
   AuthGuard just tests that user is logged in, nothing more
+
+  Permalinks: https://angular.io/api/router/UrlMatcher
+  eg match /obs/{int id|mongodb _id}
   **/
 const routes: Routes = [
 { path: 'home', component: DummyComponent },
