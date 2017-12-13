@@ -1,0 +1,45 @@
+<ng-template #popTemplate>
+  Just another: <strong>strong</strong><br>
+  <button class="btn btn-success">Approve</button>
+  <button class="btn btn-danger">Reject</button>
+</ng-template>
+
+<nav class="navbar navbar-toggleable-sm ">
+  <button (click)="isCollapsed = !isCollapsed" class="navbar-toggler navbar-toggler-right" type="button" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <fa [name]="'bars'" [fixed]="'true'"></fa>
+  </button>
+  <span class="navbar-brand" routerLink="/home">NLF</span>
+  <div [collapse]="isCollapsed" class="collapse navbar-collapse justify-content-between" id="navbar">
+
+    <ul class="navbar-nav">
+
+      <li class="nav-item active">
+        <a class="nav-item nav-link" routerLink="/users">Users</a>
+      </li>
+
+
+      <li dropdown class="nav-item dropdown">
+
+        <a dropdownToggle class="nav-item nav-link dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">
+          ORS
+        </a>
+      <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" routerLink="/ors/">ORS</a>
+        <!--<a class="dropdown-item" routerLink="/ors/child">ORS Child</a> only from internal-->
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Something else here</a>
+      </div>
+    </li>
+  </ul>
+    <!-- Right side items -->
+    <div class="navbar-nav">
+      <a class="nav-item nav-link" routerLink="/home"><fa [name]="'home-o'" [fixed]="'true'"></fa></a>
+      <a class="nav-item nav-link" [popover]="popTemplate" placement="bottom" container="body" popoverTitle="Template ref content inside"><fa [name]="'user-o'" [fixed]="'true'"></fa></a>
+      <a class="nav-item nav-link" href="#"><fa [name]="'desktop'" [fixed]="'true'"></fa></a>
+      <a class="nav-item nav-link" href="#"><fa [name]="'commenting-o'" [fixed]="'true'"></fa></a>
+      <a class="nav-item nav-link" href="#"><fa [name]="'envelope-o'" [fixed]="'true'"></fa></a>
+      <a *ngIf="isAuth()" class="nav-item nav-link" (click)="logout()" routerLink="/">Logout</a>
+      <a *ngIf="!isAuth()" class="nav-item nav-link" routerLink="/login">Login</a>
+    </div>
+  </div>
+</nav>
