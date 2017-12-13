@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 //Top level app direct routes
 import { AuthComponent } from './auth/auth.component';
-import { DummyComponent } from './dummy/dummy.component';
+import { DummyComponent } from './ui/dummy/dummy.component';
 import { AppOrsComponent } from './app-ors/app-ors.component';
 import { AppUserTableComponent } from './app-user/app-user-table/app-user-table.component';
 

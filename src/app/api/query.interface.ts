@@ -1,5 +1,4 @@
 export interface QueryInterface {
-
   where?: any; //string
   max_results?: number; //number
   page?: number; //number

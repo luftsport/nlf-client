@@ -5,25 +5,18 @@ import { LicenseInterface } from './license.interface';
 
 export interface UserItem {
     id: number;
-    firstname: string;
-    lastname: string;
-    fullname: string;
-    updated: Date;
 
-    phone?: string;
-    email?: string;
-    gender?: string;
-    birthdate?: Date;
+    avatar?: any;
+    settings?: any;
+    custom?: any;
+    info?: any;
+    stastistics?: any;
 
-    membership: MembershipInterface;
-    licenses: LicenseInterface;
-    location: LocationInterface;
+    acl: any;
 
-    _version?: number;
     _etag: string;
     _created: Date;
     _id: string;
-    //_latest_version: number;
     _updated: Date;
     _links: EveLinks;
 }

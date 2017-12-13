@@ -3,15 +3,21 @@ import { HttpRequest,HttpResponse, HttpErrorResponse, HttpHandler, HttpEvent, Ht
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import { Router, RouterStateSnapshot } from '@angular/router';
+import { AlertService } from '../services/alert/alert.service';
 
 //import { AuthComponent } from './auth.component'; // Do not work
+
+
+/**
+Should only use AlertService for development environment
+**/
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
   cachedRequests: Array<HttpRequest<any>> = [];
 
-  constructor(private router: Router) { } //, private auth: AuthComponent) { } Dows not work?
+  constructor(private router: Router, private alertService: AlertService) { } //, private auth: AuthComponent) { } Dows not work?
 
   public collectFailedRequest(request): void {
     this.cachedRequests.push(request);
@@ -42,13 +48,16 @@ export class AuthInterceptor implements HttpInterceptor {
       }
     }, (err: any) => {
       if (err instanceof HttpErrorResponse) {
-        console.log("Got error");
+
         if (err.status === 401) {
           this.collectFailedRequest(request); //from user-auth service which is needed in constructor
           console.log("401");
           console.log(this.cachedRequests);
           this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url }});
 
+        }
+        else {
+          this.alertService.warning(err.message);
         }
       }
     });

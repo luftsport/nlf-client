@@ -21,6 +21,7 @@ import { FontAwesomeModule } from 'ngx-icons';
 
 // API
 import { UserService } from './api/user.service';
+import { MelwinUserService } from './api/melwin-user.service';
 import { UserAuthService } from './api/user-auth.service';
 import { AuthInterceptor } from './auth/auth.interceptor';
 
@@ -30,19 +31,25 @@ import { AlertComponent } from './services/alert/alert.component';
 
 // Our custom components
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
 import { AppUserComponent } from './app-user/app-user.component';
 import { AppUserTableComponent } from './app-user/app-user-table/app-user-table.component';
 import { UserTableComponent } from './app-user/user-table/user-table.component';
 import { AppOrsComponent } from './app-ors/app-ors.component';
 import { AppChildComponent } from './app-ors/app-child/app-child.component';
 import { AppRoutingModule } from './app-routing.module';
-import { DummyComponent } from './dummy/dummy.component';
+
+// UI components
+import { NavbarComponent } from './ui/navbar/navbar.component';
+import { DummyComponent } from './ui/dummy/dummy.component';
 
 // Do not need dataservice
 import { DataService } from './app-ors/data.service';
 import { AuthComponent } from './auth/auth.component';
 import { AuthGuard } from './auth/auth.guard';
+
+// Resolvers
+import { ResolveComponent } from './resolve/resolve.component';
+import { ResolveUserComponent } from './resolve/resolve-user.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +62,9 @@ import { AuthGuard } from './auth/auth.guard';
     AppChildComponent,
     DummyComponent,
     AuthComponent,
-    AlertComponent
+    AlertComponent,
+    ResolveComponent,
+    ResolveUserComponent
   ],
   imports: [
     BrowserModule,
@@ -74,6 +83,7 @@ import { AuthGuard } from './auth/auth.guard';
     //NgbModule.forRoot()
   ],
   providers: [UserService,
+              MelwinUserService,
               UserAuthService,
               DataService,
               Title,

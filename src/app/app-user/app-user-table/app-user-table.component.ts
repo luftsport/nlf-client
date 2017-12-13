@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { UserService } from '../../api/user.service';
+import { MelwinUserService } from '../../api/melwin-user.service';
 import { OptionsInterface } from '../../api/options.interface';
 // Table
 import { TemplateRef, ViewChild } from '@angular/core';
@@ -73,7 +73,7 @@ export class AppUserTableComponent implements OnInit {
     groupRows: false
   };
 
-  public constructor(private userService: UserService) {
+  public constructor(private userService: MelwinUserService) {
 
   }
 

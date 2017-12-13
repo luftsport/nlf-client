@@ -17,9 +17,9 @@ export class UserService extends RestService {
 
   private relativeUrl: string = '/melwin/users/';
 
-  public getUser(id:number): Observable<UserItem> {
+  public getUser(id:number, options?: OptionsInterface): Observable<UserItem> {
 
-    return this.getItem(this.relativeUrl, id);
+    return this.getItem(this.relativeUrl, id, options);
   }
 
   public getUsers(options?: OptionsInterface): Observable<UserList> {
