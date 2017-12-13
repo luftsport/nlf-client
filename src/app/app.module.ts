@@ -36,6 +36,12 @@ import { AppUserTableComponent } from './app-user/app-user-table/app-user-table.
 import { UserTableComponent } from './app-user/user-table/user-table.component';
 import { AppOrsComponent } from './app-ors/app-ors.component';
 import { AppChildComponent } from './app-ors/app-child/app-child.component';
+import { AppAdminComponent } from './app-admin/app-admin.component';
+import { AppContentComponent } from './app-content/app-content.component';
+import { AppConfluenceComponent } from './app-confluence/app-confluence.component';
+import { AppClubComponent } from './app-club/app-club.component';
+
+// Routes
 import { AppRoutingModule } from './app-routing.module';
 
 // UI components
@@ -49,11 +55,8 @@ import { AuthGuard } from './auth/auth.guard';
 
 // Resolvers
 import { ResolveComponent } from './resolve/resolve.component';
-import { ResolveUserComponent } from './resolve/resolve-user.compone;
-import { AppAdminComponent } from './app-admin/app-admin.compone;
-import { AppContentComponent } from './app-content/app-content.compone;
-import { AppConfluenceComponent } from './app-confluence/app-confluence.compone;
-import { AppClubComponent } from './app-club/app-club.component'nt'nt'nt'nt';
+import { ResolveUserComponent } from './resolve/resolve-user.component';
+
 
 @NgModule({
   declarations: [
@@ -68,11 +71,11 @@ import { AppClubComponent } from './app-club/app-club.component'nt'nt'nt'nt';
     AuthComponent,
     AlertComponent,
     ResolveComponent,
-    ResolveUserCompon,
+    ResolveUserComponent,
     AppAdminComponent,
     AppContentComponent,
     AppConfluenceComponent,
-    AppClubComponentent
+    AppClubComponent,
   ],
   imports: [
     BrowserModule,
