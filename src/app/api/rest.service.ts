@@ -32,7 +32,7 @@ export abstract class RestService {
     }
 
     //options.headers = new HttpHeaders().set(options.headers);
-    return options;
+    return options.headers;
   }
 
   protected getDefaultHeaders() {
@@ -44,19 +44,19 @@ export abstract class RestService {
     }
   }
 
-  protected getItem(relativeUrl: string, id: number, options?: OptionsInterface = {}): Observable<any> {
+  protected getItem(relativeUrl: string, id: number, options: OptionsInterface = {}): Observable<any> {
     console.log(relativeUrl);
     console.log(options);
     return this.http.get(this.baseUrl + relativeUrl + id.toString(), this.getOptions(options));
   }
 
-  protected getList(relativeUrl: string, options?: OptionsInterface = {}): Observable<any> {
+  protected getList(relativeUrl: string, options: OptionsInterface = {}): Observable<any> {
     return this.http.get(this.baseUrl + relativeUrl, this.getOptions(options));
   }
 
 
 
-  protected post(relativeUrl: string, data: any, options?: OptionsInterface = {}): Observable<any> {
+  protected post(relativeUrl: string, data: any, options: OptionsInterface = {}): Observable<any> {
 
     return this.http.post(this.baseUrl + relativeUrl, JSON.stringify(data), this.getOptions(options));
     // and so on for every http method that your API supports
