@@ -11,7 +11,7 @@ Needs upgrading to ng5 to abolish the deprecated HttpModule...
 import {Idle, DEFAULT_INTERRUPTSOURCES} from '@ng-idle/core';
 import {Keepalive} from '@ng-idle/keepalive';
 import { AlertService } from '../services/alert/alert.service';
-
+import { AuthService } from '../auth/auth.service';
 // Imports the application wide object
 import { AppComponent } from "../app.component";
 
@@ -40,7 +40,8 @@ export class AppOrsComponent implements OnInit {
     private app:AppComponent,
     private idle: Idle,
     private keepalive: Keepalive,
-    private alertService: AlertService) {
+    private alertService: AlertService,
+    private auth: AuthService) {
 
     app.setTitle("ORS");
 
@@ -61,6 +62,7 @@ export class AppOrsComponent implements OnInit {
       this.idleState = 'Timed out!';
       this.timedOut = true;
       alertService.error(this.idleState);
+      this.auth.logout(true); //force logout!
     });
 
     idle.onIdleStart.subscribe(() => {

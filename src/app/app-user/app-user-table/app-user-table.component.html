@@ -1,7 +1,22 @@
 <div class="container">
   <div class="row">
+    <div class="container">
+    <h2>Tester melwin og users</h2>
+    <h3>Tag input test (fra tabellens data)</h3>
+    <tag-input [(ngModel)]="items"  theme='bootstrap' [onlyFromAutocomplete]="true">
+
+      <tag-input-dropdown [identifyBy]="'id'" [displayBy]="'fullname'" [showDropdownIfEmpty]="true"
+                            keepOpen="false"  [autocompleteItems]="data">
+          </tag-input-dropdown>
+    </tag-input>
+    <div class="clearfix"></div>
+    <h5>Tag modell</h5>
+    <ul>
+    <div *ngFor="let item of items"><li>{{item.fullname}} ({{item.id}})</li></div>
+    </ul>
     <div class="col-12">
 
+    <h3>Tabell test med server paging</h3>
     <ngx-table
       [configuration]="configuration"
       [data]="data"
@@ -25,9 +40,6 @@
   	<td>
 			<h5 class="color-green font-light">{{row.fullname}}</h5>
 		</td>
-
-
-
     <td>
 			<div class="font-small">
 				{{row.phone}}
@@ -53,5 +65,12 @@
 
 
   </div>
+</div>
+  <div class="container">
+  <h2>Tester resolver</h2>
+  <app-resolve-user [id]="-99"></app-resolve-user>
+  <app-resolve-user [id]="45199"></app-resolve-user>
+  <app-resolve-user [id]="5657"></app-resolve-user>
+</div>
 </div>
 </div>

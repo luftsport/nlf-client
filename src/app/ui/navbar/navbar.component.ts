@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverModule } from 'ngx-bootstrap/popover';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'navbar',
@@ -8,20 +9,9 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() {}
+  constructor(public auth: AuthService) {}
 
   isCollapsed = true;
-
-  isAuth() {
-
-    if(localStorage.currentUser) {return true;}
-    return false;
-  }
-  
-  public logout() {
-    this.auth.logout();
-    console.log("Weee");
-  }
 
   ngOnInit() {
   }

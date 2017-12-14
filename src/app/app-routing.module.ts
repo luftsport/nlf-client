@@ -24,7 +24,7 @@ import { AppUserRoutingModule } from './app-user/app-user-routing.module';
 const routes: Routes = [
 { path: 'home', component: DummyComponent },
 { path: 'users', component: AppUserTableComponent, canActivate: [AuthGuard] },
-{ path: 'ors', component: AppOrsComponent },
+{ path: 'ors', component: AppOrsComponent , canActivate: [AuthGuard] },
 { path: 'login', component: AuthComponent },
 { path: '', redirectTo: '/home', pathMatch: 'full' }, //redirect root
 { path: '**', component: DummyComponent }, //Not found

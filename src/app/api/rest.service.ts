@@ -28,7 +28,7 @@ export abstract class RestService {
       options.headers = this.getDefaultHeaders();
     }
     else {
-      options: OptionsInterface = { headers: this.getDefaultHeaders() };
+      options = { headers: this.getDefaultHeaders() };
     }
 
     //options.headers = new HttpHeaders().set(options.headers);

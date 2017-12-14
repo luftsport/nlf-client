@@ -35,8 +35,8 @@ export class AppUserTableComponent implements OnInit {
 
   @ViewChild('detailsTemplate') detailsTemplateRef: TemplateRef<any>;
 
-
   data;
+  item;
 
   columns = [
    { key: 'id', title: 'ID' },

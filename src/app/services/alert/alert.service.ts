@@ -8,6 +8,7 @@ export class AlertService {
 
     private subject = new Subject<any>();
     private keepAfterNavigationChange = false;
+    private dismissible = true;
 
     constructor(private router: Router) {
         // clear alert message on route change
@@ -24,23 +25,27 @@ export class AlertService {
         });
     }
 
-    success(message: string, keepAfterNavigationChange = false) {
+    success(message: string, keepAfterNavigationChange = false, dismissible = true) {
         this.keepAfterNavigationChange = keepAfterNavigationChange;
+        this.dismissible = dismissible;
         this.subject.next({ type: 'success', text: message });
     }
 
-    info(message: string, keepAfterNavigationChange = false) {
+    info(message: string, keepAfterNavigationChange = false, dismissible = true) {
         this.keepAfterNavigationChange = keepAfterNavigationChange;
+        this.dismissible = dismissible;
         this.subject.next({ type: 'info', text: message });
     }
 
-    warning(message: string, keepAfterNavigationChange = false) {
+    warning(message: string, keepAfterNavigationChange = false, dismissible = true) {
         this.keepAfterNavigationChange = keepAfterNavigationChange;
+        this.dismissible = dismissible;
         this.subject.next({ type: 'warning', text: message });
     }
 
-    error(message: string, keepAfterNavigationChange = false) {
+    error(message: string, keepAfterNavigationChange = false, dismissible = true) {
         this.keepAfterNavigationChange = keepAfterNavigationChange;
+        this.dismissible = dismissible;
         this.subject.next({ type: 'danger', text: message });
     }
 

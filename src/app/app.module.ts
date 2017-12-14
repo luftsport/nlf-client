@@ -57,6 +57,7 @@ import { DummyComponent } from './ui/dummy/dummy.component';
 import { DataService } from './app-ors/data.service';
 import { AuthComponent } from './auth/auth.component';
 import { AuthGuard } from './auth/auth.guard';
+import { AuthService } from './auth/auth.service';
 
 // Resolvers
 import { ResolveComponent } from './resolve/resolve.component';
@@ -65,6 +66,9 @@ import { ResolveUserComponent } from './resolve/resolve-user.component';
 // APp root component
 import { AppComponent } from './app.component';
 
+// Tag
+import { TagInputModule } from 'ngx-chips';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
 
 @NgModule({
   declarations: [
@@ -104,6 +108,8 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     NgIdleKeepaliveModule.forRoot(),
     MomentModule,
+    TagInputModule,
+    BrowserAnimationsModule
     //NgbModule.forRoot()
   ],
   providers: [UserService,
@@ -112,6 +118,7 @@ import { AppComponent } from './app.component';
               DataService,
               Title,
               AlertService,
+              AuthService,
               {provide: HTTP_INTERCEPTORS,
                useClass: AuthInterceptor,
                multi: true},

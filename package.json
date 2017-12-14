@@ -34,6 +34,7 @@
     "font-awesome": "^4.7.0",
     "mongo-query-generator": "^0.1.0",
     "ngx-bootstrap": "^2.0.0-beta.9",
+    "ngx-chips": "^1.6.1",
     "ngx-easy-table": "^2.1.2",
     "ngx-icons": "^0.2.0",
     "ngx-progressbar": "^2.1.1",
