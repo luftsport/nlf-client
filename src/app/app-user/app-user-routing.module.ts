@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppUserComponent } from './app-user.component';
 import { AuthGuard } from '../auth/auth.guard';
 
-const appUserRoutes:Routes = [{ path: '', component: AppUserComponent, canActivate: [AuthGuard]}];
+const appUserRoutes:Routes = [{ path: 'user/profile', component: AppUserComponent, canActivate: [AuthGuard]}];
 
 
 @NgModule({

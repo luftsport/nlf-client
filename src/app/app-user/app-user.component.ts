@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable} from 'rxjs/Rx';
 import { UserService } from '../api/user.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-app-user',
@@ -9,17 +10,39 @@ import { UserService } from '../api/user.service';
 })
 export class AppUserComponent implements OnInit {
 
-  constructor(private userService: UserService) {
+  user: any = {};
+  avatar: string = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
 
+  constructor(private userService: UserService,
+              private domSanitizer: DomSanitizer) {
+
+      this.user.id = +localStorage.getItem('currentUser');
   }
 
-  fullname: string = 'Loading..';
-  birthdate: Date;
-  users: any[];
+  public getAvatar() {
+    this.userService.getAvatar(this.user.id).subscribe(
+      data => {
 
-  ngOnInit() {}
+        if(data.avatar) {
+          this.avatar  = 'data:'+data.avatar.content_type+';base64,'+data.avatar.file;
+        }
+        //this.user.id = localStorage.getItem('currentUser');
+      },
+      err => console.error(err),
+      () => console.log("Done")
+      );
+  }
+
+  ngOnInit() {
+    this.getAvatar();
+  }
 
   /**
+
+  $scope.avatar.dataURL = 'data:'+data.avatar.content_type+';base64,'+data.avatar.file;
+}
+else {
+  $scope.avatar.dataURL = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
   public getone(id:number) {
 
 

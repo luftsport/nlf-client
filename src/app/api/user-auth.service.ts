@@ -6,6 +6,7 @@ import { RestService } from './rest.service'
 
 
 import { UserItem, UserList } from './user.interface';
+import { OptionsInterface } from './options.interface';
 
 interface UserAuthItem {
   success: boolean;
@@ -20,17 +21,15 @@ interface UserAuthItem {
 @Injectable()
 export class UserAuthService extends RestService {
 
-
   constructor( http: HttpClient
               //, private cookieService: CookieService
             ){super(http);}
 
   private relativeUrl: string = '/user/authenticate';
 
-  public authenticate(username: string, password: string): Observable<any> {
+  public authenticate(username: string, password: string, options?: OptionsInterface): Observable<any> {
 
-    return this.post(this.relativeUrl , {username: username, password: password}, {});
+    return this.post(this.relativeUrl , {username: username, password: password}, options);
   }
-
 
 }

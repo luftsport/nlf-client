@@ -23,10 +23,11 @@ export class AuthComponent implements OnInit {
       private alertService: AlertService
       //private authenticationService: AuthenticationService,
       //private alertService: AlertService
-    ) { }
+    ) {
+  this.logout(); }
 
   ngOnInit() {
-      this.logout();
+
       // get return url from route parameters or default to '/'
       this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }

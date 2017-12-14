@@ -19,6 +19,7 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PaginationModule } from "ngx-bootstrap/pagination"; //Dependency for ng2-table
 import { PopoverModule } from 'ngx-bootstrap/popover';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 //import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { FontAwesomeModule } from 'ngx-icons';
@@ -49,6 +50,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 // UI components
 import { NavbarComponent } from './ui/navbar/navbar.component';
+import { FooterComponent } from './ui/footer/footer.component';
 import { DummyComponent } from './ui/dummy/dummy.component';
 
 // Do not need dataservice
@@ -62,6 +64,7 @@ import { ResolveUserComponent } from './resolve/resolve-user.component';
 
 // APp root component
 import { AppComponent } from './app.component';
+
 
 @NgModule({
   declarations: [
@@ -81,6 +84,7 @@ import { AppComponent } from './app.component';
     AppContentComponent,
     AppConfluenceComponent,
     AppClubComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
@@ -93,6 +97,7 @@ import { AppComponent } from './app.component';
     BsDropdownModule.forRoot(),
     CollapseModule,
     PopoverModule.forRoot(),
+    TabsModule.forRoot(),
     FontAwesomeModule,
     PaginationModule.forRoot(),
     TableModule,

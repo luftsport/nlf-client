@@ -12,6 +12,7 @@ import { AuthGuard } from './auth/auth.guard';
 
 //Child appplication internal routes:
 import { AppOrsRoutingModule } from './app-ors/app-ors-routing.module';
+import { AppUserRoutingModule } from './app-user/app-user-routing.module';
 
 /**
   Route object top level
@@ -32,7 +33,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes),
-            AppOrsRoutingModule],
+            AppOrsRoutingModule,
+            AppUserRoutingModule],
   exports: [ RouterModule],
   providers: [AuthGuard],
   declarations: []

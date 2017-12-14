@@ -19,13 +19,16 @@ export abstract class RestService {
   Use typical geojson, where methods to generate the correct parameters.
 
   **/
-  protected getOptions(options: OptionsInterface) {
+  protected getOptions(options?: OptionsInterface) {
 
     if(options.headers) {
       options.headers = Object.assign(options.headers, this.getDefaultHeaders());
     }
-    else {
+    else if(options){
       options.headers = this.getDefaultHeaders();
+    }
+    else {
+      options: OptionsInterface = { headers: this.getDefaultHeaders() };
     }
 
     //options.headers = new HttpHeaders().set(options.headers);
@@ -41,20 +44,21 @@ export abstract class RestService {
     }
   }
 
-  protected getItem(relativeUrl: string, id: number, options: OptionsInterface = {}): Observable<any> {
+  protected getItem(relativeUrl: string, id: number, options?: OptionsInterface = {}): Observable<any> {
+    console.log(relativeUrl);
+    console.log(options);
     return this.http.get(this.baseUrl + relativeUrl + id.toString(), this.getOptions(options));
   }
 
-  protected getList(relativeUrl: string, options: OptionsInterface = {}): Observable<any> {
+  protected getList(relativeUrl: string, options?: OptionsInterface = {}): Observable<any> {
     return this.http.get(this.baseUrl + relativeUrl, this.getOptions(options));
   }
 
 
 
-  protected post(relativeUrl: string, data: any, options: OptionsInterface = {}): Observable<any> {
+  protected post(relativeUrl: string, data: any, options?: OptionsInterface = {}): Observable<any> {
 
-    return this.http.post(this.baseUrl + relativeUrl, JSON.stringify(data),
-  {headers: this.getDefaultHeaders()});
+    return this.http.post(this.baseUrl + relativeUrl, JSON.stringify(data), this.getOptions(options));
     // and so on for every http method that your API supports
   }
 

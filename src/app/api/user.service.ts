@@ -27,6 +27,14 @@ export class UserService extends RestService {
     return this.getList(this.relativeUrl, options);
   }
 
+  public getAvatar(id:number) {
+
+    let options: OptionsInterface = {
+      params: {projection: '{"avatar": 1}'},
+    }
+    return this.getItem(this.relativeUrl, id, options);
+  }
+
 /**
   public getsomething: Observable<Article> = this.http.get("https://api.github.com/users/seeschweiler");
 

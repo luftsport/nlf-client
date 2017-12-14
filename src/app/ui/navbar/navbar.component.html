@@ -4,7 +4,7 @@
   <button class="btn btn-danger">Reject</button>
 </ng-template>
 
-<nav class="navbar navbar-toggleable-sm ">
+<nav class="navbar navbar-toggleable-sm navbar-dark bg-dark">
   <button (click)="isCollapsed = !isCollapsed" class="navbar-toggler navbar-toggler-right" type="button" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <fa [name]="'bars'" [fixed]="'true'"></fa>
   </button>
@@ -34,10 +34,10 @@
     <!-- Right side items -->
     <div class="navbar-nav">
       <a class="nav-item nav-link" routerLink="/home"><fa [name]="'home-o'" [fixed]="'true'"></fa></a>
-      <a class="nav-item nav-link" [popover]="popTemplate" placement="bottom" container="body" popoverTitle="Template ref content inside"><fa [name]="'user-o'" [fixed]="'true'"></fa></a>
-      <a class="nav-item nav-link" href="#"><fa [name]="'desktop'" [fixed]="'true'"></fa></a>
+      <a class="nav-item nav-link" routerLink="user/profile"><fa [name]="'user-o'" [fixed]="'true'"></fa></a>
+      <a class="nav-item nav-link" [popover]="popTemplate" placement="bottom" container="body" popoverTitle="Template ref content inside"><fa [name]="'desktop'" [fixed]="'true'"></fa></a>
       <a class="nav-item nav-link" href="#"><fa [name]="'commenting-o'" [fixed]="'true'"></fa></a>
-      <a class="nav-item nav-link" href="#"><fa [name]="'envelope-o'" [fixed]="'true'"></fa></a>
+      <a class="nav-item nav-link" href="#"><fa [name]="'bell-o'" [fixed]="'true'"></fa></a>
       <a *ngIf="isAuth()" class="nav-item nav-link" (click)="logout()" routerLink="/">Logout</a>
       <a *ngIf="!isAuth()" class="nav-item nav-link" routerLink="/login">Login</a>
     </div>
