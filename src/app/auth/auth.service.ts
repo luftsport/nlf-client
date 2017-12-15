@@ -38,7 +38,6 @@ export class AuthService {
 
   }
 
-
   public isAuthenticated() {
 
     return this.isAuth;

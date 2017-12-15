@@ -1,1 +1,20 @@
 nav {border-bottom: 1px solid #CCCCCC; }
+.fa-fnix-container {
+  position: relative;
+}
+
+.fa-fnix-sub {
+  top: -1px;
+  right: -1px;
+  font-size: 10px;
+  position: absolute;
+}
+
+.btn-sm .fa-fnix-sub {
+  right: -4px;
+  font-size: 8px;
+}
+
+.fa-fnix-sub-bg {
+  text-shadow: 0 0 1px black;
+}
