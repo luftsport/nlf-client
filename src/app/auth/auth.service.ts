@@ -7,6 +7,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class AuthService {
 
   private isAuth: boolean = false;
+  private loading: boolean = false;
+
+  private message: string;
+
 
   constructor(
     private authenticationService: UserAuthService,
@@ -33,7 +37,7 @@ export class AuthService {
       this.router.navigate([returnUrl]);
     }
     else {
-      this.router.navigate('/home');
+      this.router.navigate(['/home']);
     }
 
   }
@@ -60,7 +64,7 @@ export class AuthService {
                     this.router.navigate([returnUrl]);
                   }
                   else {
-                    this.router.navigate('/home');
+                    this.router.navigate(['/home']);
                   }
                 }
                 else {
