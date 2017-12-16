@@ -23,7 +23,7 @@
   <span class="navbar-brand" routerLink="/home">NLF</span>
   <div [collapse]="isCollapsed" class="collapse navbar-collapse justify-content-between" id="navbar">
 
-    <ul class="navbar-nav">
+    <ul class="navbar-nav" *ngIf="(isLoggedIn | async)">
 
       <li class="nav-item active">
         <a class="nav-item nav-link" routerLink="/users">Users</a>
@@ -44,7 +44,7 @@
     </li>
   </ul>
     <!-- Right side items -->
-    <div class="navbar-nav">
+    <div class="navbar-nav" *ngIf="(isLoggedIn | async)">
       <a class="nav-item nav-link" routerLink="/home"><fa [name]="'home-o'" [fixed]="'true'"></fa></a>
       <a class="nav-item nav-link" routerLink="user/profile"><fa [name]="'user-o'" [fixed]="'true'"></fa></a>
       <a class="nav-item nav-link" [popover]="popTemplate" placement="bottom" container="body" popoverTitle="Template ref content inside"><fa [name]="'desktop'" [fixed]="'true'"></fa></a>
@@ -60,8 +60,8 @@
        </a>
         <a class="nav-item nav-link text-danger" href="#"><fa [name]="'bell-o'" [fixed]="'true'"></fa></a>
 
-      <a *ngIf="auth.isAuthenticated()" class="nav-item nav-link" (click)="auth.logout()" routerLink="/">Logout</a>
-      <a *ngIf="!auth.isAuthenticated()" class="nav-item nav-link" routerLink="/login">Login</a>
+      <a *ngIf="(isLoggedIn | async)" (click)="authService.logout()" class="nav-item nav-link btn">Logout</a>
+      <!--<a *ngIf="!(isLoggedIn | async)" class="nav-item nav-link" routerLink="/login">Login</a>-->
     </div>
   </div>
 </nav>

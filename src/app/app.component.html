@@ -3,7 +3,9 @@
 <navbar></navbar>
 <main role="main">
 
-  <alert-service></alert-service>
-  <router-outlet></router-outlet>
+
+  <alert-service ></alert-service>
+  <app-auth *ngIf="!(isLoggedIn | async)"></app-auth>
+  <router-outlet *ngIf="(isLoggedIn | async)"></router-outlet>
   <app-ui-footer></app-ui-footer>
 </main>

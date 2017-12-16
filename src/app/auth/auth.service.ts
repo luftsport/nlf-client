@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { UserAuthService } from '../api/user-auth.service';
 import { AlertService } from '../services/alert/alert.service';
+// Import ng2-idle
+import {Idle, DEFAULT_INTERRUPTSOURCES} from '@ng-idle/core';
+import {Keepalive} from '@ng-idle/keepalive';
+
 import { Router, ActivatedRoute } from '@angular/router';
+import { BehaviorSubject, Observable } from "rxjs";
 
 @Injectable()
 export class AuthService {
@@ -11,46 +16,55 @@ export class AuthService {
 
   private message: string;
 
+  //ng2-idle
+  idleState: string;
+  timedOut: boolean = false;
+  lastPing?: Date = null;
+
+  public isAuthSubject = new BehaviorSubject<boolean>(this.hasToken());
 
   constructor(
-    private authenticationService: UserAuthService,
+    private userAuthService: UserAuthService,
     private alertService: AlertService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private idle: Idle,
+    private keepalive: Keepalive) {
 
-
-  public logout(force?: boolean, returnUrl?: string) {
-
-    if(!returnUrl) { returnUrl = 'home';}
-
-    if(localStorage.getItem('currentUser') && !force) {
-      this.alertService.success("Du har blitt logget ut", true);
+      this.isAuthSubject.next(false);
     }
-    else if(localStorage.getItem('currentUser') && force) {
-      this.alertService.warning("Du har blitt automatisk logget ut", true);
-    }
-    localStorage.removeItem('currentUser');
-    localStorage.removeItem('token');
-    localStorage.removeItem('valid');
 
-    if(force) {
-      this.router.navigate([returnUrl]);
-    }
-    else {
-      this.router.navigate(['/home']);
-    }
+  public hasToken(): boolean {
+
+    return !!localStorage.getItem('token');
 
   }
 
-  public isAuthenticated() {
-
-    return this.isAuth;
-
+  public isAuthenticated(): Observable<boolean> {
+    return this.isAuthSubject.asObservable();
   }
 
-  public login(username: string, password: string, returnUrl?: string) {
+  public login(username: string, password: string, returnUrl?: string): void {
       if(!returnUrl) { returnUrl = 'home';}
-      this.authenticationService.authenticate(username, password)
+
+      /**
+      localStorage.setItem('currentUser', 45199 );
+      localStorage.setItem('token', 'MWVjN2RkNjFjNWJmNGYzMWJkNzgzNjk4MTM3MDQzN2E6');
+      localStorage.setItem('valid', 1513381607511);
+
+      console.log(this.hasToken());
+      this.isAuthSubject.next(true);
+
+
+      if(returnUrl) {
+        this.router.navigate([returnUrl]);
+      }
+      else {
+        this.router.navigate(['/home']);
+      }
+      **/
+
+      this.userAuthService.authenticate(username, password)
           .subscribe(
               data => {
                 if(data.success == true) {
@@ -58,20 +72,74 @@ export class AuthService {
                   localStorage.setItem('currentUser', username );
                   localStorage.setItem('token', data.token64);
                   localStorage.setItem('valid', data.valid['$date']);
-                  this.isAuth = true;
+
+                  //broadcast
+                  this.isAuthSubject.next(true);
+
+                  /**
+                  If first_login = true
+                  this.alertService.warning('Din første login, vennligst oppdater profilen');
+                  this.router.navigate(['user/profile']);
+
+
+                  **/
+
+                  /**
+                  Idle config!
+                  **/
+                  // sets an idle timeout of 5 seconds, for testing purposes.
+                  this.idle.setIdle(5);
+                  // sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out.
+                  this.idle.setTimeout(10);
+                  // sets the default interrupts, in this case, things like clicks, scrolls, touches to the document
+                  this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
+
+                  this.idle.onIdleEnd.subscribe(() => {
+                    this.idleState = 'No longer idle.';
+                    this.alertService.success(this.idleState);
+                  });
+
+                  this.idle.onTimeout.subscribe(() => {
+                    this.idleState = 'Timed out!';
+                    this.timedOut = true;
+                    this.alertService.error(this.idleState);
+                    this.logout(true); //force logout!
+                  });
+
+                  this.idle.onIdleStart.subscribe(() => {
+                    this.idleState = 'You\'ve gone idle!';
+                    this.alertService.info(this.idleState);
+                  });
+
+                  this.idle.onTimeoutWarning.subscribe((countdown) => {
+                    this.idleState = 'You will time out in ' + countdown + ' seconds!';
+                    this.alertService.info(this.idleState);
+                  });
+
+                  // sets the ping interval to 15 seconds
+                  this.keepalive.interval(15);
+
+                  this.keepalive.onPing.subscribe(() => this.lastPing = new Date());
+
+                  this.idleReset();
                   //this.alertService.success("You logged in, yay!"); //This works after navigate
+                  /**
                   if(returnUrl) {
                     this.router.navigate([returnUrl]);
                   }
                   else {
                     this.router.navigate(['/home']);
                   }
+                  **/
+                  return true;
                 }
                 else {
 
                   this.alertService.warning(data.message);
                   this.message = data.message;
-                  this.isAuth = false;
+                  this.isAuthSubject.next(false);
+                  this.idleStop();
+                  return false;
                 }
               },
               error => {
@@ -79,7 +147,50 @@ export class AuthService {
                   //This is a HttpErrorResponse should send the whole to alertService and do stuff there
                   this.alertService.error(error.message);
                   this.loading = false;
-                  this.isAuth = false;
+                  this.isAuthSubject.next(false);
+                  this.idleStop();
+                  return false;
               });
+  }
+
+  public logout(force?: boolean, returnUrl?: string) {
+
+    //if(!returnUrl) { returnUrl = 'home';}
+
+    if(this.hasToken() && !force) {
+      this.alertService.success("Du har blitt logget ut", true);
+    }
+    else if(this.hasToken() && force) {
+      this.alertService.warning("Du har blitt automatisk logget ut", true);
+    }
+
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('token');
+    localStorage.removeItem('valid');
+
+    this.idleStop();
+    this.isAuthSubject.next(false);
+
+    /**
+    if(force) {
+      this.router.navigate([returnUrl]);
+    }
+    else {
+      this.router.navigate(['/home']);
+    }
+    **/
+
+  }
+
+  public idleStop() {
+    if(!!this.idle) this.idle.stop();
+  }
+
+  public idleReset() {
+    if(!!this.idle) {
+      this.idle.watch();
+      this.idleState = 'Started.';
+      this.timedOut = false;
+    }
   }
 }
