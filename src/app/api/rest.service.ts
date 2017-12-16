@@ -21,18 +21,23 @@ export abstract class RestService {
   **/
   protected getOptions(options?: OptionsInterface) {
 
-    if(options.headers) {
+    if(!options) {
+        options = {};
+    }
+
+    if(!!options.headers) {
       options.headers = Object.assign(options.headers, this.getDefaultHeaders());
     }
-    else if(options){
+    else if(!!options){
       options.headers = this.getDefaultHeaders();
     }
     else {
       options = { headers: this.getDefaultHeaders() };
     }
 
+    //options.responseType = 'application/json';
     //options.headers = new HttpHeaders().set(options.headers);
-    return options.headers;
+    return options;
   }
 
   protected getDefaultHeaders() {
