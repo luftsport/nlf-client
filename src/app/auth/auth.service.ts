@@ -47,14 +47,9 @@ export class AuthService {
   public login(username: string, password: string, returnUrl?: string): void {
       if(!returnUrl) { returnUrl = 'home';}
 
+
       /**
-      localStorage.setItem('currentUser', 45199 );
-      localStorage.setItem('token', 'MWVjN2RkNjFjNWJmNGYzMWJkNzgzNjk4MTM3MDQzN2E6');
-      localStorage.setItem('valid', 1513381607511);
-
-      console.log(this.hasToken());
       this.isAuthSubject.next(true);
-
 
       if(returnUrl) {
         this.router.navigate([returnUrl]);
