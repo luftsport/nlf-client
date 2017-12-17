@@ -4,8 +4,11 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import { Router, RouterStateSnapshot } from '@angular/router';
 import { AlertService } from '../services/alert/alert.service';
+import { LocalStorageService } from '../services/storage/local-storage.service';
 
-//import { AuthComponent } from './auth.component'; // Do not work
+
+//import { AuthService } from './auth.service'; //Can't use due to cyclic dependency?
+
 
 
 /**
@@ -17,7 +20,11 @@ export class AuthInterceptor implements HttpInterceptor {
 
   cachedRequests: Array<HttpRequest<any>> = [];
 
-  constructor(private router: Router, private alertService: AlertService) { } //, private auth: AuthComponent) { } Dows not work?
+  constructor(private router: Router,
+    private alertService: AlertService,
+    private storage: LocalStorageService
+    //private authService: AuthService
+  ) { }
 
   public collectFailedRequest(request): void {
     this.cachedRequests.push(request);
@@ -26,15 +33,19 @@ export class AuthInterceptor implements HttpInterceptor {
   public retryFailedRequests(): void {
     // retry the requests. this method can
     // be called after the token is refreshed
+
+    for (let r of this.cachedRequests) {
+      //next.handle(r) //.do((event: HttpEvent<any>) =>);
+    }
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     //Request:
-    if(localStorage.getItem('token')) {
+    if(this.storage.hasToken()) { //should verify valid?
       request = request.clone({
         setHeaders: {
-          Authorization: 'Basic ' + localStorage.getItem('token'),
+          Authorization: 'Basic ' + this.storage.getToken(),
         }
       });
     }
@@ -53,7 +64,7 @@ export class AuthInterceptor implements HttpInterceptor {
           this.collectFailedRequest(request); //from user-auth service which is needed in constructor
           console.log("401");
           console.log(this.cachedRequests);
-          this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url }});
+          //this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url }});
 
         }
         else {

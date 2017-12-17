@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { UserAuthService } from '../api/user-auth.service';
 import { AlertService } from '../services/alert/alert.service';
+import { LocalStorageService } from '../services/storage/local-storage.service';
+
 // Import ng2-idle
 import {Idle, DEFAULT_INTERRUPTSOURCES} from '@ng-idle/core';
 import {Keepalive} from '@ng-idle/keepalive';
@@ -29,14 +31,15 @@ export class AuthService {
     private route: ActivatedRoute,
     private router: Router,
     private idle: Idle,
-    private keepalive: Keepalive) {
+    private keepalive: Keepalive,
+    private storage: LocalStorageService) {
 
       this.isAuthSubject.next(false);
     }
 
   public hasToken(): boolean {
 
-    return !!localStorage.getItem('token');
+    return this.storage.hasToken();
 
   }
 
@@ -64,9 +67,7 @@ export class AuthService {
               data => {
                 if(data.success == true) {
                   console.log(data);
-                  localStorage.setItem('currentUser', username );
-                  localStorage.setItem('token', data.token64);
-                  localStorage.setItem('valid', data.valid['$date']);
+                  this.storage.saveUser(username, data.token64, +data.valid['$date'])
 
                   //broadcast
                   this.isAuthSubject.next(true);
@@ -159,9 +160,8 @@ export class AuthService {
       this.alertService.warning("Du har blitt automatisk logget ut", true);
     }
 
-    localStorage.removeItem('currentUser');
-    localStorage.removeItem('token');
-    localStorage.removeItem('valid');
+    //Remove stored on user, let this handle everything
+    this.storage.clearStorage();
 
     this.idleStop();
     this.isAuthSubject.next(false);

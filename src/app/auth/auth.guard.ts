@@ -3,6 +3,7 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 import { AlertService } from '../services/alert/alert.service';
 import { AuthService } from './auth.service';
 import { Observable } from "rxjs";
+import { LocalStorageService } from '../services/storage/local-storage.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -11,7 +12,8 @@ export class AuthGuard implements CanActivate {
 
     constructor(private router: Router,
                 private alertService: AlertService,
-                private authService: AuthService
+                private authService: AuthService,
+                private storage: LocalStorageService
               ) {
               this.isLoggedIn = authService.isAuthenticated();
             }
@@ -21,25 +23,15 @@ export class AuthGuard implements CanActivate {
     Should be checking acl's instead
     **/
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        console.log("Logget inn guard:" + this.authService.hasToken());
-        if (this.authService.hasToken()) {
-            // logged in so return true
-            //if( Date.now() > +localStorage.getItem('valid')-(1000*60*59) ) {
-            if( Date.now() > +localStorage.getItem('valid') ) {
-              this.alertService.warning('Your session has timed out and you got logged out');
-              //this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
-              this.authService.logout();
-              return false;
 
-            }
-
+        if (this.storage.hasToken(true)) {
             return true;
         }
-
-        //this.authService.logout();
-        //this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
-        this.authService.logout();
-        return false;
+        else {
+          this.alertService.warning('Your session has timed out and you got automatically logged out');
+          this.authService.logout();
+          return false;
+        }
 
     }
 }
