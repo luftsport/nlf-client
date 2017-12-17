@@ -30,8 +30,10 @@ export class UserService extends RestService {
   public getAvatar(id:number) {
 
     let options: OptionsInterface = {
-      params: {projection: '{"avatar": 1}'},
-    }
+      query: {
+        projection: {"avatar": 1}
+        },
+    };
     return this.getItem(this.relativeUrl, id, options);
   }
 
