@@ -114,7 +114,7 @@ export class AppUserTableComponent implements OnInit {
 
     //Using OptionsInterface to build and pass options
     let options: OptionsInterface = {
-        params: { page: this.pagination.offset,
+        query: { page: this.pagination.offset,
                   max_results: this.pagination.limit,
                   sort: this.sort
                   //where: '{"": "F"}'

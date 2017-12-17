@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 //import {RequestOptions, Request, RequestMethod} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { EveItem, EveList } from "./eve.interface";
@@ -33,6 +33,23 @@ export abstract class RestService {
     }
     else {
       options = { headers: this.getDefaultHeaders() };
+    }
+
+    if(options.query){
+      let params = new HttpParams();
+
+
+      Object.keys(options.query).forEach((k)=>{
+
+        if(typeof options.query[k] == 'string' || typeof options.query[k] == 'number'){
+          params = params.set(k,options.query[k]+'');
+        }else{
+          params = params.set(k,JSON.stringify(options.query[k]));
+        }
+      });
+
+      options.params=params;
+
     }
 
     //options.responseType = 'application/json';
