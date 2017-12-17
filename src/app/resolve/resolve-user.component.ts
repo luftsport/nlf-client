@@ -26,8 +26,7 @@ export class ResolveUserComponent implements OnInit {
     else {
 
       let options: OptionsInterface = {
-          params: { projection: '{"fullname": 1}'
-                  }
+          params: { projection: '{"fullname": 1}'}
       }
 
       this.melwinUserService.getUser(this.id, options).subscribe(
