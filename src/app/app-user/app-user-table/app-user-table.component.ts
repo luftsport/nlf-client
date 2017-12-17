@@ -52,7 +52,7 @@ export class AppUserTableComponent implements OnInit {
   };
 
   //Initial table sort
-  sort: string = 'id';
+  sort: Array<Object> = [{'id': 1}];
 
   configuration : Config = {
     searchEnabled: false,
@@ -95,15 +95,17 @@ export class AppUserTableComponent implements OnInit {
 
     }
     if(obj.event == 'onOrder') {
-      //this.sort = {obj.value.key: obj.value.order == 'asc' ? 1 : -1};
-      //obj.value.order == 'asc' ? this.sort = obj.value.key : '-' + obj.value.key;
+
+      this.sort = [];
+      let tmpSort = {};
+
       if(obj.value.order == 'desc') {
-        this.sort = '-'+obj.value.key;
+        tmpSort[obj.value.key] = -1;
       }
-      else {
-        this.sort = obj.value.key;
+      else if(obj.value.order == 'asc'){
+        tmpSort[obj.value.key] = 1;
       }
-      console.log(this.sort);
+      this.sort.push(tmpSort);
     }
 
     //Always call getData on table event? No only for pagination and order
@@ -115,9 +117,9 @@ export class AppUserTableComponent implements OnInit {
     //Using OptionsInterface to build and pass options
     let options: OptionsInterface = {
         query: { page: this.pagination.offset,
-                  max_results: this.pagination.limit,
-                  sort: this.sort
-                  //where: '{"": "F"}'
+                 max_results: this.pagination.limit,
+                 sort: this.sort,
+                 //where: {'id': {'$in': [45199]}}
                 },
         headers: {'X-Something-Stinks': 'Have a fishy day!'},
     }

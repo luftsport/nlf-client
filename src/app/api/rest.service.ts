@@ -35,16 +35,22 @@ export abstract class RestService {
       options = { headers: this.getDefaultHeaders() };
     }
 
-    if(options.query){
+    if(!!options.query){
+
       let params = new HttpParams();
 
+      // sort is a different animal, make string first.
+      if(!!options.query.sort && options.query.sort instanceof Object) {
+        options.query.sort = JSON.stringify(options.query.sort).replace(/[{]/g, '(').replace(/[}]/g,')').replace(/:/g, ',');
+      }
 
       Object.keys(options.query).forEach((k)=>{
 
         if(typeof options.query[k] == 'string' || typeof options.query[k] == 'number'){
-          params = params.set(k,options.query[k]+'');
-        }else{
-          params = params.set(k,JSON.stringify(options.query[k]));
+          params = params.append(k,options.query[k]+'');
+        }
+        else {
+          params = params.append(k,JSON.stringify(options.query[k]));
         }
       });
 
