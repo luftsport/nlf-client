@@ -26,6 +26,7 @@ import { FontAwesomeModule } from 'ngx-icons';
 
 // API
 import { UserService } from './api/user.service';
+import { QueryBuilderService } from "./api/querybuilder.service";
 import { MelwinUserService } from './api/melwin-user.service';
 import { UserAuthService } from './api/user-auth.service';
 import { AuthInterceptor } from './auth/auth.interceptor';
@@ -68,7 +69,7 @@ import { AppComponent } from './app.component';
 
 // Tag
 import { TagInputModule } from 'ngx-chips';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';// this is needed!
 
 @NgModule({
   declarations: [
@@ -112,7 +113,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
     BrowserAnimationsModule
     //NgbModule.forRoot()
   ],
-  providers: [UserService,
+  providers: [QueryBuilderService,
+              UserService,
               MelwinUserService,
               UserAuthService,
               DataService,
