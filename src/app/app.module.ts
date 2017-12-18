@@ -34,6 +34,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 // Site wide notifications
 import { AlertService } from './services/alert/alert.service';
 import { AlertComponent } from './services/alert/alert.component';
+import { LocalStorageService } from './services/storage/local-storage.service';
 
 // Our custom components
 import { AppUserComponent } from './app-user/app-user.component';
@@ -121,6 +122,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';/
               Title,
               AlertService,
               AuthService,
+              LocalStorageService,
               {provide: HTTP_INTERCEPTORS,
                useClass: AuthInterceptor,
                multi: true},

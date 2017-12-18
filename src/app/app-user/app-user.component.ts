@@ -18,7 +18,7 @@ export class AppUserComponent implements OnInit {
               private domSanitizer: DomSanitizer,
               private storage: LocalStorageService) {
 
-      this.user.id = +storage.getId();
+      this.user.id = storage.getId();
   }
 
   public getAvatar() {

@@ -42,7 +42,7 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     //Request:
-    if(this.storage.hasToken()) { //should verify valid?
+    if(this.storage.hasToken(true)) { //should verify valid?
       request = request.clone({
         setHeaders: {
           Authorization: 'Basic ' + this.storage.getToken(),

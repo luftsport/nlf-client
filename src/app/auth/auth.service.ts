@@ -67,8 +67,8 @@ export class AuthService {
               data => {
                 if(data.success == true) {
                   console.log(data);
-                  this.storage.saveUser(username, data.token64, +data.valid['$date'])
 
+                  this.storage.saveUser(username, data.token64, data.valid['$date']);
                   //broadcast
                   this.isAuthSubject.next(true);
 

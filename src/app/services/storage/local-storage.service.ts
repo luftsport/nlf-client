@@ -26,9 +26,9 @@ export class LocalStorageService {
 
   constructor() { }
 
-  public saveUser(token: string, id: number, valid: Date | number) {
+  public saveUser(id: number|string, token: string, valid: Date|number|string) {
 
-    localStorage.setItem('auth-token', token);
+    localStorage.setItem('auth-token', String(token));
     localStorage.setItem('auth-id', String(id));
     localStorage.setItem('auth-valid', String(valid));
 
@@ -56,14 +56,12 @@ export class LocalStorageService {
 
       if( valid && Date.now() > +localStorage.getItem('auth-valid') ) {
         return false;
-
       }
 
       return true;
     }
 
     return false;
-
   }
 
   /**
