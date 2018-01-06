@@ -1,0 +1,3 @@
+  <select class="form-control" [formControl]="userClubChooser" [(ngModel)]="selected">
+    <option *ngFor="let opt of userClubs" [ngValue]="opt" ><app-resolve-club [clubid]="opt"></app-resolve-club></option>
+  </select>
