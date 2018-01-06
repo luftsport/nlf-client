@@ -49,11 +49,13 @@ export class AlertService {
         this.subject.next({ type: 'danger', text: message });
     }
 
-    danger(message: string, keepAfterNavigationChange = false) {
+    danger(message: string, keepAfterNavigationChange = false, dismissible = true) {
         this.error(message, keepAfterNavigationChange);
     }
 
-
+    clear() {
+      this.subject.next();
+    }
     getMessage(): Observable<any> {
         return this.subject.asObservable();
     }

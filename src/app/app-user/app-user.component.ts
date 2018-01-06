@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 import { UserService } from '../api/user.service';
+import { OptionsInterface } from '../api/options.interface';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LocalStorageService } from '../services/storage/local-storage.service';
 
@@ -12,12 +13,13 @@ import { LocalStorageService } from '../services/storage/local-storage.service';
 export class AppUserComponent implements OnInit {
 
   user: any = {};
+  something: string = 'testit';
+  currentUser: any;
   avatar: string = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
 
   constructor(private userService: UserService,
               private domSanitizer: DomSanitizer,
               private storage: LocalStorageService) {
-
       this.user.id = storage.getId();
   }
 
@@ -34,6 +36,7 @@ export class AppUserComponent implements OnInit {
       () => console.log("Done")
       );
   }
+
 
   ngOnInit() {
     this.getAvatar();

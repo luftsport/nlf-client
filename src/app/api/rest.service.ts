@@ -73,7 +73,19 @@ export abstract class RestService {
     }
   }
 
-  protected getItem(relativeUrl: string, id: number, options: OptionsInterface = {}): Observable<any> {
+  /**
+  Get item by _id
+  **/
+  protected getItem(relativeUrl: string, id: number|string, options: OptionsInterface = {}): Observable<any> {
+    console.log(relativeUrl);
+    console.log(options);
+    return this.http.get(this.baseUrl + relativeUrl + id.toString(), this.getOptions(options));
+  }
+
+  /**
+  Get item by id (custom Number(id))
+  **/
+  protected getItemById(relativeUrl: string, id: number, options: OptionsInterface = {}): Observable<any> {
     console.log(relativeUrl);
     console.log(options);
     return this.http.get(this.baseUrl + relativeUrl + id.toString(), this.getOptions(options));

@@ -1,7 +1,7 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { FormsModule, NgModel } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, NgModel } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { HttpModule } from '@angular/http'; //NB ONLY FOR ng2-idle until ng5 support for HttpClient
@@ -13,7 +13,7 @@ import { NgProgressHttpClientModule } from '@ngx-progressbar/http-client';
 import { TableModule } from 'ngx-easy-table';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
 import { MomentModule } from 'angular2-moment'; // optional, provides moment-style pipes for date formatting
-
+import { NgPipesModule } from 'ngx-pipes';
 // ngx-bootstrap
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -25,9 +25,13 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FontAwesomeModule } from 'ngx-icons';
 
 // API
-import { UserService } from './api/user.service';
-import { QueryBuilderService } from "./api/querybuilder.service";
 import { MelwinUserService } from './api/melwin-user.service';
+import { MelwinClubsService } from './api/melwin-clubs.service';
+import { MelwinMembershipService } from './api/melwin-membership.service';
+import { MelwinLicensesService } from './api/melwin-licenses.service';
+import { AclRolesService } from './api/acl-roles.service';
+import { AclGroupsService } from './api/acl-groups.service';
+import { UserService } from './api/user.service';
 import { UserAuthService } from './api/user-auth.service';
 import { AuthInterceptor } from './auth/auth.interceptor';
 
@@ -63,14 +67,26 @@ import { AuthService } from './auth/auth.service';
 
 // Resolvers
 import { ResolveComponent } from './resolve/resolve.component';
-import { ResolveUserComponent } from './resolve/resolve-user.component';
+import { ResolveUserComponent } from './resolve/resolve-user/resolve-user.component';
+import { ResolveClubComponent } from './resolve/resolve-club/resolve-club.component';
+import { ResolveLicenseComponent } from './resolve/resolve-license/resolve-license.component';
+import { ResolveMembershipComponent } from './resolve/resolve-membership/resolve-membership.component';
+import { ResolveGroupComponent } from './resolve/resolve-group/resolve-group.component';
+import { ResolveRoleComponent } from './resolve/resolve-role/resolve-role.component';
 
 // APp root component
 import { AppComponent } from './app.component';
 
 // Tag
 import { TagInputModule } from 'ngx-chips';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';// this is needed!
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppUserMembershipComponent } from './app-user/app-user-membership/app-user-membership.component';
+import { AppUserSettingsComponent } from './app-user/app-user-settings/app-user-settings.component';
+import { AppUserNotificationsComponent } from './app-user/app-user-notifications/app-user-notifications.component';
+import { AppUserOrsComponent } from './app-user/app-user-ors/app-user-ors.component';
+import { AppUserClubSelectorComponent } from './app-user/app-user-club-selector/app-user-club-selector.component';
+
+import { AppUserAclComponent } from './app-user/app-user-acl/app-user-acl.component';
 
 @NgModule({
   declarations: [
@@ -91,15 +107,28 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';/
     AppConfluenceComponent,
     AppClubComponent,
     FooterComponent,
+    AppUserMembershipComponent,
+    AppUserSettingsComponent,
+    AppUserNotificationsComponent,
+    AppUserOrsComponent,
+    ResolveClubComponent,
+    ResolveLicenseComponent,
+    AppUserClubSelectorComponent,
+    ResolveMembershipComponent,
+    ResolveGroupComponent,
+    ResolveRoleComponent,
+    AppUserAclComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     HttpModule, //NB ONLY FOR ng2-idle until ng5 support for HttpClient
     FormsModule,
+    ReactiveFormsModule,
     AlertModule.forRoot(),
     NgProgressModule.forRoot(),
     NgProgressHttpClientModule,
+    NgPipesModule,
     BsDropdownModule.forRoot(),
     CollapseModule,
     PopoverModule.forRoot(),
@@ -114,9 +143,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';/
     BrowserAnimationsModule
     //NgbModule.forRoot()
   ],
-  providers: [QueryBuilderService,
-              UserService,
+  providers: [UserService,
               MelwinUserService,
+              MelwinClubsService,
+              MelwinMembershipService,
+              MelwinLicensesService,
+              AclRolesService,
+              AclGroupsService,
               UserAuthService,
               DataService,
               Title,

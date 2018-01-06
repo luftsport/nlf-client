@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MelwinUserService } from '../api/melwin-user.service';
-import { OptionsInterface } from '../api/options.interface';
+import { MelwinUserService } from '../../api/melwin-user.service';
+import { OptionsInterface } from '../../api/options.interface';
 
 @Component({
   selector: 'app-resolve-user',

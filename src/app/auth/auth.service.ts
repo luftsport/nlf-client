@@ -34,7 +34,7 @@ export class AuthService {
     private keepalive: Keepalive,
     private storage: LocalStorageService) {
 
-      this.isAuthSubject.next(false);
+      //this.isAuthSubject.next(false);
     }
 
   public hasToken(): boolean {
@@ -71,6 +71,8 @@ export class AuthService {
                   this.storage.saveUser(username, data.token64, data.valid['$date']);
                   //broadcast
                   this.isAuthSubject.next(true);
+                  //clear alerts since we do not re-route
+                  this.alertService.clear()
 
                   /**
                   If first_login = true
@@ -84,7 +86,7 @@ export class AuthService {
                   Idle config!
                   **/
                   // sets an idle timeout of 5 seconds, for testing purposes.
-                  this.idle.setIdle(5);
+                  this.idle.setIdle(60*60);
                   // sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out.
                   this.idle.setTimeout(10);
                   // sets the default interrupts, in this case, things like clicks, scrolls, touches to the document
