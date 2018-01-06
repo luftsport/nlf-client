@@ -39,7 +39,7 @@ export class AppUserMembershipComponent implements OnInit {
         console.error(err);
         this.alertService.error('Kunne ikke finne medlemsskapsdata på deg');
       },
-      //() => console.log("Done")
+      // () => console.log("Done")
     );
   }
 

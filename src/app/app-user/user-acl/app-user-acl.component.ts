@@ -63,7 +63,7 @@ export class AppUserAclComponent implements OnInit {
             if (!!data.group) {
               if (!this.acl[data.group]) {
                 this.acl[data.group] = [r];
-              } 
+              }
               else {
                 this.acl[data.group].push(r);
               }
