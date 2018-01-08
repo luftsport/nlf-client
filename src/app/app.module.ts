@@ -17,10 +17,10 @@ import { NgPipesModule } from 'ngx-pipes';
 // ngx-bootstrap
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { PaginationModule } from "ngx-bootstrap/pagination"; //Dependency for ng2-table
+import { PaginationModule } from 'ngx-bootstrap/pagination'; //Dependency for ng2-table
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-//import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+// import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { FontAwesomeModule } from 'ngx-icons';
 
@@ -42,8 +42,7 @@ import { LocalStorageService } from './services/storage/local-storage.service';
 
 // Our custom components
 import { AppUserComponent } from './app-user/app-user.component';
-import { AppUserTableComponent } from './app-user/app-user-table/app-user-table.component';
-import { UserTableComponent } from './app-user/user-table/user-table.component';
+import { AppUserTableComponent } from './app-user/user-table/user-table.component';
 import { AppOrsComponent } from './app-ors/app-ors.component';
 import { AppChildComponent } from './app-ors/app-child/app-child.component';
 import { AppAdminComponent } from './app-admin/app-admin.component';
@@ -80,13 +79,13 @@ import { AppComponent } from './app.component';
 // Tag
 import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppUserMembershipComponent } from './app-user/app-user-membership/app-user-membership.component';
-import { AppUserSettingsComponent } from './app-user/app-user-settings/app-user-settings.component';
-import { AppUserNotificationsComponent } from './app-user/app-user-notifications/app-user-notifications.component';
-import { AppUserOrsComponent } from './app-user/app-user-ors/app-user-ors.component';
-import { AppUserClubSelectorComponent } from './app-user/app-user-club-selector/app-user-club-selector.component';
+import { AppUserMembershipComponent } from './app-user/user-membership/user-membership.component';
+import { AppUserSettingsComponent } from './app-user/user-settings/user-settings.component';
+import { AppUserNotificationsComponent } from './app-user/user-notifications/user-notifications.component';
+import { AppUserOrsComponent } from './app-user/user-ors/user-ors.component';
+import { AppUserClubSelectorComponent } from './app-user/user-club-selector/user-club-selector.component';
 
-import { AppUserAclComponent } from './app-user/app-user-acl/app-user-acl.component';
+import { AppUserAclComponent } from './app-user/user-acl/user-acl.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +93,6 @@ import { AppUserAclComponent } from './app-user/app-user-acl/app-user-acl.compon
     NavbarComponent,
     AppUserComponent,
     AppUserTableComponent,
-    UserTableComponent,
     AppOrsComponent,
     AppChildComponent,
     DummyComponent,

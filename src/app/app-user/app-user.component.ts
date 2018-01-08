@@ -6,16 +6,16 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { LocalStorageService } from '../services/storage/local-storage.service';
 
 @Component({
-  selector: 'app-app-user',
+  selector: 'app-user',
   templateUrl: './app-user.component.html',
   styleUrls: ['./app-user.component.css']
 })
 export class AppUserComponent implements OnInit {
 
   user: any = {};
-  something: string = 'testit';
+  something = 'testit';
   currentUser: any;
-  avatar: string = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+  avatar = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
 
   constructor(private userService: UserService,
               private domSanitizer: DomSanitizer,
@@ -27,13 +27,13 @@ export class AppUserComponent implements OnInit {
     this.userService.getAvatar(this.user.id).subscribe(
       data => {
 
-        if(data.avatar) {
+        if (data.avatar) {
           this.avatar  = 'data:'+data.avatar.content_type+';base64,'+data.avatar.file;
         }
-        //this.user.id = storage.getId();
+        // this.user.id = storage.getId();
       },
       err => console.error(err),
-      () => console.log("Done")
+      () => console.log('Done')
       );
   }
 

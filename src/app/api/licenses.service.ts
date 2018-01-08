@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
 
-import { RestService } from './rest.service'
+import { RestService } from './rest.service';
 import { OptionsInterface } from './options.interface';
 
 interface LicenseItem {
@@ -23,7 +23,7 @@ export class LicensesService  extends RestService {
 
   private relativeUrl: string = '/licenses/';
 
-  public getLicense(id:string, options?: OptionsInterface): Observable<LicenseItem> {
+  public getLicense(id: string, options?: OptionsInterface): Observable<LicenseItem> {
 
     return this.getItem(this.relativeUrl, id, options);
   }

@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppConfluenceComponent } from './app-confluence.component';
 import { AuthGuard } from '../auth/auth.guard';
 
-const appConfluenceRoutes:Routes = [{ path: '', component: AppConfluenceComponent, canActivate: [AuthGuard]}];
+const appConfluenceRoutes: Routes = [{ path: '', component: AppConfluenceComponent, canActivate: [AuthGuard]}];
 
 
 @NgModule({

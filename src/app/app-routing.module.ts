@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './auth/auth.component';
 import { DummyComponent } from './ui/dummy/dummy.component';
 import { AppOrsComponent } from './app-ors/app-ors.component';
-import { AppUserTableComponent } from './app-user/app-user-table/app-user-table.component';
+import { AppUserTableComponent } from './app-user/user-table/user-table.component';
 
 //Auth guard
 import { AuthGuard } from './auth/auth.guard';

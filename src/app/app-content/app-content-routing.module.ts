@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppContentComponent } from './app-content.component';
 import { AuthGuard } from '../auth/auth.guard';
 
-const appContentRoutes:Routes = [{ path: '', component: AppContentComponent, canActivate: [AuthGuard]}];
+const appContentRoutes: Routes = [{ path: '', component: AppContentComponent, canActivate: [AuthGuard]}];
 
 
 @NgModule({
