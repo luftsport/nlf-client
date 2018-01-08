@@ -18,7 +18,7 @@ export class ResolveMembershipComponent implements OnInit {
   ngOnInit() {
 
     let options: OptionsInterface = {
-        params: { projection: '{"name": 1}'}
+        query: { projection: {name: 1}}
       };
 
     this.melwinMembershipService.getMembership(this.membershipid, options).subscribe(

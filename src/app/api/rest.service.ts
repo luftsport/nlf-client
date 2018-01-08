@@ -1,18 +1,18 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-//import {RequestOptions, Request, RequestMethod} from '@angular/http';
+// import {RequestOptions, Request, RequestMethod} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { EveItem, EveList } from "./eve.interface";
+import { EveItem, EveList } from './eve.interface';
 import { OptionsInterface } from './options.interface';
 
 
 export abstract class RestService {
 
   //Api same address
-  protected baseUrl: string = '/api/v1';
+  protected baseUrl = '/api/v1';
 
   constructor(private http: HttpClient
-              //, private cookieService: CookieService
-            ){}
+              // , private cookieService: CookieService
+            ) {}
 
   /**
   @TODO: needs to have a parameter parser
@@ -21,45 +21,49 @@ export abstract class RestService {
   **/
   protected getOptions(options?: OptionsInterface) {
 
-    if(!options) {
+    if (!options) {
         options = {};
     }
 
-    if(!!options.headers) {
+    if (!!options.params) {
+      console.log('Use of params is not allowed, use query');
+    }
+
+    if (!!options.headers) {
       options.headers = Object.assign(options.headers, this.getDefaultHeaders());
     }
-    else if(!!options){
+    else if (!!options) {
       options.headers = this.getDefaultHeaders();
     }
     else {
       options = { headers: this.getDefaultHeaders() };
     }
 
-    if(!!options.query){
+    if (!!options.query) {
 
       let params = new HttpParams();
 
       // sort is a different animal, make string first.
-      if(!!options.query.sort && options.query.sort instanceof Object) {
-        options.query.sort = JSON.stringify(options.query.sort).replace(/[{]/g, '(').replace(/[}]/g,')').replace(/:/g, ',');
+      if (!!options.query.sort && options.query.sort instanceof Object) {
+        options.query.sort = JSON.stringify(options.query.sort).replace(/[{]/g, '(').replace(/[}]/g, ')').replace(/:/g, ',');
       }
 
-      Object.keys(options.query).forEach((k)=>{
+      Object.keys(options.query).forEach((k) => {
 
-        if(typeof options.query[k] == 'string' || typeof options.query[k] == 'number'){
-          params = params.append(k,options.query[k]+'');
+        if (typeof options.query[k] === 'string' || typeof options.query[k] === 'number'){
+          params = params.append(k, options.query[k] + '');
         }
         else {
-          params = params.append(k,JSON.stringify(options.query[k]));
+          params = params.append(k, JSON.stringify(options.query[k]));
         }
       });
 
-      options.params=params;
+      options.params = params;
 
     }
 
-    //options.responseType = 'application/json';
-    //options.headers = new HttpHeaders().set(options.headers);
+    // options.responseType = 'application/json';
+    // options.headers = new HttpHeaders().set(options.headers);
     return options;
   }
 
@@ -67,10 +71,10 @@ export abstract class RestService {
 
     return {
       'Content-Type': 'application/json; charset=utf8',
-      //'Accept': 'application/json',
+      // 'Accept': 'application/json',
       'Accept' : '*/*',
       'X-Angular-Rules': 'True'
-    }
+    };
   }
 
   /**

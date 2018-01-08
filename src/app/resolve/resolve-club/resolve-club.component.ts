@@ -19,7 +19,7 @@ export class ResolveClubComponent implements OnInit {
   ngOnInit() {
 
     let options: OptionsInterface = {
-        params: { projection: '{"name": 1}'}
+        query: { projection: {name: 1}}
       };
 
     this.melwinClubsService.getClub(this.clubid, options).subscribe(
