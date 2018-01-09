@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { LocalStorageService } from './local-storage.service';
+import { NlfLocalStorageService } from './local-storage.service';
 
-describe('LocalStorageService', () => {
+describe('NlfLocalStorageService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [LocalStorageService]
+      providers: [NlfLocalStorageService]
     });
   });
 
-  it('should be created', inject([LocalStorageService], (service: LocalStorageService) => {
+  it('should be created', inject([NlfLocalStorageService], (service: NlfLocalStorageService) => {
     expect(service).toBeTruthy();
   }));
 });

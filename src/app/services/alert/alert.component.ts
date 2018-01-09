@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AlertService } from './alert.service';
+import { NlfAlertService } from './alert.service';
 
 @Component({
     moduleId: module.id,
-    selector: 'alert-service',
+    selector: 'nlf-alert-service',
     templateUrl: 'alert.component.html'
 })
-export class AlertComponent {
+export class NlfAlertComponent {
     message: any;
   
-    constructor(private alertService: AlertService) { }
+    constructor(private alertService: NlfAlertService) { }
 
     ngOnInit() {
         this.alertService.getMessage().subscribe(message => { this.message = message; });

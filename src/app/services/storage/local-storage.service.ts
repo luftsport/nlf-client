@@ -22,7 +22,7 @@ structure:
 **/
 
 @Injectable()
-export class LocalStorageService {
+export class NlfLocalStorageService {
 
   constructor() { }
 

@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { AppComponent } from '../../app.component';
+import { NlfComponent } from '../../nlf.component';
 
 @Component({
-  selector: 'app-dummy',
+  selector: 'nlf-ui-dummy',
   templateUrl: './dummy.component.html',
   styleUrls: ['./dummy.component.css']
 })
-export class DummyComponent implements OnInit {
+export class NlfUiDummyComponent implements OnInit {
 
 
-  constructor(private app:AppComponent) {
-    app.setTitle("Dummy home component");
+  constructor(private app: NlfComponent) {
+    app.setTitle('Dummy home component');
   }
 
   ngOnInit() {
