@@ -1,0 +1,18 @@
+<div class="container">
+    <h3>ORS Child Form test</h3>
+    <form #appChildForm="ngForm">
+      <div class="form-group">
+        <label for="message">ORS Id: {{id}}</label>
+        <!-- For debounce: https://stackoverflow.com/questions/32051273/angular-and-debounce -->
+        <input (keyup)="newMessage()" [(ngModel)]="message" name="message" type="text" class="form-control" id="message" required>
+      </div>
+
+
+<div class="form-group">
+      <a routerLink="/ors" class="btn btn-primary">Go to parent</a>
+</div>
+
+    </form>
+
+    {{message}}
+</div>

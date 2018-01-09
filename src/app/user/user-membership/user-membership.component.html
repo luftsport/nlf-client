@@ -1,0 +1,64 @@
+<div *ngIf="user.id">
+  <div class="card">
+    <h4 class="card-header">Medlemsskap</h4>
+    <div class="card-body">
+      <dl>
+        <dt>Medlemsnummer:</dt>
+        <dd>{{user.id}}</dd>
+        <dt>Innmeldt NLF:</dt>
+        <dd>{{user.membership.enrolled | date}}</dd>
+        <dt>Type medlemsskap:</dt>
+        <dd>
+          <nlf-resolve-membership [membershipid]="user.membership.type"></nlf-resolve-membership>
+        </dd>
+        <dt>Medlemsavgift:</dt>
+        <dd>{{user.membership.fee}}</dd>
+        <dt>Saldo:</dt>
+        <dd>{{user.membership.balance}}</dd>
+        <dt>Gyldighet:</dt>
+        <dd>{{user.membership.valid | date}}</dd>
+      </dl>
+      <strong>Klubbmedlemsskap:</strong>
+      <ul>
+        <li *ngFor="let club of user.membership.clubs">
+          <nlf-resolve-club [clubid]="club"></nlf-resolve-club>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h4 class="card-header">Kontaktinfo</h4>
+    <div class="card-body">
+      <dl>
+        <dt>Adresse:</dt>
+        <dd>{{user.location.street}}, {{user.location.zip}} {{user.location.city}}</dd>
+        <dt>Telefon:</dt>
+        <dd>{{user.phone}}</dd>
+        <dt>Epost:</dt>
+        <dd>{{user.email}}</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="card">
+    <h4 class="card-header">Lisenser</h4>
+    <div class="card-body">
+
+      <strong>Lisenser:</strong>
+      <ul>
+        <li *ngFor="let license of user.licenses.rights">
+          <nlf-resolve-license [licenseid]="license"></nlf-resolve-license>
+        </li>
+        <li *ngIf="!hasLicenses">
+          Ingen Lisenser
+        </li>
+      </ul>
+
+      <dl *ngIf="hasLicenses">
+        <dt>Gyldig til:</dt>
+        <dd>{{user.licenses.expiry | date}}</dd>
+      </dl>
+    </div>
+  </div>
+</div>
