@@ -40,8 +40,8 @@ export class NlfUserTableComponent implements OnInit {
 
   @ViewChild('detailsTemplate') detailsTemplateRef: TemplateRef<any>;
 
-  data;
-  item;
+  data: any;
+  items: any;
 
   columns = [
     { key: 'id', title: 'ID' },

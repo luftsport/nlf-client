@@ -1,4 +1,4 @@
-<div class="container">
+<div *ngIf="render" class="container">
 	<div class="row">
 
 
@@ -9,6 +9,8 @@
 
 			<div class="row">
 				<div class="col-3">
+					
+					<!-- To become user-avatar-->
 					<div class="card mb-3">
 						<img class="card-img-top h-100" [src]="domSanitizer.bypassSecurityTrustUrl(avatar)" alt="Avatar">
 				
@@ -20,6 +22,7 @@
 							<a href="#" class="btn btn-block btn-primary">Endre profilbilde</a>
 						</div>
 					</div>
+					
 				</div>
 
 				<div class="col-9">
@@ -33,7 +36,7 @@
 		
 		</tab>
 		
-		<tab heading="Setttings" id="tab2">
+		<tab heading="Settings" id="tab2">
 
 			<nlf-user-settings></nlf-user-settings>
 

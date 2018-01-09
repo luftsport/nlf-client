@@ -13,14 +13,16 @@ export class NlfUserMembershipComponent implements OnInit {
 
   id: number;
   // Always initialize object
-  user = {}; // MelwinUserItem = {id: this.id, membership: {}, licenses: {}, location: {}};
+  user: any; // = {}; // ApiNlfUserItem = {id: this.id, membership: {}, licenses: {}, location: {}};
   hasLicenses = false;
+  render = false;
 
   constructor(private storage: NlfLocalStorageService,
               private membership: ApiNlfUserService,
               private alertService: NlfAlertService) {
 
     this.id = storage.getId();
+
     this.getuser();
   }
 
@@ -29,7 +31,8 @@ export class NlfUserMembershipComponent implements OnInit {
     this.membership.getUser(this.id).subscribe(
       data => {
         this.user = data;
-
+        // Only render on data
+        this.render = true;
         if (!!data.licenses && !!data.licenses.rights && data.licenses.rights.length > 0 ) {
           this.hasLicenses = true;
         }

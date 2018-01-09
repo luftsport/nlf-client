@@ -16,8 +16,8 @@ export class NlfUserClubSelectorComponent implements OnInit {
   // Needs true because we might change default club if defaultClub is undefined
   @Output() getSelected = new EventEmitter<string>(true);
 
-  protected userClubs: string[];
-  private selected: string;
+  public userClubs: string[];
+  public selected: string;
 
   something = '';
 

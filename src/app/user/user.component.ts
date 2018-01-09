@@ -16,9 +16,10 @@ export class NlfUserComponent implements OnInit {
   something = 'testit';
   currentUser: any;
   avatar = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+  render = false;
 
   constructor(private apiUserService: ApiUserService,
-              private domSanitizer: DomSanitizer,
+              public domSanitizer: DomSanitizer,
               private storage: NlfLocalStorageService) {
       this.user.id = storage.getId();
   }
@@ -33,7 +34,7 @@ export class NlfUserComponent implements OnInit {
         // this.user.id = storage.getId();
       },
       err => console.error(err),
-      () => console.log('Done')
+      () => { this.render = true; }
       );
   }
 

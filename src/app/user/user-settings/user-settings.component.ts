@@ -14,6 +14,7 @@ export class NlfUserSettingsComponent implements OnInit {
 
   model: any = {};
   user: any = {};
+  render = false;
 
   /**
   Define our reactive form
@@ -38,12 +39,13 @@ export class NlfUserSettingsComponent implements OnInit {
     this.apiUserService.getUser(this.user.id, options).subscribe(
       data => {
         this.model = data;
+        this.render = true;
         console.log(this.model);
         this.populateForm();
 
       },
       err => console.error(err),
-      () => console.log('Done')
+      () => {}
     );
 
   }
