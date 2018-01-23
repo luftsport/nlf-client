@@ -1,0 +1,8 @@
+<span *ngIf="dataReady">
+  <span *ngIf="observation.id > 0">
+    #<a [routerLink]="['/ors/fallskjerm/report/', observation.id]">{{ observation.id }} {{ observation.title }}</a>
+  </span>
+  <span *ngIf="observation.id == 0">
+    #? {{ observation.title }}
+  </span>
+</span>

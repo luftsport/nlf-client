@@ -8,14 +8,11 @@ import { ApiOptionsInterface, ApiNlfUserItem, ApiNlfUserList } from './api.inter
 @Injectable()
 export class ApiNlfUserService extends ApiRestService {
 
-  constructor( http: HttpClient
-              // , private cookieService: CookieService
-            ) { super(http); }
+  constructor( http: HttpClient ) { super(http); }
 
   private relativeUrl = '/melwin/users/';
 
   public getUser(id: number, options?: ApiOptionsInterface): Observable<ApiNlfUserItem> {
-
     return this.getItem(this.relativeUrl, id, options);
   }
 
@@ -24,4 +21,9 @@ export class ApiNlfUserService extends ApiRestService {
     return this.getList(this.relativeUrl, options);
   }
 
+
+  public getUserIdCache(id: number, options?: ApiOptionsInterface): Observable<ApiNlfUserItem> {
+
+    return Observable.defer(() => this.getUser(id, options) ).publishReplay(1, 30000).refCount().take(1);
+  }
 }

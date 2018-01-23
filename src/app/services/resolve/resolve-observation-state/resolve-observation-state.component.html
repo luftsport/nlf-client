@@ -1,0 +1,4 @@
+<span class="badge badge-{{ this.statuses[this.state]['badge'] }}">
+    <fa *ngIf="!!this.icon" [name]="this.statuses[this.state]['icon']" fixed="true"></fa>
+    {{ state | nlfOrsState }}
+</span>

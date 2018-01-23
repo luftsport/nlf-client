@@ -1,3 +1,4 @@
+import { ApiCacheService } from './../../../api/api-cache.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { ApiNlfMembershipService } from '../../../api/api-nlf-membership.service';
 import { ApiOptionsInterface } from '../../../api/api.interface';
@@ -13,7 +14,8 @@ export class NlfResolveMembershipComponent implements OnInit {
 
   membershipName: string;
 
-  constructor(private melwinMembershipService: ApiNlfMembershipService) { }
+  constructor(private melwinMembershipService: ApiNlfMembershipService,
+              private apiCache: ApiCacheService) { }
 
   ngOnInit() {
 
@@ -21,7 +23,8 @@ export class NlfResolveMembershipComponent implements OnInit {
         query: { projection: {name: 1}}
       };
 
-    this.melwinMembershipService.getMembership(this.membershipid, options).subscribe(
+    this.apiCache.get(['resolve-membership', this.membershipid, options.query],
+    this.melwinMembershipService.getMembership(this.membershipid, options)).subscribe(
       data => {
         console.log(data);
         this.membershipName = data.name;

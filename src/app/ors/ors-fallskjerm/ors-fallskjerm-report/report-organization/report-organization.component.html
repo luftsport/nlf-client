@@ -1,0 +1,41 @@
+<div *ngIf="organization">
+
+
+  <dl>
+    <span *ngIf="!!organization.hl">
+      <dt class="col-md-3">HL</dt>
+      <dd class="col-md-9">
+        <span *ngFor="let hl of organization.hl">
+          <nlf-resolve-user link="true" [userid]="hl.id"></nlf-resolve-user>
+        </span>
+      </dd>
+    </span>
+    <span *ngIf="!!organization.hl">
+      <dt class="col-md-3">HFL</dt>
+      <dd class="col-md-9">
+        <span *ngFor="let hfl of organization.hfl">
+          <nlf-resolve-user link="true" [userid]="hfl.id"></nlf-resolve-user>
+        </span>
+      </dd>
+    </span>
+    <span *ngIf="!!organization.hm">
+      <dt class="col-md-3">HM</dt>
+      <dd class="col-md-9">
+        <span *ngFor="let hm of organization.hm">
+          <nlf-resolve-user link="true" [userid]="hm.id"></nlf-resolve-user>
+        </span>
+      </dd>
+    </span>
+
+    <span *ngIf="!!organization.pilot">
+      <dt class="col-md-3">Pilot</dt>
+      <dd class="col-md-9">
+        <span *ngFor="let pilot of organization.pilot">
+          <nlf-resolve-user link="true" [userid]="pilot.id"></nlf-resolve-user>
+        </span>
+      </dd>
+    </span>
+
+  </dl>
+
+</div>

@@ -1,0 +1,277 @@
+<div *ngIf="dataReady">
+
+	<div class="card mb-6">
+		<h5 class="card-header">
+
+			<div class="container">
+				<!-- TITLE -->
+
+				<!-- <fa name="file-text-o" fixed="true"></fa>&nbsp;-->
+				<!-- {{ data.tags | nlfOrsTags: ' / '}} -->
+				#{{ data.id }}
+				<nlf-resolve-observation-tags [tags]="data.tags" link="true" seperator="/"></nlf-resolve-observation-tags>&nbsp;
+				<!-- /TITLE -->
+				<!-- RATING -->
+				<span class="badge badge-{{data.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ data.rating | nlfOrsRatingCalc }}</span>
+
+
+				<!-- DIFFERENT VERSION -->
+				<span *ngIf="data._version !== data._latest_version" class="badge badge-warning">
+					<a [routerLink]="['/ors/fallskjerm/report/', data.id]">v{{ data._version }} av {{ data._latest_version }}</a>
+				</span>
+				<!-- /DIFFERENT VERSION -->
+
+				<!-- RATING TEST 
+			<rating [ngModel]="data.rating.actual" max="8" readonly="true"></rating> / <rating [ngModel]="data.rating.potential" max="8" readonly="true"></rating> 
+			 /RATING TEST -->
+
+				<!-- WORKFLOW STATE -->
+				<span class="pull-right">
+					<nlf-resolve-observation-state [state]="data.workflow.state" icon="true"></nlf-resolve-observation-state>
+				</span>
+				<!-- /WORKFLOW STATE -->
+			</div>
+		</h5>
+		<!-- /END HEADER -->
+
+		<div class="card-body">
+
+			<div class="container">
+
+				<div class="row">
+					<!-- Summary table -->
+					<div class="col-md-6 table-responsive">
+						<nlf-ors-fallskjerm-report-summary [observation]="data"></nlf-ors-fallskjerm-report-summary>
+					</div>
+
+					<!-- Map -->
+					<div class="col-md-6">
+						<div *ngIf="!!data.location?.geo?.coordinates">
+							<agm-map [latitude]="toFloat(data.location.geo.coordinates[0])" [longitude]="toFloat(data.location.geo.coordinates[1])" [zoom]="12">
+								<agm-marker [label]="data.location.nickname" [latitude]="toFloat(data.location.geo.coordinates[0])" [longitude]="toFloat(data.location.geo.coordinates[1])"></agm-marker>
+							</agm-map>
+						</div>
+						<div *ngIf="!data.location?.geo?.coordinates">
+
+							<alert type="danger" [dismissible]="false">
+								<fa name="map-marker" fixed="true"></fa>
+								Ingen lokalisasjon satt.
+							</alert>
+
+						</div>
+					</div>
+				</div>
+
+				<!-- Workflow -->
+				<div class="row">
+					<div class="col-md-12">
+
+						<div (click)="isWorkflowTimelineCollapsed = !isWorkflowTimelineCollapsed" class="card-header pointer">
+							<fa name="random" fixed="true"></fa>
+							Arbeidsflyt
+							<i class="fa fa-fw" [ngClass]="{'fa-angle-down': isWorkflowTimelineCollapsed, 'fa-angle-up': !isWorkflowTimelineCollapsed}"></i>
+						</div>
+						<div [collapse]="isWorkflowTimelineCollapsed">
+							<nlf-ors-fallskjerm-report-workflow-timeline [_id]="data._id" [workflow]="data.workflow"></nlf-ors-fallskjerm-report-workflow-timeline>
+						</div>
+					</div>
+				</div>
+
+				<!-- Involved -->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card-header">
+							<fa name="users" fixed="true"></fa>Involverte
+						</div>
+						<nlf-ors-fallskjerm-report-involved [involved]="data.involved"></nlf-ors-fallskjerm-report-involved>
+					</div>
+				</div>
+				<!-- /Involved -->
+
+				<!-- Files -->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card-header">
+							<fa name="file" fixed="true"></fa>Vedlegg
+						</div>
+						<nlf-ors-fallskjerm-report-files [files]="data.files"></nlf-ors-fallskjerm-report-files>
+					</div>
+				</div>
+				<!-- /Files -->
+
+				<!-- Components timeline - forløpet -->
+				<div class="row">
+					<div class="col-md-12">
+						<nlf-report-components-timeline [components]="data.components"></nlf-report-components-timeline>
+					</div>
+				</div>
+
+				<!-- Organization -->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card-header">
+							<fa name="users" fixed="true"></fa>Hoppfeltorganisasjon</div>
+						<nlf-ors-fallskjerm-report-organization [organization]="data.organization"></nlf-ors-fallskjerm-report-organization>
+					</div>
+				</div>
+				<!-- /Organization -->
+
+				<!-- Weather -->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card-header">
+							<fa name="cloud" fixed="true"></fa>Været</div>
+						<nlf-ors-fallskjerm-report-weather [weather]="data.weather"></nlf-ors-fallskjerm-report-weather>
+					</div>
+				</div>
+				<!-- /Weather -->
+
+				<!-- Actions -->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card-header">
+							<fa name="bolt" fixed="true"></fa>Tiltak</div>
+						<nlf-ors-fallskjerm-report-actions [actions]="data.actions"></nlf-ors-fallskjerm-report-actions>
+					</div>
+				</div>
+				<!-- /Actions -->
+
+				<!-- Verdicts -->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card-header">
+							<fa name="comments-o" fixed="true"></fa>Vurderinger
+						</div>
+					</div>
+
+					<!-- ASK matrix -->
+					<div class="col-md-4">
+						<nlf-ors-fallskjerm-report-ask [ask]="data.ask" [verbose]="true"></nlf-ors-fallskjerm-report-ask>
+					</div>
+
+					<!-- ASK comments -->
+					<div class="col-md-8">
+
+						<div *ngIf="!!data.ask && !!data.ask.text">
+							<nlf-ors-fallskjerm-report-ask-text [comments]="data.ask.text"></nlf-ors-fallskjerm-report-ask-text>
+						</div>
+					</div>
+
+				</div>
+				<!-- /verdicts -->
+
+				<!-- Related -->
+				<div *ngIf="!!data.related && data.related?.length > 0" class="row">
+					<div class="col-md-12">
+						<div class="card-header">
+							<fa name="external-link" fixed="true"></fa>Relaterte</div>
+						<nlf-ors-fallskjerm-report-related [related]="data.related"></nlf-ors-fallskjerm-report-related>
+					</div>
+				</div>
+				<!-- /Related -->
+
+
+				<hr>
+				<div class="card-header"><h3>Tester under</h3></div>
+				<div class="card-header">DIFF TEST</div>
+				<pre semanticDiff [left]="left" [right]="right"></pre>
+				
+
+
+				<div *ngIf="!!dataDiff" class="row">
+
+					<div class="col-md-6">
+						<p class="lead">Forrige</p>{{ dataDiff[1] | json }}
+					</div>
+
+					<div class="col-md-6">
+						<p class="lead">Siste</p>{{ dataDiff[0] | json }}
+					</div>
+
+
+				</div>
+
+
+
+
+				<div class="card" style="width: 22rem;">
+					<img class="card-img-top img-fluid" src="{{ currentImage }}" alt="Card image cap">
+					<div class="card-body">
+						<h5 class="card-header">Your image</h5>
+						<form>
+							<div class="form-group">
+								<input class="form-control-file" type="file" (change)="onUpload($event)">
+							</div>
+						</form>
+					</div>
+				</div>
+
+				<!--
+			<h2>Følgende er registrert:</h2>
+			<label>Id</label>
+			<pre>{{data.id}}</pre>
+			<pre>{{data._id}}</pre>
+
+			<label>Created</label>
+			<pre>{{data._created | date:'yyyy-MM-dd HH:mm'}}</pre>
+
+			<label>Club</label>
+			<pre>{{data.club | json}}</pre>
+
+			<label>Acl</label>
+			<pre>{{data.acl | json}}</pre>
+
+			<label>Type</label>
+			<pre>{{data.type | json}}</pre>
+
+			<label>Flags</label>
+			<pre>{{data.flags | json}}</pre>
+
+			<label>Rating</label>
+			<pre>{{data.rating | json}}</pre>
+
+			<label>Kunnskap ferdigheter holdning</label>
+			<pre>{{data.ask | json}}</pre>
+
+			<label>Location</label>
+			<pre>{{data.location | json}}</pre>
+
+			<label>Files</label>
+			<pre>{{data.files | json}}</pre>
+
+			<label>When</label>
+			<pre>{{data.when | json}}</pre>
+
+			<label>Tags</label>
+			<pre>{{data.tags | json}}</pre>
+
+			<label>Organization</label>
+			<pre>{{data.organization | json}}</pre>
+
+			<label>Involved</label>
+			<pre>{{data.involved | json}}</pre>
+
+			<label>Components</label>
+			<pre>{{data.components | json}}</pre>
+
+			<label>Weather</label>
+			<pre>{{data.weather | json}}</pre>
+
+			<label>Vurdering</label>
+			<pre>{{data.ask | json}}</pre>
+
+			<label>Tiltak</label>
+			<pre>{{data.actions | json}}</pre>
+
+
+			<label>Workflow</label>
+			<pre>{{data.workflow | json}}</pre>
+			-->
+
+			</div>
+		</div>
+	</div>
+</div>
+<div *ngIf="!dataReady">
+	<nlf-ui-page-spinner size="5"></nlf-ui-page-spinner>
+</div>

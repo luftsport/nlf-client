@@ -12,9 +12,7 @@ import { ApiOptionsInterface, ApiUserAuthItem } from './api.interface';
 @Injectable()
 export class ApiUserAuthService extends ApiRestService {
 
-  constructor( http: HttpClient
-              //, private cookieService: CookieService
-            ) { super(http); }
+  constructor( http: HttpClient ) { super(http); }
 
   private relativeUrl = '/user/authenticate';
 

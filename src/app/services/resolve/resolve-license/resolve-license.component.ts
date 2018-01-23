@@ -1,3 +1,4 @@
+import { ApiCacheService } from './../../../api/api-cache.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { ApiNlfLicensesService } from '../../../api/api-nlf-licenses.service';
 import { ApiOptionsInterface } from '../../../api/api.interface';
@@ -11,24 +12,29 @@ import { ApiOptionsInterface } from '../../../api/api.interface';
 export class NlfResolveLicenseComponent implements OnInit {
 
   @Input() licenseid: string;
+  @Input() unknown?: boolean;
 
   licenseName: string;
 
-  constructor(private melwinLicensesService: ApiNlfLicensesService) { }
+  constructor(private melwinLicensesService: ApiNlfLicensesService,
+              private apiCache: ApiCacheService) { }
 
   ngOnInit() {
 
     let options: ApiOptionsInterface = {
-        query: { projection: {name: 1}}
-      };
+      query: { projection: { name: 1 } }
+    };
 
-    this.melwinLicensesService.getLicense(this.licenseid, options).subscribe(
+    this.apiCache.get(['resolve-license', this.licenseid, options.query],
+      this.melwinLicensesService.getLicense(this.licenseid, options)).subscribe(
       data => {
-        console.log(data);
         this.licenseName = data.name;
       },
-      err => this.licenseName = 'Ukjent lisens (' + this.licenseid + ')',
-      () => console.log('Done')
+      err => {
+        if (!!this.unknown) { // Only return if we want the unknowns too
+          this.licenseName = 'Ukjent lisens (' + this.licenseid + ')';
+        }
+      },
     );
   }
 

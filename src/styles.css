@@ -1,1 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+.nlf-page-center{
+    position:absolute;
+    top:50%;
+    left:50%;
+    padding:10px;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    z-index: 999999;
+}
+
+.ngx-easy-table-small{font-size: 0.8rem !important;}
+
+.pointer {cursor: pointer;}
+
+/** Diffing **/
+ins{
+    color: black;
+    background: #bbffbb;
+  }
+  
+  del{
+    color: black;
+    background: #ffbbbb;
+  }

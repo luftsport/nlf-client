@@ -1,0 +1,6 @@
+  <span *ngFor="let t of tags; let i = index">
+
+    <a [routerLink]="[url, t]">{{ t }}</a>
+    <span *ngIf="i < (tags.length - 1)">{{ seperator }}</span>
+
+  </span>

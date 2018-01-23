@@ -4,8 +4,12 @@
 <main role="main">
 
 
-  <nlf-alert-service ></nlf-alert-service>
+  <nlf-alert-service></nlf-alert-service>
   <nlf-auth *ngIf="!(isLoggedIn | async)"></nlf-auth>
   <router-outlet *ngIf="(isLoggedIn | async)"></router-outlet>
-  <nlf-ui-footer></nlf-ui-footer>
+
 </main>
+<!--<footer> currently in ui footer
+<nlf-ui-footer></nlf-ui-footer>
+</footer>
+-->

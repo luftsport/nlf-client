@@ -22,19 +22,15 @@ import { NlfComponent } from '../nlf.component';
 })
 export class NlfOrsComponent implements OnInit {
 
-//public static routes:Routes = [{ path: 'ors/child', component: NlfChildComponent }];
+  // public static routes:Routes = [{ path: 'ors/child', component: NlfChildComponent }];
 
   model = new OrsModel(18, 'Brekt bein');
   message: string;
   submitted = false;
 
-
-
-
   constructor(
     private data: DataService,
     private app: NlfComponent,
-
     private alertService: NlfAlertService,
     private auth: NlfAuthService) {
 
@@ -43,12 +39,9 @@ export class NlfOrsComponent implements OnInit {
 
   }
 
-
-
   ngOnInit() {
-      this.data.currentMessage.subscribe(message => this.model.other = message);
-      console.log('APP ORS');
-      console.log(this.message);
+    this.data.currentMessage.subscribe(message => this.model.other = message);
+    this.app.setTitle('ORS');
   }
   onSubmit() {
     this.submitted = true;

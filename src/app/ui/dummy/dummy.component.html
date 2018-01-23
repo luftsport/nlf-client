@@ -1,29 +1,109 @@
 <!-- Main jumbotron for a primary marketing message or call to action -->
-<div class="jumbotron">
+<div class="jumbotron ">
   <div class="container">
-    <h1 class="display-3">Nye ORS</h1>
-    <alert type="success"><fa [name]="'angellist'" [size]="'2x'" [fixed]="'true'"></fa>Hello ngx</alert>
-    <p>ORS er oppdatert. Eller mer riktig, platformen som applikasjonen ORS kjører på er oppdatert. Både rammeverket for web klienten og ui rammeverket er oppdatert. Nå er det Angular 5 og Bootstrap 4!</p>
-    <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+    <!--<h2 class="display-3">NLF Platform</h2>-->
+    <!-- NGX Charts! -->
+    <!-- [view]="view"  not defined to parent element size-->
+      <ngx-charts-advanced-pie-chart [activeEntries]="activeEntries" [scheme]="colorScheme" [label]="label" [results]="single"
+        [gradient]="gradient" (select)="onSelect($event)">
+      </ngx-charts-advanced-pie-chart>
+    <!-- MODAL -->
+
+    <!--
+      <div class="clearfix"></div>
+       <div class="col-md-6 bg-info jumbotron">
+          <nlf-ors-create></nlf-ors-create>
+        </div>
+    -->
+
+    <a (click)="openModal(template)" class="btn btn-primary btn-lg" href="#" role="button">Les mer &raquo;</a>
+       
+        
   </div>
 </div>
 
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">NLF Platform</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <nlf-ors-fallskjerm-last number="3"></nlf-ors-fallskjerm-last>
+    <div class="clearfix"></div>
+    <ngx-charts-pie-grid [scheme]="colorScheme" [results]="multipie" (select)="onSelect($event)">
+    </ngx-charts-pie-grid>
+  </div>
+</ng-template>
+
 <div class="container">
   <div class="row">
-    <div class="col-md-4">
-      <h2>Heading</h2>
-      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-      <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+    <div class="col-md-12">
+      <div class="card-deck">
+
+        <nlf-user-profile></nlf-user-profile>
+        <!-- 
+        <div class="card">
+          <div class="card-header">Opprett Observasjon</div>
+          
+         <div class="card-body">
+            <span class="text-center">
+              <nlf-ors-create></nlf-ors-create>
+            </span>
+          </div>
+          <div class="card-footer">
+            <a class="btn btn-primary btn-block" [routerLink]="['/user/profile']" role="button">Oppdater profil &raquo;</a>
+          </div>
+        </div>-->
+        <!-- END USER OR ORS -->
+        <div class="card">
+          <div class="card-header">Været</div>
+          <div class="card-body">
+
+            <p class="card-text">
+              <h3>
+                <p>
+                  <wi name="showers" fixed="true"></wi>Rainy</p>
+                <p>
+                  <wi name="thermometer" fixed="true"></wi>13&deg;C</p>
+                <p>
+                  <wi name="wind" fixed="true" degree="45"></wi>22Kt/045&deg;</p>
+                <p>
+                  <wi name="strong-wind" fixed="true"></wi>32Kt/043&deg;</p>
+                <p>
+                  <wi name="humidity" fixed="true"></wi>78%</p>
+                <p>
+                  <wi name="barometer" fixed="true"></wi>1013hPa</p>
+
+
+
+              </h3>
+              <p class="card-text">
+                <small class="text-muted">Last updated 23 seconds ago</small>
+              </p>
+
+
+          </div>
+          <div class="card-footer">
+            <a class="btn btn-primary btn-block" [routerLink]="['/ors']" role="button">METAR &raquo;</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">Siste lukkede ORS</div>
+          <p>
+            <nlf-ors-fallskjerm-last number="8"></nlf-ors-fallskjerm-last>
+          </p>
+          <div class="card-footer">
+            <a class="btn btn-secondary btn-block" [routerLink]="['/ors/fallskjerm']" role="button">ORS &raquo;</a>
+          </div>
+        </div>
+      </div>
+      <!-- /CARD DECK -->
+
+
+
     </div>
-    <div class="col-md-4">
-      <h2>Heading</h2>
-      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-      <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-      <h2>Heading</h2>
-      <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-      <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-    </div>
+
   </div>
-  <hr>
+</div>

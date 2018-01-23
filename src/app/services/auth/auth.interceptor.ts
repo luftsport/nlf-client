@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { HttpRequest, HttpResponse, HttpErrorResponse, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import { Router, RouterStateSnapshot } from '@angular/router';
 import { NlfAlertService } from '../alert/alert.service';
 import { NlfLocalStorageService } from '../storage/local-storage.service';
+import { NlfAuthService } from './auth.service';
+
 
 
 // import { AuthService } from './auth.service'; //Can't use due to cyclic dependency?
@@ -18,13 +20,16 @@ import { NlfLocalStorageService } from '../storage/local-storage.service';
 @Injectable()
 export class NlfAuthInterceptor implements HttpInterceptor {
 
+  auth: any;
   cachedRequests: Array<HttpRequest<any>> = [];
 
   constructor(private router: Router,
     private alertService: NlfAlertService,
-    private storage: NlfLocalStorageService
-    // private authService: AuthService
-  ) {  }
+    private storage: NlfLocalStorageService,
+    private injector: Injector // Because https://github.com/angular/angular/issues/18224
+  ) {
+
+  }
 
   public collectFailedRequest(request): void {
     this.cachedRequests.push(request);
@@ -61,14 +66,15 @@ export class NlfAuthInterceptor implements HttpInterceptor {
       if (err instanceof HttpErrorResponse) {
 
         if (err.status === 401) {
-          this.collectFailedRequest(request); //from user-auth service which is needed in constructor
+          this.auth = this.injector.get(NlfAuthService); // Because https://github.com/angular/angular/issues/18224
+          this.collectFailedRequest(request);
           console.log('401');
           console.log(this.cachedRequests);
-          //this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url }});
+          // this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url }});
+          this.auth.logout();
 
-        }
-        else {
-          this.alertService.warning(err.message);
+        } else {
+          //this.alertService.warning(err.message);
         }
       }
     });

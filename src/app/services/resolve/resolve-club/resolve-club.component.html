@@ -1,1 +1,11 @@
-
+<span *ngIf="dataReady">
+    <span *ngIf="!!link && club.id !== ''">
+        <a [routerLink]="['/ors/club', club.id]">{{ club.name }}</a>
+    </span>
+    <span *ngIf="!link || club.id === ''">
+        {{ club.name }}
+    </span>
+</span>
+<span *ngIf="!dataReady">
+    <fa name="spinner" animation="pulse" [size]="1"></fa>
+</span>

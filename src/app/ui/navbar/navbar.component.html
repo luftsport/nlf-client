@@ -1,3 +1,4 @@
+<!-- popup template eg workflows -->
 <ng-template #popTemplate>
   <div class="list-group row px-0 mx-0">
     <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
@@ -16,11 +17,13 @@
   <button class="btn btn-block btn-danger">Reject</button>
 </ng-template>
 
+<!-- Navbar itself -->
 <nav class="navbar navbar-toggleable-sm navbar-dark bg-dark">
-  <button (click)="isCollapsed = !isCollapsed" class="navbar-toggler navbar-toggler-right" type="button" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <fa [name]="'bars'" [fixed]="'true'"></fa>
+  <button (click)="isCollapsed = !isCollapsed" class="navbar-toggler navbar-toggler-right" type="button" aria-controls="navbarNavAltMarkup"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <fa name="bars" fixed="true"></fa>
   </button>
-  <span class="navbar-brand" routerLink="/home">NLF</span>
+  <span class="navbar-brand" [routerLink]="['/']">NLF</span>
   <div [collapse]="isCollapsed" class="collapse navbar-collapse justify-content-between" id="navbar">
 
     <ul class="navbar-nav" *ngIf="(isLoggedIn | async)">
@@ -35,30 +38,40 @@
         <a dropdownToggle class="nav-item nav-link dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">
           ORS
         </a>
-      <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" routerLink="/ors/">ORS</a>
-        <!--<a class="dropdown-item" routerLink="/ors/child">ORS Child</a> only from internal-->
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">Something else here</a>
-      </div>
-    </li>
-  </ul>
+        <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" routerLink="/ors/">ORS</a>
+          <!--<a class="dropdown-item" routerLink="/ors/child">ORS Child</a> only from internal-->
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" routerLink="/ors/fallskjerm">ORS Fallskjerm</a>
+        </div>
+      </li>
+    </ul>
     <!-- Right side items -->
     <div class="navbar-nav" *ngIf="(isLoggedIn | async)">
-      <a class="nav-item nav-link" routerLink="/home"><fa [name]="'home-o'" [fixed]="'true'"></fa></a>
-      <a class="nav-item nav-link" routerLink="user/profile"><fa [name]="'user-o'" [fixed]="'true'"></fa></a>
-      <a class="nav-item nav-link" [popover]="popTemplate" placement="bottom" container="body" popoverTitle="Template ref content inside"><fa [name]="'desktop'" [fixed]="'true'"></fa></a>
-      <a class="nav-item nav-link" href="#"><fa [name]="'commenting-o'" [fixed]="'true'"></fa></a>
+      <a class="nav-item nav-link" routerLink="/home">
+        <fa [name]="'home-o'" [fixed]="'true'"></fa>
+      </a>
+      <a class="nav-item nav-link" routerLink="user/profile">
+        <fa [name]="'user-o'" [fixed]="'true'"></fa>
+      </a>
+      <a class="nav-item nav-link" [popover]="popTemplate" placement="bottom" container="body" popoverTitle="Template ref content inside">
+        <fa [name]="'desktop'" [fixed]="'true'"></fa>
+      </a>
+      <a class="nav-item nav-link" href="#">
+        <fa [name]="'commenting-o'" [fixed]="'true'"></fa>
+      </a>
 
       <!-- Custom css for notifications -->
       <a class="nav-item nav-link" href="#">
-         <span class="fa-fnix-container">
-           <i class="fa fa-bell-o fa-fw"></i>
-           <i class="fa text-danger fa-circle fa-fnix-sub-bg fa-fw fa-fnix-sub"></i>
-           <i class="fa fa-exclamation fa-inverse fa-fw fa-fnix-sub"></i>
-         </span>
-       </a>
-        <a class="nav-item nav-link text-danger" href="#"><fa [name]="'bell-o'" [fixed]="'true'"></fa></a>
+        <span class="fa-fnix-container">
+          <i class="fa fa-bell-o fa-fw"></i>
+          <i class="fa text-danger fa-circle fa-fnix-sub-bg fa-fw fa-fnix-sub"></i>
+          <i class="fa fa-exclamation fa-inverse fa-fw fa-fnix-sub"></i>
+        </span>
+      </a>
+      <a class="nav-item nav-link text-danger" href="#">
+        <fa [name]="'bell-o'" [fixed]="'true'"></fa>
+      </a>
 
       <a *ngIf="(isLoggedIn | async)" (click)="authService.logout()" class="nav-item nav-link btn">Logout</a>
       <!--<a *ngIf="!(isLoggedIn | async)" class="nav-item nav-link" routerLink="/login">Login</a>-->

@@ -1,0 +1,53 @@
+<span *ngIf="!!ask">
+
+  <!-- Badges with letters -->
+  <span *ngIf="!verbose">
+    <!--!isNeutral(l.key) && -->
+
+    <span *ngFor="let l of askValues">
+      <span [ngClass]="{'badge':true, 'badge-danger': isNegative(l.key), 'badge-secondary': isNeutral(l.key), 'badge-success': isPositive(l.key)}">{{ l.nick }}</span>
+    </span>
+
+  </span>
+
+  <!-- Fullblown -->
+  <div *ngIf="!!verbose">
+    <h4>
+      <span *ngFor="let l of askValues">
+
+        <span [ngClass]="{'badge':true, 
+      'badge-danger': isNegative(l.key), 
+      'badge-secondary': isNeutral(l.key), 
+      'badge-success': isPositive(l.key)}">{{ l.label }}
+        </span>
+
+      </span>
+    </h4>
+    <ul class="list-unstyled">
+      <li>
+        <span *ngIf="isPositive('knowledge')">
+          <b>Gode</b> kunnskaper hadde innvirkning</span>
+        <span *ngIf="isNeutral('knowledge')">Kunnskapen til de involverte hadde
+          <b>ingen</b> innvirkning</span>
+        <span *ngIf="isNegative('knowledge')">
+          <b>Mangelfulle</b> kunnskaper hadde betydning</span>
+      </li>
+      <li>
+        <span *ngIf="isPositive('skills')">
+          <b>Gode</b> ferdigheter hadde innvirkning</span>
+        <span *ngIf="isNeutral('skills')">Ferdighetene til de involverte hadde
+          <b>ingen</b> innvirkning</span>
+        <span *ngIf="isNegative('skills')">
+          <b>Mangelfulle</b> ferdigheter hadde betydning</span>
+      </li>
+      <li>
+        <span *ngIf="isPositive('attitude')">
+          <b>Gode</b> holdninger hadde innvirkning</span>
+        <span *ngIf="isNeutral('attitude')">Holdningene til de involverte hadde
+          <b>ingen</b> innvirkning</span>
+        <span *ngIf="isNegative('attitude')">
+          <b>Dårlige</b> holdninger hadde betydning</span>
+      </li>
+    </ul>
+  </div>
+</span>

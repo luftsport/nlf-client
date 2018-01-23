@@ -1,0 +1,39 @@
+<span *ngIf="!!withDate">
+<div class="form-group">
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <owl-date-time-inline [(ngModel)]="selectedMoment"></owl-date-time-inline>
+      <!--<div class="col align-middle">
+        <input type="text" name="date" class="form-control" [minDate]="minDate" [maxDate]="maxDate" #dp="bsDatepicker" bsDatepicker [(bsValue)]="bsValue">
+      </div>
+      <div class="col align-middle">
+          <timepicker [(ngModel)]="mytime" [showMeridian]="ismeridian"></timepicker>
+      </div>-->
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <nlf-user-club-selector></nlf-user-club-selector>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <button class="btn btn-block btn-primary">Opprett ORS</button>
+    </div>
+  </div>
+
+</div>
+</span>
+<span *ngIf="!withDate">
+    <form>
+        <div class="row">
+          <div class="col">
+              <nlf-user-club-selector></nlf-user-club-selector>
+          </div>
+          <div class="col">
+              <button class="btn btn-block btn-primary"><fa name="plus" fixed="true"></fa>Opprett ORS</button>
+          </div>
+        </div>
+      </form>
+</span>

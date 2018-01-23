@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+
+    <div class="col-xl-12">
+      <!-- Group = tight, with padding deck = spacing, no padding card-body style="padding: 0;" -->
+      <div class="card-deck">
+
+        <div class="card mb-6 border-success">
+          <h5 class="card-header">
+            <fa name="user" fixed="true"></fa>Mine observasjoner</h5>
+          <div class="card-body table-responsive" style="padding: 0;">
+            <nlf-ors-fallskjerm-self-table></nlf-ors-fallskjerm-self-table>
+          </div>
+        </div>
+
+        <div class="card mb-6 border-primary">
+          <h5 class="card-header">
+            <fa name="random" fixed="true"></fa>Til min behandling</h5>
+          <div class="card-body" style="padding: 0;">
+            <nlf-ors-fallskjerm-todo-table></nlf-ors-fallskjerm-todo-table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <h5 class="card-header">
+          <fa name="bolt" fixed="true"></fa>Alle observasjoner</h5>
+        <div class="card-body" style="padding: 0;">
+          <nlf-ors-fallskjerm-all-table></nlf-ors-fallskjerm-all-table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

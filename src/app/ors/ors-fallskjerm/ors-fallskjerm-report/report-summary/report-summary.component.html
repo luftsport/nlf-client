@@ -1,0 +1,108 @@
+<table class="table table-sm table-hover">
+
+  <tr style="border-top: none !important">
+    <td style="border-top: none !important">Klubb</td>
+    <td style="border-top: none !important">
+      <nlf-resolve-club link="true" long="true" [clubid]="observation.club"></nlf-resolve-club>
+    </td>
+  </tr>
+
+  <tr>
+    <td>Observatør</td>
+    <td>
+      <nlf-resolve-user link="true" [userid]="observation.reporter"></nlf-resolve-user>&nbsp;
+    </td>
+  </tr>
+
+  <tr>
+    <td>Hovedinstruktør</td>
+    <td>
+      <div *ngFor="let userid of observation.organization.hi">
+        <nlf-resolve-user link="true" [userid]="userid"></nlf-resolve-user>&nbsp;
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>Type</td>
+    <td>
+      <nlf-resolve-observation-types [type]="observation.type" badge="true"></nlf-resolve-observation-types>
+      <span class="pull-right">
+        <nlf-ors-fallskjerm-report-ask [ask]="observation.ask" [verbose]="false"></nlf-ors-fallskjerm-report-ask>
+      </span>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td>Flagg</td>
+    <td>
+      <div *ngIf="!!observation.flags">
+        <span *ngIf="!!observation.flags.insurance">
+          <nlf-resolve-observation-flags flag="insurance"></nlf-resolve-observation-flags>
+        </span>
+        <span *ngIf="!!observation.flags.aviation">
+          <nlf-resolve-observation-flags flag="aviation"></nlf-resolve-observation-flags>
+        </span>
+
+      </div>
+      <span *ngIf="!observation.flags || (!observation.flags.aviation && !observation.flags.insurance)">Ingen</span>
+    </td>
+
+  </tr>
+
+
+  <tr *ngIf="!!observation.rating">
+    <td>Alvorlighetsgrad</td>
+    <td>{{ observation.rating.actual }} av {{ observation.rating.potential }}  <span class="pull-right badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating | nlfOrsRatingCalc }}</span></td>
+  </tr>
+
+
+  <tr>
+    <td>Tidspunkt</td>
+    <td>{{ observation.when | date:'yyyy-MM-dd HH:mm'}}</td>
+  </tr>
+  <tr>
+    <td>Opprettet</td>
+    <td>{{ observation._created | date:'yyyy-MM-dd HH:mm'}}</td>
+  </tr>
+  <tr>
+    <td>Lukket</td>
+    <td *ngIf="observation.workflow.state==('closed' || 'withdrawn')">{{ observation.workflow.last_transition | date:'yyyy-MM-dd HH:mm' }}</td>
+    <td *ngIf="observation.workflow.state!=('closed' || 'withdrawn')">
+      <span class="text-danger">Under behandling</span>
+    </td>
+
+  </tr>
+  <tr>
+    <td>Versjon</td> <!-- @TODO: Generate list of versions and link to them /report/:id?v=1 or /report/:id/:version -->
+    <td>
+      {{ observation._version }} <span *ngIf="observation._version !== observation._latest_version">
+      av <a [routerLink]="['/ors/fallskjerm/report/', observation.id]">{{ observation._latest_version }}</a></span>
+    </td>
+  </tr>
+  <tr>
+    <td>Behandlingstid</td>
+    <td>{{ turnaround }}</td>
+  </tr>
+  <tr>
+    <td>Involverte</td>
+    <td>{{ observation.involved?.length }}</td>
+  </tr>
+  <tr>
+    <td>Kjennelser</td>
+    <td>
+      <div *ngIf="observation.involved?.length > 0">
+        <div *ngFor="let v of observation.involved">
+          <div *ngIf="!!v.verdict">
+            <div *ngIf="!!v.verdict.fu" class="badge badge-warning">Farlig Ukontrollert </div>
+            <div *ngIf="!!v.verdict.mh" class="badge badge-danger">Permanent Hoppforbud </div>
+            <div *ngIf="!!v.verdict.ph" class="badge badge-danger">Midlertidig Hoppforbud</div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="observation.involved?.length === 0">Ingen</div>
+    </td>
+  </tr>
+
+</table>

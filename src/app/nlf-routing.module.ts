@@ -22,11 +22,10 @@ import { NlfUserRoutingModule } from './user/user-routing.module';
   eg match /obs/{int id|mongodb _id}
   **/
 const routes: Routes = [
-{ path: 'home', component: NlfUiDummyComponent },
-{ path: 'users', component: NlfUserTableComponent}, // , canActivate: [AuthGuard] },
-{ path: 'ors', component: NlfOrsComponent }, // canActivate: [AuthGuard] },
+{ path: 'users', component: NlfUserTableComponent, canActivate: [NlfAuthGuard] },
+{ path: 'ors', component: NlfOrsComponent, canActivate: [NlfAuthGuard] },
 { path: 'login', component: NlfAuthComponent },
-{ path: '', redirectTo: '/home', pathMatch: 'full' }, // redirect root
+{ path: '', redirectTo: '/', pathMatch: 'full' }, // redirect root
 { path: '**', component: NlfUiDummyComponent }, // Not found
 ];
 

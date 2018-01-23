@@ -1,0 +1,114 @@
+<div *ngIf="involved">
+  <table class="table table-condensed table-hover ">
+    <tr>
+      <th>Hopper</th>
+      <th>Lisenser</th>
+      <th>Erfaring</th>
+      <th>Hopp</th>
+      <th>Kjennelse</th>
+      <th>Utstyr</th>
+    </tr>
+    <tr *ngFor="let p of involved">
+      <td>
+        <nlf-resolve-user link="true" [userid]="p.id" [tmpname]="p.tmpname"></nlf-resolve-user>
+        <!-- Hopper {{$index+1}}-->
+      </td>
+      <td>
+        <span *ngIf="!!p.licenses">
+          <small>
+            <div *ngFor="let l of p.licenses.rights">
+              <nlf-resolve-license [licenseid]="l"></nlf-resolve-license>
+            </div>
+          </small>
+        </span>
+
+
+      </td>
+      <td>
+        <span>
+          <span *ngIf="!!p.numberOfJumps">
+            <label>Antall hopp:&nbsp;</label>
+            <span>{{ p.numberOfJumps }}</span>
+          </span>
+          <br>
+          <label>År i sporten:&nbsp;</label>
+          <span>{{ p.yearsOfExperience ? p.yearsOfExperience : '?' }}</span>
+          <br>
+        </span>
+      </td>
+
+      <td>
+        <span>
+          <span *ngIf="!!p.jumptypeSelected">
+            <label>Hopptype:&nbsp;</label>
+            <span>{{ p.jumptypeSelected }}</span>
+            <br>
+          </span>
+          <span *ngIf="!!p.jumptypeTags">
+            <label>Aktivitet:&nbsp;</label>
+            <span>{{ p.jumptypeTags.join(', ') }}</span>
+            <br>
+          </span>
+          <span *ngIf="!!p.aircraft">
+            <label>Flytype:&nbsp;</label>
+            <span>{{ p.aircraft }}</span>
+            <br>
+          </span>
+          <span *ngIf="!!p.jumpAltitude">
+            <label>Utsprangshøyde:&nbsp;</label>
+            <span>{{ p.jumpAltitude }}</span>
+            <br>
+          </span>
+        </span>
+      </td>
+      <td>
+        <div *ngIf="!!p.verdict">
+          <div *ngIf="!!p.verdict.fu">
+            <span class="badge badge-warning">Farlig Ukontrollert</span>
+          </div>
+          <div *ngIf="!!p.verdict.ph">
+            <span class="badge badge-danger">Permanent Hoppforbud</span>
+          </div>
+          <div *ngIf="!!p.verdict.mh">
+            <span class="badge badge-danger">Midlertidig Hoppforbud</span>
+          </div>
+        </div>
+      </td>
+
+      <td>
+        <div *ngIf="!!p.gear">
+        <label *ngIf="!!p.gear.harnessType || !!p.gear.harnessExperience">Seletøy: </label>
+        <span *ngIf="!!p.gear.harnessType">{{p.gear.harnessType}}</span>
+        <span *ngIf="!!p.gear.harnessExperience">{{p.gear.harnessExperience}} hopp</span>
+        <br *ngIf="!!p.gear.harnessType || !!p.gear.harnessExperience">
+
+        <label *ngIf="!!p.gear.mainCanopyType|| !!p.gear.mainCanopyExperience|| !!p.gear.mainCanopySize">Hovedskjerm: </label>
+        <span *ngIf="!!p.gear.mainCanopyType">{{p.gear.mainCanopyType}}</span>
+        <span *ngIf="!!p.gear.mainCanopySize">{{p.gear.mainCanopySize}} sqft</span>
+        <span *ngIf="!!p.gear.mainCanopyExperience">{{p.gear.mainCanopyExperience}} hopp</span>
+        <br *ngIf="!!p.gear.mainCanopyType||p.gear.mainCanopyExperience||p.gear.mainCanopySize">
+
+        <label *ngIf="!!p.gear.reserveCanopyType ||p.gear.reserveCanopySize">Reserveskjerm: </label>
+        <span *ngIf="!!p.gear.reserveCanopyType">{{p.gear.reserveCanopyType}}</span>
+        <span *ngIf="!!p.gear.reserveCanopySize">{{p.gear.reserveCanopySize}}</span>
+        <br *ngIf="!!p.gear.reserveCanopyType || !!p.gear.reserveCanopySize">
+
+        <label *ngIf="!!p.gear.rigger">MK: </label>
+        <span *ngIf="!!p.gear.rigger">
+          <nlf-resolve-user link="true" [userid]="p.gear.rigger.id" [tmpname]="p.gear.rigger.tmpname">
+          </nlf-resolve-user>
+        </span>
+        <br *ngIf="!!p.gear.rigger">
+
+        <label *ngIf="!!p.gear.rigger">Pakkedato: </label>
+        <span *ngIf="!!p.gear.rigger">{{ p.gear.riggerdate | date:'yyyy-MM-dd' }}</span>
+        <br *ngIf="!!p.gear.riggerdate">
+
+        <label *ngIf="!!p.gear.other">Annet utstyr: </label>
+        <span *ngIf="!!p.gear.other">{{ p.gear.other | join: ', ' }}</span>
+        <br *ngIf="!!p.gear.other">
+      </div>
+      </td>
+    </tr>
+  </table>
+</div>

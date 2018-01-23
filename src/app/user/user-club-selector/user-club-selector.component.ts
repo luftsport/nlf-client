@@ -11,7 +11,6 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
   styleUrls: ['./user-club-selector.component.css']
 })
 export class NlfUserClubSelectorComponent implements OnInit {
-  @Input() id: number;
   @Input() defaultClub: string; // = '375-F';
   // Needs true because we might change default club if defaultClub is undefined
   @Output() getSelected = new EventEmitter<string>(true);

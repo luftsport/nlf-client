@@ -1,62 +1,67 @@
-<div *ngIf="render" class="container">
+<div *ngIf="dataReady" class="container">
 	<div class="row">
 
 
-	<div class="col-12">
-  	<tabset [justified]="true">
+		<div class="col-12">
+			<tabset [justified]="true">
 
-		<tab heading="Profil" id="tab1">
+				<tab heading="Profil" id="tab1">
 
-			<div class="row">
-				<div class="col-3">
-					
-					<!-- To become user-avatar-->
-					<div class="card mb-3">
-						<img class="card-img-top h-100" [src]="domSanitizer.bypassSecurityTrustUrl(avatar)" alt="Avatar">
-				
-							<div class="card-body">
-							<h4 class="card-title text-center"><nlf-resolve-user [id]=user.id></nlf-resolve-user></h4>
-							<p class="card-text"></p>
+					<div class="row">
+						<div class="col-3">
+
+							<!-- To become user-avatar-->
+							<div class="card mb-3">
+								<img class="card-img-top h-100" [src]="domSanitizer.bypassSecurityTrustUrl(avatar)" alt="Avatar">
+
+								<div class="card-body">
+									<h4 class="card-title text-center">
+										<nlf-resolve-user [userid]=user.id></nlf-resolve-user>
+									</h4>
+									<p class="card-text"></p>
+								</div>
+								<div class="card-footer">
+									<a href="#" class="btn btn-block btn-primary">Endre profilbilde</a>
+								</div>
+							</div>
+
 						</div>
-						<div class="card-footer">
-							<a href="#" class="btn btn-block btn-primary">Endre profilbilde</a>
+
+						<div class="col-9">
+
+							<nlf-user-membership></nlf-user-membership>
+
 						</div>
+
 					</div>
-					
-				</div>
 
-				<div class="col-9">
 
+				</tab>
+
+				<tab heading="Settings" id="tab2">
+
+					<nlf-user-settings></nlf-user-settings>
+
+				</tab>
+
+				<tab heading="Medlemsskap">
 					<nlf-user-membership></nlf-user-membership>
+				</tab>
 
-				</div>
+				<tab heading="Notifications">
 
-			</div>
-			
-		
-		</tab>
-		
-		<tab heading="Settings" id="tab2">
+				</tab>
 
-			<nlf-user-settings></nlf-user-settings>
+				<tab heading="ORS" id="tab1">
 
-		</tab>
+				</tab>
 
-		<tab heading="Medlemsskap">
-			<nlf-user-membership></nlf-user-membership>
-		</tab>
-
-		<tab heading="Notifications">
-
-		</tab>
-
-		<tab heading="ORS" id="tab1">
-
-		</tab>
-
-  </tabset>
+			</tabset>
 
 
+		</div>
 	</div>
-	</div>
+</div>
+<div *ngIf="!dataReady">
+	<nlf-ui-page-spinner size="5"></nlf-ui-page-spinner>
 </div>

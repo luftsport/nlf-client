@@ -36,7 +36,9 @@ export class NlfAuthComponent implements OnInit {
       if (this.auth.login(this.model.username, this.model.password, returnUrl)) {
         this.loading = false;
       }
-      this.loading = false;
+      else {
+        this.loading = false;
+      }
 
     }
 
