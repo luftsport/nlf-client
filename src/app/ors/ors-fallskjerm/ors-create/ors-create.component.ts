@@ -8,7 +8,7 @@ import { NlfLocalStorageService } from '../../../services/storage/local-storage.
 })
 export class NlfOrsCreateComponent implements OnInit {
 
-  Input() layout?: string; // inline, short, datetimepicker, calendar etc
+  @Input() layout: string; // inline, short, datetimepicker, calendar etc
 
   userid: number;
   bsValue: Date = new Date();

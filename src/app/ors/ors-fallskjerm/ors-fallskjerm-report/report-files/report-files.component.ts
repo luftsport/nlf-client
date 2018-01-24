@@ -29,7 +29,7 @@ export class NlfOrsFallskjermReportFilesComponent implements OnInit {
 
     let processed = 0;
     this.dataReady = false;
-
+    
     // Do not download files
     const options: ApiOptionsInterface = {
       query: { projection: { file: 0 } }
