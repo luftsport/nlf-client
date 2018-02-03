@@ -32,7 +32,7 @@ export class NlfOrsFallskjermSelfTableComponent implements OnInit {
   };
 
   // Initial table sort
-  sort: Array<Object> = [{ when: 1 }];
+  sort: Array<Object> = [{ when: -1 }];
 
   tableSelf: TableConfig = {
     searchEnabled: false,
@@ -78,7 +78,7 @@ export class NlfOrsFallskjermSelfTableComponent implements OnInit {
     if (obj.event === 'onOrder') {
 
       // Limits which columns can order or not
-      //if (this.columns[this.columns.findIndex(c => c.key === obj.value.key)].sort === true) {
+      // if (this.columns[this.columns.findIndex(c => c.key === obj.value.key)].sort === true) {
         this.sort = [];
         let tmpSort = {};
 

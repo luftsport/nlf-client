@@ -1,0 +1,76 @@
+<div *ngIf="dataReady">
+
+  <div class="card mb-6">
+    <h5 class="card-header">
+
+      <div class="container">
+        <!-- TITLE -->
+
+        <!-- <fa name="file-text-o" fixed="true"></fa>&nbsp;-->
+        <!-- {{ data.tags | nlfOrsTags: ' / '}} -->
+        #{{ observation.id }}
+        <nlf-resolve-observation-tags [tags]="observation.tags" link="true" seperator="/"></nlf-resolve-observation-tags>&nbsp;
+        <span *ngIf="!!observation.rating" class="badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating | nlfOrsRatingCalc }}</span>
+        <!-- WORKFLOW STATE -->
+        <span class="pull-right">
+          <span class="badge badge-secondary">{{ observation._updated | amTimeAgo }}</span>
+          <span class="badge badge-success">{{ observation._version }}</span>
+          <nlf-resolve-observation-state [state]="observation.workflow.state" icon="true"></nlf-resolve-observation-state>
+        </span>
+        <!-- /WORKFLOW STATE -->
+      </div>
+    </h5>
+
+    <div class="container">
+      <nlf-ors-editor-title [(tags)]="observation.tags" group="observation"></nlf-ors-editor-title>
+      <code>
+        {{ observation.tags | json}}
+      </code>
+      <hr>
+
+      <nlf-ors-editor-type [(type)]="observation.type"></nlf-ors-editor-type>
+      {{ observation.type }}
+      <hr>
+
+      <nlf-ors-editor-when [(when)]="observation.when"></nlf-ors-editor-when>
+      {{ observation.when }}
+      <hr>
+
+      <nlf-ors-editor-flags [(flags)]="observation.flags"></nlf-ors-editor-flags>
+      {{ observation.flags | json }}
+      <hr>
+      <nlf-ors-editor-rating [(rating)]="observation.rating"></nlf-ors-editor-rating>
+      Rating for observation {{ observation.rating | json }}
+      <hr> HI:
+      <div *ngFor="let hi of observation.organization.hi">
+        <nlf-resolve-user [userid]="hi" link="true"></nlf-resolve-user>
+      </div>
+      HL:
+      <nlf-ors-editor-people [(people)]="observation.organization.hl"></nlf-ors-editor-people>
+      {{ observation.organization.hl | json }} HFL:
+      <nlf-ors-editor-people [(people)]="observation.organization.hfl"></nlf-ors-editor-people>
+      {{ observation.organization.hfl | json }} HM:
+      <nlf-ors-editor-people [(people)]="observation.organization.hm"></nlf-ors-editor-people>
+      {{ observation.organization.hm | json }} Pilot:
+      <nlf-ors-editor-people [(people)]="observation.organization.pilot"></nlf-ors-editor-people>
+      {{ observation.organization.pilot | json }}
+      <hr> Involverte:
+      <nlf-ors-editor-people [(people)]="observation.involved"></nlf-ors-editor-people>
+      {{ observation.involved | json }}
+      <hr>
+      <nlf-ors-editor-actions [(actions)]="observation.actions"></nlf-ors-editor-actions>
+      {{ observation.actions | json }}
+      <hr>
+      <div class="row">
+        <nlf-ors-editor-ask [(ask)]="observation.ask" [state]="observation.workflow.state"></nlf-ors-editor-ask>
+      </div>
+      {{ observation.ask | json }}
+    </div>
+  </div>
+
+  <button (click)="save()" class="btn btn-primary btn-lg" [disabled]="!changes">Save</button>
+</div>
+<div *ngIf="!dataReady">
+
+  <nlf-ui-page-spinner size="5"></nlf-ui-page-spinner>
+</div>

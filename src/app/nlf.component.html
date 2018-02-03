@@ -1,12 +1,14 @@
 <ng-progress [thick]="true"></ng-progress>
 
 <nlf-ui-navbar></nlf-ui-navbar>
+
 <main role="main">
 
-
   <nlf-alert-service></nlf-alert-service>
+
   <nlf-auth *ngIf="!(isLoggedIn | async)"></nlf-auth>
-  <router-outlet *ngIf="(isLoggedIn | async)"></router-outlet>
+  
+  <router-outlet *ngIf="isLoggedIn | async"></router-outlet>
 
 </main>
 <!--<footer> currently in ui footer

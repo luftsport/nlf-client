@@ -12,7 +12,7 @@
 				<nlf-resolve-observation-tags [tags]="data.tags" link="true" seperator="/"></nlf-resolve-observation-tags>&nbsp;
 				<!-- /TITLE -->
 				<!-- RATING -->
-				<span class="badge badge-{{data.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ data.rating | nlfOrsRatingCalc }}</span>
+				<span *ngIf="!!data.rating" class="badge badge-{{data.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ data.rating | nlfOrsRatingCalc }}</span>
 
 
 				<!-- DIFFERENT VERSION -->
@@ -47,16 +47,19 @@
 					<!-- Map -->
 					<div class="col-md-6">
 						<div *ngIf="!!data.location?.geo?.coordinates">
-							<agm-map [latitude]="toFloat(data.location.geo.coordinates[0])" [longitude]="toFloat(data.location.geo.coordinates[1])" [zoom]="12">
-								<agm-marker [label]="data.location.nickname" [latitude]="toFloat(data.location.geo.coordinates[0])" [longitude]="toFloat(data.location.geo.coordinates[1])"></agm-marker>
+							<agm-map [latitude]="toFloat(data.location.geo.coordinates[0])" [mapTypeControl]="true" [longitude]="toFloat(data.location.geo.coordinates[1])"
+							 [zoom]="12">
+								<agm-marker [label]="data.location.nickname" [latitude]="toFloat(data.location.geo.coordinates[0])" [longitude]="toFloat(data.location.geo.coordinates[1])">
+									<!--<agm-info-window>{{ data.location.nickname }}</agm-info-window> -->
+								</agm-marker>
 							</agm-map>
 						</div>
 						<div *ngIf="!data.location?.geo?.coordinates">
 
-							<alert type="danger" [dismissible]="false">
+							<ngb-alert type="danger" [dismissible]="false">
 								<fa name="map-marker" fixed="true"></fa>
 								Ingen lokalisasjon satt.
-							</alert>
+							</ngb-alert>
 
 						</div>
 					</div>
@@ -71,7 +74,7 @@
 							Arbeidsflyt
 							<i class="fa fa-fw" [ngClass]="{'fa-angle-down': isWorkflowTimelineCollapsed, 'fa-angle-up': !isWorkflowTimelineCollapsed}"></i>
 						</div>
-						<div [collapse]="isWorkflowTimelineCollapsed">
+						<div [ngbCollapse]="isWorkflowTimelineCollapsed">
 							<nlf-ors-fallskjerm-report-workflow-timeline [_id]="data._id" [workflow]="data.workflow"></nlf-ors-fallskjerm-report-workflow-timeline>
 						</div>
 					</div>
@@ -172,10 +175,12 @@
 
 
 				<hr>
-				<div class="card-header"><h3>Tester under</h3></div>
+				<div class="card-header">
+					<h3>Tester under</h3>
+				</div>
 				<div class="card-header">DIFF TEST</div>
 				<pre semanticDiff [left]="left" [right]="right"></pre>
-				
+
 
 
 				<div *ngIf="!!dataDiff" class="row">

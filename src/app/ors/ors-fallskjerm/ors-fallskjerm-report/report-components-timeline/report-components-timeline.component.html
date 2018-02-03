@@ -1,7 +1,8 @@
 <div *ngIf="!!components" class="col-xs-12  col-md-12">
 
   <label class="control-label">
-    <h3><fa name="random" fixed="true"></fa>Forløp</h3>
+    <h3>
+      <fa name="random" fixed="true"></fa>Forløp</h3>
   </label>
 
   <div *ngIf="components.length == 0" class="text-danger">
@@ -16,10 +17,10 @@
 
     <li *ngFor="let c of components; let i = index">
 
-      <div class="timeline-badge" [ngClass]="{'default': c.flags.barrier,
-                                            'info': c.flags.incident,
-                                            'warning': c.flags.cause || c.flags.root_cause, 
-                                            'danger': 	c.flags.consequence || c.flags.final_consequence}">
+      <div class="timeline-badge" [ngClass]="{'bg-secondary': !!c.flags.barrier,
+                                            'bg-info': !!c.flags.incident,
+                                            'bg-warning': !!c.flags.cause || !!c.flags.root_cause, 
+                                            'bg-danger': !!c.flags.consequence || !!c.flags.final_consequence}">
         {{ i+1 }}
       </div>
 
@@ -36,7 +37,7 @@
                 </span>
               </span>
 
-              <span *ngIf="!!c.flags.barrier" class="badge badge-default">Barriære</span>
+              <span *ngIf="!!c.flags.barrier" class="badge badge-secondary">Barriære</span>
               <span *ngIf="!!c.flags.incident" class="badge badge-info">Hendelse</span>
               <span *ngIf="!!c.flags.cause" class="badge badge-warning">Årsak</span>
               <span *ngIf="!!c.flags.root_cause" class="badge badge-warning">Rot Årsak</span>
@@ -94,9 +95,9 @@
               <!--<flags attributes="c.attributes"></flags>-->
             </dd>
           </dl>
-
         </div>
       </div>
     </li>
   </ul>
+
 </div>

@@ -18,34 +18,34 @@ export class NlfAuthComponent implements OnInit {
   message: string;
 
   constructor(
-      private route: ActivatedRoute,
-      private router: Router,
-      private auth: NlfAuthService,
-      // private alertService: AlertService
-      // private authenticationService: AuthenticationService,
-      // private alertService: AlertService
-    ) {
+    private route: ActivatedRoute,
+    private router: Router,
+    private auth: NlfAuthService,
+    // private alertService: AlertService
+    // private authenticationService: AuthenticationService,
+    // private alertService: AlertService
+  ) {
+  }
+
+  isAuth() {
+    return this.auth.isAuthenticated();
+  }
+
+  login(returnUrl?: string) {
+    this.loading = true;
+    if (this.auth.login(this.model.username, this.model.password, returnUrl)) {
+      this.loading = false;
+    }
+    else {
+      this.loading = false;
     }
 
-    isAuth() {
-      return this.auth.isAuthenticated();
-    }
-
-    login(returnUrl?: string) {
-      this.loading = true;
-      if (this.auth.login(this.model.username, this.model.password, returnUrl)) {
-        this.loading = false;
-      }
-      else {
-        this.loading = false;
-      }
-
-    }
+  }
 
   ngOnInit() {
 
-      // get return url from route parameters or default to '/'
-      this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    // get return url from route parameters or default to '/'
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
 

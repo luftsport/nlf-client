@@ -1,9 +1,9 @@
-<alert *ngIf="message" type="{{message.type}}"
+<ngb-alert *ngIf="message" type="{{ message.type }}"
 [dismissible]="true">
   <i [ngClass]="{'fa fa-fw': message,
   'fa-check': message.type === 'success',
   'fa-info-circle': message.type === 'info',
   'fa-exclamation-circle': message.type === 'warning',
   'fa-exclamation-triangle': message.type === 'danger'}"></i>
-   {{message.text}}
-</alert>
+   {{ message.text }}
+</ngb-alert>

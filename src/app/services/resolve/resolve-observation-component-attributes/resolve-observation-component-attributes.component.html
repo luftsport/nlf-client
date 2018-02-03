@@ -1,4 +1,5 @@
 <span *ngFor="let attr of attributes | keys">
-  <span *ngIf="!!badge && !!map[attr]" class="badge badge-{{ map[attr]['color'] }}">{{ map[attr]['label'] }}</span>
-  <span *ngIf="!badge && !!map[attr]">{{ map[attr]['label'] }}</span>
+  <span *ngIf="!!badge && !!config.observation.components.attributes[attr]" class="badge badge-{{ config.observation.components.attributes[attr]['badge'] }}">
+    {{ config.observation.components.attributes[attr]['label'] }}</span>
+  <span *ngIf="!badge && !!config.observation.components.attributes[attr]">{{ config.observation.components.attributes[attr]['label'] }}</span>
 </span>

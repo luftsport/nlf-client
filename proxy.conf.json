@@ -1,6 +1,6 @@
 {
   "/api/v1/": {
-    "target": "https://app.nlf.no",
+    "target": "http://127.0.0.1:8081",
     "changeOrigin": true,
     "logLevel": "debug",
     "secure": false

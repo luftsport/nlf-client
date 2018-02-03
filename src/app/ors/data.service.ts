@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
-
 export class DataService {
 
   private messageSource = new BehaviorSubject<string>("");
@@ -14,7 +13,7 @@ export class DataService {
   }
 
   changeMessage(message: string) {
-    this.messageSource.next(message)
+    this.messageSource.next(message);
   }
-  
+
 }

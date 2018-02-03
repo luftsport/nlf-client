@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PopoverModule } from 'ngx-bootstrap/popover';
 import { NlfAuthService } from '../../services/auth/auth.service';
 import { Observable } from "rxjs";
 

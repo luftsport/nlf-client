@@ -1,0 +1,80 @@
+<div class="row">
+  <div class="col-lg-9">
+    <div class="row">
+      Potensiell: {{ rating.actual | nlfOrsRating }}
+      <ngb-rating [(rate)]="rating.actual" [starTemplate]="t" (ngChange)="onChange(event)" max="8"></ngb-rating>
+    </div>
+    <div class="row">
+      Faktisk: {{ rating.potential | nlfOrsRating }}
+      <ngb-rating [(rate)]="rating.potential" [starTemplate]="t" (ngChange)="onChange(event)" max="8"></ngb-rating>
+    </div>
+  </div>
+  <div class="col-lg-3">
+    <h1>
+      <nlf-resolve-observation-rating [rating]="rating"></nlf-resolve-observation-rating>
+    </h1>
+  </div>
+  {{ rating | json }}
+
+  <span class="pointer" (click)="openModal(modalHelp)"><fa name="question" fixed="true"></fa></span>
+
+  <ng-template #t let-fill="fill" let-index="index">
+    <span class="rating-star" [class.rating-filled]="fill === 100" [class.rating-bad]="index > 4">&#9679;</span>
+  </ng-template>
+
+  <!-- MODAL HELP -->
+  <ng-template #modalHelp>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">
+        Hjelp: ORS Alvorlighetsgrad</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>
+        Alvorlighetsgraden for en observasjon består av
+        <q>faktisk</q> og
+        <q>potensiell</q> alvorlighetsgrad.
+      </p>
+      <p>
+        Faktisk alvorlighetsgrad sier noe om hva som faktisk skjedde, hvor alvorlig ble det faktisk.
+      </p>
+      <p>
+        Potensiell alvorlighetsgrad er en betraktning du som observatør gjør på hva som hadde en reell sannsynlighet for å skje.
+        Selv om det åpenbart er fare for at man omkommer hver gang man hopper ut av et fly så er sannsynligheten lav.
+      </p>
+      <p>
+        <strong>Gradering:</strong>
+      </p>
+        <ol>
+          <li>Alt OK</li>
+          <li>Til ettertanke</li>
+          <li>Mindre skade</li>
+          <li>Middels skade</li>
+          <li>Alvorlig skade</li>
+          <li>Alvorlig skade/men</li>
+          <li>Død</li>
+          <li>Flere døde</li>
+        </ol>
+     
+      <p>
+        Faktisk og potensiell brukes så for å gi en gradering fra 1-100 der 100 er værst.
+      </p>
+      <p>
+        <strong>Eksempel:</strong>
+        <br/> I seperasjon åpner containeren seg, og bag og liner kommer ut. Linene surrer seg rundt beina til hopperen som forsøker
+        å trekke pilotskjemen. Ender på rygg og liner og duk utvikler seg til en real floke. Gjennomfører nødprosedyre men
+        reservepiloten går rett i floken av en hovedskjerm og surrer seg sammen. Hopperen fortsetter å kjempe og plutselig
+        løser det seg, hovedskjemen kommer fri og drar fribagen av reserven. Reserven flyr, hopperen lander uskadet om noe
+        shaky.
+        <br/> Her vil faktisk være
+        <q>Til ettertanke</q> (2) mens det var en reell sannsynlighet for
+        <q>Død</q> (7) for hopperen. Dette gir en gradering på 74 som er høyt.
+      </p>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline-dark" (click)="modalRef.close()">Ferdig</button>
+    </div>
+  </ng-template>

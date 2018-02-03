@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Inject } from '@angular/core';
+import { NLF_CONFIG, NlfConfig } from '../../../nlf-config.module';
 
 @Component({
   selector: 'nlf-resolve-observation-flags',
@@ -8,14 +9,16 @@ import { Component, Input, OnInit } from '@angular/core';
 export class NlfResolveObservationFlagsComponent implements OnInit {
 
   @Input() flag: string;
-  name: string;
-  list = { 'aviation': 'Luftfartshendelse', 'insurance': 'Forsikringssak' };
+  @Input() badge?: boolean;
+  @Input() icon?: boolean;
 
-  constructor() { }
+  name: string;
+
+  constructor(@Inject(NLF_CONFIG) private config: NlfConfig) { }
 
   ngOnInit() {
     try {
-      this.name = this.list[this.flag];
+      this.name = this.config.observation.flags[this.flag]['label'];
     } catch (e) {
       this.name = 'Ukjent';
     }

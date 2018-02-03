@@ -1,3 +1,10 @@
+<span *ngIf="dataReady">
   <select class="form-control" [formControl]="userClubChooser" [(ngModel)]="selected">
-    <option *ngFor="let opt of userClubs" [ngValue]="opt" ><nlf-resolve-club [clubid]="opt"></nlf-resolve-club></option>
+    <option *ngFor="let opt of userClubs" [ngValue]="opt">
+      <nlf-resolve-club [clubid]="opt"></nlf-resolve-club>
+    </option>
   </select>
+</span>
+<span *ngIf="!dataReady">
+  <fa name="spinner" animation="pulse" size="3x"></fa>
+</span>

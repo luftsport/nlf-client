@@ -1,0 +1,14 @@
+<tag-input [(ngModel)]="populated" (onAdd)="onAdd($event)" (onRemove)="onRemove($event)" 
+ theme='bootstrap' [onlyFromAutocomplete]="false" [displayBy]="'tag'" [identifyBy]="'tag'"
+>
+
+    <tag-input-dropdown [showDropdownIfEmpty]="true" 
+                          keepOpen="false" [displayBy]="'tag'" [identifyBy]="'tag'"  [autocompleteItems]="apidata">
+        </tag-input-dropdown>
+  </tag-input>
+
+<ul *ngFor="let i of populated">
+
+  <li>{{ i | json }}</li>
+
+</ul>

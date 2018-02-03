@@ -19,7 +19,7 @@
             <td class="ngx-easy-table-small">
                 <span *ngIf="!!row.rating">
                     <!--{{ row.rating.actual }} av {{ row.rating.potential }}: {{ row.rating | nlfOrsRatingCalc }}-->
-                    <progressbar class="progress-striped active" [value]="row.rating | nlfOrsRatingCalc" [type]="row.rating | nlfOrsRatingCalc | nlfDynamicColor">{{ row.rating | nlfOrsRatingCalc }}</progressbar>
+                    <ngb-progressbar class="progress-striped active" [value]="row.rating | nlfOrsRatingCalc" [type]="row.rating | nlfOrsRatingCalc | nlfDynamicColor">{{ row.rating | nlfOrsRatingCalc }}</ngb-progressbar>
                 </span>
             </td>
             <td class="ngx-easy-table-small">

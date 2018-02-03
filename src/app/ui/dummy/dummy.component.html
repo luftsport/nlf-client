@@ -1,42 +1,172 @@
+<!-- Header with Background Image 
+<header class="business-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <h1 class="display-3 text-center text-white mt-4">Business Name or Tagline</h1>
+        </div>
+      </div>
+    </div>
+  </header>-->
 <!-- Main jumbotron for a primary marketing message or call to action -->
-<div class="jumbotron ">
+
+<!--<h2 class="display-3">NLF Platform</h2>-->
+<!-- NGX Charts! -->
+<!-- [view]="view"  not defined to parent element size-->
+<!--<header class="business-header bg-light">
   <div class="container">
-    <!--<h2 class="display-3">NLF Platform</h2>-->
-    <!-- NGX Charts! -->
-    <!-- [view]="view"  not defined to parent element size-->
+ 
+    <p style="min-height: 300px;" class="text-center">
       <ngx-charts-advanced-pie-chart [activeEntries]="activeEntries" [scheme]="colorScheme" [label]="label" [results]="single"
         [gradient]="gradient" (select)="onSelect($event)">
       </ngx-charts-advanced-pie-chart>
-    <!-- MODAL -->
+    </p>
+    <p class="text-center">
+      <a (click)="openModal(template)" class="btn btn-primary btn-lg" href="#" role="button">Les mer &raquo;</a>
+    </p>
+  </div>
 
-    <!--
-      <div class="clearfix"></div>
-       <div class="col-md-6 bg-info jumbotron">
-          <nlf-ors-create></nlf-ors-create>
-        </div>
-    -->
+</header> -->
 
-    <a (click)="openModal(template)" class="btn btn-primary btn-lg" href="#" role="button">Les mer &raquo;</a>
-       
-        
+<!-- Heading Row -->
+<div class="container">
+  <div class="row my-4">
+
+    <div class="col-lg-8">
+      <ngx-charts-advanced-pie-chart *ngIf="dataReady" [activeEntries]="activeEntries" [scheme]="colorScheme" [label]="label" [results]="pie"
+        [gradient]="gradient" (select)="onSelect($event)"></ngx-charts-advanced-pie-chart>
+    </div>
+    <!-- /.col-lg-8 -->
+    <div class="col-lg-4">
+      <h1 class="nlf-blue">
+        <i class="nlf nlf-fw nlf-logo"></i>NLF Platform</h1>
+      <p>FNLF Platform har blitt NLF Platform! Etter Motorfly seksjonen har kommet til er også navnet endret til å representere
+        det faktum at alle sesjoner i NLF kan benytte NLF platform. ORS er en av flere applikasjoner som kjører på platformen</p>
+      <a (click)="openModal(modalTemplate)" class="btn btn-primary btn-lg" href="#">Les mer &raquo;</a>
+    </div>
+    <!-- /.col-md-4 -->
   </div>
 </div>
+<!-- /.row -->
 
-<ng-template #template>
+<div class="py-5 nlf-bg-blue">
+  <div class="container">
+    <p class="m-0 text-center text-white">
+      <nlf-ors-create></nlf-ors-create>
+    </p>
+  </div>
+  <!-- /.container -->
+</div>
+<!-- Page Content 
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-8">
+      <h2 class="mt-4">Registrer ORS</h2>
+      <p>
+        <nlf-ors-create></nlf-ors-create>
+
+      </p>
+    </div>
+    <div class="col-sm-4">
+      <h2 class="mt-4">Kontakt oss</h2>
+      <iframe src='https://sts.nif.no/Account/SignInMI?ReturnUrl=https%3a%2f%2fsts.nif.no%2f%252fissue%252fwsfed%253fwa%253dwsignin1.0%2526wtrealm%253dhttps%3a%2f%2fmi.nif.no%2f%2526wctx%253drm%25253d0%252526id%25253dpassive%252526ru%25253dhttps%3a%2f%2fmi.nif.no%2fHome%2fSetStartPage'
+        height='380' width='310' frameborder='0'></iframe>
+      <address>
+        <abbr title="Phone">P:</abbr>
+        (123) 456-7890
+        <br>
+        <abbr title="Email">E:</abbr>
+        <a href="mailto:#">name@example.com</a>
+      </address>
+    </div>
+  </div>
+  -->
+<!-- /.row -->
+
+<!--
+  <div class="row">
+    <div class="col-sm-4 my-4">
+      <div class="card">
+        <img class="card-img-top" src="http://placehold.it/300x200" alt="">
+        <div class="card-body">
+          <h4 class="card-title">Card title</h4>
+          <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus.</p>
+        </div>
+        <div class="card-footer">
+          <a href="#" class="btn btn-primary">Find Out More!</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4 my-4">
+      <div class="card">
+        <img class="card-img-top" src="http://placehold.it/300x200" alt="">
+        <div class="card-body">
+          <h4 class="card-title">Card title</h4>
+          <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus totam
+            ut praesentium aut.</p>
+        </div>
+        <div class="card-footer">
+          <a href="#" class="btn btn-primary">Find Out More!</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4 my-4">
+      <div class="card">
+        <img class="card-img-top" src="http://placehold.it/300x200" alt="">
+        <div class="card-body">
+          <h4 class="card-title">Card title</h4>
+          <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
+        </div>
+        <div class="card-footer">
+          <a href="#" class="btn btn-primary">Find Out More!</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>-->
+<!-- /.container -->
+
+<!-- Footer -->
+<!--
+<footer class="py-5 bg-dark">
+  <div class="container">
+    <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+  </div>
+</footer>
+-->
+
+
+<ng-template #modalTemplate>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">NLF Platform</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <h4 class="modal-title pull-left">
+      NLF Platform</h4>
+
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
+    <ngx-charts-advanced-pie-chart *ngIf="dataReady" [activeEntries]="activeEntries" [scheme]="colorScheme" [label]="label" [results]="pie"
+      [gradient]="gradient" (select)="onSelect($event)"></ngx-charts-advanced-pie-chart>
     <nlf-ors-fallskjerm-last number="3"></nlf-ors-fallskjerm-last>
     <div class="clearfix"></div>
-    <ngx-charts-pie-grid [scheme]="colorScheme" [results]="multipie" (select)="onSelect($event)">
-    </ngx-charts-pie-grid>
+    <div>
+      <ngx-charts-pie-grid [scheme]="colorScheme" [results]="multipie" (select)="onSelect($event)">
+      </ngx-charts-pie-grid>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a class="btn btn-secondary" (click)="modalRef.close()">Close</a>
   </div>
 </ng-template>
 
+<div class="row">
+  <p></p>
+</div>
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -106,4 +236,23 @@
     </div>
 
   </div>
+</div>
+
+
+<div class="py-5 bg-dark">
+  <div class="container">
+    <p class="m-0 text-center text-white">
+
+      <!--<i class="nlf nlf-fw nlf-2x nlf-logo-original"></i>-->
+      <i class="nlf nlf-fw nlf-5x nlf-fallskjerm"></i>
+      <i class="nlf nlf-fw nlf-5x nlf-seilfly"></i>
+      <i class="nlf nlf-fw nlf-5x nlf-motorfly"></i>
+      <i class="nlf nlf-fw nlf-5x nlf-ballong"></i>
+      <i class="nlf nlf-fw nlf-5x nlf-mikrofly"></i>
+      <i class="nlf nlf-fw nlf-5x nlf-modellfly"></i>
+      <i class="nlf nlf-fw nlf-5x nlf-hgpg"></i>
+    </p>
+
+  </div>
+  <!-- /.container -->
 </div>

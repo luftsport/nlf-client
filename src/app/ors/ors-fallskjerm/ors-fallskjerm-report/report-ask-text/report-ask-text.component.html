@@ -4,7 +4,7 @@
       <img class="mr-3 rounded-circle" src="https://dummyimage.com/64x64/595659/e3e4e8">
       <div class="media-body">
         <h5 class="mt-0">Observatør</h5>
-        <p [innerHTML]="comments.draft | newlines"></p>
+        <p [innerHTML]="comments.draft | newlines | safe: 'html'"></p>
       </div>
     </div>
   </div>

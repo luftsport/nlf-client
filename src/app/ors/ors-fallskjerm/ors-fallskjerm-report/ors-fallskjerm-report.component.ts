@@ -42,8 +42,6 @@ export class NlfOrsFallskjermReportComponent implements OnInit {
       this.version = params['version'] ? params['version'] : 0;
       this.app.setTitle('NLF - ORS Rapport #' + this.id);
       this.getData();
-
-     
     });
 
 

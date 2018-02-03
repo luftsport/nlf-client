@@ -1,4 +1,5 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, Inject } from '@angular/core';
+import { NLF_CONFIG, NlfConfig } from '../nlf-config.module';
 
 /**
  * Needs to get attributes from server => resolver
@@ -9,24 +10,10 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'nlfOrsComponentAttributes'
 })
 export class NlfOrsComponentAttributesPipe implements PipeTransform {
-
-  attributes = {
-    reserve_ride: { color: 'info', label: 'Reserve benyttet' },
-    aad_fire: { color: 'warning', label: 'Nødåpner fyring' },
-    aad_rescue: { color: 'warning', label: 'Nødåpner redning' },
-    packing_error: { color: 'default', label: 'Pakkefeil' },
-    gear_malfunction: { color: 'default', label: 'Feilfunksjon' },
-    damage: { color: 'default', label: 'Matriell skade' },
-    gear_failure: { color: 'default', label: 'Utstyrsvikt' },
-    rigger_error: { color: 'warning', label: 'MK/MR Feil' },
-    violation: { color: 'default', label: 'Regelbrudd' },
-    injury: { color: 'warning', label: 'Personskade' },
-    death: { color: 'warning', label: 'Død' }
-  };
+  
+  constructor(@Inject(NLF_CONFIG) private config: NlfConfig) {};
 
   transform(value: any, badge: boolean = true, seperator: string = ' '): any {
-
-
 
     if (value instanceof Array) {
       return this.multiple(value, badge, seperator);
@@ -41,9 +28,9 @@ export class NlfOrsComponentAttributesPipe implements PipeTransform {
   private one(value: string, badge: boolean): string {
 
     if (badge) {
-      return '<span class="badge badge-${this.attributes[value][\'color\']}">${this.attributes[value][\'label\']}</span>';
+      return '<span class="badge badge-${config.observation.components.attributes[value][\'color\']}">${config.observation.components.attributes[value][\'label\']}</span>';
     } else {
-      return this.attributes[value]['label'];
+      return this.config.observation.components.attributes[value]['label'];
     }
   }
 

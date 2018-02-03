@@ -16,7 +16,7 @@ export abstract class ApiRestService {
   Use typical geojson, where methods to generate the correct parameters.
 
   **/
-  protected getOptions(options?: ApiOptionsInterface) {
+  protected getOptions(options?: ApiOptionsInterface, etag?: string) {
 
     if (!options) {
       options = {};
@@ -28,13 +28,13 @@ export abstract class ApiRestService {
     }
 
     if (!!options.headers) {
-      options.headers = Object.assign(options.headers, this.getDefaultHeaders());
+      options.headers = Object.assign(options.headers, this.getDefaultHeaders(etag));
 
     } else if (!!options) {
-      options.headers = this.getDefaultHeaders();
+      options.headers = this.getDefaultHeaders(etag);
 
     } else {
-      options = { headers: this.getDefaultHeaders() };
+      options = { headers: this.getDefaultHeaders(etag) };
     }
 
     if (!!options.query) {
@@ -84,14 +84,18 @@ export abstract class ApiRestService {
     return options;
   }
 
-  protected getDefaultHeaders() {
-
-    return {
+  protected getDefaultHeaders(etag?: string) {
+    let headers = {
       'Content-Type': 'application/json; charset=utf8',
       // 'Accept': 'application/json',
       'Accept': '*/*',
       'X-Angular-Rules': 'True'
     };
+
+    if (!!etag) {
+      headers['If-Match'] = etag;
+    }
+    return headers;
   }
 
   /**
@@ -116,8 +120,6 @@ export abstract class ApiRestService {
     return this.http.get(this.baseUrl + relativeUrl, this.getOptions(options));
   }
 
-
-
   protected post(relativeUrl: string, data: any, options: ApiOptionsInterface = {}): Observable<any> {
 
     return this.http.post(this.baseUrl + relativeUrl, JSON.stringify(data), this.getOptions(options));
@@ -127,7 +129,18 @@ export abstract class ApiRestService {
   /**
   Needs _etag support in Headers
   **/
-  protected put(relativeUrl: string, data: any, options: any, etag: any) { }
-  protected patch(relativeUrl: string, data: any, options: any, etag: any) { }
+  protected put(relativeUrl: string, _id: string, data: any, options: ApiOptionsInterface = {}, etag?: string): Observable<any> {
+    return this.http.put(this.baseUrl + relativeUrl + _id, JSON.stringify(data), this.getOptions(options, etag));
+  }
+
+  protected patch(relativeUrl: string, _id: string, data: any, options: ApiOptionsInterface = {}, etag?: string): Observable<any> {
+
+    return this.http.patch(this.baseUrl + relativeUrl + _id, JSON.stringify(data), this.getOptions(options, etag));
+
+  }
+
+  protected delete(relativeUrl: string, _id: string, options: ApiOptionsInterface = {}): Observable<any> {
+    return this.http.delete(this.baseUrl + relativeUrl + _id);
+  }
 
 }

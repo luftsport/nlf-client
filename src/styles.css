@@ -14,6 +14,54 @@
 
 .pointer {cursor: pointer;}
 
+/* NLF colors **/
+
+.nlf-text-blue {
+  color: #004465;
+}
+.nlf-text-light {
+  color: #5bbfcc;
+}
+.nlf-text-dark {
+  color: #1d1d1b;
+}
+.nlf-text-orange {
+  color: #f07f00;
+}
+.nlf-text-purple {
+  color: #93648d;
+}
+
+.nlf-bg-blue {
+  background-color: #004465;
+}
+.nlf-bg-light {
+  background-color: #5bbfcc;
+}
+.nlf-bg-dark {
+  color: #1d1d1b;
+}
+.nlf-bg-orange {
+  background-color: #f07f00;
+}
+.nlf-bg-purple {
+  background-color: #93648d;
+}
+
+/* Startbootstrap */
+.business-header {
+  height: 50vh;
+  min-height: 300px;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+}
+
+.card {
+  height: 100%;
+}
+
 /** Diffing **/
 ins{
     color: black;

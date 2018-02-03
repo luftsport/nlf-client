@@ -1,6 +1,7 @@
 import { ApiObservationAskTextInterface } from './../../../../api/api.interface';
 import { Component, Input, OnInit } from '@angular/core';
 import { NewlinesPipe } from 'angular-pipes/src/string/newlines.pipe';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'nlf-ors-fallskjerm-report-ask-text',
@@ -10,7 +11,7 @@ import { NewlinesPipe } from 'angular-pipes/src/string/newlines.pipe';
 export class NlfOrsFallskjermReportAskTextComponent implements OnInit {
 
   @Input() comments: ApiObservationAskTextInterface;
-  constructor() { }
+  constructor(public domSanitizer: DomSanitizer) { }
 
   ngOnInit() {
   }

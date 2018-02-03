@@ -17,7 +17,8 @@ export class NlfOrsFallskjermReportFilesComponent implements OnInit {
   constructor(private apiFile: ApiFilesService) { }
 
   ngOnInit() {
-    if (this.filelist.length > 0) {
+
+    if (this.files.length > 0) {
       this.getFiles();
     } else {
       this.dataReady = true;
@@ -42,7 +43,7 @@ export class NlfOrsFallskjermReportFilesComponent implements OnInit {
           data['r'] = f.r;
           this.filelist.push(data);
         },
-        err => console.log(err.message),
+        err => processed++,
         () => {
           processed++;
           if (processed === this.files.length) {

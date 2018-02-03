@@ -1,0 +1,28 @@
+<span *ngIf="dataReady">
+  <tag-input 
+  [(ngModel)]="items" 
+  (onAdd)="onAdd($event)" 
+  (onRemove)="onRemove($event)" 
+  theme='bootstrap' 
+  [onlyFromAutocomplete]="false"
+  [displayBy]="'fullname'" 
+  [identifyBy]="'id'"
+  placeholder="Ny person"
+  secondaryPlaceholder="Legg til">
+
+  <tag-input-dropdown 
+    [showDropdownIfEmpty]="false" 
+    keepOpen="false" 
+    [displayBy]="'fullname'" 
+    [identifyBy]="'id'" 
+    [autocompleteObservable]='requestAutocompleteItems'>
+  </tag-input-dropdown>
+
+</tag-input>
+
+<ul *ngFor="let i of items">
+
+  <li>{{ i | json }}</li>
+
+</ul>
+</span>

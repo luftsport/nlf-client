@@ -7,7 +7,7 @@ import { NlfAlertService } from './alert.service';
     selector: 'nlf-alert-service',
     templateUrl: 'alert.component.html'
 })
-export class NlfAlertComponent {
+export class NlfAlertComponent implements OnInit {
     message: any;
   
     constructor(private alertService: NlfAlertService) { }

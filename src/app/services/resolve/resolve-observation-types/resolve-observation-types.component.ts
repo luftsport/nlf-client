@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Inject } from '@angular/core';
+import { NLF_CONFIG, NlfConfig } from '../../../nlf-config.module';
 
 @Component({
   selector: 'nlf-resolve-observation-types',
@@ -13,20 +14,12 @@ export class NlfResolveObservationTypesComponent implements OnInit {
   name: string;
   color: string;
 
-  list = {
-    'sharing': { label: 'Erfaringsdeling', color: 'primary' },
-    'unsafe_act': { label: 'Uønsket hending', color: 'secondary' },
-    'near_miss': { label: 'Næruhell', color: 'warning' },
-    'incident': { label: 'Uhell', color: 'danger' },
-    'accident': { label: 'Ulykke', color: 'dark' }
-  };
-
-  constructor() { }
+  constructor(@Inject(NLF_CONFIG) private config: NlfConfig) { }
 
   ngOnInit() {
     try {
-      this.name = this.list[this.type]['label'];
-      this.color = this.list[this.type]['color'];
+      this.name = this.config.observation.types[this.type]['label'];
+      this.color = this.config.observation.types[this.type]['badge'];
     } catch (e) {
       this.name = 'Ukjent';
       this.color = 'secondary';

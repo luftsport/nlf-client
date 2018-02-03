@@ -1,0 +1,62 @@
+<div class="col-md-6">
+  <div class="btn-group" role="group">
+    <span *ngFor="let a of askValues">
+      <button type="button" [ngClass]="{'btn border':true, 'btn-danger': isNegative(a.key), 
+                  'btn-secondary': isNeutral(a.key), 
+                  'btn-success': isPositive(a.key)}" (click)="flip(a.key)">{{a.label}}
+      </button>
+    </span>
+  </div>
+  <div class="clearfix"></div>
+  <div *ngIf="verbose">
+    <br />
+    <ul class="list-unstyled">
+      <li>
+        <span *ngIf="isPositive('knowledge')">
+          <b>Gode</b> kunnskaper hadde innvirkning</span>
+        <span *ngIf="isNeutral('knowledge')">Kunnskapen til de involverte hadde
+          <b>ingen</b> innvirkning</span>
+        <span *ngIf="isNegative('knowledge')">
+          <b>Mangelfulle</b> kunnskaper hadde betydning</span>
+      </li>
+      <li>
+        <span *ngIf="isPositive('skills')">
+          <b>Gode</b> ferdigheter hadde innvirkning</span>
+        <span *ngIf="isNeutral('skills')">Ferdighetene til de involverte hadde
+          <b>ingen</b> innvirkning</span>
+        <span *ngIf="isNegative('skills')">
+          <b>Mangelfulle</b> ferdigheter hadde betydning</span>
+      </li>
+      <li>
+        <span *ngIf="isPositive('attitude')">
+          <b>Gode</b> holdninger hadde innvirkning</span>
+        <span *ngIf="isNeutral('attitude')">Holdningene til de involverte hadde
+          <b>ingen</b> innvirkning</span>
+        <span *ngIf="isNegative('attitude')">
+          <b>Dårlige</b> holdninger hadde betydning</span>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="col-md-6">
+  Tekst for: {{ state }}
+<form #testForm="ngForm">
+    <p 
+    style="border:1px lightgrey solid;min-height:88px; width: 100%;" 
+    contenteditable="true" propValueAccessor="innerHTML"
+    name="myFormName" 
+    [(ngModel)]="ask.text[state]"
+    [mention]="list" class="form-control" [mentionConfig]="mconf">
+    </p>
+    
+  </form>
+  <!--(searchTerm)="search($event)"-->
+  <p>Arr: {{ data.currentArr | async | json }}</p>
+  <p>List: {{ list | json }}</p>
+ 
+
+  <!--<div contenteditable="true" style="border:1px lightgrey solid;min-height:88px" 
+     [textContent]="ask.text[state]" (input)="ask.text[state]=$event.target.textContent"></div>-->
+  <!--<div #asktext contenteditable="true" [textContent]="ask.text[state]" (input)="model=asktext.innerText" style="border:1px lightgrey solid;min-height:88px" [mention]="items" class="form-control" (searchTerm)="search($event)" [mentionConfig]="mconf"></div>-->
+  <!--<div [(ngModel)]="ask.text[state]" [mention]="items" class="form-control" (searchTerm)="search($event)" [mentionConfig]="mconf" contenteditable="true" style="border:1px lightgrey solid;min-height:88px"></div>-->
+</div>

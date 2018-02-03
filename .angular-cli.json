@@ -17,9 +17,10 @@
       "test": "test.ts",
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
-      "prefix": "app",
+      "prefix": "nlf",
       "styles": [
         "styles.css",
+        "../node_modules/nlf/style.css",
         "../node_modules/bootstrap/dist/css/bootstrap.css",
         "../node_modules/weather-icons/css/weather-icons.css",
         "../node_modules/weather-icons/css/weather-icons-wind.css",
@@ -27,6 +28,7 @@
         "../node_modules/ng-pick-datetime/assets/style/picker.min.css",
         "../node_modules/ngx-easy-table/spectre.css",
         "../node_modules/ngx-easy-table/spectre-icons.css"
+        
       ],
       "scripts": [
       ],

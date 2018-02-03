@@ -1,39 +1,61 @@
-<span *ngIf="!!withDate">
-<div class="form-group">
-  <div class="form-row">
-    <div class="form-group col-md-12">
-      <owl-date-time-inline [(ngModel)]="selectedMoment"></owl-date-time-inline>
-      <!--<div class="col align-middle">
+<span *ngIf="dataReady">
+
+  <span *ngIf="!loading">
+    <span *ngIf="!!withDate">
+      <div class="form-group">
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <owl-date-time-inline [(ngModel)]="selectedMoment"></owl-date-time-inline>
+            <!--<div class="col align-middle">
         <input type="text" name="date" class="form-control" [minDate]="minDate" [maxDate]="maxDate" #dp="bsDatepicker" bsDatepicker [(bsValue)]="bsValue">
       </div>
       <div class="col align-middle">
           <timepicker [(ngModel)]="mytime" [showMeridian]="ismeridian"></timepicker>
       </div>-->
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-12">
-      <nlf-user-club-selector></nlf-user-club-selector>
-    </div>
-  </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <select class="form-control" [formControl]="clubChooser" [(ngModel)]="selected">
+              <option *ngFor="let club of clubs" [ngValue]="club.id">
+                {{ club.name }}
+              </option>
+            </select>
+          </div>
+        </div>
 
-  <div class="form-row">
-    <div class="form-group col-md-12">
-      <button class="btn btn-block btn-primary">Opprett ORS</button>
-    </div>
-  </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <button class="btn btn-block btn-primary btn-lg">Opprett ORS</button>
+          </div>
+        </div>
 
-</div>
-</span>
-<span *ngIf="!withDate">
-    <form>
+      </div>
+    </span>
+    <span *ngIf="!withDate">
+      <form>
         <div class="row">
           <div class="col">
-              <nlf-user-club-selector></nlf-user-club-selector>
+            <select class="form-control" [formControl]="clubChooser" [(ngModel)]="selected">
+              <option *ngFor="let club of clubs" [ngValue]="club.id">
+                {{ club.name }}
+              </option>
+            </select>
           </div>
           <div class="col">
-              <button class="btn btn-block btn-primary"><fa name="plus" fixed="true"></fa>Opprett ORS</button>
+            <button (click)="createObservation()" class="btn btn-block btn-primary btn-lg">
+              <fa name="plus" fixed="true"></fa>Opprett ORS</button>
           </div>
         </div>
       </form>
+    </span>
+  </span>
+  <span *ngIf="loading">
+    <fa name="spinner" animation="pulse" size="3x"></fa>
+    <p class="lead">Oppretter ORS...</p>
+  </span>
+</span>
+<!-- End page -->
+<span *ngIf="!dataReady">
+  <fa name="spinner" animation="pulse" size="3x"></fa>
 </span>

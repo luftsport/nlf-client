@@ -1,4 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+// import { NLF_CONFIG, NlfConfig } from '../../../nlf-config.module';
+
+
 
 @Component({
   selector: 'nlf-resolve-observation-tags',
@@ -14,6 +17,7 @@ export class NlfResolveObservationTagsComponent implements OnInit {
   url = '/ors/fallskjerm/search/tag/';
   html = [];
 
+  //   constructor(@Inject(NLF_CONFIG) private config: NlfConfig) { }
   constructor() { }
 
   ngOnInit() {

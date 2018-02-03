@@ -2,7 +2,8 @@ import { Pipe, Input, PipeTransform } from '@angular/core';
 import { ApiObservationRatingInterface } from '../api/api.interface';
 
 @Pipe({
-  name: 'nlfOrsRatingCalc'
+  name: 'nlfOrsRatingCalc',
+  pure: false
 })
 export class NlfOrsRatingCalcPipe implements PipeTransform {
 

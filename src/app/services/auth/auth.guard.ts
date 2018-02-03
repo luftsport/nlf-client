@@ -24,10 +24,10 @@ export class NlfAuthGuard implements CanActivate {
     **/
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
-        if (this.storage.hasToken(true)) {
+        if (this.storage.hasToken(false)) { // do not validate token
             return true;
-        }
-        else {
+        } else {
+
           this.alertService.warning('Your session has timed out and you got automatically logged out');
           this.authService.logout();
           return false;

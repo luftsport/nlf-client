@@ -24,7 +24,7 @@
     <fa name="bars" fixed="true"></fa>
   </button>
   <span class="navbar-brand" [routerLink]="['/']">NLF</span>
-  <div [collapse]="isCollapsed" class="collapse navbar-collapse justify-content-between" id="navbar">
+  <div [ngbCollapse]="isCollapsed" class="collapse navbar-collapse justify-content-between" id="navbar">
 
     <ul class="navbar-nav" *ngIf="(isLoggedIn | async)">
 
@@ -33,9 +33,9 @@
       </li>
 
 
-      <li dropdown class="nav-item dropdown">
+      <li ngbDropdown class="nav-item dropdown">
 
-        <a dropdownToggle class="nav-item nav-link dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">
+        <a ngbDropdownToggle class="nav-item nav-link dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">
           ORS
         </a>
         <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -54,7 +54,7 @@
       <a class="nav-item nav-link" routerLink="user/profile">
         <fa [name]="'user-o'" [fixed]="'true'"></fa>
       </a>
-      <a class="nav-item nav-link" [popover]="popTemplate" placement="bottom" container="body" popoverTitle="Template ref content inside">
+      <a class="nav-item nav-link" [ngbPopover]="popTemplate" placement="bottom" container="body" popoverTitle="Template ref content inside">
         <fa [name]="'desktop'" [fixed]="'true'"></fa>
       </a>
       <a class="nav-item nav-link" href="#">

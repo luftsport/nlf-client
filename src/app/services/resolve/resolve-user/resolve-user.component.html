@@ -8,7 +8,7 @@
     <!-- No profile, no link -->
     <span *ngIf="!link && userid > 0" title="{{ fullname }} har ingen profil">{{ fullname }}</span>
     <!-- Anonymous or tmpname sup eller attr? -->
-    <span *ngIf="userid <= 0">{{ fullname }}<sup class="text-info" title="Midlertidig navn, ikke registrert som medlem"><fa name="question"></fa></sup></span>
+    <span *ngIf="userid <= 0">{{ fullname }}<sup class="text-info" title="Midlertidig navn eller anonymisert"><fa name="question"></fa></sup></span>
 </span>
 <span *ngIf="!dataReady">
     <fa name="spinner" animation="pulse" [size]="1"></fa>

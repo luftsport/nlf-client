@@ -420,6 +420,43 @@ export interface ApiFileItem extends ApiEveBaseItem {
 }
 
 export interface ApiFileList extends ApiEveBaseList {
-    _items: ApiFileItem;
+    _items: ApiFileItem[];
 
 }
+
+/**
+ * Clubs (our local club collection)
+ */
+
+export interface ApiClubItem extends ApiEveBaseItem {
+    id: string;
+    name?: string;
+    active?: boolean;
+    org?: string;
+    locations?: ApiLocationInterface[];
+    planes?: Object;
+    roles?: Object;
+    ot?: number; // enum 1 and 2
+    ci?: number;
+    logo?: string; // base64 string
+    url?: string;
+}
+
+export interface ApiClubList extends ApiEveLinks {
+    _items: ApiClubItem[];
+}
+/**
+ * TAGS
+ */
+
+ export interface ApiTagItem extends ApiEveBaseItem {
+    freq: number;
+    group: string;
+    related: string[];
+    tag: string;
+ }
+
+ export interface ApiTagList extends ApiEveBaseList {
+     _items: ApiTagItem[];
+ }
+

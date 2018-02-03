@@ -13,6 +13,7 @@ import { NlfAuthGuard } from './services/auth/auth.guard';
 // Child appplication internal routes:
 import { NlfOrsRoutingModule } from './ors/ors-routing.module';
 import { NlfUserRoutingModule } from './user/user-routing.module';
+import { NlfErrorRoutingModule } from './error/error-routing.module';
 
 /**
   Route object top level
@@ -26,14 +27,16 @@ const routes: Routes = [
 { path: 'ors', component: NlfOrsComponent, canActivate: [NlfAuthGuard] },
 { path: 'login', component: NlfAuthComponent },
 { path: '', redirectTo: '/', pathMatch: 'full' }, // redirect root
-{ path: '**', component: NlfUiDummyComponent }, // Not found
+{ path: '**', component: NlfUiDummyComponent, canActivate: [NlfAuthGuard]  }, // Not found
 ];
 
 
 @NgModule({
   imports: [RouterModule.forRoot(routes),
             NlfOrsRoutingModule,
-            NlfUserRoutingModule],
+            NlfUserRoutingModule,
+            NlfErrorRoutingModule
+          ],
   exports: [ RouterModule],
   providers: [NlfAuthGuard],
   declarations: []

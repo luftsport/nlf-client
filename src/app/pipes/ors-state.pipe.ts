@@ -1,23 +1,19 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, Inject } from '@angular/core';
+import { NLF_CONFIG, NlfConfig } from '../nlf-config.module';
 
 @Pipe({
   name: 'nlfOrsState'
 })
 export class NlfOrsStatePipe implements PipeTransform {
 
-  private statuses = {'withdrawn': 'Trekt tilbake',
-                      'draft': 'Utkast',
-                      'pending_review_hi': 'Avventer HI',
-                      'pending_review_fs': 'Avventer Fagsjef',
-                      'pending_review_su': 'Avventer SU',
-                      'closed': 'Lukket' };
+  constructor(@Inject(NLF_CONFIG) private config: NlfConfig) {};
 
   transform(value: any, args?: any): any {
 
     let data = '';
 
     try {
-      data = this.statuses[value];
+      data = this.config.observation.state[value]['label'];
     } catch (e) {
       data = 'Ukjent';
     }

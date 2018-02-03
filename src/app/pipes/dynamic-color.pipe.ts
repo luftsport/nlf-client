@@ -2,7 +2,8 @@ import { NlfOrsRatingCalcPipe } from './ors-rating-calc.pipe';
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'nlfDynamicColor'
+  name: 'nlfDynamicColor',
+  pure: false
 })
 export class NlfDynamicColorPipe implements PipeTransform {
 

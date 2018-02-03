@@ -7,7 +7,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpModule } from '@angular/http'; // NB ONLY FOR ng2-idle until ng5 support for HttpClient
 
 // Third party
-import { AlertModule } from 'ngx-bootstrap';
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { NgProgressHttpClientModule } from '@ngx-progressbar/http-client';
 import { TableModule } from 'ngx-easy-table';
@@ -20,21 +19,8 @@ import { AgmCoreModule } from '@agm/core';
 // CHarting
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
-// ngx-bootstrap
-import { CollapseModule } from 'ngx-bootstrap/collapse';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { PaginationModule } from 'ngx-bootstrap/pagination'; // Dependency for ng2-table
-import { PopoverModule } from 'ngx-bootstrap/popover';
-import { TabsModule } from 'ngx-bootstrap/tabs';
-import { RatingModule } from 'ngx-bootstrap/rating';
-import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
-import { ModalModule } from 'ngx-bootstrap/modal';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { TimepickerModule } from 'ngx-bootstrap/timepicker';
-
-
-
-// import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+// ng-bootstrap
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { FontAwesomeModule, WeatherIconsModule } from 'ngx-icons';
 // import { Ng2WeatherIconsModule } from 'ng2-weather-icons'; // Broken - make fa => wi!!
@@ -51,8 +37,12 @@ import { ApiUserAuthService } from './api/api-user-auth.service';
 import { ApiObservationsService } from './api/api-observations.service';
 import { ApiObservationsWorkflowService } from './api/api-observations-workflow.service';
 import { ApiFilesService } from './api/api-files.service';
+import { ApiTagsService } from './api/api-tags.service';
 // Api Cache service
 import { ApiCacheService } from './api/api-cache.service';
+
+// API AGGREGATION
+import { ApiObservationsAggService } from './api/api-observations-agg.service';
 
 // Authentication interceptor
 import { NlfAuthInterceptor } from './services/auth/auth.interceptor';
@@ -120,6 +110,8 @@ import { NlfOrsFallskjermMainComponent } from './ors/ors-fallskjerm/ors-fallskje
 // PIPES
 import { NlfOrsStatePipe } from './pipes/ors-state.pipe';
 import { NlfOrsTypePipe } from './pipes/ors-type.pipe';
+import { NlfOrsPeoplePipe } from './pipes/ors-people.pipe';
+import { SafePipe } from './pipes/safe.pipe';
 
 // LATEST
 import { NlfOrsFallskjermReportComponent } from './ors/ors-fallskjerm/ors-fallskjerm-report/ors-fallskjerm-report.component';
@@ -155,6 +147,27 @@ import { DiffMatchPatchModule } from 'ng-diff-match-patch';
 import { NlfOrsReportFilesThumbnailsComponent } from './ors/ors-fallskjerm/ors-fallskjerm-report/report-files-thumbnails/report-files-thumbnails.component';
 import { NlfOrsCreateComponent } from './ors/ors-fallskjerm/ors-create/ors-create.component'; // https://github.com/elliotforbes/ng-diff-match-patch/issues/24
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+
+// ORS EDITOR
+import { NlfOrsEditorService } from './ors/ors-editor/ors-editor.service';
+import { NlfOrsEditorComponent } from './ors/ors-editor/ors-editor.component';
+import { NlfOrsEditorTitleComponent } from './ors/ors-editor/ors-editor-title/ors-editor-title.component';
+import { NlfOrsEditorTypeComponent } from './ors/ors-editor/ors-editor-type/ors-editor-type.component';
+import { NlfOrsEditorWhenComponent } from './ors/ors-editor/ors-editor-when/ors-editor-when.component';
+import { NlfOrsEditorRatingComponent } from './ors/ors-editor/ors-editor-rating/ors-editor-rating.component';
+import { NlfResolveObservationRatingComponent } from './services/resolve/resolve-observation-rating/resolve-observation-rating.component';
+import { NlfOrsEditorPeopleComponent } from './ors/ors-editor/ors-editor-people/ors-editor-people.component';
+import { NlfOrsEditorActionsComponent } from './ors/ors-editor/ors-editor-actions/ors-editor-actions.component';
+import { NlfOrsEditorAskComponent } from './ors/ors-editor/ors-editor-ask/ors-editor-ask.component';
+import { NlfOrsEditorFlagsComponent } from './ors/ors-editor/ors-editor-flags/ors-editor-flags.component';
+// CONFIG
+import { NlfConfigModule } from './nlf-config.module';
+import { MentionModule } from 'angular-mentions/mention';
+import { ContenteditableDirective } from 'ng-contenteditable';
+import { ApiClubsService } from './api/api-clubs.service';
+import { NlfErrorComponent } from './error/error.component';
+
+
 
 @NgModule({
   declarations: [
@@ -214,12 +227,26 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
     NlfResolveObservationStateComponent,
     NlfResolveObservationComponentAttributesComponent,
     NlfResolveObservationTagsComponent,
+    NlfResolveObservationRatingComponent,
     NlfOrsRatingPipe,
     NlfOrsRatingCalcPipe,
     NlfDynamicColorPipe,
+    NlfOrsPeoplePipe,
+    SafePipe,
     NlfOrsFallskjermLastComponent,
     NlfOrsReportFilesThumbnailsComponent,
     NlfOrsCreateComponent,
+    NlfOrsEditorComponent,
+    NlfOrsEditorTitleComponent,
+    NlfOrsEditorTypeComponent,
+    NlfOrsEditorWhenComponent,
+    NlfOrsEditorRatingComponent,
+    NlfOrsEditorPeopleComponent,
+    NlfOrsEditorActionsComponent,
+    NlfOrsEditorAskComponent,
+    NlfOrsEditorFlagsComponent,
+    NlfErrorComponent,
+    ContenteditableDirective
   ],
   imports: [
     BrowserModule,
@@ -227,31 +254,23 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
     HttpModule, // NB ONLY FOR ng2-idle until ng5 support for HttpClient
     FormsModule,
     ReactiveFormsModule,
-    AlertModule.forRoot(),
+    NlfConfigModule, // Config module
     NgProgressModule.forRoot(),
     NgProgressHttpClientModule,
     NgPipesModule,
-    BsDropdownModule.forRoot(),
-    CollapseModule,
-    PopoverModule.forRoot(),
-    TabsModule.forRoot(),
-    RatingModule.forRoot(),
-    ProgressbarModule.forRoot(),
-    ModalModule.forRoot(),
-    FontAwesomeModule,
-    WeatherIconsModule,
-    PaginationModule.forRoot(),
-    TableModule,
-    BsDatepickerModule.forRoot(),
-    TimepickerModule.forRoot(),
-    OwlDateTimeModule, 
+    FontAwesomeModule, // ngx-icons
+    WeatherIconsModule, // ngx-icons
+    TableModule, // ngx-easy-table
+    NgbModule.forRoot(), // ng-bootstrap
+    OwlDateTimeModule,
     OwlNativeDateTimeModule,
     NgxChartsModule, // Charting
     // NgxDatatableModule,
     NlfRoutingModule,
     NgIdleKeepaliveModule.forRoot(),
     MomentModule,
-    TagInputModule,
+    TagInputModule, // ngx-chips
+    MentionModule, // angular-mentions
     BrowserAnimationsModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBW1IdM-nFGiwwfP4H2sJg5YiromIuysJ8'
@@ -260,6 +279,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
     // NgbModule.forRoot()
   ],
   providers: [ApiUserService,
+              ApiClubsService,
               ApiNlfUserService,
               ApiNlfClubsService,
               ApiNlfMembershipService,
@@ -270,12 +290,15 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
               ApiObservationsService,
               ApiObservationsWorkflowService,
               ApiFilesService,
+              ApiTagsService,
               ApiCacheService,
+              ApiObservationsAggService,
               DataService, // @TODO: Remove
               Title, // TODO: rename NlfUiTitleService
               NlfAlertService,
               NlfAuthService,
               NlfLocalStorageService,
+              NlfOrsEditorService,
               {provide: HTTP_INTERCEPTORS,
                useClass: NlfAuthInterceptor,
                multi: true},

@@ -26,12 +26,20 @@ export class NlfLocalStorageService {
 
   constructor() { }
 
-  public saveUser(id: number|string, token: string, valid: Date|number|string) {
+  public saveUser(id: number | string, token: string, valid: Date | number | string) {
 
     localStorage.setItem('auth-token', String(token));
     localStorage.setItem('auth-id', String(id));
     localStorage.setItem('auth-valid', String(valid));
 
+  }
+
+  public saveDefaultClub(clubid: string) {
+    localStorage.setItem('default-club', String(clubid));
+  }
+
+  public getDefaultClub() {
+    return localStorage.getItem('default-club');
   }
 
   /**
@@ -52,9 +60,9 @@ export class NlfLocalStorageService {
   **/
   public hasToken(valid?: boolean): boolean {
 
-    if(!!localStorage.getItem('auth-token')) {
+    if (!!localStorage.getItem('auth-token')) {
 
-      if( valid && Date.now() > +localStorage.getItem('auth-valid') ) {
+      if (valid && Date.now() > +localStorage.getItem('auth-valid')) {
         return false;
       }
 
@@ -70,7 +78,7 @@ export class NlfLocalStorageService {
   **/
   public getId(): number {
 
-    if(!!localStorage.getItem('auth-id')) {
+    if (!!localStorage.getItem('auth-id')) {
 
       return +localStorage.getItem('auth-id');
     }
@@ -103,7 +111,7 @@ export class NlfLocalStorageService {
   }
 
   public getOrs(): any {
-    if(this.hasOrs()) {
+    if (this.hasOrs()) {
       return JSON.parse(localStorage.getItem('ors'));
     }
     else {
@@ -120,7 +128,7 @@ export class NlfLocalStorageService {
       localStorage.removeItem('ors');
       return true;
     }
-    catch(e) {
+    catch (e) {
       return false;
     }
 
@@ -131,7 +139,7 @@ export class NlfLocalStorageService {
   **/
   public hasOrs(): boolean {
 
-    if(!!localStorage.getItem('ors')) {
+    if (!!localStorage.getItem('ors')) {
       return true;
     }
 

@@ -18,6 +18,8 @@ export class NlfUserClubSelectorComponent implements OnInit {
   public userClubs: string[];
   public selected: string;
 
+  dataReady = false;
+
   something = '';
 
   userClubChooser: FormControl;
@@ -65,6 +67,8 @@ export class NlfUserClubSelectorComponent implements OnInit {
         else {
           this.selected = this.defaultClub;
         }
+
+        this.dataReady = true;
 
       },
       err => console.error(err),

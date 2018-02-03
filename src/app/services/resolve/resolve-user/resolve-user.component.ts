@@ -68,7 +68,7 @@ export class NlfResolveUserComponent implements OnInit {
           data => this.fullname = data.fullname,
           err => this.fullname = 'Ukjent person',
           () => this.dataReady = true
-        )
+        );
       } else { // check in both and decide if link or not
 
         const optionsuser: ApiOptionsInterface = {

@@ -19,12 +19,12 @@ export class NlfAuthService {
 
   private message: string;
 
-  //ng2-idle
+  //n g2-idle
   idleState: string;
   timedOut: boolean = false;
   lastPing?: Date = null;
-  idleTimeout = 5; //seconds
-  logoutTimeout = 10; // Seconds before logging out after idleTimeout times out
+  idleTimeout = 29 * 60; //seconds
+  logoutTimeout = 60; // Seconds before logging out after idleTimeout times out
 
   public isAuthSubject = new BehaviorSubject<boolean>(this.hasToken());
 
@@ -91,9 +91,9 @@ export class NlfAuthService {
           Idle config!
           **/
           // sets an idle timeout of 5 seconds, for testing purposes.
-          this.idle.setIdle(20 * 60);
+          this.idle.setIdle(this.idleTimeout);
           // sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out.
-          this.idle.setTimeout(5 * 60);
+          this.idle.setTimeout(this.logoutTimeout);
           // sets the default interrupts, in this case, things like clicks, scrolls, touches to the document
           this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
 
@@ -151,6 +151,9 @@ export class NlfAuthService {
         this.loading = false;
         this.isAuthSubject.next(false);
         this.idleStop();
+        
+        // Do not work since no check for public pages
+        // this.router.navigate(['/error/', error.status]);
         return false;
       });
   }
