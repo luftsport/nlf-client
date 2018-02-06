@@ -1,3 +1,32 @@
-<p>
-  ors-editor-files works!
-</p>
+
+<nlf-ors-fallskjerm-report-files [files]="observation.files"></nlf-ors-fallskjerm-report-files>
+
+<div class="drop-container" ngFileDrop [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput"
+  [ngClass]="{ 'is-drop-over': dragOver }">
+  <h1>Drag &amp; Drop</h1>
+</div>
+
+<label class="upload-button">
+  <input type="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple> or choose file(s)
+</label>
+
+<button type="button" class="start-upload-btn" (click)="startUpload()">
+  Start Upload
+</button>
+
+<div class="upload-items">
+  <div class="upload-item" *ngFor="let f of ngxfiles; let i = index;">
+    <span class="filename">
+      <span>{{ f.name }} ({{ f.id }}) - {{ f.progress?.data?.percentage }}%</span>
+      <span>uploading with {{ f.progress?.data?.speedHuman }}</span>
+      <span>ETA {{ f.progress?.data?.etaHuman }}</span>
+    </span>
+    <div class="progress">
+      <span class="bar" [style.width]="f?.progress?.data?.percentage + '%'"></span>
+    </div>
+  </div>
+</div>
+
+<div *ngFor="let f of imagePreview">
+  <img [src]="f">
+</div>

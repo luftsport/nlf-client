@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NlfOrsEditorFilesComponent } from './ors-editor-files.component';
+import { OrsEditorHelpComponent } from './ors-editor-help.component';
 
-describe('NlfOrsEditorFilesComponent', () => {
-  let component: NlfOrsEditorFilesComponent;
-  let fixture: ComponentFixture<NlfOrsEditorFilesComponent>;
+describe('OrsEditorHelpComponent', () => {
+  let component: OrsEditorHelpComponent;
+  let fixture: ComponentFixture<OrsEditorHelpComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NlfOrsEditorFilesComponent ]
+      declarations: [ OrsEditorHelpComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NlfOrsEditorFilesComponent);
+    fixture = TestBed.createComponent(OrsEditorHelpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

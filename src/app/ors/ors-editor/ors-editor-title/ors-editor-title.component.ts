@@ -1,9 +1,10 @@
-import { ApiOptionsInterface, ApiTagList } from './../../../api/api.interface';
+import { ApiOptionsInterface, ApiObservationsItem, ApiTagList } from './../../../api/api.interface';
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { ApiTagsService } from '../../../api/api-tags.service';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { NlfOrsEditorService } from '../ors-editor.service';
 
 @Component({
   selector: 'nlf-ors-editor-title',
@@ -12,14 +13,15 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 })
 export class NlfOrsEditorTitleComponent implements OnInit {
 
-  @Input() tags;
-  @Input() group;
-  @Output() tagsChange: EventEmitter<any> = new EventEmitter<any>();
-
-  data = ['Fuck', 'Uffa'];
   apidata: any;
   populated = [];
-  constructor(private tagService: ApiTagsService, private http: HttpClient) {
+  observation: ApiObservationsItem;
+
+
+  constructor(private tagService: ApiTagsService, 
+              private http: HttpClient,
+              private subject: NlfOrsEditorService) {
+    this.subject.observableObservation.subscribe(observation => this.observation = observation);  
   }
 
   toUpper(value): string {
@@ -48,7 +50,7 @@ export class NlfOrsEditorTitleComponent implements OnInit {
         err => console.log(err)
       );
     } else if (item.tag === item._id) {
-      this.tagService.create({ tag: this.toUpper(item.tag), group: this.group, related: [] }).subscribe(
+      this.tagService.create({ tag: this.toUpper(item.tag), group: 'observation', related: [] }).subscribe(
         res => {
           this.populated[this.populated.length - 1] = { tag: res.tag, _id: res._id };
           this.tagService.freq(res._id, 1).subscribe(
@@ -90,12 +92,13 @@ export class NlfOrsEditorTitleComponent implements OnInit {
       }
     });
 
-    this.tagsChange.emit(tags);
+    this.observation.tags = tags;
+    this.subject.update(this.observation);
   }
 
   ngOnInit() {
 
-    this.populated = this.tags;
+    this.populated = this.observation.tags;
 
     // this.getTags('test').subscribe( data => console.log(data));
     let options: ApiOptionsInterface = {

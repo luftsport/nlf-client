@@ -1,19 +1,16 @@
 <form class="form-inline">
-    <div class="form-group">
-      <div class="input-group">
-        <input class="form-control" placeholder="yyyy-mm-dd"
-               name="dp" [(ngModel)]="date" [maxDate]="maxDate" (ngModelChange)="onChange($event.next)" ngbDatepicker #d="ngbDatepicker">
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
-            <fa name="calendar" fixed="true"></fa>
-          </button>
-        </div>
+  <div class="form-group">
+    <div class="input-group">
+      <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="date" [maxDate]="maxDate" (ngModelChange)="onChange($event.next)"
+        ngbDatepicker #d="ngbDatepicker">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+          <fa name="calendar" fixed="true"></fa>
+        </button>
       </div>
     </div>
-  </form>
-  <ngb-timepicker [(ngModel)]="time" [meridian]="meridian" (ngModelChange)="onChange($event.next)"></ngb-timepicker>
-  <hr>
-  {{ date | json }} og {{ time | json }}<br>
-  {{ maxDate }}
-  {{ when | json }}
-  <hr>
+  </div>
+</form>
+<ngb-timepicker [(ngModel)]="time" [meridian]="meridian" (ngModelChange)="onChange($event.next)"></ngb-timepicker>
+<hr> {{ date | json }} og {{ time | json }}
+<br> {{ maxDate }} {{ observation.when | json }}

@@ -2,7 +2,7 @@
   <span *ngFor="let t of config.observation.typesArr">
 
     <div class="form-check">
-      <input [(ngModel)]="type" class="form-check-input" (change)="onChange()" type="radio" name="type{{ t }}" id="type-{{ t }}" [value]="t" [checked]="t===type">
+      <input [(ngModel)]="observation.type" class="form-check-input" (change)="onChange()" type="radio" name="type{{ t }}" id="type-{{ t }}" [value]="t" [checked]="t===observation.type">
       <label class="form-check-label" for="type-{{ t }}">
         {{ t | nlfOrsType }}
       </label>

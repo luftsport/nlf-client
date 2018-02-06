@@ -1,5 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ApiObservationActionsInterface } from '../../../api/api.interface';
+import { ApiObservationActionsInterface, ApiObservationsItem } from '../../../api/api.interface';
+import { NlfOrsEditorService } from '../ors-editor.service';
+
+
 
 @Component({
   selector: 'nlf-ors-editor-actions',
@@ -8,58 +11,82 @@ import { ApiObservationActionsInterface } from '../../../api/api.interface';
 })
 export class NlfOrsEditorActionsComponent implements OnInit {
 
-  @Input() actions: ApiObservationActionsInterface;
-  @Output() actionsChange: EventEmitter<ApiObservationActionsInterface> = new EventEmitter<ApiObservationActionsInterface>();
+  //@Input() actions: ApiObservationActionsInterface;
+  //@Output() actionsChange: EventEmitter<ApiObservationActionsInterface> = new EventEmitter<ApiObservationActionsInterface>();
   actionCentral = '';
   actionLocal = '';
   dataReady = false;
+  observation: ApiObservationsItem;
+  /**
+  Mentions:
+  import { NlfOrsEditorService } from './../ors-editor.service';
+  list;
+  mconf = { triggerChar: '@', maxItems: 10, labelKey: 'fullname', mentionSelect: this.format };
 
-  constructor() { }
+  private data: NlfOrsEditorService
+  this.data.currentArr.subscribe(list => this.list = list);
+*/
+  constructor(private subject: NlfOrsEditorService) {
+    this.subject.observableObservation.subscribe(observation => this.observation = observation);
+
+  }
 
   ngOnInit() {
-    if (typeof this.actions === 'undefined') {
-      this.actions = {local: [], central: []};
+    if (typeof this.observation.actions === 'undefined') {
+      this.observation.actions = {local: [], central: []};
     }
 
-    if (typeof this.actions.local === 'undefined') {
-      this.actions.local = [];
+    if (typeof this.observation.actions.local === 'undefined') {
+      this.observation.actions.local = [];
     }
 
-    if (typeof this.actions.central === 'undefined') {
-      this.actions.central = [];
+    if (typeof this.observation.actions.central === 'undefined') {
+      this.observation.actions.central = [];
     }
 
     this.dataReady = true;
   }
 
+  /** Mentions
+  format(event) {
+    console.log(event);
+    return '<macro contenteditable="false" class="badge badge-info" id="' + event.id + '">' + event.fullname + '</macro>';
+  }
+  **/
+
   onChange(event) {
-    this.actionsChange.emit(event);
+    // this.observation.actionsChange.emit(event);
+    this.subject.update(this.observation);
   }
 
   addActionLocal(action) {
 
-    this.actions.local.push(action);
+    this.observation.actions.local.push(action);
     this.actionLocal = '';
-    this.actionsChange.emit(this.actions);
+    this.subject.update(this.observation);
+    // this.observation.actionsChange.emit(this.observation.actions);
   }
 
   addActionCentral(action) {
 
-    this.actions.central.push(action);
+    this.observation.actions.central.push(action);
     this.actionCentral = '';
-    this.actionsChange.emit(this.actions);
+    this.subject.update(this.observation);
+    // this.observation.actionsChange.emit(this.observation.actions);
   }
 
   removeActionLocal(index) {
 
-    this.actions.local.splice(index, 1);
-    this.actionsChange.emit(this.actions);
+    this.observation.actions.local.splice(index, 1);
+    this.subject.update(this.observation);
+    // this.observation.actionsChange.emit(this.observation.actions);
   }
 
   removeActionCentral(index) {
 
-    this.actions.central.splice(index, 1);
-    this.actionsChange.emit(this.actions);
+    this.observation.actions.central.splice(index, 1);
+    this.subject.update(this.observation);
+    // this.observation.actionsChange.emit(this.observation.actions);
   }
 
 

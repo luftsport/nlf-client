@@ -1,16 +1,18 @@
 import { ApiObservationsItem } from './../../api/api.interface';
 import { ApiObservationsService } from './../../api/api-observations.service';
-import { Component, OnInit, KeyValueDiffers, DoCheck } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NlfAlertService } from '../../services/alert/alert.service';
 import { ActivatedRoute } from '@angular/router';
 import { NlfComponent } from '../../nlf.component';
+import { NlfOrsEditorService } from './ors-editor.service';
+import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 
 @Component({
   selector: 'nlf-ors-editor',
   templateUrl: './ors-editor.component.html',
   styleUrls: ['./ors-editor.component.css']
 })
-export class NlfOrsEditorComponent implements OnInit, DoCheck {
+export class NlfOrsEditorComponent implements OnInit, OnDestroy {
 
   id: number | string;
   dataReady = false;
@@ -18,14 +20,40 @@ export class NlfOrsEditorComponent implements OnInit, DoCheck {
   differ: any;
   changes = false;
   initialized = false;
+  hotkeys: Hotkey | Hotkey[];
 
   constructor(private route: ActivatedRoute,
     private orsService: ApiObservationsService,
     private alertService: NlfAlertService,
+    private subject: NlfOrsEditorService,
     private app: NlfComponent,
-    private differs: KeyValueDiffers) {
+    private hotkeysService: HotkeysService
+    // private differs: KeyValueDiffers
+  ) {
+
     // Instantiate diff checking:
-    this.differ = this.differs.find({}).create();
+    // this.differ = this.differs.find({}).create();
+
+    // Instantiate our behavioursubject
+    this.subject.observableObservation.subscribe(
+      observation => {
+        this.observation = observation;
+        this.changed(observation);
+      },
+      err => console.log(err),
+      () => console.log('Done subject')
+
+    );
+
+    // Instantiate all hotkeys
+    this.hotkeys = this.hotkeysService.add(new Hotkey(['command+s', 'ctrl+s'], (event: KeyboardEvent): boolean => {
+      console.log('Save');
+      if (this.changes) {
+        this.save();
+      }
+      return false; // Prevent bubbling
+    }));
+
   }
 
   ngOnInit() {
@@ -34,11 +62,25 @@ export class NlfOrsEditorComponent implements OnInit, DoCheck {
       this.app.setTitle('NLF - ORS Editor #' + this.id);
       this.getData();
     });
+  }
 
+  ngOnDestroy() {
+    this.hotkeysService.remove(this.hotkeys);
+  }
+
+  changed(data) {
+    console.log('Changed: ', data);
+    if (this.initialized) {
+      this.changes = true;
+    }
+  }
+
+  handleKey(event) {
+    console.log(event);
   }
 
   save() {
-    let tmp = {...this.observation};
+    let tmp = { ...this.observation };
     const tmp_id = this.observation._id;
     const tmp_etag = this.observation._etag;
     // if (!!tmp._id) { delete tmp._id; }
@@ -53,7 +95,7 @@ export class NlfOrsEditorComponent implements OnInit, DoCheck {
     if (!!tmp.reporter) { delete tmp.reporter; }
     if (!!tmp.club) { delete tmp.club; }
     if (!!tmp.owner) { delete tmp.owner; }
-    if (!!tmp.workflow) { try {delete tmp.workflow; } catch (e) {} }
+    if (!!tmp.workflow) { try { delete tmp.workflow; } catch (e) { } }
     // if (!!tmp._meta) { delete tmp._meta; }
 
     this.orsService.save(tmp_id, tmp, tmp_etag).subscribe(
@@ -68,50 +110,51 @@ export class NlfOrsEditorComponent implements OnInit, DoCheck {
     );
   }
 
-
-ngDoCheck() {
-  if (this.dataReady) {
-    const change = this.differ.diff(this.observation);
-    if (change) {
-      console.log('Changes:');
-      console.log(change);
-      change.forEachChangedItem(r => console.log('changed ', r.currentValue));
-      change.forEachAddedItem(r => console.log('added ' + r.currentValue));
-      change.forEachRemovedItem(r => console.log('removed ' + r.currentValue));
-
-      // Need to let first change pass as it's init
-      if (this.initialized) {
-        this.changes = true;
+  /**
+    ngDoCheck() {
+      if (this.dataReady) {
+        const change = this.differ.diff(this.observation);
+        if (change) {
+          console.log('Changes:');
+          console.log(change);
+          change.forEachChangedItem(r => console.log('changed ', r.currentValue));
+          change.forEachAddedItem(r => console.log('added ' + r.currentValue));
+          change.forEachRemovedItem(r => console.log('removed ' + r.currentValue));
+  
+          // Need to let first change pass as it's init
+          if (this.initialized) {
+            this.changes = true;
+          } else {
+            this.initialized = true;
+          }
+        }
       } else {
-        this.initialized = true;
+        // const change = this.differ.diff(this.observation);
+        this.changes = false;
       }
+  
     }
-  } else {
-    // const change = this.differ.diff(this.observation);
-    this.changes = false;
-  }
-
-}
-
+   */
   public getData() {
-  this.dataReady = false;
+    this.dataReady = false;
 
-  this.orsService.get(this.id).subscribe(
-    data => {
-      this.observation = data;
+    this.orsService.get(this.id).subscribe(
+      data => {
 
-      // Make some defaults:
-      if (typeof this.observation.rating === 'undefined') {
-        this.observation.rating = {actual: 1, potential: 1};
-      }
-      // this.observation.tags = ['test', '1234'];
-
-    },
-    err => {
-      this.alertService.error(err.message);
-    },
-    () => this.dataReady = true
-  );
-}
+        this.observation = data;
+        this.subject.update(this.observation);
+        this.initialized = true;
+        // Make some defaults:
+        if (typeof this.observation.rating === 'undefined') {
+          this.observation.rating = { actual: 1, potential: 1 };
+        }
+      },
+      err => {
+        this.alertService.error(err.message);
+        this.initialized = false;
+      },
+      () => this.dataReady = true
+    );
+  }
 
 }

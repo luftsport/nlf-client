@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, TemplateRef } from '@angular/core';
-import { ApiObservationRatingInterface } from '../../../api/api.interface';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ApiObservationRatingInterface, ApiObservationsItem } from '../../../api/api.interface';
+import { NlfOrsEditorService } from '../ors-editor.service';
 
 @Component({
   selector: 'nlf-ors-editor-rating',
@@ -9,27 +9,20 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class NlfOrsEditorRatingComponent implements OnInit {
 
-  @Input() rating: ApiObservationRatingInterface;
-  @Output() ratingChange: EventEmitter<ApiObservationRatingInterface> = new EventEmitter<ApiObservationRatingInterface>();
-
-  otherRating: ApiObservationRatingInterface;
+  observation: ApiObservationsItem;
 
   modalRef;
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private subject: NlfOrsEditorService) {
+    this.subject.observableObservation.subscribe(observation => this.observation = observation);
+  }
 
   ngOnInit() {
-    this.otherRating = Object.assign({}, this.rating);
   }
 
   onChange(event) {
-    this.otherRating = Object.assign({}, this.rating);
-
-    this.ratingChange.emit(this.rating);
-
+    console.log('Rating updating now oboy');
+    this.subject.update(this.observation);
   }
 
-  openModal(template: TemplateRef<any>) {
-   this.modalRef = this.modalService.open(template, {size: 'lg'});
-  }
 }

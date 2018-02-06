@@ -1,4 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { NlfOrsEditorService } from '../ors-editor.service';
+import { ApiObservationsItem } from '../../../api/api.interface';
 
 @Component({
   selector: 'nlf-ors-editor-when',
@@ -7,33 +9,34 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class NlfOrsEditorWhenComponent implements OnInit {
 
-  @Input() when: Date;
-  @Output() whenChange: EventEmitter<Date> = new EventEmitter<Date>();
+  observation: ApiObservationsItem;
 
   date: { year: number, month: number, day: number };
   time: { hour: number, minute: number, second?: number };
   maxDate: { year: number, month: number, day: number };
 
-  constructor() { }
+  constructor(private subject: NlfOrsEditorService) {
+    this.subject.observableObservation.subscribe(observation => this.observation = observation);
+  }
 
   ngOnInit() {
 
-    if (!(this.when instanceof Date)) {
-      this.when = new Date(this.when);
+    if (!(this.observation.when instanceof Date)) {
+      this.observation.when = new Date(this.observation.when);
     }
     const now: Date = new Date();
     this.maxDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
-    this.date = { year: this.when.getFullYear(), month: this.when.getMonth() + 1, day: this.when.getDate() };
-    this.time = { hour: this.when.getHours(), minute: this.when.getMinutes() };
+    this.date = { year: this.observation.when.getFullYear(), month: this.observation.when.getMonth() + 1, day: this.observation.when.getDate() };
+    this.time = { hour: this.observation.when.getHours(), minute: this.observation.when.getMinutes() };
 
   }
 
   onChange(event): void {
-    // this.whenChange.emit(this.type);
+    // this.observation.whenChange.emit(this.type);
     console.log(this.date);
     console.log(this.time);
-    this.when = new Date(this.date.year + '-' + this.date.month + '-' + this.date.day + 'T' + this.time.hour + ':' + this.time.minute + ':00.000000Z');
-    console.log(this.when);
-    this.whenChange.emit(this.when);
+    this.observation.when = new Date(this.date.year + '-' + this.date.month + '-' + this.date.day + 'T' + this.time.hour + ':' + this.time.minute + ':00.000000Z');
+    console.log(this.observation.when);
+    this.subject.update(this.observation);
   }
 }

@@ -1,5 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { NLF_CONFIG, NlfConfig } from '../../../nlf-config.module';
+import { NlfOrsEditorService } from '../ors-editor.service';
+import { ApiObservationsItem } from '../../../api/api.interface';
 
 @Component({
   selector: 'nlf-ors-editor-type',
@@ -8,13 +10,17 @@ import { NLF_CONFIG, NlfConfig } from '../../../nlf-config.module';
 })
 export class NlfOrsEditorTypeComponent implements OnInit {
 
-  @Input() type: string;
-  @Output() typeChange: EventEmitter<any> = new EventEmitter<any>();
+  observation: ApiObservationsItem;
 
-  constructor(@Inject(NLF_CONFIG) private config: NlfConfig) {}
+  constructor(@Inject(NLF_CONFIG) private config: NlfConfig,
+              private subject: NlfOrsEditorService) {
+    
+    this.subject.observableObservation.subscribe(observation => this.observation = observation);
+            
+  }
 
   onChange(): void {
-    this.typeChange.emit(this.type);
+    this.subject.update(this.observation);
   }
 
   ngOnInit() {

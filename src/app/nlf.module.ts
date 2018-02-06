@@ -8,13 +8,18 @@ import { HttpModule } from '@angular/http'; // NB ONLY FOR ng2-idle until ng5 su
 
 // Third party
 import { NgProgressModule } from '@ngx-progressbar/core';
-import { NgProgressHttpClientModule } from '@ngx-progressbar/http-client';
+import { NgProgressHttpModule } from '@ngx-progressbar/http';
+// import { NgProgressRouterModule } from '@ngx-progressbar/router';
 import { TableModule } from 'ngx-easy-table';
 // import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
 import { MomentModule } from 'angular2-moment'; // optional, provides moment-style pipes for date formatting
 import { NgPipesModule } from 'angular-pipes'; // Angular pise, love them!
 import { AgmCoreModule } from '@agm/core';
+import { HotkeyModule } from 'angular2-hotkeys';
+
+// File uploader
+import { NgUploaderModule } from 'ngx-uploader';
 
 // CHarting
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -150,6 +155,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 // ORS EDITOR
 import { NlfOrsEditorService } from './ors/ors-editor/ors-editor.service';
+import { NlfOrsEditorInvolvedService } from './ors/ors-editor/ors-editor-involved.service';
 import { NlfOrsEditorComponent } from './ors/ors-editor/ors-editor.component';
 import { NlfOrsEditorTitleComponent } from './ors/ors-editor/ors-editor-title/ors-editor-title.component';
 import { NlfOrsEditorTypeComponent } from './ors/ors-editor/ors-editor-type/ors-editor-type.component';
@@ -160,11 +166,16 @@ import { NlfOrsEditorPeopleComponent } from './ors/ors-editor/ors-editor-people/
 import { NlfOrsEditorActionsComponent } from './ors/ors-editor/ors-editor-actions/ors-editor-actions.component';
 import { NlfOrsEditorAskComponent } from './ors/ors-editor/ors-editor-ask/ors-editor-ask.component';
 import { NlfOrsEditorFlagsComponent } from './ors/ors-editor/ors-editor-flags/ors-editor-flags.component';
+import { NlfOrsEditorFilesComponent } from './ors/ors-editor/ors-editor-files/ors-editor-files.component';
+import { NlfOrsEditorHelpComponent } from './ors/ors-editor/ors-editor-help/ors-editor-help.component';
+
 // CONFIG
 import { NlfConfigModule } from './nlf-config.module';
 import { MentionModule } from 'angular-mentions/mention';
 import { ContenteditableDirective } from 'ng-contenteditable';
 import { ApiClubsService } from './api/api-clubs.service';
+
+// Do not work as of yet!!!
 import { NlfErrorComponent } from './error/error.component';
 
 
@@ -245,8 +256,11 @@ import { NlfErrorComponent } from './error/error.component';
     NlfOrsEditorActionsComponent,
     NlfOrsEditorAskComponent,
     NlfOrsEditorFlagsComponent,
+    NlfOrsEditorFilesComponent,
+    NlfOrsEditorHelpComponent,
     NlfErrorComponent,
-    ContenteditableDirective
+    ContenteditableDirective,
+
   ],
   imports: [
     BrowserModule,
@@ -256,7 +270,8 @@ import { NlfErrorComponent } from './error/error.component';
     ReactiveFormsModule,
     NlfConfigModule, // Config module
     NgProgressModule.forRoot(),
-    NgProgressHttpClientModule,
+    NgProgressHttpModule,
+    // NgProgressRouterModule,
     NgPipesModule,
     FontAwesomeModule, // ngx-icons
     WeatherIconsModule, // ngx-icons
@@ -272,6 +287,8 @@ import { NlfErrorComponent } from './error/error.component';
     TagInputModule, // ngx-chips
     MentionModule, // angular-mentions
     BrowserAnimationsModule,
+    NgUploaderModule,
+    HotkeyModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBW1IdM-nFGiwwfP4H2sJg5YiromIuysJ8'
     }),
@@ -299,6 +316,7 @@ import { NlfErrorComponent } from './error/error.component';
               NlfAuthService,
               NlfLocalStorageService,
               NlfOrsEditorService,
+              NlfOrsEditorInvolvedService,
               {provide: HTTP_INTERCEPTORS,
                useClass: NlfAuthInterceptor,
                multi: true},

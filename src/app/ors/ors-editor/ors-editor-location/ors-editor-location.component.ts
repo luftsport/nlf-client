@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NlfOrsEditorService } from '../ors-editor.service';
+import { ApiObservationsItem } from '../../../api/api.interface';
 
 @Component({
   selector: 'app-ors-editor-location',
@@ -7,7 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrsEditorLocationComponent implements OnInit {
 
-  constructor() { }
+  observation: ApiObservationsItem;
+
+  constructor(private subject: NlfOrsEditorService) {
+    this.subject.observableObservation.subscribe(observation => this.observation = observation);
+
+    // this.subject.update(this.observation);
+  }
 
   ngOnInit() {
   }

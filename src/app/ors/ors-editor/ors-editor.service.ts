@@ -1,40 +1,38 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-//import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { ApiObservationsItem } from '../../api/api.interface';
 
 @Injectable()
 export class NlfOrsEditorService {
-  /**
-   * Provides a behavioursubject for sharing a list of persons
-   * Used by the people component getting people into the observation.
-   * For every person that is and is added the subject updates accordingly
-   * Removing persons will not affect the subject since our menitions
-   * module do not like it. HI is not added even if is regarded a person in the
-   * observation.
-   */
 
-  private involvedList = new BehaviorSubject<Object>({});
-  private involvedArr = new BehaviorSubject<Array<Object>>([]);
-  // private involvedList = new ReplaySubject<Object>(1);
 
-  currentList = this.involvedList.asObservable(); // For people to subscribe
-  currentArr = this.involvedArr.asObservable(); // For mentions to subscribe
+  private observation = new BehaviorSubject<ApiObservationsItem>({id: 0, when: new Date(), club: 'NLF', location: {}, owner: 0, reporter: 0 });
+
+  observableObservation = this.observation.asObservable();
 
   constructor() { }
 
-  public changeArr(list: Array<Object>) {
-    //const unique = [...Array.from(new Set(list.map((item: any) => item.id)))];
-    let flags = [];
-    let output = [];
+  public update(observation: ApiObservationsItem) {
 
-    for (let i = 0; i < list.length; i++) {
-      if (!!flags[list[i]['id']]) {
-        continue;
-      }
-      flags[list[i]['id']] = true;
-      output.push(list[i]);
-    }
-    this.involvedArr.next(output);
+    this.observation.next(observation);
   }
 
 }
+
+/** Cut'n paste stuff
+import { NlfOrsEditorService } from '../ors-editor.service';
+import { ApiObservationsItem } from '../../../api/api.interface';
+, ApiObservationsItem
+
+observation: ApiObservationsItem;
+
+constructor(private subject: NlfOrsEditorService) {
+    this.subject.observableObservation.subscribe(observation => this.observation = observation);
+  }
+
+
+  this.subject.update(this.observation);
+
+
+
+ */

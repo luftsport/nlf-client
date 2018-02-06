@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { ApiOptionsInterface, ApiObservationOrganizationInterface } from '../../../api/api.interface';
+import { ApiObservationsItem, ApiOptionsInterface, ApiObservationOrganizationInterface } from '../../../api/api.interface';
 import { ApiNlfUserService } from '../../../api/api-nlf-user.service';
 import { ApiUserService } from '../../../api/api-user.service';
+import { NlfOrsEditorInvolvedService } from '../ors-editor-involved.service';
 import { NlfOrsEditorService } from '../ors-editor.service';
 
 interface ObservationPeople {
@@ -38,8 +39,8 @@ export class NlfOrsEditorPeopleComponent implements OnInit {
    * data?: {licenses?:, membership?:, gear?:}
    * 
    */
-  @Input() people: Pp[];
-  @Output() peopleChange: EventEmitter<Pp[]> = new EventEmitter<Pp[]>();
+  observation: ApiObservationsItem;
+  @Input() who: ObservationPeople[]; // = 'involved' || 'organization.hl' || 'organization.hm' || 'organization.hfl' || 'organization.pilot';
   items = [];
   dataReady = false;
 
@@ -48,21 +49,24 @@ export class NlfOrsEditorPeopleComponent implements OnInit {
 
 
   constructor(
+    private subject: NlfOrsEditorService,
     private http: HttpClient,
-    private data: NlfOrsEditorService,
+    private data: NlfOrsEditorInvolvedService,
     private userNlfService: ApiNlfUserService,
     private userService: ApiUserService) {
 
     // Subscribe to behavioursubject:
     this.data.currentArr.subscribe(list => this.list = list);
+    // Subscribe to observation
+    this.subject.observableObservation.subscribe(observation => this.observation = observation);
 
   }
 
   ngOnInit() {
 
-    if (!!this.people) {
+    if (!!this.who) {
       // Build the id, fullname mapping
-      this.people.forEach((item, index) => {
+      this.who.forEach((item, index) => {
         console.log(item);
 
         if (item.id < 0 && !!item.tmpname) {
@@ -89,7 +93,7 @@ export class NlfOrsEditorPeopleComponent implements OnInit {
         }
       }); // End forEach
     } else {
-      this.people = [];
+      this.who = [];
       this.items = [];
       // Update our behavioursubject:
       this.data.changeArr(this.list);
@@ -98,6 +102,8 @@ export class NlfOrsEditorPeopleComponent implements OnInit {
     this.dataReady = true;
 
   }
+
+  private add
 
   /**
    * @TODO: add relevant information about person here in people
@@ -113,7 +119,7 @@ export class NlfOrsEditorPeopleComponent implements OnInit {
     if (!(typeof event.id === 'number')) {
       const d = new Date();
       const id = -1 * d.getMilliseconds();
-      this.people.push({ id: id, tmpname: event.fullname });
+      this.who.push({ id: id, tmpname: event.fullname });
 
     } else {
 
@@ -137,25 +143,26 @@ export class NlfOrsEditorPeopleComponent implements OnInit {
             );
           },
           err => console.log(err),
-          () => this.people.push(data_tmp)
+          () => this.who.push(data_tmp)
         );
       }
 
     }
     this.list.push({ id: event.id, fullname: event.fullname });
     this.data.changeArr(this.list);
-    this.peopleChange.emit(this.people);
+    this.subject.update(this.observation);
+
 
   }
 
   public onRemove(event) {
     // let newList = []; // new placeholder
-    this.people.forEach((item, index) => {
+    this.who.forEach((item, index) => {
 
       if (item.id === event.id) {
-        this.people.splice(index, 1);
-        if (this.people === [null, null]) {
-          this.people = [];
+        this.who.splice(index, 1);
+        if (this.who === [null, null]) {
+          this.who = [];
         }
       }
       // else {
@@ -169,7 +176,8 @@ export class NlfOrsEditorPeopleComponent implements OnInit {
     // Emit to parent Output
     //delete this.list[event.id];
 
-    this.peopleChange.emit(this.people);
+    this.subject.update(this.observation);
+
 
   }
 

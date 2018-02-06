@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
-import { ApiObservationAskInterface } from '../../../api/api.interface';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { ApiObservationAskInterface, ApiObservationsItem } from '../../../api/api.interface';
 
 // import { Observable } from 'rxjs/Observable';
 // import { Subject } from 'rxjs/Subject';
@@ -7,7 +7,9 @@ import { ApiObservationAskInterface } from '../../../api/api.interface';
 
 import { HttpClient } from '@angular/common/http';
 import { ApiOptionsInterface, ApiObservationOrganizationInterface } from '../../../api/api.interface';
-import { NlfOrsEditorService } from './../ors-editor.service';
+import { NlfOrsEditorInvolvedService } from './../ors-editor-involved.service';
+import { NlfOrsEditorService } from '../ors-editor.service';
+
 
 @Component({
   selector: 'nlf-ors-editor-ask',
@@ -16,52 +18,22 @@ import { NlfOrsEditorService } from './../ors-editor.service';
 })
 export class NlfOrsEditorAskComponent implements OnInit {
 
-  @Input() ask;
-  @Input() state;
-  @Input() involved?;
-  @Output() askChange: EventEmitter<ApiObservationAskInterface> = new EventEmitter<ApiObservationAskInterface>();
-
   verbose = true;
-
-
-
-  // @TODO move to NlfConfig
-  askValues = [
-    { key: 'knowledge', label: 'Kunnskaper', nick: 'K' },
-    { key: 'skills', label: 'Ferdigheter', nick: 'F' },
-    { key: 'attitude', label: 'Holdninger', nick: 'H' }
-  ];
-
-  items_multi: string[] | any = {
-    '@': [{ name: 'Einar Huseby', id: 45199 },
-    { name: 'Knut Asgeir Lien', id: 6777 },
-    { name: 'Håkon Søgnen', id: 6777 },
-    { name: 'Jan Wang', id: 5766 }],
-    '#': [{ id: 566, name: 'Reservetrekk' }, { id: 77, name: 'Falt ned skrent' }]
-  };
-
-  items = [{ fullname: 'Einar Huseby', id: 45199 },
-  { fullname: 'Håkon Søgnen', id: 6777 },
-  { fullname: 'Knut Asgeir Lien', id: 6777 },
-  { fullname: 'Jan Wang', id: 5766 }];
   mconf = { triggerChar: '@', maxItems: 10, labelKey: 'fullname', mentionSelect: this.format };
 
-  // httpItems: Observable<any[]>;
-  // private searchTermStream = new Subject();
-
-  list; // : Object;
-  obs;
+  list; // mentions list
+  observation: ApiObservationsItem;
 
   constructor(private http: HttpClient,
-              private data: NlfOrsEditorService) { 
-                this.data.currentArr.subscribe(list => this.list = list);
-                this.data.currentList.subscribe(obs => this.obs = obs);
+              private data: NlfOrsEditorInvolvedService,
+              private subject: NlfOrsEditorService) {
+
+                this.data.currentArr.subscribe(list => this.list = list); // Involved list
+                this.subject.observableObservation.subscribe(observation => this.observation = observation); // Observation
               }
 
   ngOnInit() {
-    
-
-    /** 
+    /**
     this.httpItems = this.searchTermStream
       .debounceTime(300)
       .distinctUntilChanged()
@@ -71,16 +43,16 @@ export class NlfOrsEditorAskComponent implements OnInit {
 
 
   isPositive(what) {
-    if (!this.ask) { return false; }
-    return (this.ask[what] > 0);
+    if (!this.observation.ask) { return false; }
+    return (this.observation.ask[what] > 0);
   }
   isNegative(what) {
-    if (!this.ask) { return false; }
-    return (this.ask[what] < 0);
+    if (!this.observation.ask) { return false; }
+    return (this.observation.ask[what] < 0);
   }
   isNeutral(what) {
-    if (!this.ask) { return true; }
-    return (this.ask[what] === 0);
+    if (!this.observation.ask) { return true; }
+    return (this.observation.ask[what] === 0);
   }
 
   search(event) {
@@ -93,20 +65,25 @@ export class NlfOrsEditorAskComponent implements OnInit {
     return '<macro contenteditable="false" class="badge badge-info" id="' + event.id + '">' + event.fullname + '</macro>';
   }
 
+  textChange() {
+    this.subject.update(this.observation);
+    console.log('Changed text ask');
+  }
+
   flip(what) {
 
-    if (typeof this.ask[what] === 'undefined' || this.ask[what] === 0) {
-      this.ask[what] = -1;
+    if (typeof this.observation.ask[what] === 'undefined' || this.observation.ask[what] === 0) {
+      this.observation.ask[what] = -1;
 
-    } else if (this.ask[what] > 0) {
-      this.ask[what] = 0;
+    } else if (this.observation.ask[what] > 0) {
+      this.observation.ask[what] = 0;
 
-    } else if (this.ask[what] < 0) {
-      this.ask[what] = 1;
+    } else if (this.observation.ask[what] < 0) {
+      this.observation.ask[what] = 1;
 
     }
 
-    this.askChange.emit(this.ask);
+    this.subject.update(this.observation);
   }
 
   /**

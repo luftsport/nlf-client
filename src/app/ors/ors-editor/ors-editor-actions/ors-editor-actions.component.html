@@ -12,8 +12,8 @@
   </form>
   <div class="clearfix"></div>
   <table class="table table-striped table-sm table-hover">
-    <tr *ngFor="let a of actions.local; let idx = index">
-      <td><strong>{{idx+1}}</strong>&nbsp;{{a}}</td>
+    <tr *ngFor="let a of observation.actions.local; let idx = index">
+      <td><strong>{{idx+1}}.</strong>&nbsp;{{a}}</td>
       <td class="text-right">
         <i class="fa fa-times fa-fw pointer" (click)="removeActionLocal(idx)"></i>
       </td>
@@ -35,8 +35,8 @@
   </form>
   <div class="clearfix"></div>
   <table class="table table-striped table-sm table-hover">
-    <tr *ngFor="let a of actions.central; let idx = index">
-      <td><strong>{{idx+1}}</strong>&nbsp;{{a}}</td>
+    <tr *ngFor="let a of observation.actions.central; let idx = index">
+      <td><strong>{{idx+1}}.</strong>&nbsp;{{a}}</td>
       <td class="text-right">
         <i class="fa fa-times fa-fw pointer" (click)="removeActionCentral(idx)"></i>
       </td>
