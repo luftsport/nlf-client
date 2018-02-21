@@ -1,16 +1,40 @@
 <!-- THUMBNAILS -->
 
-<div *ngIf="dataReady" class="row text-center text-lg-left">
+<div class="row text-center text-lg-left">
 
   <div *ngFor="let t of thumbnails" class="col-lg-3 col-md-4 col-xs-6">
-    <a href="#" class="d-block mb-4 h-100">
+    <span (click)="openModal(modalImage, t)" class="d-block mb-4 h-100 pointer">
       <img class="img-fluid img-thumbnail" [src]="domSanitizer.bypassSecurityTrustUrl(t.src)" alt="{{ t.filename }}">
-    </a>
+    </span>
   </div>
 </div>
 
 <!-- /THUMBNAILS -->
 
 <div *ngIf="!dataReady">
-  <fa name="spinner" animation="pulse" [size]="1"></fa>
+  <fa name="spinner" animation="pulse" [size]="1" fixed="true"></fa>Loading thumbnails...
 </div>
+
+<!-- Modal -->
+<ng-template #modalImage>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      {{ viewImageName }}</h4>
+
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    
+    <img *ngIf="!viewImageLoading" class="img-fluid" [src]="domSanitizer.bypassSecurityTrustUrl(viewimage.src)" alt="file">
+    
+    <span *ngIf="!!viewImageLoading" class="text-center">
+      <fa name="spinner" animation="pulse" size="3" fixed="true"></fa>
+    </span>
+  
+  </div>
+  <div class="modal-footer">
+    <a class="btn btn-secondary" (click)="modalRef.close()">Close</a>
+  </div>
+</ng-template>

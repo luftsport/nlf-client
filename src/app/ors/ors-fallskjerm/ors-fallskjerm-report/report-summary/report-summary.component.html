@@ -96,8 +96,8 @@
         <div *ngFor="let v of observation.involved">
           <div *ngIf="!!v.verdict">
             <div *ngIf="!!v.verdict.fu" class="badge badge-warning">Farlig Ukontrollert </div>
-            <div *ngIf="!!v.verdict.mh" class="badge badge-danger">Permanent Hoppforbud </div>
-            <div *ngIf="!!v.verdict.ph" class="badge badge-danger">Midlertidig Hoppforbud</div>
+            <div *ngIf="!!v.verdict.ph" class="badge badge-danger">Permanent Hoppforbud </div>
+            <div *ngIf="!!v.verdict.mh" class="badge badge-danger">Midlertidig Hoppforbud</div>
           </div>
         </div>
       </div>

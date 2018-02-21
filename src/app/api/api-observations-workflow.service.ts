@@ -14,7 +14,7 @@ export class ApiObservationsWorkflowService extends ApiRestService {
 
   public getWorkflowState(id: string | number, options?: ApiOptionsInterface): Observable<ApiObservationsItem> {
 
-    return this.getItem(this.relativeUrl + id + 'state', id, options);
+    return this.getItem(this.relativeUrl + id, '/state', options);
   }
 
   public getWorkflowTodo(options?: ApiOptionsInterface): Observable<ApiObservationsList> {

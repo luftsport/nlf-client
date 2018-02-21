@@ -1,40 +1,39 @@
 <div *ngIf="dataReady">
 
-	<div class="card mb-6">
-		<h5 class="card-header">
+	<header class="nlf-sticky-toolbar">
 
-			<div class="container">
+		<div class="container lead">
 			<hotkeys-cheatsheet title="Hotkeys Rock!"></hotkeys-cheatsheet>
-				<!-- TITLE -->
+			<!-- TITLE -->
 
-				<!-- <fa name="file-text-o" fixed="true"></fa>&nbsp;-->
-				<!-- {{ data.tags | nlfOrsTags: ' / '}} -->
-				#{{ data.id }}
-				<nlf-resolve-observation-tags [tags]="data.tags" link="true" seperator="/"></nlf-resolve-observation-tags>&nbsp;
-				<!-- /TITLE -->
-				<!-- RATING -->
-				<span *ngIf="!!data.rating" class="badge badge-{{data.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ data.rating | nlfOrsRatingCalc }}</span>
+			<!-- <fa name="file-text-o" fixed="true"></fa>&nbsp;-->
+			<!-- {{ data.tags | nlfOrsTags: ' / '}} -->
+			#{{ data.id }}
+			<nlf-resolve-observation-tags [tags]="data.tags" link="true" seperator="/"></nlf-resolve-observation-tags>&nbsp;
+			<!-- /TITLE -->
+			<!-- RATING -->
+			<span *ngIf="!!data.rating" class="badge badge-{{data.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ data.rating | nlfOrsRatingCalc }}</span>
 
 
-				<!-- DIFFERENT VERSION -->
-				<span *ngIf="data._version !== data._latest_version" class="badge badge-warning">
-					<a [routerLink]="['/ors/fallskjerm/report/', data.id]">v{{ data._version }} av {{ data._latest_version }}</a>
-				</span>
-				<!-- /DIFFERENT VERSION -->
+			<!-- DIFFERENT VERSION -->
+			<span *ngIf="data._version !== data._latest_version" class="badge badge-warning">
+				<a [routerLink]="['/ors/fallskjerm/report/', data.id]">v{{ data._version }} av {{ data._latest_version }}</a>
+			</span>
+			<!-- /DIFFERENT VERSION -->
 
-				<!-- RATING TEST 
+			<!-- RATING TEST 
 			<rating [ngModel]="data.rating.actual" max="8" readonly="true"></rating> / <rating [ngModel]="data.rating.potential" max="8" readonly="true"></rating> 
 			 /RATING TEST -->
 
-				<!-- WORKFLOW STATE -->
-				<span class="pull-right">
-					<nlf-resolve-observation-state [state]="data.workflow.state" icon="true"></nlf-resolve-observation-state>
-				</span>
-				<!-- /WORKFLOW STATE -->
-			</div>
-		</h5>
-		<!-- /END HEADER -->
-
+			<!-- WORKFLOW STATE -->
+			<span class="pull-right">
+				<nlf-resolve-observation-state [state]="data.workflow.state" icon="true"></nlf-resolve-observation-state>
+			</span>
+			<!-- /WORKFLOW STATE -->
+		</div>
+	</header>
+	<!-- /END HEADER -->
+	<div class="card">
 		<div class="card-body">
 
 			<div class="container">

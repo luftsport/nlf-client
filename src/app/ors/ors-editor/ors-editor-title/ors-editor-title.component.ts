@@ -21,7 +21,7 @@ export class NlfOrsEditorTitleComponent implements OnInit {
   constructor(private tagService: ApiTagsService, 
               private http: HttpClient,
               private subject: NlfOrsEditorService) {
-    this.subject.observableObservation.subscribe(observation => this.observation = observation);  
+    this.subject.observableObservation.subscribe(observation => this.observation = observation);
   }
 
   toUpper(value): string {

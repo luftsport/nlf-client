@@ -11,16 +11,20 @@
   </div>
 
   <div class="clearfix"></div>
-
-  <ul class="timeline" *ngIf="components?.length > 0">
+  
+  
+  <button *ngIf="components?.length > 0" type="button" class="btn btn-outline-primary" (click)="componentCollapsed = !componentCollapsed"
+          [attr.aria-expanded]="!componentCollapsed" aria-controls="collapseid">Collapse</button>
+  
+          <ul class="timeline" *ngIf="components?.length > 0">
 
 
     <li *ngFor="let c of components; let i = index">
 
       <div class="timeline-badge" [ngClass]="{'bg-secondary': !!c.flags.barrier,
-                                            'bg-info': !!c.flags.incident,
-                                            'bg-warning': !!c.flags.cause || !!c.flags.root_cause, 
-                                            'bg-danger': !!c.flags.consequence || !!c.flags.final_consequence}">
+                                              'bg-info': !!c.flags.incident,
+                                              'bg-warning': !!c.flags.cause || !!c.flags.root_cause, 
+                                              'bg-danger': !!c.flags.consequence || !!c.flags.final_consequence}">
         {{ i+1 }}
       </div>
 
@@ -48,12 +52,19 @@
           </h4>
           <h4 class="timeline-title">
             {{ c.what }}
-            <nlf-resolve-observation-tags [tags]="c.tags" link="true"></nlf-resolve-observation-tags>
+            <!-- @TODO remove tags -->
+            <!--<nlf-resolve-observation-tags [tags]="c.tags" link="true"></nlf-resolve-observation-tags>-->
 
           </h4>
         </div>
-        <div class="timeline-body">
 
+        <div class="timeline-body" *ngIf="componentCollapsed">
+          <span *ngIf="!!c.attributes">
+            <nlf-resolve-observation-component-attributes [attributes]="c.attributes" badge="true"></nlf-resolve-observation-component-attributes>
+          </span>
+        </div>
+
+        <div class="timeline-body" id="collapseide" [ngbCollapse]="componentCollapsed">
 
           <dl class="row">
             <dt class="col-sm-3">Hvem:</dt>

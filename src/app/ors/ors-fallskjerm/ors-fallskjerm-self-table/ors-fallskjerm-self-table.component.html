@@ -3,9 +3,9 @@
 
         <ng-template let-row>
             <td class="ngx-easy-table-small">
-                    <a *ngIf="row.workflow.state==='closed'" [routerLink]="['/ors/fallskjerm/report/', row.id]">{{ row.id }}</a>
-                    <a *ngIf="row.workflow.state!=='closed'" [routerLink]="['/ors/fallskjerm/edit/', row.id]">{{ row.id }}</a>
-                </td>
+                <a *ngIf="row.workflow.state==='closed'" [routerLink]="['/ors/fallskjerm/report/', row.id]">{{ row.id }}</a>
+                <a *ngIf="row.workflow.state!=='closed'" [routerLink]="['/ors/fallskjerm/edit/', row.id]">{{ row.id }}</a>
+            </td>
             <td class="ngx-easy-table-small">
                 {{ row.when | amTimeAgo }}
             </td>

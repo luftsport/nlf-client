@@ -168,6 +168,8 @@ import { NlfOrsEditorAskComponent } from './ors/ors-editor/ors-editor-ask/ors-e
 import { NlfOrsEditorFlagsComponent } from './ors/ors-editor/ors-editor-flags/ors-editor-flags.component';
 import { NlfOrsEditorFilesComponent } from './ors/ors-editor/ors-editor-files/ors-editor-files.component';
 import { NlfOrsEditorHelpComponent } from './ors/ors-editor/ors-editor-help/ors-editor-help.component';
+import { NlfOrsEditorLocationComponent } from './ors/ors-editor/ors-editor-location/ors-editor-location.component';
+import { NlfOrsEditorWorkflowComponent } from './ors/ors-editor/ors-editor-workflow/ors-editor-workflow.component';
 
 // CONFIG
 import { NlfConfigModule } from './nlf-config.module';
@@ -178,6 +180,12 @@ import { ApiClubsService } from './api/api-clubs.service';
 // Do not work as of yet!!!
 import { NlfErrorComponent } from './error/error.component';
 
+// videogular
+import {VgCoreModule} from 'videogular2/core';
+import {VgControlsModule} from 'videogular2/controls';
+import {VgOverlayPlayModule} from 'videogular2/overlay-play';
+import {VgBufferingModule} from 'videogular2/buffering';
+//import {SingleMediaPlayer} from './single-media-player';
 
 
 @NgModule({
@@ -258,9 +266,10 @@ import { NlfErrorComponent } from './error/error.component';
     NlfOrsEditorFlagsComponent,
     NlfOrsEditorFilesComponent,
     NlfOrsEditorHelpComponent,
+    NlfOrsEditorLocationComponent,
+    NlfOrsEditorWorkflowComponent,
     NlfErrorComponent,
     ContenteditableDirective,
-
   ],
   imports: [
     BrowserModule,
@@ -292,8 +301,12 @@ import { NlfErrorComponent } from './error/error.component';
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBW1IdM-nFGiwwfP4H2sJg5YiromIuysJ8'
     }),
-    DiffMatchPatchModule // DIFF
+    DiffMatchPatchModule, // DIFF
     // NgbModule.forRoot()
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule,
   ],
   providers: [ApiUserService,
               ApiClubsService,

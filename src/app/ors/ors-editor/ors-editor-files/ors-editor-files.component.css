@@ -1,0 +1,43 @@
+.fa-thumbnail i {
+	top: 50%;
+	left: 50%;
+	position: absolute;
+	margin-left: -10px;
+    margin-top: -20px;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+
+/** Dropzone for file upload **/
+.drop-container {
+	background: #F8F8F8;
+	border: 5px dashed #DDD;
+	width: 100%;
+	height: auto;
+	text-align: center;
+	padding: 10px;
+	margin: 10px 0px 10px 0px;
+}
+.dragover {
+	border: 5px dashed #007BFF;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}

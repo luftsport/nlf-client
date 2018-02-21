@@ -11,6 +11,16 @@
   z-index: 999;
   overflow:hidden;
 }
+
+.nlf-toolbar {
+  padding: 0.65rem 1.05rem;
+  margin-bottom: 0;
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #868E96;
+  width: 100%;
+  overflow:hidden;
+}
+
 .nlf-page-center{
     position:absolute;
     top:50%;

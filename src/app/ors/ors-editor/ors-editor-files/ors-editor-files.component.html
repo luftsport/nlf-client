@@ -1,32 +1,162 @@
+<div *ngIf="!onlyFilepicker">
+  <!-- THUMBNAILS -->
+  <div class="row text-center text-lg-left">
 
-<nlf-ors-fallskjerm-report-files [files]="observation.files"></nlf-ors-fallskjerm-report-files>
+    <div *ngFor="let thumb of filelist; let i = index">
+      <div *ngIf="thumb.isImage">
 
-<div class="drop-container" ngFileDrop [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput"
-  [ngClass]="{ 'is-drop-over': dragOver }">
-  <h1>Drag &amp; Drop</h1>
-</div>
+        <!-- <div class="d-block mb-4 h-100">-->
+        <span (click)="openModal(modalEditorImage, i)" class="pointer fa-thumbnail text-center col-lg-3 col-md-4 col-xs-6">
 
-<label class="upload-button">
-  <input type="file" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple> or choose file(s)
-</label>
+          <img class="img-fluid img-thumbnail" [src]="domSanitizer.bypassSecurityTrustUrl(thumb.src)" alt="{{ thumb.filename }}">
+          <i class="fa fa-3x" [ngClass]="thumb.r ? 'fa-lock text-danger' : 'fa-unlock text-success'"></i>
 
-<button type="button" class="start-upload-btn" (click)="startUpload()">
-  Start Upload
-</button>
+        </span>
+        <!--</div>-->
+      </div>
+    </div>
 
-<div class="upload-items">
-  <div class="upload-item" *ngFor="let f of ngxfiles; let i = index;">
-    <span class="filename">
-      <span>{{ f.name }} ({{ f.id }}) - {{ f.progress?.data?.percentage }}%</span>
-      <span>uploading with {{ f.progress?.data?.speedHuman }}</span>
-      <span>ETA {{ f.progress?.data?.etaHuman }}</span>
-    </span>
-    <div class="progress">
-      <span class="bar" [style.width]="f?.progress?.data?.percentage + '%'"></span>
+  </div>
+
+  <!-- IMAGE MODAL -->
+  <ng-template #modalEditorImage>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">
+        {{ viewImageName }}</h4>
+
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body text-center">
+      <div *ngIf="!viewImageLoading">
+        <img class="img-fluid" [src]="domSanitizer.bypassSecurityTrustUrl(viewimage.src)" alt="file">
+
+        <div class="clearfix"></div>
+
+        <fa (click)="setRestricted(false, filelist[viewimage.index]['_id'], viewimage.index)" *ngIf="!!filelist[viewimage.index]['r']"
+          class="text-danger pointer" name="lock" fixed="true">
+        </fa>
+        <fa (click)="setRestricted(true, filelist[viewimage.index]['_id'], viewimage.index)" *ngIf="!filelist[viewimage.index]['r']"
+          class="text-success pointer" name="unlock" fixed="true">
+        </fa>
+
+        {{ filelist[viewimage.index]['name'] }} {{ filelist[viewimage.index]['size'] | bytes : 2 }} {{ filelist[viewimage.index]['content_type']
+        }} {{ filelist[viewimage.index]['_created'] | date:'yyyy-MM-dd HH:mm' }}
+
+        <fa *ngIf="!!filelist[viewimage.index-1]" name="chevron-left" class="pointer" (click)="getModalImage(viewimage.index-1)"
+          fixed="true"></fa>
+        <fa *ngIf="!!filelist[viewimage.index+1]" name="chevron-right" class="pointer" (click)="getModalImage(viewimage.index+1)"
+          fixed="true"></fa>
+
+        <nlf-resolve-user [userid]="filelist[viewimage.index]['owner']"></nlf-resolve-user>
+
+        <fa class="pointer" (click)="removeFromFilelist(filelist[viewimage.index]['_id'], viewimage.index);modalRef.close()" name="times"
+          fixed="true"></fa>
+      </div>
+      <span *ngIf="!!viewImageLoading" class="text-center">
+        <fa name="spinner" animation="pulse" [size]="3" fixed="true"></fa>
+      </span>
+
+    </div>
+    <div class="modal-footer">
+      <a class="btn btn-secondary" (click)="modalRef.close()">Close</a>
+    </div>
+  </ng-template>
+  <!-- /MODAL -->
+  <!-- /THUMBNAILS -->
+
+  <!-- FILE LIST -->
+  <div *ngIf="dataReady">
+    <div class="table-responsive">
+      <table class="table table-sm table-striped table-hover">
+        <tbody>
+
+          <tr *ngFor="let f of filelist; let i = index">
+
+            <td>
+              <fa (click)="setRestricted(false, f._id, i)" *ngIf="!!f.r" class="text-danger pointer" name="lock" fixed="true"></fa>
+              <fa (click)="setRestricted(true, f._id, i)" *ngIf="!f.r" class="text-success pointer" name="unlock" fixed="true"></fa>
+
+              <a *ngIf="!f.image" [routerLink]="['/file/download/', f._id]">{{f.name}}</a>
+              <a *ngIf="!!f.image" (click)="openModal(modalEditorImage, f)" class="pointer">{{f.name}}</a>
+            </td>
+            <td>{{ f.size | bytes : 2 }}</td>
+            <td>{{f.content_type}}&nbsp;</td>
+            <td>
+              <!--<fa (click)="download(f)" name="download" fixed="true"></fa>-->
+              <a href="{{ f.download }}">
+                <fa name="download" fixed="true"></fa>
+              </a>
+              <fa class="pointer" (click)="removeFromFilelist(f._id, i)" name="times" fixed="true"></fa>
+            </td>
+            <td>&nbsp;</td>
+
+          </tr>
+
+        </tbody>
+      </table>
     </div>
   </div>
+  <!-- /FILE LIST -->
+</div>
+<!-- / -->
+
+<!-- FILE DROP -->
+<div *ngIf="dropzone || (onlyFilepicker && dropzone)">
+  <div class="drop-container" ngFileDrop [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput"
+    [ngClass]="{ 'dragover': dragOver }">
+    <p class="lead">Dra og slipp filer her</p>
+    <p></p>
+
+    <!-- UPLOAD BUTTON -->
+    <label class="btn btn-primary btn-file">
+      <fa name="plus" fixed="true"></fa>Legg til filer
+      <input type="file" style="display: none;" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput"
+        multiple>
+    </label>
+    <!-- /UPLOAD BUTTON -->
+
+    <!-- UPLOAD PROGRESS -->
+    <div class="upload-items">
+      <div *ngIf="uploading">
+        <div class="upload-item" *ngFor="let f of ngxfiles; let i = index;">
+          <span class="filename">
+            <span>{{ f.name }} ({{ f.id }}) - {{ f.progress?.data?.percentage }}%</span>
+            <span>uploading with {{ f.progress?.data?.speedHuman }}</span>
+            <span>ETA {{ f.progress?.data?.etaHuman }}</span>
+          </span>
+          <div class="progress">
+            <span class="bar" [style.width]="f?.progress?.data?.percentage + '%'"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /UPLOAD PROGRESS -->
+  </div>
+</div>
+<!-- /FILE DROP -->
+
+<div *ngIf="!dropzone || (onlyFilepicker && !dropzone)">
+  <!-- UPLOAD BUTTON -->
+  <label class="btn btn-primary btn-file">
+    <fa name="plus" fixed="true"></fa>Legg til filer
+    <input type="file" style="display: none;" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput"
+      multiple>
+  </label>
+  <!-- /UPLOAD BUTTON -->
 </div>
 
+<!-- VIDEO PLAYER 
+<vg-player>
+  <video [vgMedia]="media" #media id="singleVideo" preload="auto" controls>
+    <source src="http://localhost:4200/api/v1/download/5a8d29eaa01ed249e486c9dc?token=ZGViM2QxMmNjNTU4NGFjNjhhZWQyOTY0NTJkYzQ5OGY6"
+      type="video/mp4">
+  </video>
+</vg-player>
+-->
+
+
 <div *ngFor="let f of imagePreview">
-  <img [src]="f">
+  <img class="img-fluid img-thumbnail" [src]="f">
 </div>

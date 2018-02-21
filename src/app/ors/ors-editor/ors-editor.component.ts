@@ -1,11 +1,12 @@
 import { ApiObservationsItem } from './../../api/api.interface';
 import { ApiObservationsService } from './../../api/api-observations.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
 import { NlfAlertService } from '../../services/alert/alert.service';
 import { ActivatedRoute } from '@angular/router';
 import { NlfComponent } from '../../nlf.component';
 import { NlfOrsEditorService } from './ors-editor.service';
 import { HotkeysService, Hotkey } from 'angular2-hotkeys';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'nlf-ors-editor',
@@ -22,12 +23,15 @@ export class NlfOrsEditorComponent implements OnInit, OnDestroy {
   initialized = false;
   hotkeys: Hotkey | Hotkey[];
 
+  modalRef;
+
   constructor(private route: ActivatedRoute,
     private orsService: ApiObservationsService,
     private alertService: NlfAlertService,
     private subject: NlfOrsEditorService,
     private app: NlfComponent,
-    private hotkeysService: HotkeysService
+    private hotkeysService: HotkeysService,
+    private modalService: NgbModal
     // private differs: KeyValueDiffers
   ) {
 
@@ -64,8 +68,17 @@ export class NlfOrsEditorComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Make sure we remove hotkeys and
+   * save any changes before unloading the component
+   * @TODO: confirm dialogue
+   */
   ngOnDestroy() {
     this.hotkeysService.remove(this.hotkeys);
+
+    if (this.changes) {
+      this.save();
+    }
   }
 
   changed(data) {
@@ -155,6 +168,11 @@ export class NlfOrsEditorComponent implements OnInit, OnDestroy {
       },
       () => this.dataReady = true
     );
+  }
+
+  openModal(template: TemplateRef<any>) {
+
+    this.modalRef = this.modalService.open(template, { size: 'lg' });
   }
 
 }

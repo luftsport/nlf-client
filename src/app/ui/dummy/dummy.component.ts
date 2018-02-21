@@ -108,7 +108,7 @@ export class NlfUiDummyComponent implements OnInit {
   ];
 
   view: any[] = [700, 300];
-  label = 'behandlede observasjoner 2014-2018';
+  label = 'totalt behandlede observasjoner';
 
   activeEntries = [this.single[0]];
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { NlfAlertService } from '../alert/alert.service';
 import { NlfAuthService } from './auth.service';
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs/Observable';
 import { NlfLocalStorageService } from '../storage/local-storage.service';
 
 @Injectable()

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OrsEditorLocationComponent } from './ors-editor-location.component';
+import { NlfOrsEditorLocationComponent } from './ors-editor-location.component';
 
-describe('OrsEditorLocationComponent', () => {
-  let component: OrsEditorLocationComponent;
-  let fixture: ComponentFixture<OrsEditorLocationComponent>;
+describe('NlfOrsEditorLocationComponent', () => {
+  let component: NlfOrsEditorLocationComponent;
+  let fixture: ComponentFixture<NlfOrsEditorLocationComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrsEditorLocationComponent ]
+      declarations: [ NlfOrsEditorLocationComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OrsEditorLocationComponent);
+    fixture = TestBed.createComponent(NlfOrsEditorLocationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

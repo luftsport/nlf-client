@@ -1,0 +1,77 @@
+<div *ngIf="dataReady">
+
+  <header class="nlf-sticky-toolbar">
+
+    <div class="container lead">
+      <!-- TITLE -->
+
+      <!-- <fa name="file-text-o" fixed="true"></fa>&nbsp;-->
+      <!-- {{ data.tags | nlfOrsTags: ' / '}} -->
+      #{{ observation.id }}
+      <nlf-resolve-observation-tags [tags]="observation.tags" link="true" seperator="/"></nlf-resolve-observation-tags>&nbsp;
+      <!-- WORKFLOW STATE -->
+      <span class="pull-right">
+
+        <span class="badge badge-secondary">{{ observation._updated | amTimeAgo }}</span>
+        <span class="badge badge-success">{{ observation._version }}</span>
+        <nlf-resolve-observation-state [state]="observation.workflow.state" icon="true"></nlf-resolve-observation-state>
+      </span>
+      <!-- /WORKFLOW STATE -->
+    </div>
+  </header>
+
+
+
+  <div class="container">
+
+    <p>
+      <strong>Klubb:</strong>
+      <nlf-resolve-club link="true" long="true" [clubid]="observation.club"></nlf-resolve-club>
+    </p>
+    <p>
+      <strong>Status:</strong>
+      {{ workflow.title }}
+    </p>
+
+    <h4>Arbeidsflyt for #{{ observation.id }}</h4>
+    <div class="form-group">
+      <!--<label for="comment">Kommentarer:</label>-->
+
+      <!--<div>
+          Dette feltet er forbeholdt kommentarer som omfatter ARBEIDSFLYTEN, feks:
+          <ul>
+            <li>at du trenger mer informasjon</li>
+            <li>at du ønsker felter fylt ut</li>
+            <li>at innsender korrigere noe</li>
+          </ul>
+          Kommentarene skal ikke inneholde personopplysninger, ei heller ytterligere beskrivelser eller vurderinger av observasjonen
+          - altså skal kun omhandle arbeidsflyten!
+        </div>-->
+
+      <textarea placeholder="Kommentarer" [(ngModel)]="comment" name="comment" class="form-control" rows="3" id="comment"></textarea>
+    </div>
+
+  </div>
+
+  <div class="nlf-toolbar">
+    <div class="container">
+      <span *ngFor="let a of workflow.actions">
+        <button [ngClass]="{'btn': true, 'btn-danger': a.resource==='reject', 'btn-success': a.resource==='approve', 'btn-dark': a.action==='withdraw'}"
+          (click)="workflowChange(a.resource)">{{ a.action }}</button>
+        &nbsp;
+      </span>
+
+      <button class="btn btn-outline-dark" (click)="cancel()">Avbryt</button>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <h3>Audit trail:</h3>
+    <nlf-ors-fallskjerm-report-workflow-timeline [vlink]="false" [_id]="observation._id" [workflow]="observation.workflow"></nlf-ors-fallskjerm-report-workflow-timeline>
+    <span *ngIf="!!changing" class="text-center">
+      <fa name="spinner" [size]="3" [fixed]="true"></fa>
+    </span>
+  </div>
+
+</div>

@@ -10,7 +10,9 @@ import { ApiObservationComponentInterface } from './../../../../api/api.interfac
 export class NlfOrsReportComponentsTimelineComponent implements OnInit {
 
   @Input() components: ApiObservationComponentInterface[];
-  
+
+  public componentCollapsed = false;
+
   constructor() { }
 
   ngOnInit() {

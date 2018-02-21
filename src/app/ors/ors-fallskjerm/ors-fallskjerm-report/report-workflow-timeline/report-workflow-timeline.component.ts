@@ -10,6 +10,7 @@ import { RouterLink } from '@angular/router';
 export class NlfOrsFallskjermReportWorkflowTimelineComponent implements OnInit {
   @Input() workflow: ApiWorkflowInterface;
   @Input() _id?: string;
+  @Input() vlink?: boolean;
 
 
   public workflowActions = {
@@ -44,6 +45,10 @@ export class NlfOrsFallskjermReportWorkflowTimelineComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
+    if (!!this.vlink) {
+      this.vlink = true;
+    }
   }
 
 }
