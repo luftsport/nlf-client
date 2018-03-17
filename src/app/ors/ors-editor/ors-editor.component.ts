@@ -7,6 +7,8 @@ import { NlfComponent } from '../../nlf.component';
 import { NlfOrsEditorService } from './ors-editor.service';
 import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmService } from './../../services/confirm/confirm.service';
+
 
 @Component({
   selector: 'nlf-ors-editor',
@@ -31,7 +33,8 @@ export class NlfOrsEditorComponent implements OnInit, OnDestroy {
     private subject: NlfOrsEditorService,
     private app: NlfComponent,
     private hotkeysService: HotkeysService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private confirmService: ConfirmService
     // private differs: KeyValueDiffers
   ) {
 
@@ -82,7 +85,7 @@ export class NlfOrsEditorComponent implements OnInit, OnDestroy {
   }
 
   changed(data) {
-    console.log('Changed: ', data);
+    // console.log('Changed: ', data);
     if (this.initialized) {
       this.changes = true;
     }
@@ -93,6 +96,7 @@ export class NlfOrsEditorComponent implements OnInit, OnDestroy {
   }
 
   save() {
+
     let tmp = { ...this.observation };
     const tmp_id = this.observation._id;
     const tmp_etag = this.observation._etag;

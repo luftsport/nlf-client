@@ -131,7 +131,6 @@ export class NlfLocalStorageService {
     catch (e) {
       return false;
     }
-
   }
 
   /**

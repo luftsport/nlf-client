@@ -23,7 +23,7 @@
     aria-expanded="false" aria-label="Toggle navigation">
     <fa name="bars" fixed="true"></fa>
   </button>
-  <span class="navbar-brand" [routerLink]="['/']">NLF</span>
+  <span class="navbar-brand pointer" [routerLink]="['/']">NLF</span>
   <div [ngbCollapse]="isCollapsed" class="collapse navbar-collapse justify-content-between" id="navbar">
 
     <ul class="navbar-nav" *ngIf="(isLoggedIn | async)">

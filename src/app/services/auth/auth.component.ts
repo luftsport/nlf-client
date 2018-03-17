@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
+
 // import { UserAuthService } from '../api/user-auth.service';
 // import { AlertService } from '../services/alert/alert.service';
 import { NlfAuthService } from './auth.service';
@@ -21,6 +22,7 @@ export class NlfAuthComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private auth: NlfAuthService,
+
     // private alertService: AlertService
     // private authenticationService: AuthenticationService,
     // private alertService: AlertService
@@ -32,11 +34,12 @@ export class NlfAuthComponent implements OnInit {
   }
 
   login(returnUrl?: string) {
+
     this.loading = true;
     if (this.auth.login(this.model.username, this.model.password, returnUrl)) {
       this.loading = false;
-    }
-    else {
+
+    } else {
       this.loading = false;
     }
 

@@ -46,7 +46,7 @@ export class NlfOrsFallskjermReportWorkflowTimelineComponent implements OnInit {
 
   ngOnInit() {
 
-    if (!!this.vlink) {
+    if (!this.vlink) {
       this.vlink = true;
     }
   }

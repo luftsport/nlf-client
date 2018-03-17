@@ -1,5 +1,5 @@
 import { ApiCacheService } from './../../api/api-cache.service';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { ApiUserAuthService } from '../../api/api-user-auth.service';
 import { NlfAlertService } from '../alert/alert.service';
 import { NlfLocalStorageService } from '../storage/local-storage.service';
@@ -18,6 +18,7 @@ export class NlfAuthService {
   private loading: boolean = false;
 
   private message: string;
+
 
   //n g2-idle
   idleState: string;
@@ -151,7 +152,7 @@ export class NlfAuthService {
         this.loading = false;
         this.isAuthSubject.next(false);
         this.idleStop();
-        
+
         // Do not work since no check for public pages
         // this.router.navigate(['/error/', error.status]);
         return false;

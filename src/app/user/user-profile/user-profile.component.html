@@ -10,6 +10,7 @@
 					<a [routerLink]="['/user/profile']">
 						<fa name="edit" fixed="true"></fa>
 					</a>
+				<span *ngIf="!!geo">{{ geo.coords.latitude }} {{ geo.coords.longitude }}</span>
 				</span>
 			</h3>
 

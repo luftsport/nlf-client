@@ -12,7 +12,8 @@ export class NlfConfig {
     stateArr: Array<string>,
     state: Object,
     typesArr: Array<string>,
-    types: Object
+    types: Object,
+    ask: Object,
   };
   // flags: Object;
   // rating: Array<Object>;
@@ -83,6 +84,11 @@ export const NLF_DI_CONFIG: NlfConfig = {
       near_miss: { label: 'Næruhell', badge: 'warning', title: 'Næruhell som definert i HB men ikke begrenset av' },
       incident: { label: 'Uhell', badge: 'danger', title: 'Personskade - oppsøker legehjelp' },
       accident: { label: 'Ulykke', badge: 'dark', title: 'Død eller varige men' },
+    },
+    ask: {
+      attitude: { label: 'Holdninger' },
+      skills: { label: 'Ferdigheter' },
+      knowledge: { label: 'Kunnskaper' },
     }
   } // END observation
 };

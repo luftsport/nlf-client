@@ -26,6 +26,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 // ng-bootstrap
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+// Confirm dialogue using ng-bootstrap
+import { ConfirmService, ConfirmState, ConfirmModalComponent } from './services/confirm/confirm.service';
 
 import { FontAwesomeModule, WeatherIconsModule } from 'ngx-icons';
 // import { Ng2WeatherIconsModule } from 'ng2-weather-icons'; // Broken - make fa => wi!!
@@ -62,10 +64,14 @@ import { NlfUserComponent } from './user/user.component';
 import { NlfUserTableComponent } from './user/user-table/user-table.component';
 import { NlfOrsComponent } from './ors/ors.component';
 import { NlfOrsChildComponent } from './ors/ors-child/ors-child.component';
-import { NlfAdminComponent } from './admin/admin.component';
 import { NlfContentComponent } from './content/content.component';
 import { NlfConfluenceComponent } from './confluence/confluence.component';
 import { NlfClubComponent } from './club/club.component';
+
+// Admin
+import { NlfAdminComponent } from './admin/admin.component';
+import { NlfAdminHelpComponent } from './admin/help/help.component';
+import { NlfAdminHelpEditComponent } from './admin/help/help-edit/help-edit.component';
 
 // Routes
 import { NlfRoutingModule } from './nlf-routing.module';
@@ -165,6 +171,7 @@ import { NlfResolveObservationRatingComponent } from './services/resolve/resolve
 import { NlfOrsEditorPeopleComponent } from './ors/ors-editor/ors-editor-people/ors-editor-people.component';
 import { NlfOrsEditorActionsComponent } from './ors/ors-editor/ors-editor-actions/ors-editor-actions.component';
 import { NlfOrsEditorAskComponent } from './ors/ors-editor/ors-editor-ask/ors-editor-ask.component';
+import { NlfOrsEditorAskTextComponent } from './ors/ors-editor/ors-editor-ask-text/ors-editor-ask-text.component';
 import { NlfOrsEditorFlagsComponent } from './ors/ors-editor/ors-editor-flags/ors-editor-flags.component';
 import { NlfOrsEditorFilesComponent } from './ors/ors-editor/ors-editor-files/ors-editor-files.component';
 import { NlfOrsEditorHelpComponent } from './ors/ors-editor/ors-editor-help/ors-editor-help.component';
@@ -185,8 +192,19 @@ import {VgCoreModule} from 'videogular2/core';
 import {VgControlsModule} from 'videogular2/controls';
 import {VgOverlayPlayModule} from 'videogular2/overlay-play';
 import {VgBufferingModule} from 'videogular2/buffering';
-//import {SingleMediaPlayer} from './single-media-player';
+// import {SingleMediaPlayer} from './single-media-player';
 
+// GEO
+import { GeoLocationService } from './services/geo/geo-location.service';
+// Dashboard
+import { NgDashboardModule } from 'ngx-dashboard';
+// Dashboard widgets
+import { NlfDashboardComponent } from './dashboard/dashboard.component';
+import { WidgetOrsPieComponent } from './dashboard/widget-ors-pie/widget-ors-pie.component';
+// Gridster instead!
+import { GridsterModule } from 'angular-gridster2';
+// Jodit editor
+import { JoditAngularModule } from 'jodit-angular';
 
 @NgModule({
   declarations: [
@@ -202,6 +220,8 @@ import {VgBufferingModule} from 'videogular2/buffering';
     NlfResolveComponent,
     NlfResolveUserComponent,
     NlfAdminComponent,
+    NlfAdminHelpComponent,
+    NlfAdminHelpEditComponent,
     NlfContentComponent,
     NlfConfluenceComponent,
     NlfClubComponent,
@@ -263,6 +283,7 @@ import {VgBufferingModule} from 'videogular2/buffering';
     NlfOrsEditorPeopleComponent,
     NlfOrsEditorActionsComponent,
     NlfOrsEditorAskComponent,
+    NlfOrsEditorAskTextComponent,
     NlfOrsEditorFlagsComponent,
     NlfOrsEditorFilesComponent,
     NlfOrsEditorHelpComponent,
@@ -270,6 +291,13 @@ import {VgBufferingModule} from 'videogular2/buffering';
     NlfOrsEditorWorkflowComponent,
     NlfErrorComponent,
     ContenteditableDirective,
+    NlfDashboardComponent,
+    WidgetOrsPieComponent,
+    ConfirmModalComponent
+  ],
+  entryComponents: [
+    WidgetOrsPieComponent,
+    ConfirmModalComponent
   ],
   imports: [
     BrowserModule,
@@ -298,15 +326,18 @@ import {VgBufferingModule} from 'videogular2/buffering';
     BrowserAnimationsModule,
     NgUploaderModule,
     HotkeyModule.forRoot(),
-    AgmCoreModule.forRoot({
+    AgmCoreModule.forRoot({ // Google maps
       apiKey: 'AIzaSyBW1IdM-nFGiwwfP4H2sJg5YiromIuysJ8'
     }),
     DiffMatchPatchModule, // DIFF
-    // NgbModule.forRoot()
+    // NgbModule.forRoot() // ngx-bootstrap (not good rather shaitolainen!)
     VgCoreModule,
     VgControlsModule,
     VgOverlayPlayModule,
     VgBufferingModule,
+    NgDashboardModule, // Dashboards ngx-dashboard
+    GridsterModule, // Gridster
+    JoditAngularModule, // Jodit editor
   ],
   providers: [ApiUserService,
               ApiClubsService,
@@ -328,8 +359,11 @@ import {VgBufferingModule} from 'videogular2/buffering';
               NlfAlertService,
               NlfAuthService,
               NlfLocalStorageService,
+              GeoLocationService,
               NlfOrsEditorService,
               NlfOrsEditorInvolvedService,
+              ConfirmService,
+              ConfirmState,
               {provide: HTTP_INTERCEPTORS,
                useClass: NlfAuthInterceptor,
                multi: true},

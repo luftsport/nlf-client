@@ -1,6 +1,5 @@
 import { ApiObservationAskTextInterface } from './../../../../api/api.interface';
 import { Component, Input, OnInit } from '@angular/core';
-import { NewlinesPipe } from 'angular-pipes/src/string/newlines.pipe';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({

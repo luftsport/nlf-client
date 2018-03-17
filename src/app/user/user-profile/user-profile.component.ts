@@ -5,7 +5,7 @@ import { ApiUserItem } from '../../api/api.interface';
 import { NlfAlertService } from '../../services/alert/alert.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NlfLocalStorageService } from '../../services/storage/local-storage.service';
-
+import { GeoLocationService } from '../../services/geo/geo-location.service';
 
 @Component({
   selector: 'nlf-user-profile',
@@ -18,12 +18,14 @@ export class NlfUserProfileComponent implements OnInit {
   avatar = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
   dataReady = false;
   myself = false;
+  geo: Coordinates;
 
   constructor(private route: ActivatedRoute,
     private userService: ApiUserService,
     public domSanitizer: DomSanitizer,
     private alertService: NlfAlertService,
-    private localStorage: NlfLocalStorageService) { }
+    private localStorage: NlfLocalStorageService,
+    private geoLocationService: GeoLocationService) { }
 
   ngOnInit() {
     this.route.params.subscribe(
@@ -42,7 +44,15 @@ export class NlfUserProfileComponent implements OnInit {
 
     );
 
-
+    this.geoLocationService.getLocation({ enableHighAccuracy: true }).subscribe(
+      position => {
+        console.log(position);
+        this.geo = position;
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
   public getData() {

@@ -3,9 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 
 // Top level app direct routes
 import { NlfUiDummyComponent } from './ui/dummy/dummy.component';
+import { NlfOrsComponent } from './ors/ors.component';
 import { NlfAuthComponent } from './services/auth/auth.component';
-import { NlfOrsComponent } from './ors/ors.component';
+import { NlfDashboardComponent } from './dashboard/dashboard.component';
 import { NlfUserTableComponent } from './user/user-table/user-table.component';
+import { NlfAdminComponent } from './admin/admin.component';
+
 
 // Auth guard
 import { NlfAuthGuard } from './services/auth/auth.guard';
@@ -14,6 +17,8 @@ import { NlfAuthGuard } from './services/auth/auth.guard';
 import { NlfOrsRoutingModule } from './ors/ors-routing.module';
 import { NlfUserRoutingModule } from './user/user-routing.module';
 import { NlfErrorRoutingModule } from './error/error-routing.module';
+import { NlfDashboardRoutingModule } from './dashboard/dashboard-routing.module';
+import { NlfAdminRoutingModule } from './admin/admin-routing.module';
 
 /**
   Route object top level
@@ -25,6 +30,8 @@ import { NlfErrorRoutingModule } from './error/error-routing.module';
 const routes: Routes = [
 { path: 'users', component: NlfUserTableComponent, canActivate: [NlfAuthGuard] },
 { path: 'ors', component: NlfOrsComponent, canActivate: [NlfAuthGuard] },
+{ path: 'dashboard', component: NlfDashboardComponent, canActivate: [NlfAuthGuard] },
+{ path: 'admin', component: NlfAdminComponent, canActivate: [NlfAuthGuard] },
 { path: 'login', component: NlfAuthComponent },
 { path: '', redirectTo: '/', pathMatch: 'full' }, // redirect root
 { path: '**', component: NlfUiDummyComponent, canActivate: [NlfAuthGuard]  }, // Not found
@@ -35,7 +42,9 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes),
             NlfOrsRoutingModule,
             NlfUserRoutingModule,
-            NlfErrorRoutingModule
+            NlfDashboardRoutingModule,
+            NlfErrorRoutingModule,
+            NlfAdminRoutingModule
           ],
   exports: [ RouterModule],
   providers: [NlfAuthGuard],

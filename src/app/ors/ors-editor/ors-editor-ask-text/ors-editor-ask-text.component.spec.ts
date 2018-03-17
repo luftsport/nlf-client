@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OrsEditorAskTextComponent } from './ors-editor-ask-text.component';
+import { NlfOrsEditorAskTextComponent } from './ors-editor-ask-text.component';
 
-describe('OrsEditorAskTextComponent', () => {
-  let component: OrsEditorAskTextComponent;
-  let fixture: ComponentFixture<OrsEditorAskTextComponent>;
+describe('NlfOrsEditorAskTextComponent', () => {
+  let component: NlfOrsEditorAskTextComponent;
+  let fixture: ComponentFixture<NlfOrsEditorAskTextComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrsEditorAskTextComponent ]
+      declarations: [ NlfOrsEditorAskTextComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OrsEditorAskTextComponent);
+    fixture = TestBed.createComponent(NlfOrsEditorAskTextComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

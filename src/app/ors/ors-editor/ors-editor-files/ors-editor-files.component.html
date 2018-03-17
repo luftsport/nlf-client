@@ -139,12 +139,28 @@
 
 <div *ngIf="!dropzone || (onlyFilepicker && !dropzone)">
   <!-- UPLOAD BUTTON -->
-  <label class="btn btn-primary btn-file">
+  <label class="btn btn-block btn-primary btn-file">
     <fa name="plus" fixed="true"></fa>Legg til filer
     <input type="file" style="display: none;" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput"
       multiple>
   </label>
   <!-- /UPLOAD BUTTON -->
+  <!-- UPLOAD PROGRESS -->
+  <div class="upload-items">
+    <div *ngIf="uploading">
+      <div class="upload-item" *ngFor="let f of ngxfiles; let i = index;">
+        <span class="filename">
+          <span>{{ f.name }} ({{ f.id }}) - {{ f.progress?.data?.percentage }}%</span>
+          <span>uploading with {{ f.progress?.data?.speedHuman }}</span>
+          <span>ETA {{ f.progress?.data?.etaHuman }}</span>
+        </span>
+        <div class="progress">
+          <span class="bar" [style.width]="f?.progress?.data?.percentage + '%'"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /UPLOAD PROGRESS -->
 </div>
 
 <!-- VIDEO PLAYER 

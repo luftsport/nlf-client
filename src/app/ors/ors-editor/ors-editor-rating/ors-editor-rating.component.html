@@ -1,23 +1,39 @@
 <div class="row">
-  <div class="col-lg-9">
+  <div class="col-sm-9">
+
     <div class="row">
-      Potensiell: 
-      <ngb-rating [(rate)]="observation.rating.actual" [starTemplate]="t" (rateChange)="onChange()" max="8"></ngb-rating>
-      {{ observation.rating.actual | nlfOrsRating }}
+      <div class="col-sm-4 lead">
+        Faktisk:
+      </div>
+      <div class="col-sm-4">
+        <ngb-rating [(rate)]="observation.rating.actual" [starTemplate]="t" (rateChange)="onChange()" max="8"></ngb-rating>
+      </div>
+      <div class="col-sm-4">
+        {{ observation.rating.actual | nlfOrsRating }}
+      </div>
+
     </div>
+
     <div class="row">
-      Faktisk:
-      <ngb-rating [(rate)]="observation.rating.potential" [starTemplate]="t" (rateChange)="onChange()" max="8"></ngb-rating>
-      {{ observation.rating.potential | nlfOrsRating }}
+      <div class="col-sm-4 lead">
+        Potensiell:
+      </div>
+      <div class="col-sm-4">
+        <ngb-rating [(rate)]="observation.rating.potential" [starTemplate]="t" (rateChange)="onChange()" max="8"></ngb-rating>
+      </div>
+      <div class="col-sm-4">
+        {{ observation.rating.potential | nlfOrsRating }}
+      </div>
     </div>
   </div>
-  <div class="col-lg-3">
+
+  <div class="col-sm-3">
     <h1>
       <nlf-resolve-observation-rating [rating]="observation.rating"></nlf-resolve-observation-rating>
     </h1>
   </div>
-
-  <ng-template #t let-fill="fill" let-index="index">
-    <span class="rating-star" [class.rating-filled]="fill === 100" [class.rating-bad]="index < 5 && index >= 2" [class.rating-worst]="index >= 5">&#9679;</span>
-  </ng-template>
 </div>
+
+<ng-template #t let-fill="fill" let-index="index">
+  <span class="rating-star" [class.rating-filled]="fill === 100" [class.rating-bad]="index < 5 && index >= 2" [class.rating-worst]="index >= 5">&#9679;</span>
+</ng-template>

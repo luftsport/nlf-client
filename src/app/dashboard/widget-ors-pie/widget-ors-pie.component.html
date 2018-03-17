@@ -1,0 +1,25 @@
+<!--
+  <ngx-charts-advanced-pie-chart *ngIf="dataReady" [activeEntries]="activeEntries" [scheme]="colorScheme" [label]="label" [results]="pie"
+    [gradient]="gradient" (select)="onSelect($event)"></ngx-charts-advanced-pie-chart>
+  <span *ngIf="!dataReady">
+    <p class="align-middle text-center text-secondary">
+      <fa name="spinner" animation="pulse" size="3x"></fa>
+    </p>
+
+  </span>
+    -->
+<div>
+  <div widgetHandle class="head handle text-info pointer">
+    <fa name="arrows-alt" fixed="true" size="3"></fa>
+    <span class="close pull-right" (click)="close($event)">X</span>
+  </div>
+
+</div>
+<ngx-charts-advanced-pie-chart *ngIf="dataReady" [activeEntries]="activeEntries" [scheme]="colorScheme" [label]="label" [results]="pie"
+  [gradient]="gradient" (select)="onSelect($event)"></ngx-charts-advanced-pie-chart>
+<span *ngIf="!dataReady">
+  <p class="align-middle text-center text-secondary">
+    <fa name="spinner" animation="pulse" size="3x"></fa>
+  </p>
+
+</span>

@@ -6,6 +6,7 @@ import { NlfLocalStorageService } from '../../../services/storage/local-storage.
 import { NlfOrsEditorService } from '../ors-editor.service';
 import { ApiFilesService } from './../../../api/api-files.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmService } from './../../../services/confirm/confirm.service';
 
 @Component({
   selector: 'nlf-ors-editor-files',
@@ -44,10 +45,11 @@ export class NlfOrsEditorFilesComponent implements OnInit {
   token: string;
 
   constructor(private storage: NlfLocalStorageService,
-    private subject: NlfOrsEditorService,
-    private apiFile: ApiFilesService,
-    public domSanitizer: DomSanitizer,
-    private modalService: NgbModal) {
+              private subject: NlfOrsEditorService,
+              private apiFile: ApiFilesService,
+              public domSanitizer: DomSanitizer,
+              private modalService: NgbModal,
+              private confirmService: ConfirmService) {
 
     this.subject.observableObservation.subscribe(
       observation => {
@@ -169,23 +171,33 @@ export class NlfOrsEditorFilesComponent implements OnInit {
 
   public removeFromFilelist(_id, index) {
 
-    this.observation.files.forEach((item, i) => {
-      if (this.observation.files[i]['f'] === _id) {
-        this.observation.files.splice(i, 1);
-      }
-    });
+    this.confirmService.confirm(
+      { title: 'Bekreft sletting',
+        message: 'Er du sikker du vil slette filen <strong>' + this.filelist[index].name + '</strong> ?',
+        yes: 'Slett',
+        no: 'Avbryt'
+      }).then(
+      () => {
+        this.observation.files.forEach((item, i) => {
+          if (this.observation.files[i]['f'] === _id) {
+            this.observation.files.splice(i, 1);
+          }
+        });
 
-    this.filelist.splice(index, 1);
+        this.filelist.splice(index, 1);
 
-    /** 
-    this.thumbnails.forEach((item, i) => {
-      if (this.thumbnails[i]['_id'] === _id) {
-        this.thumbnails.splice(i, 1);
-      }
-    }); */
+        /**
+        this.thumbnails.forEach((item, i) => {
+          if (this.thumbnails[i]['_id'] === _id) {
+            this.thumbnails.splice(i, 1);
+          }
+        }); */
 
-    this.subject.update(this.observation);
-    this.fileChange.emit(true);
+        this.subject.update(this.observation);
+        this.fileChange.emit(true);
+      },
+      () => {}
+    );
 
   }
 

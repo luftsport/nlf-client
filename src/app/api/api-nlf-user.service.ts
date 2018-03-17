@@ -21,6 +21,10 @@ export class ApiNlfUserService extends ApiRestService {
     return this.getList(this.relativeUrl, options);
   }
 
+  public search(query: string, options?: ApiOptionsInterface): Observable<ApiNlfUserList> {
+    return this.getList(this.relativeUrl + 'search?q=' + query, options);
+
+  }
 
   public getUserIdCache(id: number, options?: ApiOptionsInterface): Observable<ApiNlfUserItem> {
 
