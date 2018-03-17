@@ -27,10 +27,12 @@
         "../node_modules/font-awesome/css/font-awesome.css",
         "../node_modules/ng-pick-datetime/assets/style/picker.min.css",
         "../node_modules/ngx-easy-table/spectre.css",
-        "../node_modules/ngx-easy-table/spectre-icons.css"
+        "../node_modules/ngx-easy-table/spectre-icons.css",
+        "../node_modules/jodit/app.css"
         
       ],
       "scripts": [
+      
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
