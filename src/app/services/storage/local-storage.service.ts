@@ -63,12 +63,14 @@ export class NlfLocalStorageService {
     if (!!localStorage.getItem('auth-token')) {
 
       if (valid && Date.now() > +localStorage.getItem('auth-valid')) {
+        console.log('AUTH token Timeout');
         return false;
       }
 
       return true;
     }
 
+    console.log('AUTH token do not exist');
     return false;
   }
 

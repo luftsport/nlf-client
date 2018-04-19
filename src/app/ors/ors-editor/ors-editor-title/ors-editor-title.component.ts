@@ -1,9 +1,7 @@
-import { ApiOptionsInterface, ApiObservationsItem, ApiTagList } from './../../../api/api.interface';
+import { ApiOptionsInterface, ApiObservationsItem, ApiTagList } from './../../../api/api.interface';
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { ApiTagsService } from '../../../api/api-tags.service';
 import { Observable } from 'rxjs/Observable';
-import { map } from 'rxjs/operators';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { NlfOrsEditorService } from '../ors-editor.service';
 
 @Component({
@@ -19,7 +17,6 @@ export class NlfOrsEditorTitleComponent implements OnInit {
 
 
   constructor(private tagService: ApiTagsService, 
-              private http: HttpClient,
               private subject: NlfOrsEditorService) {
     this.subject.observableObservation.subscribe(observation => this.observation = observation);
   }

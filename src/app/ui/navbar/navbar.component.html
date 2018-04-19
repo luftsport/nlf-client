@@ -26,7 +26,7 @@
   <span class="navbar-brand pointer" [routerLink]="['/']">NLF</span>
   <div [ngbCollapse]="isCollapsed" class="collapse navbar-collapse justify-content-between" id="navbar">
 
-    <ul class="navbar-nav" *ngIf="(isLoggedIn | async)">
+    <ul class="navbar-nav" *ngIf="isLoggedIn">
 
       <li class="nav-item active">
         <a class="nav-item nav-link" routerLink="/users">Users</a>
@@ -47,7 +47,7 @@
       </li>
     </ul>
     <!-- Right side items -->
-    <div class="navbar-nav" *ngIf="(isLoggedIn | async)">
+    <div class="navbar-nav" *ngIf="isLoggedIn">
       <a class="nav-item nav-link" routerLink="/home">
         <fa [name]="'home-o'" [fixed]="'true'"></fa>
       </a>
@@ -73,7 +73,7 @@
         <fa [name]="'bell-o'" [fixed]="'true'"></fa>
       </a>
 
-      <a *ngIf="(isLoggedIn | async)" (click)="authService.logout()" class="nav-item nav-link btn">Logout</a>
+      <a *ngIf="isLoggedIn" (click)="authService.logout()" class="nav-item nav-link btn">Logout</a>
       <!--<a *ngIf="!(isLoggedIn | async)" class="nav-item nav-link" routerLink="/login">Login</a>-->
     </div>
   </div>

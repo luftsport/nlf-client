@@ -33,7 +33,7 @@ export class NlfOrsEditorActionsComponent implements OnInit {
 
   ngOnInit() {
     if (typeof this.observation.actions === 'undefined') {
-      this.observation.actions = {local: [], central: []};
+      this.observation.actions = { local: [], central: [] };
     }
 
     if (typeof this.observation.actions.local === 'undefined') {
@@ -60,19 +60,21 @@ export class NlfOrsEditorActionsComponent implements OnInit {
   }
 
   addActionLocal(action) {
-
-    this.observation.actions.local.push(action);
-    this.actionLocal = '';
-    this.subject.update(this.observation);
-    // this.observation.actionsChange.emit(this.observation.actions);
+    if (action.length > 0) {
+      this.observation.actions.local.push(action);
+      this.actionLocal = '';
+      this.subject.update(this.observation);
+      // this.observation.actionsChange.emit(this.observation.actions);
+    }
   }
 
   addActionCentral(action) {
-
-    this.observation.actions.central.push(action);
-    this.actionCentral = '';
-    this.subject.update(this.observation);
-    // this.observation.actionsChange.emit(this.observation.actions);
+    if (action.length > 0) {
+      this.observation.actions.central.push(action);
+      this.actionCentral = '';
+      this.subject.update(this.observation);
+      // this.observation.actionsChange.emit(this.observation.actions);
+    }
   }
 
   removeActionLocal(index) {

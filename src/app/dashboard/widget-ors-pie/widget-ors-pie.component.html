@@ -15,8 +15,11 @@
   </div>
 
 </div>
-<ngx-charts-advanced-pie-chart *ngIf="dataReady" [activeEntries]="activeEntries" [scheme]="colorScheme" [label]="label" [results]="pie"
-  [gradient]="gradient" (select)="onSelect($event)"></ngx-charts-advanced-pie-chart>
+<div *ngIf="dataReady">
+  <ngx-charts-advanced-pie-chart [activeEntries]="activeEntries" [scheme]="colorScheme" [label]="label" [results]="pie" [gradient]="gradient" (select)="onSelect($event)">
+
+  </ngx-charts-advanced-pie-chart>
+</div>
 <span *ngIf="!dataReady">
   <p class="align-middle text-center text-secondary">
     <fa name="spinner" animation="pulse" size="3x"></fa>

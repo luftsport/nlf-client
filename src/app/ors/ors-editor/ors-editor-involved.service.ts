@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
+export interface NlfOrsEditorInvolvedInterface {
+  id: number;
+  fullname?: string;
+  tmpname?: string;
+}
 
 @Injectable()
 export class NlfOrsEditorInvolvedService {
@@ -13,7 +18,7 @@ export class NlfOrsEditorInvolvedService {
    * observation.
    */
 
-  private involvedArr = new BehaviorSubject<Array<Object>>([]);
+  private involvedArr = new BehaviorSubject<Array<NlfOrsEditorInvolvedInterface>>([]);
 
   currentArr = this.involvedArr.asObservable(); // For mentions to subscribe
 
@@ -32,6 +37,7 @@ export class NlfOrsEditorInvolvedService {
       output.push(list[i]);
     }
     this.involvedArr.next(output);
+    console.log('InvolvedSubject:', output);
   }
 
 }

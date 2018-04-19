@@ -445,6 +445,38 @@ export interface ApiClubItem extends ApiEveBaseItem {
 export interface ApiClubList extends ApiEveLinks {
     _items: ApiClubItem[];
 }
+
+/**
+ * Help
+ */
+
+export interface ApiHelpItem extends ApiEveBaseItem {
+    title: string;
+    key: string;
+    body: string;
+}
+
+export interface ApiHelpList extends ApiEveBaseList {
+    _items: ApiHelpItem[];
+}
+
+/**
+ * Content
+ */
+
+export interface ApiContentItem extends ApiEveBaseItem {
+    title: string;
+    slug?: string;
+    body: string;
+    space_key: string;
+    parent?: string;
+    order?: number;
+    ref?: string;
+}
+
+export interface ApiContentList extends ApiEveBaseList {
+    _items: ApiContentItem[];
+}
 /**
  * TAGS
  */

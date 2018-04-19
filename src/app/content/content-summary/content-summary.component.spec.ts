@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GeoComponent } from './geo.component';
+import { NlfContentSummaryComponent } from './content-summary.component';
 
-describe('GeoComponent', () => {
-  let component: GeoComponent;
-  let fixture: ComponentFixture<GeoComponent>;
+describe('NlfContentSummaryComponent', () => {
+  let component: NlfContentSummaryComponent;
+  let fixture: ComponentFixture<NlfContentSummaryComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GeoComponent ]
+      declarations: [ NlfContentSummaryComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GeoComponent);
+    fixture = TestBed.createComponent(NlfContentSummaryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -8,7 +8,7 @@ export class NlfOrsEditorService {
 
   private observation = new BehaviorSubject<ApiObservationsItem>({id: 0, when: new Date(), club: 'NLF', location: {}, owner: 0, reporter: 0 });
 
-  observableObservation = this.observation.asObservable();
+  public observableObservation = this.observation.asObservable();
 
   constructor() { }
 

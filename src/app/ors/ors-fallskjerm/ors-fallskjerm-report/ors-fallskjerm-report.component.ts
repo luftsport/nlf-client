@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { JsonPipe } from '@angular/common';
 import { ApiObservationsService } from '../../../api/api-observations.service';
@@ -16,6 +16,8 @@ import { ApiEveBaseList } from '../../../api/api-eve.interface';
 })
 export class NlfOrsFallskjermReportComponent implements OnInit {
 
+  @Input() inputId?: number; // Allows to use seperately
+
   id: number;
   version: number;
   data: ApiObservationsItem;
@@ -32,17 +34,24 @@ export class NlfOrsFallskjermReportComponent implements OnInit {
   isWorkflowTimelineCollapsed = true;
 
   constructor(private route: ActivatedRoute,
-    private orsService: ApiObservationsService,
-    private alertService: NlfAlertService,
-    private app: NlfComponent) { }
+              private orsService: ApiObservationsService,
+              private alertService: NlfAlertService,
+              private app: NlfComponent) { }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.id = params['id'] ? params['id'] : 0;
-      this.version = params['version'] ? params['version'] : 0;
-      this.app.setTitle('NLF - ORS Rapport #' + this.id);
+
+    if (!!this.inputId && this.inputId > 0) {
+      this.id = this.inputId;
       this.getData();
-    });
+
+    } else {
+      this.route.params.subscribe(params => {
+        this.id = params['id'] ? params['id'] : 0;
+        this.version = params['version'] ? params['version'] : 0;
+        this.app.setTitle('NLF - ORS Rapport #' + this.id);
+        this.getData();
+      });
+    }
 
 
 

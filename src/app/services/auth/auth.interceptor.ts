@@ -1,11 +1,14 @@
 import { Injectable, Injector } from '@angular/core';
-import { HttpRequest, HttpResponse, HttpErrorResponse, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
+import { HttpClient, HttpRequest, HttpResponse, HttpErrorResponse, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/do';
+// import { do } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { Router, RouterStateSnapshot } from '@angular/router';
 import { NlfAlertService } from '../alert/alert.service';
 import { NlfLocalStorageService } from '../storage/local-storage.service';
 import { NlfAuthService } from './auth.service';
+import { NlfAuthSubjectService } from './auth-subject.service';
+
 
 
 
@@ -20,28 +23,40 @@ import { NlfAuthService } from './auth.service';
 @Injectable()
 export class NlfAuthInterceptor implements HttpInterceptor {
 
-  auth: any;
   cachedRequests: Array<HttpRequest<any>> = [];
 
   constructor(private router: Router,
-    private alertService: NlfAlertService,
-    private storage: NlfLocalStorageService,
-    private injector: Injector // Because https://github.com/angular/angular/issues/18224
-  ) {
+              private alertService: NlfAlertService,
+              private storage: NlfLocalStorageService,
+              private injector: Injector, // Because https://github.com/angular/angular/issues/18224
+              private http: HttpClient,
+              private authSubject: NlfAuthSubjectService) {
 
+    this.authSubject.observableAuth.subscribe(
+      auth => {
+        if (!!auth && this.cachedRequests.length > 0) {
+          this.retryFailedRequests();
+        }
+      },
+      err => console.log('Auth interceptor error getting login logout')
+    );
   }
 
   public collectFailedRequest(request): void {
+    console.log('cached Request', request);
     this.cachedRequests.push(request);
   }
 
   public retryFailedRequests(): void {
     // retry the requests. this method can
     // be called after the token is refreshed
+    // https://stackoverflow.com/questions/45202208/angular-4-interceptor-retry-requests-after-token-refresh?noredirect=1&lq=1
 
-    for (let r of this.cachedRequests) {
-      // next.handle(r) //.do((event: HttpEvent<any>) =>);
-    }
+    this.cachedRequests.forEach(request => {
+      console.log('Retrying: ', request);
+      // request.method === "POST" || PUT PATCH DELETE
+      this.http.request(request).subscribe((response) => { });
+    });
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -55,28 +70,32 @@ export class NlfAuthInterceptor implements HttpInterceptor {
       });
     }
 
-    return next.handle(request).do((event: HttpEvent<any>) => {
+    return next.handle(request).pipe(
+      tap(
+        (event: HttpEvent<any>) => {
 
-      // Response
-      if (event instanceof HttpResponse) {
-        // do stuff with response if you want
-        // return next.handle(request);
-      }
-    }, (err: any) => {
-      if (err instanceof HttpErrorResponse) {
+          // Response
+          if (event instanceof HttpResponse) {
+            // do stuff with response if you want
+            // return next.handle(request);
+          }
+        }, (err: any) => {
+          if (err instanceof HttpErrorResponse) {
 
-        if (err.status === 401) {
-          this.auth = this.injector.get(NlfAuthService); // Because https://github.com/angular/angular/issues/18224
-          this.collectFailedRequest(request);
-          console.log('401');
-          console.log(this.cachedRequests);
-          // this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url }});
-          this.auth.logout();
+            if (err.status === 401) {
+              let auth = this.injector.get(NlfAuthService); // Because https://github.com/angular/angular/issues/18224
+              this.collectFailedRequest(request);
+              console.log('401');
+              console.log(this.cachedRequests);
+              // this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url }});
+              auth.logout();
 
-        } else {
-          //this.alertService.warning(err.message);
+            } else {
+              // this.alertService.warning(err.message);
+            }
+          }
         }
-      }
-    });
+      )
+    );
   }
 }

@@ -139,8 +139,8 @@ export abstract class ApiRestService {
 
   }
 
-  protected delete(relativeUrl: string, _id: string, options: ApiOptionsInterface = {}): Observable<any> {
-    return this.http.delete(this.baseUrl + relativeUrl + _id);
+  protected delete(relativeUrl: string, _id: string, options: ApiOptionsInterface = {}, etag?: string): Observable<any> {
+    return this.http.delete(this.baseUrl + relativeUrl + _id, this.getOptions(options, etag));
   }
 
 }

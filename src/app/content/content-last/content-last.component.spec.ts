@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OrsEditorInvolvedComponent } from './ors-editor-involved.component';
+import { ContentLastComponent } from './content-last.component';
 
-describe('OrsEditorInvolvedComponent', () => {
-  let component: OrsEditorInvolvedComponent;
-  let fixture: ComponentFixture<OrsEditorInvolvedComponent>;
+describe('ContentLastComponent', () => {
+  let component: ContentLastComponent;
+  let fixture: ComponentFixture<ContentLastComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrsEditorInvolvedComponent ]
+      declarations: [ ContentLastComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OrsEditorInvolvedComponent);
+    fixture = TestBed.createComponent(ContentLastComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OrsEditorHelpComponent } from './ors-editor-help.component';
+import { NlfContentSpaceComponent } from './content-space.component';
 
-describe('OrsEditorHelpComponent', () => {
-  let component: OrsEditorHelpComponent;
-  let fixture: ComponentFixture<OrsEditorHelpComponent>;
+describe('NlfContentSpaceComponent', () => {
+  let component: NlfContentSpaceComponent;
+  let fixture: ComponentFixture<NlfContentSpaceComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrsEditorHelpComponent ]
+      declarations: [ NlfContentSpaceComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OrsEditorHelpComponent);
+    fixture = TestBed.createComponent(NlfContentSpaceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

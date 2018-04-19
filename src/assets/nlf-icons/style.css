@@ -1,0 +1,174 @@
+@font-face {
+  font-family: 'nlf';
+  src:  url('./fonts/nlf.eot?mxim9f');
+  src:  url('./fonts/nlf.eot?mxim9f#iefix') format('embedded-opentype'),
+    url('./fonts/nlf.ttf?mxim9f') format('truetype'),
+    url('./fonts/nlf.woff?mxim9f') format('woff'),
+    url('./fonts/nlf.svg?mxim9f#nlf') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+.nlf {
+  display: inline-block;
+  font-family: 'nlf';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.nlf-fw {
+  text-align: center;
+  width: 1.5em;
+}
+
+/* makes the font 33% larger relative to the icon container */
+.nlf-lg {
+  font-size: 1.33333333em;
+  line-height: 0.75em;
+  vertical-align: -15%;
+}
+.nlf-2x {
+  font-size: 2em;
+}
+.nlf-3x {
+  font-size: 3em;
+}
+.nlf-4x {
+  font-size: 4em;
+}
+.nlf-5x {
+  font-size: 5em;
+}
+
+.nlf-spin {
+  -webkit-animation: nlf-spin 2s infinite linear;
+  animation: nlf-spin 2s infinite linear;
+}
+.nlf-pulse {
+  -webkit-animation: nlf-spin 1s infinite steps(8);
+  animation: nlf-spin 1s infinite steps(8);
+}
+@-webkit-keyframes nlf-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@keyframes nlf-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+.nlf-rotate-90 {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+.nlf-rotate-180 {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.nlf-rotate-270 {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
+  -webkit-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  transform: rotate(270deg);
+}
+.nlf-flip-horizontal {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)";
+  -webkit-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+}
+.nlf-flip-vertical {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
+  -webkit-transform: scale(1, -1);
+  -ms-transform: scale(1, -1);
+  transform: scale(1, -1);
+}
+:root .nlf-rotate-90,
+:root .nlf-rotate-180,
+:root .nlf-rotate-270,
+:root .nlf-flip-horizontal,
+:root .nlf-flip-vertical {
+  filter: none;
+}
+.nlf-stack {
+  position: relative;
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  line-height: 2em;
+  vertical-align: middle;
+}
+.nlf-stack-1x,
+.nlf-stack-2x {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+.nlf-stack-1x {
+  line-height: inherit;
+}
+.nlf-stack-2x {
+  font-size: 2em;
+}
+.nlf-inverse {
+  color: #ffffff;
+}
+
+.nlf-propeller-spin {
+    margin-top: 5%;
+    margin-left: 23%;
+}
+
+.nlf-propeller:before {
+  content: "\e903";
+}
+.nlf-fallskjerm:before {
+  content: "\e90a";
+}
+.nlf-logo-original:before {
+  content: "\e900";
+}
+.nlf-logo:before {
+  content: "\e901";
+}
+.nlf-logo-plain:before {
+  content: "\e902";
+}
+.nlf-seilfly:before {
+  content: "\e904";
+}
+.nlf-motorfly:before {
+  content: "\e905";
+}
+.nlf-modellfly:before {
+  content: "\e906";
+}
+.nlf-mikrofly:before {
+  content: "\e907";
+}
+.nlf-hgpg:before {
+  content: "\e908";
+}
+.nlf-ballong:before {
+  content: "\e909";
+}

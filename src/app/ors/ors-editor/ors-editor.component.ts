@@ -25,6 +25,7 @@ export class NlfOrsEditorComponent implements OnInit, OnDestroy {
   initialized = false;
   hotkeys: Hotkey | Hotkey[];
 
+  preview = {};
   modalRef;
 
   constructor(private route: ActivatedRoute,
@@ -48,7 +49,7 @@ export class NlfOrsEditorComponent implements OnInit, OnDestroy {
         this.changed(observation);
       },
       err => console.log(err),
-      () => console.log('Done subject')
+      () => console.log('Done subject update')
 
     );
 
@@ -165,6 +166,7 @@ export class NlfOrsEditorComponent implements OnInit, OnDestroy {
         if (typeof this.observation.rating === 'undefined') {
           this.observation.rating = { actual: 1, potential: 1 };
         }
+
       },
       err => {
         this.alertService.error(err.message);
@@ -176,6 +178,11 @@ export class NlfOrsEditorComponent implements OnInit, OnDestroy {
 
   openModal(template: TemplateRef<any>) {
 
+    this.modalRef = this.modalService.open(template, { size: 'lg' });
+  }
+
+  openPreview(template: TemplateRef<any>, what: string, title: string) {
+    this.preview = {what: what, title: title};
     this.modalRef = this.modalService.open(template, { size: 'lg' });
   }
 

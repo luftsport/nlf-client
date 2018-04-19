@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd } from '@angular/router';
-import { NlfAuthService } from './services/auth/auth.service';
-import { Observable } from "rxjs";
+import { NlfAuthSubjectService } from './services/auth/auth-subject.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'nlf-root',
@@ -13,13 +13,18 @@ export class NlfComponent {
 
   readonly title = 'NLF';
   // For navbar!|
-  isLoggedIn: Observable<boolean>;
+  isLoggedIn: boolean;
   isCollapsed = false;
 
-  public constructor(private titleService: Title,
-    public authService: NlfAuthService,
+  public constructor(
+    private titleService: Title,
+    private authSubject: NlfAuthSubjectService,
     private router: Router) {
-    this.isLoggedIn = authService.isAuthenticated();
+
+    this.authSubject.observableAuth.subscribe(
+      auth => this.isLoggedIn = auth,
+      err => this.isLoggedIn = false
+    );
   }
 
   public setTitle(newTitle: string) {
@@ -33,8 +38,8 @@ export class NlfComponent {
 
     this.router.events.subscribe((event: NavigationEnd) => {
       try {
-        if (event.url.substring(1, 6) === 'error') { 
-          return true
+        if (event.url.substring(1, 6) === 'error') {
+          return true;
         } else {
           return false;
         }
@@ -42,9 +47,9 @@ export class NlfComponent {
         return false;
       }
     });
-    /** 
+    /**
     this.router.events.subscribe(res => {
-      
+
       if( this.router.url.substring(1,6) === 'error') {
         return true;
       } else {

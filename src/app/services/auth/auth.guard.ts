@@ -2,27 +2,34 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { NlfAlertService } from '../alert/alert.service';
 import { NlfAuthService } from './auth.service';
+import { NlfAuthSubjectService } from './auth-subject.service';
+
 import { Observable } from 'rxjs/Observable';
 import { NlfLocalStorageService } from '../storage/local-storage.service';
 
 @Injectable()
 export class NlfAuthGuard implements CanActivate {
 
-    isLoggedIn: Observable<boolean>;
+    isLoggedIn: boolean;
 
     constructor(private router: Router,
                 private alertService: NlfAlertService,
                 private authService: NlfAuthService,
-                private storage: NlfLocalStorageService
+                private storage: NlfLocalStorageService,
+                private authSubject: NlfAuthSubjectService
               ) {
-              this.isLoggedIn = authService.isAuthenticated();
-            }
+
+        this.authSubject.observableAuth.subscribe(
+            auth => this.isLoggedIn = auth,
+            err => this.isLoggedIn = false
+            );
+    }
 
     /**
     Since ng2-idle is used this is redudant
     Should be checking acl's instead
     **/
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
         if (this.storage.hasToken(false)) { // do not validate token
             return true;

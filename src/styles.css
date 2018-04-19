@@ -8,6 +8,17 @@ nlf-root, main {
   height: 100%;
 }
 
+.nlf-sticky {
+  background: white;
+  margin-bottom: 0;
+  width: 100%;
+  position:sticky;
+  position: -webkit-sticky;
+  top:0;
+  z-index: 999;
+  overflow:hidden;
+}
+
 .nlf-sticky-toolbar {
   padding: 0.75rem 1.25rem;
   margin-bottom: 0;
@@ -41,6 +52,7 @@ nlf-root, main {
     z-index: 999999;
 }
 
+/** TRIBUTE JS **/
 .tribute-container {
   position: absolute;
   /** Only when triangle 

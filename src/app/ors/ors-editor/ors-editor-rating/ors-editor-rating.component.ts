@@ -20,7 +20,7 @@ export class NlfOrsEditorRatingComponent implements OnInit {
   ngOnInit() {
   }
 
-  onChange(event) {
+  onChange() {
     console.log('Rating updating now oboy');
     this.subject.update(this.observation);
   }

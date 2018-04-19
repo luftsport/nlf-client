@@ -45,6 +45,10 @@ import { ApiObservationsService } from './api/api-observations.service';
 import { ApiObservationsWorkflowService } from './api/api-observations-workflow.service';
 import { ApiFilesService } from './api/api-files.service';
 import { ApiTagsService } from './api/api-tags.service';
+import { ApiClubsService } from './api/api-clubs.service';
+import { ApiHelpService } from './api/api-help.service';
+import { ApiContentService } from './api/api-content.service';
+
 // Api Cache service
 import { ApiCacheService } from './api/api-cache.service';
 
@@ -64,7 +68,6 @@ import { NlfUserComponent } from './user/user.component';
 import { NlfUserTableComponent } from './user/user-table/user-table.component';
 import { NlfOrsComponent } from './ors/ors.component';
 import { NlfOrsChildComponent } from './ors/ors-child/ors-child.component';
-import { NlfContentComponent } from './content/content.component';
 import { NlfConfluenceComponent } from './confluence/confluence.component';
 import { NlfClubComponent } from './club/club.component';
 
@@ -72,6 +75,17 @@ import { NlfClubComponent } from './club/club.component';
 import { NlfAdminComponent } from './admin/admin.component';
 import { NlfAdminHelpComponent } from './admin/help/help.component';
 import { NlfAdminHelpEditComponent } from './admin/help/help-edit/help-edit.component';
+
+// Content
+import { NlfContentComponent } from './content/content.component';
+import { NlfContentEditComponent } from './content/content-edit/content-edit.component';
+import { NlfContentViewComponent } from './content/content-view/content-view.component';
+import { NlfContentSpaceComponent } from './content/content-space/content-space.component';
+import { NlfContentSummaryComponent } from './content/content-summary/content-summary.component';
+import { NlfContentTreeComponent } from './content/content-tree/content-tree.component';
+import { NlfContentLastComponent } from './content/content-last/content-last.component';
+
+
 
 // Routes
 import { NlfRoutingModule } from './nlf-routing.module';
@@ -88,6 +102,7 @@ import { DataService } from './ors/data.service';
 import { NlfAuthComponent } from './services/auth/auth.component';
 import { NlfAuthGuard } from './services/auth/auth.guard';
 import { NlfAuthService } from './services/auth/auth.service';
+import { NlfAuthSubjectService } from './services/auth/auth-subject.service';
 
 // Resolvers
 import { NlfResolveComponent } from './services/resolve/resolve.component';
@@ -174,15 +189,20 @@ import { NlfOrsEditorAskComponent } from './ors/ors-editor/ors-editor-ask/ors-e
 import { NlfOrsEditorAskTextComponent } from './ors/ors-editor/ors-editor-ask-text/ors-editor-ask-text.component';
 import { NlfOrsEditorFlagsComponent } from './ors/ors-editor/ors-editor-flags/ors-editor-flags.component';
 import { NlfOrsEditorFilesComponent } from './ors/ors-editor/ors-editor-files/ors-editor-files.component';
-import { NlfOrsEditorHelpComponent } from './ors/ors-editor/ors-editor-help/ors-editor-help.component';
 import { NlfOrsEditorLocationComponent } from './ors/ors-editor/ors-editor-location/ors-editor-location.component';
 import { NlfOrsEditorWorkflowComponent } from './ors/ors-editor/ors-editor-workflow/ors-editor-workflow.component';
+import { NlfOrsEditorComponentsComponent } from './ors/ors-editor/ors-editor-components/ors-editor-components.component';
 
 // CONFIG
 import { NlfConfigModule } from './nlf-config.module';
-import { MentionModule } from 'angular-mentions/mention';
-import { ContenteditableDirective } from 'ng-contenteditable';
-import { ApiClubsService } from './api/api-clubs.service';
+// import { MentionModule } from 'angular-mentions/mention'; // @TODO: Remove
+import { ContenteditableDirective } from './services/contenteditable/contenteditable.directive';
+
+// Help
+import { NlfHelpComponent } from './services/help/help.component';
+
+// Confirm directive
+import { ConfirmTemplateDirective } from './services/confirm/confirm.service';
 
 // Do not work as of yet!!!
 import { NlfErrorComponent } from './error/error.component';
@@ -223,6 +243,12 @@ import { JoditAngularModule } from 'jodit-angular';
     NlfAdminHelpComponent,
     NlfAdminHelpEditComponent,
     NlfContentComponent,
+    NlfContentEditComponent,
+    NlfContentViewComponent,
+    NlfContentSpaceComponent,
+    NlfContentSummaryComponent,
+    NlfContentTreeComponent,
+    NlfContentLastComponent,
     NlfConfluenceComponent,
     NlfClubComponent,
     NlfUiFooterComponent,
@@ -272,6 +298,7 @@ import { JoditAngularModule } from 'jodit-angular';
     NlfDynamicColorPipe,
     NlfOrsPeoplePipe,
     SafePipe,
+    ConfirmTemplateDirective,
     NlfOrsFallskjermLastComponent,
     NlfOrsReportFilesThumbnailsComponent,
     NlfOrsCreateComponent,
@@ -286,10 +313,11 @@ import { JoditAngularModule } from 'jodit-angular';
     NlfOrsEditorAskTextComponent,
     NlfOrsEditorFlagsComponent,
     NlfOrsEditorFilesComponent,
-    NlfOrsEditorHelpComponent,
     NlfOrsEditorLocationComponent,
     NlfOrsEditorWorkflowComponent,
+    NlfOrsEditorComponentsComponent,
     NlfErrorComponent,
+    NlfHelpComponent,
     ContenteditableDirective,
     NlfDashboardComponent,
     WidgetOrsPieComponent,
@@ -322,7 +350,7 @@ import { JoditAngularModule } from 'jodit-angular';
     NgIdleKeepaliveModule.forRoot(),
     MomentModule,
     TagInputModule, // ngx-chips
-    MentionModule, // angular-mentions
+    // MentionModule, // angular-mentions REMOVE
     BrowserAnimationsModule,
     NgUploaderModule,
     HotkeyModule.forRoot(),
@@ -354,10 +382,13 @@ import { JoditAngularModule } from 'jodit-angular';
               ApiTagsService,
               ApiCacheService,
               ApiObservationsAggService,
+              ApiHelpService,
+              ApiContentService,
               DataService, // @TODO: Remove
               Title, // TODO: rename NlfUiTitleService
               NlfAlertService,
               NlfAuthService,
+              NlfAuthSubjectService,
               NlfLocalStorageService,
               GeoLocationService,
               NlfOrsEditorService,

@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NlfConfluenceComponent } from './confluence.component';
 import { NlfAuthGuard } from '../services/auth/auth.guard';
 
-const nlfConfluenceRoutes: Routes = [{ path: '', component: NlfConfluenceComponent, canActivate: [NlfAuthGuard]}];
+const nlfConfluenceRoutes: Routes = [{ path: 'confluence', component: NlfConfluenceComponent, canActivate: [NlfAuthGuard]}];
 
 
 @NgModule({

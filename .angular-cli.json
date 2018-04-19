@@ -20,7 +20,7 @@
       "prefix": "nlf",
       "styles": [
         "styles.css",
-        "../node_modules/nlf/style.css",
+        "assets/nlf-icons/style.css",
         "../node_modules/bootstrap/dist/css/bootstrap.css",
         "../node_modules/weather-icons/css/weather-icons.css",
         "../node_modules/weather-icons/css/weather-icons-wind.css",

@@ -3,13 +3,13 @@ import { Injectable, OnInit } from '@angular/core';
 import { ApiUserAuthService } from '../../api/api-user-auth.service';
 import { NlfAlertService } from '../alert/alert.service';
 import { NlfLocalStorageService } from '../storage/local-storage.service';
-
+import { NlfAuthSubjectService } from './auth-subject.service';
 // Import ng2-idle
 import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
 import { Keepalive } from '@ng-idle/keepalive';
 
 import { Router, ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class NlfAuthService {
@@ -20,36 +20,33 @@ export class NlfAuthService {
   private message: string;
 
 
-  //n g2-idle
+  // ng2-idle
   idleState: string;
   timedOut: boolean = false;
   lastPing?: Date = null;
-  idleTimeout = 29 * 60; //seconds
+  idleTimeout = 29 * 60; // seconds
   logoutTimeout = 60; // Seconds before logging out after idleTimeout times out
 
-  public isAuthSubject = new BehaviorSubject<boolean>(this.hasToken());
+  constructor(private apiCache: ApiCacheService,
+              private userAuthService: ApiUserAuthService,
+              private alertService: NlfAlertService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private idle: Idle,
+              private keepalive: Keepalive,
+              private storage: NlfLocalStorageService,
+              private authSubject: NlfAuthSubjectService) {
 
-  constructor(
-    private apiCache: ApiCacheService,
-    private userAuthService: ApiUserAuthService,
-    private alertService: NlfAlertService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private idle: Idle,
-    private keepalive: Keepalive,
-    private storage: NlfLocalStorageService) {
-
-    // this.isAuthSubject.next(false);
+    this.authSubject.observableAuth.subscribe(
+      auth => this.isAuth = auth,
+      err => this.isAuth = false
+    );
   }
 
   public hasToken(): boolean {
 
     return this.storage.hasToken();
 
-  }
-
-  public isAuthenticated(): Observable<boolean> {
-    return this.isAuthSubject.asObservable();
   }
 
   public login(username: string, password: string, returnUrl?: string): void {
@@ -76,7 +73,7 @@ export class NlfAuthService {
 
           this.storage.saveUser(username, data.token64, data.valid['$date']);
           // broadcast
-          this.isAuthSubject.next(true);
+          this.authSubject.update(true);
           // clear alerts since we do not re-route
           this.alertService.clear();
 
@@ -84,8 +81,6 @@ export class NlfAuthService {
           If first_login = true
           this.alertService.warning('Din første login, vennligst oppdater profilen');
           this.router.navigate(['user/profile']);
-
-
           **/
 
           /**
@@ -135,12 +130,13 @@ export class NlfAuthService {
             this.router.navigate(['/home']);
           }
           **/
+
           return true;
         } else {
 
           this.alertService.warning(data.message);
           this.message = data.message;
-          this.isAuthSubject.next(false);
+          this.authSubject.update(false);
           this.idleStop();
           return false;
         }
@@ -150,7 +146,7 @@ export class NlfAuthService {
         // This is a HttpErrorResponse should send the whole to alertService and do stuff there
         this.alertService.error(error.message);
         this.loading = false;
-        this.isAuthSubject.next(false);
+        this.authSubject.update(false);
         this.idleStop();
 
         // Do not work since no check for public pages
@@ -178,7 +174,7 @@ export class NlfAuthService {
     this.apiCache.clear();
 
     this.idleStop();
-    this.isAuthSubject.next(false);
+    this.authSubject.update(false);
 
     /**
     if(force) {

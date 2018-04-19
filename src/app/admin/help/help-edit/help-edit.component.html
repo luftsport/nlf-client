@@ -1,33 +1,41 @@
 <div class="row">
   <div class="nlf-sticky-toolbar">
     <div class="container">
-      <fa name="edit" fixed="true"></fa>Tittel
+      <fa name="edit" fixed="true"></fa>{{ title }}
     </div>
   </div>
 </div>
-<div class="row h-100">
+<div *ngIf="dataReady" class="row h-100">
 
   <div class="col-sm-12 h-100">
-    <div class="container h-100" style="height: 100% !important; border: 1px solid blue;top:0px; bottom:0px;">
-      <form>
-        <div class="form-group">
-          <label for="helptitle">Tittel</label>
-          <input type="text" class="form-control" id="helptitle" placeholder="Tittel">
-        </div>
-        <div class="form-group">
-          <label for="helpkey">Hjelpenøkkel</label>
-          <input type="text" class="form-control" id="helpkey" placeholder="Unik nøkkel for hjelp">
-        </div>
-
-      </form>
-
-      <jodit-editor [config]="joditConfig" (onChange)="logChange($event)"></jodit-editor>
+    <div class="container">
+      <div class="form-group">
+        <label for="helptitle">Tittel</label>
+        <input [(ngModel)]="title" type="text" class="form-control" id="helptitle" placeholder="Tittel">
+      </div>
+      <div class="form-group">
+        <label for="helpkey">Hjelpenøkkel</label>
+        <input *ngIf="mode==='create'" [(ngModel)]="key" type="text" class="form-control" id="helpkey" placeholder="Unik nøkkel for hjelp">
+        <input *ngIf="mode==='edit'" [ngModel]="key" type="text" class="form-control" id="helpkey" disabled>
+      </div>
+      <!-- tagname, id, defaultvalue, config -->
+      <jodit-editor [config]="joditConfig" [defaultValue]="body"></jodit-editor>
+      
     </div>
     <div class="nlf-toolbar fixed-bottom">
       <span class="float-right">
-        <button class="btn">Cancel</button>
-        <button class="btn btn-primary">Save</button>
+        <a class="btn" [routerLink]="['/admin/help/']">
+          <fa name="close" fixed="true"></fa>Cancel</a>
+        <button [disabled]="!changed" *ngIf="mode==='edit'" (click)="save()" class="btn btn-primary">
+          <fa name="save" fixed="true"></fa>Save</button>
+        <button *ngIf="mode==='create'" (click)="create()" class="btn btn-success">
+          <fa name="plus" fixed="true"></fa>Create</button>
       </span>
     </div>
   </div>
+</div>
+<div *ngIf="!dataReady">
+  <p class="align-middle text-center  text-secondary">
+    <fa name="spinner" animation="pulse" size="3x"></fa>
+  </p>
 </div>

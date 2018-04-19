@@ -1,3 +1,38 @@
-List of help texts! Table?
-<br>
-Key + <button class="btn btn-primary"><fa name="plus" fixed="true"></fa>Ny hjelpetekst</button>
+<div class="row">
+    <div class="nlf-sticky-toolbar">
+        <div class="container">
+            <fa name="question" fixed="true"></fa>Hjelpetekster
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="container">
+        <span *ngIf="!!dataReady">
+            <ngx-table [configuration]="tableHelp" [data]="help" [columns]="columns" [(pagination)]="pagination" (event)="eventEmitted($event)">
+
+                <ng-template let-row>
+                    <td class="ngx-easy-table-small">
+                        <a [routerLink]="['/admin/help/edit/', row.key]">{{ row.key }}</a>
+                    </td>
+                    <td class="ngx-easy-table-small">
+                        <a [routerLink]="['/admin/help/edit/', row.key]">{{ row.title }}</a>
+                    </td>
+                    <td>
+                        <span class="pointer" (click)="delete(row)"><fa name="close" fixed="true"></fa></span>
+                        <nlf-help [key]="row.key" [details]="true"></nlf-help>
+                    </td>
+                </ng-template>
+            </ngx-table>
+        </span>
+        <span *ngIf="!dataReady">
+            <p class="align-middle text-center  text-secondary">
+                <fa name="spinner" animation="pulse" size="3x"></fa>
+            </p>
+        </span>
+
+        <a [routerLink]="['/admin/help/create']" class="btn btn-primary">
+            <fa name="plus" fixed="true"></fa>Ny hjelpetekst
+        </a>
+
+    </div>
+</div>

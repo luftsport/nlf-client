@@ -8,7 +8,8 @@ import { NlfAuthGuard } from '../services/auth/auth.guard';
 const nlfAdminRoutes: Routes = [
     { path: 'admin/', component: NlfAdminComponent, canActivate: [NlfAuthGuard]},
     { path: 'admin/help', component: NlfAdminHelpComponent, canActivate: [NlfAuthGuard]},
-    { path: 'admin/help/edit/abc', component: NlfAdminHelpEditComponent, canActivate: [NlfAuthGuard]},
+    { path: 'admin/help/create', component: NlfAdminHelpEditComponent, canActivate: [NlfAuthGuard]},
+    { path: 'admin/help/edit/:key', component: NlfAdminHelpEditComponent, canActivate: [NlfAuthGuard]},
   ];
 
 @NgModule({

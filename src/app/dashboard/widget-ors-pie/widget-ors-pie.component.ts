@@ -71,7 +71,8 @@ export class WidgetOrsPieComponent extends WidgetComponent {
   onSelect(event) {
     console.log(event);
   }
-  close(event: any, id: string) {
+
+  close(event: any) { // , id: string
     this.dashboard.removeItemById(this.widgetId);
     event.preventDefault();
     event.stopPropagation();

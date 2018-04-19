@@ -87,12 +87,12 @@
   </tr>
   <tr>
     <td>Involverte</td>
-    <td>{{ observation.involved?.length }}</td>
+    <td>{{ observation.involved | count }}</td>
   </tr>
   <tr>
     <td>Kjennelser</td>
     <td>
-      <div *ngIf="observation.involved?.length > 0">
+      <div *ngIf="numberOfInvolved > 0">
         <div *ngFor="let v of observation.involved">
           <div *ngIf="!!v.verdict">
             <div *ngIf="!!v.verdict.fu" class="badge badge-warning">Farlig Ukontrollert </div>
@@ -101,7 +101,7 @@
           </div>
         </div>
       </div>
-      <div *ngIf="observation.involved?.length === 0">Ingen</div>
+      <div *ngIf="numberOfInvolved === 0">Ingen</div>
     </td>
   </tr>
 

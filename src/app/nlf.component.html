@@ -6,9 +6,11 @@
 
   <nlf-alert-service></nlf-alert-service>
 
-  <nlf-auth *ngIf="!(isLoggedIn | async)"></nlf-auth>
-  
-  <router-outlet *ngIf="isLoggedIn | async"></router-outlet>
+  <nlf-auth *ngIf="!isLoggedIn"></nlf-auth>
+
+  <span *ngIf="!!isLoggedIn">
+    <router-outlet></router-outlet>
+  </span>
 
 </main>
 <!--<footer> currently in ui footer

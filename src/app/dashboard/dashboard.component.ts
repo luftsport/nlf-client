@@ -134,8 +134,8 @@ export class NlfDashboardComponent implements OnInit {
     this.options.api.optionsChanged();
   }
 
-  removeItem(item) {
-    this.dashboard.splice(this.dashboard.indexOf(item), 1);
+  removeItem(event) {
+    this.dashboard.splice(this.dashboard.indexOf(event), 1);
   }
 
   addItem() {

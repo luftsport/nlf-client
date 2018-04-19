@@ -35,17 +35,15 @@
     <div class="col-lg-8">
       <ngx-charts-advanced-pie-chart *ngIf="dataReady" [activeEntries]="activeEntries" [scheme]="colorScheme" [label]="label" [results]="pie"
         [gradient]="gradient" (select)="onSelect($event)"></ngx-charts-advanced-pie-chart>
-        <span *ngIf="!dataReady">
-           <p class="align-middle text-center text-secondary"><fa name="spinner" animation="pulse" size="3x"></fa></p>
-        </span>
+      <span *ngIf="!dataReady">
+        <p class="align-middle text-center text-secondary">
+          <fa name="spinner" animation="pulse" size="3x"></fa>
+        </p>
+      </span>
     </div>
     <!-- /.col-lg-8 -->
     <div class="col-lg-4">
-      <h1 class="nlf-blue">
-        NLF Platform</h1>
-      <p>FNLF Platform har blitt NLF Platform! Etter Motorfly seksjonen har kommet til er også navnet endret til å representere
-        det faktum at alle sesjoner i NLF kan benytte NLF platform. ORS er en av flere applikasjoner som kjører på platformen</p>
-      <a (click)="openModal(modalTemplate)" class="btn btn-primary btn-lg" href="#">Les mer &raquo;</a>
+      <nlf-content-summary key="nlf-platform"></nlf-content-summary>
     </div>
     <!-- /.col-md-4 -->
   </div>
@@ -190,7 +188,7 @@
           </div>
         </div>-->
         <!-- END USER OR ORS -->
-        <div class="card">
+        <div class="card mb-4">
           <div class="card-header">Været</div>
           <div class="card-body">
 
@@ -222,7 +220,7 @@
             <a class="btn btn-primary btn-block" [routerLink]="['/ors']" role="button">METAR &raquo;</a>
           </div>
         </div>
-        <div class="card">
+        <div class="card mb-4">
           <div class="card-header">Siste lukkede ORS</div>
           <p>
             <nlf-ors-fallskjerm-last number="8"></nlf-ors-fallskjerm-last>
@@ -231,6 +229,34 @@
             <a class="btn btn-secondary btn-block" [routerLink]="['/ors/fallskjerm']" role="button">ORS &raquo;</a>
           </div>
         </div>
+
+      </div>
+      <div class="card-deck">
+        <!-- Content -->
+        <div class="card mb-4">
+          <div class="card-header lead"><i class="nlf nlf-fallskjerm nlf-fw"></i>Siste i Fallskjerm</div>
+            <nlf-content-last space_key="fallskjerm" number="8"></nlf-content-last>
+          <div class="card-footer">
+            <a class="btn btn-secondary btn-block" [routerLink]="['/content/space/fallskjerm']" role="button">Se mer &raquo;</a>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-header lead"><i class="nlf nlf-motorfly nlf-fw"></i>Siste i Motor</div>
+            <nlf-content-last space_key="motor" number="8"></nlf-content-last>
+          <div class="card-footer">
+            <a class="btn btn-secondary btn-block" [routerLink]="['/content/space/motor']" role="button">Se mer &raquo;</a>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-header lead">Siste i ORS</div>
+            <nlf-content-last space_key="ors" number="8"></nlf-content-last>
+          <div class="card-footer">
+            <a class="btn btn-secondary btn-block" [routerLink]="['/content/space/ors']" role="button">Se mer &raquo;</a>
+          </div>
+        </div>
+
       </div>
       <!-- /CARD DECK -->
 

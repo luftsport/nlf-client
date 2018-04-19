@@ -1,8 +1,11 @@
 <div class="col-md-12" style="height: 1200px; min-height: 500px;">
   <gridster [options]="options">
-    <gridster-item [item]="item" *ngFor="let item of dashboard">
-      Nuff
-    </gridster-item>
+    
+    <span *ngFor="let item of dashboard">
+      <gridster-item [item]="item">
+        Nuff
+      </gridster-item>
+    </span>
 
     <gridster-item [item]="{ cols: 20, rows: 10, y: 2, x: 0 }">
       <ngx-charts-pie-chart [labels]="true" [results]="hopptyper"></ngx-charts-pie-chart>
@@ -18,7 +21,7 @@
     <gridster-item [item]="{ cols: 10, rows: 10, y: 2, x: 0 }">
       <div class="item-buttons">
         <fa name="arrows-alt" fixed="true" class="drag-handler pointer"></fa>
-        <fa name="close" fixed="true" class="remove-button pointer" (click)="removeItem($event, item)" (touchstart)="removeItem($event, item)">
+        <fa name="close" fixed="true" class="remove-button pointer" (click)="removeItem($event)" (touchstart)="removeItem($event)">
         </fa>
       </div>
 

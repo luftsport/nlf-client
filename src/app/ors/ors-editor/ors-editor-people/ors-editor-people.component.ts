@@ -1,4 +1,4 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -39,26 +39,29 @@ export class NlfOrsEditorPeopleComponent implements OnInit {
    * data?: {licenses?:, membership?:, gear?:}
    * 
    */
-  observation: ApiObservationsItem;
+
   @Input() who: ObservationPeople[]; // = 'involved' || 'organization.hl' || 'organization.hm' || 'organization.hfl' || 'organization.pilot';
+
+  observation: ApiObservationsItem;
+
   items = [];
   dataReady = false;
 
   // Our shared data object which is: {45199: {id, fullname}}
-  list: Array<Object>; //: Object; // our behavioursubject passing around
+  involved: Array<Object>; //: Object; // our behavioursubject passing around
 
 
   constructor(
-    private subject: NlfOrsEditorService,
     private http: HttpClient,
-    private data: NlfOrsEditorInvolvedService,
+    private observationSubject: NlfOrsEditorService,
+    private involvedSubject: NlfOrsEditorInvolvedService,
     private userNlfService: ApiNlfUserService,
     private userService: ApiUserService) {
 
-    // Subscribe to behavioursubject:
-    this.data.currentArr.subscribe(list => this.list = list);
+    // Subscribe to involved:
+    this.involvedSubject.currentArr.subscribe(list => this.involved = list);
     // Subscribe to observation
-    this.subject.observableObservation.subscribe(observation => this.observation = observation);
+    this.observationSubject.observableObservation.subscribe(observation => this.observation = observation);
 
   }
 
@@ -72,23 +75,27 @@ export class NlfOrsEditorPeopleComponent implements OnInit {
         if (item.id < 0 && !!item.tmpname) {
 
           this.items.push({ id: item.id, fullname: item.tmpname });
-          this.list.push({ id: item.id, fullname: item.tmpname });
+          this.involved.push({ id: item.id, tmpname: item.tmpname });
         } else {
 
-          let options: ApiOptionsInterface = {
+          const options: ApiOptionsInterface = {
             query: { where: { id: item.id }, projection: { 'fullname': 1 } }
           };
           this.userNlfService.getUser(item.id, options).subscribe(
             data => {
               this.items.push({ id: item.id, fullname: data.fullname, tmpname: item.tmpname });
-              this.list.push({ id: item.id, fullname: data.fullname });
+              this.involved.push({ id: item.id });
             },
             err => {
               console.log(err);
               this.items.push({ id: item.id, fullname: item.tmpname, tmpname: item.tmpname });
-              this.list.push({ id: item.id, fullname: item.tmpname });
+              if (item.id < 0) {
+                this.involved.push({ id: item.id, tmpname: item.tmpname });
+              } else {
+                this.involved.push({ id: item.id });
+              }
             },
-            () => this.data.changeArr(this.list) // Update our behavioursubject:
+            () => this.involvedSubject.changeArr(this.involved) // Update our behavioursubject:
           );
         }
       }); // End forEach
@@ -96,14 +103,12 @@ export class NlfOrsEditorPeopleComponent implements OnInit {
       this.who = [];
       this.items = [];
       // Update our behavioursubject:
-      this.data.changeArr(this.list);
+      this.involvedSubject.changeArr(this.involved);
     }
 
     this.dataReady = true;
 
   }
-
-  private add
 
   /**
    * @TODO: add relevant information about person here in people
@@ -114,9 +119,9 @@ export class NlfOrsEditorPeopleComponent implements OnInit {
     console.log(event);
 
     // Just add the bugger to our subject
-    //this.data.changeList(this.list.push({id: event.id, fullname: event.fullname}));
+    //this.involvedSubject.changeList(this.involved.push({id: event.id, fullname: event.fullname}));
 
-    if (!(typeof event.id === 'number')) {
+    if (event.id === event.fullname) {
       const d = new Date();
       const id = -1 * d.getMilliseconds();
       this.who.push({ id: id, tmpname: event.fullname });
@@ -124,7 +129,7 @@ export class NlfOrsEditorPeopleComponent implements OnInit {
     } else {
 
       //data_tmp.id = event.id;
-      if (event._id < 0) {
+      if (event.id < 0) {
         let data_tmp: ObservationPeople = { id: event.id, tmpname: event.fullname };
 
       } else {
@@ -148,9 +153,9 @@ export class NlfOrsEditorPeopleComponent implements OnInit {
       }
 
     }
-    this.list.push({ id: event.id, fullname: event.fullname });
-    this.data.changeArr(this.list);
-    this.subject.update(this.observation);
+    this.involved.push({ id: event.id, fullname: event.fullname });
+    this.involvedSubject.changeArr(this.involved);
+    this.observationSubject.update(this.observation);
 
 
   }
@@ -172,11 +177,11 @@ export class NlfOrsEditorPeopleComponent implements OnInit {
     });
 
     // Change our subject
-    // this.data.changeList(newList);
+    // this.involvedSubject.changeList(newList);
     // Emit to parent Output
-    //delete this.list[event.id];
+    //delete this.involved[event.id];
 
-    this.subject.update(this.observation);
+    this.observationSubject.update(this.observation);
 
 
   }

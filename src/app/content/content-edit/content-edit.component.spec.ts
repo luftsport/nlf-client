@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DashboardComponent } from './dashboard.component';
+import { NlfAdminHelpEditComponent } from './help-edit.component';
 
-describe('DashboardComponent', () => {
-  let component: DashboardComponent;
-  let fixture: ComponentFixture<DashboardComponent>;
+describe('NlfAdminHelpEditComponent', () => {
+  let component: NlfAdminHelpEditComponent;
+  let fixture: ComponentFixture<NlfAdminHelpEditComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DashboardComponent ]
+      declarations: [ NlfAdminHelpEditComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DashboardComponent);
+    fixture = TestBed.createComponent(NlfAdminHelpEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

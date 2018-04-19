@@ -45,12 +45,15 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
   parent: string;
   changed = false;
 
-  content: ApiContentItem;
+  content: ApiContentItem = { title: '', slug: '', body: undefined, space_key: '' };
 
   // Tributejs
   tribute: Tribute;
   debouncedGetOrs = debounce(this.getOrs, 500);
   debouncedGetUsers = debounce(this.getUsers, 500);
+  debouncedGetContent = debounce(this.getContent, 500);
+  debouncedUpdateBody = debounce(this.logChange, 200);
+  joditInit = false;
 
   constructor(private apiContent: ApiContentService,
     private route: ActivatedRoute,
@@ -68,20 +71,20 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
       url => {
         // CREATE
         if (url[0]['path'] === 'content' && url[1]['path'] === 'create') {
-          this.content = {title: '', body: '', space_key: ''};
+          this.content = { title: '', body: '', space_key: '' };
 
           this.route.params.subscribe(
-            
+
             params => {
               console.log('Params', params);
 
               if (!!params['parent'] && params['parent'].length === 24) {
-                
+
                 this.mode = 'create_page';
 
                 const options: ApiOptionsInterface = {
                   query: {
-                    projection: {_id: 1, title: 1, slug: 1, space_key: 1 }
+                    projection: { _id: 1, title: 1, slug: 1, space_key: 1 }
                   },
                 };
 
@@ -93,7 +96,7 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
                   err => console.log(err),
                   () => this.dataReady = true
                 );
-                
+
 
               } else if (!params['parent']) {
                 console.log('Create Space');
@@ -116,9 +119,7 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
               this.mode = 'edit';
             },
             err => console.log(err),
-            () => {this.dataReady = true;
-              // this.messenger$.next(true);
-            }
+            () => this.dataReady = true
           );
         }
       },
@@ -136,7 +137,7 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
       iframe: null,
       selectClass: 'highlight',
       selectTemplate: function (item) {
-        return '<macro contenteditable="false" class="badge badge-danger" id="' + item.original.id + '">@' + item.original.fullname + '</macro>';
+        return '<macro href="#" data-url="/user/' + item.original.id + '" contenteditable="false" class="badge badge-danger macrolink pointer" id="' + item.original.id + '">@' + item.original.fullname + '</macro>';
       },
       menuItemTemplate: function (item) {
         return item.string;
@@ -153,12 +154,39 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
       positionMenu: true,
     };
 
+    const content = {
+      trigger: '[',
+      iframe: null,
+      selectClass: 'highlight',
+      selectTemplate: function (item) {
+        return '<a href="javascript:void(0);" class="macrolink" data-url="/content/view/' + item.original.space_key + '/' + item.original.slug + '">' + item.original.title + '</a>';
+      },
+      menuItemTemplate: function (item) {
+        if (!item.original.parent) {
+          return '<i class="fa fa-sitemap fa-fw"></i>&nbsp;' + item.string;
+        } else {
+          return '<i class="fa fa-file fa-fw"></i>&nbsp;' + item.string;
+        }
+      },
+      noMatchTemplate: 'Fant ingen',
+      lookup: function (item) {
+        return item.title;
+      },
+      fillAttr: 'title',
+      values: (text, callback) => this.debouncedGetContent(text, u => callback(u)),
+      requireLeadingSpace: true,
+      allowSpaces: true,
+      replaceTextSuffix: '\n',
+      positionMenu: true,
+    };
+
     const ors = {
       trigger: '#',
       iframe: null,
       selectClass: 'highlight',
       selectTemplate: function (item) {
-        return '<macro contenteditable="false" class="badge badge-danger" id="' + item.original.id + '">#' + item.original.id + ' ' + item.original.title + '</macro>';
+        return '<macro href="#" data-url="/ors/fallskjerm/report/' + item.original.id + '" contenteditable="false" class="badge badge-danger macrolink pointer" id="' + item.original.id + '"> \
+        #' + item.original.id + ' ' + item.original.title + '</macro>';
       },
       menuItemTemplate: function (item) {
         return item.string;
@@ -169,7 +197,7 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
       values: (text, callback) => this.debouncedGetOrs(text, u => callback(u)),
       requireLeadingSpace: true,
     };
-    this.tribute = new Tribute({ collection: [users, ors], allowSpaces: true });
+    this.tribute = new Tribute({ collection: [users, ors, content], allowSpaces: true });
 
     this.joditConfig = {
       buttons: 'paragraph, bold,strikethrough,underline,italic,|, \
@@ -181,76 +209,48 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
                 align,undo,redo,\n,cut,hr,eraser,copyformat,|, \
                 symbol,selectall,source, fullsize',
       imageDefaultWidth: 400,
-      events: { beforeEnter: (event) => {
-                    console.log('Tribute acvtive');
-                    if (this.tribute.isActive) {
-                      return true;
-                    }
-                     // return true; // prevent enter plugin but not prevent default behavior
-              },
-              afterInit: (event) => {
-                this.tribute.attach(document.getElementsByClassName('jodit_wysiwyg'));
-                console.log('initiated');
-                console.log(event);
-                this.jodit = event;
-                this.messenger$.next(true);
-                return true;
-              },
-              openImageProperties: (current) => {
-                console.log('Image properties');
+      height: 600,
 
-              },
-              
-                afterInsertImage: (image) => {
-                  console.log('IMAGE');
-                  console.log(image);
-                  return true;
-                },
-                afterResize: () => {
-                  console.log('Resize');
-                  
-                },
-              
-              }
+      events: {
+        beforeEnter: (event) => {
+          if (this.tribute.isActive) {
+            return true; // prevent enter plugin but not prevent default behavior
+          }
+        },
+        afterInit: (event, jodit) => {
+          this.tribute.attach(document.getElementsByClassName('jodit_wysiwyg'));
+          // this.jodit = jodit; // get editor instance
+
+          return true;
+        },
+        change: (new_value, old_value) => {
+          if (new_value !== old_value) {
+            // console.log('Not equal');
+          }
+          this.debouncedUpdateBody(new_value);
+          return false;
+        }
+      }
     };
   }
 
-  handleEvent(event): boolean {
-    console.log('triggered handleevent');
-    console.log(event);
-    return false;
-  }
-
   ngAfterViewInit() {
-    this.messenger$.subscribe(
-      value => {
-        console.log('MESSENGER');
-        if (value) {
-          this.jodit.events.on('afterPaste', (event) => {
-            console.log('PASTE');
-            return false; // deny paste
-      
-        });
-        }
-      }
-    );
-    
 
     // this.tribute.attach(document.getElementsByClassName('jodit_wysiwyg'));
-/*
-    this.messenger$.subscribe(
-      value => {
-        if (value) {
-          this.tribute = new Tribute({ collection: [users, ors], allowSpaces: true });
-          this.tribute.attach(document.getElementsByClassName('tribute-jodit'));
-        }
-      }
-    );
-    **/
+    /*
+        this.messenger$.subscribe(
+          value => {
+            if (value) {
+              this.tribute = new Tribute({ collection: [users, ors], allowSpaces: true });
+              this.tribute.attach(document.getElementsByClassName('tribute-jodit'));
+            }
+          }
+        );
+        **/
   }
 
   public getOrs(text, callback) {
-    console.log('searcing for kuk, text', text);
+    console.log('searcing for ORS, text', text);
 
     let ids = text.replace(/\D+/g, '') // Non digits
       .split(' ')
@@ -298,17 +298,17 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
         data => {
           console.log(data);
           if (data._meta.total > 0) {
-            let kuk = data._items.map((item) => {
+            const items = data._items.map((item) => {
               return { id: item.id, title: item['tags'].join(' '), search: '#' + item.id + ' ' + item['tags'].join(' ') };
             });
-            console.log('Kuk', kuk);
-            callback(kuk);
+            console.log('ORS Items', items);
+            callback(items);
           } else {
             callback([]);
           }
         },
         err => callback([]),
-        () => console.log('Kuk done:')
+        () => console.log('ORS items done:')
       );
     } else {
       console.log('Nothing is long enough!');
@@ -345,6 +345,41 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
     }
   }
 
+  public getContent(text, callback) {
+
+    const tags = text
+      .split(' ')
+      .filter(item => item.trim() !== '')
+      .map((item) => {
+        return item.charAt(0).toUpperCase() + item.slice(1);
+      });
+
+    if (text.length < 3) {
+      callback([]);
+    } else {
+      console.log('Search content', text);
+      const options: ApiOptionsInterface = {
+        query: {
+          // max_results: 20,
+          sort: [{ id: -1 }],
+          where: { $text: { $search: text }},
+          // projection: { score: { $meta: "textScore" } },
+        },
+      };
+
+
+      // this.apiCache.get(['ors-last', options.query], this.orsService.getObservations(options), 1 * 60 * 1000).subscribe(
+      this.apiContent.getContentList(options).subscribe(
+        data => {
+          callback(data._items);
+          console.log('Result', data._items);
+        },
+        err => callback([]),
+      );
+
+    }
+  }
+
   public slugify() {
 
     if (this.content.title.length > 0) {
@@ -352,11 +387,11 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
       const a = 'øåàáäâèéëêìíïîòóöôùúüûñçßÿœæŕśńṕẃǵǹḿǘẍźḧ·/_,:;';
       const b = 'oaaaaaeeeeiiiioooouuuuncsyoarsnpwgnmuxzh------';
       const p = new RegExp(a.split('').join('|'), 'g');
-    
+
       this.content.slug = this.content.title.toString().toLowerCase()
         .replace(/\s+/g, '-')           // Replace spaces with -
         .replace(p, c =>
-            b.charAt(a.indexOf(c)))     // Replace special chars
+          b.charAt(a.indexOf(c)))     // Replace special chars
         .replace(/&/g, '-og-')         // Replace & with 'and'
         .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
         .replace(/\-\-+/g, '-')         // Replace multiple - with single -
@@ -366,17 +401,21 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
     }
   }
 
-  logChange(event) {
-
-    if (!this.done) {
-      console.log('Instantiated tribute');
-      // this.tribute.attach(document.getElementsByClassName('jodit_wysiwyg'));
-      this.done = true;
-    }
-    // console.log(event);
+  public change() {
     this.changed = true;
-    this.content.body = event.value;
+  }
 
+  logChange(value) {
+    // console.log(event);
+
+    if (this.joditInit) {
+      // console.log('Changed body');
+      this.changed = true;
+      this.content.body = value; // .value;
+    } else {
+      // console.log('First pass');
+      this.joditInit = true;
+    }
   }
 
   create() {

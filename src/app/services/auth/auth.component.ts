@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { NlfAuthSubjectService } from './auth-subject.service';
 
 
 // import { UserAuthService } from '../api/user-auth.service';
@@ -17,20 +18,23 @@ export class NlfAuthComponent implements OnInit {
   loading = false;
   returnUrl: string;
   message: string;
+  private isAuthenticated: boolean;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private auth: NlfAuthService,
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private auth: NlfAuthService,
+              private authSubject: NlfAuthSubjectService) {
 
-    // private alertService: AlertService
-    // private authenticationService: AuthenticationService,
-    // private alertService: AlertService
-  ) {
+    this.authSubject.observableAuth.subscribe(
+      update => this.isAuthenticated = update,
+      err => this.isAuthenticated = false
+    );
   }
 
+
   isAuth() {
-    return this.auth.isAuthenticated();
+    console.log('Auth component isAuth');
+    return this.isAuthenticated;
   }
 
   login(returnUrl?: string) {
@@ -49,6 +53,7 @@ export class NlfAuthComponent implements OnInit {
 
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    console.log('Route', this.route.snapshot);
   }
 
 

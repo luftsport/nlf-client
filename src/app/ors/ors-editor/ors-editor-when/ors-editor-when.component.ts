@@ -15,8 +15,8 @@ export class NlfOrsEditorWhenComponent implements OnInit {
   time: { hour: number, minute: number, second?: number };
   maxDate: { year: number, month: number, day: number };
 
-  constructor(private subject: NlfOrsEditorService) {
-    this.subject.observableObservation.subscribe(observation => this.observation = observation);
+  constructor(private observationSubject: NlfOrsEditorService) {
+    this.observationSubject.observableObservation.subscribe(observation => this.observation = observation);
   }
 
   ngOnInit() {
@@ -37,6 +37,6 @@ export class NlfOrsEditorWhenComponent implements OnInit {
     console.log(this.time);
     this.observation.when = new Date(this.date.year + '-' + this.date.month + '-' + this.date.day + 'T' + this.time.hour + ':' + this.time.minute + ':00.000000Z');
     console.log(this.observation.when);
-    this.subject.update(this.observation);
+    this.observationSubject.update(this.observation);
   }
 }
