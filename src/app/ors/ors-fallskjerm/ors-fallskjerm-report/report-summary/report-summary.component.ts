@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import { ApiObservationsItem } from '../../../../api/api.interface';
+import { ApiObservationsItem } from 'app/api/api.interface';
 
 @Component({
   selector: 'nlf-ors-fallskjerm-report-summary',

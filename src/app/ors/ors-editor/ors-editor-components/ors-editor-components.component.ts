@@ -1,15 +1,18 @@
+
 import { Component, OnInit, Inject, TemplateRef, OnDestroy } from '@angular/core';
-import { ApiOptionsInterface, ApiObservationsItem, ApiTagList } from '../../../api/api.interface';
-import { ApiTagsService } from '../../../api/api-tags.service';
+import { ApiOptionsInterface, ApiObservationsItem, ApiTagList } from 'app/api/api.interface';
+import { ApiTagsService } from 'app/api/api-tags.service';
 import { NlfOrsEditorInvolvedService, NlfOrsEditorInvolvedInterface } from '../ors-editor-involved.service';
-import { NlfOrsEditorService } from '../ors-editor.service';
-import { NlfConfig, NLF_CONFIG } from './../../../nlf-config.module';
+import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
+import { NlfConfig, NLF_CONFIG } from 'app/nlf-config.module';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
+import { map, debounceTime, switchMap, distinctUntilChanged } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+
+
+
 
 @Component({
   selector: 'nlf-ors-editor-components',
@@ -76,12 +79,11 @@ export class NlfOrsEditorComponentsComponent implements OnInit, OnDestroy {
     this.formatter = (x: { tag: string }) => x.tag;
 
     this.search = (text: Observable<string>) =>
-      text
-        .debounceTime(500)
-        .distinctUntilChanged()
-        .switchMap(term =>
-          this.getTags(term).map(r => r._items.length === 0 ? [] : r._items) // .map(r => r.tag)
-        );
+      text.pipe(switchMap(term =>
+        this.getTags(term).pipe(debounceTime(500),
+          distinctUntilChanged(),
+          map(r => r._items.length === 0 ? [] : r._items)) // .map(r => r.tag)
+      ));
 
   }
 
@@ -119,6 +121,19 @@ export class NlfOrsEditorComponentsComponent implements OnInit, OnDestroy {
 
   onSelect(event) {
     console.log(event);
+  }
+
+  /**
+   * Drag'n drop functions
+   */
+  dropCause(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.causes, event.previousIndex, event.currentIndex);
+    this.updateObservation();
+  }
+
+  dropConsequence(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.consequences, event.previousIndex, event.currentIndex);
+    this.updateObservation();
   }
 
   updateObservation() {

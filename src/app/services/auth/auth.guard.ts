@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { NlfAlertService } from '../alert/alert.service';
+import { NlfAlertService } from 'app/services/alert/alert.service';
 import { NlfAuthService } from './auth.service';
 import { NlfAuthSubjectService } from './auth-subject.service';
 
-import { Observable } from 'rxjs/Observable';
-import { NlfLocalStorageService } from '../storage/local-storage.service';
+import { Observable } from 'rxjs';
+import { NlfLocalStorageService } from 'app/services/storage/local-storage.service';
 
 @Injectable()
 export class NlfAuthGuard implements CanActivate {
@@ -30,7 +30,7 @@ export class NlfAuthGuard implements CanActivate {
     Should be checking acl's instead
     **/
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-
+        return true;
         if (this.storage.hasToken(false)) { // do not validate token
             return true;
         } else {

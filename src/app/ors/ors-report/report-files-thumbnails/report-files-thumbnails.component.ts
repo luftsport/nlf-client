@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, TemplateRef } from '@angular/core';
-import { ApiFileItem } from '../../../../api/api.interface';
-import { ApiFilesService } from '../../../../api/api-files.service';
+import { ApiFileItem } from 'app/api/api.interface';
+import { ApiFilesService } from 'app/api/api-files.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 

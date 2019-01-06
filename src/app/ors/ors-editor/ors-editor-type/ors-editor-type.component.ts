@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { NLF_CONFIG, NlfConfig } from '../../../nlf-config.module';
-import { NlfOrsEditorService } from '../ors-editor.service';
-import {  ApiObservationsItem } from '../../../api/api.interface';
+import { NLF_CONFIG, NlfConfig } from 'app/nlf-config.module';
+import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
+import {  ApiObservationsItem } from 'app/api/api.interface';
 
 @Component({
   selector: 'nlf-ors-editor-type',

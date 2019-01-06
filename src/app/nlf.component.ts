@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd } from '@angular/router';
-import { NlfAuthSubjectService } from './services/auth/auth-subject.service';
-import { Observable } from 'rxjs/Observable';
+import { NlfAuthSubjectService } from 'app/services/auth/auth-subject.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'nlf-root',

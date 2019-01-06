@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DataService } from '../data.service';
+import { DataService } from 'app/ors/data.service';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({

@@ -1,7 +1,7 @@
-import { ApiCacheService } from './../../../api/api-cache.service';
+import { ApiCacheService } from 'app/api/api-cache.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { ApiNlfLicensesService } from '../../../api/api-nlf-licenses.service';
-import { ApiOptionsInterface } from '../../../api/api.interface';
+import { ApiNlfLicensesService } from 'app/api/api-nlf-licenses.service';
+import { ApiOptionsInterface } from 'app/api/api.interface';
 
 @Component({
   selector: 'nlf-resolve-license',

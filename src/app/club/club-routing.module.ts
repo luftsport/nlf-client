@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NlfClubComponent } from './club.component';
-import { NlfAuthGuard } from '../services/auth/auth.guard';
+import { NlfAuthGuard } from 'app/services/auth/auth.guard';
 
 const nlfClubRoutes: Routes = [{ path: 'club', component: NlfClubComponent, canActivate: [NlfAuthGuard]}];
 

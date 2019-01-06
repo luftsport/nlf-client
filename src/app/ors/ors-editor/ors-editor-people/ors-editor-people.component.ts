@@ -1,12 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { ApiObservationsItem, ApiOptionsInterface, ApiObservationOrganizationInterface } from '../../../api/api.interface';
-import { ApiNlfUserService } from '../../../api/api-nlf-user.service';
-import { ApiUserService } from '../../../api/api-user.service';
-import { NlfOrsEditorInvolvedService } from '../ors-editor-involved.service';
-import { NlfOrsEditorService } from '../ors-editor.service';
+import { ApiObservationsItem, ApiOptionsInterface, ApiObservationOrganizationInterface } from 'app/api/api.interface';
+import { ApiNlfUserService } from 'app/api/api-nlf-user.service';
+import { ApiUserService } from 'app/api/api-user.service';
+import { NlfOrsEditorInvolvedService } from 'app/ors/ors-editor/ors-editor-involved.service';
+import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 
 interface ObservationPeople {
   id: number;
@@ -75,7 +75,7 @@ export class NlfOrsEditorPeopleComponent implements OnInit {
         if (item.id < 0 && !!item.tmpname) {
 
           this.items.push({ id: item.id, fullname: item.tmpname });
-          this.involved.push({ id: item.id, tmpname: item.tmpname });
+          this.involved.push({ id: item.id, tmpname: item.tmpname, fullname: item.tmpname });
         } else {
 
           const options: ApiOptionsInterface = {
@@ -84,16 +84,17 @@ export class NlfOrsEditorPeopleComponent implements OnInit {
           this.userNlfService.getUser(item.id, options).subscribe(
             data => {
               this.items.push({ id: item.id, fullname: data.fullname, tmpname: item.tmpname });
-              this.involved.push({ id: item.id });
+              this.involved.push({ id: item.id, fullname: data.fullname });
             },
             err => {
               console.log(err);
               this.items.push({ id: item.id, fullname: item.tmpname, tmpname: item.tmpname });
-              if (item.id < 0) {
+              this.involved.push({ id: item.id, fullname: item.tmpname, tmpname: item.tmpname });
+              /**if (item.id < 0) {
                 this.involved.push({ id: item.id, tmpname: item.tmpname });
               } else {
-                this.involved.push({ id: item.id });
-              }
+                this.involved.push({ id: item.id, fullname: item.fullname });
+              } */
             },
             () => this.involvedSubject.changeArr(this.involved) // Update our behavioursubject:
           );
@@ -191,9 +192,6 @@ export class NlfOrsEditorPeopleComponent implements OnInit {
    * @TODO: move out in membershipservice
    */
   public requestAutocompleteItems = (text: string): Observable<any> => {
-    const url = `/api/v1/melwin/users/search?q=${text}`;
-    return this.http
-      .get(url)
-      .pipe(map(data => data['_items']));
+    return this.userNlfService.search(text).pipe(map(data => data['_items']));
   }
 }

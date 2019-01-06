@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ApiObservationActionsInterface } from '../../../../api/api.interface';
+import { ApiObservationActionsInterface } from 'app/api/api.interface';
 
 @Component({
   selector: 'nlf-ors-fallskjerm-report-actions',

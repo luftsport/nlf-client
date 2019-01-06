@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { ApiObservationsService } from '../../../api/api-observations.service';
-import { ApiOptionsInterface } from '../../../api/api.interface';
+import { ApiObservationsService } from 'app/api/api-observations.service';
+import { ApiOptionsInterface } from 'app/api/api.interface';
 import { TableModule } from 'ngx-easy-table';
-import { TableConfig, TableEventObject } from './../../../interfaces/ngx-easy-table.interface';
+import { TableConfig, TableEventObject } from 'app/interfaces/ngx-easy-table.interface';
 
 @Component({
   selector: 'nlf-ors-fallskjerm-all-table',
@@ -53,7 +53,14 @@ export class NlfOrsFallskjermAllTableComponent implements OnInit {
     isLoading: false,
     detailsTemplate: false,
     groupRows: false,
-    paginationRangeEnabled: true
+    paginationRangeEnabled: true,
+    tableLayout: {
+      style: 'normal', // or big or tiny
+      theme: 'normal', // or dark
+      border: true,
+      hover: true,
+      striped: false,
+    }
   };
 
   constructor(private orsService: ApiObservationsService) { }

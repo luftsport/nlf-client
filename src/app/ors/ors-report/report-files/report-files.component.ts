@@ -1,5 +1,5 @@
-import { ApiFilesService } from './../../../../api/api-files.service';
-import { ApiObservationFileInterface, ApiFileItem, ApiOptionsInterface } from './../../../../api/api.interface';
+import { ApiFilesService } from 'app/api/api-files.service';
+import { ApiObservationFileInterface, ApiFileItem, ApiOptionsInterface } from 'app/api/api.interface';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({

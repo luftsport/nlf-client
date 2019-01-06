@@ -1,10 +1,10 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { ApiContentService } from './../../api/api-content.service';
+import { ApiContentService } from 'app/api/api-content.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiObservationsService } from './../../api/api-observations.service';
-import { ApiNlfUserService } from './../../api/api-nlf-user.service';
-import { ApiOptionsInterface, ApiContentItem, ApiObservationsItem, ApiNlfUserItem, ApiNlfUserList } from '../../api/api.interface';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { ApiObservationsService } from 'app/api/api-observations.service';
+import { ApiNlfUserService } from 'app/api/api-nlf-user.service';
+import { ApiOptionsInterface, ApiContentItem, ApiObservationsItem, ApiNlfUserItem, ApiNlfUserList } from 'app/api/api.interface';
+import { BehaviorSubject } from 'rxjs';
 
 import Tribute from 'tributejs/src';
 import { debounce } from 'ts-debounce';

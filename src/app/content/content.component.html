@@ -1,6 +1,6 @@
 <div class="row">
   <div class="nlf-sticky-toolbar">
-      <div class="container">
+      <div class="container nlf-dark">
           <fa name="sitemap" fixed="true"></fa>Content spaces
       </div>
   </div>
@@ -12,7 +12,8 @@
 
               <ng-template let-row>
                   <td class="ngx-easy-table-small">
-                      <a [routerLink]="['/content/space/', row.space_key]"><fa name="sitemap" fixed="true"></fa>{{ row.space_key }}</a>
+                    <fa name="sitemap" fixed="true"></fa>&nbsp;
+                    <a [routerLink]="['/content/space/', row.space_key]">{{ row.space_key }}</a>
                   </td>
                   <td class="ngx-easy-table-small">
                       <a [routerLink]="['/content/view/', row.space_key, row.slug]">{{ row.title }}</a>

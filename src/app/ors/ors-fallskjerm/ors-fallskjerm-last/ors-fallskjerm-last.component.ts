@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { ApiObservationsService } from '../../../api/api-observations.service';
-import { ApiOptionsInterface, ApiObservationsList } from '../../../api/api.interface';
-import { ApiCacheService } from '../../../api/api-cache.service';
+import { ApiObservationsService } from 'app/api/api-observations.service';
+import { ApiOptionsInterface, ApiObservationsList } from 'app/api/api.interface';
+import { ApiCacheService } from 'app/api/api-cache.service';
 
 @Component({
   selector: 'nlf-ors-fallskjerm-last',

@@ -1,5 +1,5 @@
-<ngb-alert *ngIf="message" type="{{ message.type }}"
-[dismissible]="true">
+<ngb-alert *ngIf="message" [type]="message.type"
+[dismissible]="true" (close)="close()">
   <i [ngClass]="{'fa fa-fw': message,
   'fa-check': message.type === 'success',
   'fa-info-circle': message.type === 'info',

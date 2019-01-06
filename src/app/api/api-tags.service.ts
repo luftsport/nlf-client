@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { ApiRestService } from './api-rest.service';
@@ -42,7 +42,7 @@ export class ApiTagsService extends ApiRestService {
   public search(options) {
     console.log('Searching in service');
     return this.getList(this.relativeUrl, options)
-      .map(res => res['_items']
+      .pipe(map(res => res['_items'])
       );
 
   }

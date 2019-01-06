@@ -1,4 +1,4 @@
-import { ApiObservationOrganizationInterface } from './../../../../api/api.interface';
+import { ApiObservationOrganizationInterface } from 'app/api/api.interface';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({

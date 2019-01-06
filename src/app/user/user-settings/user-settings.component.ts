@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiUserService } from '../../api/api-user.service';
-import { NlfLocalStorageService } from '../../services/storage/local-storage.service';
-import { ApiOptionsInterface } from '../../api/api.interface';
+import { ApiUserService } from 'app/api/api-user.service';
+import { NlfLocalStorageService } from 'app/services/storage/local-storage.service';
+import { ApiOptionsInterface } from 'app/api/api.interface';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 

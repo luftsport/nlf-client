@@ -139,7 +139,7 @@ export class NlfDashboardComponent implements OnInit {
   }
 
   addItem() {
-    this.dashboard.push({});
+    this.dashboard.push({x: 0, y: 0, cols: 1, rows: 1});
   }
 
 }

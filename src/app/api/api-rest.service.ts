@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 // import {RequestOptions, Request, RequestMethod} from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { ApiOptionsInterface } from './api.interface';
 
 

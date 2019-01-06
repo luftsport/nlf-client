@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform, Inject } from '@angular/core';
-import { NLF_CONFIG, NlfConfig } from '../nlf-config.module';
+import { NLF_CONFIG, NlfConfig } from 'app/nlf-config.module';
 
 /**
  * Needs to get attributes from server => resolver

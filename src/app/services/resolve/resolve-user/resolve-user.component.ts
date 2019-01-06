@@ -1,9 +1,10 @@
-import { ApiCacheService } from './../../../api/api-cache.service';
+import { ApiCacheService } from 'app/api/api-cache.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { ApiNlfUserService } from '../../../api/api-nlf-user.service';
-import { ApiOptionsInterface } from '../../../api/api.interface';
-import { ApiUserService } from '../../../api/api-user.service';
-import { Observable } from 'rxjs/Rx';
+import { ApiNlfUserService } from 'app/api/api-nlf-user.service';
+import { ApiOptionsInterface } from 'app/api/api.interface';
+import { ApiUserService } from 'app/api/api-user.service';
+import { Observable, of, forkJoin } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'nlf-resolve-user',
@@ -77,9 +78,9 @@ export class NlfResolveUserComponent implements OnInit {
 
         const users = this.apiCache.get(['get-user', this.userid, optionsuser.query], this.userService.getUser(this.userid, optionsuser));
 
-        Observable.forkJoin(
-          users.catch(userError => Observable.of(userError)),
-          nlfUsers.catch(nlfUserError => Observable.of(nlfUserError)))
+        forkJoin(
+          users.pipe(catchError(userError => of(userError))),
+          nlfUsers.pipe(catchError(nlfUserError => of(nlfUserError))))
           .subscribe(
 
           data => {

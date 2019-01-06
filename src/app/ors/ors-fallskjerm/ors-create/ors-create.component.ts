@@ -1,10 +1,10 @@
-import { ApiOptionsInterface } from './../../../api/api.interface';
+import { ApiOptionsInterface } from 'app/api/api.interface';
 import { Component, Input, OnInit } from '@angular/core';
-import { NlfLocalStorageService } from '../../../services/storage/local-storage.service';
-import { ApiObservationsService } from '../../../api/api-observations.service';
+import { NlfLocalStorageService } from 'app/services/storage/local-storage.service';
+import { ApiObservationsService } from 'app/api/api-observations.service';
 import { Router } from '@angular/router';
-import { ApiClubsService } from '../../../api/api-clubs.service';
-import { ApiUserService } from '../../../api/api-user.service';
+import { ApiClubsService } from 'app/api/api-clubs.service';
+import { ApiUserService } from 'app/api/api-user.service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({

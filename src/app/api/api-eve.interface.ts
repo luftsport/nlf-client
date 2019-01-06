@@ -16,6 +16,16 @@ export interface ApiEveMeta {
   total: number;
 }
 
+export interface ApiEveBaseList {
+  _meta?: ApiEveMeta;
+  _links?: ApiEveLinks;
+}
+
+export interface ApiEveList extends ApiEveBaseList {
+  _items: ApiEveItem[];
+
+}
+
 export interface ApiEveBaseItem {
   _version?: number;
   _etag?: string;
@@ -26,17 +36,9 @@ export interface ApiEveBaseItem {
   _links?: ApiEveLinks;
 }
 
-export interface ApiEveBaseList {
-  _meta?: ApiEveMeta;
-  _links?: ApiEveLinks;
-}
-
 export interface ApiEveItem {
   id?: string;
   _id: string;
 }
 
-export interface ApiEveList extends ApiEveBaseList {
-  _items: ApiEveItem[];
 
-}

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { ApiRestService } from './api-rest.service';
@@ -13,7 +13,7 @@ export class ApiNlfLicensesService extends ApiRestService {
 
   constructor(http: HttpClient) { super(http); }
 
-  private relativeUrl = '/melwin/licenses/';
+  private relativeUrl = '/legacy/melwin/licenses/';
 
   public getLicense(id: string, options?: ApiOptionsInterface): Observable<ApiNlfLicenseItem> {
 

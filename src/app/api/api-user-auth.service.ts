@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { HttpClient, HttpRequest } from '@angular/common/http';
 
 import { ApiRestService } from './api-rest.service';

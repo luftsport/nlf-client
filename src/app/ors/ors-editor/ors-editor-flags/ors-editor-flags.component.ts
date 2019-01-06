@@ -1,7 +1,7 @@
-import { ApiObservationFlagsInterface, ApiObservationsItem } from './../../../api/api.interface';
+import { ApiObservationFlagsInterface, ApiObservationsItem } from 'app/api/api.interface';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { NlfOrsEditorService } from '../ors-editor.service';
+import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 
 @Component({
   selector: 'nlf-ors-editor-flags',

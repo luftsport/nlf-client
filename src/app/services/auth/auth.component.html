@@ -1,49 +1,68 @@
 <div class="nlf-page-center">
-  <h2 class="text-center">Login</h2>
-  <hr>
-  <p></p>
-  <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
 
-    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-      <!--<label for="username">Username</label>-->
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <div class="input-group-text">
-            <fa name="user" fixed="true"></fa>
-          </div>
-        </div>
-        <input placeholder="Username" type="text" class="form-control" name="username" [(ngModel)]="model.username" #username="ngModel"
-          required />
+  <div class="card" style="width: 25rem;">
+    <span class="text-center card-header" style="color: #004365 !important;">
+      <span class="nlf-stack nlf-5x">
+        <i [ngClass]="{'nlf-spin': !!auth.loading}" class="nlf nlf-propeller nlf-propeller-spin nlf-stack-2x text-dark"></i>
+        <i class="nlf nlf-logo-plain nlf-stack-2x text-dark"></i>
+      </span>
+    </span>
+    <div class="card-body">
+      <h5 class="card-title">Login</h5>
+
+      <div *ngIf="!auth.loading">
+        <p class="card-text">Authentication via NLF Auth</p>
+        <a href="{{ env._auth_service }}?client_id={{ env._client_id }}&response_type={{ env._response_type }}&scope={{ env._scope }}&shebang={{ env._shebang }}&redirect_uri={{ _return_uri }}"
+          class="btn btn-lg btn-primary btn-block" type="submit">
+          <fa name="lock" fixed="true"></fa> Logg inn med NLF Auth
+        </a>
+        <p class="small">Hjelp til innlogging</p>
       </div>
-      <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
-    </div>
-
-    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-      <!--<label for="password">Password</label>-->
-
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <div class="input-group-text">
-            <fa name="lock" fixed="true"></fa>
-          </div>
-        </div>
-        <input placeholder="Password" type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel"
-          required />
+      <div *ngIf="!!auth.loading">
+          <p class="card-text">Authenticating, please wait...</p>
       </div>
-      <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
     </div>
-    <p></p>
-    <div class="form-group">
-      <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
-      />
 
-      <button [disabled]="!!loading" class="btn btn-block btn-primary pull-right">Login</button>
+    <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
 
-    </div>
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+        <!--<label for="username">Username</label>-->
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <fa name="user" fixed="true"></fa>
+            </div>
+          </div>
+          <input placeholder="Username" type="text" class="form-control" name="username" [(ngModel)]="model.username" #username="ngModel"
+            required />
+        </div>
+        <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
+      </div>
+  
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+        <!--<label for="password">Password</label>-->
+  
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <fa name="lock" fixed="true"></fa>
+            </div>
+          </div>
+          <input placeholder="Password" type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel"
+            required />
+        </div>
+        <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
+      </div>
+      <p></p>
+      <div class="form-group">
+        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+        />
+  
+        <button [disabled]="!!loading" class="btn btn-block btn-primary pull-right">Login</button>
+  
+      </div>
   </form>
-  <div class="clearfix"></div>
-  <div class="text-center">
-    <p></p>
-    <p class="small">Hjelp til innlogging</p>
+  
   </div>
+
 </div>

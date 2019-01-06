@@ -1,4 +1,4 @@
-import { ApiWorkflowInterface } from './../../../../api/api.interface';
+import { ApiWorkflowInterface } from 'app/api/api.interface';
 import { Component, Input, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 

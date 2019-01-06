@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiContentService } from './../../api/api-content.service';
-import { ApiContentItem, ApiContentList, ApiOptionsInterface } from './../../api/api.interface';
-import { TableConfig, TableEventObject } from './../../interfaces/ngx-easy-table.interface';
-import { ConfirmService } from './../../services/confirm/confirm.service';
+import { ApiContentService } from 'app/api/api-content.service';
+import { ApiContentItem, ApiContentList, ApiOptionsInterface } from 'app/api/api.interface';
+import { TableConfig, TableEventObject } from 'app/interfaces/ngx-easy-table.interface';
+import { ConfirmService } from 'app/services/confirm/confirm.service';
 
 
 @Component({
@@ -49,7 +49,14 @@ export class NlfContentSpaceComponent implements OnInit {
     isLoading: false,
     detailsTemplate: false,
     groupRows: false,
-    paginationRangeEnabled: true
+    paginationRangeEnabled: true,
+    tableLayout: {
+      style: 'normal', // or big or tiny
+      theme: 'normal', // or dark
+      border: true,
+      hover: true,
+      striped: false,
+    }
   };
 
   constructor(private apiContent: ApiContentService,

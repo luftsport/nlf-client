@@ -1,4 +1,4 @@
-import { ApiObservationInvolvedInterface } from './../../../../api/api.interface';
+import { ApiObservationInvolvedInterface } from 'app/api/api.interface';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({

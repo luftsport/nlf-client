@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { ApiRestService } from './api-rest.service';
@@ -12,7 +12,7 @@ export class ApiNlfClubsService extends ApiRestService {
 
   constructor(http: HttpClient) { super(http); }
 
-  private relativeUrl = '/melwin/clubs/';
+  private relativeUrl = '/legacy/melwin/clubs/';
 
   public getClub(id: string, options?: ApiOptionsInterface): Observable<ApiNlfClubItem> {
 

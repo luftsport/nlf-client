@@ -1,4 +1,4 @@
-<div *ngIf="dataReady">
+<div *ngIf="dataReady" id="testpdf">
 
 	<header class="nlf-sticky-toolbar">
 
@@ -12,7 +12,8 @@
 			<nlf-resolve-observation-tags [tags]="data.tags" link="true" seperator="/"></nlf-resolve-observation-tags>&nbsp;
 			<!-- /TITLE -->
 			<!-- RATING -->
-			<span *ngIf="!!data.rating" class="badge badge-{{data.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ data.rating | nlfOrsRatingCalc }}</span>
+			<span *ngIf="!!data.rating" class="badge badge-{{data.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ data.rating
+				| nlfOrsRatingCalc }}</span>
 
 
 			<!-- DIFFERENT VERSION -->
@@ -113,7 +114,8 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="card-header">
-							<fa name="users" fixed="true"></fa>Hoppfeltorganisasjon</div>
+							<fa name="users" fixed="true"></fa>Hoppfeltorganisasjon
+						</div>
 						<nlf-ors-fallskjerm-report-organization [organization]="data.organization"></nlf-ors-fallskjerm-report-organization>
 					</div>
 				</div>
@@ -123,7 +125,8 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="card-header">
-							<fa name="cloud" fixed="true"></fa>Været</div>
+							<fa name="cloud" fixed="true"></fa>Været
+						</div>
 						<nlf-ors-fallskjerm-report-weather [weather]="data.weather"></nlf-ors-fallskjerm-report-weather>
 					</div>
 				</div>
@@ -133,7 +136,8 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="card-header">
-							<fa name="bolt" fixed="true"></fa>Tiltak</div>
+							<fa name="bolt" fixed="true"></fa>Tiltak
+						</div>
 						<nlf-ors-fallskjerm-report-actions [actions]="data.actions"></nlf-ors-fallskjerm-report-actions>
 					</div>
 				</div>
@@ -167,7 +171,8 @@
 				<div *ngIf="!!data.related && data.related?.length > 0" class="row">
 					<div class="col-md-12">
 						<div class="card-header">
-							<fa name="external-link" fixed="true"></fa>Relaterte</div>
+							<fa name="external-link" fixed="true"></fa>Relaterte
+						</div>
 						<nlf-ors-fallskjerm-report-related [related]="data.related"></nlf-ors-fallskjerm-report-related>
 					</div>
 				</div>
@@ -276,6 +281,8 @@
 			</div>
 		</div>
 	</div>
+
+
 </div>
 <div *ngIf="!dataReady">
 	<nlf-ui-page-spinner size="5"></nlf-ui-page-spinner>

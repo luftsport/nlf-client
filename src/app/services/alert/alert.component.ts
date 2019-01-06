@@ -9,10 +9,14 @@ import { NlfAlertService } from './alert.service';
 })
 export class NlfAlertComponent implements OnInit {
     message: any;
-  
+
     constructor(private alertService: NlfAlertService) { }
 
     ngOnInit() {
         this.alertService.getMessage().subscribe(message => { this.message = message; });
+    }
+
+    close() {
+        this.alertService.clear();
     }
 }

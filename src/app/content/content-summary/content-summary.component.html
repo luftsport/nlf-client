@@ -2,5 +2,6 @@
   <H1 class="nlf-blue">{{ content.title }}</H1>
 
   <p [innerHTML]="content.body | stripTags | truncate: 140: '...': true "></p>
-  <a [routerLink]="['content/view/', content.space_key, content.slug]" class="btn btn-primary btn-lg">Les mer &raquo;</a>
+  <a [routerLink]="['/content/view/', content.space_key, content.slug]" class="btn btn-primary btn-lg">Les mer &raquo;</a>
+
 </div>

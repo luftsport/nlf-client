@@ -1,7 +1,7 @@
-import { ApiCacheService } from './../../../api/api-cache.service';
+import { ApiCacheService } from 'app/api/api-cache.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { ApiAclGroupsService } from '../../../api/api-acl-groups.service';
-import { ApiOptionsInterface } from '../../../api/api.interface';
+import { ApiAclGroupsService } from 'app/api/api-acl-groups.service';
+import { ApiOptionsInterface } from 'app/api/api.interface';
 
 @Component({
   selector: 'nlf-resolve-group',

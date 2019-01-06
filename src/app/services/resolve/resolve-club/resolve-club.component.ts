@@ -1,8 +1,8 @@
-import { ApiNlfClubItem } from './../../../api/api.interface';
-import { ApiCacheService } from './../../../api/api-cache.service';
+import { ApiNlfClubItem } from 'app/api/api.interface';
+import { ApiCacheService } from 'app/api/api-cache.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { ApiNlfClubsService } from '../../../api/api-nlf-clubs.service';
-import { ApiOptionsInterface } from '../../../api/api.interface';
+import { ApiNlfClubsService } from 'app/api/api-nlf-clubs.service';
+import { ApiOptionsInterface } from 'app/api/api.interface';
 
 @Component({
   selector: 'nlf-resolve-club',

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ApiObservationComponentInterface } from './../../../../api/api.interface';
+import { ApiObservationComponentInterface } from 'app/api/api.interface';
 
 
 @Component({

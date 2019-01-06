@@ -1,12 +1,12 @@
 import { Component, OnInit, Output, Input, TemplateRef, EventEmitter } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ApiObservationFileInterface, ApiObservationsItem, ApiOptionsInterface } from '../../../api/api.interface';
+import { ApiObservationFileInterface, ApiObservationsItem, ApiOptionsInterface } from 'app/api/api.interface';
 import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions } from 'ngx-uploader';
-import { NlfLocalStorageService } from '../../../services/storage/local-storage.service';
-import { NlfOrsEditorService } from '../ors-editor.service';
-import { ApiFilesService } from './../../../api/api-files.service';
+import { NlfLocalStorageService } from 'app/services/storage/local-storage.service';
+import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
+import { ApiFilesService } from 'app/api/api-files.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmService } from './../../../services/confirm/confirm.service';
+import { ConfirmService } from 'app/services/confirm/confirm.service';
 
 @Component({
   selector: 'nlf-ors-editor-files',

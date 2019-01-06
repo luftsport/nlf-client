@@ -16,7 +16,7 @@
       <img class="mr-3 rounded-circle" src="https://dummyimage.com/64x64/595659/e3e4e8">
       <div class="media-body">
         <h5 class="mt-0">Hovedinstruktør</h5>
-        <p [innerHTML]="comments.pending_review_hi | newlines"></p>
+        <p [innerHTML]="comments.pending_review_hi | newlines | safe: 'html'"></p>
       </div>
     </div>
   </div>
@@ -30,7 +30,7 @@
       <img class="mr-3 rounded-circle" src="https://dummyimage.com/64x64/595659/e3e4e8">
       <div class="media-body">
         <h5 class="mt-0">Fagsjef</h5>
-        <p [innerHTML]="comments.pending_review_fs | newlines"></p>
+        <p [innerHTML]="comments.pending_review_fs | newlines | safe: 'html'"></p>
       </div>
     </div>
   </div>
@@ -42,7 +42,7 @@
       <img class="mr-3 rounded-circle" src="https://dummyimage.com/64x64/595659/e3e4e8">
       <div class="media-body">
         <h5 class="mt-0">SU</h5>
-        <p [innerHTML]="comments.pending_review_su | newlines"></p>
+        <p [innerHTML]="comments.pending_review_su | newlines | safe: 'html'"></p>
       </div>
     </div>
   </div>

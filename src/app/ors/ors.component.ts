@@ -7,6 +7,7 @@ import { NlfOrsChildComponent } from './ors-child/ors-child.component';
 /**
 Testing ng2-idle
 Needs upgrading to ng5 to abolish the deprecated HttpModule...
+DONE!
 **/
 
 import { NlfAlertService } from '../services/alert/alert.service';

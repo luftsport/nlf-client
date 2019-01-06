@@ -1,6 +1,6 @@
 import { Component, Injectable, Directive, TemplateRef } from '@angular/core';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-import { SafePipe } from './../../pipes/safe.pipe';
+import { SafePipe } from 'app/pipes/safe.pipe';
 /**
  * Options passed when opening a confirmation modal
  */

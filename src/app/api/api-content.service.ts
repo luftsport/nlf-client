@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { ApiRestService } from './api-rest.service';
 import { ApiOptionsInterface, ApiContentItem, ApiContentList } from './api.interface';
 

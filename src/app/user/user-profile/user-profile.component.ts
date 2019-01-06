@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ApiUserService } from '../../api/api-user.service';
-import { ApiUserItem } from '../../api/api.interface';
-import { NlfAlertService } from '../../services/alert/alert.service';
+import { ApiUserService } from 'app/api/api-user.service';
+import { ApiUserItem } from 'app/api/api.interface';
+import { NlfAlertService } from 'app/services/alert/alert.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { NlfLocalStorageService } from '../../services/storage/local-storage.service';
-import { GeoLocationService } from '../../services/geo/geo-location.service';
+import { NlfLocalStorageService } from 'app/services/storage/local-storage.service';
+import { GeoLocationService } from 'app/services/geo/geo-location.service';
 
 @Component({
   selector: 'nlf-user-profile',

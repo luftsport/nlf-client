@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { ApiRestService } from './api-rest.service';
@@ -10,7 +10,7 @@ export class ApiObservationsWorkflowService extends ApiRestService {
 
   constructor( http: HttpClient ) { super(http); }
 
-  private relativeUrl = '/observations/workflow/';
+  private relativeUrl = '/f/observations/workflow/';
 
   public getWorkflowState(id: string | number, options?: ApiOptionsInterface): Observable<ApiObservationsItem> {
 

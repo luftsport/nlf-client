@@ -1,14 +1,21 @@
-import { ApiObservationsService } from './../../../api/api-observations.service';
-import { ApiNlfUserService } from './../../../api/api-nlf-user.service';
+import { ApiObservationsService } from 'app/api/api-observations.service';
+import { ApiNlfUserService } from 'app/api/api-nlf-user.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ConfirmService } from 'app/services/confirm/confirm.service';
 
-import { ApiOptionsInterface, ApiObservationsItem, ApiNlfUserItem, ApiNlfUserList } from '../../../api/api.interface';
+import { ApiOptionsInterface, ApiObservationsItem, ApiNlfUserItem, ApiNlfUserList } from 'app/api/api.interface';
 
-import { NlfOrsEditorInvolvedService } from './../ors-editor-involved.service';
-import { NlfOrsEditorService } from '../ors-editor.service';
+import { NlfOrsEditorInvolvedService } from 'app/ors/ors-editor/ors-editor-involved.service';
+import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import Tribute from 'tributejs/src';
 import { debounce } from 'ts-debounce';
+
+/**
+@todo need to fire event on Tribute insert
+https://stackoverflow.com/questions/45625049/contenteditable-how-to-completely-remove-span-when-pressing-del-or-backspace
+ */
+
 
 @Component({
   selector: 'nlf-ors-editor-ask-text',
@@ -18,35 +25,45 @@ import { debounce } from 'ts-debounce';
 export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
   list; // mentions list
   observation: ApiObservationsItem;
-  mconf = { triggerChar: '@', maxItems: 10, labelKey: 'fullname', mentionSelect: this.format };
-
+  rs: any;
   tribute: Tribute;
 
   debouncedGetOrs = debounce(this.getOrs, 500);
   debouncedGetUsers = debounce(this.getUsers, 500);
 
-
   constructor(private subject: NlfOrsEditorService,
     private involved: NlfOrsEditorInvolvedService,
     private nlfUsers: ApiNlfUserService,
-    private orsService: ApiObservationsService) {
+    private orsService: ApiObservationsService,
+    private confirmService: ConfirmService) {
 
     this.involved.currentArr.subscribe(list => this.list = list); // Involved list
     this.subject.observableObservation.subscribe(observation => this.observation = observation);
+
   }
 
   ngOnInit() {
 
   }
 
+ 
+
   ngAfterViewInit() {
+
+    const rs = (length) =>  Math.round((Math.pow(36, length + 1) - Math.random() * Math.pow(36, length))).toString(36).slice(1);
+
     const users = {
       trigger: '!',
       iframe: null,
       selectClass: 'highlight',
       // function called on select that returns the content to insert<macro contenteditable="false" class="badge badge-info"
       selectTemplate: function (item) {
-        return '<macro contenteditable="false" class="badge badge-info" id="' + item.original.id + '">!' + item.original.fullname + '</macro>';
+        const id = rs(12);
+        return '<macro href="#" data-url="/user/' + item.original.id + '" contenteditable="false"\
+                data-type="user" data-id="' + item.original.id + '"\
+                onclick="this.remove()"\
+                class="badge badge-info macrolink pointer" id="' + id + '">\
+                !' + item.original.fullname + '</macro>';
       },
       // template for displaying item in menu
       menuItemTemplate: function (item) {
@@ -80,14 +97,19 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
       iframe: null,
       selectClass: 'highlight',
       selectTemplate: function (item) {
-        return '<macro contenteditable="false" class="badge badge-danger" id="' + item.original.id + '">@' + item.original.fullname + '</macro>';
+        const id = rs(12);
+        return '<macro href="#" data-url="/user/' + item.original.id + '" contenteditable="false" \
+                data-type="user" data-id="' + item.original.id + '"\
+                onclick="this.remove()"\
+                class="badge badge-danger macrolink pointer" id="' + id + '">\
+                @' + item.original.fullname + '</macro>';
       },
       menuItemTemplate: function (item) {
         return item.string;
       },
       noMatchTemplate: 'Fant ingen',
       lookup: function (item) {
-        return  item.fullname + ' (' + item.id + ')';
+        return item.fullname + ' (' + item.id + ')';
       },
       fillAttr: 'fullname',
       values: (text, callback) => this.debouncedGetUsers(text, u => callback(u)),
@@ -102,7 +124,12 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
       iframe: null,
       selectClass: 'highlight',
       selectTemplate: function (item) {
-        return '<macro contenteditable="false" class="badge badge-danger" id="' + item.original.id + '">#' + item.original.id + ' ' + item.original.title + '</macro>';
+        const id = rs(12);
+        return '<macro href="#" data-url="/ors/fallskjerm/report/' + item.original.id + '" contenteditable="false"\
+                data-type="f_ors" data-id="' + item.original.id + '"\
+                onclick="this.remove()"\
+                class="badge badge-danger macrolink pointer" id="' + id + '"> \
+                #' + item.original.id + ' ' + item.original.title + '</macro>';
       },
       menuItemTemplate: function (item) {
         return item.string;
@@ -115,6 +142,7 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
     };
 
     /**
+      @todo https://github.com/ladderio/ngx-tribute
      *  this.menuSelected = 0
         this.current = {}
         this.inputEvent = false
@@ -124,13 +152,14 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
         this.replaceTextSuffix = replaceTextSuffix = '\n'
         this.positionMenu = positionMenu | true
      */
-    this.tribute = new Tribute({ collection: [users, remote, ors], allowSpaces: true});
+    this.tribute = new Tribute({ collection: [users, remote, ors], allowSpaces: true });
     this.tribute.attach(document.getElementsByName('myFormName'));
 
 
   }
 
   public getInvolved(text, callback) {
+    console.log(this.list);
     callback(this.list);
   }
 
@@ -166,18 +195,18 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
     console.log('searcing for kuk, text', text);
 
     let ids = text.replace(/\D+/g, '') // Non digits
-    .split(' ')
-    .filter(item => parseInt(item, 10) > 0)
-    .map((item) => {
+      .split(' ')
+      .filter(item => parseInt(item, 10) > 0)
+      .map((item) => {
         return parseInt(item, 10);
-    });
+      });
 
     let tags = text.replace(/\d+/g, '')
-    .split(' ')
-    .filter(item => item.trim() !== '')
-    .map((item) => {
+      .split(' ')
+      .filter(item => item.trim() !== '')
+      .map((item) => {
         return item.charAt(0).toUpperCase() + item.slice(1);
-    });
+      });
 
     console.log('ID', ids, ids.length);
     console.log('Tags', tags, tags.length);
@@ -200,7 +229,7 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
         query: {
           // max_results: 20,
           sort: [{ id: -1 }],
-          where: { '$or': [{ 'id': { '$in': ids } }, {$text: { $search: tags.join(' ') }}]}, // { tags: { '$in': tags } }] },
+          where: { '$or': [{ 'id': { '$in': ids } }, { $text: { $search: tags.join(' ') } }] }, // { tags: { '$in': tags } }] },
           // where: { id: { '$in': ids } },
           // projection: { score: { $meta: "textScore" } }, // { id: 1, tags: 1, workflow: 1, reporter: 1, owner: 1, involved: 1, organization: 1 }
         },
@@ -239,5 +268,23 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
   }
   textChange() {
     this.subject.update(this.observation);
+  }
+
+
+
+  reset() {
+    const confirmMsg = {
+      title: 'Please confirm',
+      message: 'Are you sure you want to delete all the text?',
+      yes: 'Delete',
+      no: 'Cancel'
+    };
+
+    this.confirmService.confirm(confirmMsg).then(
+      () => {
+        this.observation.ask.text[this.observation.workflow.state] = '';
+      },
+      () => { }
+    );
   }
 }

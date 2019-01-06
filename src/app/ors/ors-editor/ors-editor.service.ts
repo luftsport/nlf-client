@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { ApiObservationsItem } from '../../api/api.interface';
+import { BehaviorSubject } from 'rxjs';
+import { ApiObservationsItem } from 'app/api/api.interface';
 
 @Injectable()
 export class NlfOrsEditorService {
@@ -20,8 +20,8 @@ export class NlfOrsEditorService {
 }
 
 /** Cut'n paste stuff
-import { NlfOrsEditorService } from '../ors-editor.service';
-import { ApiObservationsItem } from '../../../api/api.interface';
+import { NlfOrsEditorService } from 'app/ors/ors-editor.service';
+import { ApiObservationsItem } from 'app/api/api.interface';
 , ApiObservationsItem
 
 observation: ApiObservationsItem;

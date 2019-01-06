@@ -1,10 +1,10 @@
 
 import { Component, OnInit, Input } from '@angular/core';
-import { ApiAclRolesService } from '../../api/api-acl-roles.service';
-import { ApiAclGroupsService } from '../../api/api-acl-groups.service';
-import { NlfLocalStorageService } from '../../services/storage/local-storage.service';
-import { NlfAlertService } from '../../services/alert/alert.service';
-import { ApiOptionsInterface } from '../../api/api.interface';
+import { ApiAclRolesService } from 'app/api/api-acl-roles.service';
+import { ApiAclGroupsService } from 'app/api/api-acl-groups.service';
+import { NlfLocalStorageService } from 'app/services/storage/local-storage.service';
+import { NlfAlertService } from 'app/services/alert/alert.service';
+import { ApiOptionsInterface } from 'app/api/api.interface';
 
 @Component({
   selector: 'nlf-user-acl',

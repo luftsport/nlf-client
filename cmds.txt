@@ -1,0 +1,2 @@
+ng serve --configuration=localhost --proxy-config proxy.conf.json
+

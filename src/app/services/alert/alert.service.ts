@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable, Subject } from 'rxjs';
 
+/**
+@todo investigate self closing setTimeout or debounceTime
+ */
 @Injectable()
 export class NlfAlertService {
 
@@ -53,8 +55,29 @@ export class NlfAlertService {
         this.error(message, keepAfterNavigationChange);
     }
 
+    primary(message: string, keepAfterNavigationChange = false, dismissible = true) {
+        this.keepAfterNavigationChange = keepAfterNavigationChange;
+        this.dismissible = dismissible;
+        this.subject.next({ type: 'primary', text: message });
+    }
+
+    secondary(message: string, keepAfterNavigationChange = false, dismissible = true) {
+        this.keepAfterNavigationChange = keepAfterNavigationChange;
+        this.dismissible = dismissible;
+        this.subject.next({ type: 'secondary', text: message });
+    }
+    light(message: string, keepAfterNavigationChange = false, dismissible = true) {
+        this.keepAfterNavigationChange = keepAfterNavigationChange;
+        this.dismissible = dismissible;
+        this.subject.next({ type: 'light', text: message });
+    }
+    dark(message: string, keepAfterNavigationChange = false, dismissible = true) {
+        this.keepAfterNavigationChange = keepAfterNavigationChange;
+        this.dismissible = dismissible;
+        this.subject.next({ type: 'dark', text: message });
+    }
     clear() {
-      this.subject.next();
+        this.subject.next();
     }
     getMessage(): Observable<any> {
         return this.subject.asObservable();

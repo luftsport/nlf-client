@@ -1,20 +1,15 @@
 import { Injectable, Injector } from '@angular/core';
 import { HttpClient, HttpRequest, HttpResponse, HttpErrorResponse, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 // import { do } from 'rxjs/operators';
 import { tap } from 'rxjs/operators';
 import { Router, RouterStateSnapshot } from '@angular/router';
-import { NlfAlertService } from '../alert/alert.service';
-import { NlfLocalStorageService } from '../storage/local-storage.service';
+import { NlfAlertService } from 'app/services/alert/alert.service';
+import { NlfLocalStorageService } from 'app/services/storage/local-storage.service';
 import { NlfAuthService } from './auth.service';
 import { NlfAuthSubjectService } from './auth-subject.service';
 
-
-
-
 // import { AuthService } from './auth.service'; //Can't use due to cyclic dependency?
-
-
 
 /**
 * Should only use AlertService for development environment
@@ -26,11 +21,11 @@ export class NlfAuthInterceptor implements HttpInterceptor {
   cachedRequests: Array<HttpRequest<any>> = [];
 
   constructor(private router: Router,
-              private alertService: NlfAlertService,
-              private storage: NlfLocalStorageService,
-              private injector: Injector, // Because https://github.com/angular/angular/issues/18224
-              private http: HttpClient,
-              private authSubject: NlfAuthSubjectService) {
+    private alertService: NlfAlertService,
+    private storage: NlfLocalStorageService,
+    private injector: Injector, // Because https://github.com/angular/angular/issues/18224
+    private http: HttpClient,
+    private authSubject: NlfAuthSubjectService) {
 
     this.authSubject.observableAuth.subscribe(
       auth => {

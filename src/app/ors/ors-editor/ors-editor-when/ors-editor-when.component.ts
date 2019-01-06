@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NlfOrsEditorService } from '../ors-editor.service';
-import { ApiObservationsItem } from '../../../api/api.interface';
+import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
+import { ApiObservationsItem } from 'app/api/api.interface';
 
 @Component({
   selector: 'nlf-ors-editor-when',

@@ -1,5 +1,5 @@
 import { Pipe, Input, PipeTransform } from '@angular/core';
-import { ApiObservationRatingInterface } from '../api/api.interface';
+import { ApiObservationRatingInterface } from 'app/api/api.interface';
 
 @Pipe({
   name: 'nlfOrsRatingCalc',

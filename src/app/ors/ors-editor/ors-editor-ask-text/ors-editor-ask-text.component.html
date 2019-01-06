@@ -1,41 +1,23 @@
 Tekst for: {{ observation.workflow.state | nlfOrsState }}
 <form #askForm="ngForm">
- <!-- <p style="border:1px lightgrey solid;min-height:88px; width: 100%;" contenteditable="true" propValueAccessor="innerHTML"
+  <!-- <p style="border:1px lightgrey solid;min-height:88px; width: 100%;" contenteditable="true" propValueAccessor="innerHTML"
     name="myFormName" [(ngModel)]="observation.ask.text[observation.workflow.state]" (ngModelChange)="textChange()" [mention]="list"
     class="form-control" [mentionConfig]="mconf">
   </p>-->
-  <p style="border:1px lightgrey solid;min-height:88px; width: 100%;" contenteditable="true" propValueAccessor="innerHTML"
+  <div style="border:1px lightgrey solid;min-height:100px; width: 100%;display: inline-block;overflow: hidden;padding:2px;" contenteditable="true" propValueAccessor="innerHTML"
     name="myFormName" [(ngModel)]="observation.ask.text[observation.workflow.state]" (ngModelChange)="textChange()"
-    class="form-control">
-  </p>
+    >
+  </div>
 </form>
+<button class="btn btn-secondary" (click)="reset()">Reset</button>
 <!--(searchTerm)="search($event)"
 <p>Arr: {{ involved.currentArr | async | json }}</p>
 <p>List: {{ list | json }}</p>
 -->
-
+<!--
+{{ observation.ask.text[observation.workflow.state] | json }}
+-->
 <!--<div contenteditable="true" style="border:1px lightgrey solid;min-height:88px" 
      [textContent]="ask.text[state]" (input)="ask.text[state]=$event.target.textContent"></div>-->
 <!--<div #asktext contenteditable="true" [textContent]="ask.text[state]" (input)="model=asktext.innerText" style="border:1px lightgrey solid;min-height:88px" [mention]="items" class="form-control" (searchTerm)="search($event)" [mentionConfig]="mconf"></div>-->
 <!--<div [(ngModel)]="ask.text[state]" [mention]="items" class="form-control" (searchTerm)="search($event)" [mentionConfig]="mconf" contenteditable="true" style="border:1px lightgrey solid;min-height:88px"></div>-->
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>

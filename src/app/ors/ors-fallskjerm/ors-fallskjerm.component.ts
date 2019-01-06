@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NlfOrsFallskjermAllTableComponent } from './ors-fallskjerm-all-table/ors-fallskjerm-all-table.component';
 import { NlfOrsFallskjermSelfTableComponent } from './ors-fallskjerm-self-table/ors-fallskjerm-self-table.component';
 import { NlfOrsFallskjermTodoTableComponent } from './ors-fallskjerm-todo-table/ors-fallskjerm-todo-table.component';
-import { NlfComponent } from '../../nlf.component';
+import { NlfComponent } from 'app/nlf.component';
 
 @Component({
   selector: 'nlf-ors-fallskjerm',

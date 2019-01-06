@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ApiObservationWeatherInterface } from '../../../../api/api.interface';
+import { ApiObservationWeatherInterface } from 'app/api/api.interface';
 
 @Component({
   selector: 'nlf-ors-fallskjerm-report-weather',

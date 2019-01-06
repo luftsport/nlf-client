@@ -1,5 +1,15 @@
 # NlfClient
 
+Note https://update.angular.io/
+
+From 5.2 to 7:
+
+Once you and all of your dependencies have updated to RxJS 6, remove rxjs-compat
+
+Run development server ng serve --proxy-config proxy.conf.json
+
+Compile documentation compdoc - tsconfig.json
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.5.
 
 ## Development server

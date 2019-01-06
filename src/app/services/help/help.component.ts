@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ApiHelpService } from './../../api/api-help.service';
-import { ApiHelpItem } from './../../api/api.interface';
+import { ApiHelpService } from 'app/api/api-help.service';
+import { ApiHelpItem } from 'app/api/api.interface';
 
 
 @Component({
@@ -30,7 +30,7 @@ export class NlfHelpComponent implements OnInit {
       data => {
         this.help = data;
         this.dataReady = true;
-        this.modalRef = this.modalService.open(template, { size: 'lg' });
+        this.modalRef = this.modalService.open(template, { size: 'lg'}); //, 'container': 'body' });
       },
       err => {
         this.help = {title: 'Ingen hjelpetekst', body: 'Det finnes ingen hjelpetekst enda for dette temaet.', key: this.key};

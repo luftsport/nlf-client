@@ -1,14 +1,50 @@
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-end">
+  <a class="navbar-brand pointer" [routerLink]="['/']">NLF</a>
+
+  <span class="ml-auto"></span>
+
+  <button (click)="navbarOpen = !navbarOpen" class="navbar-toggler navbar-toggler-right" type="button" aria-controls="navbarNavAltMarkup"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <fa name="bars" fixed="true"></fa>
+  </button>
+
+
+  <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent2" [ngClass]="{ 'show': navbarOpen }">
+
+    <ul class="navbar-nav text-right">
+<!--
+      <li *ngIf="isLoggedIn" ngbDropdown placement="bottom-right" class="nav-item">
+        <span class="nav-link pointer" id="dropdownBasic1" ngbDropdownToggle routerLinkActive="active">ORS</span>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <a class="dropdown-item pointer">Action - 1</a>
+          <a class="dropdown-item pointer">Another Action</a>
+          <a class="dropdown-item pointer">Something else is here</a>
+        </div>
+      </li>
+-->
+      <li class="nav-item" routerLinkActive="active">
+        <a *ngIf="isLoggedIn" (click)="authService.logout()" class="nav-item nav-link btn">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
 <!-- popup template eg workflows -->
+<!--
 <ng-template #popTemplate>
   <div class="list-group row px-0 mx-0">
     <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
 
 
-    <a href="#" class="list-group-item list-group-item-action list-group-item-primary">This is a primary list group item</a>
-    <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">This is a secondary list group item</a>
-    <a href="#" class="list-group-item list-group-item-action list-group-item-success">This is a success list group item</a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-primary">This is a primary list group
+      item</a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">This is a secondary list group
+      item</a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-success">This is a success list group
+      item</a>
     <a href="#" class="list-group-item list-group-item-action list-group-item-danger">This is a danger list group item</a>
-    <a href="#" class="list-group-item list-group-item-action list-group-item-warning">This is a warning list group item</a>
+    <a href="#" class="list-group-item list-group-item-action list-group-item-warning">This is a warning list group
+      item</a>
     <a href="#" class="list-group-item list-group-item-action list-group-item-info">This is a info list group item</a>
     <a href="#" class="list-group-item list-group-item-action list-group-item-light">This is a light list group item</a>
     <a href="#" class="list-group-item list-group-item-action list-group-item-dark">This is a dark list group item</a>
@@ -17,7 +53,7 @@
   <button class="btn btn-block btn-danger">Reject</button>
 </ng-template>
 
-<!-- Navbar itself -->
+< !-- Navbar itself -- >
 <nav class="navbar navbar-toggleable-sm navbar-dark bg-dark">
   <button (click)="isCollapsed = !isCollapsed" class="navbar-toggler navbar-toggler-right" type="button" aria-controls="navbarNavAltMarkup"
     aria-expanded="false" aria-label="Toggle navigation">
@@ -40,14 +76,24 @@
         </a>
         <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" routerLink="/ors/">ORS</a>
-          <!--<a class="dropdown-item" routerLink="/ors/child">ORS Child</a> only from internal-->
+          < !--<a class="dropdown-item" routerLink="/ors/child">ORS Child</a> only from internal-- >
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" routerLink="/ors/fallskjerm">ORS Fallskjerm</a>
         </div>
       </li>
     </ul>
-    <!-- Right side items -->
+    < !-- Right side items -- >
     <div class="navbar-nav" *ngIf="isLoggedIn">
+
+      <div ngbDropdown class="d-inline-block">
+        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button class="dropdown-item">Action - 1</button>
+          <button class="dropdown-item">Another Action</button>
+          <button class="dropdown-item">Something else is here</button>
+        </div>
+      </div>
+
       <a class="nav-item nav-link" routerLink="/home">
         <fa [name]="'home-o'" [fixed]="'true'"></fa>
       </a>
@@ -61,7 +107,7 @@
         <fa [name]="'commenting-o'" [fixed]="'true'"></fa>
       </a>
 
-      <!-- Custom css for notifications -->
+      < !-- Custom css for notifications -- >
       <a class="nav-item nav-link" href="#">
         <span class="fa-fnix-container">
           <i class="fa fa-bell-o fa-fw"></i>
@@ -74,7 +120,8 @@
       </a>
 
       <a *ngIf="isLoggedIn" (click)="authService.logout()" class="nav-item nav-link btn">Logout</a>
-      <!--<a *ngIf="!(isLoggedIn | async)" class="nav-item nav-link" routerLink="/login">Login</a>-->
+      < !--<a *ngIf="!(isLoggedIn | async)" class="nav-item nav-link" routerLink="/login">Login</a>-- >
     </div>
   </div>
 </nav>
+-->

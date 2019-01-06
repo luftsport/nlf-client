@@ -9,8 +9,8 @@ export class NlfDynamicColorPipe implements PipeTransform {
 
   transform(value: any): any {
     let type: string;
-   
-    if (value < 15 ) {
+
+    if (value < 15) {
       type = 'secondary';
     } else if (value < 25) {
       type = 'info';

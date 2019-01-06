@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgClass } from '@angular/common';
-import { ApiObservationAskInterface } from '../../../../api/api.interface';
+import { ApiObservationAskInterface } from 'app/api/api.interface';
 
 
 @Component({

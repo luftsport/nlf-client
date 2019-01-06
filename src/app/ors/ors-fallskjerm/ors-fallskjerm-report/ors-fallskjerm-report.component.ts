@@ -1,12 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { JsonPipe } from '@angular/common';
-import { ApiObservationsService } from '../../../api/api-observations.service';
-import { ApiOptionsInterface, ApiObservationsItem } from '../../../api/api.interface';
-import { NlfAlertService } from '../../../services/alert/alert.service';
-import { NlfComponent } from '../../../nlf.component';
+import { ApiObservationsService } from 'app/api/api-observations.service';
+import { ApiOptionsInterface, ApiObservationsItem } from 'app/api/api.interface';
+import { NlfAlertService } from 'app/services/alert/alert.service';
+import { NlfComponent } from 'app/nlf.component';
 import { NgStringPipesModule } from 'angular-pipes';
-import { ApiEveBaseList } from '../../../api/api-eve.interface';
+import { ApiEveBaseList } from 'app/api/api-eve.interface';
 
 
 @Component({

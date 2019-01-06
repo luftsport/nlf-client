@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, TemplateRef } from '@angular/core';
-import { ApiObservationRatingInterface, ApiObservationsItem } from '../../../api/api.interface';
-import { NlfOrsEditorService } from '../ors-editor.service';
+import { ApiObservationRatingInterface, ApiObservationsItem } from 'app/api/api.interface';
+import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 
 @Component({
   selector: 'nlf-ors-editor-rating',

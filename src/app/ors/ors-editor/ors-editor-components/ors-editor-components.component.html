@@ -3,59 +3,64 @@
 </button>
 
 <!-- CAUSES -->
-<div *ngFor="let cause of causes; let i = index">
-  <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <span class="input-group-text" id="basic-addon2">
-        <fa name="arrows-alt" [fixed]="true"></fa>
-      </span>
+<span cdkDropList (cdkDropListDropped)="dropCause($event)">
+  <div cdkDrag *ngFor="let cause of causes; let i = index">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span cdkDragHandle class="input-group-text drag-handle" id="basic-addon2">
+          <fa name="arrows-alt" [fixed]="true"></fa>
+        </span>
+      </div>
+      <div class="input-group-prepend">
+        <span class="input-group-text bg-warning lead" id="basic-addon2">
+          Å
+        </span>
+      </div>
+      <div class="form-control">
+        <tag-input class="align-ngx-input" [ngModel]="!!cause.what ? [cause.what] : []"
+          [modelAsStrings]="true" [inputId]="i===0 ? 'focuscause' : ''" maxItems="1" theme='minimal' (onAdd)="onAddWhat($event, 'cause', i)"
+          (onRemove)="onRemoveWhat($event, 'cause', i)" [addOnBlur]="true" [animationDuration]="{enter: '0ms', leave: '0ms'}"
+          secondaryPlaceholder='Kort beskrivelse av årsak' [ripple]="false" #input>
+          <ng-template style="background: transparent" let-item="item" let-index="index">
+            <!-- DEFINE HERE YOUR TEMPLATE -->
+            {{ item }}
+            <delete-icon (click)="input.removeItem(item, index)"></delete-icon>
+          </ng-template>
+        </tag-input>
+      </div>
+      <!-- 
+      <div *ngIf="i!==0" class="input-group-append">
+        <span (click)="moveCause(i, i-1)" class="input-group-text pointer" id="basic-addon2">
+          <fa name="angle-double-up" [fixed]="true"></fa>
+        </span>
+      </div>
+      <div *ngIf="i!==(causes.length-1)" class="input-group-append">
+        <span (click)="moveCause(i, i+1)" class="input-group-text pointer" id="basic-addon2">
+          <fa name="angle-double-down" [fixed]="true"></fa>
+        </span>
+      </div>
+    -->
+      <div class="input-group-append">
+        <span (click)="removeCause(i)" class="input-group-text pointer" id="basic-addon2">
+          <fa name="trash" [fixed]="true"></fa>
+        </span>
+      </div>
+      <div class="input-group-append">
+        <span (click)="openModal(componentModal, 'cause', i)" class="input-group-text  pointer" id="basic-addon2">
+          <fa name="edit" [fixed]="true"></fa>
+        </span>
+      </div>
     </div>
-    <div class="input-group-prepend">
-      <span class="input-group-text bg-warning lead" id="basic-addon2">
-        Å
-      </span>
-    </div>
-    <div class="form-control">
-      <tag-input [ngModel]="!!cause.what ? [cause.what] : []" [modelAsStrings]="true" [inputId]="i===0 ? 'focuscause' : ''" maxItems="1"
-        theme='minimal' (onAdd)="onAddWhat($event, 'cause', i)" (onRemove)="onRemoveWhat($event, 'cause', i)" [addOnBlur]="true"
-        [animationDuration]="{enter: '0ms', leave: '0ms'}" secondaryPlaceholder='Kort beskrivelse av årsak' [ripple]="false"
-        #input>
-        <ng-template let-item="item" let-index="index">
-          <!-- DEFINE HERE YOUR TEMPLATE -->
-          {{ item }}
-          <delete-icon (click)="input.removeItem(item, index)"></delete-icon>
-        </ng-template>
-      </tag-input>
-    </div>
-    <div *ngIf="i!==0" class="input-group-append">
-      <span (click)="moveCause(i, i-1)" class="input-group-text pointer" id="basic-addon2">
-        <fa name="angle-double-up" [fixed]="true"></fa>
-      </span>
-    </div>
-    <div *ngIf="i!==(causes.length-1)" class="input-group-append">
-      <span (click)="moveCause(i, i+1)" class="input-group-text pointer" id="basic-addon2">
-        <fa name="angle-double-down" [fixed]="true"></fa>
-      </span>
-    </div>
-    <div class="input-group-append">
-      <span (click)="removeCause(i)" class="input-group-text pointer" id="basic-addon2">
-        <fa name="trash" [fixed]="true"></fa>
-      </span>
-    </div>
-    <div class="input-group-append">
-      <span (click)="openModal(componentModal, 'cause', i)" class="input-group-text  pointer" id="basic-addon2">
-        <fa name="edit" [fixed]="true"></fa>
-      </span>
-    </div>
+    <div class="drag-custom-placeholder" *cdkDragPlaceholder></div>
   </div>
-</div>
+</span>
 <!-- /CAUSES -->
 
 <!-- INCIDENT -->
 <div *ngFor="let incident of incidents; let i = index">
   <div class="input-group mb-3">
     <div class="input-group-prepend">
-      <span class="input-group-text" id="basic-addon2">
+      <span class="input-group-text not-allowed" id="basic-addon2">
         <fa name="bolt" [fixed]="true"></fa>
       </span>
     </div>
@@ -65,10 +70,10 @@
       </span>
     </div>
     <div class="form-control">
-      <tag-input [ngModel]="!!incidents[i].what ? [incidents[i].what] : []" [modelAsStrings]="true" inputId="incident" maxItems="1"
-        theme='minimal' (onAdd)="onAddWhat($event, 'incident', 0)" (onRemove)="onRemoveWhat($event, 'incident', 0)" [addOnBlur]="true"
-        [animationDuration]="{enter: '0ms', leave: '0ms'}" secondaryPlaceholder='Kort beskrivelse av hendelsen' [ripple]="false"
-        #input>
+      <tag-input class="align-ngx-input" [ngModel]="!!incidents[i].what ? [incidents[i].what] : []" [modelAsStrings]="true"
+        inputId="incident" maxItems="1" theme='minimal' (onAdd)="onAddWhat($event, 'incident', 0)" (onRemove)="onRemoveWhat($event, 'incident', 0)"
+        [addOnBlur]="true" [animationDuration]="{enter: '0ms', leave: '0ms'}" secondaryPlaceholder='Kort beskrivelse av hendelsen'
+        [ripple]="false" #input>
         <ng-template let-item="item" let-index="index">
           <!-- DEFINE HERE YOUR TEMPLATE -->
           {{ item }}
@@ -86,52 +91,57 @@
 <!-- /INCIDENT -->
 
 <!-- CONSEQUENCES -->
-<div *ngFor="let consequence of consequences; let i = index">
-  <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <span class="input-group-text" id="basic-addon2">
-        <fa name="arrows-alt" [fixed]="true"></fa>
-      </span>
+<span cdkDropList (cdkDropListDropped)="dropConsequence($event)">
+  <div cdkDrag *ngFor="let consequence of consequences; let i = index">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span cdkDragHandle class="input-group-text drag-handle" id="basic-addon2">
+          <fa name="arrows-alt" [fixed]="true"></fa>
+        </span>
+      </div>
+      <div class="input-group-prepend">
+        <span class="input-group-text bg-danger lead" id="basic-addon2">
+          K
+        </span>
+      </div>
+      <div class="form-control">
+        <tag-input class="align-ngx-input" [ngModel]="!!consequence.what ? [consequence.what] : []" [modelAsStrings]="true" [inputId]="consequences.length===(i+1) ? 'focusconsequence' : ''"
+          maxItems="1" theme='minimal' (onAdd)="onAddWhat($event, 'consequence', i)" (onRemove)="onRemoveWhat($event, 'consequence', i)"
+          [addOnBlur]="true" [animationDuration]="{enter: '0ms', leave: '0ms'}" secondaryPlaceholder='Kort beskrivelse av konsekvens'
+          [ripple]="false" #input>
+          <ng-template let-item="item" let-index="index">
+            <!-- DEFINE HERE YOUR TEMPLATE -->
+            {{ item }}
+            <delete-icon (click)="input.removeItem(item, index)"></delete-icon>
+          </ng-template>
+        </tag-input>
+      </div>
+      <!-- 
+      <div *ngIf="i!==0" class="input-group-append">
+        <span (click)="moveConsequence(i, i-1)" class="input-group-text pointer" id="basic-addon2">
+          <fa name="angle-double-up" [fixed]="true"></fa>
+        </span>
+      </div>
+      <div *ngIf="i!==(consequences.length-1)" class="input-group-append">
+        <span (click)="moveConsequence(i, i+1)" class="input-group-text pointer" id="basic-addon2">
+          <fa name="angle-double-down" [fixed]="true"></fa>
+        </span>
+      </div>
+    -->
+      <div class="input-group-append">
+        <span (click)="removeConsequence(i)" class="input-group-text pointer" id="basic-addon2">
+          <fa name="trash" [fixed]="true"></fa>
+        </span>
+      </div>
+      <div class="input-group-append">
+        <span (click)="openModal(componentModal, 'consequence', i)" class="input-group-text pointer" id="basic-addon2">
+          <fa name="edit" [fixed]="true"></fa>
+        </span>
+      </div>
     </div>
-    <div class="input-group-prepend">
-      <span class="input-group-text bg-danger lead" id="basic-addon2">
-        K
-      </span>
-    </div>
-    <div class="form-control">
-      <tag-input [ngModel]="!!consequence.what ? [consequence.what] : []" [modelAsStrings]="true" [inputId]="consequences.length===(i+1) ? 'focusconsequence' : ''"
-        maxItems="1" theme='minimal' (onAdd)="onAddWhat($event, 'consequence', i)" (onRemove)="onRemoveWhat($event, 'consequence', i)"
-        [addOnBlur]="true" [animationDuration]="{enter: '0ms', leave: '0ms'}" secondaryPlaceholder='Kort beskrivelse av konsekvens'
-        [ripple]="false" #input>
-        <ng-template let-item="item" let-index="index">
-          <!-- DEFINE HERE YOUR TEMPLATE -->
-          {{ item }}
-          <delete-icon (click)="input.removeItem(item, index)"></delete-icon>
-        </ng-template>
-      </tag-input>
-    </div>
-    <div *ngIf="i!==0" class="input-group-append">
-      <span (click)="moveConsequence(i, i-1)" class="input-group-text pointer" id="basic-addon2">
-        <fa name="angle-double-up" [fixed]="true"></fa>
-      </span>
-    </div>
-    <div *ngIf="i!==(consequences.length-1)" class="input-group-append">
-      <span (click)="moveConsequence(i, i+1)" class="input-group-text pointer" id="basic-addon2">
-        <fa name="angle-double-down" [fixed]="true"></fa>
-      </span>
-    </div>
-    <div class="input-group-append">
-      <span (click)="removeConsequence(i)" class="input-group-text pointer" id="basic-addon2">
-        <fa name="trash" [fixed]="true"></fa>
-      </span>
-    </div>
-    <div class="input-group-append">
-      <span (click)="openModal(componentModal, 'consequence', i)" class="input-group-text pointer" id="basic-addon2">
-        <fa name="edit" [fixed]="true"></fa>
-      </span>
-    </div>
+    <div class="drag-custom-placeholder" *cdkDragPlaceholder></div>
   </div>
-</div>
+</span>
 <!-- /CONSEQUENCES -->
 
 <button (click)="addConsequence()" class="btn btn-danger">
@@ -190,17 +200,21 @@
     Attributter:
     <br>
     <span *ngFor="let key of config.observation.components.attributes | keys">
-      <button *ngIf="modalComponent.data.attributes[key]" (click)="modalToggleAttributes(key, false)" class="btn btn-{{ config.observation.components.attributes[key]['badge'] }}">{{ config.observation.components.attributes[key]['label'] }}</button>
-      <button *ngIf="!modalComponent.data.attributes[key]" (click)="modalToggleAttributes(key, true)" class="btn  btn-outline-secondary">{{ config.observation.components.attributes[key]['label'] }}</button>
+      <button *ngIf="modalComponent.data.attributes[key]" (click)="modalToggleAttributes(key, false)" class="btn btn-{{ config.observation.components.attributes[key]['badge'] }}">{{
+        config.observation.components.attributes[key]['label'] }}</button>
+      <button *ngIf="!modalComponent.data.attributes[key]" (click)="modalToggleAttributes(key, true)" class="btn  btn-outline-secondary">{{
+        config.observation.components.attributes[key]['label'] }}</button>
     </span>
     <hr> {{ modalComponent | json }}
 
   </div>
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa name="close" [fixed]="true"></fa>Avbryt</button>
+      <fa name="close" [fixed]="true"></fa>Avbryt
+    </button>
     <button class="btn btn-success" (click)="modalComponentUpdate()">
-      <fa name="check" [fixed]="true"></fa>Oppdater</button>
+      <fa name="check" [fixed]="true"></fa>Oppdater
+    </button>
   </div>
 </ng-template>
 <!-- /MODAL COMPONENT

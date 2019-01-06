@@ -9,7 +9,8 @@
       <!-- {{ data.tags | nlfOrsTags: ' / '}} -->
       #{{ observation.id }}
       <nlf-resolve-observation-tags [tags]="observation.tags" link="true" seperator="/"></nlf-resolve-observation-tags>&nbsp;
-      <span *ngIf="!!observation.rating" class="badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating | nlfOrsRatingCalc }}</span>
+      <span *ngIf="!!observation.rating" class="badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{
+        observation.rating | nlfOrsRatingCalc }}</span>
       <!-- WORKFLOW STATE -->
       <span class="pull-right">
 
@@ -34,42 +35,44 @@
   <div class="container">
     <nlf-ors-editor-title></nlf-ors-editor-title>
     <nlf-help key="ors-editor-title"></nlf-help>
-    <code>
+    <div *ngIf="!!devDebug">
+      <code>
     {{ observation.tags | json}}
   </code>
+    </div>
     <hr>
 
     <nlf-ors-editor-type></nlf-ors-editor-type>
     <nlf-help key="ors-editor-type"></nlf-help>
 
-    {{ observation.type }}
+    <div *ngIf="!!devDebug">{{ observation.type }}</div>
     <hr>
 
     <nlf-ors-editor-when></nlf-ors-editor-when>
     <nlf-help key="ors-editor-when"></nlf-help>
-    {{ observation.when }}
+    <div *ngIf="!!devDebug">{{ observation.when }}</div>
     <hr>
 
     <nlf-ors-editor-flags></nlf-ors-editor-flags>
     <nlf-help key="ors-editor-flags"></nlf-help>
-    {{ observation.flags | json }}
+    <div *ngIf="!!devDebug">{{ observation.flags | json }}</div>
     <hr>
 
     <nlf-ors-editor-rating></nlf-ors-editor-rating>
     <nlf-help key="ors-editor-rating"></nlf-help>
-    Rating for observation {{ observation.rating | json }}
+    <div *ngIf="!!devDebug">Rating for observation {{ observation.rating | json }}</div>
     <hr>
 
     <!-- Location -->
     <nlf-ors-editor-location></nlf-ors-editor-location>
     <nlf-help key="ors-editor-location"></nlf-help>
-    {{ observation.location | json }}
+    <div *ngIf="!!devDebug">{{ observation.location | json }}</div>
     <hr>
 
     <!-- Files -->
     <nlf-ors-editor-files [dropzone]="true" (fileChange)="save($event)"></nlf-ors-editor-files>
     <nlf-help key="ors-editor-files"></nlf-help>
-    {{ observation.files | json }}
+    <div *ngIf="!!devDebug">{{ observation.files | json }}</div>
 
     <!-- ORGANIZATION -->
     <hr> HI:
@@ -78,33 +81,37 @@
     </div>
     HL:
     <nlf-ors-editor-people [who]="observation.organization.hl"></nlf-ors-editor-people>
-    {{ observation.organization.hl | json }} HFL:
+    <div *ngIf="!!devDebug">{{ observation.organization.hl | json }}</div>
+    HFL:
     <nlf-ors-editor-people [who]="observation.organization.hfl"></nlf-ors-editor-people>
-    {{ observation.organization.hfl | json }} HM:
+    <div *ngIf="!!devDebug">{{ observation.organization.hfl | json }}</div>
+    HM:
     <nlf-ors-editor-people [who]="observation.organization.hm"></nlf-ors-editor-people>
-    {{ observation.organization.hm | json }} Pilot:
+    <div *ngIf="!!devDebug">{{ observation.organization.hm | json }}</div>
+    Pilot:
     <nlf-ors-editor-people [who]="observation.organization.pilot"></nlf-ors-editor-people>
-    {{ observation.organization.pilot | json }}
+    <div *ngIf="!!devDebug">{{ observation.organization.pilot | json }}</div>
     <nlf-help key="ors-editor-organization"></nlf-help>
-    <hr> Involverte:
+    <hr>
+    Involverte:
     <nlf-ors-editor-people [who]="observation.involved"></nlf-ors-editor-people>
     <nlf-help key="ors-editor-involved"></nlf-help>
-    {{ observation.involved | json }}
-    
+    <div *ngIf="!!devDebug">{{ observation.involved | json }}</div>
+
     <hr>
     <!-- COMPONENTS -->
     <div class="nlf-toolbar">Forløpet
-    <button (click)="openPreview(modalPreview, 'components', 'Forløpet')" class="pull-right btn btn-link">
-      <fa name="eye" [fixed]="true"></fa>Preview
+      <button (click)="openPreview(modalPreview, 'components', 'Forløpet')" class="pull-right btn btn-link">
+        <fa name="eye" [fixed]="true"></fa>Preview
       </button>
-      </div>
+    </div>
     <nlf-ors-editor-components></nlf-ors-editor-components>
     <hr>
 
     <!--  [(actions)]="observation.actions" -->
     <nlf-ors-editor-actions></nlf-ors-editor-actions>
     <nlf-help key="ors-editor-actions"></nlf-help>
-    {{ observation.actions | json }}
+    <div *ngIf="!!devDebug">{{ observation.actions | json }}</div>
     <hr>
 
 
@@ -118,14 +125,14 @@
         <nlf-help key="ors-editor-ask-text"></nlf-help>
       </div>
     </div>
-    
-    {{ observation.ask | json }}
+
+    <div *ngIf="!!devDebug">{{ observation.ask | json }}</div>
     <hr>
 
   </div>
 
   <div class="container">
-    {{ observation |json }}
+    <div *ngIf="!!devDebug">{{ observation |json }}</div>
     <button (click)="save()" class="btn btn-primary btn-lg" [disabled]="!changes">Save</button>
 
   </div>
@@ -150,7 +157,7 @@
       <nlf-report-components-timeline [components]="observation.components"></nlf-report-components-timeline>
     </div>
   </div>
-    <div class="modal-footer">
+  <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">Ferdig</button>
   </div>
 </ng-template>
@@ -170,11 +177,13 @@
       Du redigerer nå observasjon #{{ observation.id }}. Denne siden er det vi kaller editoren.
     </p>
     <p>
-      For hver logiske bolk i editoren vil du kunne se hjelpetekst for respektive bolker ved å trykke på spørsmålstegnet
+      For hver logiske bolk i editoren vil du kunne se hjelpetekst for respektive bolker ved å trykke på
+      spørsmålstegnet
       <fa class="text-info" name="question" fixed="true"></fa> .
     </p>
     <p>
-      Øverst på siden har du verktøylinjen som bla viser løpenummer, tittel og rating (til venstre) og til høyre finner du følgende:
+      Øverst på siden har du verktøylinjen som bla viser løpenummer, tittel og rating (til venstre) og til høyre finner
+      du følgende:
     </p>
     <p>
       <fa class="text-info" name="question" fixed="true"></fa>
@@ -192,7 +201,8 @@
     </p>
     <p>
       <span class="badge badge-secondary">{{ observation._updated | amTimeAgo }}</span>
-      sier noe om hvor lenge det er siden du har lagret. Klikker du på Denne vil du få opp informasjon om observasjonen du redigerer.
+      sier noe om hvor lenge det er siden du har lagret. Klikker du på Denne vil du få opp informasjon om observasjonen
+      du redigerer.
 
     </p>
     <p>
@@ -203,8 +213,10 @@
       vises og indikerer at du kan lagre ved å klikke på det.
     </p>
     <p>
-      <span class="badge badge-success">v{{ observation._version }}</span> viser hvilken versjon av observasjonen du jobber på. Dette er altså versjon {{ observation._version
-      }}. Alle endringer tas vare på og ved å klikke på denne kan du se alle versjoner av denne observasjonen og videre kan
+      <span class="badge badge-success">v{{ observation._version }}</span> viser hvilken versjon av observasjonen du
+      jobber på. Dette er altså versjon {{ observation._version
+      }}. Alle endringer tas vare på og ved å klikke på denne kan du se alle versjoner av denne observasjonen og videre
+      kan
       du se endringer mellom versjonene.
     </p>
     <p>
@@ -216,11 +228,13 @@
       </span>
     </p>
     <p>
-      Denne knappen aktiverer arbeidsflyten (saksgangen) og du får et nytt vindu hvor du kan legge inn kommentarer før du godkjenner
+      Denne knappen aktiverer arbeidsflyten (saksgangen) og du får et nytt vindu hvor du kan legge inn kommentarer før
+      du godkjenner
       og sender videre eller avslår og sender tilbake (avhengig hvor du er).
     </p>
     <p>
-      Om du har opprettet ved en feiltagelse eller noe annet og du ønsker å slette eller avbryte observasjonen så velger du "Trekk
+      Om du har opprettet ved en feiltagelse eller noe annet og du ønsker å slette eller avbryte observasjonen så
+      velger du "Trekk
       tilbake". Ombestemmer du deg etter å ha trukket observasjonen kan du "Gjenåpne".
     </p>
   </div>

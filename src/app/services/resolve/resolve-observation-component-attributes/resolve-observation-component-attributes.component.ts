@@ -1,6 +1,6 @@
-import { ApiObservationComponentAttributesInterface } from './../../../api/api.interface';
+import { ApiObservationComponentAttributesInterface } from 'app/api/api.interface';
 import { Component, Input, OnInit, Inject } from '@angular/core';
-import { NLF_CONFIG, NlfConfig } from '../../../nlf-config.module';
+import { NLF_CONFIG, NlfConfig } from 'app/nlf-config.module';
 
 @Component({
   selector: 'nlf-resolve-observation-component-attributes',

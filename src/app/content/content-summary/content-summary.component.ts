@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ApiContentService } from './../../api/api-content.service';
+import { ApiContentService } from 'app/api/api-content.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiOptionsInterface, ApiContentItem } from '../../api/api.interface';
+import { ApiOptionsInterface, ApiContentItem } from 'app/api/api.interface';
 
 @Component({
   selector: 'nlf-content-summary',

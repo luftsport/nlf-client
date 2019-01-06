@@ -124,6 +124,8 @@ nlf-root, main {
 .ngx-easy-table-small{font-size: 0.8rem !important;}
 
 .pointer {cursor: pointer;}
+.not-allowed:hover { cursor: not-allowed; }
+.drag-handle:hover { cursor: move; }
 
 /* NLF colors **/
 
@@ -183,3 +185,21 @@ ins{
     color: black;
     background: #ffbbbb;
   }
+
+/** Fullscreen modals **/
+.modal-full {
+    top: 0;
+    min-width: 100%;
+    margin: 0;
+}
+
+.modal-full .modal-content {
+    min-height: 100vh;
+}
+
+/** ngx-charts responsive **/
+.chart-wrapper {
+  display: flex;
+  overflow: hidden;
+  min-height: 16em;
+}

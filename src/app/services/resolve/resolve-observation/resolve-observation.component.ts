@@ -1,6 +1,6 @@
-import { ApiOptionsInterface } from './../../../api/api.interface';
+import { ApiOptionsInterface } from 'app/api/api.interface';
 import { Component, Input, OnInit } from '@angular/core';
-import { ApiObservationsService } from '../../../api/api-observations.service';
+import { ApiObservationsService } from 'app/api/api-observations.service';
 
 @Component({
   selector: 'nlf-resolve-observation',

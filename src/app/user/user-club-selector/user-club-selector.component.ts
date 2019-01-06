@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { NlfLocalStorageService } from '../../services/storage/local-storage.service';
-import { ApiOptionsInterface } from '../../api/api.interface';
-import { ApiNlfClubsService } from '../../api/api-nlf-clubs.service';
-import { ApiNlfUserService } from '../../api/api-nlf-user.service';
+import { NlfLocalStorageService } from 'app/services/storage/local-storage.service';
+import { ApiOptionsInterface } from 'app/api/api.interface';
+import { ApiNlfClubsService } from 'app/api/api-nlf-clubs.service';
+import { ApiNlfUserService } from 'app/api/api-nlf-user.service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({

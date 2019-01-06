@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiNlfUserService } from '../../api/api-nlf-user.service';
-import { NlfLocalStorageService } from '../../services/storage/local-storage.service';
-import { NlfAlertService } from '../../services/alert/alert.service';
+import { ApiNlfUserService } from 'app/api/api-nlf-user.service';
+import { NlfLocalStorageService } from 'app/services/storage/local-storage.service';
+import { NlfAlertService } from 'app/services/alert/alert.service';
 
 
 @Component({

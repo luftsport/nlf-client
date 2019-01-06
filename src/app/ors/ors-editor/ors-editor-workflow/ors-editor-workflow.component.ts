@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NlfOrsEditorService } from '../ors-editor.service';
-import { ApiObservationsItem } from '../../../api/api.interface';
-import { ApiObservationsWorkflowService } from './../../../api/api-observations-workflow.service';
+import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
+import { ApiObservationsItem } from 'app/api/api.interface';
+import { ApiObservationsWorkflowService } from 'app/api/api-observations-workflow.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({

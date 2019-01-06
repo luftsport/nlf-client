@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject ,  Observable } from 'rxjs';
 // import { Observable } from 'rxjs/';
-import { NlfLocalStorageService } from './../storage/local-storage.service';
+import { NlfLocalStorageService } from 'app/services/storage/local-storage.service';
 
 @Injectable()
 export class NlfAuthSubjectService {
@@ -14,7 +13,7 @@ export class NlfAuthSubjectService {
 
   constructor(private storage: NlfLocalStorageService) {
 
-    this.auth = new BehaviorSubject<boolean>(this.storage.hasToken());
+    this.auth = new BehaviorSubject<boolean>(true); //this.storage.hasToken());
     this.observableAuth = this.auth.asObservable();
   }
 

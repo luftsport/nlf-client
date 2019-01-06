@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ApiObservationActionsInterface, ApiObservationsItem } from '../../../api/api.interface';
-import { NlfOrsEditorService } from '../ors-editor.service';
+import { ApiObservationActionsInterface, ApiObservationsItem } from 'app/api/api.interface';
+import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 
 
 

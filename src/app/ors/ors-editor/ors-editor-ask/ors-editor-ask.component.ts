@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild, Inject } from '@angular/core';
-import { ApiObservationsItem } from '../../../api/api.interface';
+import { ApiObservationsItem } from 'app/api/api.interface';
 
 // import { Observable } from 'rxjs/Observable';
 // import { Subject } from 'rxjs/Subject';
@@ -7,7 +7,7 @@ import { ApiObservationsItem } from '../../../api/api.interface';
 
 
 import { NlfOrsEditorService } from '../ors-editor.service';
-import { NLF_CONFIG, NlfConfig } from './../../../nlf-config.module';
+import { NLF_CONFIG, NlfConfig } from 'app/nlf-config.module';
 
 
 @Component({

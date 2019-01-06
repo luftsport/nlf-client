@@ -1,8 +1,8 @@
-import { ApiOptionsInterface, ApiObservationsItem, ApiTagList } from './../../../api/api.interface';
+import { ApiOptionsInterface, ApiObservationsItem, ApiTagList } from 'app/api/api.interface';
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { ApiTagsService } from '../../../api/api-tags.service';
-import { Observable } from 'rxjs/Observable';
-import { NlfOrsEditorService } from '../ors-editor.service';
+import { ApiTagsService } from 'app/api/api-tags.service';
+import { Observable } from 'rxjs';
+import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 
 @Component({
   selector: 'nlf-ors-editor-title',

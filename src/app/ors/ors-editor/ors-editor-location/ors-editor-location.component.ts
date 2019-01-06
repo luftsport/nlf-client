@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { NlfOrsEditorService } from '../ors-editor.service';
-import { ApiObservationsItem, ApiOptionsInterface } from '../../../api/api.interface';
-import { ApiClubsService } from '../../../api/api-clubs.service';
+import { ApiObservationsItem, ApiOptionsInterface } from 'app/api/api.interface';
+import { ApiClubsService } from 'app/api/api-clubs.service';
 import { FormControl } from '@angular/forms';
 
 @Component({

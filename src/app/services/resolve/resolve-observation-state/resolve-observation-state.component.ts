@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Inject } from '@angular/core';
-import { environment } from '../../../../environments/environment';
-import { NLF_CONFIG, NlfConfig } from '../../../nlf-config.module';
+import { environment } from 'environments/environment';
+import { NLF_CONFIG, NlfConfig } from 'app/nlf-config.module';
 
 @Component({
   selector: 'nlf-resolve-observation-state',

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform, Inject, Input } from '@angular/core';
-import { NLF_CONFIG, NlfConfig } from '../nlf-config.module';
+import { NLF_CONFIG, NlfConfig } from 'app/nlf-config.module';
 
 @Pipe({
   name: 'nlfOrsRating'

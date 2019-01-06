@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, defer } from 'rxjs';
+import { publishReplay, refCount, take } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 import { ApiRestService } from './api-rest.service';
@@ -10,7 +11,7 @@ export class ApiNlfUserService extends ApiRestService {
 
   constructor( http: HttpClient ) { super(http); }
 
-  private relativeUrl = '/melwin/users/';
+  private relativeUrl = '/legacy/melwin/users/';
 
   public getUser(id: number, options?: ApiOptionsInterface): Observable<ApiNlfUserItem> {
     return this.getItem(this.relativeUrl, id, options);
@@ -21,13 +22,20 @@ export class ApiNlfUserService extends ApiRestService {
     return this.getList(this.relativeUrl, options);
   }
 
-  public search(query: string, options?: ApiOptionsInterface): Observable<ApiNlfUserList> {
-    return this.getList(this.relativeUrl + 'search?q=' + query, options);
+  public search(query: string): Observable<ApiNlfUserList> {
+
+    const options: ApiOptionsInterface = {
+      query: {
+        where: {'$text': {'$search': query}}
+        },
+    };
+
+    return this.getList(this.relativeUrl, options);
 
   }
 
   public getUserIdCache(id: number, options?: ApiOptionsInterface): Observable<ApiNlfUserItem> {
 
-    return Observable.defer(() => this.getUser(id, options) ).publishReplay(1, 30000).refCount().take(1);
+    return defer(() => this.getUser(id, options)).pipe(publishReplay(1, 30000), refCount(), take(1));
   }
 }

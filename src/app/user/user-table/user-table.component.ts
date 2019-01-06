@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { ApiNlfUserService } from '../../api/api-nlf-user.service';
-import { ApiOptionsInterface } from '../../api/api.interface';
+import { ApiNlfUserService } from 'app/api/api-nlf-user.service';
+import { ApiOptionsInterface } from 'app/api/api.interface';
 // Table
 import { TemplateRef, ViewChild } from '@angular/core';
 import { TableModule } from 'ngx-easy-table';

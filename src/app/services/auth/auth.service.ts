@@ -1,41 +1,40 @@
-import { ApiCacheService } from './../../api/api-cache.service';
+import { ApiCacheService } from 'app/api/api-cache.service';
 import { Injectable, OnInit } from '@angular/core';
-import { ApiUserAuthService } from '../../api/api-user-auth.service';
-import { NlfAlertService } from '../alert/alert.service';
-import { NlfLocalStorageService } from '../storage/local-storage.service';
+import { ApiUserAuthService } from 'app/api/api-user-auth.service';
+import { NlfAlertService } from 'app/services/alert/alert.service';
+import { NlfLocalStorageService } from 'app/services/storage/local-storage.service';
 import { NlfAuthSubjectService } from './auth-subject.service';
 // Import ng2-idle
 import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
 import { Keepalive } from '@ng-idle/keepalive';
 
 import { Router, ActivatedRoute } from '@angular/router';
-import { BehaviorSubject} from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class NlfAuthService {
 
-  private isAuth: boolean = false;
-  private loading: boolean = false;
-
+  private isAuth = false;
   private message: string;
 
 
   // ng2-idle
   idleState: string;
-  timedOut: boolean = false;
+  timedOut = false;
   lastPing?: Date = null;
   idleTimeout = 29 * 60; // seconds
   logoutTimeout = 60; // Seconds before logging out after idleTimeout times out
+  loading = false;
 
   constructor(private apiCache: ApiCacheService,
-              private userAuthService: ApiUserAuthService,
-              private alertService: NlfAlertService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private idle: Idle,
-              private keepalive: Keepalive,
-              private storage: NlfLocalStorageService,
-              private authSubject: NlfAuthSubjectService) {
+    private userAuthService: ApiUserAuthService,
+    private alertService: NlfAlertService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private idle: Idle,
+    private keepalive: Keepalive,
+    private storage: NlfLocalStorageService,
+    private authSubject: NlfAuthSubjectService) {
 
     this.authSubject.observableAuth.subscribe(
       auth => this.isAuth = auth,
@@ -51,12 +50,10 @@ export class NlfAuthService {
 
   public login(username: string, password: string, returnUrl?: string): void {
 
-    if (!returnUrl) {
-      returnUrl = 'home';
-    }
-
-
-    /**
+    this.alertService.clear();
+    this.loading = true;
+    console.log('Returnurl', returnUrl);
+    /** 
     this.isAuthSubject.next(true);
 
     if(returnUrl) {
@@ -71,7 +68,7 @@ export class NlfAuthService {
       data => {
         if (!!data.success && data.success === true) {
 
-          this.storage.saveUser(username, data.token64, data.valid['$date']);
+          this.storage.saveUser(data.username, data.token64, data.valid['$date']);
           // broadcast
           this.authSubject.update(true);
           // clear alerts since we do not re-route
@@ -121,38 +118,50 @@ export class NlfAuthService {
           this.keepalive.onPing.subscribe(() => this.lastPing = new Date());
 
           this.idleReset();
-          // this.alertService.success("You logged in, yay!"); //This works after navigate
-          /**
-          if(returnUrl) {
+          this.alertService.success('You succesfully logged in!'); //This works after navigate
+
+          if (!!returnUrl) {
+            console.log('Will redirect!', returnUrl);
             this.router.navigate([returnUrl]);
           }
-          else {
+          /**else {
             this.router.navigate(['/home']);
-          }
-          **/
+          } */
 
-          return true;
+
+          this.loading = false;
+          
+          // oauth
+          this.router.navigate([], {
+            queryParams: {
+              access_token: null,
+              token_type: null,
+              expires_in: null
+            },
+            queryParamsHandling: 'merge'
+          });
         } else {
 
-          this.alertService.warning(data.message);
+          this.alertService.error(data.message);
           this.message = data.message;
           this.authSubject.update(false);
           this.idleStop();
-          return false;
+          this.loading = false;
         }
       },
       error => {
         console.log(error);
         // This is a HttpErrorResponse should send the whole to alertService and do stuff there
-        this.alertService.error(error.message);
+        this.alertService.danger(error.message);
         this.loading = false;
         this.authSubject.update(false);
         this.idleStop();
 
         // Do not work since no check for public pages
         // this.router.navigate(['/error/', error.status]);
-        return false;
+        this.loading = false;
       });
+
   }
 
   public logout(force?: boolean, returnUrl?: string) {

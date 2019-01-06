@@ -1,9 +1,9 @@
 import { Component, Renderer2, ElementRef, forwardRef, OnInit, Input, Inject, ViewChild } from '@angular/core';
 import { WidgetHandleDirective, WidgetComponent, DashboardComponent } from 'ngx-dashboard';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { NlfConfig, NLF_CONFIG } from './../../nlf-config.module';
-import { ApiObservationsAggService } from './../../api/api-observations-agg.service';
-import { ApiOptionsInterface } from '../../api/api.interface';
+import { NlfConfig, NLF_CONFIG } from 'app/nlf-config.module';
+import { ApiObservationsAggService } from 'app/api/api-observations-agg.service';
+import { ApiOptionsInterface } from 'app/api/api.interface';
 
 
 const forwardReference = forwardRef(() => WidgetOrsPieComponent);

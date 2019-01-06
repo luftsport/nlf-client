@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NlfAuthSubjectService } from '../../services/auth/auth-subject.service';
-import { NlfAuthService } from './../../services/auth/auth.service';
+import { NlfAuthSubjectService } from 'app/services/auth/auth-subject.service';
+import { NlfAuthService } from 'app/services/auth/auth.service';
 
 // import { Observable } from "rxjs";
 
@@ -21,7 +21,7 @@ export class NlfUiNavbarComponent implements OnInit {
       err => this.isLoggedIn = false
     );
   }
-
+  navbarOpen = false;
   isCollapsed = true;
 
   ngOnInit() {

@@ -29,10 +29,11 @@ import { NlfContentRoutingModule } from './content/content-routing.module';
   eg match /obs/{int id|mongodb _id}
 
   For public pages data: { isPublic: true }
+
+  @todo investigate lazy-loading
   **/
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' }, // redirect root
-  { path: '**', component: NlfUiDummyComponent, canActivate: [NlfAuthGuard]  },
+  
   { path: 'home', component: NlfUiDummyComponent, canActivate: [NlfAuthGuard]  },
   { path: 'users', component: NlfUserTableComponent, canActivate: [NlfAuthGuard] },
   { path: 'ors', component: NlfOrsComponent, canActivate: [NlfAuthGuard] },
@@ -40,6 +41,9 @@ const routes: Routes = [
   { path: 'admin', component: NlfAdminComponent, canActivate: [NlfAuthGuard] },
   { path: 'content', component: NlfContentComponent, canActivate: [NlfAuthGuard] },
   { path: 'login', component: NlfAuthComponent },
+  { path: 'integration', loadChildren: './integration/integration.module#NlfIntegrationModule' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' }, // redirect root
+  { path: '**', component: NlfUiDummyComponent, canActivate: [NlfAuthGuard]  },
 ];
 
 // , onSameUrlNavigation: 'reload'
@@ -56,6 +60,4 @@ const routes: Routes = [
   providers: [NlfAuthGuard],
   declarations: []
 })
-
-
 export class NlfRoutingModule { }

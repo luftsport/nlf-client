@@ -1,13 +1,13 @@
-import { ApiObservationsItem } from './../../api/api.interface';
-import { ApiObservationsService } from './../../api/api-observations.service';
+import { ApiObservationsItem } from 'app/api/api.interface';
+import { ApiObservationsService } from 'app/api/api-observations.service';
 import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
-import { NlfAlertService } from '../../services/alert/alert.service';
+import { NlfAlertService } from 'app/services/alert/alert.service';
 import { ActivatedRoute } from '@angular/router';
-import { NlfComponent } from '../../nlf.component';
+import { NlfComponent } from 'app/nlf.component';
 import { NlfOrsEditorService } from './ors-editor.service';
 import { HotkeysService, Hotkey } from 'angular2-hotkeys';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmService } from './../../services/confirm/confirm.service';
+import { ConfirmService } from 'app/services/confirm/confirm.service';
 
 
 @Component({
@@ -24,7 +24,7 @@ export class NlfOrsEditorComponent implements OnInit, OnDestroy {
   changes = false;
   initialized = false;
   hotkeys: Hotkey | Hotkey[];
-
+  devDebug = false;
   preview = {};
   modalRef;
 

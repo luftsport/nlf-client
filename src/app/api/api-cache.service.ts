@@ -1,6 +1,6 @@
+import { tap } from 'rxjs/operators';
+import {throwError as observableThrowError,  Observable ,  Subject, of } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
 
 interface CacheContent {
   expiry: number;
@@ -33,7 +33,7 @@ export class ApiCacheService {
 
     if (this.hasValidCachedValue(key)) {
       console.log(`%cGetting from cache ${key}`, 'color: green');
-      return Observable.of(this.cache.get(key).value);
+      return of(this.cache.get(key).value);
     }
 
     if (!maxAge) {
@@ -47,13 +47,14 @@ export class ApiCacheService {
 
       this.inFlightObservables.set(key, new Subject());
       console.log(`%c Calling api for ${key}`, 'color: purple');
-      return fallback.do(
-        (value) => { this.set(key, value, maxAge); },
-        (err) => { this.set(key, fallback, this.DEFAULT_MAX_AGE_ERR); },
-      );
+      return fallback.pipe(
+        tap(
+          (value) => { this.set(key, value, maxAge); },
+          (err) => { this.set(key, fallback, this.DEFAULT_MAX_AGE_ERR); },
+      ));
     } else {
 
-      return Observable.throw('Requested key is not available in Cache');
+      return observableThrowError('Requested key is not available in Cache');
     }
 
   }

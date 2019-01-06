@@ -1,10 +1,10 @@
 import { Component, OnInit, TemplateRef, Inject } from '@angular/core';
-import { NlfComponent } from '../../nlf.component';
+import { NlfComponent } from 'app/nlf.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { ApiObservationsAggService } from '../../api/api-observations-agg.service';
-import { ApiOptionsInterface } from '../../api/api.interface';
-import { NlfConfig, NLF_CONFIG } from './../../nlf-config.module';
+import { ApiObservationsAggService } from 'app/api/api-observations-agg.service';
+import { ApiOptionsInterface } from 'app/api/api.interface';
+import { NlfConfig, NLF_CONFIG } from 'app/nlf-config.module';
 
 //import { Moment } from 'moment';
 @Component({
