@@ -1,20 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NlfSharedModule } from 'app/nlf-shared.module';
 
 import { NlfIntegrationRoutingModule } from './integration-routing.module';
 import { NlfWorkersStatusComponent } from './workers-status/workers-status.component';
 import { WorkersLogsComponent } from './workers-logs/workers-logs.component';
 import { ProcessInfoComponent } from './process-info/process-info.component';
 
-// Services
-import { LungoService } from 'app/api/lungo.service';
-// Site wide notifications
-import { NlfAlertService } from 'app/services/alert/alert.service';
 
 import { TableModule } from 'ngx-easy-table';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { FontAwesomeModule } from 'ngx-icons';
 import { NlfChangesHourComponent } from './changes-hour/changes-hour.component';
+import { WorkerLogComponent } from './worker-log/worker-log.component';
 
 @NgModule({
   declarations: [
@@ -22,17 +20,18 @@ import { NlfChangesHourComponent } from './changes-hour/changes-hour.component';
     WorkersLogsComponent,
     ProcessInfoComponent,
     NlfChangesHourComponent,
+    WorkerLogComponent,
   ],
   imports: [
     CommonModule,
+    NlfSharedModule,
     NlfIntegrationRoutingModule,
     TableModule,
     NgxChartsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
   ],
   providers: [
-    LungoService,
-    NlfAlertService
+
   ]
 })
 export class NlfIntegrationModule { }

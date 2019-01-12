@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LungoIntegrationChangesAggregateList } from 'app/api/api.interface';
-import { LungoService } from 'app/api/lungo.service';
+import { LungoIntegrationChangesAggregateList } from 'app/api/lungo.interface';
+import { LungoIntegrationService } from 'app/api/lungo-integration.service';
 import { NlfAlertService } from 'app/services/alert/alert.service';
 
 @Component({
@@ -13,7 +13,7 @@ export class NlfChangesHourComponent implements OnInit {
   dataReady = false;
   hours = [];
 
-  constructor(private lungo: LungoService,
+  constructor(private lungo: LungoIntegrationService,
     private alertService: NlfAlertService) {
 
   }

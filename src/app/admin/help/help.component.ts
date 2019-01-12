@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiHelpService } from './../../api/api-help.service';
-import { ApiHelpItem, ApiHelpList, ApiOptionsInterface } from './../../api/api.interface';
-import { TableConfig, TableEventObject } from './../../interfaces/ngx-easy-table.interface';
-import { ConfirmService } from './../../services/confirm/confirm.service';
+import { ApiHelpService } from 'app/api/api-help.service';
+import { ApiHelpItem, ApiHelpList, ApiOptionsInterface } from 'app/api/api.interface';
+import { TableConfig, TableEventObject } from 'app/interfaces/ngx-easy-table.interface';
+import { ConfirmService } from 'app/services/confirm/confirm.service';
 
 @Component({
   selector: 'nlf-admin-help',
@@ -17,7 +17,7 @@ export class NlfAdminHelpComponent implements OnInit {
   columns = [
     { key: 'key', title: 'Key', sort: true },
     { key: 'title', title: 'Tittel', sort: true },
-    {title: 'Operations'}
+    { title: 'Operations' }
   ];
 
   pagination = {
@@ -28,13 +28,13 @@ export class NlfAdminHelpComponent implements OnInit {
 
   sort: Array<Object> = [{ 'id': -1 }];
 
-  tableHelp: TableConfig = {
+  tableConfig = {
     searchEnabled: false,
     headerEnabled: true,
     orderEnabled: true,
     globalSearchEnabled: false,
     paginationEnabled: true,
-    exportEnabled: true,
+    exportEnabled: false,
     clickEvent: false,
     selectRow: true,
     selectCol: false,
@@ -45,7 +45,22 @@ export class NlfAdminHelpComponent implements OnInit {
     isLoading: false,
     detailsTemplate: false,
     groupRows: false,
-    paginationRangeEnabled: true
+    paginationRangeEnabled: true,
+    collapseAllRows: false,
+    checkboxes: false,
+    resizeColumn: false,
+    fixedColumnWidth: true,
+    horizontalScroll: false,
+    draggable: false,
+    logger: false,
+    showDetailsArrow: false,
+    showContextMenu: false,
+    persistState: false,
+    tableLayout: {
+      borderless: false,
+      hover: true,
+      striped: true,
+    },
   };
 
   constructor(private apiHelp: ApiHelpService,

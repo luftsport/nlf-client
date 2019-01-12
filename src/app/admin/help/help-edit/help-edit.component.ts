@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiHelpService } from './../../../api/api-help.service';
+import { ApiHelpService } from 'app/api/api-help.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({

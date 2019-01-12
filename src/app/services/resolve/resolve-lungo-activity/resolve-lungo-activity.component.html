@@ -1,0 +1,11 @@
+<span *ngIf="dataReady">
+  <span *ngIf="!!link && activity.id !== ''">
+    <a [routerLink]="['/activity', activity.id]">{{ activity.name }}</a>
+  </span>
+  <span *ngIf="!link || activity.id === ''">
+    {{ activity.name }}
+  </span>
+</span>
+<span *ngIf="!dataReady">
+  <fa name="spinner" animation="pulse" [size]="1"></fa>
+</span>

@@ -2,7 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiHelpService } from 'app/api/api-help.service';
 import { ApiHelpItem } from 'app/api/api.interface';
-
+import { Router, NavigationStart } from '@angular/router';
+import 'rxjs/add/operator/filter';
 
 @Component({
   selector: 'nlf-help',
@@ -19,7 +20,18 @@ export class NlfHelpComponent implements OnInit {
   modalRef;
 
   constructor(private modalService: NgbModal,
-              private apiHelp: ApiHelpService) { }
+              private apiHelp: ApiHelpService,
+              router: Router) {
+
+    router.events
+      .filter(event => event instanceof NavigationStart)
+      .subscribe((event: NavigationStart) => {
+        // You only receive NavigationStart events
+        if (!!this.modalService.hasOpenModals()) {
+          this.modalService.dismissAll();
+        }
+      });
+  }
 
   ngOnInit() {
 
@@ -30,10 +42,10 @@ export class NlfHelpComponent implements OnInit {
       data => {
         this.help = data;
         this.dataReady = true;
-        this.modalRef = this.modalService.open(template, { size: 'lg'}); //, 'container': 'body' });
+        this.modalRef = this.modalService.open(template, { size: 'lg' }); //, 'container': 'body' });
       },
       err => {
-        this.help = {title: 'Ingen hjelpetekst', body: 'Det finnes ingen hjelpetekst enda for dette temaet.', key: this.key};
+        this.help = { title: 'Ingen hjelpetekst', body: 'Det finnes ingen hjelpetekst enda for dette temaet.', key: this.key };
         this.dataReady = true;
         this.modalRef = this.modalService.open(template, { size: 'lg' });
       },

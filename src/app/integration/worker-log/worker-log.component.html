@@ -1,0 +1,27 @@
+<span class="pointer text-info" (click)="open(logModal)">
+    <fa name="align-justify" fixed="true"></fa> Logg
+  </span>
+  
+  <ng-template #logModal>
+  
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">
+        Logg for: <nlf-resolve-lungo-organization [organization_id]="organization_id"></nlf-resolve-lungo-organization>
+      </h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+
+      <div *ngFor="let row of log">
+        {{ row }}
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline-dark" (click)="modalRef.close()">Ferdig</button>
+    </div>
+  
+  </ng-template>
+  

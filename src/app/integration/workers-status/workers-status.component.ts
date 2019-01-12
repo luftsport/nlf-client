@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { LungoSyncdaemonWorkersStatusItem, LungoIntegrationChangesStatusItem } from 'app/api/api.interface';
-import { LungoService } from 'app/api/lungo.service';
+import { Component, TemplateRef, ViewChild, OnInit } from '@angular/core';
+import { LungoSyncdaemonWorkersStatusItem, LungoIntegrationChangesStatusItem } from 'app/api/lungo.interface';
+import { LungoIntegrationService } from 'app/api/lungo-integration.service';
 import { NlfAlertService } from 'app/services/alert/alert.service';
 import { map } from 'rxjs/operators';
+
 // import { Config } from './ngx-easy-table/model/config';
 
 @Component({
@@ -22,6 +23,7 @@ export class NlfWorkersStatusComponent implements OnInit {
   entityTypes = [];
   entityTypesReady = false;
 
+  @ViewChild('detailsTemplate') detailsTemplateRef: TemplateRef<any>;
   tableConfig = {
     searchEnabled: false,
     headerEnabled: true,
@@ -37,17 +39,17 @@ export class NlfWorkersStatusComponent implements OnInit {
     additionalActions: false,
     serverPagination: false,
     isLoading: false,
-    detailsTemplate: false,
+    detailsTemplate: true,
+    showDetailsArrow: true,
     groupRows: false,
     paginationRangeEnabled: true,
     collapseAllRows: false,
     checkboxes: false,
     resizeColumn: false,
-    fixedColumnWidth: true,
+    fixedColumnWidth: false,
     horizontalScroll: false,
     draggable: false,
     logger: false,
-    showDetailsArrow: false,
     showContextMenu: false,
     persistState: false,
     tableLayout: {
@@ -75,10 +77,10 @@ export class NlfWorkersStatusComponent implements OnInit {
   "next_run_time": null
    */
   columns = [
+    { key: 'status', title: 'Status', sort: true },
     { key: 'id', title: 'ID', sort: true },
     { key: 'state', title: 'State', sort: true },
     { key: 'mode', title: 'Mode', sort: true },
-    { key: 'status', title: 'Status', sort: true },
     { key: 'sync_type', title: 'Type', sort: true },
     { key: 'sync_errors', title: 'Errors', sort: true },
     { key: 'next_run_time', title: 'Next', sort: false },
@@ -105,7 +107,7 @@ export class NlfWorkersStatusComponent implements OnInit {
   next_run_time: Date;
   last_synced: Date;
 
-  constructor(private lungo: LungoService,
+  constructor(private lungo: LungoIntegrationService,
     private alertService: NlfAlertService) {
 
 
@@ -115,6 +117,13 @@ export class NlfWorkersStatusComponent implements OnInit {
 
     this.getWorkers();
 
+  }
+
+  public uptime(value: number) {
+    const hours: number = Math.floor(value / 3600);
+    const minutes: number = Math.floor((value - (hours * 3600)) / 60);
+    const seconds: number = Math.floor(value - hours * 3600 - minutes * 60);
+    return hours + ' hours ' + minutes + ' minutes ' + seconds + ' seconds'; // { hours: hours, minutes: minutes, seconds: seconds };
   }
 
   public refresh() {
@@ -194,7 +203,7 @@ export class NlfWorkersStatusComponent implements OnInit {
     const should = ['pending', 'error', 'finished', 'ready'];
     let has = [];
     this.pie = [];
-    
+
     this.status.forEach(el => {
       this.pie.push({ name: el._id, value: el.count });
       has.push(el._id);
@@ -229,12 +238,12 @@ export class NlfWorkersStatusComponent implements OnInit {
   }
 
   getEntityTypes() {
-    
+
     this.lungo.getIntegrationChangesEntityTypes().subscribe(
       data => {
         this.entityTypes = [];
         data._items.forEach(el => {
-          this.entityTypes.push({name: el._id, value: el.count});
+          this.entityTypes.push({ name: el._id, value: el.count });
         });
       },
       err => {

@@ -1,0 +1,12 @@
+<span *ngIf="dataReady">
+  <span *ngIf="!!link && function.id !== ''">
+      <a [routerLink]="['/function', function.id]">{{ function.type_name }}</a>
+  </span>
+  <span *ngIf="!link || function.id === ''">
+      {{ function.type_name }}
+  </span>
+  <nlf-resolve-lungo-organization [organization_id]="function.active_in_org_id"></nlf-resolve-lungo-organization>
+</span>
+<span *ngIf="!dataReady">
+  <fa name="spinner" animation="pulse" [size]="1"></fa>
+</span>

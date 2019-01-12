@@ -1,0 +1,12 @@
+<span *ngIf="dataReady">
+  <span *ngIf="!!link && organization.id !== ''">
+      <a [routerLink]="['/organization', organization.id]">{{ organization.name }}</a>
+  </span>
+  <span *ngIf="!link || organization.id === ''">
+      {{ organization.name }}
+  </span>
+  <nlf-resolve-lungo-activity *ngIf="!!organization.main_activity.id && !!show_type" [activity_id]="organization.main_activity.id"></nlf-resolve-lungo-activity>
+</span>
+<span *ngIf="!dataReady">
+  <fa name="spinner" animation="pulse" [size]="1"></fa>
+</span>

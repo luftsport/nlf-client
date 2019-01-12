@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ResolveUserComponent } from './resolve-user.component';
+import { NlfResolveLungoPersonComponent } from './resolve-user.component';
 
-describe('ResolveUserComponent', () => {
-  let component: ResolveUserComponent;
-  let fixture: ComponentFixture<ResolveUserComponent>;
+describe('NlfResolveLungoPersonComponent', () => {
+  let component: NlfResolveLungoPersonComponent;
+  let fixture: ComponentFixture<NlfResolveLungoPersonComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ResolveUserComponent ]
+      declarations: [ NlfResolveLungoPersonComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ResolveUserComponent);
+    fixture = TestBed.createComponent(NlfResolveLungoPersonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

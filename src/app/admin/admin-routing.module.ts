@@ -6,10 +6,10 @@ import { NlfAdminHelpEditComponent} from './help/help-edit/help-edit.component';
 import { NlfAuthGuard } from 'app/services/auth/auth.guard';
 
 const nlfAdminRoutes: Routes = [
-    { path: 'admin/', component: NlfAdminComponent, canActivate: [NlfAuthGuard]},
-    { path: 'admin/help', component: NlfAdminHelpComponent, canActivate: [NlfAuthGuard]},
-    { path: 'admin/help/create', component: NlfAdminHelpEditComponent, canActivate: [NlfAuthGuard]},
-    { path: 'admin/help/edit/:key', component: NlfAdminHelpEditComponent, canActivate: [NlfAuthGuard]},
+    { path: '', component: NlfAdminComponent, canActivate: [NlfAuthGuard], data: {label: 'Admin'}},
+    { path: 'help', component: NlfAdminHelpComponent, canActivate: [NlfAuthGuard], data: {label: 'Help'}},
+    { path: 'help/create', component: NlfAdminHelpEditComponent, canActivate: [NlfAuthGuard], data: {label: 'Create'}},
+    { path: 'help/edit/:key', component: NlfAdminHelpEditComponent, canActivate: [NlfAuthGuard], data: {label: 'Edit'}},
   ];
 
 @NgModule({

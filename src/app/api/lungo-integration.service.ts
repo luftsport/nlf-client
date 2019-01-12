@@ -2,12 +2,19 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ApiRestService } from './api-rest.service';
-import { ApiOptionsInterface, LungoSyncdaemonProcessInfoItem, LungoSyncdaemonWorkersLogsList, LungoSyncdaemonWorkersStatusList, LungoIntegrationChangesStatusList, LungoIntegrationChangesAggregateList} from './api.interface';
+import { ApiOptionsInterface } from 'app/api/api.interface';
+import {
+  LungoSyncdaemonProcessInfoItem,
+  LungoSyncdaemonWorkersLogsList,
+  LungoSyncdaemonWorkerLogList,
+  LungoSyncdaemonWorkersStatusList,
+  LungoIntegrationChangesStatusList,
+  LungoIntegrationChangesAggregateList } from './lungo.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LungoService extends ApiRestService {
+export class LungoIntegrationService extends ApiRestService {
 
   constructor(http: HttpClient) { super(http); }
 
@@ -21,6 +28,10 @@ export class LungoService extends ApiRestService {
   public getWorkersLogs(options?: ApiOptionsInterface): Observable<LungoSyncdaemonWorkersLogsList> {
     const localUrl = 'syncdaemon/workers/logs';
     return this.getList(this.relativeUrl + localUrl, options);
+  }
+
+  public getWorkerLog(id: number, options?: ApiOptionsInterface): Observable<LungoSyncdaemonWorkerLogList> {
+    return this.getItem(this.relativeUrl + 'syncdaemon/worker/log/', id, options);
   }
 
   public getProcessInfo(options?: ApiOptionsInterface): Observable<LungoSyncdaemonProcessInfoItem> {
@@ -41,4 +52,6 @@ export class LungoService extends ApiRestService {
     const localUrl = 'integration/changes/aggregate/hour';
     return this.getList(this.relativeUrl + localUrl, options);
   }
+
+
 }

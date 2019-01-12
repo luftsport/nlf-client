@@ -11,28 +11,12 @@
  * - ApiUserList
  */
 
-import { ApiEveLinks, ApiEveMeta, ApiEveBaseItem, ApiEveBaseList } from './api-eve.interface';
+import { ApiEveLinks, ApiEveBaseItem, ApiEveBaseList, ApiEveQueryInterface } from './api-eve.interface';
 import { HttpHeaders } from '@angular/common/http';
 import { HttpParams } from '@angular/common/http/src/params';
 
-
-/**
- * The api query and options interface
- */
-
-export interface ApiQueryInterface {
-    where?: any; // string
-    max_results?: number; // number
-    page?: number; // number
-    sort?: Object[]; // string or array? [{key: 1}] or ["-key", "key2", ...]
-    aggregate?: any; // string
-    projection?: any;
-    version?: number | string;
-}
-
-
 export interface ApiOptionsInterface {
-    query?: ApiQueryInterface;
+    query?: ApiEveQueryInterface;
     body?: any;
     params?: HttpParams | { [param: string]: string | string[]; };
     headers?: HttpHeaders | { [header: string]: string | string[]; };
@@ -481,102 +465,13 @@ export interface ApiContentList extends ApiEveBaseList {
  * TAGS
  */
 
- export interface ApiTagItem extends ApiEveBaseItem {
+export interface ApiTagItem extends ApiEveBaseItem {
     freq: number;
     group: string;
     related: string[];
     tag: string;
- }
-
- export interface ApiTagList extends ApiEveBaseList {
-     _items: ApiTagItem[];
- }
-
-/**
- * Lungo!
- */
-
- export interface LungoSyncdaemonWorkersStatusItem {
-    name?: string;
-    id?: number;
-    status?: boolean;
-    state?: string;
-    mode?: string;
-    reason?: string;
-    index?: number;
-    uptime?: number[];
-    started?: Date;
-    messages: number;
-    sync_type?: string;
-    sync_interval?: Date[];
-    sync_misfires?: number;
-    sync_errors?: number;
-    next_run_time?: Date;
- }
-
- export interface LungoSyncdaemonWorkersStatusList extends LungoSyncdaemonWorkersStatusItem {
-    _items: LungoSyncdaemonWorkersStatusItem[];
 }
 
-export interface LungoSyncdaemonWorkersLogsItem {
-    id: number;
-    log: string[];
+export interface ApiTagList extends ApiEveBaseList {
+    _items: ApiTagItem[];
 }
-export interface LungoSyncdaemonWorkersLogsList extends LungoSyncdaemonWorkersLogsItem {
-    _items: LungoSyncdaemonWorkersLogsItem[];
-
-}
-
-export interface LungoSyncdaemonProcessInfoItem {
-    uids?: number[];
-    cpu_percent?: number;
-    username?: string;
-    name?: string;
-    threads?: [number[]];
-    num_ctx_switches?: number[];
-    cpu_num?: number;
-    cpu_times?: number[];
-    io_counters?: number[];
-    create_time?: number;
-    exe?: string;
-    gids?: number[];
-    num_threads?: number;
-    connections?: [[]];
-    cpu_affinity?: number[];
-    memory_percent?: number;
-    ionice?: number[];
-    nice?: number;
-    cwd?: string;
-    ppid?: number;
-    memory_full_info?: number[];
-    pid?: number;
-    cmdline?: string[];
-    status?: string;
-
-}
-
-export interface LungoIntegrationChangesStatusItem {
-    _id?: string;
-    count?: number;
-}
-
-export interface LungoIntegrationChangesStatusList extends LungoIntegrationChangesStatusItem {
-    _items: LungoIntegrationChangesStatusItem[];
-}
-
-export interface AggregateByDateItem {
-    year?: number;
-    month?: number;
-    day?: number;
-    hour?: number;
-    minute?: number;
-}
-export interface LungoIntegrationChangesAggregateItem extends AggregateByDateItem {
-    _id?: AggregateByDateItem;
-    count?: number;
-}
-
-export interface LungoIntegrationChangesAggregateList extends LungoIntegrationChangesAggregateItem {
-    _items: LungoIntegrationChangesAggregateItem[];
-}
-

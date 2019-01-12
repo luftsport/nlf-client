@@ -33,8 +33,8 @@
   <div class="row my-4">
 
     <div class="col-lg-8">
-      <ngx-charts-advanced-pie-chart *ngIf="dataReady" [activeEntries]="activeEntries" [scheme]="colorScheme" [label]="label" [results]="pie"
-        [gradient]="gradient" (select)="onSelect($event)"></ngx-charts-advanced-pie-chart>
+      <ngx-charts-advanced-pie-chart *ngIf="dataReady" [activeEntries]="activeEntries" [scheme]="colorScheme" [label]="label"
+        [results]="pie" [gradient]="gradient" (select)="onSelect($event)"></ngx-charts-advanced-pie-chart>
       <span *ngIf="!dataReady">
         <p class="align-middle text-center text-secondary">
           <fa name="spinner" animation="pulse" size="3x"></fa>
@@ -54,11 +54,31 @@
   <div class="container">
     <p class="m-0 text-center text-white">
       <nlf-ors-create></nlf-ors-create>
-      <button class="btn" [routerLink]="['/integration']">TEST</button>
     </p>
   </div>
   <!-- /.container -->
 </div>
+
+<div class="py-5 nlf-bg-purple">
+  <div class="container">
+    <span class="m-0 text-center text-white">
+      <h2>Tests</h2>
+      <button class="btn" [routerLink]="['/integration']">Integration</button><br/>
+      <button class="btn" [routerLink]="['/admin']">Admin</button><br/>
+      Person: <nlf-resolve-lungo-person person_id="301041"></nlf-resolve-lungo-person><br/>
+      Org: <nlf-resolve-lungo-organization organization_id="22976" show_type="true"></nlf-resolve-lungo-organization><br/>
+      Lisens: <nlf-resolve-lungo-license license_id="10299159"></nlf-resolve-lungo-license><br/>
+      Function: <nlf-resolve-lungo-function function_id="28851410"></nlf-resolve-lungo-function><br/>
+      Activity: <nlf-resolve-lungo-activity activity_id="109"></nlf-resolve-lungo-activity><br/>
+      Org type: <nlf-resolve-lungo-organization-type type_id="8"></nlf-resolve-lungo-organization-type><br/>
+      Func type: <nlf-resolve-lungo-function-type type_id="7"></nlf-resolve-lungo-function-type><br/>
+    </span>
+  </div>
+  <!-- /.container -->
+</div>
+
+
+
 <!-- Page Content 
 <div class="container">
 
@@ -152,8 +172,8 @@
     </button>
   </div>
   <div class="modal-body">
-    <ngx-charts-advanced-pie-chart *ngIf="dataReady" [activeEntries]="activeEntries" [scheme]="colorScheme" [label]="label" [results]="pie"
-      [gradient]="gradient" (select)="onSelect($event)"></ngx-charts-advanced-pie-chart>
+    <ngx-charts-advanced-pie-chart *ngIf="dataReady" [activeEntries]="activeEntries" [scheme]="colorScheme" [label]="label"
+      [results]="pie" [gradient]="gradient" (select)="onSelect($event)"></ngx-charts-advanced-pie-chart>
     <nlf-ors-fallskjerm-last number="3"></nlf-ors-fallskjerm-last>
     <div class="clearfix"></div>
     <div>
@@ -196,17 +216,23 @@
             <p class="card-text">
               <h3>
                 <p>
-                  <wi name="showers" fixed="true"></wi>Rainy</p>
+                  <wi name="showers" fixed="true"></wi>Rainy
+                </p>
                 <p>
-                  <wi name="thermometer" fixed="true"></wi>13&deg;C</p>
+                  <wi name="thermometer" fixed="true"></wi>13&deg;C
+                </p>
                 <p>
-                  <wi name="wind" fixed="true" degree="45"></wi>22Kt/045&deg;</p>
+                  <wi name="wind" fixed="true" degree="45"></wi>22Kt/045&deg;
+                </p>
                 <p>
-                  <wi name="strong-wind" fixed="true"></wi>32Kt/043&deg;</p>
+                  <wi name="strong-wind" fixed="true"></wi>32Kt/043&deg;
+                </p>
                 <p>
-                  <wi name="humidity" fixed="true"></wi>78%</p>
+                  <wi name="humidity" fixed="true"></wi>78%
+                </p>
                 <p>
-                  <wi name="barometer" fixed="true"></wi>1013hPa</p>
+                  <wi name="barometer" fixed="true"></wi>1013hPa
+                </p>
 
 
 
@@ -236,15 +262,16 @@
         <!-- Content -->
         <div class="card mb-4">
           <div class="card-header lead"><i class="nlf nlf-fallskjerm nlf-fw"></i>Siste i Fallskjerm</div>
-            <nlf-content-last space_key="fallskjerm" number="8"></nlf-content-last>
+          <nlf-content-last space_key="fallskjerm" number="8"></nlf-content-last>
           <div class="card-footer">
-            <a class="btn btn-secondary btn-block" [routerLink]="['/content/space/fallskjerm']" role="button">Se mer &raquo;</a>
+            <a class="btn btn-secondary btn-block" [routerLink]="['/content/space/fallskjerm']" role="button">Se mer
+              &raquo;</a>
           </div>
         </div>
 
         <div class="card mb-4">
           <div class="card-header lead"><i class="nlf nlf-motorfly nlf-fw"></i>Siste i Motor</div>
-            <nlf-content-last space_key="motor" number="8"></nlf-content-last>
+          <nlf-content-last space_key="motor" number="8"></nlf-content-last>
           <div class="card-footer">
             <a class="btn btn-secondary btn-block" [routerLink]="['/content/space/motor']" role="button">Se mer &raquo;</a>
           </div>
@@ -252,7 +279,7 @@
 
         <div class="card mb-4">
           <div class="card-header lead">Siste i ORS</div>
-            <nlf-content-last space_key="ors" number="8"></nlf-content-last>
+          <nlf-content-last space_key="ors" number="8"></nlf-content-last>
           <div class="card-footer">
             <a class="btn btn-secondary btn-block" [routerLink]="['/content/space/ors']" role="button">Se mer &raquo;</a>
           </div>

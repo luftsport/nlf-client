@@ -7,7 +7,6 @@ import { NlfOrsComponent } from './ors/ors.component';
 import { NlfAuthComponent } from './services/auth/auth.component';
 import { NlfDashboardComponent } from './dashboard/dashboard.component';
 import { NlfUserTableComponent } from './user/user-table/user-table.component';
-import { NlfAdminComponent } from './admin/admin.component';
 import { NlfContentComponent } from './content/content.component';
 
 
@@ -34,26 +33,25 @@ import { NlfContentRoutingModule } from './content/content-routing.module';
   **/
 const routes: Routes = [
   
-  { path: 'home', component: NlfUiDummyComponent, canActivate: [NlfAuthGuard]  },
-  { path: 'users', component: NlfUserTableComponent, canActivate: [NlfAuthGuard] },
-  { path: 'ors', component: NlfOrsComponent, canActivate: [NlfAuthGuard] },
-  { path: 'dashboard', component: NlfDashboardComponent, canActivate: [NlfAuthGuard] },
-  { path: 'admin', component: NlfAdminComponent, canActivate: [NlfAuthGuard] },
-  { path: 'content', component: NlfContentComponent, canActivate: [NlfAuthGuard] },
-  { path: 'login', component: NlfAuthComponent },
-  { path: 'integration', loadChildren: './integration/integration.module#NlfIntegrationModule' },
+  { path: 'home', component: NlfUiDummyComponent, canActivate: [NlfAuthGuard]  , data: {label: 'Home'}},
+  { path: 'users', component: NlfUserTableComponent, canActivate: [NlfAuthGuard], data: {label: 'Users'}},
+  { path: 'ors', component: NlfOrsComponent, canActivate: [NlfAuthGuard] , data: {label: 'ORS'}},
+  { path: 'dashboard', component: NlfDashboardComponent, canActivate: [NlfAuthGuard], data: {label: 'Dashboard'}},
+  { path: 'admin', loadChildren: 'app/admin/admin.module#NlfAdminModule', canActivate: [NlfAuthGuard], data: {label: 'Admin'}},
+  { path: 'content', component: NlfContentComponent, canActivate: [NlfAuthGuard], data: {label: 'Content'}},
+  { path: 'login', component: NlfAuthComponent , data: {label: 'Login'}},
+  { path: 'integration', loadChildren: './integration/integration.module#NlfIntegrationModule' , data: {label: 'Integration'}},
   { path: '', redirectTo: '/home', pathMatch: 'full' }, // redirect root
   { path: '**', component: NlfUiDummyComponent, canActivate: [NlfAuthGuard]  },
 ];
 
 // , onSameUrlNavigation: 'reload'
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { enableTracing: true }),
+  imports: [RouterModule.forRoot(routes), //, { enableTracing: true }),
             NlfOrsRoutingModule,
             NlfUserRoutingModule,
             NlfDashboardRoutingModule,
             NlfErrorRoutingModule,
-            NlfAdminRoutingModule,
             NlfContentRoutingModule
           ],
   exports: [ RouterModule],

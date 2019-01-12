@@ -1,20 +1,21 @@
-import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { FormsModule, ReactiveFormsModule, NgModel } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { NlfSharedModule } from 'app/nlf-shared.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 // import { HttpModule } from '@angular/http'; // NB ONLY FOR ng2-idle until ng5 support for HttpClient
+import { Title } from '@angular/platform-browser';
+
+import { NlfRoutingModule } from './nlf-routing.module';
 
 // Third party
-import { NgProgressModule } from '@ngx-progressbar/core';
-import { NgProgressHttpModule } from '@ngx-progressbar/http';
+
 // import { NgProgressRouterModule } from '@ngx-progressbar/router';
 import { TableModule } from 'ngx-easy-table';
 // import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
 import { MomentModule } from 'angular2-moment'; // optional, provides moment-style pipes for date formatting
-import { NgPipesModule } from 'angular-pipes'; // Angular pipes, love them!
+
 import { AgmCoreModule } from '@agm/core';
 import { HotkeyModule } from 'angular2-hotkeys';
 // File uploader
@@ -27,12 +28,11 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { GenericTableModule } from '@angular-generic-table/core';
 import { RTModule } from 'right-angled';
 
-// ng-bootstrap
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 // Confirm dialogue using ng-bootstrap
 import { ConfirmService, ConfirmState, ConfirmModalComponent } from 'app/services/confirm/confirm.service';
 
-import { FontAwesomeModule, WeatherIconsModule } from 'ngx-icons';
+
 // import { Ng2WeatherIconsModule } from 'ng2-weather-icons'; // Broken - make fa => wi!!
 
 // API
@@ -63,7 +63,6 @@ import { NlfAuthInterceptor } from 'app/services/auth/auth.interceptor';
 
 // Site wide notifications
 import { NlfAlertService } from 'app/services/alert/alert.service';
-import { NlfAlertComponent } from 'app/services/alert/alert.component';
 import { NlfLocalStorageService } from 'app/services/storage/local-storage.service';
 
 // Our custom components
@@ -74,10 +73,7 @@ import { NlfOrsChildComponent } from 'app/ors/ors-child/ors-child.component';
 import { NlfConfluenceComponent } from 'app/confluence/confluence.component';
 import { NlfClubComponent } from 'app/club/club.component';
 
-// Admin
-import { NlfAdminComponent } from 'app/admin/admin.component';
-import { NlfAdminHelpComponent } from 'app/admin/help/help.component';
-import { NlfAdminHelpEditComponent } from 'app/admin/help/help-edit/help-edit.component';
+
 
 // Content
 import { NlfContentComponent } from 'app/content/content.component';
@@ -89,9 +85,6 @@ import { NlfContentTreeComponent } from 'app/content/content-tree/content-tree.c
 import { NlfContentLastComponent } from 'app/content/content-last/content-last.component';
 
 
-
-// Routes
-import { NlfRoutingModule } from 'app/nlf-routing.module';
 
 // UI components
 import { NlfUiNavbarComponent } from 'app/ui/navbar/navbar.component';
@@ -107,14 +100,7 @@ import { NlfAuthGuard } from 'app/services/auth/auth.guard';
 import { NlfAuthService } from 'app/services/auth/auth.service';
 import { NlfAuthSubjectService } from 'app/services/auth/auth-subject.service';
 
-// Resolvers
-import { NlfResolveComponent } from 'app/services/resolve/resolve.component';
-import { NlfResolveUserComponent } from 'app/services/resolve/resolve-user/resolve-user.component';
-import { NlfResolveClubComponent } from 'app/services/resolve/resolve-club/resolve-club.component';
-import { NlfResolveLicenseComponent } from 'app/services/resolve/resolve-license/resolve-license.component';
-import { NlfResolveMembershipComponent } from 'app/services/resolve/resolve-membership/resolve-membership.component';
-import { NlfResolveGroupComponent } from 'app/services/resolve/resolve-group/resolve-group.component';
-import { NlfResolveRoleComponent } from 'app/services/resolve/resolve-role/resolve-role.component';
+
 
 // APp root component
 import { NlfComponent } from 'app/nlf.component';
@@ -138,11 +124,7 @@ import { NlfOrsFallskjermSelfTableComponent } from 'app/ors/ors-fallskjerm/ors-f
 import { NlfOrsFallskjermAllTableComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-all-table/ors-fallskjerm-all-table.component';
 import { NlfOrsFallskjermMainComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-main/ors-fallskjerm-main.component';
 
-// PIPES
-import { NlfOrsStatePipe } from 'app/pipes/ors-state.pipe';
-import { NlfOrsTypePipe } from 'app/pipes/ors-type.pipe';
-import { NlfOrsPeoplePipe } from 'app/pipes/ors-people.pipe';
-import { SafePipe } from 'app/pipes/safe.pipe';
+
 
 // LATEST
 import { NlfOrsFallskjermReportComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-report/ors-fallskjerm-report.component';
@@ -198,14 +180,21 @@ import { NlfOrsEditorLocationComponent } from 'app/ors/ors-editor/ors-editor-loc
 import { NlfOrsEditorWorkflowComponent } from 'app/ors/ors-editor/ors-editor-workflow/ors-editor-workflow.component';
 import { NlfOrsEditorComponentsComponent } from 'app/ors/ors-editor/ors-editor-components/ors-editor-components.component';
 
+
+// Services
+import { LungoIntegrationService } from 'app/api/lungo-integration.service';
+import { LungoPersonsService } from 'app/api/lungo-persons.service';
+import { LungoOrganizationsService } from 'app/api/lungo-organizations.service';
+import { LungoLicensesService } from 'app/api/lungo-licenses.service';
+import { LungoFunctionsService } from 'app/api/lungo-functions.service';
+import { LungoActivitiesService } from 'app/api/lungo-activities.service';
+
 // CONFIG
 import { NlfConfigModule } from 'app/nlf-config.module';
 // import { MentionModule } from 'angular-mentions/mention'; // @TODO: Remove
 // https://github.com/KostyaTretyak/ng-contenteditable instead?
 import { ContenteditableDirective } from 'app/services/contenteditable/contenteditable.directive';
 
-// Help
-import { NlfHelpComponent } from 'app/services/help/help.component';
 
 // Confirm directive
 import { ConfirmTemplateDirective } from 'app/services/confirm/confirm.service';
@@ -242,12 +231,7 @@ import { JoditAngularModule } from 'jodit-angular';
     NlfOrsChildComponent,
     NlfUiDummyComponent,
     NlfAuthComponent,
-    NlfAlertComponent,
-    NlfResolveComponent,
-    NlfResolveUserComponent,
-    NlfAdminComponent,
-    NlfAdminHelpComponent,
-    NlfAdminHelpEditComponent,
+
     NlfContentComponent,
     NlfContentEditComponent,
     NlfContentViewComponent,
@@ -262,20 +246,15 @@ import { JoditAngularModule } from 'jodit-angular';
     NlfUserSettingsComponent,
     NlfUserNotificationsComponent,
     NlfUserOrsComponent,
-    NlfResolveClubComponent,
-    NlfResolveLicenseComponent,
+
     NlfUserClubSelectorComponent,
-    NlfResolveMembershipComponent,
-    NlfResolveGroupComponent,
-    NlfResolveRoleComponent,
+
     NlfUserAclComponent,
     NlfOrsFallskjermComponent,
     NlfOrsFallskjermTodoTableComponent,
     NlfOrsFallskjermSelfTableComponent,
     NlfOrsFallskjermAllTableComponent,
     NlfOrsFallskjermMainComponent,
-    NlfOrsStatePipe,
-    NlfOrsTypePipe,
     NlfOrsFallskjermReportComponent,
     NlfUiPageSpinnerComponent,
     NlfOrsFallskjermReportWorkflowTimelineComponent,
@@ -302,8 +281,6 @@ import { JoditAngularModule } from 'jodit-angular';
     NlfOrsRatingPipe,
     NlfOrsRatingCalcPipe,
     NlfDynamicColorPipe,
-    NlfOrsPeoplePipe,
-    SafePipe,
     ConfirmTemplateDirective,
     NlfOrsFallskjermLastComponent,
     NlfOrsReportFilesThumbnailsComponent,
@@ -323,7 +300,6 @@ import { JoditAngularModule } from 'jodit-angular';
     NlfOrsEditorWorkflowComponent,
     NlfOrsEditorComponentsComponent,
     NlfErrorComponent,
-    NlfHelpComponent,
     ContenteditableDirective,
     NlfDashboardComponent,
     WidgetOrsPieComponent,
@@ -334,28 +310,22 @@ import { JoditAngularModule } from 'jodit-angular';
     ConfirmModalComponent
   ],
   imports: [
-    BrowserModule,
     HttpClientModule,
-    // HttpModule, // NB ONLY FOR ng2-idle until ng5 support for HttpClient
-    FormsModule,
-    ReactiveFormsModule,
     DragDropModule,
+    NlfSharedModule,
     NlfConfigModule, // Config module
-    NgProgressModule.forRoot(),
-    NgProgressHttpModule.forRoot(),
-    // NgProgressRouterModule,
-    NgPipesModule,
-    FontAwesomeModule, // ngx-icons
-    WeatherIconsModule, // ngx-icons
+    NlfRoutingModule,
+    BrowserModule,
+
     GenericTableModule,
     TableModule, // ngx-easy-table
     RTModule, // right-angled declarative tables
-    NgbModule.forRoot(), // ng-bootstrap
+    
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     NgxChartsModule, // Charting
     // NgxDatatableModule,
-    NlfRoutingModule,
+    
     NgIdleKeepaliveModule.forRoot(),
     MomentModule,
     TagInputModule, // ngx-chips
@@ -395,6 +365,14 @@ import { JoditAngularModule } from 'jodit-angular';
               ApiContentService,
               DataService, // @TODO: Remove
               Title, // TODO: rename NlfUiTitleService
+              // LUNGO
+              LungoIntegrationService,
+              LungoPersonsService,
+              LungoOrganizationsService,
+              LungoLicensesService,
+              LungoFunctionsService,
+              LungoActivitiesService,
+              // Common Services
               NlfAlertService,
               NlfAuthService,
               NlfAuthSubjectService,

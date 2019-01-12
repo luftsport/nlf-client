@@ -1,4 +1,5 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
+// 
 // import {RequestOptions, Request, RequestMethod} from '@angular/http';
 import { Observable } from 'rxjs';
 import { ApiOptionsInterface } from './api.interface';
@@ -40,8 +41,6 @@ export abstract class ApiRestService {
     if (!!options.query) {
 
       let params = new HttpParams();
-
-
       // sort is a different animal, make string first.
       //if (!!options.query.sort && options.query.sort instanceof Object) {
       //  options.query.sort = JSON.stringify(options.query.sort).replace(/[{]/g, '(').replace(/[}]/g, ')').replace(/:/g, ',');
@@ -74,13 +73,8 @@ export abstract class ApiRestService {
           console.log(e);
         }
       }
-
-
-
     }
 
-    // options.responseType = 'application/json';
-    // options.headers = new HttpHeaders().set(options.headers);
     return options;
   }
 
@@ -89,7 +83,6 @@ export abstract class ApiRestService {
       'Content-Type': 'application/json; charset=utf8',
       // 'Accept': 'application/json',
       'Accept': '*/*',
-      'X-Angular-Rules': 'True'
     };
 
     if (!!etag) {
@@ -98,21 +91,11 @@ export abstract class ApiRestService {
     return headers;
   }
 
-  /**
-  Get item by _id
-  **/
   protected getItem(relativeUrl: string, id: number | string, options: ApiOptionsInterface = {}): Observable<any> {
-    // console.log(relativeUrl);
-    // console.log(options);
     return this.http.get(this.baseUrl + relativeUrl + id.toString(), this.getOptions(options));
   }
 
-  /**
-  Get item by id (custom Number(id))
-  **/
   protected getItemById(relativeUrl: string, id: number, options: ApiOptionsInterface = {}): Observable<any> {
-    // console.log(relativeUrl);
-    // console.log(options);
     return this.http.get(this.baseUrl + relativeUrl + id.toString(), this.getOptions(options));
   }
 
@@ -121,22 +104,15 @@ export abstract class ApiRestService {
   }
 
   protected post(relativeUrl: string, data: any, options: ApiOptionsInterface = {}): Observable<any> {
-
     return this.http.post(this.baseUrl + relativeUrl, JSON.stringify(data), this.getOptions(options));
-    // and so on for every http method that your API supports
   }
 
-  /**
-  Needs _etag support in Headers
-  **/
   protected put(relativeUrl: string, _id: string, data: any, options: ApiOptionsInterface = {}, etag?: string): Observable<any> {
     return this.http.put(this.baseUrl + relativeUrl + _id, JSON.stringify(data), this.getOptions(options, etag));
   }
 
   protected patch(relativeUrl: string, _id: string, data: any, options: ApiOptionsInterface = {}, etag?: string): Observable<any> {
-
     return this.http.patch(this.baseUrl + relativeUrl + _id, JSON.stringify(data), this.getOptions(options, etag));
-
   }
 
   protected delete(relativeUrl: string, _id: string, options: ApiOptionsInterface = {}, etag?: string): Observable<any> {

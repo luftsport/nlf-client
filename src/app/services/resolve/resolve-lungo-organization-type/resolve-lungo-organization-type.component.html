@@ -1,0 +1,11 @@
+<span *ngIf="dataReady">
+  <span *ngIf="!!link && organization.org_type_id !== ''">
+    <a [routerLink]="['/organization/type', organization_type.org_type_id]">{{ organization_type.org_type_text }}</a>
+  </span>
+  <span *ngIf="!link || organization.org_type_id === ''">
+    {{ organization_type.org_type_text }}
+  </span>
+</span>
+<span *ngIf="!dataReady">
+  <fa name="spinner" animation="pulse" [size]="1"></fa>
+</span>

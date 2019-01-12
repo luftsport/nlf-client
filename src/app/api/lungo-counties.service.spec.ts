@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LungoService } from './lungo.service';
+import { LungoCountiesService } from './lungo-counties.service';
 
-describe('LungoService', () => {
+describe('LungoCountiesService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: LungoService = TestBed.get(LungoService);
+    const service: LungoCountiesService = TestBed.get(LungoCountiesService);
     expect(service).toBeTruthy();
   });
 });

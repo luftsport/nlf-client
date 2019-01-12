@@ -1,0 +1,4 @@
+<a *ngFor="let breadcrumb of breadcrumbs; let isLast=last" 
+  class="breadcrumb-item" 
+  [ngClass]="{'active': isLast}" 
+  [routerLink]="breadcrumb.url">{{breadcrumb.label}}</a>

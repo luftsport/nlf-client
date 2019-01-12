@@ -1,14 +1,14 @@
-<div class="row">
-    <div class="nlf-sticky-toolbar">
-        <div class="container">
-            <fa name="question" fixed="true"></fa>Hjelpetekster
-        </div>
+<header class="nlf-sticky-toolbar">
+    <div class="container">
+    <nlf-breadcrumb></nlf-breadcrumb>
     </div>
-</div>
+</header>
+
 <div class="row">
     <div class="container">
         <span *ngIf="!!dataReady">
-            <ngx-table [configuration]="tableHelp" [data]="help" [columns]="columns" [(pagination)]="pagination" (event)="eventEmitted($event)">
+            <ngx-table [configuration]="tableConfig" [data]="help" [columns]="columns" [(pagination)]="pagination"
+                (event)="eventEmitted($event)">
 
                 <ng-template let-row>
                     <td class="ngx-easy-table-small">
@@ -18,7 +18,9 @@
                         <a [routerLink]="['/admin/help/edit/', row.key]">{{ row.title }}</a>
                     </td>
                     <td>
-                        <span class="pointer" (click)="delete(row)"><fa name="close" fixed="true"></fa></span>
+                        <span class="pointer" (click)="delete(row)">
+                            <fa name="close" fixed="true"></fa>
+                        </span>
                         <nlf-help [key]="row.key" [details]="true"></nlf-help>
                     </td>
                 </ng-template>

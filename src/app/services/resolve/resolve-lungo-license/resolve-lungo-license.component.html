@@ -1,0 +1,12 @@
+<span *ngIf="dataReady">
+  <span *ngIf="!!link && license.id !== ''">
+    <a [routerLink]="['/license', license.id]">{{ license.type_name }}</a>
+  </span>
+  <span *ngIf="!link || license.id === ''">
+    {{ license.type_name }}
+  </span>
+  <span>{{ license.period_name }}</span>
+</span>
+<span *ngIf="!dataReady">
+  <fa name="spinner" animation="pulse" [size]="1"></fa>
+</span>
