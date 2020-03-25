@@ -1,0 +1,21 @@
+<div class="p-3">
+  <div class="form-check">
+    <!-- (ngModelChange)="onChange()"-->
+    <input class="form-check-input" type="checkbox" name="club" id="club" [value]="this.observation['operational']['club']" [(ngModel)]="this.observation['operational']['club']">
+    <label class="form-check-label" for="club">
+      Klubbregi
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" name="club" id="jumping" [value]="this.observation['operational']['jumping']" [(ngModel)]="this.observation['operational']['jumping']">
+    <label class="form-check-label" for="jumping">
+      Hopping
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" name="club" id="operational" [value]="this.observation['operational']['op']" [(ngModel)]="this.observation['operational']['op']">
+    <label class="form-check-label" for="operational">
+      Operativt
+    </label>
+  </div>
+</div>

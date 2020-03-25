@@ -9,9 +9,9 @@ import { ApiOptionsInterface, ApiHelpItem, ApiHelpList } from './api.interface';
 @Injectable()
 export class ApiHelpService extends ApiRestService {
 
-  constructor( http: HttpClient ) { super(http); }
-
   private relativeUrl = '/help/';
+
+  constructor( http: HttpClient ) { super(http); }
 
   public getHelp(key: string, options?: ApiOptionsInterface): Observable<ApiHelpItem> {
     return this.getItem(this.relativeUrl, key, options);

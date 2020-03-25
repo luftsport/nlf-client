@@ -1,0 +1,49 @@
+<div *ngIf="!!userData.person_id">
+  <div class="modal-header">
+    <h4 class="modal-title">
+      Hei <nlf-resolve-lungo-person [person_id]="userData.person_id"></nlf-resolve-lungo-person>
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div *ngIf="!success && !!error">
+      <h2>{{error}}</h2>
+    </div>
+    
+    <div *ngIf="!!success">
+      <p class="lead">Supert! Du har også muligheten til å endre innstillingene senere under kontoinnstillinger.</p>
+      <button class="btn btn-block btn-lg btn-success">
+        <fa name="check" fw="true"></fa>
+        <nlf-resolve-lungo-activity [activity_id]="userData.settings.default_activity"></nlf-resolve-lungo-activity>&nbsp;/&nbsp;
+        <nlf-resolve-lungo-organization [organization_id]="userData.settings.default_discipline" [show_type]="false"></nlf-resolve-lungo-organization>
+      </button>
+
+    </div>
+    <div *ngIf="!success && !error">
+      <p class="lead">Dette er første gangen systemet registrerer du logger inn. Vennligst velg en av dine klubber som
+        hovedmedlemsskap.
+        Du kan senere endre dette under kontoinnstillinger.</p>
+      <span *ngIf="!!org">
+        
+        <p *ngFor="let role of org">
+          <button (click)="setDefaultClub(role)" class="btn btn-block btn-lg btn-primary">
+            <fa name="plus" fw="true"></fa>
+            <nlf-resolve-lungo-activity [activity_id]="role.activity"></nlf-resolve-lungo-activity>&nbsp;/&nbsp;
+            <nlf-resolve-lungo-organization [organization_id]="role.org" [show_type]="false"></nlf-resolve-lungo-organization>
+          </button>
+        </p>
+        <div *ngIf="org.length==0" class="alert alert-danger">
+          Fant ingen klubber som du kan tilknyttes, vennligst varsle NLF om dette.
+          Denne applikasjonen vil ikke fungere optimalt før dette er i orden.
+        </div>
+      </span>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div *ngIf="!!success || !!error">
+      <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+    </div>
+  </div>
+</div>

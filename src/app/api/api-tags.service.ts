@@ -9,9 +9,9 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class ApiTagsService extends ApiRestService {
 
-  constructor(http: HttpClient) { super(http); }
-
   private relativeUrl = '/tags/';
+
+  constructor(http: HttpClient) { super(http); }
 
   public getTags(options?: ApiOptionsInterface): Observable<ApiTagList> {
 

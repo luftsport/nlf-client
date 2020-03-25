@@ -1,25 +1,49 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { NlfOrsChildComponent } from './ors-child/ors-child.component';
-import { NlfOrsFallskjermComponent } from './ors-fallskjerm/ors-fallskjerm.component';
-import { NlfOrsFallskjermReportComponent } from './ors-fallskjerm/ors-fallskjerm-report/ors-fallskjerm-report.component';
-import { NlfOrsEditorComponent } from './ors-editor/ors-editor.component';
-import { NlfOrsEditorWorkflowComponent } from './ors-editor/ors-editor-workflow/ors-editor-workflow.component';
 
-import { NlfAuthGuard } from '../services/auth/auth.guard';
+import { NlfOrsEditorWorkflowComponent } from 'app/ors/ors-editor/ors-editor-workflow/ors-editor-workflow.component';
+import { NlfOrsComponent } from 'app/ors/ors.component';
+
+import { NlfOrsFallskjermComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm.component';
+import { NlfOrsFallskjermReportComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-report/ors-fallskjerm-report.component';
+import { NlfOrsFallskjermEditorComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-editor/ors-fallskjerm-editor.component';
+import {  NlfOrsFallskjermSearchComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-search/ors-fallskjerm-search.component';
+
+import { NlfOrsMotorComponent } from 'app/ors/ors-motor/ors-motor.component';
+import { NlfOrsMotorEditorComponent } from 'app/ors/ors-motor/ors-motor-editor/ors-motor-editor.component';
+import { NlfOrsMotorReportComponent } from 'app/ors/ors-motor/ors-motor-report/ors-motor-report.component';
+import { NlfOrsMotorSearchComponent } from 'app/ors/ors-motor/ors-motor-search/ors-motor-search.component';
+import { NlfOrsActivitiesComponent } from 'app/ors/ors-activities/ors-activities.component';
 
 
-const nlfOrsRoutes: Routes = [{ path: 'ors/child/:id', component: NlfOrsChildComponent, canActivate: [NlfAuthGuard]},
-                              { path: 'ors/fallskjerm', component: NlfOrsFallskjermComponent, canActivate: [NlfAuthGuard]},
-                              { path: 'ors/fallskjerm/report/:id', component: NlfOrsFallskjermReportComponent, canActivate: [NlfAuthGuard]},
-                              { path: 'ors/fallskjerm/report/:id/version/:version', component: NlfOrsFallskjermReportComponent, canActivate: [NlfAuthGuard]},
-                              { path: 'ors/fallskjerm/edit/:id', component: NlfOrsEditorComponent, canActivate: [NlfAuthGuard]},
-                              { path: 'ors/fallskjerm/edit/workflow/:id', component: NlfOrsEditorWorkflowComponent, canActivate: [NlfAuthGuard]}
-                            ];
+import { NlfAuthGuard } from 'app/services/auth/auth.guard';
+
+
+const nlfOrsRoutes: Routes = [{ path: 'ors/', component: NlfOrsComponent, canActivate: [NlfAuthGuard] },
+// Fallskjerm
+{ path: 'ors/fallskjerm', component: NlfOrsFallskjermComponent, canActivate: [NlfAuthGuard] },
+{ path: 'ors/fallskjerm/report/:id', component: NlfOrsFallskjermReportComponent, canActivate: [NlfAuthGuard] },
+{ path: 'ors/fallskjerm/report/:id/version/:version', component: NlfOrsFallskjermReportComponent, canActivate: [NlfAuthGuard] },
+{ path: 'ors/fallskjerm/edit/:id', component: NlfOrsFallskjermEditorComponent, canActivate: [NlfAuthGuard] },
+{ path: 'ors/fallskjerm/search', component: NlfOrsFallskjermSearchComponent, canActivate: [NlfAuthGuard] },
+
+//{ path: 'ors/fallskjerm/edit/workflow/:id', component: NlfOrsEditorWorkflowComponent, canActivate: [NlfAuthGuard]},
+// Motorfly
+{ path: 'ors/motorfly', component: NlfOrsMotorComponent, canActivate: [NlfAuthGuard] },
+{ path: 'ors/motorfly/report/:id', component: NlfOrsMotorReportComponent, canActivate: [NlfAuthGuard] },
+{ path: 'ors/motorfly/report/:id/version/:version', component: NlfOrsMotorReportComponent, canActivate: [NlfAuthGuard] },
+{ path: 'ors/motorfly/edit/:id', component: NlfOrsMotorEditorComponent, canActivate: [NlfAuthGuard] },
+{ path: 'ors/motorfly/search', component: NlfOrsMotorSearchComponent, canActivate: [NlfAuthGuard] },
+
+// Stndalones
+{ path: 'ors/:activity/activities/:id', component:  NlfOrsActivitiesComponent, canActivate: [NlfAuthGuard] },
+
+  //{ path: 'ors/fallskjerm/edit/workflow/:id', component: NlfOrsEditorWorkflowComponent, canActivate: [NlfAuthGuard]},
+];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(nlfOrsRoutes, {onSameUrlNavigation: 'reload'})],
-  exports: [ RouterModule],
+  imports: [RouterModule.forRoot(nlfOrsRoutes, { onSameUrlNavigation: 'reload' })],
+  exports: [RouterModule],
   declarations: []
 })
 

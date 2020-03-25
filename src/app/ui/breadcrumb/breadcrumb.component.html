@@ -1,4 +1,23 @@
-<a *ngFor="let breadcrumb of breadcrumbs; let isLast=last" 
-  class="breadcrumb-item" 
-  [ngClass]="{'active': isLast}" 
-  [routerLink]="breadcrumb.url">{{breadcrumb.label}}</a>
+<!--
+<a *ngFor="let breadcrumb of breadcrumbs; let isLast=last" class="breadcrumb-item" [ngClass]="{'active': isLast}"
+  [routerLink]="breadcrumb.url">{{breadcrumb.label}}
+</a>
+<a *ngFor="let bcElement of bcLoadedData; let last = last" class="breadcrumb-item" [ngClass]="{'active': isLast}"
+  >{{ bcElement.breadcrumb }}
+  {{ bcElement | json }}jjio
+</a>
+-->
+
+<div class="breadcrumb simple">
+    <div *ngFor="let bcElement of bcLoadedData; let last = last">
+      {{bcElement.bc}}
+      <span class="breadcrumb-separator" *ngIf="!last">></span>
+    </div>
+  </div>
+  
+  <div class="breadcrumb advanced">
+    <div *ngFor="let bcElement of bcForDisplay; let last = last">
+      {{bcElement}}
+      <span class="breadcrumb-separator" *ngIf="!last">></span>
+    </div>
+  </div>

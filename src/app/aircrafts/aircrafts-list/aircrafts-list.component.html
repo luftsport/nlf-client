@@ -1,0 +1,72 @@
+<header class="nlf-sticky-toolbar">
+  <div class="container">
+    <span class="breadcrumb">
+      <li class="breadcrumb-item">
+        <fa name="plane" [fixed]="true" class="mr-1 active"></fa><a [routerLink]="['/', 'aircraft']">Aircraft</a>
+      </li>
+    </span>
+
+    <!--Note difference between federation, sections/activity and clubs! Section->show all club aircrafts? -->
+    <span class="float-right d-inline">
+      <nlf-aircrafts-add></nlf-aircrafts-add>
+    </span>
+
+  </div>
+</header>
+
+<div class="container">
+
+
+
+  <div *ngIf="!!dataReady">
+    <ngx-table [configuration]="tableAll" [data]="data" [columns]="columns" [(pagination)]="pagination"
+      [filtersTemplate]="filtersTemplate" (event)="eventEmitted($event)">
+
+      <!-- ROWS -->
+      <ng-template let-row>
+        <td class="ngx-easy-table-small">
+          <a [routerLink]="['/aircraft', 'edit', row._id]">{{ row.callsign }}</a>
+        </td>
+        <td class="ngx-easy-table-small">
+          {{ row.type }}
+        </td>
+        <td class="ngx-easy-table-small">
+          {{ row.manufacturer }}
+        </td>
+        <td class="ngx-easy-table-small">
+          {{ row.model }}
+        </td>
+        <td class="ngx-easy-table-small">
+          {{ row.msn }}
+        </td>
+        <td class="ngx-easy-table-small text-center">
+          <span class="badge" [ngClass]="{'badge-success': row.status=='ACTIVE','badge-secondary': row.status=='DELETED'}">{{ row.status }}</span>
+        </td>
+        <td class="ngx-easy-table-small text-center">
+          <span *ngIf="!!row.e5x">
+            <fa class="text-success" name="check"></fa>
+          </span>
+          <!--
+          <span *ngIf="!row.e5x">
+            <fa class="text-danger" name="close"></fa>
+          </span>
+          -->
+        </td>
+
+
+      </ng-template>
+    </ngx-table>
+
+    <!--FILTERS-->
+    
+    
+    <!-- Summary 
+    <span class="mx-1" *ngFor="let x of aircraft_types">
+        {{ x._id.type | upperfirst }} ({{ x.count}})
+    </span>
+    -->
+  </div>
+  <div *ngIf="!dataReady">
+    <nlf-ui-page-spinner></nlf-ui-page-spinner>
+  </div>
+</div>

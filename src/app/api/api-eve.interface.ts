@@ -53,7 +53,7 @@ export interface ApiEveQueryInterface {
   where?: any; // string
   max_results?: number; // number
   page?: number; // number
-  sort?: Object[]; // string or array? [{key: 1}] or ["-key", "key2", ...]
+  sort?: Object[] | string; // string or array? [{key: 1}] or ["-key", "key2", ...]
   aggregate?: any; // string
   projection?: any;
   version?: number | string; // 4 for v4 or 'DIFFS' for all diffs

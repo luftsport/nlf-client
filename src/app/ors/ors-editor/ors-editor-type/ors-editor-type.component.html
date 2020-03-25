@@ -1,10 +1,19 @@
 <div class="radio">
-  <span *ngFor="let t of config.observation.typesArr">
+  <span *ngFor="let t of config[observation._model.type].observation.typesArr">
 
     <div class="form-check">
-      <input [(ngModel)]="observation.type" class="form-check-input" (change)="onChange()" type="radio" name="type{{ t }}" id="type-{{ t }}" [value]="t" [checked]="t===observation.type">
+      <input [disabled]="!observation.acl_user.w"
+      [(ngModel)]="observation.type"
+      class="form-check-input"
+      (change)="onChange()"
+      type="radio"
+      name="type{{ t }}"
+      id="type-{{ t }}"
+      [value]="t"
+      [checked]="t===observation.type"
+      [ngbTooltip]="title ? config[observation._model.type].observation.types[t]['title'] : ''">
       <label class="form-check-label" for="type-{{ t }}">
-        {{ t | nlfOrsType }}
+        {{ t | nlfOrsType:observation._model.type }}
       </label>
     </div>
   </span>

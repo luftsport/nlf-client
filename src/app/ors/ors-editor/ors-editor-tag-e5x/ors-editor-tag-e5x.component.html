@@ -1,0 +1,116 @@
+<div class="form-group">
+  <label [for]="path">{{ title || label }}
+    <span *ngIf="!!unit">[{{ unit }}]</span>
+    <fa (click)="openModal(modalHelp)" *ngIf="show_help" class="ml-1 pointer" name="question" [fixed]="true"></fa>
+  </label>
+
+  <span *ngIf="!attribute">
+    <fa name="spinner" animation="pulse" [size]="1"></fa>
+  </span>
+
+  <span *ngIf="!!attribute">
+
+    <!-- Simple within limits, all populated -->
+    <span *ngIf="choices.length>0 && !search">
+      <nlf-ors-editor-tag-static (change)="update($event)" [disable]="disabled" [(items)]="items" [tags]="choices" [multiple]="(attribute.max>1 || attribute.max==-1) ? true : false" [max]="attribute.max>1 ? attribute.max : undefined" [id]="path">
+      </nlf-ors-editor-tag-static>
+    </span>
+
+    <!-- SEARCH MANY -->
+    <span *ngIf="search">
+      <ng-select [id]="path" [disabled]="disabled" class="form-control w-auto mw-100" [items]="tags$ | async" [typeahead]="tagsInput$" [addTag]="false" [multiple]="(attribute.max>1 || attribute.max==-1) ? true : false"
+        [maxSelectedItems]="attribute.max>1 ? attribute.max : undefined" [hideSelected]="true" [(ngModel)]="selectedTags" (change)="onChange($event)" [clearable]="true" bindLabel="label" labelForId="id" autoCapitalize="off"
+        placeholder="Skriv for å søke" notFoundText="Fant ikke noe">
+        <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+          <div>
+            <span [ngOptionHighlight]="search">{{item.label}}</span>
+          </div>
+          <small>{{ item.descr }}</small>
+        </ng-template>
+      </ng-select>
+    </span>
+
+    <!-- Just an Input -->
+    <span *ngIf="!search && !attribute.choices_key && choices.length==0 && attribute.max==1">
+
+      <!-- Number -->
+      <span *ngIf="!!attribute.restrictions">
+        <input *ngIf="attribute.restrictions.type=='decimal' || attribute.restrictions.type=='integer' || attribute.restrictions.type=='int'" type="number" [max]="attribute.restrictions.max" [min]="attribute.restrictions.min"
+          [step]="attribute.restrictions.inc" [disabled]="disabled" (change)="update($event)" [(ngModel)]="items" [id]="path" class="form-control">
+
+        <!-- String -->
+        <input *ngIf="attribute.restrictions.type=='string'" type="{{ type || 'text'}}" [max]="attribute.restrictions.max" [min]="attribute.restrictions.min || 0" [disabled]="disabled" (change)="update($event)" [(ngModel)]="items" [id]="path"
+          class="form-control">
+      </span>
+
+      <span *ngIf="!attribute.restrictions">
+        <!-- String -->
+        <input *ngIf="attribute.type=='string'" type="{{ type || 'text'}}" [disabled]="disabled" (change)="update($event)" [(ngModel)]="items" [id]="path" class="form-control">
+        <!-- Number -->
+        <input *ngIf="attribute.type!='string'" type="number" [disabled]="disabled" (change)="update($event)" [(ngModel)]="items" [id]="path" class="form-control">
+      </span>
+
+
+    </span>
+
+  </span>
+  <!-- DEBUG:
+  <code>{{ items | json }}</code>
+  <code>{{ selectedTags | json }}</code>
+  -->
+</div>
+
+
+<!-- RUNWAY MODAL -->
+<ng-template #modalHelp>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      {{ label }}
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+    <!-- CHOICES DESCR -->
+    <div class="row my-3" *ngIf="!!attribute.choices_key && !!choices">
+      <div class="col-md-12">
+        <dl>
+          <div *ngFor="let choice of choices; let idx = index">
+            <dt>{{ choice.label }} <span class="badge badge-secondary" *ngIf="!!choice.icao">{{ choice.icao }}</span></dt>
+            <dd>{{ choice.descr }}</dd>
+            <dd>{{ choice.expl }}</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <!-- ATTRIBUTE SUMMARY -->
+    <div *ngIf="!!attribute" class="row">
+      <div class="col-md-12">
+        <div class="alert alert-info">
+          <div>Attributt: {{ attribute.attribute }}</div>
+          <div>Attributt Id: {{ attribute.attribute_id }}</div>
+          <div>Data type: {{ attribute.type }}</div>
+          <div>Antall: {{ attribute.min }} - {{ attribute.max }}</div>
+          <div *ngIf="!!attribute.default">Default: {{ attribute.default }}</div>
+          <div *ngIf="!!attribute.restrictions">
+            <div>Type: {{ attribute.restrictions.type }}</div>
+            <div>Min: {{ attribute.restrictions.min }}</div>
+            <div>Max: {{ attribute.restrictions.max }}</div>
+          </div>
+          <div>RIT version: {{ attribute.rit_version }}</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="modalRef.close()">
+      <fa name="times" [fixed]="true"></fa>Ferdig
+    </button>
+  </div>
+</ng-template>

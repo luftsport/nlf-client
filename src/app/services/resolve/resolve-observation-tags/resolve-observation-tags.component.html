@@ -1,6 +1,5 @@
-  <span *ngFor="let t of tags; let i = index">
-
-    <a [routerLink]="[url, t]">{{ t }}</a>
-    <span *ngIf="i < (tags.length - 1)">{{ seperator }}</span>
-
+  <span *ngFor="let tag of tags; let i = index; let last=last">
+    <a *ngIf="link" [routerLink]="['/ors', activity, 'search']" [queryParams]="{where: stringify({$text: {$search: tag}})}">{{ tag }}</a>
+    <span *ngIf="!link">{{ tag }}</span>
+    <span *ngIf="!last">{{ seperator }}</span>
   </span>

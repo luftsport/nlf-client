@@ -1,7 +1,8 @@
-import { ApiObservationFlagsInterface, ApiObservationsItem } from 'app/api/api.interface';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ApiObservationFlagsInterface, ApiObservationsItem, NlfConfigItem } from 'app/api/api.interface';
+import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
+import { NlfConfigService } from 'app/nlf-config.service';
 
 @Component({
   selector: 'nlf-ors-editor-flags',
@@ -11,12 +12,24 @@ import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 export class NlfOrsEditorFlagsComponent implements OnInit {
 
   observation: ApiObservationsItem;
+  public config: NlfConfigItem;
 
-  constructor(private subject: NlfOrsEditorService) {
+  constructor(
+    private configService: NlfConfigService,
+    private subject: NlfOrsEditorService) {
+
+    this.configService.observableConfig.subscribe(
+      data => {
+        this.config = data;
+      }
+    );
     this.subject.observableObservation.subscribe(observation => this.observation = observation);
   }
 
   ngOnInit() {
+    if (!this.observation.hasOwnProperty('flags')) {
+      this.observation['flags'] = {};
+    }
   }
 
   onChange(event) {

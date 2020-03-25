@@ -1,0 +1,137 @@
+<div class="modal-header">
+  <h4 class="modal-title">
+    {{ observation._model.type | capitalize }} ORS #{{ observation.id }}
+    <span *ngIf="ENV._name!='prod'" class="badge badge-danger">{{ ENV._name }}</span>
+  </h4>
+
+  <button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+
+  <dl class="row">
+    <dt class="col-sm-3">Type</dt>
+    <dd class="col-sm-9">
+      <nlf-resolve-observation-types [activity]="observation._model.type" [type]="observation.type" badge="true"></nlf-resolve-observation-types>
+    </dd>
+
+    <dt class="col-sm-3">Status</dt>
+    <dd class="col-sm-9">
+      <nlf-resolve-observation-state [activity]="observation._model.type" [state]="observation.workflow.state" icon="true"></nlf-resolve-observation-state>
+    </dd>
+
+    <dt class="col-sm-3">Opprettet</dt>
+    <dd class="col-sm-9">
+      <fa name="clock-o" [fixed]="true"></fa>{{ observation._created | amTimeAgo }},  {{ observation._created | date:'yyyy-MM-dd HH:mm' }}
+    </dd>
+
+    <dt class="col-sm-3">Sist endret</dt>
+    <dd class="col-sm-9">
+      <fa name="clock-o" [fixed]="true"></fa>{{ observation._updated | amTimeAgo }},  {{ observation._updated | date:'yyyy-MM-dd HH:mm' }}
+    </dd>
+
+
+    <dt class="col-sm-3">Observatør</dt>
+    <dd class="col-sm-9">
+      <nlf-resolve-lungo-person [person_id]="observation.reporter" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
+    </dd>
+
+      <dt *ngIf="observation._model.type=='fallskjerm'" class="col-sm-3">HI</dt>
+      <dd *ngIf="observation._model.type=='fallskjerm'" class="col-sm-9">
+        <nlf-resolve-lungo-person *ngFor="let hi of observation.organization.hi" [person_id]="hi" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
+      </dd>
+
+      <dt *ngIf="observation._model.type=='motorfly'" class="col-sm-3">DTO i klubb</dt>
+      <dd *ngIf="observation._model.type=='motorfly'" class="col-sm-9">
+        <div *ngFor="let dto of observation.organization.dto">
+          <nlf-resolve-lungo-person [person_id]="dto" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
+        </div>
+      </dd>
+      <dt *ngIf="observation._model.type=='motorfly'" class="col-sm-3">ORS Ansvarlig</dt>
+      <dd *ngIf="observation._model.type=='motorfly'" class="col-sm-9">
+        <div *ngFor="let ors of observation.organization.ors">
+          <nlf-resolve-lungo-person [person_id]="ors" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
+        </div>
+      </dd>
+
+    <dt class="col-sm-3">Version</dt>
+    <dd class="col-sm-9">
+      {{ observation._version }}
+    </dd>
+    <dt class="col-sm-3">Klubb</dt>
+    <dd class="col-sm-9">
+      <nlf-resolve-lungo-organization [organization_id]="observation.club" show_type="true" link="true" long="true"></nlf-resolve-lungo-organization>
+    </dd>
+    <dt class="col-sm-3">Gren</dt>
+    <dd class="col-sm-9">
+      <nlf-resolve-lungo-organization [organization_id]="observation.discipline" show_type="true" link="true" long="true"></nlf-resolve-lungo-organization>
+    </dd>
+    
+    <dt class="col-sm-3">Tilgang</dt>
+    <dd class="col-sm-9">
+      
+      <dl *ngIf="!!observation.acl_user" class="row">
+        
+        <dt class="col-sm-4">
+        <fa name="{{observation.acl_user.r ? 'check' : 'ban'}}" [ngClass]="observation.acl_user.r ? 'text-success' : 'text-danger'" [fixed]="true"></fa> Read
+        </dt>
+        <dd class="col-sm-8">
+        <span *ngIf="!!acl_list"><nlf-resolve-avatars [persons]="acl_list['read']||[]" max="5"></nlf-resolve-avatars></span>
+        </dd>
+        
+        <dt class="col-sm-4">
+        <fa name="{{observation.acl_user.w ? 'check' : 'ban'}}" [ngClass]="observation.acl_user.w ? 'text-success' : 'text-danger'" [fixed]="true"></fa> Write
+        </dt>
+        <dd class="col-sm-8">
+        <span *ngIf="!!acl_list"><nlf-resolve-avatars [persons]="acl_list['write']||[]" max="5"></nlf-resolve-avatars></span>
+        </dd>
+        
+        <dt class="col-sm-4">
+        <fa name="{{observation.acl_user.x ? 'check' : 'ban'}}" [ngClass]="observation.acl_user.x ? 'text-success' : 'text-danger'" [fixed]="true"></fa> Execute
+        </dt>
+        <dd class="col-sm-8">
+        <span *ngIf="!!acl_list"><nlf-resolve-avatars [persons]="acl_list['execute']||[]" max="5"></nlf-resolve-avatars></span>
+        </dd>
+        
+        <dt class="col-sm-4">
+        <fa name="{{observation.acl_user.d ? 'check' : 'ban'}}" [ngClass]="observation.acl_user.d ? 'text-success' : 'text-danger'" [fixed]="true"></fa> Delete
+        </dt>
+        <dd class="col-sm-8">
+        <span *ngIf="!!acl_list"><nlf-resolve-avatars [persons]="acl_list['delete']||[]" max="5"></nlf-resolve-avatars></span>
+        </dd>
+        
+      </dl>
+      
+      
+    </dd>
+
+    <dt class="col-sm-3">ORS Modell</dt>
+    <dd class="col-sm-9">
+      <dl class="row">
+        <dt class="col-sm-4">Type</dt>
+        <dd class="col-sm-8">{{ observation._model.type}}</dd>
+        <dt class="col-sm-4">Versjon</dt>
+        <dd class="col-sm-8">{{ observation._model.version}}</dd>
+        <dt class="col-sm-4">Id</dt>
+        <dd class="col-sm-8">{{ observation._id}}</dd>
+      </dl>
+    </dd>
+
+  </dl>
+  
+  <!--
+  <div (click)="isWorkflowTimelineCollapsed = !isWorkflowTimelineCollapsed" class="card-header pointer">
+    <fa name="random" [fixed]="true"></fa>
+    Arbeidsflyt
+    <i class="fa fa-fw" [ngClass]="{'fa-angle-down': isWorkflowTimelineCollapsed, 'fa-angle-up': !isWorkflowTimelineCollapsed}"></i>
+  </div>
+  <div [ngbCollapse]="!isWorkflowTimelineCollapsed">
+    <nlf-ors-report-workflow-timeline [activity]="observation._model.type" [_id]="observation._id" [workflow]="observation.workflow"></nlf-ors-report-workflow-timeline>
+  </div>
+  -->
+
+</div>
+<div class="modal-footer">
+  <button class="btn btn-outline-dark" (click)="activeModal.close()">Ferdig</button>
+</div>

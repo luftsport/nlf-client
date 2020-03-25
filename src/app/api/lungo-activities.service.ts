@@ -11,9 +11,9 @@ import { LungoActivitiesItem, LungoActivitiesList } from 'app/api/lungo.interfac
 })
 export class LungoActivitiesService extends ApiRestService {
 
-  constructor(http: HttpClient) { super(http); }
-
   private relativeUrl = '/integration/activities/';
+
+  constructor(http: HttpClient) { super(http); }
 
   public getActivity(id: string, options?: ApiOptionsInterface): Observable<LungoActivitiesItem> {
 

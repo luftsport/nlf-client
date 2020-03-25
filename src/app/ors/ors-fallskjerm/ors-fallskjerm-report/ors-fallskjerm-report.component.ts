@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { JsonPipe } from '@angular/common';
 import { ApiObservationsService } from 'app/api/api-observations.service';
-import { ApiOptionsInterface, ApiObservationsItem } from 'app/api/api.interface';
+import { ApiOptionsInterface, ApiObservationsFallskjermItem } from 'app/api/api.interface';
 import { NlfAlertService } from 'app/services/alert/alert.service';
 import { NlfComponent } from 'app/nlf.component';
 import { NgStringPipesModule } from 'angular-pipes';
@@ -20,9 +20,10 @@ export class NlfOrsFallskjermReportComponent implements OnInit {
 
   id: number;
   version: number;
-  data: ApiObservationsItem;
-  dataDiff: any;
+  observation: ApiObservationsFallskjermItem;
+  observationDiff: any;
   dataReady = false;
+  error;
   spinner = true;
   currentImage: string;
   rating: number;
@@ -36,9 +37,12 @@ export class NlfOrsFallskjermReportComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private orsService: ApiObservationsService,
               private alertService: NlfAlertService,
-              private app: NlfComponent) { }
+              private app: NlfComponent) {
+
+  }
 
   ngOnInit() {
+    this.orsService.setActivity('fallskjerm');
 
     if (!!this.inputId && this.inputId > 0) {
       this.id = this.inputId;
@@ -80,18 +84,18 @@ export class NlfOrsFallskjermReportComponent implements OnInit {
 
     let options: ApiOptionsInterface = {};
     options = {
-      query: { version: 'diffs' },
+      query: { max_results: 1000, version: 'diffs' },
     };
 
 
     this.orsService.getObservation(_id, options).subscribe(
       data => {
-        this.dataDiff = data;
+        this.observationDiff = data;
         console.log('In DIFFS');
         console.log(data);
 
-        this.left = "Tester om dette fungerer eller ikke"; //this.dataDiff._items[0].ask.draft;
-        this.right = "Tester vel om dette fungerer kanskje ikke enn så lenge"; // this.dataDiff._items[1].ask.pending_review_hi;
+        this.left = "Tester om dette fungerer eller ikke"; //this.observationDiff._items[0].ask.draft;
+        this.right = "Tester vel om dette fungerer kanskje ikke enn så lenge"; // this.observationDiff._items[1].ask.pending_review_hi;
       },
       err => console.log(err),
     );
@@ -109,16 +113,15 @@ export class NlfOrsFallskjermReportComponent implements OnInit {
 
     }
 
-
     this.orsService.getObservation(this.id, options).subscribe(
       data => {
-        this.data = data;
+        this.observation = data;
 
-        if (this.version > 0 && this.version !== this.data._latest_version) {
-          this.alertService.warning('Utdatert versjon du ser på versjon ' + this.version + ' av dokumentet. Siste versjon er ' + this.data._latest_version);
+        if (this.version > 0 && this.version !== this.observation._latest_version) {
+          this.alertService.warning('Utdatert versjon du ser på versjon ' + this.version + ' av dokumentet. Siste versjon er ' + this.observation._latest_version);
         }
 
-        this.getDiffs(data._id);
+        this.getDiffs(this.observation._id);
 
         // @TODO: Remove since in pipe!
         // Calculate some stupid rating?
@@ -129,6 +132,8 @@ export class NlfOrsFallskjermReportComponent implements OnInit {
       },
       err => {
         this.alertService.error(err.message);
+        this.error = err;
+        this.dataReady = false;
       },
       () => this.dataReady = true
     );

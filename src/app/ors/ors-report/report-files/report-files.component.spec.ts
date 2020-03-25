@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NlfOrsFallskjermReportFilesComponent } from './report-files.component';
+import { NlfOrsReportFilesComponent } from './report-files.component';
 
 describe('NlfOrsFallskjermReportFilesComponent', () => {
-  let component: NlfOrsFallskjermReportFilesComponent;
-  let fixture: ComponentFixture<NlfOrsFallskjermReportFilesComponent>;
+  let component: NlfOrsReportFilesComponent;
+  let fixture: ComponentFixture<NlfOrsReportFilesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NlfOrsFallskjermReportFilesComponent ]
+      declarations: [ NlfOrsReportFilesComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NlfOrsFallskjermReportFilesComponent);
+    fixture = TestBed.createComponent(NlfOrsReportFilesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

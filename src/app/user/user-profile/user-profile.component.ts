@@ -4,8 +4,8 @@ import { ApiUserService } from 'app/api/api-user.service';
 import { ApiUserItem } from 'app/api/api.interface';
 import { NlfAlertService } from 'app/services/alert/alert.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { NlfLocalStorageService } from 'app/services/storage/local-storage.service';
 import { GeoLocationService } from 'app/services/geo/geo-location.service';
+import { NlfUserSubjectService } from 'app/user/user-subject.service';
 
 @Component({
   selector: 'nlf-user-profile',
@@ -13,35 +13,41 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
   styleUrls: ['./user-profile.component.css']
 })
 export class NlfUserProfileComponent implements OnInit {
-  userid: number;
+  person_id: number;
   user: ApiUserItem;
   avatar = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
   dataReady = false;
   myself = false;
   geo: Coordinates;
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private userSubject: NlfUserSubjectService,
+    private route: ActivatedRoute,
     private userService: ApiUserService,
     public domSanitizer: DomSanitizer,
     private alertService: NlfAlertService,
-    private localStorage: NlfLocalStorageService,
-    private geoLocationService: GeoLocationService) { }
+    private geoLocationService: GeoLocationService) {
+
+    this.userSubject.observable.subscribe(
+      data => {
+        if (!!data) {
+          this.person_id = data.person_id;
+        }
+      },
+      err => console.log('Error getting user data: ', err));
+  }
 
   ngOnInit() {
     this.route.params.subscribe(
       params => {
-        if (!!params['userid']) {
-          this.userid = params['userid'];
+        if (!!params['person_id']) {
+          this.getData(params['person_id']);
         } else {
-          this.userid = this.localStorage.getId();
+          this.getData(this.person_id);
         }
-        this.getData();
-      },
-      err => {
-        this.userid = this.localStorage.getId();
-        this.getData();
-      },
 
+      },
+      err => console.log('Error getting user')
     );
 
     this.geoLocationService.getLocation({ enableHighAccuracy: true }).subscribe(
@@ -55,18 +61,16 @@ export class NlfUserProfileComponent implements OnInit {
     );
   }
 
-  public getData() {
+  public getData(id) {
     this.dataReady = false;
-    this.userService.getUser(this.userid).subscribe(
+    this.userService.getUser(id).subscribe(
       data => {
         this.user = data;
         if (!!data.avatar && !!data.avatar.file) {
           this.avatar = 'data:' + data.avatar.content_type + ';base64,' + data.avatar.file;
         }
 
-        if (this.user.id === this.localStorage.getId()) {
-          this.myself = true;
-        }
+        this.person_id === id ? this.myself = true : this.myself = false;
 
       },
       err => {

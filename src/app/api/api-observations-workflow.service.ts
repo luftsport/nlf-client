@@ -8,9 +8,13 @@ import { ApiOptionsInterface, ApiObservationsItem, ApiObservationsList } from '.
 @Injectable()
 export class ApiObservationsWorkflowService extends ApiRestService {
 
-  constructor( http: HttpClient ) { super(http); }
+  private relativeUrl: string;
 
-  private relativeUrl = '/f/observations/workflow/';
+  constructor(http: HttpClient) { super(http); }
+
+  public setActivity(activity: string) {
+    this.relativeUrl = '/' + activity + '/observations/workflow/';
+  }
 
   public getWorkflowState(id: string | number, options?: ApiOptionsInterface): Observable<ApiObservationsItem> {
 
@@ -18,8 +22,12 @@ export class ApiObservationsWorkflowService extends ApiRestService {
   }
 
   public getWorkflowTodo(options?: ApiOptionsInterface): Observable<ApiObservationsList> {
-    console.log(options);
     return this.getList(this.relativeUrl + 'todo', options);
+  }
+
+  public getGraph(objectId: string, state: string, options?: ApiOptionsInterface): Observable<any> {
+
+    return this.getItem(this.relativeUrl + objectId, '/graph/' + state, options);
   }
 
   /**
@@ -31,6 +39,6 @@ export class ApiObservationsWorkflowService extends ApiRestService {
    */
   public changeWorkflowState(objectId: string, action: string, comment: string, options?: ApiOptionsInterface): Observable<ApiObservationsList> {
 
-    return this.post(this.relativeUrl + objectId + '/' + action, {'comment': comment}, options);
+    return this.post(this.relativeUrl + objectId + '/' + action, { 'comment': comment }, options);
   }
 }

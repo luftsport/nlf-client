@@ -7,7 +7,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class NlfResolveObservationRatingComponent implements OnInit {
 
-  @Input() rating;
+  @Input() rating: number;
+  @Input() activity: string;
 
   constructor() { }
 

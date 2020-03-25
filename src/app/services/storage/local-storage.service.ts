@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-
+import { ApiUserAcl } from 'app/api/api.interface';
+import { ApiAclRoleInterface } from 'app/api/api.interface';
 /**
 This class/service should be the on-to-go-to for all localStorage requirements
 A dumbed down approach which only serves as an abstraction to different storage
@@ -40,6 +41,52 @@ export class NlfLocalStorageService {
 
   public getDefaultClub() {
     return localStorage.getItem('default-club');
+  }
+  public saveSettings(settings: Object) {
+    localStorage.setItem('settings', JSON.stringify(settings));
+  }
+
+  public getSettings(): Object {
+    if (!!localStorage.getItem('settings')) {
+      return JSON.parse(localStorage.getItem('settings'));
+    }
+    return [];
+  }
+
+  public getSetting(key: string) {
+    const settings = this.getSettings();
+    return settings[key];
+  }
+  public saveAcl(acl: ApiAclRoleInterface[]) {
+    localStorage.setItem('acl', JSON.stringify(acl));
+  }
+
+  public getAcl(): ApiAclRoleInterface[] {
+    if (!!localStorage.getItem('acl')) {
+      return JSON.parse(localStorage.getItem('acl'));
+    }
+    return [];
+  }
+
+  public saveActivities(activities: string[]) {
+    localStorage.setItem('activities', JSON.stringify(activities));
+  }
+
+  public getActivities(): string[] {
+    if (!!localStorage.getItem('activities')) {
+      return JSON.parse(localStorage.getItem('activities'));
+    }
+    return [];
+  }
+
+  public hasActivity(activity: string) {
+
+    const activities = this.getActivities();
+
+    if (activities.indexOf(activity) > -1) {
+      return true;
+    }
+    return false;
   }
 
   /**

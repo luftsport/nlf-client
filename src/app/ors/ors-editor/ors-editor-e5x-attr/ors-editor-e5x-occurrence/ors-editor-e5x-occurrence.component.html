@@ -1,0 +1,178 @@
+<div class="nlf-ors-toolbar mb-2">
+  Hvor skjedde det?
+  <nlf-help class="pull-right" key="ors-editor-e5x-where"></nlf-help>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="observation.occurrence.attributes.locationName.value" path="E5X.Occurrence.LocationName" id="locationName"></nlf-ors-editor-tag-e5x>
+  </div>
+  <div class="col-md-2">
+    <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="observation.occurrence.attributes.latitudeOfOcc.value" path="E5X.Occurrence.LatitudeOfOcc" id="latitudeOfOcc"></nlf-ors-editor-tag-e5x>
+  </div>
+  <div class="col-md-2">
+    <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="observation.occurrence.attributes.longitudeOfOcc.value" path="E5X.Occurrence.LongitudeOfOcc" id="longitudeOfOcc"></nlf-ors-editor-tag-e5x>
+  </div>
+  <div class="col-md-2">
+    <label>Vis kart</label>
+    <nlf-ors-editor-e5x-where (change)="debouncedUpdate()" [paths]="flightPaths" [disabled]="!observation.acl_user.w" [modal]="true" [showOnlyBtn]="true" [(attr)]="observation.occurrence.attributes"></nlf-ors-editor-e5x-where>
+  </div>
+</div>
+
+<!--
+<div class="row">
+  <div class="col-md-6">
+    <nlf-ors-editor-tag-e5x [disabled]="!observation.acl_user.w" [(items)]="observation.occurrence.attributes.locationName.value" path="E5X.Occurrence.LocationName" id="locationName"></nlf-ors-editor-tag-e5x>
+  </div>
+
+  <div class="col-md-6">
+    <nlf-ors-editor-tag-e5x [disabled]="!observation.acl_user.w" [(items)]="observation.occurrence.attributes.stateAreaOfOcc.value" path="E5X.Occurrence.StateAreaOfOcc" id="stateAreaOfOcc"></nlf-ors-editor-tag-e5x>
+  </div>
+</div>
+-->
+
+
+<div class="nlf-ors-toolbar">
+  Klassifiser hendelsen
+  <nlf-help class="pull-right" key="ors-editor-e5x-classification"></nlf-help>
+</div>
+<div class="py-2 bg-warning col-md-12">
+  <div class="row">
+    <div class="col-md-4">
+      <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="observation.occurrence.attributes.injuryLevel.value" path="E5X.Occurrence.InjuryLevel" id="injuryLevel"></nlf-ors-editor-tag-e5x>
+    </div>
+    <div class="col-md-2">
+      <label>Ytterligere info</label>
+      <nlf-ors-editor-e5x-injuries (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" (change)="update()" [(attr)]="observation.occurrence.attributes"></nlf-ors-editor-e5x-injuries>
+    </div>
+    <div class="col-md-4">
+      <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="observation.occurrence.attributes.highestDamage.value" path="E5X.Occurrence.HighestDamage" id="highestDamage"></nlf-ors-editor-tag-e5x>
+    </div>
+    <div class="col-md-2">
+      <label>Ytterligere info</label>
+      <nlf-ors-editor-e5x-damage (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" (change)="update()" [(attr)]="observation.occurrence.attributes"></nlf-ors-editor-e5x-damage>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" (change)="debouncedUpdate()" [(items)]="observation.occurrence.attributes.occurrenceClass.value" path="E5X.Occurrence.OccurrenceClass"
+        id="OccurrenceClass"></nlf-ors-editor-tag-e5x>
+    </div>
+
+    <div class="col-md-6">
+      <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" (change)="debouncedUpdate()" [(items)]="observation.occurrence.attributes.detectionPhase.value" path="E5X.Occurrence.DetectionPhase" id="DetectionPhase">
+      </nlf-ors-editor-tag-e5x>
+    </div>
+
+    <div class="col-md-12">
+      <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" (change)="debouncedUpdate()" [(items)]="observation.occurrence.attributes.occurrenceCategory.value" path="E5X.Occurrence.OccurrenceCategory"
+        id="OccurrenceCategory">
+      </nlf-ors-editor-tag-e5x>
+    </div>
+  </div>
+</div>
+<!-- /CLASSIFICATION -->
+
+
+
+
+
+<!-- OTHER ENTITIES -->
+<div class="nlf-ors-toolbar">
+  Legg til annet relevant
+  <nlf-help class="pull-right" key="ors-editor-e5x-entities"></nlf-help>
+</div>
+<!--
+<div class="my-3">
+  <nlf-ors-editor-e5x-airspace [disabled]="!observation.acl_user.w" (change)="update()" [(airspace)]="observation.occurrence.entities.airSpace"></nlf-ors-editor-e5x-airspace>
+</div>
+<div class="my-3">
+  <nlf-ors-editor-e5x-aerodrome [disabled]="!observation.acl_user.w" (change)="update()" [(aerodrome)]="observation.occurrence.entities.aerodromeGeneral"></nlf-ors-editor-e5x-aerodrome>
+</div>
+<div class="my-3">
+  <nlf-ors-editor-e5x-atm [disabled]="!observation.acl_user.w" (change)="update()" [(atm)]="observation.occurrence.entities.airNavigationService"></nlf-ors-editor-e5x-atm>
+</div>
+
+-->
+<!--aerodrome wx reports = metars!-->
+<div class="my-3">
+  <nlf-ors-editor-e5x-wxphenomena [disabled]="!observation.acl_user.w" (change)="update()" [(wxPhenomena)]="observation.occurrence.entities.precipitationAndOtherWeatherPhenomena"></nlf-ors-editor-e5x-wxphenomena>
+</div>
+<!-- NOT READY
+  <div class="my-3">
+    <nlf-ors-editor-e5x-runway [disabled]="!observation.acl_user.w" (change)="update()" [(runway)]="observation.occurrence.entities.runwayIncursion"></nlf-ors-editor-e5x-runway>
+  </div>
+  <div class="my-3">
+    <nlf-ors-editor-e5x-separation [disabled]="!observation.acl_user.w" (change)="update()" [(separation)]="observation.occurrence.entities.separation"></nlf-ors-editor-e5x-separation>
+  </div>
+  <div class="my-3">
+    <nlf-ors-editor-e5x-events [disabled]="!observation.acl_user.w" (change)="update()" [(events)]="observation.occurrence.entities.events"></nlf-ors-editor-e5x-events>
+  </div>
+-->
+
+<!-- Aerodrome, Airspace, ATM involvement, WX Phenomena -->
+<!-- More difficult -> Runway Incursion, Airprox, Events -->
+
+
+<!-- WHERE MODAL -->
+<ng-template #modal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      Occurred Where
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <ng-container *ngTemplateOutlet="attrTemplate"></ng-container>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="modalRef.close()">
+      <fa name="times" [fixed]="true"></fa>Avbryt
+    </button>
+    <button [disabled]="!observation.acl_user.w" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate(modalIndex)">
+      <fa name="check" [fixed]="true"></fa>Oppdater
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #attrTemplate>
+  <div class="row">
+    <agm-map *ngIf="geoReady" [latitude]="toFloat(observation.occurrence.attributes.latitudeOfOcc.value)" [longitude]="toFloat(observation.occurrence.attributes.longitudeOfOcc.value)" (mapClick)="mapClicked($event)" [mapTypeControl]="true"
+      [zoom]="7">
+      <agm-marker [markerDraggable]="isDraggable()" (dragEnd)="markerMoved($event)" [latitude]="toFloat(observation.occurrence.attributes.latitudeOfOcc.value)" [longitude]="toFloat(observation.occurrence.attributes.longitudeOfOcc.value)">
+      </agm-marker>
+    </agm-map>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <nlf-ors-editor-tag-e5x [disabled]="!observation.acl_user.w" [(items)]="observation.occurrence.attributes.latitudeOfOcc.value" path="E5X.Occurrence.LatitudeOfOcc" id="latitudeOfOcc"></nlf-ors-editor-tag-e5x>
+    </div>
+    <div class="col-md-6">
+      <nlf-ors-editor-tag-e5x [disabled]="!observation.acl_user.w" [(items)]="observation.occurrence.attributes.longitudeOfOcc.value" path="E5X.Occurrence.LongitudeOfOcc" id="longitudeOfOcc"></nlf-ors-editor-tag-e5x>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <nlf-ors-editor-tag-e5x [disabled]="!observation.acl_user.w" [(items)]="observation.occurrence.attributes.locationName.value" path="E5X.Occurrence.LocationName" id="locationName"></nlf-ors-editor-tag-e5x>
+    </div>
+
+    <div class="col-md-12">
+      <nlf-ors-editor-tag-e5x [disabled]="!observation.acl_user.w" [(items)]="observation.occurrence.attributes.stateAreaOfOcc.value" path="E5X.Occurrence.StateAreaOfOcc" id="stateAreaOfOcc"></nlf-ors-editor-tag-e5x>
+    </div>
+  </div>
+
+  <div class="row">
+    <div *ngIf="devDebug" class="row">
+      AC: {{ atm | json }}
+    </div>
+  </div>
+
+</ng-template>

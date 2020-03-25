@@ -12,7 +12,7 @@
 <!-- /THUMBNAILS -->
 
 <div *ngIf="!dataReady">
-  <fa name="spinner" animation="pulse" [size]="1" fixed="true"></fa>Loading thumbnails...
+  <fa name="spinner" animation="pulse" [size]="1" [fixed]="true"></fa>Loading thumbnails...
 </div>
 
 <!-- Modal -->
@@ -30,7 +30,8 @@
     <img *ngIf="!viewImageLoading" class="img-fluid" [src]="domSanitizer.bypassSecurityTrustUrl(viewimage.src)" alt="file">
     
     <span *ngIf="!!viewImageLoading" class="text-center">
-      <fa name="spinner" animation="pulse" size="3" fixed="true"></fa>
+      <!--<nlf-ui-page-spinner></nlf-ui-page-spinner>-->
+      <fa class="text-center" name="spinner" animation="pulse" size="5x"></fa>
     </span>
   
   </div>

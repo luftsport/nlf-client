@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NlfOrsFallskjermReportWorkflowTimelineComponent } from './report-workflow-timeline.component';
+import { NlfOrsReportWorkflowTimelineComponent } from './report-workflow-timeline.component';
 
 describe('NlfOrsFallskjermReportWorkflowTimelineComponent', () => {
-  let component: NlfOrsFallskjermReportWorkflowTimelineComponent;
-  let fixture: ComponentFixture<NlfOrsFallskjermReportWorkflowTimelineComponent>;
+  let component: NlfOrsReportWorkflowTimelineComponent;
+  let fixture: ComponentFixture<NlfOrsReportWorkflowTimelineComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NlfOrsFallskjermReportWorkflowTimelineComponent ]
+      declarations: [ NlfOrsReportWorkflowTimelineComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NlfOrsFallskjermReportWorkflowTimelineComponent);
+    fixture = TestBed.createComponent(NlfOrsReportWorkflowTimelineComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

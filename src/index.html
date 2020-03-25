@@ -12,6 +12,7 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico?v=jekhwhrihre">
 
   <base href="/">
+
   <!-- inline spinner styles to be able to display spinner right away -->
   <style type="text/css">
     body,
@@ -28,6 +29,7 @@
       height: 100%;
     }
 
+    /** GREY SIMPLE **/
     .app-loading .spinner {
       height: 200px;
       width: 200px;
@@ -70,6 +72,75 @@
         stroke-dasharray: 89, 200;
         stroke-dashoffset: -124px;
       }
+
+    }
+
+    /** /GREY SIMPLE **/
+
+    /** CHERRY **/
+    .loader {
+      max-width: 15rem;
+      width: 100%;
+      height: auto;
+      stroke-linecap: round;
+    }
+
+    circle {
+      fill: none;
+      stroke-width: 3.5;
+      animation-name: preloader;
+      animation-duration: 3s;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
+      transform-origin: 170px 170px;
+      will-change: transform;
+    }
+
+    circle:nth-of-type(1) {
+      stroke-dasharray: 550px;
+    }
+
+    circle:nth-of-type(2) {
+      stroke-dasharray: 500px;
+    }
+
+    circle:nth-of-type(3) {
+      stroke-dasharray: 450px;
+    }
+
+    circle:nth-of-type(4) {
+      stroke-dasharray: 300px;
+    }
+
+    circle:nth-of-type(5) {
+      stroke-dasharray: 200px;
+    }
+
+    circle:nth-of-type(1) {
+      animation-delay: -0.15s;
+    }
+
+    circle:nth-of-type(2) {
+      animation-delay: -0.3s;
+    }
+
+    circle:nth-of-type(3) {
+      animation-delay: -0.45s;
+    }
+
+    circle:nth-of-type(4) {
+      animation-delay: -0.6s;
+    }
+
+    circle:nth-of-type(5) {
+      animation-delay: -0.75s;
+    }
+
+
+    @keyframes preloader {
+      50% {
+        transform: rotate(360deg);
+      }
     }
   </style>
 </head>
@@ -78,11 +149,24 @@
   <nlf-root>
 
     <div class="app-loading">
-      <div class="logo"></div>
+
+      <svg class="loader" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 340">
+        <circle cx="170" cy="170" r="160" stroke="#1D1D1B" />
+        <circle cx="170" cy="170" r="135" stroke="#F07F00" />
+        <circle cx="170" cy="170" r="110" stroke="#5BBFCC" />
+        <circle cx="170" cy="170" r="85" stroke="#93648D" />
+        <circle cx="170" cy="170" r="50" stroke="#004465" />
+      </svg>
+      <!--#004465 purple-->
+
+      <!-- GREY SIMPLE 
       <svg class="spinner" viewBox="25 25 50 50">
         <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
       </svg>
+      -->
+      NLF starting...
     </div>
+
 
   </nlf-root>
 </body>

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Inject } from '@angular/core';
-import { NLF_CONFIG, NlfConfig } from 'app/nlf-config.module';
+import {  NlfConfigService } from 'app/nlf-config.service';
+import { NlfConfigItem } from 'app/api/api.interface';
 
 @Component({
   selector: 'nlf-resolve-observation-types',
@@ -9,21 +10,30 @@ import { NLF_CONFIG, NlfConfig } from 'app/nlf-config.module';
 export class NlfResolveObservationTypesComponent implements OnInit {
 
   @Input() type: string;
+  @Input() activity: string;
   @Input() badge: boolean;
 
   name: string;
   color: string;
+  public config: NlfConfigItem;
 
-  constructor(@Inject(NLF_CONFIG) private config: NlfConfig) { }
+  constructor(private configService: NlfConfigService) { }
 
   ngOnInit() {
-    try {
-      this.name = this.config.observation.types[this.type]['label'];
-      this.color = this.config.observation.types[this.type]['badge'];
-    } catch (e) {
-      this.name = 'Ukjent';
-      this.color = 'secondary';
-    }
+
+    this.configService.observableConfig.subscribe(
+      data => {
+        this.config = data;
+        try {
+          this.name = this.config[this.activity].observation.types[this.type]['label'];
+          this.color = this.config[this.activity].observation.types[this.type]['badge'];
+        } catch (e) {
+          this.name = 'Ukjent';
+          this.color = 'secondary';
+        }
+      }
+    );
+
   }
 
 }

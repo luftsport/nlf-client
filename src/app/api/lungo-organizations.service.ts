@@ -16,11 +16,11 @@ import {
 })
 export class LungoOrganizationsService extends ApiRestService {
 
-  constructor(http: HttpClient) { super(http); }
-
   private relativeUrl = '/integration/organizations/';
 
-  public getOrganization(id: string, options?: ApiOptionsInterface): Observable<LungoOrganizationsItem> {
+  constructor(http: HttpClient) { super(http); }
+
+  public getOrganization(id: number, options?: ApiOptionsInterface): Observable<LungoOrganizationsItem> {
 
     return this.getItem(this.relativeUrl, id, options);
   }
@@ -30,7 +30,7 @@ export class LungoOrganizationsService extends ApiRestService {
     return this.getList(this.relativeUrl, options);
   }
 
-  public getOrganizationType(id: string, options?: ApiOptionsInterface): Observable<LungoOrganizationsTypesItem> {
+  public getOrganizationType(id: number, options?: ApiOptionsInterface): Observable<LungoOrganizationsTypesItem> {
 
     return this.getItem(this.relativeUrl + 'types/', id, options);
   }

@@ -3,11 +3,11 @@ import { ApiObservationFileInterface, ApiFileItem, ApiOptionsInterface } from 'a
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'nlf-ors-fallskjerm-report-files',
+  selector: 'nlf-ors-report-files',
   templateUrl: './report-files.component.html',
   styleUrls: ['./report-files.component.css']
 })
-export class NlfOrsFallskjermReportFilesComponent implements OnInit {
+export class NlfOrsReportFilesComponent implements OnInit {
 
   @Input() files: ApiObservationFileInterface[]; // [{f: string, r: boolean}]
 

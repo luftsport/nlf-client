@@ -1,0 +1,275 @@
+<div class="row">
+  <div class="col-md-12">
+    <button [disabled]="disabled" [ngClass]="[!!crew ? 'btn-success' : 'btn-secondary']" class="btn btn-block mb-3" (click)="add();openModal(personModal, modalIdx)">
+      <fa name="plus" [fixed]="true"></fa>Crew/Pax
+    </button>
+
+    <div class="my-1" *ngFor="let c of crew; let idx = index">
+      <nlf-resolve-lungo-person (click)="openModal(personModal, idx)" [person_id]="c.person.id" [tmp_name]="c.person.tmp_name" [link]="false" avatar="true"></nlf-resolve-lungo-person>
+      &nbsp;
+
+      <fa class="mr-auto" name="edit" (click)="openModal(personModal, idx)"></fa>
+      <span *ngIf="!disabled">
+        <fa class="mr-auto" name="close" (click)="delete(idx)"></fa>
+      </span>
+    </div>
+  </div>
+</div>
+<!-- PERSON MODAL -->
+<ng-template #personModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      <nlf-resolve-lungo-person *ngIf="!!modalValue.person.id || !!modalValue.person.tmp_name" [link]="false" [person_id]="modalValue.person.id" [tmp_name]="modalValue.person.tmp_name" link="false" avatar="true"></nlf-resolve-lungo-person>
+      {{ callsign }}
+      <span *ngIf="!modalValue.person.id && !modalValue.person.tmp_name">Legg til person</span>
+    </h4>
+    <button [disabled]="disabled" type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+    <div *ngIf="!disabled" class="row">
+      <div class="col-md-12 mb-1">
+        <div *ngIf="!anon">
+          <nlf-ors-editor-tag-person [disabled]="disabled" [fc]="true" [(person)]="modalValue.person" activity="motorfly"></nlf-ors-editor-tag-person>
+          <button class="btn btn-link" (click)="setAnon()">
+            <fa name="user-secret" [fixed]="true"></fa>Sett anonym
+          </button>
+        </div>
+        <div *ngIf="anon">
+          <button class="btn btn-link" (click)="unsetAnon()">
+            <fa name="user-o" [fixed]="true"></fa>Bruk navn
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!!modalValue.person.id || !!modalValue.person.tmp_name">
+
+      <!-- Category-->
+      <div class="row">
+        <div class="form-group col-md-12">
+          <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.flightCrewMember.attributes.category.value" path="E5X.Occurrence.Aircraft.FlightCrewMember.Category" id="Category"></nlf-ors-editor-tag-e5x>
+        </div>
+      </div>
+
+      <!-- Flytid -->
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.flightCrewMember.attributes.experienceAllAC.value" path="E5X.Occurrence.Aircraft.FlightCrewMember.ExperienceAllAC" id="ExperienceAllAC"></nlf-ors-editor-tag-e5x>
+        </div>
+        <div class="form-group col-md-6">
+          <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.flightCrewMember.attributes.experienceThisAC.value" path="E5X.Occurrence.Aircraft.FlightCrewMember.ExperienceThisAC" id="ExperienceThisAC"></nlf-ors-editor-tag-e5x>
+        </div>
+      </div>
+
+      <!-- CURRENCY -->
+      <div class="form-row mb-1">
+        <div class="col-md-6">
+          <label>Flight last 90 days [h]</label>
+          <input type="number" step="0.5" [disabled]="disabled" [(ngModel)]="modalValue.currency.h90d" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <label>Flight last 365 days [h]</label>
+          <input type="number" step="0.5" [disabled]="disabled" [(ngModel)]="modalValue.currency.h365d" class="form-control">
+        </div>
+      </div>
+      <div class="form-row mb-1">
+        <div class="col-md-6">
+          <label>Landings last 30 days [no]</label>
+          <input type="number" step="1" [disabled]="disabled" [(ngModel)]="modalValue.currency.l30d" class="form-control">
+        </div>
+        <div class="col-md-6">
+          <label>Landings last 90 days [no]</label>
+          <input type="number" step="1" [disabled]="disabled" [(ngModel)]="modalValue.currency.l90d" class="form-control">
+        </div>
+      </div>
+
+      <!--CrewMember-->
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.flightCrewMember.attributes.dutyLast24Hours.value" path="E5X.Occurrence.Aircraft.FlightCrewMember.DutyLast24Hours" id="DutyLast24Hours"></nlf-ors-editor-tag-e5x>
+        </div>
+        <div class="form-group col-md-6">
+          <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.flightCrewMember.attributes.restBeforeDuty.value" path="E5X.Occurrence.Aircraft.FlightCrewMember.RestBeforeDuty" id="RestBeforeDuty"></nlf-ors-editor-tag-e5x>
+        </div>
+      </div>
+
+      <!--  HUMAN FACTORS humanFactors: {sleepQuality: undefined, stress: undefined, pressure: undefined},-->
+      <div *ngIf="!!modalValue.humanFactors">
+        <div class="row lead">
+          <div class="col-md-12">
+            Human Factors
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <label>Opplevd søvnkvalitet</label>
+          </div>
+          <div class="col-md-12">
+            <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="modalValue.humanFactors.sleepQuality">
+              <label ngbButtonLabel class="btn-secondary">
+                <input ngbButton [disabled]="disabled" type="radio" [value]="1"> Very bad
+              </label>
+              <label ngbButtonLabel class="btn-secondary">
+                <input ngbButton [disabled]="disabled" type="radio" value="2"> Bad
+              </label>
+              <label ngbButtonLabel class="btn-secondary">
+                <input ngbButton [disabled]="disabled" type="radio" [value]="3"> Normal
+              </label>
+              <label ngbButtonLabel class="btn-secondary">
+                <input ngbButton [disabled]="disabled" type="radio" [value]="4"> Good
+              </label>
+              <label ngbButtonLabel class="btn-secondary">
+                <input ngbButton [disabled]="disabled" type="radio" [value]="5"> Very Good
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <label>Opplevd stress i forkant av flyvning</label>
+          </div>
+
+          <div class="col-md-12">
+            <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="modalValue.humanFactors.stress">
+              <label ngbButtonLabel class="btn-secondary">
+                <input ngbButton [disabled]="disabled" type="radio" [value]="1"> Very high
+              </label>
+              <label ngbButtonLabel class="btn-secondary">
+                <input ngbButton [disabled]="disabled" type="radio" value="2"> High
+              </label>
+              <label ngbButtonLabel class="btn-secondary">
+                <input ngbButton [disabled]="disabled" type="radio" [value]="3"> Normal
+              </label>
+              <label ngbButtonLabel class="btn-secondary">
+                <input ngbButton [disabled]="disabled" type="radio" [value]="4"> Low
+              </label>
+              <label ngbButtonLabel class="btn-secondary">
+                <input ngbButton [disabled]="disabled" type="radio" [value]="5"> Very low
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-md-12">
+            <label>Opplevd press for å gjennomføre flyvning:</label>
+          </div>
+          <div class="col-md-12">
+            <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="modalValue.humanFactors.pressure">
+              <label ngbButtonLabel class="btn-secondary">
+                <input ngbButton [disabled]="disabled" type="radio" [value]="1"> Very high
+              </label>
+              <label ngbButtonLabel class="btn-secondary">
+                <input ngbButton [disabled]="disabled" type="radio" value="2"> High
+              </label>
+              <label ngbButtonLabel class="btn-secondary">
+                <input ngbButton [disabled]="disabled" type="radio" [value]="3"> Normal
+              </label>
+              <label ngbButtonLabel class="btn-secondary">
+                <input ngbButton [disabled]="disabled" type="radio" [value]="4"> Low
+              </label>
+              <label ngbButtonLabel class="btn-secondary">
+                <input ngbButton [disabled]="disabled" type="radio" [value]="5"> Very Low
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--LICENSES-->
+      <div *ngFor="let m of modalValue.flightCrewMember.entities.flightCrewLicenses; let idx = index">
+        <div class="row">
+          <div class="col-md-12 lead bg-light">
+            License {{ (idx+1) }}
+            <fa *ngIf="!disabled" (click)="deleteLicense(idx)" class="ml-2 pointer" name="times" [fixed]="true"></fa>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-8">
+            <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.flightCrewMember.entities.flightCrewLicenses[idx].attributes.licenseIssuedBy.value" path="E5X.Occurrence.Aircraft.FlightCrewMember.FlightCrewLicenses.LicenseIssuedBy"
+              id="LicenseIssuedBy">
+            </nlf-ors-editor-tag-e5x>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="DateOfLicense">Date of Issue</label>
+            <nlf-ors-editor-date [disabled]="disabled" [(date)]="modalValue.flightCrewMember.entities.flightCrewLicenses[idx].attributes.dateOfLicense.value"></nlf-ors-editor-date>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.flightCrewMember.entities.flightCrewLicenses[idx].attributes.licenseType.value" path="E5X.Occurrence.Aircraft.FlightCrewMember.FlightCrewLicenses.LicenseType"
+              id="LicenseType">
+            </nlf-ors-editor-tag-e5x>
+          </div>
+          <div class="form-group col-md-6">
+            <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.flightCrewMember.entities.flightCrewLicenses[idx].attributes.validity.value" path="E5X.Occurrence.Aircraft.FlightCrewMember.FlightCrewLicenses.Validity" id="Validity">
+            </nlf-ors-editor-tag-e5x>
+          </div>
+        </div>
+
+        <!-- RATINGS -->
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.flightCrewMember.entities.flightCrewLicenses[idx].attributes.ratings.value" path="E5X.Occurrence.Aircraft.FlightCrewMember.FlightCrewLicenses.Ratings" id="Ratings">
+            </nlf-ors-editor-tag-e5x>
+          </div>
+        </div>
+      </div>
+
+      <!--INCAPACITATION-->
+      <div *ngFor="let i of modalValue.incapacitation; let idx = index">
+        <div class="row">
+          <div class="col-md-12 lead bg-light">
+            Incapacitation {{ (idx+1) }}
+            <fa *ngIf="!disabled" (click)="deleteIncapacitation(idx)" class="ml-2 pointer" name="times" [fixed]="true"></fa>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.incapacitation[idx].attributes.personIncapacitated.value" path="E5X.Occurrence.Aircraft.Incapacitation.PersonIncapacitated" id="PersonIncapacitated">
+            </nlf-ors-editor-tag-e5x>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.incapacitation[idx].attributes.reasonForIncapacity.value" path="E5X.Occurrence.Aircraft.Incapacitation.ReasonForIncapacity" id="ReasonForIncapacity">
+            </nlf-ors-editor-tag-e5x>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <button (click)="addLicense()" [disabled]="disabled" class="btn btn-primary btn-block">
+            <fa name="plus" [fixed]="true"></fa>License
+          </button>
+        </div>
+        <div class="col-md-4">
+          <button (click)="addHumanFactors()" [disabled]="disabled || !!modalValue.humanFactors" class="btn btn-primary btn-block">
+            <fa name="plus" [fixed]="true"></fa>Human factors
+          </button>
+        </div>
+        <div class="col-md-4">
+          <button (click)="addIncapacitation()" [disabled]="disabled" class="btn btn-primary btn-block">
+            <fa name="plus" [fixed]="true"></fa>Incapacitation
+          </button>
+        </div>
+      </div>
+    </div>
+    {{crew.e5x | json }}
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="modalRef.close()">
+      <fa name="times" [fixed]="true"></fa>Avbryt
+    </button>
+    <button [disabled]="disabled" [ngClass]="{'disabled': disable}" class="btn btn-success" (click)="modalUpdate()">
+      <fa name="check" [fixed]="true"></fa>Oppdater
+    </button>
+  </div>
+</ng-template>

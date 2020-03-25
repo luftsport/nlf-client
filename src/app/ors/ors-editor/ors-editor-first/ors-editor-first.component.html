@@ -1,0 +1,31 @@
+<ngb-alert *ngIf="!!userData && !userData.settings.ors.first_report" type="success" (close)="close()">
+  <div class="col-md-12">
+    <p class="lead"><strong>Hei</strong>, oppretter du en ORS rapport for første gang?</p>
+    <hr />
+    <p>Øverst på siden under navigasjonen finner du det som kalles en toolbar og den er spesifikk for denne siden.</p>
+    <p>Der finner du bla et <fa name="question"></fa> som vil åpne en hjelpetekst for denne observasjonen</p>
+    <p>Merk at du også finner <fa name="question"></fa> for hver logiske blokk og for mange felter i selve rapporten.
+      Ved å klikke på <fa name="question"></fa> får du opp hjelpetekster for disse.</p>
+    <p></p>
+    <p>
+      <strong>
+        Synes du det er mange felter å fylle ut?
+      </strong>
+    </p>
+    <p>Ingen fare, du trenger kun fylle ut det du mener er relevant.
+      Feltene er der i tilfelle du ønsker å benytte disse! Det viktigste at du faktisk rapporterer, ikke
+      at du nødvendigvis har fylt ut alle feltene.
+      <strong>
+        Det finnes ingen skjemasjekk, så her kan du fylle ut så mye eller lite som du faktisk synes er relevant!
+      </strong>
+    </p>
+    <p>
+      Når du lukker dette varselet vil du slippe å se det igjen - uansett hvilke enheter du vi logge på med.
+    </p>
+  </div>
+  <div class="col-md-12 mb-1 text-right">
+    <button (click)="close()" class="btn btn-primary">
+      <fa name="check" [fixed]="true"></fa>Ok, skjønner!
+    </button>
+  </div>
+</ngb-alert>

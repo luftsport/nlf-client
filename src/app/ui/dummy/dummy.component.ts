@@ -1,10 +1,10 @@
 import { Component, OnInit, TemplateRef, Inject } from '@angular/core';
 import { NlfComponent } from 'app/nlf.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ApiObservationsAggService } from 'app/api/api-observations-agg.service';
-import { ApiOptionsInterface } from 'app/api/api.interface';
-import { NlfConfig, NLF_CONFIG } from 'app/nlf-config.module';
+import { ApiOptionsInterface, NlfConfigItem } from 'app/api/api.interface';
+import {  NlfConfigService } from 'app/nlf-config.service';
+import { NlfUserSubjectService } from 'app/user/user-subject.service';
 
 //import { Moment } from 'moment';
 @Component({
@@ -14,7 +14,10 @@ import { NlfConfig, NLF_CONFIG } from 'app/nlf-config.module';
 })
 export class NlfUiDummyComponent implements OnInit {
   dataReady = false;
+  activities;
+  default_activity;
   pie = [];
+  public config: NlfConfigItem;
 
   // ngx-charts
   single = [
@@ -121,40 +124,64 @@ export class NlfUiDummyComponent implements OnInit {
   constructor(private app: NlfComponent,
     private modalService: NgbModal,
     private agg: ApiObservationsAggService,
-    @Inject(NLF_CONFIG) private config: NlfConfig) {
+    private userSubject: NlfUserSubjectService,
+    private configService: NlfConfigService) {
 
-    app.setTitle('Dummy home component');
+    app.setTitle('Forside');
+
+    this.userSubject.observable.subscribe(
+      userData => {
+        this.activities = userData.activities;
+        this.default_activity = userData.settings.default_activity;
+      },
+      err => console.log('Error getting user acitivites: ', err)
+    );
 
   }
 
   ngOnInit() {
-    
-    let d1 = new Date('2014-01-01');
-    let d2 = new Date('2019-01-01');
-    let options: ApiOptionsInterface = {
-      query: {
-        aggregate: { '$club': '375-F',
-                     '$from': d1.toISOString(),
-                     '$to': d2.toISOString(),
-                     '$state': 'closed'}
-      }
-    };
-
-    this.agg.getPie(options).subscribe(
+    this.configService.observableConfig.subscribe(
       data => {
+        this.config = data;
+        if (this.default_activity === 109) {
+          this.agg.setActivity('fallskjerm');
+        } else {
+          this.agg.setActivity('motorfly');
+        }
 
-        data._items.forEach(el => {
+        let d1 = new Date('2014-01-01');
+        let d2 = new Date('2030-01-01');
+        let options: ApiOptionsInterface = {
+          query: {
+            aggregate: {
+              $from: d1.toISOString(),
+              $to: d2.toISOString(),
+              $state: 'closed'
+            }
+          }
+        };
 
-          this.pie.push({'name': this.config.observation.types[el._id]['label'], 'value': el.count});
+        this.agg.getPie(options).subscribe(
+          data => {
 
-        });
-        this.dataReady = true;
-        console.log(data);
+            data._items.forEach(el => {
+              if (this.default_activity === 109) {
+                this.pie.push({ 'name': this.config.fallskjerm.observation.types[el._id]['label'], 'value': el.count });
+              } else {
+                this.pie.push({ 'name': this.config.motorfly.observation.types[el._id]['label'], 'value': el.count });
+              }
 
-      },
-      err => console.log(err),
-      () => console.log('Done')
+            });
+            this.dataReady = true;
+            console.log(data);
+
+          },
+          err => console.log(err),
+          () => console.log('Done')
+        );
+      }
     );
+
   }
 
   /**
@@ -168,7 +195,7 @@ export class NlfUiDummyComponent implements OnInit {
    * Modal
    */
   openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.open(template, {size: 'lg'});
+    this.modalRef = this.modalService.open(template, { size: 'lg' });
   }
 
 }

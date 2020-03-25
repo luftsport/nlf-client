@@ -13,8 +13,8 @@ export class NlfResolveLungoActivityComponent implements OnInit {
 
 
   @Input() activity_id: string;
-  @Input() link: boolean;
-  @Input() long: boolean;
+  @Input() link: false;
+  @Input() long: false;
 
   activity: LungoActivitiesItem;
   dataReady = false;

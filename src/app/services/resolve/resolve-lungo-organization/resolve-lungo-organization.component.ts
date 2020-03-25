@@ -12,10 +12,11 @@ import { LungoOrganizationsItem } from 'app/api/lungo.interface';
 export class NlfResolveLungoOrganizationComponent implements OnInit {
 
 
-  @Input() organization_id: string;
-  @Input() show_type = false;
-  @Input() link: boolean;
-  @Input() long: boolean;
+  @Input() organization_id: number;
+  @Input() show_type: boolean = false;
+  @Input() link?: boolean;
+  @Input() long?: boolean;
+  @Input() popover: boolean = false;
 
   organization: LungoOrganizationsItem;
   dataReady = false;

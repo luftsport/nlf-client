@@ -29,12 +29,14 @@
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/ng-pick-datetime/assets/style/picker.min.css",
               "node_modules/ngx-easy-table/style.css",
-              "node_modules/jodit/app.css"
+              "node_modules/jodit/app.css",
+              "node_modules/@yaireo/tagify/dist/tagify.css",
+              "node_modules/@ng-select/ng-select/themes/default.theme.css"
             ],
             "scripts": []
           },
           "configurations": {
-            "production": {
+            "prod": {
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -69,12 +71,12 @@
               ]
             },
             "dev": {
-              "optimization": false,
+              "optimization": true,
               "outputHashing": "all",
               "sourceMap": true,
               "extractCss": true,
               "namedChunks": false,
-              "aot": false,
+              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": false,

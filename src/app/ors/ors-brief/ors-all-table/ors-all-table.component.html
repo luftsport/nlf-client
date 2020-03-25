@@ -1,0 +1,91 @@
+<span *ngIf="!!dataReady">
+
+    <ngx-table class="table table-flush" id="ors_all_table" [configuration]="tableConf" [data]="data" [columns]="columns" [(pagination)]="pagination"
+        [filtersTemplate]="filtersTemplate" (event)="eventEmitted($event)">
+
+        <!-- ROWS -->
+        <ng-template let-row>
+            <td class="ngx-easy-table-small">
+                <a *ngIf="row.workflow.state!=='closed'" [routerLink]="['/ors', row._model.type, 'edit', row.id]">{{ row.id }}</a>
+                <a *ngIf="row.workflow.state==='closed'" [routerLink]="['/ors', row._model.type, 'report', row.id]">{{ row.id }}</a>
+            </td>
+            <td class="ngx-easy-table-small">
+                {{ row.when | date:"yyyy-MM-dd HH:mm" }}
+            </td>
+            <td class="ngx-easy-table-small">
+                <a *ngIf="row.workflow.state!=='closed'" [routerLink]="['/ors', row._model.type, 'edit', row.id]">{{ row.tags | nlfOrsTags: seperator:' / ' }}</a>
+                <a *ngIf="row.workflow.state==='closed'" [routerLink]="['/ors', row._model.type, 'report', row.id]">{{ row.tags | nlfOrsTags: seperator:' / ' }}</a>
+
+            </td>
+            <td class="ngx-easy-table-small">
+                <span *ngIf="!!row.discipline">
+
+                    <nlf-resolve-lungo-organization [organization_id]="row.discipline" [popover]="true" ></nlf-resolve-lungo-organization>
+
+                </span>
+            </td>
+            <td class="ngx-easy-table-small">
+                <span *ngIf="!!row.rating">
+                    <!--{{ row.rating.actual }} av {{ row.rating.potential }}: {{ row.rating | nlfOrsRatingCalc }}-->
+                    <ngb-progressbar class="progress-striped active" [value]="row.rating | nlfOrsRatingCalc" [type]="row.rating | nlfOrsRatingCalc | nlfDynamicColor">{{
+                        row.rating | nlfOrsRatingCalc }}</ngb-progressbar>
+                </span>
+            </td>
+            <td class="ngx-easy-table-small">
+                <span *ngIf="!!row.workflow.state">
+                    {{ row.workflow.state | nlfOrsState: row._model.type }}
+                </span>
+            </td>
+            <!--<td [innerHTML]="row.type | nlfOrsType: row._model.type" class="ngx-easy-table-small">-->
+            <td class="ngx-easy-table-small text-right">
+              <nlf-resolve-observation-types [type]="row.type" [activity]="row._model.type" [badge]="true"></nlf-resolve-observation-types>
+            </td>
+
+        </ng-template>
+    </ngx-table>
+
+    <!--FILTERS-->
+    <ng-template #filtersTemplate>
+        <th></th>
+        <th>
+
+        </th>
+        <th>
+
+        </th>
+        <!--CLUBS-->
+        <th>
+            <select class="form-control form-control-sm" (change)="clubChooser($event)">
+                <option [value]=""></option>
+                <option *ngFor="let club of clubs" [value]="club.id">
+                    {{ club.name }}
+                </option>
+            </select>
+
+        </th>
+        <th></th>
+        <!--STATUS-->
+        <th>
+            <select class="form-control form-control-sm" (change)="stateChooser($event)">
+                <option [value]=""></option>
+                <option *ngFor="let status of config[activity].observation.state | keyvalue" [value]="status.key">
+                    {{ status.value.label }}
+                </option>
+            </select>
+        </th>
+        <!--TYPE-->
+        <th>
+            <select class="form-control form-control-sm" (change)="typeChooser($event)">
+                <option [value]=""></option>
+                <option *ngFor="let type of config[activity].observation.types | keyvalue" [value]="type.key">
+                    {{ type.value.label }}
+                </option>
+            </select>
+        </th>
+    </ng-template>
+</span>
+<span *ngIf="!dataReady">
+    <p class="align-middle text-center  text-secondary">
+        <fa name="spinner" animation="pulse" size="3x"></fa>
+    </p>
+</span>

@@ -9,10 +9,10 @@ import { saveAs } from 'file-saver';
 @Injectable()
 export class ApiFilesService extends ApiRestService {
 
-  constructor(http: HttpClient) { super(http); }
-
   private relativeUrl = '/files/'; // Eve resource
   private downloadUrl = '/download/'; // Blueprint resource
+
+  constructor(http: HttpClient) { super(http); }
 
   public getFile(id: string, options?: ApiOptionsInterface): Observable<ApiFileItem> {
 
@@ -58,6 +58,21 @@ export class ApiFilesService extends ApiRestService {
       },
       err => console.log(err)
     );
+  }
+
+  public getOrphan(options?: ApiOptionsInterface): Observable<any> {
+    return this.getList(this.relativeUrl + 'orphan', options);
+  }
+
+  public getDuplicates(options?: ApiOptionsInterface): Observable<any> {
+    return this.getList(this.relativeUrl + 'duplicates', options);
+  }
+
+  /**
+  * To reverse check files
+  **/
+  public getGeneric(url: string, options?: ApiOptionsInterface): Observable<any> {
+    return this.getList(url, options);
   }
 
 }

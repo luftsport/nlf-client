@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router, RouterStateSnapshot } from '@angular/router';
 import { NlfAlertService } from 'app/services/alert/alert.service';
-import { NlfLocalStorageService } from 'app/services/storage/local-storage.service';
 import { NlfAuthService } from './auth.service';
 import { NlfAuthSubjectService } from './auth-subject.service';
 
@@ -19,21 +18,30 @@ import { NlfAuthSubjectService } from './auth-subject.service';
 export class NlfAuthInterceptor implements HttpInterceptor {
 
   cachedRequests: Array<HttpRequest<any>> = [];
+  hasToken = false;
+  token: String;
 
   constructor(private router: Router,
     private alertService: NlfAlertService,
-    private storage: NlfLocalStorageService,
     private injector: Injector, // Because https://github.com/angular/angular/issues/18224
     private http: HttpClient,
-    private authSubject: NlfAuthSubjectService) {
+    private authDataSubject: NlfAuthSubjectService) {
 
-    this.authSubject.observableAuth.subscribe(
-      auth => {
-        if (!!auth && this.cachedRequests.length > 0) {
+    this.authDataSubject.observableAuth.subscribe(
+      data => {
+        if (!!data && data.hasOwnProperty('token') && this.cachedRequests.length > 0) {
           this.retryFailedRequests();
         }
       },
       err => console.log('Auth interceptor error getting login logout')
+    );
+    this.authDataSubject.observableAuthData.subscribe(
+      data => {
+        if (!!data) {
+          this.token = data.token;
+        }
+      },
+      err => console.log('Problem getting token: ', err)
     );
   }
 
@@ -56,11 +64,10 @@ export class NlfAuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    // Request:
-    if (this.storage.hasToken(true)) { // should verify valid?
+    if (!!this.token) { // should verify valid?
       request = request.clone({
         setHeaders: {
-          Authorization: 'Basic ' + this.storage.getToken(),
+          Authorization: 'Basic ' + this.token
         }
       });
     }
@@ -78,7 +85,7 @@ export class NlfAuthInterceptor implements HttpInterceptor {
           if (err instanceof HttpErrorResponse) {
 
             if (err.status === 401) {
-              let auth = this.injector.get(NlfAuthService); // Because https://github.com/angular/angular/issues/18224
+              const auth = this.injector.get(NlfAuthService); // Because https://github.com/angular/angular/issues/18224
               this.collectFailedRequest(request);
               console.log('401');
               console.log(this.cachedRequests);

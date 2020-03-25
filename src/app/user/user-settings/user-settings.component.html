@@ -1,5 +1,5 @@
 <div *ngIf="render" class="container">
-Klubb: {{model.default_club}}
+Klubb: {{model.default_discipline}}
 
 <!--
 Example row:
@@ -16,7 +16,7 @@ Example row:
   <div class="form-group row">
     <label class="col-sm-3 col-form-label">Velg default klubb:</label>
     <div class="col-sm-9">
-      <nlf-user-club-selector (getSelected)="setClub($event)" [defaultClub]="model.default_club"></nlf-user-club-selector>
+      <nlf-user-club-selector (getSelected)="setClub($event)" [defaultClub]="model.default_discipline"></nlf-user-club-selector>
     </div>
   </div>
 

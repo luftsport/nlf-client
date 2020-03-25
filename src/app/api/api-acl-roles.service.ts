@@ -10,9 +10,9 @@ import { ApiOptionsInterface, ApiAclRoleItem, ApiAclRoleList } from './api.inter
 @Injectable()
 export class ApiAclRolesService extends ApiRestService {
 
-  constructor(http: HttpClient) { super(http); }
-
   private relativeUrl = '/acl/roles/';
+
+  constructor(http: HttpClient) { super(http); }
 
   public getRole( id: string, options?: ApiOptionsInterface): Observable<ApiAclRoleItem> {
 

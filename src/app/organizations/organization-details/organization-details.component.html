@@ -1,0 +1,238 @@
+<div *ngIf="dataReady">
+
+  <div class="container my-3">
+    <h1>{{ lungo.name }} (<nlf-resolve-lungo-organization-type [type_id]="lungo.type_id"></nlf-resolve-lungo-organization-type>)</h1>
+
+    <div class="row">
+      <!-- Summary table -->
+      <div class="col-md-6 table-responsive">
+        <table class="table table-sm table-hover">
+
+          <tr style="border-top: none !important">
+            <td style="border-top: none !important">Org Type</td>
+            <td style="border-top: none !important">
+              <nlf-resolve-lungo-organization-type [type_id]="lungo.type_id"></nlf-resolve-lungo-organization-type> ({{ lungo.type_id }})
+            </td>
+          </tr>
+
+          <!--Forbund-->
+          <tr *ngIf="federation_id > 0">
+            <td>Seksjon</td>
+            <td>
+              <a [routerLink]="['/organizations', federation_id]">
+                <nlf-resolve-lungo-activity [activity_id]="lungo.main_activity.id"></nlf-resolve-lungo-activity>
+              </a>
+            </td>
+          </tr>
+
+          <tr *ngIf="lungo.comment">
+            <td>Kommentar</td>
+            <td>
+              {{ lungo.comment }}
+            </td>
+          </tr>
+          <tr>
+            <td>Org Id</td>
+            <td>
+              {{ lungo.id }}
+            </td>
+          </tr>
+          <tr>
+
+          <tr *ngIf="!!lungo.nif_organization_number">
+            <td>NIF Org Nr</td>
+            <td>
+              {{ lungo.nif_organization_number }}
+            </td>
+          </tr>
+          <tr>
+            <td>Opprettet</td>
+            <td>
+              {{ lungo.created | date:'yyyy-MM-dd' }}
+            </td>
+          </tr>
+          <tr>
+            <td>Siste synk</td>
+            <td>
+              {{ lungo._updated | date:'yyyy-MM-dd HH:MM:SS' }}
+            </td>
+          </tr>
+          <tr>
+            <td>Telefon</td>
+            <td>
+              {{ lungo.contact.phone_home }} {{ lungo.contact.phone_mobile }}
+            </td>
+          </tr>
+          <tr>
+            <td>Adresse</td>
+            <td>
+              {{ lungo.contact.street_address }}
+            </td>
+          </tr>
+          <tr>
+            <td>Poststed</td>
+            <td>
+              {{ lungo.contact.zip_code }} {{ lungo.contact.city }}
+            </td>
+          </tr>
+          <tr>
+            <td>Epost</td>
+            <td>
+              <a href="mailto:{{ lungo.contact.email }}">{{ lungo.contact.email }}</a>
+            </td>
+          </tr>
+          <tr>
+            <td>Hjemmeside</td>
+            <td>
+              <a href="{{ lungo.contact.home_page }}" target="_blank">{{ lungo.contact.home_page }}</a>
+            </td>
+          </tr>
+          <tr>
+            <td>Hovedaktivitet</td>
+            <td>
+              <nlf-resolve-lungo-activity [activity_id]="lungo.main_activity.id" link="true"></nlf-resolve-lungo-activity>
+            </td>
+          </tr>
+          <tr>
+            <td>Aktiviteter</td>
+            <td>
+              <nlf-resolve-lungo-activity class="mr-1" *ngFor="let activity of lungo.activities" [activity_id]="activity.id" link="true"></nlf-resolve-lungo-activity>
+            </td>
+          </tr>
+          <tr *ngIf="lungo.type_id==5">
+            <td>Klubb</td>
+            <td>
+              <span *ngFor="let group of lungo._down">
+                <nlf-resolve-lungo-organization class="mr-1" *ngIf="group.type==6" [organization_id]="group.id" show_type="true" link="true" long="true"></nlf-resolve-lungo-organization>
+              </span>
+            </td>
+          </tr>
+          <tr *ngIf="lungo.type_id==6">
+            <td>Lag</td>
+            <td>
+              <span *ngFor="let club of lungo._up">
+                <nlf-resolve-lungo-organization class="mr-1" *ngIf="club.type==5" [organization_id]="club.id" link="true" long="true"></nlf-resolve-lungo-organization>
+              </span>
+            </td>
+          </tr>
+          <tr *ngIf="lungo.type_id==6">
+            <td>Gren</td>
+            <td>
+              <span *ngFor="let gren of lungo._down">
+                <nlf-resolve-lungo-organization class="mr-1" *ngIf="gren.type==14" [organization_id]="gren.id" link="true" long="true" show_type="true"></nlf-resolve-lungo-organization>
+              </span>
+            </td>
+          </tr>
+          <tr *ngIf="lungo.type_id==14">
+            <td>Klubb</td>
+            <td>
+              <span *ngFor="let group of lungo._up">
+                <nlf-resolve-lungo-organization class="mr-1" *ngIf="group.type==6" [organization_id]="group.id" link="true" long="true"></nlf-resolve-lungo-organization>
+              </span>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Map -->
+      <div class="col-md-6">
+        <div *ngIf="!!lungo.contact?.location">
+          <agm-map style="height: 25rem !important" [latitude]="lungo.contact.location.geo.coordinates[1]" [longitude]="lungo.contact.location.geo.coordinates[0]" [zoom]="zoom" mapTypeControl="true">
+            <agm-marker [latitude]="lungo.contact.location.geo.coordinates[1]" [longitude]="lungo.contact.location.geo.coordinates[0]">
+            </agm-marker>
+          </agm-map>
+        </div>
+        <!--marker --- label="Dummy label"-->
+        <div *ngIf="!lungo.contact?.location">
+          <agm-map style="height: 25rem !important" *ngIf="!!geo" [latitude]="geo.coords.latitude" [longitude]="geo.coords.longitude" [zoom]="zoom" mapTypeControl="true">
+            <agm-marker [latitude]="geo.coords.latitude" [longitude]="geo.coords.longitude">
+            </agm-marker>
+          </agm-map>
+        </div>
+        <!--
+          <div *ngIf="!data.location?.geo?.coords">
+            <ngb-alert type="danger" [dismissible]="false">
+              <fa name="map-marker" [fixed]="true"></fa>
+              Ingen lokalisasjon satt.
+            </ngb-alert>
+          </div>
+          -->
+
+      </div>
+    </div>
+
+    <!--
+      <code class="small">
+        {{ lungo | json }}
+      </code>
+      -->
+    <div class="row">
+      <div class="col-md-12">
+
+
+        <!--SEKSJONER -->
+        <div *ngIf="lungo.id==376">
+          <div class="nlf-ors-toolbar nlf-ors-block-bottom">Seksjoner</div>
+          <div *ngFor="let org of lungo._down">
+            <nlf-resolve-lungo-organization *ngIf="org.type==19" [organization_id]="org.id" link="true"></nlf-resolve-lungo-organization>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <!-- FUNCTIONS -->
+        <div class="nlf-ors-toolbar nlf-ors-block-bottom">Funksjoner</div>
+        <nlf-organization-functions [org_id]="organization_id"></nlf-organization-functions>
+
+      </div>
+      <div class="col-md-6">
+        <div class="nlf-ors-toolbar nlf-ors-block-bottom">Nærliggende flyplasser</div>
+        <!--ORGS CLOSE BY ORG-->
+        <nlf-aip-airport-near *ngIf="!!lungo.contact?.location" [latitude]="lungo.contact.location.geo.coordinates[1]" [longitude]="lungo.contact.location.geo.coordinates[0]">
+        </nlf-aip-airport-near>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+
+        <!--CLUBS IN ACTIVITY/SECTION-->
+        <div *ngIf="disciplines.length>0" class="nlf-ors-toolbar nlf-ors-block-bottom">Klubber</div>
+        <div *ngFor="let discipline of disciplines">
+          <nlf-resolve-lungo-organization [organization_id]="discipline.id" link="true"></nlf-resolve-lungo-organization>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="nlf-ors-toolbar nlf-ors-block-bottom">Andre nærliggende organisasjoner</div>
+        <!--ORGS CLOSE BY ORG-->
+        <nlf-organizations-near *ngIf="!!lungo.contact?.location" [latitude]="lungo.contact.location.geo.coordinates[1]" [longitude]="lungo.contact.location.geo.coordinates[0]"></nlf-organizations-near>
+
+      </div>
+      <div class="col-md-6">
+        <div class="nlf-ors-toolbar nlf-ors-block-bottom">Organisasjoner nært meg</div>
+        <!--ORGS CLOSE BY ME-->
+        <nlf-organizations-near *ngIf="!!geo" [latitude]="geo.coords.latitude" [longitude]="geo.coords.longitude"></nlf-organizations-near>
+      </div>
+    </div>
+
+
+
+    <div class="row">
+      <!-- FALLSKJERM LAST OPP-->
+      <div *ngIf="1===3 && lungo.main_activity.id==109 && lungo.type_id==5">
+        <button class="btn btn-primary">
+          <fa name="upload" [fixed]="true"></fa>Last opp manifest
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!dataReady">
+  <nlf-ui-page-spinner size="5"></nlf-ui-page-spinner>
+</div>

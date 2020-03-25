@@ -3,12 +3,14 @@ import { Component, Input, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'nlf-ors-fallskjerm-report-workflow-timeline',
+  selector: 'nlf-ors-report-workflow-timeline',
   templateUrl: './report-workflow-timeline.component.html',
   styleUrls: ['./report-workflow-timeline.component.css']
 })
-export class NlfOrsFallskjermReportWorkflowTimelineComponent implements OnInit {
+export class NlfOrsReportWorkflowTimelineComponent implements OnInit {
+  
   @Input() workflow: ApiWorkflowInterface;
+  @Input() activity: string;
   @Input() _id?: string;
   @Input() vlink?: boolean;
 

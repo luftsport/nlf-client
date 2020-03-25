@@ -2,19 +2,19 @@
 
   <div class="row nlf-sticky">
     <div class="container">
-
+      <!--
       <span class="float-right">
         <a [routerLink]="['/content/edit/', content._id]">
-          <fa name="edit" fixed="true"></fa>Edit</a>
+          <fa name="edit" [fixed]="true"></fa>Edit</a>
         <a [routerLink]="['/content/create/', content._id]">
-          <fa name="plus" fixed="true"></fa>Create</a>
+          <fa name="plus" [fixed]="true"></fa>Create</a>
       </span>
-
+      -->
       <!-- Page Heading/Breadcrumbs -->
       <h1 class="mt-4 mb-3">
         {{ content.title }}
       </h1>
-
+<!-- REMOVED FOR NOW 
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
           <a [routerLink]="['/content/space', content.space_key]">Hjem</a>
@@ -24,6 +24,7 @@
         </li>
         <li class="breadcrumb-item active">{{ content.title }}</li>
       </ol>
+      -->
 
     </div>
   </div>
@@ -34,7 +35,7 @@
 
       <!-- Date/Time -->
       <p class="small">Opprettet {{ content._created | amCalendar }} sist endret {{ content._updated | amCalendar }} av
-        <nlf-resolve-user link="true" [userid]="content.owner"></nlf-resolve-user>
+        <nlf-resolve-user link="false" [userid]="content.owner"></nlf-resolve-user>
       </p>
 
       <hr>
@@ -42,6 +43,8 @@
       <!-- Post Content -->
       <div [innerHTML]="content.body | safe: 'html'"></div>
       <hr>
+
+      <!--
       <div class="col-lg-12">
         <div class="col-lg-3">
 
@@ -64,6 +67,8 @@
       </div>
       </div>
       </div>
+
+    -->
     </div>
   </div>
 </div>

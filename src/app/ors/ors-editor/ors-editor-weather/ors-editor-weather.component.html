@@ -1,0 +1,206 @@
+<!--
+<div class="bg-light">
+
+  <div class="row">
+
+      <div class="d-flex flex-row m-3 align-middle">
+          <div class="bg-light rounded-left h1">{{ wx.wind.avg }}</div>
+          <div class="d-flex flex-column">
+              <div class="p-1 bg-danger small rounded-top">{{ wx.wind.max }}</div>
+              <div class="p-1 bg-success small rounded-bottom">{{ wx.wind.min }}</div>
+            </div>
+      </div>
+
+
+    Vind: {{ wx.wind.avg }} (max {{ wx.wind.max }} min {{ wx.wind.min }})
+    Temperatur: {{ wx.temp.ground }}&deg;C Utsprangshøyde: {{ wx.temp.altitude }}
+    Skybase: {{ wx.clouds.base }}Fot
+    Mer:
+    <wi *ngIf="wx.wind.turbulence" name="tornado" [fixed]="true"></wi>
+    <wi *ngIf="wx.wind.gusting" name="strong-wind" [fixed]="true"></wi>
+    <wi *ngIf="wx.clouds.rain" name="rain" [fixed]="true"></wi>
+    <wi *ngIf="wx.clouds.snow" name="snow" [fixed]="true"></wi>
+    <wi *ngIf="wx.clouds.fog" name="fog" [fixed]="true"></wi>
+    <wi *ngIf="wx.clouds.hail" name="hail" [fixed]="true"></wi>
+    <wi *ngIf="wx.clouds.thunder" name="lightning" [fixed]="true"></wi>
+    Bekrivelse
+    <div>{{ wx.description }}</div>
+  </div>
+
+  <button (click)="openModal(weatherModal)" class="btn btn-block btn-primary my-2">
+    <fa name="cloud" [fixed]="true"></fa>Beskriv været
+  </button>
+  {{ wx | json }}
+</div>
+-->
+<div class="row">
+  <!-- Wind -->
+  <div class="col-xs-12 col-md-4">
+    <p class="lead">Vind (knot)</p>
+    <div class="form-group">
+      <label for="windavg">Gjennomsnitt (kt)</label>
+      <input [disabled]="!observation.acl_user.w" class="form-control" type="number" id="windavg" (ngModelChange)="debouncedUpdate()" [(ngModel)]="wx.wind.avg">
+    </div>
+    <div class="form-group">
+      <label for="windmax">Max (kt)</label>
+      <input [disabled]="!observation.acl_user.w" class="form-control" type="number" id="windmax" (ngModelChange)="debouncedUpdate()" [(ngModel)]="wx.wind.max">
+    </div>
+    <div class="form-group">
+      <label for="windmin">Min (kt)</label>
+      <input [disabled]="!observation.acl_user.w" class="form-control" type="number" id="windmin" (ngModelChange)="debouncedUpdate()" [(ngModel)]="wx.wind.min">
+    </div>
+
+
+    <button [disabled]="!observation.acl_user.w" (click)="wx.wind.turbulence=!!!wx.wind.turbulence;debouncedUpdate()" class="btn btn-block" [ngClass]="!!wx.wind.turbulence ? 'btn-secondary' : 'btn-outline-dark'" id="turbulence">
+      <wi name="tornado" [fixed]="true"></wi> Turbulens
+    </button>
+    <button [disabled]="!observation.acl_user.w" (click)="wx.wind.gusting=!!!wx.wind.gusting;debouncedUpdate()" class="btn btn-block" [ngClass]="!!wx.wind.gusting ? 'btn-secondary' : 'btn-outline-dark'" id="gusting">
+      <wi name="strong-wind" [fixed]="true"></wi> Gusting
+    </button>
+  </div>
+  <!-- Clouds -->
+  <div class="col-xs-12 col-md-4">
+    <p class="lead">Skybase (fot)</p>
+    <div class="form-group">
+      <label for="cloudbase">Min (kt)</label>
+      <input [disabled]="!observation.acl_user.w" class="form-control" type="number" id="cloudbase" (ngModelChange)="debouncedUpdate()" [(ngModel)]="wx.clouds.base">
+    </div>
+
+    <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.rain=!!!wx.clouds.rain;debouncedUpdate()" class="btn btn-block" [ngClass]="!!wx.clouds.rain ? 'btn-secondary' : 'btn-outline-dark'">
+      <wi name="rain" [fixed]="true"></wi> Regn
+    </button>
+    <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.fog=!!!wx.clouds.fog;debouncedUpdate()" class="btn btn-block" [ngClass]="!!wx.clouds.fog ? 'btn-secondary' : 'btn-outline-dark'">
+      <wi name="fog" [fixed]="true"></wi> Tåke
+    </button>
+    <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.hail=!!!wx.clouds.hail;debouncedUpdate()" class="btn btn-block" [ngClass]="!!wx.clouds.hail ? 'btn-secondary' : 'btn-outline-dark'">
+      <wi name="hail" [fixed]="true"></wi> Hagl
+    </button>
+    <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.snow=!!!wx.clouds.snow;debouncedUpdate()" class="btn btn-block" [ngClass]="!!wx.clouds.snow ? 'btn-secondary' : 'btn-outline-dark'">
+      <wi name="snow" [fixed]="true"></wi> Snø
+    </button>
+    <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.thunder=!!!wx.clouds.thunder;debouncedUpdate()" class="btn btn-block" [ngClass]="!!wx.clouds.thunder ? 'btn-secondary' : 'btn-outline-dark'">
+      <wi name="lightning" [fixed]="true"></wi> Torden
+    </button>
+  </div>
+
+  <!-- Temp -->
+  <div class="col-xs-12 col-md-4">
+    <p class="lead">Temperatur (&deg;C)</p>
+    <div class="form-group">
+      <label for="tempfground">Bakken</label>
+      <input [disabled]="!observation.acl_user.w" class="form-control" type="number" id="tempground" (ngModelChange)="debouncedUpdate()" [(ngModel)]="wx.temp.ground">
+    </div>
+    <div class="form-group">
+      <label for="tempexit">Utsprangshøyde</label>
+      <input [disabled]="!observation.acl_user.w" class="form-control" type="number" id="tempexit" (ngModelChange)="debouncedUpdate()" [(ngModel)]="wx.temp.altitude">
+    </div>
+  </div>
+</div>
+
+<!-- Beskrivelse -->
+<div class="row mt-3">
+  <div class="col-xs-12 col-md-12">
+    <div class="form-group">
+      <label class="lead" for="other">Kort beskrivelse av været</label>
+      <textarea [disabled]="!observation.acl_user.w" class="form-control" type="text" id="other" name="description" (ngModelChange)="debouncedUpdate()" [(ngModel)]="wx.description"></textarea>
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL -->
+<ng-template #weatherModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      Været
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row">
+      <!-- Wind -->
+      <div class="col-xs-12 col-md-4">
+        <p class="lead">Vind (knot)</p>
+        <div class="form-group">
+          <label for="windavg">Gjennomsnitt (kt)</label>
+          <input [disabled]="!observation.acl_user.w" class="form-control" type="number" id="windavg" [(ngModel)]="wx.wind.avg">
+        </div>
+        <div class="form-group">
+          <label for="windmax">Max (kt)</label>
+          <input [disabled]="!observation.acl_user.w" class="form-control" type="number" id="windmax" [(ngModel)]="wx.wind.max">
+        </div>
+        <div class="form-group">
+          <label for="windmin">Min (kt)</label>
+          <input [disabled]="!observation.acl_user.w" class="form-control" type="number" id="windmin" [(ngModel)]="wx.wind.min">
+        </div>
+
+
+        <button [disabled]="!observation.acl_user.w" (click)="wx.wind.turbulence=!!!wx.wind.turbulence" class="btn btn-block" [ngClass]="!!wx.wind.turbulence ? 'btn-secondary' : 'btn-outline-dark'" id="turbulence">
+          <wi name="tornado" [fixed]="true"></wi> Turbulens
+        </button>
+        <button [disabled]="!observation.acl_user.w" (click)="wx.wind.gusting=!!!wx.wind.gusting" class="btn btn-block" [ngClass]="!!wx.wind.gusting ? 'btn-secondary' : 'btn-outline-dark'" id="gusting">
+          <wi name="strong-wind" [fixed]="true"></wi> Gusting
+        </button>
+      </div>
+      <!-- Clouds -->
+      <div class="col-xs-12 col-md-4">
+        <p class="lead">Skybase (fot)</p>
+        <div class="form-group">
+          <label for="cloudbase">Min (kt)</label>
+          <input [disabled]="!observation.acl_user.w" class="form-control" type="number" id="cloudbase" [(ngModel)]="wx.clouds.base">
+        </div>
+
+        <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.rain=!!!wx.clouds.rain" class="btn btn-block" [ngClass]="!!wx.clouds.rain ? 'btn-secondary' : 'btn-outline-dark'">
+          <wi name="rain" [fixed]="true"></wi> Regn
+        </button>
+        <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.fog=!!!wx.clouds.fog" class="btn btn-block" [ngClass]="!!wx.clouds.fog ? 'btn-secondary' : 'btn-outline-dark'">
+          <wi name="fog" [fixed]="true"></wi> Tåke
+        </button>
+        <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.hail=!!!wx.clouds.hail" class="btn btn-block" [ngClass]="!!wx.clouds.hail ? 'btn-secondary' : 'btn-outline-dark'">
+          <wi name="hail" [fixed]="true"></wi> Hagl
+        </button>
+        <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.snow=!!!wx.clouds.snow" class="btn btn-block" [ngClass]="!!wx.clouds.snow ? 'btn-secondary' : 'btn-outline-dark'">
+          <wi name="snow" [fixed]="true"></wi> Snø
+        </button>
+        <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.thunder=!!!wx.clouds.thunder" class="btn btn-block" [ngClass]="!!wx.clouds.thunder ? 'btn-secondary' : 'btn-outline-dark'">
+          <wi name="lightning" [fixed]="true"></wi> Torden
+        </button>
+      </div>
+
+      <!-- Temp -->
+      <div class="col-xs-12 col-md-4">
+        <p class="lead">Temperatur (&deg;C)</p>
+        <div class="form-group">
+          <label for="tempfground">På bakken (&deg;C)</label>
+          <input [disabled]="!observation.acl_user.w" class="form-control" type="number" id="tempground" [(ngModel)]="wx.temp.ground">
+        </div>
+        <div class="form-group">
+          <label for="tempexit">På utsprangshøyde (&deg;C)</label>
+          <input [disabled]="!observation.acl_user.w" class="form-control" type="number" id="tempexit" [(ngModel)]="wx.temp.altitude">
+        </div>
+      </div>
+    </div>
+
+    <!-- Beskrivelse -->
+    <div class="row mt-3">
+      <div class="col-xs-12 col-md-12">
+        <div class="form-group">
+          <label for="other">Kort beskrivelse av været</label>
+          <textarea [disabled]="!observation.acl_user.w" class="form-control" type="text" id="other" name="description" [(ngModel)]="wx.description"></textarea>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="modalRef.close()">
+      <fa name="close" [fixed]="true"></fa>Avbryt
+    </button>
+    <button [disabled]="!observation.acl_user.w" class="btn btn-secondary" (click)="closeModal()">
+      <fa name="check" [fixed]="true"></fa>Oppdater
+    </button>
+  </div>
+</ng-template>

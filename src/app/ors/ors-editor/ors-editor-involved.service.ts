@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { LungoPersonsService } from 'app/api/lungo-persons.service';
+import { ApiCacheService } from 'app/api/api-cache.service';
+import { ApiOptionsInterface } from 'app/api/api.interface';
 
 export interface NlfOrsEditorInvolvedInterface {
   id: number;
-  fullname?: string;
-  tmpname?: string;
+  full_name?: string;
+  tmp_name?: string;
 }
 
 @Injectable()
@@ -20,15 +23,57 @@ export class NlfOrsEditorInvolvedService {
 
   private involvedArr = new BehaviorSubject<Array<NlfOrsEditorInvolvedInterface>>([]);
 
-  currentArr = this.involvedArr.asObservable(); // For mentions to subscribe
+  public currentArr = this.involvedArr.asObservable(); // For mentions to subscribe
 
-  constructor() { }
+  private list = [];
+
+  constructor(
+    private personService: LungoPersonsService,
+    private apiCache: ApiCacheService
+  ) { }
+
+  public add(person_id: number, name: string) {
+
+    if (!!name && name.length > 3) {
+      this.list.push({ id: person_id, full_name: name });
+      this.changeArr(this.list);
+    } else if (person_id > 0) {
+      const options: ApiOptionsInterface = {
+        query: { projection: { full_name: 1 } }
+      };
+      this.apiCache.get(
+        ['user', person_id, options.query],
+        this.personService.getUser(person_id, options)
+      ).subscribe(
+        data => {
+          this.list.push({ id: person_id, full_name: data.full_name });
+          this.changeArr(this.list);
+        },
+        err => { },
+        () => { }
+      );
+    }
+  }
+  public update(list: Array<Object>) {
+    this.changeArr(list);
+  }
 
   public changeArr(list: Array<Object>) {
     //const unique = [...Array.from(new Set(list.map((item: any) => item.id)))];
     let flags = [];
     let output = [];
 
+    // Filter unique
+    /**
+    const flags = new Set();
+    const newPlaces = places.filter(entry => {
+      if (flags.has(entry.city)) {
+          return false;
+      }
+      flags.add(entry.city);
+      return true;
+    });
+    **/
     for (let i = 0; i < list.length; i++) {
       if (!!flags[list[i]['id']]) {
         continue;
@@ -37,8 +82,6 @@ export class NlfOrsEditorInvolvedService {
       output.push(list[i]);
     }
     this.involvedArr.next(output);
-    console.log('InvolvedSubject:', output);
   }
 
 }
-

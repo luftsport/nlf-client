@@ -4,10 +4,11 @@ import { ApiEveLinks, ApiEveBaseItem, ApiEveBaseList, ApiEveQueryInterface } fro
 
 export interface LungoLocation {
 
-    geo: { type: string, coordinates: [number, number] };
-    score: number;
-    confidence: number;
-    quality: string;
+    geo?: { type: string, coordinates: [number, number] };
+    score?: number;
+    confidence?: number;
+    quality?: string;
+    distance?: number;
 }
 
 export interface LungoContact {
@@ -54,7 +55,10 @@ export interface LungoFunctionsItem extends ApiEveBaseItem {
     type_id?: number;
     from_date?: Date;
     to_date?: Date;
+    // active in org to become legacy
     active_in_org_id?: number;
+    org_id?: number;
+    org_type_id?: number;
     contact_id?: number;
     contact_information_id?: number;
     fa_function_id?: number;
@@ -260,19 +264,25 @@ export interface LungoCountriesList extends ApiEveBaseList {
 /**
  * Persons
  */
+export interface LungoMembershipsItem {
+    club?: number;
+    discipline?: number;
+    activity?: number;
+}
+
 export interface LungoPersonsCompetenceItem {
     id: number;
-    _code: number;
-    issuer: number;
-    expiry: Date;
+    _code?: number;
+    issuer?: number;
+    expiry?: Date;
     paid?: Date;
 }
 export interface LungoPersonsLicenseItem {
     id: number;
-    status_id: number;
-    status_date: Date;
-    expiry: Date;
-    type_id: number;
+    status_id?: number;
+    status_date?: Date;
+    expiry?: Date;
+    type_id?: number;
     type_name?: string;
 }
 export interface LungoPersonsItem extends ApiEveBaseItem {
@@ -286,11 +296,12 @@ export interface LungoPersonsItem extends ApiEveBaseItem {
     first_name?: string;
     last_name?: string;
     full_name?: string;
-    functions?: number[] | LungoFunctionsItem;
-    clubs: number[] | LungoOrganizationsItem;
-    activities: number[] | LungoActivitiesItem[];
-    competences: LungoPersonsCompetenceItem[] | LungoCompetencesItem[];
-    licenses: LungoPersonsLicenseItem[] | LungoLicensesItem[];
+    functions?: number[] | LungoFunctionsItem[];
+    clubs?: number[] | LungoOrganizationsItem[];
+    activities?: number[] | LungoActivitiesItem[];
+    memberships?: LungoMembershipsItem[];
+    competences?: LungoPersonsCompetenceItem[] | LungoCompetencesItem[];
+    licenses?: LungoPersonsLicenseItem[] | LungoLicensesItem[];
     nationality_id?: number;
     sport_no?: string;
     user_id?: number;
@@ -303,7 +314,7 @@ export interface LungoPersonsList extends ApiEveBaseList {
 }
 
 export interface LungoPersonsSearchItem extends ApiEveBaseItem {
-    full_name: string;
+    full_name?: string;
     id: number;
     _score?: number;
 }

@@ -1,3 +1,23 @@
+<header class="nlf-sticky-toolbar">
+    <div class="container">
+        <span class="breadcrumb">
+            <li class="breadcrumb-item">
+                <fa name="plug" [fixed]="true" class="mr-1 active"></fa><a [routerLink]="['/', '376']">NIF Integration</a>
+            </li>
+        </span>
+
+        <span class="float-right d-inline">
+            <a class="mr-1 btn btn-primary btn-sm" [routerLink]="['/integration']">
+                <fa name="cog" [fixed]="true"></fa>Syncdaemon
+            </a>
+        </span>
+
+    </div>
+</header>
+
+<div *ngIf="!dataReady">
+    <nlf-ui-page-spinner></nlf-ui-page-spinner>
+</div>
 <div *ngIf="!!dataReady">
 
     <div class="row clearfix">
@@ -8,7 +28,7 @@
         </div>
         <div class="col-md-6">
             <div class="chart-wrapper">
-                <ngx-charts-advanced-pie-chart *ngIf="entityTypesReady" [scheme]="colorScheme" [label]="'Entities'"
+                <ngx-charts-advanced-pie-chart *ngIf="entityTypesReady" [scheme]="colorScheme" [label]="'Change entities'"
                     [results]="entityTypes" [gradient]="gradient">
                 </ngx-charts-advanced-pie-chart>
             </div>
@@ -50,7 +70,7 @@
             <h5>online</h5>
         </div>
         <div class="col-md-2 text-center bg-danger text-white">
-            <h2>{{ workers.length-online }}</h2>
+            <h2 *ngIf="!!workers">{{ workers.length-online }}</h2>
             <h5>offline</h5>
         </div>
         <div class="col-md-2 text-center bg-success text-white">
@@ -64,8 +84,10 @@
 
 
     </div>
-    <ngx-table [configuration]="tableConfig" [data]="workers" [columns]="columns" [(pagination)]="pagination" (event)="eventEmitted($event)"
-        [detailsTemplate]="detailsTemplateRef">
+    <!--<button class="btn btn-primary" *ngIf="!workersStarted && syncdaemonStatus" (click)="startWorkers()"><fa name="play"></fa>Start workers</button>-->
+
+    <ngx-table *ngIf="!!workers" [configuration]="tableConfig" [data]="workers" [columns]="columns" [(pagination)]="pagination"
+        (event)="eventEmitted($event)" [detailsTemplate]="detailsTemplate">
 
         <ng-template let-row>
             <td>
@@ -108,27 +130,33 @@
     </ngx-table>
 
     <ng-template #detailsTemplate let-row>
-            <div>{{ row.name }}</div>
-            <div>{{ row.id }}</div>
-            <div>{{ row.status }}</div>
-            <div>{{ row.mode }}</div>
-            <div>{{ row.reason }}</div>
-            <div *ngIf="row.uptime.length == 2">{{ row.uptime[0] }} days, {{ uptime(row.uptime[1]) }}</div>
-            <div>{{ row.started | date:"yyyy-MM-dd HH:mm:ss" }}</div>
-            <div>{{ row.messages }}</div>
-            <div>{{ row.sync_type }}</div>
-            <div *ngIf="row.sync_interval.length == 2">{{ row.sync_interval[0] | date:"HH:mm:ss.SSS" }} to {{ row.sync_interval[1] | date:"HH:mm:ss.SSS" }}</div>
-            <div>{{ row.sync_misfires }}</div>
-            <div>{{ row.sync_errors }}</div>
-            <div>{{ row.next_run_time | date:"HH:mm:ss" }}</div>
-            
-            <button class="btn btn-danger">Shutdown</button>
-            <button class="btn btn-warning">Reboot</button>
-            <button class="btn btn-info">Logs</button>
-            <button class="btn btn-info">Changes</button>
-            <nlf-worker-log [organization_id]="row.id" [index]="row.index"></nlf-worker-log>
-        
-        </ng-template>
+        <div>Index: {{ row.index }}</div>
+        <div>{{ row.name }}</div>
+        <div>{{ row.id }}</div>
+        <div>{{ row.status }}</div>
+        <div>{{ row.mode }}</div>
+        <div>{{ row.reason }}</div>
+        <div *ngIf="row.uptime.length == 2">{{ row.uptime[0] }} days, {{ uptime(row.uptime[1]) }}</div>
+        <div>{{ row.started | date:"yyyy-MM-dd HH:mm:ss" }}</div>
+        <div>{{ row.messages }}</div>
+        <div>{{ row.sync_type }}</div>
+        <div *ngIf="row.sync_interval.length == 2">Last synced {{ row.sync_interval[1] | amTimeAgo }}</div>
+        <div *ngIf="row.sync_interval.length == 2">{{ row.sync_interval[0] | date:"HH:mm:ss.SSS" }} to {{
+            row.sync_interval[1] | date:"HH:mm:ss.SSS" }}</div>
+        <div>{{ row.sync_misfires }}</div>
+        <div>{{ row.sync_errors }}</div>
+        <div>{{ row.next_run_time | date:"HH:mm:ss" }}</div>
+
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+        <button class="btn btn-danger" (click)="rebootWorker(row.index)">Reboot</button>
+
+        <button class="btn btn-info">Logs</button>
+        <button class="btn btn-info">Changes</button>
+        <nlf-worker-log [organization_id]="row.id" [index]="row.index"></nlf-worker-log>
+
+    </ng-template>
 
 
 

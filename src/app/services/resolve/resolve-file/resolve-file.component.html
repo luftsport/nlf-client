@@ -1,0 +1,16 @@
+
+<!--
+"content_type": "image/jpeg",
+"name": "IMG_1323.JPG",
+"owner": 95001,
+"_created": "2015-03-17T13:18:15.000000Z",
+"size": 1853657,
+"_updated": "2015-03-17T13:18:15.000000Z",
+"_etag": "c5e89eeb0a91ac401234f30a87d7e68fa8f2b08c",
+"ref": "observations",
+"ref_id": "550828ce7ae7281d0091bdba",
+-->
+
+<div *ngIf="dataReady">
+{{ data.name }} {{ data.content_type }} {{ data.size | bytes : 2 }} {{ data._created | date:'yyyy-MM-dd HH:mm' }} {{ data.ref }} {{ data.ref_id }}<nlf-resolve-lungo-person [person_id]="data.owner" [link]="false" [avatar]="true"></nlf-resolve-lungo-person>
+</div>

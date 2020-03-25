@@ -11,9 +11,9 @@ import { ApiOptionsInterface, ApiNlfLicenseList, ApiNlfLicenseItem } from './api
 @Injectable()
 export class ApiNlfLicensesService extends ApiRestService {
 
-  constructor(http: HttpClient) { super(http); }
-
   private relativeUrl = '/legacy/melwin/licenses/';
+
+  constructor(http: HttpClient) { super(http); }
 
   public getLicense(id: string, options?: ApiOptionsInterface): Observable<ApiNlfLicenseItem> {
 

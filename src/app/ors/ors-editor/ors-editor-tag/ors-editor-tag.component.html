@@ -1,0 +1,29 @@
+<ng-select
+[ngClass]="{'form-control': fc}"
+[disabled]="disabled"
+class="w-auto mw-100"
+id="{{elementId}}"
+[items]="tags$ | async"
+bindLabel="tag"
+[addTag]="allowAdd" 
+[multiple]="true"
+[hideSelected]="true"
+[loading]="tagsLoading"
+[typeahead]="tagsInput$"
+[(ngModel)]="selectedTags"
+(add)="onAdd($event)"
+(remove)="onRemove($event)"
+(clear)="onClear($event)"
+[maxSelectedItems]="limit"
+[groupValue]="group"
+autoCapitalize="on"
+addTagText="+Opprett ny tag"
+placeholder="Skriv for å søke" 
+notFoundText="Fant ikke noe">
+  <ng-template *ngIf="details" ng-option-tmp let-item="item" let-search="searchTerm">
+    <div>
+      <span [ngOptionHighlight]="search">{{item.tag}}</span>
+    </div>
+    <small><b>Freq:</b> {{item.freq}} | <b>Group</b> {{ item.group }} | <b>Activity</b> {{ item.activity }}</small>
+  </ng-template>
+</ng-select>

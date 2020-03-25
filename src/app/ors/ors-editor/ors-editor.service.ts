@@ -6,7 +6,7 @@ import { ApiObservationsItem } from 'app/api/api.interface';
 export class NlfOrsEditorService {
 
 
-  private observation = new BehaviorSubject<ApiObservationsItem>({id: 0, when: new Date(), club: 'NLF', location: {}, owner: 0, reporter: 0 });
+  private observation = new BehaviorSubject<ApiObservationsItem>({id: 0, when: new Date(), club: 0, discipline: 0, location: {}, owner: 0, reporter: 0 });
 
   public observableObservation = this.observation.asObservable();
 
@@ -15,6 +15,10 @@ export class NlfOrsEditorService {
   public update(observation: ApiObservationsItem) {
 
     this.observation.next(observation);
+  }
+
+  public reset() {
+    this.observation.next({id: 0, when: new Date(), club: 0, discipline: 0, location: {}, owner: 0, reporter: 0 });
   }
 
 }

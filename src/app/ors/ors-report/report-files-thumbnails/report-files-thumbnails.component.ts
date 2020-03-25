@@ -5,7 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'nlf-ors-fallskjerm-report-files-thumbnails',
+  selector: 'nlf-ors-report-files-thumbnails',
   templateUrl: './report-files-thumbnails.component.html',
   styleUrls: ['./report-files-thumbnails.component.css']
 })

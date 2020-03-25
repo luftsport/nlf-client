@@ -1,11 +1,15 @@
 <span *ngIf="dataReady">
+  
   <span *ngIf="!!link && function.id !== ''">
     <a [routerLink]="['/function/type', function_type.id]">{{ function_type.name }}</a>
   </span>
   <span *ngIf="!link || function.id === ''">
     {{ function_type.name }}
   </span>
-  {{ function_type.category_name }}
+  <span *ngIf="long">
+    {{ function_type.category_name }}
+  </span>
+
 </span>
 <span *ngIf="!dataReady">
   <fa name="spinner" animation="pulse" [size]="1"></fa>

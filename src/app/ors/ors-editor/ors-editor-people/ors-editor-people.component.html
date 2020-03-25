@@ -1,28 +1,230 @@
 <span *ngIf="dataReady">
-  <tag-input 
-  [(ngModel)]="items" 
-  (onAdd)="onAdd($event)" 
-  (onRemove)="onRemove($event)" 
-  theme='bootstrap' 
-  [onlyFromAutocomplete]="false"
-  [displayBy]="'fullname'" 
-  [identifyBy]="'id'"
-  placeholder="Ny person"
-  secondaryPlaceholder="Legg til">
 
-  <tag-input-dropdown 
-    [showDropdownIfEmpty]="false" 
-    keepOpen="false" 
-    [displayBy]="'fullname'" 
-    [identifyBy]="'id'" 
-    [autocompleteObservable]='requestAutocompleteItems'>
-  </tag-input-dropdown>
+  <tag-input [(ngModel)]="items" (onAdd)="onAdd($event)" (onRemove)="onRemove($event)" theme='bootstrap' [onlyFromAutocomplete]="false" [displayBy]="'full_name'" [identifyBy]="'id'" placeholder="Ny person" secondaryPlaceholder="Legg til"
+    [maxItems]="maxItems" [disable]="disabled">
 
-</tag-input>
+    <tag-input-dropdown [zIndex]="99999" [showDropdownIfEmpty]="false" keepOpen="false" [displayBy]="'full_name'" [identifyBy]="'id'" focusFirstElement="true" [autocompleteObservable]='requestAutocompleteItems'>
+    </tag-input-dropdown>
 
-<ul *ngFor="let i of items">
+  </tag-input>
 
-  <li>{{ i | json }}</li>
 
-</ul>
+  <!--
+  { "id": 301041, "data": { "date": "2019-02-05T19:21:06.096Z",
+  "licenses": [ { "id": 8948522, "status_id": 3, "status_date": "2018-05-24T13:46:49.013000Z", "expiry": "2018-12-31T00:00:00.000000Z", "type_id": 205519, "type_name": "Basis" } ],
+  "functions": [ 20786409, 20786865, 22458282, 25428769 ],
+  "private": { "default_club": 22976, "default_activity": 109 } } }
+
+-->
+  <table *ngIf="details" class="table table-striped table-hover mt-2">
+    <tr *ngFor="let p of who; let idx = index">
+      <td class="pointer" (click)="openPersonModal(involvedModal, idx)">
+        <fa *ngIf="p.id>0" name="check" fw="true" class="text-success mr-2" title="Hentet fra medlemssystemet"></fa>
+        <fa *ngIf="p.id<1" name="check" fw="exclamation" class="text-danger mr-2" title="Ukjent person"></fa>
+        <strong>
+          <nlf-resolve-lungo-person [person_id]="p.id" [tmp_name]="p.tmp_name" [link]="false" [avatar]="true"></nlf-resolve-lungo-person>
+        </strong>
+
+      </td>
+      <td>
+        <fa *ngIf="p.fu" name="exclamation" fw="true" class="text-danger"></fa>
+      </td>
+      <td>
+        Summary of stuff
+      </td>
+      <td>
+        <span *ngIf="!!p.data && 1==9">
+          <nlf-resolve-lungo-license *ngFor="let l of p.data.licenses" [license_id]="l.id" link="false" long="false"></nlf-resolve-lungo-license>
+          <nlf-resolve-lungo-function *ngFor="let fid of p.data.functions" [function_id]="fid" show_org="true" link="false" long="false"></nlf-resolve-lungo-function>
+        </span>
+      </td>
+      <td>
+        <fa *ngIf="!disabled" class="pointer" (click)="onRemove({id:p.id})" name="times" fw="true"></fa>
+      </td>
+    </tr>
+
+  </table>
+
+  <!--<fa (click)="openPersonModal(involvedModal, idx)" name="id-card-o" fw="true"></fa>-->
+
+  <!-- /dataReady -->
 </span>
+
+<!-- MODAL -->
+<ng-template #involvedModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      <nlf-resolve-lungo-person [person_id]="modalPerson.id" [tmp_name]="modalPerson.tmp_name" link="false" avatar="false"></nlf-resolve-lungo-person>
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+    <div class="row mb-3">
+      <div class="col-xs-12 col-md-12">
+        <div class="form-check">
+          <input [disabled]="disabled" class="form-check-input" type="checkbox" [(ngModel)]="modalPerson.ph" id="ph">
+          <label class="form-check-label" for="ph">
+            Permanent Hoppforbud
+          </label>
+        </div>
+        <div class="form-check">
+          <input [disabled]="disabled" class="form-check-input" type="checkbox" [(ngModel)]="modalPerson.fu" id="fu">
+          <label class="form-check-label" for="fu">
+            Farlig Ukontrollert (FU)
+          </label>
+        </div>
+      </div>
+    </div>
+    <!--Hopptype, år i sporten og antall hopp-->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="whereAt">Hopptype</label>
+          <nlf-ors-editor-tag-string fc="true" allowAdd="true" preload="false" group="jump_types" activity="fallskjerm" [(tagString)]="modalPerson.data.jumpType" [disabled]="disabled">
+          </nlf-ors-editor-tag-string>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="activity">Aktivitet</label>
+          <nlf-ors-editor-tag fc="true" preload="true" group="jump_activity" activity="fallskjerm" [(initialTags)]="modalPerson.data.activity" [disabled]="disabled">
+          </nlf-ors-editor-tag>
+        </div>
+      </div>
+    </div>
+
+    <!--Aktivitet, Flytype, utsprangshøyde -->
+    <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="yearsinsport">År i sporten</label>
+          <input [disabled]="disabled" class="form-control" type="number" id="yearsinsport" [(ngModel)]="modalPerson.data.yearinsport">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="jups">Antall hopp</label>
+          <input [disabled]="disabled" class="form-control" type="number" id="jups" [(ngModel)]="modalPerson.data.totalJumps">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="aircraft">Flytype</label>
+          <nlf-ors-editor-tag-string fc="true" preload="true" group="aircraft_types" activity="fallskjerm" [(tagString)]="modalPerson.data.aircraft" [disabled]="disabled">
+          </nlf-ors-editor-tag-string>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="altitude">Utsprangshøyde</label>
+          <input [disabled]="disabled" class="form-control" type="number" id="altitude" [(ngModel)]="modalPerson.data.altitude">
+        </div>
+      </div>
+    </div>
+
+    <!-- Hovedskjerm, størrelse, erfaring -->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="mainCanopy">Hovedskjerm</label>
+          <nlf-ors-editor-tag-string fc="true" preload="true" group="main_canopies" activity="fallskjerm" [(tagString)]="modalPerson.data.gear.mainCanopy" [disabled]="disabled">
+          </nlf-ors-editor-tag-string>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="mainCanopySize">Størrelse</label>
+          <input [disabled]="disabled" class="form-control" type="number" id="mainCanopySize" [(ngModel)]="modalPerson.data.gear.mainCanopySize">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="mainCanopyExperience">Erfaring Hovedskjerm</label>
+          <input [disabled]="disabled" class="form-control" type="number" id="mainCanopyExperience" [(ngModel)]="modalPerson.data.gear.mainCanopyExperience">
+        </div>
+      </div>
+    </div>
+
+    <!-- Reserve, størrelse mk, pakkedato -->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="reserveCanopy">Reserveskjerm</label>
+          <nlf-ors-editor-tag-string fc="true" preload="true" group="reserve_canopies" activity="fallskjerm" [disabled]="disabled" [(tagString)]="modalPerson.data.gear.reserveCanopy">
+          </nlf-ors-editor-tag-string>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="reserveCanopySize">Størrelse</label>
+          <input [disabled]="disabled" class="form-control" type="number" id="reserveCanopySize" [(ngModel)]="modalPerson.data.gear.reserveCanopySize">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label for="rigger">MK</label>
+        <!--<input class="form-control" type="text" id="rigger" [(ngModel)]="modalPerson.data.gear.rigger">-->
+        <nlf-ors-editor-people id="rigger" [maxItems]="1" [who]="modalPerson.data.gear.rigger" [details]="false" path="involved.{{modalIndex}}.data.gear.rigger" [disabled]="disabled"></nlf-ors-editor-people>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+
+          <label for="riggerDate">Pakkedato</label>
+          <nlf-ors-editor-date [disabled]="disabled" id="riggerDate" [(date)]="modalPerson.data.gear.riggerDate"></nlf-ors-editor-date>
+          <!--<input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="modalPerson.data.gear.riggerDate"
+              ngbDatepicker #d="ngbDatepicker">-->
+        </div>
+      </div>
+    </div>
+    <!-- Seletøy, erfaring, nødåpner -->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="harness">Seletøy</label>
+          <nlf-ors-editor-tag-string fc="true" preload="true" group="harness_types" activity="fallskjerm" [(tagString)]="modalPerson.data.gear.harness" [disabled]="disabled">
+          </nlf-ors-editor-tag-string>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="harnessExperience">Erfaring seletøy</label>
+          <input [disabled]="disabled" class="form-control" type="number" id="harnessExperience" [(ngModel)]="modalPerson.data.gear.harnessExperience">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="aad">Nødåpner</label>
+          <nlf-ors-editor-tag-string fc="true" preload="true" group="aad_types" activity="fallskjerm" [(tagString)]="modalPerson.data.gear.aad" [disabled]="disabled">
+          </nlf-ors-editor-tag-string>
+        </div>
+      </div>
+    </div>
+
+    <!-- Annet -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="other">Annet utstyr</label>
+          <nlf-ors-editor-tag fc="true" preload="true" group="other_equipment" activity="fallskjerm" [(initialTags)]="modalPerson.data.gear.other" [disabled]="disabled"></nlf-ors-editor-tag>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="devDebug" class="row">
+      Person: {{ modalPerson | json }}
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="modalRef.close()">
+      <fa name="times" [fixed]="true"></fa>Avbryt
+    </button>
+    <button [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalInvolvedUpdate(modalIndex)">
+      <fa name="check" [fixed]="true"></fa>Oppdater
+    </button>
+  </div>
+</ng-template>

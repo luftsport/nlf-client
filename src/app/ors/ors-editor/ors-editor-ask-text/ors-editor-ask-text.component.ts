@@ -1,11 +1,10 @@
 import { ApiObservationsService } from 'app/api/api-observations.service';
-import { ApiNlfUserService } from 'app/api/api-nlf-user.service';
+import { LungoPersonsService } from 'app/api/lungo-persons.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ConfirmService } from 'app/services/confirm/confirm.service';
-
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiOptionsInterface, ApiObservationsItem, ApiNlfUserItem, ApiNlfUserList } from 'app/api/api.interface';
-
 import { NlfOrsEditorInvolvedService } from 'app/ors/ors-editor/ors-editor-involved.service';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import Tribute from 'tributejs/src';
@@ -27,18 +26,25 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
   observation: ApiObservationsItem;
   rs: any;
   tribute: Tribute;
+  modalRef;
 
-  debouncedGetOrs = debounce(this.getOrs, 500);
-  debouncedGetUsers = debounce(this.getUsers, 500);
+  debouncedGetOrs = debounce(this.getOrs, 900);
+  debouncedGetUsers = debounce(this.getUsers, 900);
+  debouncedUpdateText = debounce(this.textChange, 1500);
 
   constructor(private subject: NlfOrsEditorService,
     private involved: NlfOrsEditorInvolvedService,
-    private nlfUsers: ApiNlfUserService,
+    private personService: LungoPersonsService,
     private orsService: ApiObservationsService,
-    private confirmService: ConfirmService) {
+    private confirmService: ConfirmService,
+    private modalService: NgbModal) {
 
     this.involved.currentArr.subscribe(list => this.list = list); // Involved list
     this.subject.observableObservation.subscribe(observation => this.observation = observation);
+
+    if (typeof this.observation.ask.text[this.observation.workflow.state] === 'undefined') {
+      this.observation.ask.text[this.observation.workflow.state] = '';
+    }
 
   }
 
@@ -46,38 +52,36 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
 
   }
 
- 
-
   ngAfterViewInit() {
 
-    const rs = (length) =>  Math.round((Math.pow(36, length + 1) - Math.random() * Math.pow(36, length))).toString(36).slice(1);
+    const rs = (length) => Math.round((Math.pow(36, length + 1) - Math.random() * Math.pow(36, length))).toString(36).slice(1);
 
     const users = {
       trigger: '!',
       iframe: null,
       selectClass: 'highlight',
       // function called on select that returns the content to insert<macro contenteditable="false" class="badge badge-info"
-      selectTemplate: function (item) {
+      selectTemplate: function(item) {
         const id = rs(12);
         return '<macro href="#" data-url="/user/' + item.original.id + '" contenteditable="false"\
                 data-type="user" data-id="' + item.original.id + '"\
                 onclick="this.remove()"\
                 class="badge badge-info macrolink pointer" id="' + id + '">\
-                !' + item.original.fullname + '</macro>';
+                !' + item.original.full_name + '</macro>';
       },
       // template for displaying item in menu
-      menuItemTemplate: function (item) {
+      menuItemTemplate: function(item) {
         return item.string;
       },
       // template for when no match is found (optional),
       // If no template is provided, menu is hidden.
-      noMatchTemplate: function (text) {
+      noMatchTemplate: function(text) {
         return 'No results!';
       },
       // column to search against in the object (accepts function or string)
-      lookup: 'fullname',
+      lookup: 'full_name',
       // column that contains the content to insert by default
-      fillAttr: 'fullname',
+      fillAttr: 'full_name',
       // REQUIRED: array of objects to match
       values: (text, callback) => this.getInvolved(text, u => callback(u)),
       // specify whether a space is required before the trigger character
@@ -96,22 +100,22 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
       trigger: '@',
       iframe: null,
       selectClass: 'highlight',
-      selectTemplate: function (item) {
+      selectTemplate: function(item) {
         const id = rs(12);
         return '<macro href="#" data-url="/user/' + item.original.id + '" contenteditable="false" \
                 data-type="user" data-id="' + item.original.id + '"\
                 onclick="this.remove()"\
                 class="badge badge-danger macrolink pointer" id="' + id + '">\
-                @' + item.original.fullname + '</macro>';
+                @' + item.original.full_name + '</macro>';
       },
-      menuItemTemplate: function (item) {
+      menuItemTemplate: function(item) {
         return item.string;
       },
       noMatchTemplate: 'Fant ingen',
-      lookup: function (item) {
-        return item.fullname + ' (' + item.id + ')';
+      lookup: function(item) {
+        return item.full_name + ' (' + item.id + ')';
       },
-      fillAttr: 'fullname',
+      fillAttr: 'full_name',
       values: (text, callback) => this.debouncedGetUsers(text, u => callback(u)),
       requireLeadingSpace: true,
       allowSpaces: true,
@@ -123,7 +127,7 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
       trigger: '#',
       iframe: null,
       selectClass: 'highlight',
-      selectTemplate: function (item) {
+      selectTemplate: function(item) {
         const id = rs(12);
         return '<macro href="#" data-url="/ors/fallskjerm/report/' + item.original.id + '" contenteditable="false"\
                 data-type="f_ors" data-id="' + item.original.id + '"\
@@ -131,7 +135,7 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
                 class="badge badge-danger macrolink pointer" id="' + id + '"> \
                 #' + item.original.id + ' ' + item.original.title + '</macro>';
       },
-      menuItemTemplate: function (item) {
+      menuItemTemplate: function(item) {
         return item.string;
       },
       noMatchTemplate: 'Fant ingen',
@@ -153,13 +157,12 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
         this.positionMenu = positionMenu | true
      */
     this.tribute = new Tribute({ collection: [users, remote, ors], allowSpaces: true });
-    this.tribute.attach(document.getElementsByName('myFormName'));
+    this.tribute.attach(document.getElementsByName('myAskDiv'));
 
 
   }
 
   public getInvolved(text, callback) {
-    console.log(this.list);
     callback(this.list);
   }
 
@@ -168,7 +171,6 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
     if (text.length < 3) {
       callback([]);
     } else {
-      console.log('Search user', text);
       const options: ApiOptionsInterface = {
         query: {
           max_results: 20,
@@ -180,10 +182,9 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
       };
 
       // this.apiCache.get(['ors-last', options.query], this.orsService.getObservations(options), 1 * 60 * 1000).subscribe(
-      this.nlfUsers.search(text).subscribe(
+      this.personService.search(text).subscribe(
         data => {
           callback(data._items);
-          console.log('Result', data._items);
         },
         err => callback([]),
       );
@@ -192,7 +193,6 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
   }
 
   public getOrs(text, callback) {
-    console.log('searcing for kuk, text', text);
 
     let ids = text.replace(/\D+/g, '') // Non digits
       .split(' ')
@@ -207,9 +207,6 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
       .map((item) => {
         return item.charAt(0).toUpperCase() + item.slice(1);
       });
-
-    console.log('ID', ids, ids.length);
-    console.log('Tags', tags, tags.length);
 
     // if (ids.lenght > 0 || tags.length > 2) {
     if (text.length > 0) {
@@ -229,7 +226,10 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
         query: {
           // max_results: 20,
           sort: [{ id: -1 }],
-          where: { '$or': [{ 'id': { '$in': ids } }, { $text: { $search: tags.join(' ') } }] }, // { tags: { '$in': tags } }] },
+          where: {
+            'workflow.state': 'closed',
+            '$or': [{ 'id': { '$in': ids } }, { $text: { $search: tags.join(' ') } }]
+          }, // { tags: { '$in': tags } }] },
           // where: { id: { '$in': ids } },
           // projection: { score: { $meta: "textScore" } }, // { id: 1, tags: 1, workflow: 1, reporter: 1, owner: 1, involved: 1, organization: 1 }
         },
@@ -238,39 +238,49 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
       // this.apiCache.get(['ors-last', options.query], this.orsService.getObservations(options), 1 * 60 * 1000).subscribe(
       this.orsService.getObservations(options).subscribe(
         data => {
-          console.log(data);
           if (data._meta.total > 0) {
-            let kuk = data._items.map((item) => {
+            let ors = data._items.map((item) => {
               return { id: item.id, title: item['tags'].join(' '), search: '#' + item.id + ' ' + item['tags'].join(' ') };
             });
-            console.log('Kuk', kuk);
-            callback(kuk);
+            callback(ors);
           } else {
             callback([]);
           }
         },
         err => callback([]),
-        () => console.log('Kuk done:')
+        () => {}
       );
     } else {
-      console.log('Nothing is long enough!');
       callback([]);
     }
 
   }
 
   format(event) {
-    console.log(event);
     return '<macro contenteditable="false" class="badge badge-info" id="' + event.id + '">' + event.fullname + '</macro>';
   }
+
   intergalactic(event) {
-    console.log(event);
   }
+
+
+  onPaste(event) {
+    console.log(event);
+    event.preventDefault();
+
+    // get text representation of clipboard
+    const text = (event.originalEvent || event).clipboardData.getData('text/plain');
+
+    // insert text manually
+    document.execCommand("insertHTML", false, text);
+    //this.observation.ask.text[this.observation.workflow.state] = this.observation.ask.text[this.observation.workflow.state].replace(/\<(?!macro|br|p).*?\>/ig, "");
+  }
+
   textChange() {
+    //Always check for html tags!
+
     this.subject.update(this.observation);
   }
-
-
 
   reset() {
     const confirmMsg = {
@@ -286,5 +296,10 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
       },
       () => { }
     );
+  }
+
+  public openModal(template) {
+
+    this.modalRef = this.modalService.open(template, { size: 'lg', backdrop: 'static', keyboard: false });
   }
 }

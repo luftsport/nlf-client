@@ -1,20 +1,21 @@
 import { ApiCacheService } from 'app/api/api-cache.service';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable, OnInit, Inject } from '@angular/core';
 import { ApiUserAuthService } from 'app/api/api-user-auth.service';
 import { NlfAlertService } from 'app/services/alert/alert.service';
-import { NlfLocalStorageService } from 'app/services/storage/local-storage.service';
 import { NlfAuthSubjectService } from './auth-subject.service';
 // Import ng2-idle
 import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
 import { Keepalive } from '@ng-idle/keepalive';
-
-import { Router, ActivatedRoute } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { NlfConfigService } from 'app/nlf-config.service';
+import { Router } from '@angular/router'; // ActivatedRoute
+import { NlfUserSubjectService } from 'app/user/user-subject.service';
+import { ApiUserDataSubjectItem, AuthDataSubjectInterface, NlfConfigItem } from 'app/api/api.interface';
 
 @Injectable()
 export class NlfAuthService {
 
   private isAuth = false;
+  private authData: AuthDataSubjectInterface;
   private message: string;
 
 
@@ -22,38 +23,50 @@ export class NlfAuthService {
   idleState: string;
   timedOut = false;
   lastPing?: Date = null;
-  idleTimeout = 29 * 60; // seconds
-  logoutTimeout = 60; // Seconds before logging out after idleTimeout times out
+  idleTimeout = 60 * 30; // seconds
+  logoutTimeout = 60 * 3; // Seconds before logging out after idleTimeout times out
   loading = false;
 
-  constructor(private apiCache: ApiCacheService,
+  firstLogin = false;
+  userData: ApiUserDataSubjectItem;
+  public config: NlfConfigItem;
+
+  constructor(
+    private apiCache: ApiCacheService,
     private userAuthService: ApiUserAuthService,
     private alertService: NlfAlertService,
-    private route: ActivatedRoute,
+    //private route: ActivatedRoute,
     private router: Router,
     private idle: Idle,
     private keepalive: Keepalive,
-    private storage: NlfLocalStorageService,
-    private authSubject: NlfAuthSubjectService) {
+    private authSubject: NlfAuthSubjectService,
+    private userSubject: NlfUserSubjectService,
+    private configSubject: NlfConfigService) {
+
+
 
     this.authSubject.observableAuth.subscribe(
       auth => this.isAuth = auth,
       err => this.isAuth = false
     );
+
+    this.authSubject.observableAuthData.subscribe(
+      data => this.authData = data,
+      err => this.authData = null
+    );
+
+    this.userSubject.observable.subscribe(
+      userData => this.userData = userData,
+      err => this.userData = null
+    );
   }
 
-  public hasToken(): boolean {
-
-    return this.storage.hasToken();
-
-  }
 
   public login(username: string, password: string, returnUrl?: string): void {
 
     this.alertService.clear();
     this.loading = true;
-    console.log('Returnurl', returnUrl);
-    /** 
+    /**
     this.isAuthSubject.next(true);
 
     if(returnUrl) {
@@ -66,11 +79,42 @@ export class NlfAuthService {
 
     this.userAuthService.authenticate(username, password).subscribe(
       data => {
+        console.log('Auth', data);
         if (!!data.success && data.success === true) {
 
-          this.storage.saveUser(data.username, data.token64, data.valid['$date']);
-          // broadcast
+
+
+          localStorage.setItem('auth-id', data.username);
+          localStorage.setItem('auth-token', data.token64);
+          localStorage.setItem('auth-valid', data.valid['$date'])
+
+          this.userData = {
+            acl: data.acl,
+            activities: data.activities,
+            person_id: +data.username,
+            _id: data._id,
+            _etag: data._etag,
+            settings: data.settings
+          };
+          localStorage.setItem('user-data', JSON.stringify(this.userData));
+          // BROADCAST SUBJECTS
+          if (!data.settings.hasOwnProperty('default_discipline') && !data.settings.hasOwnProperty('default_activity')) {
+            this.firstLogin = true;
+          }
+
           this.authSubject.update(true);
+
+          this.authSubject.updateAuthData({
+            person_id: +data.username,
+            token: data.token64,
+            valid: new Date(data.valid['$date'])
+          });
+
+          this.userSubject.update(this.userData);
+
+          // Update global settings
+          this.configSubject.init();
+
           // clear alerts since we do not re-route
           this.alertService.clear();
 
@@ -92,7 +136,7 @@ export class NlfAuthService {
 
           this.idle.onIdleEnd.subscribe(() => {
             this.idleState = 'Du er ikke lengre registrert som inaktiv';
-            this.alertService.success(this.idleState);
+            this.alertService.success(this.idleState, false, true, 5);
           });
 
           this.idle.onTimeout.subscribe(() => {
@@ -118,7 +162,7 @@ export class NlfAuthService {
           this.keepalive.onPing.subscribe(() => this.lastPing = new Date());
 
           this.idleReset();
-          this.alertService.success('You succesfully logged in!'); //This works after navigate
+          this.alertService.success('You succesfully logged in!', false, true, 5); //This works after navigate
 
           if (!!returnUrl) {
             console.log('Will redirect!', returnUrl);
@@ -128,25 +172,17 @@ export class NlfAuthService {
             this.router.navigate(['/home']);
           } */
 
-
           this.loading = false;
-          
-          // oauth
-          this.router.navigate([], {
-            queryParams: {
-              access_token: null,
-              token_type: null,
-              expires_in: null
-            },
-            queryParamsHandling: 'merge'
-          });
+
         } else {
 
           this.alertService.error(data.message);
           this.message = data.message;
           this.authSubject.update(false);
+          this.authSubject.updateAuthData(null);
           this.idleStop();
           this.loading = false;
+
         }
       },
       error => {
@@ -160,7 +196,12 @@ export class NlfAuthService {
         // Do not work since no check for public pages
         // this.router.navigate(['/error/', error.status]);
         this.loading = false;
-      });
+
+      },
+      () => {
+
+      }
+    );
 
   }
 
@@ -168,23 +209,22 @@ export class NlfAuthService {
 
     // if(!returnUrl) { returnUrl = 'home';}
 
-    if (this.hasToken() && !force) {
-      this.alertService.success('Du har blitt logget ut', true);
-
-    } else if (this.hasToken() && force) {
-
-      this.alertService.warning('Du har blitt automatisk logget ut', true);
-    }
-
     // Remove stored on user, let this handle everything
-    this.storage.clearStorage();
+
 
     // Cleanup api cache
     this.apiCache.clear();
 
     this.idleStop();
     this.authSubject.update(false);
+    this.authSubject.updateAuthData(undefined);
+    localStorage.clear();
 
+    if (!force) {
+      this.alertService.success('Du har blitt logget ut', true);
+    } else {
+      this.alertService.warning('Du har blitt automatisk logget ut', true);
+    }
     /**
     if(force) {
       this.router.navigate([returnUrl]);

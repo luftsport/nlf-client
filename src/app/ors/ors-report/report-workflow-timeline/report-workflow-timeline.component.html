@@ -5,13 +5,13 @@
     <div class="sl-item b-l" [ngClass]="workflowColors[w.a]">
       <div class="m-l">
         <div class="text-muted">{{ w.t | date:'yyyy-MM-dd HH:mm'}} {{ workflowActions[w.a] }}
-          <a *ngIf="w.v > 1 && vlink" [routerLink]="['/ors/fallskjerm/report', _id, 'version', w.v]">v{{ w.v }}</a>
+          <a *ngIf="w.v > 1 && vlink" [routerLink]="['/ors', activity, 'report', _id, 'version', w.v]">v{{ w.v }}</a>
           <span class="text-muted" *ngIf="w.v < 2 || !vlink">v{{ w.v }}</span>
         </div>
         <!-- Link to version! -->
         <p>
           <span class="text-info">
-            <nlf-resolve-user [userid]="w.u" link="true"></nlf-resolve-user>
+            <nlf-resolve-lungo-person link="true" [person_id]="w.u"></nlf-resolve-lungo-person>
           </span>
           <span *ngIf="w.c!=null && w.c!='Initialized workflow'">:
             <i>{{w.c}}</i>

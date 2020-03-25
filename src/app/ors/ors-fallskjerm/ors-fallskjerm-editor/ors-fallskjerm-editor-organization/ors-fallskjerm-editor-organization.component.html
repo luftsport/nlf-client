@@ -1,0 +1,40 @@
+<dl class="row mt-3">
+  <!-- HI -->
+  <dt class="col-sm-3 col-md-1 lead">HI:</dt>
+  <dd class="col-sm-9 col-md-11 lead">
+    <div *ngFor="let hi of observation.organization.hi">
+      <nlf-resolve-lungo-person [person_id]="hi" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
+    </div>
+      <div *ngIf="!observation.organization.hi" class="alert alert-danger" role="alert">
+        <fa name="exclamation" [fixed]="true"></fa> Ingen HI satt
+      </div>
+    </dd>
+</dl>
+
+<!-- HL & HFL -->
+<div class="row">
+  <div class="col-md-1 lead">HL</div>
+  <div class="col-md-5">
+    <nlf-ors-editor-tag-persons [disabled]="!observation.acl_user.w" [(persons)]="observation.organization.hl" [activity]="observation._model.type" (change)="update($event)"></nlf-ors-editor-tag-persons>
+    <div *ngIf="!!devDebug">{{ observation.organization.hl | json }}</div>
+  </div>
+  <div class="col-md-1 lead">HFL</div>
+  <div class="col-md-5">
+    <nlf-ors-editor-tag-persons [disabled]="!observation.acl_user.w" [(persons)]="observation.organization.hfl" [activity]="observation._model.type" (change)="update($event)"></nlf-ors-editor-tag-persons>
+    <div *ngIf="!!devDebug">{{ observation.organization.hfl | json }}</div>
+  </div>
+</div>
+<!--HM & Pilot -->
+<div class="row mt-3">
+  <div class="col-md-1 lead">HM</div>
+  <div class="col-md-5">
+    <nlf-ors-editor-tag-persons [disabled]="!observation.acl_user.w" [(persons)]="observation.organization.hm" [activity]="observation._model.type" (change)="update($event)"></nlf-ors-editor-tag-persons>
+    <div *ngIf="!!devDebug">{{ observation.organization.hm | json }}</div>
+  </div>
+  <div class="col-md-1 lead">Pilot</div>
+  <div class="col-md-5">
+    <nlf-ors-editor-tag-persons [disabled]="!observation.acl_user.w" [(persons)]="observation.organization.pilot" [activity]="observation._model.type" (change)="update($event)"></nlf-ors-editor-tag-persons>
+  <!--  <nlf-ors-editor-people [disabled]="!observation.acl_user.w" [who]="observation.organization.pilot" [details]="false" path="organization.pilot"></nlf-ors-editor-people>-->
+    <div *ngIf="!!devDebug">{{ observation.organization.pilot | json }}</div>
+  </div>
+</div>

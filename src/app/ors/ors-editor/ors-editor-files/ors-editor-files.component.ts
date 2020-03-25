@@ -2,11 +2,12 @@ import { Component, OnInit, Output, Input, TemplateRef, EventEmitter } from '@an
 import { DomSanitizer } from '@angular/platform-browser';
 import { ApiObservationFileInterface, ApiObservationsItem, ApiOptionsInterface } from 'app/api/api.interface';
 import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions } from 'ngx-uploader';
-import { NlfLocalStorageService } from 'app/services/storage/local-storage.service';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import { ApiFilesService } from 'app/api/api-files.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmService } from 'app/services/confirm/confirm.service';
+import { NlfUserSubjectService } from 'app/user/user-subject.service';
+import { NlfAuthSubjectService } from 'app/services/auth/auth-subject.service';
 
 @Component({
   selector: 'nlf-ors-editor-files',
@@ -41,15 +42,18 @@ export class NlfOrsEditorFilesComponent implements OnInit {
   humanizeBytes: Function;
   dragOver: boolean;
   imagePreview = [];
-  userid: number;
+
+  userData;
   token: string;
 
-  constructor(private storage: NlfLocalStorageService,
-              private subject: NlfOrsEditorService,
-              private apiFile: ApiFilesService,
-              public domSanitizer: DomSanitizer,
-              private modalService: NgbModal,
-              private confirmService: ConfirmService) {
+  constructor(
+    private subject: NlfOrsEditorService,
+    private apiFile: ApiFilesService,
+    public domSanitizer: DomSanitizer,
+    private modalService: NgbModal,
+    private confirmService: ConfirmService,
+    private userSubject: NlfUserSubjectService,
+    private authDataSubject: NlfAuthSubjectService) {
 
     this.subject.observableObservation.subscribe(
       observation => {
@@ -69,8 +73,26 @@ export class NlfOrsEditorFilesComponent implements OnInit {
     this.uploadInput = new EventEmitter<UploadInput>(); // input events, we use this to emit data to ngx-uploader
     this.humanizeBytes = humanizeBytes;
 
-    this.userid = this.storage.getId();
-    this.token = this.storage.getToken();
+
+      this.authDataSubject.observableAuthData.subscribe(
+        data => {
+          if (!!data) {
+            this.token = data.token;
+          }
+        },
+        err => console.log('Problem getting token: ', err)
+      );
+
+
+    this.userSubject.observable.subscribe(
+      data => {
+        if(!!data) {
+          this.userData = data
+          this.getFiles();
+        }
+      },
+      err => console.log('Error getting user data: ', err)
+      );
 
   }
 
@@ -78,7 +100,7 @@ export class NlfOrsEditorFilesComponent implements OnInit {
     if (typeof this.dropzone === 'undefined') { this.dropzone = true; }
     if (typeof this.onlyFilepicker === 'undefined') { this.onlyFilepicker = false; }
 
-    this.getFiles();
+
   }
 
   /**
@@ -95,7 +117,6 @@ export class NlfOrsEditorFilesComponent implements OnInit {
     this.filelist = [];
 
     this.observation.files.forEach(f => {
-      console.log(f);
       this.getFile(f);
       processed++;
       if (this.observation.files.length === processed) {
@@ -122,6 +143,8 @@ export class NlfOrsEditorFilesComponent implements OnInit {
             image => {
               data['src'] = 'data:' + image.mimetype + ';charset=utf8;base64,' + image.src;
               data['isImage'] = true;
+              data['download'] = this.apiFile.getDirectLink(data._id) + '?token=' + this.token;
+              this.filelist.push(data);
             },
             err => {
               console.log('Error getting image ' + data._id + ' ' + data.name);
@@ -130,11 +153,9 @@ export class NlfOrsEditorFilesComponent implements OnInit {
 
         } else {
           data['isImage'] = false;
+          this.filelist.push(data);
+          data['download'] = this.apiFile.getDirectLink(data._id) + '?token=' + this.token;
         }
-
-        data['download'] = this.apiFile.getDirectLink(data._id) + '?token=' + this.token;
-        this.filelist.push(data);
-
       },
       err => console.log(err)
 
@@ -172,32 +193,33 @@ export class NlfOrsEditorFilesComponent implements OnInit {
   public removeFromFilelist(_id, index) {
 
     this.confirmService.confirm(
-      { title: 'Bekreft sletting',
+      {
+        title: 'Bekreft sletting',
         message: 'Er du sikker du vil slette filen <strong>' + this.filelist[index].name + '</strong> ?',
         yes: 'Slett',
         no: 'Avbryt'
       }).then(
-      () => {
-        this.observation.files.forEach((item, i) => {
-          if (this.observation.files[i]['f'] === _id) {
-            this.observation.files.splice(i, 1);
-          }
-        });
+        () => {
+          this.observation.files.forEach((item, i) => {
+            if (this.observation.files[i]['f'] === _id) {
+              this.observation.files.splice(i, 1);
+            }
+          });
 
-        this.filelist.splice(index, 1);
+          this.filelist.splice(index, 1);
 
-        /**
-        this.thumbnails.forEach((item, i) => {
-          if (this.thumbnails[i]['_id'] === _id) {
-            this.thumbnails.splice(i, 1);
-          }
-        }); */
+          /**
+          this.thumbnails.forEach((item, i) => {
+            if (this.thumbnails[i]['_id'] === _id) {
+              this.thumbnails.splice(i, 1);
+            }
+          }); */
 
-        this.subject.update(this.observation);
-        this.fileChange.emit(true);
-      },
-      () => {}
-    );
+          this.subject.update(this.observation);
+          this.fileChange.emit(true);
+        },
+        () => { }
+      );
 
   }
 
@@ -207,8 +229,8 @@ export class NlfOrsEditorFilesComponent implements OnInit {
 
   /**
    * Todo see if only filelist and index also for src?
-   * @param template 
-   * @param index 
+   * @param template
+   * @param index
    */
   openModal(template: TemplateRef<any>, index) {
 
@@ -301,12 +323,13 @@ export class NlfOrsEditorFilesComponent implements OnInit {
         headers: { 'Authorization': 'Basic ' + this.token },
         file: file,
         data: {
-          ref: 'observations',
+          ref: this.observation._model.type + '_observations',
           ref_id: this.observation._id,
           content_type: file.type,
           name: file.name,
           size: String(file.size),
-          owner: String(this.userid)
+          owner: String(this.userData.person_id),
+          activity: this.observation._model.type // config[observation._model.type].letter/code
         }
       };
 

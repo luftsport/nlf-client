@@ -1,0 +1,26 @@
+  <!-- WHOS GONNA BE NOTIIED? -->
+  <span class="avatar-group avatar-group-sm avatar-group-overlapped mt-10">
+
+    <!-- AVATARS -->
+    <span *ngFor="let person_id of persons; let idx = index">
+      <div *ngIf="max>idx" class="avatar">
+      <nlf-resolve-avatar [person_id]="person_id" [title]="true"></nlf-resolve-avatar>
+      </div>
+    </span>
+    <!-- Max numbers?? -->
+    <div *ngIf="show_remaining && persons.length>max" class="avatar pointer" (click)="nextStep()">
+      <span [ngbTooltip]="persons.length" class="avatar-text avatar-text-green rounded-circle">
+        <span class="initial-wrap"><span>+{{ persons.length-max }}</span></span>
+      </span>
+    </div>
+    
+    <!-- ADD RECEPIENT 
+    <div *ngIf="1==4" class="avatar">
+      <a href="#">
+        <span class="add-new-plus">
+          <fa name="plus"></fa>
+        </span>
+      </a>
+    </div>
+    -->
+  </span>

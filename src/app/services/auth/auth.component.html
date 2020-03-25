@@ -1,68 +1,96 @@
-<div class="nlf-page-center">
+<!--<div class="nlf-page-center">-->
+<div class="text-center">
 
-  <div class="card" style="width: 25rem;">
-    <span class="text-center card-header" style="color: #004365 !important;">
-      <span class="nlf-stack nlf-5x">
-        <i [ngClass]="{'nlf-spin': !!auth.loading}" class="nlf nlf-propeller nlf-propeller-spin nlf-stack-2x text-dark"></i>
-        <i class="nlf nlf-logo-plain nlf-stack-2x text-dark"></i>
-      </span>
-    </span>
-    <div class="card-body">
-      <h5 class="card-title">Login</h5>
-
-      <div *ngIf="!auth.loading">
-        <p class="card-text">Authentication via NLF Auth</p>
-        <a href="{{ env._auth_service }}?client_id={{ env._client_id }}&response_type={{ env._response_type }}&scope={{ env._scope }}&shebang={{ env._shebang }}&redirect_uri={{ _return_uri }}"
-          class="btn btn-lg btn-primary btn-block" type="submit">
-          <fa name="lock" fixed="true"></fa> Logg inn med NLF Auth
-        </a>
-        <p class="small">Hjelp til innlogging</p>
-      </div>
-      <div *ngIf="!!auth.loading">
-          <p class="card-text">Authenticating, please wait...</p>
-      </div>
+  <div class="d-none d-sm-block">
+    <div class="nlf-stack-wide nlf-5x my-2">
+      <i [ngClass]="{'nlf-spin nlf-propeller': !!auth.loading}" class="nlf nlf-stack-2x text-dark"></i>
+      <i class="nlf nlf-logo-plain nlf-stack-2x text-dark"></i>
     </div>
-
-    <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
-
-      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-        <!--<label for="username">Username</label>-->
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text">
-              <fa name="user" fixed="true"></fa>
-            </div>
-          </div>
-          <input placeholder="Username" type="text" class="form-control" name="username" [(ngModel)]="model.username" #username="ngModel"
-            required />
-        </div>
-        <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
-      </div>
-  
-      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-        <!--<label for="password">Password</label>-->
-  
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text">
-              <fa name="lock" fixed="true"></fa>
-            </div>
-          </div>
-          <input placeholder="Password" type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel"
-            required />
-        </div>
-        <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
-      </div>
-      <p></p>
-      <div class="form-group">
-        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
-        />
-  
-        <button [disabled]="!!loading" class="btn btn-block btn-primary pull-right">Login</button>
-  
-      </div>
-  </form>
-  
   </div>
 
+  <div *ngIf="!!auth.loading">
+    <p class="card-text">Authenticating, please wait...</p>
+  </div>
+</div>
+
+
+
+<div *ngIf="!auth.loading">
+  <div class="card mx-auto" style="max-width: 450px; width: 100%">
+
+    <div class="card-header text-center">
+      <h2>Login</h2>
+    </div>
+
+    <div class="card-body text-center">
+      <!-- ALERT OAUTH ERROR-->
+      <div *ngIf="!!oauth_error && !!oauth_error_descr" class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">ERROR {{ oauth_error | split: '_' | join: ' ' | upperfirst }}</h4>
+        <p>{{ oauth_error_descr }}</p>
+        <hr>
+        <p *ngIf="oauth_error=='invalid_request'" class="mb-0">
+          Ta kontakt med administrator, noe er galt med konfigurasjonen
+        </p>
+        <p *ngIf="oauth_error=='unauthorized_client'" class="mb-0">
+          Ta kontakt med administrator, noe er galt med konfigurasjonen
+        </p>
+        <p *ngIf="oauth_error=='access_denied'" class="mb-0">
+          Feil brukernavn og/eller passord eller
+          du er ikke medlem av påkrevd seksjon(er). Forsøk å logge deg inn i https://mi.nif.no
+        </p>
+        <p *ngIf="oauth_error=='unsupported_response_type'" class="mb-0">
+          Ta kontakt med administrator, noe er galt med konfigurasjonen
+        </p>
+        <p *ngIf="oauth_error=='invalid_scope'" class="mb-0">
+          Ta kontakt med administrator, noe er galt med konfigurasjonen
+        </p>
+      </div>
+
+      <!-- LOGIN BTN -->
+      <div *ngIf="!!status && status._status && status.message.mongo>0">
+        <a href="{{ ENV._auth_service }}?client_id={{ ENV._client_id }}&response_type={{ ENV._response_type }}&scope={{ ENV._scope }}&shebang={{ ENV._shebang }}&redirect_uri={{ _return_uri }}" class="btn btn-lg btn-primary btn-block" type="submit">
+          <fa name="lock" [fixed]="true"></fa> Logg inn med NLF Auth
+        </a>
+      </div>
+
+      <ul class="list-group list-group-flush">
+
+        <li class="list-group-item">
+        </li>
+
+        <li class="list-group-item">
+          <!-- MESSAGES -->
+          <div *ngIf="ENV.production" class="alert alert-warning" role="alert">
+            <strong>Fallskjerm</strong> ORS er tilgjengelig via <a href="https://ors.nlf.no">ors.nlf.no</a>
+          </div>
+
+          <!-- DRIFTSSTATUS -->
+          <div *ngIf="!!status">
+            <div *ngIf=" status._status && status.message.mongo > 0" class="alert alert-success" role="alert">
+              <strong>
+                <fa name="check" [fixed]="true"></fa>Status
+              </strong> alle systemer fungerer som normalt
+            </div>
+            <div *ngIf="!status._status || status.message.mongo < 1" class="alert alert-danger" role="alert">
+              <strong>
+                <fa name="exclamation-triangle" [fixed]="true"></fa>Status
+              </strong> det er problemer med noen systemer og det jobbes for å løse det
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          Innlogging skjer via NLF-auth (https://auth.nlf.no)
+        </li>
+        <li class="list-group-item">
+          Du benytter samme brukernavn og passord som ved innlogging i Min Idrett (https://mi.nif.no)
+        </li>
+        <li class="list-group-item">
+          Etter autentisering via NLF-Auth blir du sendt tilbake hit.
+        </li>
+        <li class="list-group-item">
+          <nlf-ui-footer></nlf-ui-footer>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>

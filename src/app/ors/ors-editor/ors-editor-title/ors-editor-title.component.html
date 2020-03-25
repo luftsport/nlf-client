@@ -1,4 +1,5 @@
-<tag-input [(ngModel)]="populated" 
+<tag-input [disabled]="!observation.acl_user.w"
+          [(ngModel)]="populated" 
           (onAdd)="onAdd($event)" 
           (onRemove)="onRemove($event)" 
           theme='bootstrap' 

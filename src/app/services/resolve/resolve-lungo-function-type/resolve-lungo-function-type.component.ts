@@ -13,8 +13,8 @@ export class ResolveLungoFunctionTypeComponent implements OnInit {
 
 
   @Input() type_id: string;
-  @Input() link: boolean;
-  @Input() long: boolean;
+  @Input() link: boolean = false;
+  @Input() long: boolean = false;
 
   function_type: LungoFunctionsTypesItem;
   dataReady = false;

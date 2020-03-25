@@ -1,0 +1,94 @@
+<div fxFlex="100">
+  <agm-map *ngIf="dataReady" (mapReady)="mapReady($event)" (zoomChange)="zoomChanged($event)" (boundsChange)="debouncedBoundsChange($event)"
+    [latitude]="geo.coords.latitude" [longitude]="geo.coords.longitude" [zoom]="zoom">
+
+    <span *ngIf="!!paths">
+      <agm-polygon *ngFor="let poly of paths; trackAirspaces" [paths]="poly.paths" [fillColor]="poly.color"
+        [strokeColor]="poly.color" [fillOpacity]="poly.opacity" [strokeOpacity]="poly.opacity" (polyClick)="polyClicked(poly, mapInfoModal)">
+      </agm-polygon>
+    </span>
+
+    <span *ngIf="!!airports">
+      <agm-marker *ngFor="let airport of airports; trackBy:trackAirport" [iconUrl]="airport_glyphs[airport.type]"
+        [latitude]="airport.location.coordinates[1]" [longitude]="airport.location.coordinates[0]">
+        <agm-info-window [disableAutoPan]="true">
+          <strong>{{ airport.icao }}</strong><br />
+          Name:
+          <a *ngIf="!!airport.home_link" target="_blank" href="{{airport.home_link}}">{{ airport.name }}</a>
+          <span *ngIf="!airport.home_link">{{ airport.name }}</span>
+          <br />
+          Type: {{ airport.type }}<br />
+          <span *ngIf="!!airport.municipality">Municipality: {{ airport.municipality }}<br /></span>
+          <span *ngIf="!!airport.iata_code">IATA: {{ airport.iata_code }}</span>
+        </agm-info-window>
+      </agm-marker>
+
+      <!--[label]="airport.icao"-->
+    </span>
+  </agm-map>
+
+</div>
+
+
+<div *ngIf="!dataReady">
+  <nlf-ui-page-spinner size="5"></nlf-ui-page-spinner>
+</div>
+
+<ng-template #mapInfoModal>
+
+  <div class="modal-header">
+    <h4 class="modal-title">
+      <span [ngClass]="polyInfo.category=='DANGER' ? 'badge-danger':'badge-secondary'" class="badge">
+        {{ polyInfo.category }}
+      </span>
+      {{ polyInfo.name }}
+    </h4>
+
+
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div>
+
+      <dl class="row">
+
+        <dt class="col-sm-3">Center</dt>
+        <dd class="col-sm-9">
+          {{ modalGeo[0] | round: 2 }}, {{ modalGeo[1] | round: 2 }}
+        </dd>
+
+        <dt class="col-sm-3">Category</dt>
+        <dd class="col-sm-9">
+          {{ polyInfo.category | upperfirst }}
+        </dd>
+        <dt class="col-sm-3">Type</dt>
+        <dd class="col-sm-9">
+          {{ polyInfo.type | upperfirst }}
+        </dd>
+        <dt class="col-sm-3">From</dt>
+        <dd class="col-sm-9">
+          {{ polyInfo.altlimit_bottom.altitude }}{{ polyInfo.altlimit_bottom.unit }} {{
+          polyInfo.altlimit_bottom.reference }}
+        </dd>
+        <dt class="col-sm-3">To</dt>
+        <dd class="col-sm-9">
+          {{ polyInfo.altlimit_top.altitude }}{{ polyInfo.altlimit_top.unit }} {{ polyInfo.altlimit_top.reference }}
+        </dd>
+      </dl>
+
+    </div>
+    <div>
+      <agm-map [latitude]="modalGeo[0]" [longitude]="modalGeo[1]" [zoom]="zoom">
+        <agm-polygon [paths]="polyInfo.paths" [fillColor]="polyInfo.color" [strokeColor]="polyInfo.color" [fillOpacity]="polyInfo.opacity"
+          [strokeOpacity]="polyInfo.opacity">
+        </agm-polygon>
+      </agm-map>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="modalRef.dismiss()">Avbryt</button>
+  </div>
+</ng-template>

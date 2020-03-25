@@ -1,12 +1,13 @@
 <div class="btn-group" role="group">
-  <span *ngFor="let key of (config.observation.ask | keys)">
-    <button type="button" [ngClass]="{'btn border':true, 'btn-danger': isNegative(key), 
-                  'btn-secondary': isNeutral(key), 
-                  'btn-success': isPositive(key)}" (click)="flip(key)">{{ config.observation.ask[key]['label'] }}
+  <span *ngFor="let key of (config[observation._model.type].observation.ask | keys)">
+    <button [disabled]="!observation.acl_user.w" type="button" [ngClass]="{'btn border':true, 'btn-danger': isNegative(key),
+                  'btn-secondary': isNeutral(key),
+                  'btn-success': isPositive(key)}" (click)="flip(key)">{{ config[observation._model.type].observation.ask[key]['label'] }}
     </button>
   </span>
 </div>
 <div class="clearfix"></div>
+<nlf-help key="ors-editor-ask"></nlf-help>
 <div *ngIf="verbose">
   <br />
   <ul class="list-unstyled">

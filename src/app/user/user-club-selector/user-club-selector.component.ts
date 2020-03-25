@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { NlfLocalStorageService } from 'app/services/storage/local-storage.service';
 import { ApiOptionsInterface } from 'app/api/api.interface';
 import { ApiNlfClubsService } from 'app/api/api-nlf-clubs.service';
 import { ApiNlfUserService } from 'app/api/api-nlf-user.service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { NlfUserSubjectService } from 'app/user/user-subject.service';
 
 @Component({
   selector: 'nlf-user-club-selector',
@@ -17,6 +17,7 @@ export class NlfUserClubSelectorComponent implements OnInit {
 
   public userClubs: string[];
   public selected: string;
+  private userData;
 
   dataReady = false;
 
@@ -28,8 +29,11 @@ export class NlfUserClubSelectorComponent implements OnInit {
   public submitted: boolean; // keep track on whether form is submitted
   public events: any[] = []; // use later to display form changes
 
-  constructor(private storage: NlfLocalStorageService,
-    private clubService: ApiNlfUserService) {
+  constructor(
+    private userSubject: NlfUserSubjectService,
+    private clubService: ApiNlfUserService
+  ) {
+    this.userSubject.observable.subscribe(userData => this.userData = userData);
 
   }
 
@@ -53,7 +57,8 @@ export class NlfUserClubSelectorComponent implements OnInit {
   public getUserClubs() {
 
     let options: ApiOptionsInterface = { query: { projection: { 'membership.clubs': 1 } } };
-    this.clubService.getUser(this.storage.getId(), options).subscribe(
+
+    this.clubService.getUser(this.userData.person_id, options).subscribe(
       data => {
         console.log('USER SELCTOR');
         console.log(data.membership.clubs);

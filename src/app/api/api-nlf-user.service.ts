@@ -9,9 +9,9 @@ import { ApiOptionsInterface, ApiNlfUserItem, ApiNlfUserList } from './api.inter
 @Injectable()
 export class ApiNlfUserService extends ApiRestService {
 
-  constructor( http: HttpClient ) { super(http); }
-
   private relativeUrl = '/legacy/melwin/users/';
+
+  constructor( http: HttpClient ) { super(http); }
 
   public getUser(id: number, options?: ApiOptionsInterface): Observable<ApiNlfUserItem> {
     return this.getItem(this.relativeUrl, id, options);

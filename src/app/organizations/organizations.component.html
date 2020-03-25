@@ -1,0 +1,51 @@
+<agm-map *ngIf="!!localGeo" [fitBounds]="true" [latitude]="toFloat(localGeo.coordinates[1]||50)" [longitude]="toFloat(localGeo.coordinates[0]||10)" [mapTypeControl]="true" [zoom]="17">
+
+  <!-- Colors: pink, yellow, purple, green, blue
+  <agm-marker *ngIf="!!testLocation" [markerDraggable]="true" (dragEnd)="updateLocation($event)" [latitude]="toFloat(testLocation.geo.coordinates[0])" [longitude]="toFloat(testLocation.geo.coordinates[1])">
+    <agm-info-window>
+      <h4>
+        <fa name="map-marker" [fixed]="true"></fa> Min lokalisajon
+      </h4>
+      <div>lng: {{ testLocation.geo.coordinates[1] }}</div>
+      <div>lat: {{ testLocation.geo.coordinates[0] }}</div>
+    </agm-info-window>
+
+  </agm-marker>
+
+
+  <agm-circle *ngIf="!!testLocation" [latitude]="toFloat(testLocation.geo.coordinates[0])" [longitude]="toFloat(testLocation.geo.coordinates[1])" [radius]="toFloat(2000)" [circleDraggable]="false" [fillColor]="'red'" [editable]="false"
+    [fillOpacity]="toFloat(0.5)">
+  </agm-circle>
+
+   [iconUrl]="idx==0 ? 'http://maps.google.com/mapfiles/ms/icons/green-dot.png' : 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'"
+
+   blue
+   https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m1.png
+   orange
+   https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m2.png
+   red
+   https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m3.png
+   pink
+   https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m4.png
+   pink large
+   https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m5.png
+imagePath="https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m"
+
+-->
+  <agm-marker-cluster imagePath="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m" imageExtension="png">
+    <span *ngFor="let org of orgs;let idx=index; let ll=last">
+      <agm-marker *ngIf="!!org?.contact?.location?.geo" [agmFitBounds]="true" [markerDraggable]="false" [latitude]="toFloat(org.contact.location.geo.coordinates[1])" [longitude]="toFloat(org.contact.location.geo.coordinates[0])">
+        <agm-info-window>
+          <h4>
+            <fa name="map-marker" [fixed]="true"></fa> {{ org.name }}
+          </h4>
+          <div>{{ org.main_activity.name }}</div>
+          <a [routerLink]="['/organizations', org.id]">{{ org.name }}</a>
+
+        </agm-info-window>
+      </agm-marker>
+      <div *ngIf="ll">WEEEEEE {{idx}}</div>
+    </span>
+  </agm-marker-cluster>
+
+</agm-map>

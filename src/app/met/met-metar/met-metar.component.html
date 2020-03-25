@@ -1,0 +1,32 @@
+<span *ngIf="dataReady && !error">
+  <dl>
+    <dt>{{ metar.icao }}</dt>
+    <dd></dd>
+    <dt>Temperature</dt>
+    <dd>{{ metar.metar.temp._value }}&deg;{{ metar.metar.temp._units }}</dd>
+    <dt>Dewpoint</dt>
+    <dd>{{ _get(metar.metar, "dewpt._value","") }}&deg;{{ metar.metar.dewpt._units }}</dd>
+    <dt>Wind</dt>
+    <dd>{{ metar.metar.wind_speed._value || '' }}{{ metar.metar.wind_speed._units || '' }} {{ metar.metar?.wind_dir?._degrees
+            || '' }}&deg; <span *ngIf="!!metar.metar.wind_dir_from && !!metar.metar.wind_dir_to">({{
+                metar.metar.wind_dir_from._degrees || '' }}-{{ metar.metar.wind_dir_to._degrees || '' }})</span></dd>
+    <dd *ngIf="!!metar.metar.wind_gust">
+      {{ metar.metar.wind_gust._gtlt || '' }} {{ metar.metar.wind_gust._value || '' }} {{ metar.metar.wind_gust._units || '' }}
+    </dd>
+    <dt>Pressure</dt>
+    <dd>{{ metar.metar.press._value }}{{ metar.metar.press._units }}</dd>
+    <dt>Visibility</dt>
+    <dd>{{ metar.metar.vis._gtlt }}{{ metar.metar.vis._value }}{{ metar.metar.vis._units }}</dd>
+    <dt>Cloud</dt>
+    <dd *ngFor="let sky of metar.metar.sky">
+      {{ _get(sky, "[0]","") }} {{ _get(sky, "[1]['_value']", "") }}{{ _get(sky, "[1]['_units']", "") }} {{ _get(sky, "[2]", "") }}
+    </dd>
+    <dt>Code</dt>
+    <dd>{{ metar.metar.code }}</dd>
+  </dl>
+  <small class="text-muted">Last updated {{ metar.metar.time | amTimeAgo }}</small>
+</span>
+<nlf-ui-component-spinner *ngIf="!dataReady && !error"></nlf-ui-component-spinner>
+<div *ngIf="!!error">
+  <span class="alert alert-danger">{{ error }}</span>
+</div>

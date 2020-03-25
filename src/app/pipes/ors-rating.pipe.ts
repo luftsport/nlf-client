@@ -1,16 +1,26 @@
 import { Pipe, PipeTransform, Inject, Input } from '@angular/core';
-import { NLF_CONFIG, NlfConfig } from 'app/nlf-config.module';
+import { NlfConfigService } from 'app/nlf-config.service';
+import { NlfConfigItem } from 'app/api/api.interface';
 
 @Pipe({
   name: 'nlfOrsRating'
 })
 export class NlfOrsRatingPipe implements PipeTransform {
 
-  constructor(@Inject(NLF_CONFIG) private config: NlfConfig) {};
+  public config: NlfConfigItem;
 
-  transform(rating: any): any {
+  constructor(private configService: NlfConfigService) {
+    this.configService.observableConfig.subscribe(
+      data => {
+        this.config = data;
+      }
+    );
+
+  }
+
+  transform(rating: number, activity: string): any {
     if (rating > 0 && rating < 9) {
-      return this.config.observation.rating[rating]['label'];
+      return this.config[activity].observation.rating[rating]['label'];
     }
   }
 

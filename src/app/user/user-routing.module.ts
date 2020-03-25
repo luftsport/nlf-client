@@ -5,7 +5,7 @@ import { NlfAuthGuard } from 'app/services/auth/auth.guard';
 import { NlfUserProfileComponent } from './user-profile/user-profile.component';
 
 const nlfUserRoutes: Routes = [{ path: 'user/profile', component: NlfUserComponent, canActivate: [NlfAuthGuard]},
-                               { path: 'user/:userid', component: NlfUserProfileComponent, canActivate: [NlfAuthGuard]}];
+                               { path: 'user/:person_id', component: NlfUserProfileComponent, canActivate: [NlfAuthGuard]}];
 
 
 @NgModule({

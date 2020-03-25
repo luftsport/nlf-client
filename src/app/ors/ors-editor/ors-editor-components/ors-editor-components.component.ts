@@ -1,23 +1,22 @@
 
-import { Component, OnInit, Inject, TemplateRef, OnDestroy } from '@angular/core';
-import { ApiOptionsInterface, ApiObservationsItem, ApiTagList } from 'app/api/api.interface';
+import { Component, OnInit, Inject, TemplateRef, OnDestroy, Input } from '@angular/core';
+import { ApiOptionsInterface, ApiObservationsItem, ApiTagList, ApiTagItem, NlfConfigItem } from 'app/api/api.interface';
 import { ApiTagsService } from 'app/api/api-tags.service';
 import { NlfOrsEditorInvolvedService, NlfOrsEditorInvolvedInterface } from '../ors-editor-involved.service';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
-import { NlfConfig, NLF_CONFIG } from 'app/nlf-config.module';
+import { NlfConfigService } from 'app/nlf-config.service';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { map, debounceTime, switchMap, distinctUntilChanged } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { distinctUntilChanged, debounceTime, switchMap, tap, catchError, map } from 'rxjs/operators';
+import { Subject, Observable, of, concat } from 'rxjs';
+
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-
-
-
 
 @Component({
   selector: 'nlf-ors-editor-components',
   templateUrl: './ors-editor-components.component.html',
   styleUrls: ['./ors-editor-components.component.css']
+  //, './tag-input.scss']
 })
 export class NlfOrsEditorComponentsComponent implements OnInit, OnDestroy {
 
@@ -28,70 +27,114 @@ export class NlfOrsEditorComponentsComponent implements OnInit, OnDestroy {
   incidents = [];
   consequences = [];
 
-  incidentTags = [];
+  // Async Items
+  tagsCauses$: Observable<ApiTagItem[]> | ApiTagItem[];
+  tagsCausesLoading = false;
+  tagsCausesInput$ = new Subject<string>();
+  selectedCausesTags: [ApiTagItem[]] = [<any>[]];
 
-  item = ['test', 'wrong', 'fuck'];
-  formatter;
-  search;
+  tagsIncidents$: Observable<ApiTagItem[]> | ApiTagItem[];
+  tagsIncidentsLoading = false;
+  tagsIncidentsInput$ = new Subject<string>();
+  selectedIncidentsTags: [ApiTagItem[]] = [<any>[]];
 
+  tagsConsequences$: Observable<ApiTagItem[]> | ApiTagItem[];
+  tagsConsequencesLoading = false;
+  tagsConsequencesInput$ = new Subject<string>();
+  selectedConsequencesTags: [ApiTagItem[]] = [<any>[]];
+
+  // Where at
+
+  tagsWhereAt$: Observable<ApiTagItem[]> | ApiTagItem[];
+  tagsWhereAtLoading = false;
+  tagsWhereAtInput$ = new Subject<string>();
+
+  // Person modal
   modalRef;
   modalComponent;
 
+  components;
+
+  public config: NlfConfigItem;
+
+
   constructor(
-    @Inject(NLF_CONFIG) public config: NlfConfig,
+    private configService: NlfConfigService,
     private observationSubject: NlfOrsEditorService,
     private involvedSubject: NlfOrsEditorInvolvedService,
     private tagService: ApiTagsService,
-    private modalService: NgbModal) {
+    private modalService: NgbModal,
+    //private tagifyService: TagifyService
+  ) {
 
     this.involvedSubject.currentArr.subscribe(involved => this.involved = involved);
 
     this.observationSubject.observableObservation.subscribe(observation => {
       this.observation = observation;
 
-      this.causes = this.observation.components.filter(
-        component => component.flags.cause === true
-      );
-      console.log('Causes', this.causes);
+      // Only on changed components!
+      if (this.components !== observation.components || this.observation.involved !== observation.involved) {
 
-      this.incidents = this.observation.components.filter(
-        component => component.flags.incident === true
-      );
+        this.causes = this.observation.components.filter(
+          component => component.flags.cause === true
+        );
+        console.log('Causes', this.causes);
 
-      // @TODO: When is this.involved finished?
-      if (this.incidents.length === 0) {
-        setTimeout(() => {
-          this.incidents.push({ what: '', flags: { incident: true }, involved: this.getInvolved(), attributes: {} });
-        }, 300);
+        this.incidents = this.observation.components.filter(
+          component => component.flags.incident === true
+        );
+        if (this.incidents.length === 0) {
+          setTimeout(() => {
+            this.incidents.push({
+              what: '',
+              flags: { incident: true },
+              involved: this.getInvolved(),
+              where: { at: undefined, altitude: undefined },
+              attributes: {}
+            });
+          }, 300);
+        }
+        console.log('Incident', this.incidents);
+
+        this.consequences = this.observation.components.filter(
+          component => component.flags.consequence === true
+        );
+        console.log('Consequences', this.consequences);
       }
-
-      console.log('Incident', this.incidents);
-
-      this.consequences = this.observation.components.filter(
-        component => component.flags.consequence === true
-      );
-      console.log('Consequences', this.consequences);
+      this.components = observation.components;
 
     });
-
-
-    // Searcher
-    this.formatter = (x: { tag: string }) => x.tag;
-
-    this.search = (text: Observable<string>) =>
-      text.pipe(switchMap(term =>
-        this.getTags(term).pipe(debounceTime(500),
-          distinctUntilChanged(),
-          map(r => r._items.length === 0 ? [] : r._items)) // .map(r => r.tag)
-      ));
-
   }
 
 
-
   ngOnInit() {
+    // Preload tags
+    this.configService.observableConfig.subscribe(
+      data => {
+        this.config = data;
+        if (this.observation.acl_user.w) {
+          this.preloadIncidentsTags();
+          this.preloadCausesTags();
+          this.preloadConsequencesTags();
+          this.preloadWhereAtTags();
+        }
+      }
+    );
 
+  }
 
+  toggleBarrier(target, index) {
+    if (this.observation.acl_user.w) {
+      if (target === 'causes') {
+        this.causes[index].flags.barrier = !!!this.causes[index].flags.barrier;
+      } else if (target === 'incidents') {
+        this.incidents[index].flags.barrier = !!!this.incidents[index].flags.barrier;
+      } else if (target === 'consequences') {
+        this.consequences[index].flags.barrier = !!!this.consequences[index].flags.barrier;
+      }
+
+      this.updateObservation();
+    }
   }
 
   ngOnDestroy() {
@@ -100,23 +143,12 @@ export class NlfOrsEditorComponentsComponent implements OnInit, OnDestroy {
     } catch (e) {
 
     }
+    // this.tagifyService.destroy();
   }
 
   getInvolved() {
-    console.log('Get inv:', this.involved.map(inv => ({ id: inv['id'], tmpname: inv['tmpname'] })));
-    return this.involved.map(inv => ({ id: inv['id'], tmpname: inv['tmpname'] }));
-  }
-
-  getTags(term): Observable<any> {
-    const options: ApiOptionsInterface = {
-      query: {
-        where: { '$text': { '$search': term }, group: 'component.what.cause', freq: { '$gte': 0 } },
-        sort: [{ freq: -1 }, { tag: 1 }],
-        max_results: 5000
-      }
-    };
-    return this.tagService.getTags(options); // .subscribe(data => this.apidata = data._items);
-
+    console.log('Get inv:', this.involved.map(inv => ({ id: inv['id'], tmp_name: inv['tmp_name'] })));
+    return this.involved.map(inv => ({ id: inv['id'], tmp_name: inv['tmp_name'] }));
   }
 
   onSelect(event) {
@@ -178,7 +210,7 @@ export class NlfOrsEditorComponentsComponent implements OnInit, OnDestroy {
 
     if (focus) {
       setTimeout(() => {
-        const focusEl: any = document.querySelector('input[id=focuscause]');
+        const focusEl: any = document.querySelector('#focuscause').querySelector('input');
         focusEl.focus();
       }, 250);
     }
@@ -187,13 +219,17 @@ export class NlfOrsEditorComponentsComponent implements OnInit, OnDestroy {
   }
 
   removeCause(index) {
-    this.causes.splice(index, 1);
-    this.updateObservation();
+    if (this.observation.acl_user.w) {
+      this.causes.splice(index, 1);
+      this.updateObservation();
+    }
   }
 
   removeConsequence(index) {
-    this.consequences.splice(index, 1);
-    this.updateObservation();
+    if (this.observation.acl_user.w) {
+      this.consequences.splice(index, 1);
+      this.updateObservation();
+    }
   }
 
   addConsequence(focus = true) {
@@ -205,7 +241,7 @@ export class NlfOrsEditorComponentsComponent implements OnInit, OnDestroy {
 
     if (focus) {
       setTimeout(() => {
-        const focusEl: any = document.querySelector('input[id=focusconsequence]');
+        const focusEl: any = document.querySelector('#focusconsequence').querySelector('input');
         focusEl.focus();
       }, 250);
     }
@@ -213,15 +249,15 @@ export class NlfOrsEditorComponentsComponent implements OnInit, OnDestroy {
     this.updateObservation();
   }
 
-  onAddWhat(event, target, index) {
-    console.log('Add', event, target, index);
+  onAddWhat(value, target, index) {
+    console.log('Add', value, target, index);
     if (target === 'cause') {
-      this.causes[index].what = event.value;
+      this.causes[index].what = value;
 
       this.addCause();
 
     } else if (target === 'incident') {
-      this.incidents[index].what = event.value;
+      this.incidents[index].what = value;
 
       // Add casue on add incident
       if (this.causes.length === 0) {
@@ -232,14 +268,14 @@ export class NlfOrsEditorComponentsComponent implements OnInit, OnDestroy {
       }
 
     } else if (target === 'consequence') {
-      this.consequences[index].what = event.value;
+      this.consequences[index].what = value;
 
       this.addConsequence();
     }
     this.updateObservation();
   }
-  onRemoveWhat(event, target, index) {
-    console.log('Del', event, target, index);
+  onRemoveWhat(target, index) {
+    console.log('Del', target, index);
 
     if (target === 'cause') {
       this.causes[index].what = undefined;
@@ -250,6 +286,132 @@ export class NlfOrsEditorComponentsComponent implements OnInit, OnDestroy {
     }
     this.updateObservation();
   }
+
+  /**
+   * Add new tag
+   * @param event full tag
+   * @param target cause | incident | consequence
+   * @param index index in respective array
+   */
+  public onAdd(event, target, index) {
+
+    if (event.hasOwnProperty('_id')) {
+      this.tagService.freq(event._id, 1).subscribe(() => { });
+    } else {
+      this.tagService.create({ tag: event.tag, group: 'component.what.' + target, activity: this.observation._model.type })
+        .subscribe(
+          result => {
+            if (target === 'causes') {
+              this.selectedCausesTags[index] = [{ _id: result._id, tag: event.tag }];
+            } else if (target === 'incidents') {
+              this.selectedIncidentsTags[index] = [{ _id: result._id, tag: event.tag }];
+            } else if (target === 'consequences') {
+              this.selectedConsequencesTags[index] = [{ _id: result._id, tag: event.tag }];
+            }
+          },
+          err => console.log('Error updating tag')
+        );
+    }
+
+  }
+
+  public onRemove(event, target, index) {
+    if (event.hasOwnProperty('_id')) {
+      this.tagService.freq(event._id, -1).subscribe(() => { });
+    }
+    this.onRemoveWhat(target, index);
+  }
+
+  public onChange(event, target, index) {
+    console.log('Changed', event, target, index);
+    //this.onAddWhat(event.tag, target, index);
+    if (typeof event === 'undefined') {
+      this.onRemoveWhat(target, index);
+    } else {
+      this.onAddWhat(event.tag, target, index);
+    }
+
+  }
+
+  //////// P R E L O A D ////////
+  private preloadCausesTags() {
+    let a: ApiTagItem[];
+    this.tagsCauses$ = this.tagService.getTags({
+      query: {
+        where: {
+          activity: this.observation._model.type,
+          group: 'component.what.cause',
+          freq: { $gte: 0 }
+        },
+        sort: [{ freq: -1 }],
+        max_results: 1000
+      }
+    }).pipe(
+      map((r) => a = r._items),
+      catchError(() => of([])), // empty list on error
+      tap(() => this.tagsCausesLoading = false)
+    );
+  }
+
+  private preloadIncidentsTags() {
+    let a: ApiTagItem[];
+    this.tagsIncidents$ = this.tagService.getTags({
+      query: {
+        where: {
+          activity: this.observation._model.type,
+          group: 'component.what.incident',
+          freq: { $gte: 0 }
+        },
+        sort: [{ freq: -1 }],
+        max_results: 1000
+      }
+    }).pipe(
+      map((r) => a = r._items),
+      catchError(() => of([])), // empty list on error
+      tap(() => this.tagsIncidentsLoading = false)
+    );
+  }
+
+
+  private preloadConsequencesTags() {
+    let a: ApiTagItem[];
+    this.tagsConsequences$ = this.tagService.getTags({
+      query: {
+        where: {
+          activity: this.observation._model.type,
+          group: 'component.what.consequence',
+          freq: { $gte: 0 }
+        },
+        sort: [{ freq: -1 }],
+        max_results: 1000
+      }
+    }).pipe(
+      map((r) => a = r._items),
+      catchError(() => of([])), // empty list on error
+      tap(() => this.tagsConsequencesLoading = false)
+    );
+  }
+
+  private preloadWhereAtTags() {
+    let a: ApiTagItem[];
+    this.tagsWhereAt$ = this.tagService.getTags({
+      query: {
+        where: {
+          activity: this.observation._model.type,
+          group: 'where-at',
+          freq: { $gte: 0 }
+        },
+        sort: [{ freq: -1 }],
+        max_results: 1000
+      }
+    }).pipe(
+      map((r) => a = r._items),
+      catchError(() => of([])), // empty list on error
+      tap(() => this.tagsWhereAtLoading = false)
+    );
+  }
+
+  /////// M O D A L ///////
 
   openModal(template: TemplateRef<any>, target, index) {
 
@@ -276,9 +438,8 @@ export class NlfOrsEditorComponentsComponent implements OnInit, OnDestroy {
     // this.modalComponent.asObservable
 
     // If not component involved in global involved, remove @TODO put map outside
-    this.modalComponent.data.involved.forEach((id, i) => {
-      const pindex = this.involved.map(p => p.id).indexOf(id);
-      if (pindex < 0) {
+    this.modalComponent.data.involved.forEach((involved, i) => {
+      if (this.involved.map(p => p.id).indexOf(involved.id) < 0) {
         this.modalComponent.data.involved.splice(i, 1);
       }
     });
@@ -303,22 +464,38 @@ export class NlfOrsEditorComponentsComponent implements OnInit, OnDestroy {
   // Toggle involved
   modalToggleInvolved(person) {
     const index = this.modalComponent.data.involved.map(i => i.id).indexOf(person.id);
-    console.log('Index involved', index);
     if (index > -1) {
       // id in involved, remove it!
       this.modalComponent.data.involved.splice(index, 1);
 
     } else if (index < 0) {
-      if (!!person.tmpname) {
-        this.modalComponent.data.involved.push({ id: person.id, tmpname: person.tmpname });
+      if (!!person.tmp_name) {
+        this.modalComponent.data.involved.push({ id: person.id, tmp_name: person.tmp_name });
       } else {
         this.modalComponent.data.involved.push({ id: person.id });
       }
     }
   }
 
+  modalWhereAtUpdate(event) {
+    console.log('Modal where at', event);
+    if (event.hasOwnProperty('_id')) {
+      this.tagService.freq(event._id, 1).subscribe(() => {
+        this.modalComponent.data.where.at = event.tag;
+      });
+    } else {
+      this.tagService.create({ tag: event.tag, group: 'where-at', activity: this.observation._model.type })
+        .subscribe(
+          result => {
+            this.modalComponent.data.where.at = event.tag;
+          },
+          err => console.log('Error updating tag')
+        );
+    }
+  }
+
   getModalInvolvedIndex(id) {
-    return this.modalComponent.data.involved.map(involved => involved.id).indexOf(id)
+    return this.modalComponent.data.involved.map(involved => involved.id).indexOf(id);
   }
 
   modalToggleAttributes(key, value) {

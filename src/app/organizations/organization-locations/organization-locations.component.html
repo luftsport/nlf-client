@@ -1,0 +1,194 @@
+<div *ngIf="!!org">
+  <div class="container">
+    <div class="row mt-3">
+
+      <div class="d-flex col-md-4 flex-column">
+
+        <h4>Steder</h4>
+
+        <div cdkDropList (cdkDropListDropped)="drop($event)">
+
+          <div class="my-2" *ngFor="let location of org.locations;let idx=index" cdkDrag>
+            <!--<a [routerLink]="['/organizations', org.id, 'location', 'edit', idx]">{{ location.nickname}}</a>-->
+            <span class="pointer" cdkDragHandle>
+              <fa name="arrows-alt" [fixed]="true"></fa>
+            </span>
+            <span class="pointer ml-1 mr-3" (click)="goTo(location)">{{ location.nickname }} <span *ngIf="idx==0"> (default)</span></span>
+            <fa class="pointer mr-1" name="times" (click)="deleteLocation(idx)"></fa>
+            <fa class="pointer" name="edit" (click)="openModal(modal, idx)"></fa>
+          </div>
+
+
+        </div>
+        <button *ngIf="currentLocation!=userGeo" class="btn btn-link" (click)="mapReset()"><fa name="crosshairs"></fa> reset kart</button>
+        <button class="btn btn-block btn-primary mt-auto my-3" (click)="openModal(modal, org.locations.length)">
+          <fa name="plus" [fixed]="true"></fa> Nytt sted
+        </button>
+
+        <div class="mt-auto my-3" *ngIf="!!returl">
+          <a class="btn btn-block btn-secondary" [routerLink]="returl">
+            <fa name="refresh"></fa> Tilbake
+          </a>
+        </div>
+      </div>
+
+      <div class="col-md-8 map-full-content">
+
+        <agm-map *ngIf="!!currentLocation" [fitBounds]="fitBounds" [latitude]="toFloat(currentLocation.geo.coordinates[0])" [longitude]="toFloat(currentLocation.geo.coordinates[1])" (mapClick)="updateLocation($event)" [mapTypeControl]="true" [zoom]="zoom">
+
+          <!-- Colors: pink, yellow, purple, green, blue
+          <agm-marker *ngIf="!!currentLocation" [markerDraggable]="true" (dragEnd)="updateLocation($event)" [latitude]="toFloat(currentLocation.geo.coordinates[0])" [longitude]="toFloat(currentLocation.geo.coordinates[1])">
+            <agm-info-window>
+              <h4>
+                <fa name="map-marker" [fixed]="true"></fa> Min lokalisajon
+              </h4>
+              <div>lng: {{ currentLocation.geo.coordinates[1] }}</div>
+              <div>lat: {{ currentLocation.geo.coordinates[0] }}</div>
+            </agm-info-window>
+
+          </agm-marker>
+           -->
+
+          <agm-circle *ngIf="!!currentLocation" [latitude]="toFloat(currentLocation.geo.coordinates[0])" [longitude]="toFloat(currentLocation.geo.coordinates[1])" [radius]="toFloat(2000)" [circleDraggable]="false" [fillColor]="'red'" [editable]="false"
+            [fillOpacity]="toFloat(0.25)">
+          </agm-circle>
+
+          <span *ngFor="let location of org.locations;let idx=index">
+            <agm-marker *ngIf="!!location?.geo" [agmFitBounds]="true" [iconUrl]="idx==0 ? 'http://maps.google.com/mapfiles/ms/icons/green-dot.png' : 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'" [markerDraggable]="false"
+              (dragEnd)="updateLocation($event)" [latitude]="toFloat(location.geo.coordinates[0])" [longitude]="toFloat(location.geo.coordinates[1])">
+              <agm-info-window>
+                <h4>
+                  <fa name="map-marker" [fixed]="true"></fa> {{ location.name }}
+                </h4>
+                <div *ngIf="idx==0"><strong>Default</strong></div>
+                <div>{{ location.municipality }}</div>
+                <div>{{ location.county }}</div>
+                <div>{{ location.geo_type }}</div>
+              </agm-info-window>
+            </agm-marker>
+          </span>
+
+        </agm-map>
+
+      </div>
+
+    </div>
+
+
+  </div>
+</div>
+
+<!-- MODAL -->
+<ng-template #modal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      <fa name="map-marker"></fa> {{ modalValue.nickname }} <span class="ml-2 small" *ngIf="modalIndex==0">default</span>
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+
+    <div class="col-xs-12" *ngIf="!!modalValue">
+
+      <agm-map [latitude]="toFloat(modalValue.geo.coordinates[0])" [longitude]="toFloat(modalValue.geo.coordinates[1])" (mapClick)="updateLocation($event)" [mapTypeControl]="true" [zoom]="14">
+
+        <!-- Colors: pink, yellow, purple, green, blue -->
+        <agm-marker [markerDraggable]="true" (dragEnd)="updateLocation($event)" [latitude]="toFloat(modalValue.geo.coordinates[0])" [longitude]="toFloat(modalValue.geo.coordinates[1])">
+        </agm-marker>
+      </agm-map>
+    </div>
+
+    <div class="col-xs-12">
+      <div class="form-row w-100">
+        <div class="form-group w-100">
+          <label for="locations-id">Søk etter stedsnavn</label>
+          <location-select [(locationItem)]="modalValue" [clearable]="false" (change)="onLocationSelected($event)" id="locations-id" [details]="true" [fc]="false"></location-select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="nickname">Navn</label>
+          <input class="form-control" type="string" id="nickname" [(ngModel)]="modalValue.nickname">
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="type">Type sted</label>
+          <!--[attr.disabled]="!observation.acl_user.w ? '' : null"-->
+          <select id="type" class="form-control" [(ngModel)]="modalValue.type">
+            <option *ngFor="let type of types" [ngValue]="type.key">
+              {{ type.val }}
+            </option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="form-row w-100">
+        <div class="form-group w-100">
+          <label for="icao">Søk etter flyplass</label>
+          <nlf-ors-editor-tag-airport [(airport)]="modalValue.icao" id="icao"></nlf-ors-editor-tag-airport>
+        </div>
+      </div>
+
+      <!--
+      @Input() airport: ApiAirport;
+      @Output() airportChange: EventEmitter<ApiAirport> = new EventEmitter();
+      @Output() change: EventEmitter<boolean> = new EventEmitter();
+      @Input() disabled = false;
+      @Input() element_id = '';
+      @Input() fc = false;
+
+    -->
+
+      <!--
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="municipality">Kommune</label>
+          <input class="form-control" type="string" id="municipality" [(ngModel)]="modalValue.municipality">
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="county">Fylke</label>
+          <input class="form-control" type="string" id="county" [(ngModel)]="modalValue.county">
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="geo_type">Geo Type</label>
+          <input class="form-control" type="string" id="geo_type" [(ngModel)]="modalValue.geo_type">
+        </div>
+      </div>
+      -->
+
+    </div>
+
+    <!--
+      @TODO add some sort of type "landingsområde" etc
+      <div>
+      <nlf-ors-editor-tag [initialTags]="locationTypes" [activity]="fallskjerm" group="location-type"></nlf-ors-editor-tag>
+      {{ locationTypes | json }}
+      </div>
+      -->
+
+
+    <!--
+    <pre class="clearfix">
+    {{ modalValue | json }}
+    </pre>
+    -->
+
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="modalRef.close()">
+      <fa name="times" [fixed]="true"></fa>Avbryt
+    </button>
+    <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate(modalIndex)">
+      <fa name="check" [fixed]="true"></fa>Oppdater
+    </button>
+  </div>
+</ng-template>

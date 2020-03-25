@@ -1,0 +1,93 @@
+<div *ngIf="!showOnlyBtn" class="row">
+  <div class="col-md-3">
+    <button class="btn btn-primary btn-block" (click)="openModal(modal)">
+      <fa name="cloud" [fixed]="true"></fa>Weather
+    </button>
+  </div>
+  <div class="col-md-9">
+
+    <!-- ATTR SHOW -->
+    <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="attr.wxConditions.value" path="E5X.Occurrence.WxConditions"></nlf-ors-editor-tag-e5x-render>
+
+  </div>
+</div>
+
+<div *ngIf="showOnlyBtn">
+  <button class="btn btn-secondary btn-block" (click)="openModal(attrModal)">
+    <fa name="cloud" [fixed]="true"></fa>Weather
+  </button>
+</div>
+
+<!-- MODAL -->
+<ng-template #attrModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      Weather conditions at occurrence
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+
+    <div class="row">
+
+      <div class="col-md-12">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.wxConditions.value" path="E5X.Occurrence.WxConditions" id="WxConditions"></nlf-ors-editor-tag-e5x>
+      </div>
+
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.lightConditions.value" path="E5X.Occurrence.LightConditions" id="LightConditions"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.visibility.value" path="E5X.Occurrence.Visibility" id="Visibility"></nlf-ors-editor-tag-e5x>
+      </div>
+
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.heightOfCloudBase.value" path="E5X.Occurrence.HeightOfCloudBase" id="HeightOfCloudBase"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.cloudAmount.value" path="E5X.Occurrence.CloudAmount" id="CloudAmount"></nlf-ors-editor-tag-e5x>
+      </div>
+
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.airTemperature.value" path="E5X.Occurrence.AirTemperature" id="AirTemperature"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.dewPoint.value" path="E5X.Occurrence.DewPoint" id="DewPoint"></nlf-ors-editor-tag-e5x>
+      </div>
+
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.windSpeed.value" path="E5X.Occurrence.WindSpeed" id="WindSpeed"></nlf-ors-editor-tag-e5x>
+      </div>
+
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.windDirection.value" path="E5X.Occurrence.WindDirection" id="WindDirection"></nlf-ors-editor-tag-e5x>
+      </div>
+
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.windGusts.value" path="E5X.Occurrence.WindGusts" id="WindGusts"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.maximumGust.value" path="E5X.Occurrence.MaximumGust" id="MaximumGust"></nlf-ors-editor-tag-e5x>
+      </div>
+
+      <div *ngIf="devDebug" class="row">
+        AC: {{ attr | json }}
+      </div>
+
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="modalRef.close()">
+      <fa name="times" [fixed]="true"></fa>Avbryt
+    </button>
+    <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate(modalIndex)">
+      <fa name="check" [fixed]="true"></fa>Oppdater
+    </button>
+  </div>
+
+</ng-template>

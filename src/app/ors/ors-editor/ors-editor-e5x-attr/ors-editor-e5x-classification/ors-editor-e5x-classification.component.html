@@ -1,0 +1,81 @@
+<div *ngIf="!modal" class="col-xs-12 col-md-12">
+
+  <div class="row">
+    <div class="col-md-6">
+      <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="debouncedUpdate()" [(items)]="attr.occurrenceClass.value" path="E5X.Occurrence.OccurrenceClass" id="OccurrenceClass"></nlf-ors-editor-tag-e5x>
+    </div>
+
+    <div class="col-md-6">
+      <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="debouncedUpdate()" [(items)]="attr.detectionPhase.value" path="E5X.Occurrence.DetectionPhase" id="DetectionPhase"></nlf-ors-editor-tag-e5x>
+    </div>
+
+    <div class="col-md-12">
+
+      <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="debouncedUpdate()" [(items)]="attr.occurrenceCategory.value" path="E5X.Occurrence.OccurrenceCategory" id="OccurrenceCategory"></nlf-ors-editor-tag-e5x>
+
+    </div>
+
+    <div *ngIf="devDebug" class="row">
+      AC: {{ attr | json }}
+    </div>
+
+  </div>
+</div>
+
+<div *ngIf="modal">
+  <button class="btn btn-info btn-block" (click)="openModal(modal)">
+    <fa name="check" class="text-secondary" *ngIf="!!attr  && !!attr.occurrenceClass.value"></fa>
+    Classification
+  </button>
+
+  <!-- ROUTE MODAL -->
+  <ng-template #modal>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">
+        Classification
+      </h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+
+
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+
+          <div class="row">
+            <div class="col-md-6">
+              <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.occurrenceClass.value" path="E5X.Occurrence.OccurrenceClass" id="OccurrenceClass"></nlf-ors-editor-tag-e5x>
+            </div>
+
+            <div class="col-md-6">
+              <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.detectionPhase.value" path="E5X.Occurrence.DetectionPhase" id="DetectionPhase"></nlf-ors-editor-tag-e5x>
+            </div>
+
+            <div class="col-md-12">
+              <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.occurrenceCategory.value" path="E5X.Occurrence.OccurrenceCategory"
+                id="OccurrenceCategory"></nlf-ors-editor-tag-e5x>
+
+            </div>
+
+            <div *ngIf="devDebug" class="row">
+              AC: {{ attr | json }}
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-outline-dark" (click)="modalRef.close()">
+        <fa name="times" [fixed]="true"></fa>Avbryt
+      </button>
+      <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate(modalIndex)">
+        <fa name="check" [fixed]="true"></fa>Oppdater
+      </button>
+    </div>
+  </ng-template>
+</div>

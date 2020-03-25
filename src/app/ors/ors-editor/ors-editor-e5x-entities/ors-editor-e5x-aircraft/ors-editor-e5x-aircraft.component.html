@@ -1,0 +1,152 @@
+<!--
+<tag-input [disabled]="!observation.acl_user.w"
+          [(ngModel)]="populated"
+          (onAdd)="onAdd($event)"
+          (onRemove)="onRemove($event)"
+          theme='bootstrap'
+          [onlyFromAutocomplete]="false"
+          [displayBy]="'callsign'"
+          [identifyBy]="'callsign'">
+
+  <tag-input-dropdown
+    [showDropdownIfEmpty]="false"
+    keepOpen="false"
+    [displayBy]="'callsign'"
+    [identifyBy]="'callsign'"
+    [autocompleteItems]="apidata">
+  </tag-input-dropdown>
+</tag-input>
+
+(add)="onAdd($event)"
+(remove)="onRemove($event)"
+(clear)="onClear($event)"
+-->
+
+<!-- Select aircraft from register -->
+<div class="row">
+  <div class="col-md-10 col-sm-8">
+    <ng-select [disabled]="!observation.acl_user.w" class="w-auto mw-100 form-control" [items]="aircrafts$ | async" [clearable]="false" [clearOnBackspace]="false" [addTag]="false" [multiple]="true" [hideSelected]="true" [loading]="tagsLoading"
+      [typeahead]="aircraftInput$" [(ngModel)]="selectedAircrafts" (add)="onAdd($event)" (remove)="onRemove($event)" bindLabel="callsign" labelForId="callsign" autoCapitalize="on" addTagText="+Opprett nytt fly" placeholder="Skriv for å søke"
+      notFoundText="Fant ikke noe">
+      <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+        <div>
+          <span [ngOptionHighlight]="search">{{item.callsign}}</span>
+        </div>
+        <small><b>Model:</b> {{item.model}} | <b>Manuf:</b> {{ item.manufacturer }} | <b>Msn:</b> {{ item.msn }}</small>
+      </ng-template>
+    </ng-select>
+  </div>
+  <!-- ADD new aircraft -->
+  <div *ngIf="observation.acl_user.w" class="col-md-2 col-sm-4 text-right">
+    <nlf-aircrafts-add></nlf-aircrafts-add>
+  </div>
+</div>
+<!-- Aircraft TABLE -->
+<table *ngIf="!!observation.aircrafts" class="table table-striped table-hover mt-2">
+  <tr *ngFor="let aircraft of observation.aircrafts; let idx = index">
+    <td>
+
+      <fa *ngIf="!!aircraft.aircraft._id" name="check" fw="true" class="text-success mr-2" title="Hentet fra flyregisteret"></fa>
+      <fa *ngIf="!aircraft.aircraft.hasOwnProperty('_id')" name="check" fw="exclamation" class="text-danger mr-2" title="Ukjent fly"></fa>
+
+      <fa *ngIf="aircraft.aircraft.type !== 'HELICOPTER'" name="airplane" fw="true"></fa>
+      <fa *ngIf="aircraft.aircraft.type === 'HELICOPTER'" name="helicopter" fw="true"></fa>
+      <strong>
+        {{ aircraft.aircraft.callsign }}
+      </strong>
+      <div class="small">{{ aircraft.aircraft.model }} / {{ aircraft.aircraft.manufacturer }}</div>
+      <div class="small">MSN: {{ aircraft.aircraft.msn }}</div>
+      <div class="small">{{ aircraft.aircraft.type | capitalize }}</div>
+    </td>
+    <td>
+      <div *ngIf="!aircraft.aircraft.e5x">
+        <button class="btn btn-secondary" (click)="openAircraftModal(aircraftModal, idx)">
+          <fa name="warning" [fixed]="true"></fa>Aircraft Data
+        </button>
+      </div>
+      <div *ngIf="!!aircraft.aircraft.e5x">
+        <button class="btn btn-success mb-3" (click)="openAircraftModal(aircraftModal, idx)">
+          <fa name="check" [fixed]="true"></fa>Aircraft Data
+        </button>
+      </div>
+
+    </td>
+    <!--
+    <td>
+      <div><strong>Gangtider</strong></div>
+      <div>Motor: No engine</div>
+      <div>Prop: No Props</div>
+      <div>AC:</div>
+    </td>
+    -->
+    <td>
+      <nlf-ors-editor-aircraft-person [disabled]="!observation.acl_user.w" (change)="updateObservation()" [callsign]="aircraft.aircraft.callsign" [(crew)]="observation.aircrafts[idx].crew"></nlf-ors-editor-aircraft-person>
+    </td>
+    <!--
+    <td>
+      <nlf-ors-editor-e5x-aircraft-partinformation [disabled]="!observation.acl_user.w" (change)="updateObservation()" [callsign]="aircraft.aircraft.callsign" [(partinformation)]="observation.aircrafts[idx].parts">
+      </nlf-ors-editor-e5x-aircraft-partinformation>
+    </td>
+    -->
+  </tr>
+
+</table>
+<!-- /AC TABLE -->
+
+<!-- FLIGHT -->
+<div *ngIf="!!observation.aircrafts && observation.aircrafts.length > 0">
+  <div class="nlf-ors-toolbar">
+    Planlagt<span *ngIf="observation.aircrafts.length>1">e</span> Rute<span *ngIf="observation.aircrafts.length>1">r</span>
+    <nlf-help class="pull-right" key="ors-editor-motorfly-routes"></nlf-help>
+  </div>
+
+  <ngb-tabset>
+    <div *ngFor="let aircraft of observation.aircrafts; let ix = index">
+      <!-- AIRCRAFTS IN TABS-->
+      <ngb-tab title="{{ aircraft.aircraft.callsign }}">
+        <ng-template ngbTabContent>
+          <div class="py-3">
+
+            <nlf-ors-editor-flight (change)="updateObservation()" [(aircraft)]="observation.aircrafts[ix]"></nlf-ors-editor-flight>
+            <!--{{ observation.aircrafts[ix].flight | json }}-->
+          </div>
+        </ng-template>
+      </ngb-tab>
+    </div>
+  </ngb-tabset>
+
+</div>
+<!-- /FLIGHT-->
+
+<!-- AIRCRAFT MODAL -->
+<!-- MODAL -->
+<ng-template #aircraftModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      {{ modalAircraft.callsign }}
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <nlf-aircrafts-edit [disabled]="!observation.acl_user.w" #nlfaircraftedit [(e5x)]="modalAircraft.e5x" [callsign]="modalAircraft.callsign" [showSave]="false" [showImage]="true"></nlf-aircrafts-edit>
+
+    <div *ngIf="devDebug" class="row">
+      AC: {{ modalAircraft | json }}
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <a [routerLink]="['/aircraft', 'edit', (modalAircraft._id || modalAircraft.callsign)]" class="btn btn-outline-dark mr-auto" (click)="modalRef.close()">
+      <fa name="edit" [fixed]="true"></fa>{{ modalAircraft.callsign }} i registeret
+    </a>
+    <button class="btn btn-outline-dark" (click)="modalRef.close()">
+      <fa name="times" [fixed]="true"></fa>Avbryt
+    </button>
+    <button [disabled]="!observation.acl_user.w" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="nlfaircraftedit.saveAircraft();modalAircraftUpdate(modalIndex)">
+      <fa name="check" [fixed]="true"></fa>Oppdater
+    </button>
+  </div>
+</ng-template>

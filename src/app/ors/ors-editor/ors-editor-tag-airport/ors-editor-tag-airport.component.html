@@ -1,0 +1,28 @@
+<ng-select
+[ngClass]="{'form-control': fc}"
+[id]="element_id"
+[disabled]="disabled"
+class="w-auto mw-100 form-control"
+[items]="airports$ | async"
+[addTag]="false"
+[multiple]="false"
+[hideSelected]="true"
+[loading]="airportsLoading"
+[typeahead]="airportsInput$"
+[(ngModel)]="airport"
+[clearable]="true"
+bindLabel="icao"
+autoCapitalize="on"
+placeholder="Skriv for å søke flyplass"
+notFoundText="Fant ikke noe"
+(change)="onChange($event)"
+>
+
+  <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+    <div>
+      <span [ngOptionHighlight]="search">{{item.icao}}</span>
+    </div>
+    <small><b>Navn:</b> {{item.name}} | <b>Sted:</b> {{ item.municipality }} | <b>Type:</b> {{ item.type }}</small>
+  </ng-template>
+
+</ng-select>

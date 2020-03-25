@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { ApiRestService } from './api-rest.service';
 import { ApiOptionsInterface } from './api.interface';
@@ -11,9 +11,9 @@ import { LungoFunctionsItem, LungoFunctionsList, LungoFunctionsTypesItem, LungoF
 })
 export class LungoFunctionsService extends ApiRestService {
 
-  constructor(http: HttpClient) { super(http); }
-
   private relativeUrl = '/integration/functions/';
+
+  constructor(http: HttpClient) { super(http); }
 
   public getFunction(id: string, options?: ApiOptionsInterface): Observable<LungoFunctionsItem> {
 

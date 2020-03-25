@@ -19,6 +19,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class ContenteditableDirective implements ControlValueAccessor, OnInit {
     @Input() propValueAccessor: string = 'textContent';
+    @Input() disabled: boolean = false;
 
     /**
      * This property is deprecated, use `propValueAccessor` instead.
@@ -37,6 +38,9 @@ export class ContenteditableDirective implements ControlValueAccessor, OnInit {
 
     ngOnInit() {
         this.propValueAccessor = this.propValueAccesor || this.propValueAccessor;
+        if (this.disabled) {
+            this.setDisabledState(this.disabled);
+        }
     }
 
     @HostListener('input')

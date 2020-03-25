@@ -12,9 +12,9 @@ import { ApiOptionsInterface, ApiUserAuthItem } from './api.interface';
 @Injectable()
 export class ApiUserAuthService extends ApiRestService {
 
-  constructor( http: HttpClient ) { super(http); }
-
   private relativeUrl = '/user/authenticate';
+
+  constructor( http: HttpClient ) { super(http); }
 
   public authenticate(username: string, password: string, options?: ApiOptionsInterface): Observable<any> {
 

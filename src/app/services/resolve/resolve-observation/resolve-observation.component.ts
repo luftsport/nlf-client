@@ -1,6 +1,7 @@
 import { ApiOptionsInterface } from 'app/api/api.interface';
 import { Component, Input, OnInit } from '@angular/core';
 import { ApiObservationsService } from 'app/api/api-observations.service';
+import { ApiCacheService } from 'app/api/api-cache.service';
 
 @Component({
   selector: 'nlf-resolve-observation',
@@ -10,6 +11,7 @@ import { ApiObservationsService } from 'app/api/api-observations.service';
 export class NlfResolveObservationComponent implements OnInit {
 
   @Input() id: number;
+  @Input() activity: string;
   @Input() link?: boolean;
   @Input() title?: boolean;
   @Input() ask?: boolean;
@@ -20,7 +22,8 @@ export class NlfResolveObservationComponent implements OnInit {
   dataReady = false;
   observation = { title: '', id: 0, _id: '' };
 
-  constructor(private orsService: ApiObservationsService) { }
+  constructor(private orsService: ApiObservationsService,
+    private apiCache: ApiCacheService) { }
 
   ngOnInit() {
 
@@ -30,7 +33,10 @@ export class NlfResolveObservationComponent implements OnInit {
     };
 
     this.orsService.getObservation(this.id, options).subscribe(**/
-    this.orsService.getObservation(this.id).subscribe(
+    this.apiCache.get(
+      ['observation-component', this.id, {}],
+      this.orsService.getObservation(this.id)
+    ).subscribe(
       data => {
         this.observation.id = data.id;
         this.observation._id = data._id;

@@ -7,16 +7,13 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class NlfUiPageSpinnerComponent implements OnInit {
 
-  @Input() size?: number;
+  @Input() size?: number = 5;
 
   fasize: string;
 
   constructor() {}
 
   ngOnInit() {
-    if (typeof this.size === 'undefined') {
-      this.size = 5; // Largest, it's page loading
-    }
     this.fasize = this.size + 'x';
   }
 

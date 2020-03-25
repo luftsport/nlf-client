@@ -1,4 +1,4 @@
-import { ApiObservationInvolvedInterface } from 'app/api/api.interface';
+import { ApiObservationFallskjermInvolvedInterface, ApiObservationsModel } from 'app/api/api.interface';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -8,7 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class NlfOrsFallskjermReportInvolvedComponent implements OnInit {
 
-  @Input() involved: ApiObservationInvolvedInterface;
+  @Input() involved: ApiObservationFallskjermInvolvedInterface;
+  @Input() model: ApiObservationsModel;
   @Input() verbose = true;
 
   constructor() { }

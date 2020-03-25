@@ -49,8 +49,12 @@ export abstract class ApiRestService {
       Object.keys(options.query).forEach((k) => {
 
         if (k === 'sort') {
-
-          params = params.append(k, JSON.stringify(options.query.sort).replace(/[{]/g, '(').replace(/[}]/g, ')').replace(/:/g, ','));
+          
+          if (typeof options.query.sort === 'string') {
+            params = params.append(k, options.query.sort);
+          } else {
+            params = params.append(k, JSON.stringify(options.query.sort).replace(/[{]/g, '(').replace(/[}]/g, ')').replace(/:/g, ','));
+          }
 
         } else if (typeof options.query[k] === 'string' || typeof options.query[k] === 'number') {
 

@@ -8,11 +8,11 @@ import { ApiOptionsInterface, ApiClubItem, ApiClubList } from './api.interface';
 @Injectable()
 export class ApiClubsService  extends ApiRestService {
 
-  constructor(http: HttpClient) { super(http); }
-
   private relativeUrl = '/legacy/clubs/';
 
-  public getClub(id: string, options?: ApiOptionsInterface): Observable<ApiClubItem> {
+  constructor(http: HttpClient) { super(http); }
+
+  public getClub(id: number, options?: ApiOptionsInterface): Observable<ApiClubItem> {
 
     return this.getItem(this.relativeUrl, id, options);
   }

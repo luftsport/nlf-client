@@ -1,0 +1,93 @@
+<div *ngIf="!modal && !showOnlyBtn">
+  <ng-container (blur)="update()" *ngTemplateOutlet="attrTemplate"></ng-container>
+</div>
+
+<div *ngIf="modal && !showOnlyBtn" class="row">
+  <div class="col-md-3">
+    <button class="btn btn-primary btn-block" (click)="openModal(attrModal)">
+      <fa name="map-marker" [fixed]="true"></fa>Where
+    </button>
+  </div>
+  <div class="col-md-9">
+    <div *ngFor="let a of atm; let idx = index">
+      <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="a.attributes.anspName.value" path="E5X.Occurrence.AirNavigationService.ANSPName"></nlf-ors-editor-tag-e5x-render>
+      &nbsp;
+      <fa name="edit" (click)="openModal(modal, idx)"></fa>
+      <fa name="close" (click)="delete(idx)"></fa>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="modal && showOnlyBtn" class="row">
+  <button class="btn btn-secondary btn-block" (click)="openModal(attrModal)">
+    <fa name="map-marker" [fixed]="true"></fa>Where
+  </button>
+</div>
+<!-- INJURIES MODAL -->
+<ng-template #attrModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      Occurred Where
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <ng-container *ngTemplateOutlet="attrTemplate"></ng-container>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="modalRef.close()">
+      <fa name="times" [fixed]="true"></fa>Avbryt
+    </button>
+    <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate(modalIndex)">
+      <fa name="check" [fixed]="true"></fa>Oppdater
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #attrTemplate>
+  <div class="row">
+    <agm-map *ngIf="geoReady" [latitude]="toFloat(attr.latitudeOfOcc.value)" [longitude]="toFloat(attr.longitudeOfOcc.value)" (mapClick)="updateLocation($event)" [mapTypeControl]="true" [zoom]="7">
+
+      <agm-marker [markerDraggable]="isDraggable()" (dragEnd)="updateLocation($event)" [latitude]="toFloat(attr.latitudeOfOcc.value)" [longitude]="toFloat(attr.longitudeOfOcc.value)">
+      </agm-marker>
+
+      <!-- PATHS -->
+      <agm-polyline *ngFor="let path of paths">
+        <agm-polyline-point *ngFor="let coordinates of path" [latitude]="coordinates[1]" [longitude]="coordinates[0]">
+        </agm-polyline-point>
+      </agm-polyline>
+
+    </agm-map>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.latitudeOfOcc.value" path="E5X.Occurrence.LatitudeOfOcc" id="latitudeOfOcc"></nlf-ors-editor-tag-e5x>
+    </div>
+    <div class="col-md-6">
+      <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.longitudeOfOcc.value" path="E5X.Occurrence.LongitudeOfOcc" id="longitudeOfOcc"></nlf-ors-editor-tag-e5x>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.locationName.value" path="E5X.Occurrence.LocationName" id="locationName"></nlf-ors-editor-tag-e5x>
+    </div>
+
+    <div class="col-md-12">
+      <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.stateAreaOfOcc.value" path="E5X.Occurrence.StateAreaOfOcc" id="stateAreaOfOcc"></nlf-ors-editor-tag-e5x>
+    </div>
+  </div>
+
+  <div class="row">
+    <div *ngIf="devDebug" class="row">
+      AC: {{ atm | json }}
+    </div>
+  </div>
+
+</ng-template>

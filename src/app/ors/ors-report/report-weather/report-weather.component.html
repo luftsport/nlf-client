@@ -91,19 +91,51 @@
         </div>
       </div>
       <div class="clearfix"></div>
-      <div *ngIf="!!weather.auto">
-        <p *ngIf="!!weather.auto.yr">Yr: {{ weather.auto.yr['@from'] }}-{{ weather.auto.yr['@to'] }} {{ weather.auto.yr.windDirection['@deg'] }}&deg;
-          {{ weather.auto.yr.windSpeed['@mps']*1.81 }} knop</p>
-        <p *ngIf="!!weather.auto.metar">METAR:
-          <span [innerHtml]="weather.auto.metar_decoded ? weather.auto.metar_decoded : weather.auto.metar | newlines"></span>
-        </p>
-        <p *ngIf="!!weather.auto.taf">TAF:
-          <span [innerHtml]="weather.auto.taf_decoded ? weather.auto.taf_decoded : weather.auto.taf | newlines"></span>
-        </p>
-        <p *ngIf="!!weather.auto.shorttaf">
-          <span [innerHtml]="weather.auto.shorttaf_decoded ? weather.auto.shorttaf_decoded : weather.auto.shorttaf | newlines"></span>
-        </p>
+    </div>
+
+  </div>
+  <!-- AUTO FROM HERE -->
+
+  <div class="row">
+
+    <div class="col-md-8 col-xs-12 p-3">
+      <p class="lead">Auto</p>
+      <div class="p-3" *ngIf="!!weather.auto?.metar_nearest?.parsed" [innerHTML]="weather.auto.metar_nearest.parsed | newlines"></div>
+    </div>
+
+    <div class="col-md-4 col-xs-12 p-3 align-text-bottom">
+      <div>
+        <button (click)="openModal(autoModal, 'metar')" [ngClass]="!!weather.auto.metar ? 'btn-success': 'btn-secondary'" class="btn btn-block my-1">METAR</button>
+      </div>
+      <div>
+        <button (click)="openModal(autoModal, 'taf')" [ngClass]="!!weather.auto.taf ? 'btn-success': 'btn-secondary'" class="btn btn-block my-1">TAF</button>
+      </div>
+      <div>
+        <button (click)="openModal(autoModal, 'yr')" [ngClass]="!!weather.auto.yr ? 'btn-success': 'btn-secondary'" class="btn btn-block my-1">YR</button>
       </div>
     </div>
+
   </div>
 </div>
+
+<ng-template #autoModal>
+
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      {{ modal.title | upperfirst }}
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div *ngFor="let row of modal.data">
+      {{ row }}
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button (click)="modalRef.dismiss()" class="btn btn-outline-dark">Ferdig</button>
+  </div>
+</ng-template>

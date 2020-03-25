@@ -1,36 +1,74 @@
+<header class="nlf-sticky-toolbar">
+  <div class="container lead">
+    ORS Fallskjerm
+
+    <button [routerLink]="['/ors', 'fallskjerm', 'search']" type="button" class="btn btn-sm btn-primary pull-right"><fa name="search" [fixed]="true"></fa> Søk</button>
+
+    <nlf-help class="pull-right mx-1" key="ors-fallskjerm"></nlf-help>
+  </div>
+
+
+</header>
+
 <div class="container">
+
   <div class="row">
 
-    <div class="col-xl-12">
-      <!-- Group = tight, with padding deck = spacing, no padding card-body style="padding: 0;" -->
+    <div class="col-md-6">
+      <div class="nlf-ors-toolbar">
+        <fa name="user" [fixed]="true"></fa> Mine observasjoner
+      </div>
+      <nlf-ors-self-table activity="fallskjerm"></nlf-ors-self-table>
+    </div>
+    <div class="col-md-6">
+      <div class="nlf-ors-toolbar">
+        <fa name="random" [fixed]="true"></fa>Til min behandling
+      </div>
+      <nlf-ors-todo-table activity="fallskjerm"></nlf-ors-todo-table>
+    </div>
+
+    <!-- Group = tight, with padding deck = spacing, no padding card-body style="padding: 0;"
       <div class="card-deck">
 
-        <div class="card mb-6 border-success">
+        <div class="card mb-3 mr-1">
           <h5 class="card-header">
-            <fa name="user" fixed="true"></fa>Mine observasjoner</h5>
+            <fa name="user" [fixed]="true"></fa>Mine observasjoner</h5>
           <div class="card-body table-responsive" style="padding: 0;">
-            <nlf-ors-fallskjerm-self-table></nlf-ors-fallskjerm-self-table>
+
           </div>
         </div>
 
-        <div class="card mb-6 border-primary">
+        <div class="card mb-3 ml-1">
           <h5 class="card-header">
-            <fa name="random" fixed="true"></fa>Til min behandling</h5>
+            <fa name="random" [fixed]="true"></fa>Til min behandling</h5>
           <div class="card-body" style="padding: 0;">
-            <nlf-ors-fallskjerm-todo-table></nlf-ors-fallskjerm-todo-table>
+            <nlf-ors-todo-table  activity="fallskjerm"></nlf-ors-todo-table>
           </div>
         </div>
       </div>
+      -->
+  </div>
+</div>
+<div class="row">
 
+    <div class="py-5 nlf-bg-blue col-md-12">
+     <div class="container">
+      <p class="m-0 text-center text-white">
+        <nlf-ors-fallskjerm-create></nlf-ors-fallskjerm-create>
+      </p>
     </div>
   </div>
-  <div class="row">
+</div>
+
+<div class="row">
+  <div class="container">
     <div class="col-xl-12">
-      <div class="card">
+      <div class="card mt-2">
         <h5 class="card-header">
-          <fa name="bolt" fixed="true"></fa>Alle observasjoner</h5>
+          <fa name="bolt" [fixed]="true"></fa>Alle observasjoner
+        </h5>
         <div class="card-body" style="padding: 0;">
-          <nlf-ors-fallskjerm-all-table></nlf-ors-fallskjerm-all-table>
+          <nlf-ors-all-table activity="fallskjerm"></nlf-ors-all-table>
         </div>
       </div>
     </div>

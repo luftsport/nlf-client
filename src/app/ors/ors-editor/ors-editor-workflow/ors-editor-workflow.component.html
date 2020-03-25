@@ -1,77 +1,69 @@
-<div *ngIf="dataReady">
+<div class="modal-header">
+  <h4 class="modal-title pull-left">
+    #{{ observation.id }} Arbeidsflyt
 
-  <header class="nlf-sticky-toolbar">
+    <!--<nlf-resolve-observation-tags [tags]="observation.tags" link="true" seperator="/"></nlf-resolve-observation-tags>-->
+    <span class="pull-right">
 
-    <div class="container lead">
-      <!-- TITLE -->
+      <!--<span class="badge badge-secondary">{{ observation._updated | amTimeAgo }}</span>
+            <span class="badge badge-success">{{ observation._version }}</span>-->
 
-      <!-- <fa name="file-text-o" fixed="true"></fa>&nbsp;-->
-      <!-- {{ data.tags | nlfOrsTags: ' / '}} -->
-      #{{ observation.id }}
-      <nlf-resolve-observation-tags [tags]="observation.tags" link="true" seperator="/"></nlf-resolve-observation-tags>&nbsp;
-      <!-- WORKFLOW STATE -->
-      <span class="pull-right">
+    </span>
 
-        <span class="badge badge-secondary">{{ observation._updated | amTimeAgo }}</span>
-        <span class="badge badge-success">{{ observation._version }}</span>
-        <nlf-resolve-observation-state [state]="observation.workflow.state" icon="true"></nlf-resolve-observation-state>
-      </span>
-      <!-- /WORKFLOW STATE -->
-    </div>
-  </header>
+  </h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 
 
+<!--BODY-->
+<div class="modal-body">
 
-  <div class="container">
-
-    <p>
-      <strong>Klubb:</strong>
-      <nlf-resolve-club link="true" long="true" [clubid]="observation.club"></nlf-resolve-club>
-    </p>
-    <p>
-      <strong>Status:</strong>
-      {{ workflow.title }}
-    </p>
-
-    <h4>Arbeidsflyt for #{{ observation.id }}</h4>
+  <!--
+  <nlf-resolve-lungo-organization [organization_id]="observation.club" show_type="false" link="true" long="false"></nlf-resolve-lungo-organization>
+  {{ workflow.title }}
+  <nlf-resolve-observation-state [state]="observation.workflow.state" [activity]="observation._model.type" icon="true"></nlf-resolve-observation-state>
+  -->
+  <div *ngIf="!!dataReady">
     <div class="form-group">
-      <!--<label for="comment">Kommentarer:</label>-->
-
-      <!--<div>
-          Dette feltet er forbeholdt kommentarer som omfatter ARBEIDSFLYTEN, feks:
-          <ul>
-            <li>at du trenger mer informasjon</li>
-            <li>at du ønsker felter fylt ut</li>
-            <li>at innsender korrigere noe</li>
-          </ul>
-          Kommentarene skal ikke inneholde personopplysninger, ei heller ytterligere beskrivelser eller vurderinger av observasjonen
-          - altså skal kun omhandle arbeidsflyten!
-        </div>-->
-
-      <textarea placeholder="Kommentarer" [(ngModel)]="comment" name="comment" class="form-control" rows="3" id="comment"></textarea>
+      <label for="comment">Kommentarer til arbeidsflyten</label>
+      <nlf-help key="ors-editor-workflow"></nlf-help>
+      <textarea [disabled]="!observation.acl_user.x" [ngClass]="{'disabled': processing}" placeholder="Kommentarer" [(ngModel)]="comment" name="comment" class="form-control" rows="3" id="comment"></textarea>
     </div>
 
-  </div>
+    <nlf-ors-report-workflow-timeline [activity]="observation._model.type" [_id]="observation._id" [workflow]="observation.workflow"></nlf-ors-report-workflow-timeline>
 
-  <div class="nlf-toolbar">
-    <div class="container">
-      <span *ngFor="let a of workflow.actions">
-        <button [ngClass]="{'btn': true, 'btn-danger': a.resource==='reject', 'btn-success': a.resource==='approve', 'btn-dark': a.action==='withdraw'}"
-          (click)="workflowChange(a.resource)">{{ a.action }}</button>
-        &nbsp;
-      </span>
-
-      <button class="btn btn-outline-dark" (click)="cancel()">Avbryt</button>
+    <div *ngIf="graph">
+      <img class="img img-fluid" [src]="domSanitizer.bypassSecurityTrustUrl(graph)">
     </div>
-  </div>
 
-  <div class="container">
-
-    <h3>Audit trail:</h3>
-    <nlf-ors-fallskjerm-report-workflow-timeline [vlink]="false" [_id]="observation._id" [workflow]="observation.workflow"></nlf-ors-fallskjerm-report-workflow-timeline>
-    <span *ngIf="!!changing" class="text-center">
-      <fa name="spinner" [size]="3" [fixed]="true"></fa>
+    <span *ngIf="!!processing" class="text-center">
+      <fa name="spinner" [size]="5" [fixed]="true"></fa>
     </span>
   </div>
+  <div *ngIf="!dataReady">
+    <div class="text-center">
+      <!--<nlf-ui-component-spinner></nlf-ui-component-spinner>-->
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+
+<!--FOOTER-->
+<div class="modal-footer">
+
+    <button type="button" class="btn btn-outline-dark mr-auto" *ngIf="!graph" (click)="getGraph()">
+      <fa name="random" [fixed]="true"></fa>Vis skjema
+    </button>
+  <span *ngIf="!!dataReady">
+    <button *ngFor="let a of workflow.actions" type="button" [disabled]="!observation.acl_user.x" class="btn mx-1" [ngClass]="{
+      'btn-danger':a.resource=='reject'||a.resource=='withdraw',
+    'btn-success':a.resource=='approve'||a.resource=='reopen',
+    'btn-info': a.resource=='dto'||a.resource=='skole'||a.resource=='teknisk',
+    'disabled':processing}" (click)="workflowChange(a.resource)">{{ a.action }}
+    </button>
+  </span>
+  <button [ngClass]="{'disabled': processing}" class="btn btn-outline-dark" (click)="activeModal.dismiss()">Avbryt</button>
 
 </div>

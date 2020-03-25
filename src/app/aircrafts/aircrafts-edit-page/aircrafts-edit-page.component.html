@@ -1,0 +1,16 @@
+<header class="nlf-sticky-toolbar">
+  <div class="container">
+    <span class="breadcrumb">
+      <li class="breadcrumb-item">
+        <fa name="plane" fixed="false" class="mr-1"></fa><a [routerLink]="['/', 'aircraft']">Aircraft</a>
+      </li>
+      <li class="breadcrumb-item">
+        <span *ngIf="callsign" class="mr-1 active">{{ callsign }}</span>
+      </li>
+    </span>
+
+  </div>
+</header>
+<div *ngIf="!!callsign" class="container">
+  <nlf-aircrafts-edit [(callsign)]="callsign"></nlf-aircrafts-edit>
+</div>

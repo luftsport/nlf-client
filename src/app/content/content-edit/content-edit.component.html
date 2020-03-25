@@ -1,10 +1,22 @@
+<div *ngIf="editorFullscreen" class="nlf-toolbar fixed-top" style="display: static; margin-bottom: 100px;">
+  <h2>
+    <input [(ngModel)]="content.title" (ngModelChange)="change()" type="text" class="form-control" id="contenttitle"
+      placeholder="Tittel" (ngModelChange)="slugify()">
+  </h2>
+</div>
+
 <div class="row" *ngIf="dataReady">
+
   <div class="nlf-sticky-toolbar">
     <div class="container">
-      <fa name="edit" fixed="true"></fa>{{ content.title }}
+      <fa name="edit" [fixed]="true"></fa>{{ content.title }}
+
     </div>
   </div>
+
 </div>
+<nlf-ui-breadcrumb></nlf-ui-breadcrumb>
+
 <div *ngIf="dataReady" class="row h-100">
 
   <div class="col-sm-12 h-100">
@@ -12,28 +24,29 @@
 
       <div class="form-group">
         <label for="contenttitle">Tittel</label>
-        <input [(ngModel)]="content.title" (ngModelChange)="change()" type="text" class="form-control" id="contenttitle" placeholder="Tittel"
-          (ngModelChange)="slugify()">
+        <input [(ngModel)]="content.title" (ngModelChange)="change()" type="text" class="form-control" id="contenttitle"
+          placeholder="Tittel" (ngModelChange)="slugify()">
       </div>
 
       <div class="form-group">
         <label for="contenttitle">Slug</label>
-        <input [(ngModel)]="content.slug" (ngModelChange)="change()" type="text" class="form-control" id="contentslug" placeholder=""
-          disabled>
+        <input [(ngModel)]="content.slug" (ngModelChange)="change()" type="text" class="form-control" id="contentslug"
+          placeholder="" disabled>
       </div>
       <!-- Create page has parent page (space root page) -->
       <div class="form-group" *ngIf="mode==='create_page'">
         <label for="contenttitle">Parent</label>
-        <input [(ngModel)]="content.parent" (ngModelChange)="change()" type="text" class="form-control" id="contentparent" placeholder="">
+        <input [(ngModel)]="content.parent" (ngModelChange)="change()" type="text" class="form-control" id="contentparent"
+          placeholder="">
       </div>
 
       <!-- Space key, always show -->
       <div class="form-group">
         <label for="spacekey">Space key</label>
-        <input *ngIf="mode==='create_space'" [(ngModel)]="content.space_key" (ngModelChange)="change()" type="text" class="form-control"
-          id="spacekey" placeholder="Unik nøkkel space">
-        <input *ngIf="mode==='edit' || mode==='create_page'" [ngModel]="content.space_key" (ngModelChange)="change()" type="text"
-          class="form-control" id="spacekey" disabled>
+        <input *ngIf="mode==='create_space'" [(ngModel)]="content.space_key" (ngModelChange)="change()" type="text"
+          class="form-control" id="spacekey" placeholder="Unik nøkkel space">
+        <input *ngIf="mode==='edit' || mode==='create_page'" [ngModel]="content.space_key" (ngModelChange)="change()"
+          type="text" class="form-control" id="spacekey" disabled>
       </div>
 
       <!-- Jodit: tagname, id, defaultvalue, config -->
@@ -47,22 +60,29 @@
     <div class="nlf-toolbar fixed-bottom">
       <span class="float-right">
 
+
         <a *ngIf="mode==='create_space'" class="btn" [routerLink]="['/content']">
-          <fa name="close" fixed="true"></fa>Cancel</a>
+          <fa name="close" [fixed]="true"></fa>Cancel
+        </a>
 
         <a *ngIf="mode==='create_page'" class="btn" [routerLink]="['/content/space', content.space_key]">
-          <fa name="close" fixed="true"></fa>Cancel</a>
+          <fa name="close" [fixed]="true"></fa>Cancel
+        </a>
 
         <a *ngIf="mode==='edit'" class="btn" [routerLink]="['/content/view', content.space_key, content.slug]">
-          <fa name="close" fixed="true"></fa>Cancel</a>
+          <fa name="close" [fixed]="true"></fa>Cancel
+        </a>
 
         <button [disabled]="!changed" *ngIf="mode==='edit'" (click)="save()" class="btn btn-primary">
-          <fa name="save" fixed="true"></fa>Save</button>
+          <fa name="save" [fixed]="true"></fa>Save
+        </button>
 
         <button *ngIf="mode==='create_space'" (click)="create()" class="btn btn-success">
-          <fa name="plus" fixed="true"></fa>Create space</button>
+          <fa name="plus" [fixed]="true"></fa>Create space
+        </button>
         <button *ngIf="mode==='create_page'" (click)="create()" class="btn btn-success">
-          <fa name="plus" fixed="true"></fa>Create page</button>
+          <fa name="plus" [fixed]="true"></fa>Create page
+        </button>
       </span>
     </div>
   </div>

@@ -1,0 +1,30 @@
+<!-- (change)="update()" [(attr)]="route[idx].occurrence.attributes"-->
+
+<!-- ENTITIES -->
+<div class="row my-3">
+  <div class="col-xs-12 col-md-12">
+
+    <div class="my-3">
+      <nlf-ors-editor-e5x-airspace [disabled]="!observation.acl_user.w" (change)="update()" [(airspace)]="observation.occurrence.entities.airSpace"></nlf-ors-editor-e5x-airspace>
+    </div>
+    <div class="my-3">
+      <nlf-ors-editor-e5x-aerodrome [disabled]="!observation.acl_user.w" (change)="update()" [(aerodrome)]="observation.occurrence.entities.aerodromeGeneral"></nlf-ors-editor-e5x-aerodrome>
+    </div>
+    <div class="my-3">
+      <nlf-ors-editor-e5x-atm [disabled]="!observation.acl_user.w" (change)="update()" [(atm)]="observation.occurrence.entities.airNavigationService"></nlf-ors-editor-e5x-atm>
+    </div>
+    <div class="my-3">
+      <!--aerodrome wx reports = metars!-->
+      <nlf-ors-editor-e5x-wxphenomena [disabled]="!observation.acl_user.w" (change)="update()" [(wxPhenomena)]="observation.occurrence.entities.precipitationAndOtherWeatherPhenomena"></nlf-ors-editor-e5x-wxphenomena>
+    </div>
+    <div class="my-3">
+      <nlf-ors-editor-e5x-runway [disabled]="!observation.acl_user.w" (change)="update()" [(runway)]="observation.occurrence.entities.runwayIncursion"></nlf-ors-editor-e5x-runway>
+    </div>
+    <div class="my-3">
+      <nlf-ors-editor-e5x-separation [disabled]="!observation.acl_user.w" (change)="update()" [(separation)]="observation.occurrence.entities.separation"></nlf-ors-editor-e5x-separation>
+    </div>
+    <div class="my-3">
+      <nlf-ors-editor-e5x-events [disabled]="!observation.acl_user.w" (change)="update()" [(events)]="observation.occurrence.entities.events"></nlf-ors-editor-e5x-events>
+    </div>
+  </div>
+</div>

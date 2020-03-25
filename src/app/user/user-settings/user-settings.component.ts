@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiUserService } from 'app/api/api-user.service';
-import { NlfLocalStorageService } from 'app/services/storage/local-storage.service';
 import { ApiOptionsInterface } from 'app/api/api.interface';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-
+import { NlfUserSubjectService } from 'app/user/user-subject.service';
 
 @Component({
   selector: 'nlf-user-settings',
@@ -21,21 +20,27 @@ export class NlfUserSettingsComponent implements OnInit {
   **/
   settingsForm: FormGroup;
 
-  constructor(private apiUserService: ApiUserService,
-              private storage: NlfLocalStorageService,
-              private fb: FormBuilder) {
+  constructor(
+    private userSubject: NlfUserSubjectService,
+    private apiUserService: ApiUserService,
+    private fb: FormBuilder) {
 
-    this.user.id = storage.getId();
-    this.getCurrentUser();
-    this.createForm();
+    this.userSubject.observable.subscribe(
+      data => {
+        if (!!data) {
+          this.getCurrentUser(data.person_id);
+          this.createForm();
+        }
+      }
+    );
   }
 
   /**
   Get data from /users/this.user
   **/
-  public getCurrentUser() {
+  public getCurrentUser(id) {
 
-    let options: ApiOptionsInterface = {query: {projection: {avatar: 0, acl: 1}}};
+    let options: ApiOptionsInterface = { query: { projection: { avatar: 0, acl: 1 } } };
     this.apiUserService.getUser(this.user.id, options).subscribe(
       data => {
         this.model = data;
@@ -45,14 +50,14 @@ export class NlfUserSettingsComponent implements OnInit {
 
       },
       err => console.error(err),
-      () => {}
+      () => { }
     );
 
   }
 
-  public setClub(club) {
+  public setClub(discipline) {
 
-    this.model.default_club = club;
+    this.model.default_discipline = discipline;
   }
 
   ngOnInit() {
@@ -91,7 +96,7 @@ export class NlfUserSettingsComponent implements OnInit {
       aadType: this.model.settings.gear.aadType,
       rigger: this.model.settings.gear.rigger,
       total_jumps: this.model.settings.total_jumps
-  });
+    });
   }
   get diagnostic() { return JSON.stringify(this.model); }
 

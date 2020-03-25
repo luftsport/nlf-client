@@ -6,10 +6,11 @@
         Faktisk:
       </div>
       <div class="col-sm-4">
-        <ngb-rating [(rate)]="observation.rating.actual" [starTemplate]="t" (rateChange)="onChange()" max="8"></ngb-rating>
+        <ngb-rating (hover)="onHoverActual($event)" (leave)="onHoverLeave()" [readonly]="!observation.acl_user.w" [(rate)]="observation.rating.actual" [starTemplate]="t" (rateChange)="onChange()" max="8"></ngb-rating>
       </div>
       <div class="col-sm-4">
-        {{ observation.rating.actual | nlfOrsRating }}
+        <span *ngIf="!hover_actual">{{ observation.rating.actual | nlfOrsRating:observation._model.type }}</span>
+        <span *ngIf="!!hover_actual">{{ hover_actual | nlfOrsRating:observation._model.type }}</span>
       </div>
 
     </div>
@@ -19,18 +20,27 @@
         Potensiell:
       </div>
       <div class="col-sm-4">
-        <ngb-rating [(rate)]="observation.rating.potential" [starTemplate]="t" (rateChange)="onChange()" max="8"></ngb-rating>
+        <ngb-rating (hover)="onHoverPotential($event)" (leave)="onHoverLeave()" [readonly]="!observation.acl_user.w" [(rate)]="observation.rating.potential" [starTemplate]="t" (rateChange)="onChange()" max="8"></ngb-rating>
       </div>
       <div class="col-sm-4">
-        {{ observation.rating.potential | nlfOrsRating }}
+        <span *ngIf="!hover_potential">{{ observation.rating.potential | nlfOrsRating:observation._model.type }}</span>
+        <span *ngIf="!!hover_potential">{{ hover_potential | nlfOrsRating:observation._model.type }}</span>
       </div>
     </div>
   </div>
 
   <div class="col-sm-3">
     <h1>
-      <nlf-resolve-observation-rating [rating]="observation.rating"></nlf-resolve-observation-rating>
+      <!--<nlf-resolve-observation-rating [rating]="observation.rating"></nlf-resolve-observation-rating>-->
+      <span class="badge badge-{{ observation.rating | nlfOrsRatingCalc | nlfDynamicColor }}">{{ observation.rating | nlfOrsRatingCalc }}</span>
     </h1>
+  </div>
+</div>
+<div *ngIf="observation.rating.potential < observation.rating.actual" class="row">
+  <div class="col-md-12">
+    <ngb-alert [dismissible]="true" type="warning">
+      <fa name="exclamation-triangle" [fixed]="true"></fa>Faktisk er høyere enn potensiell.
+    </ngb-alert>
   </div>
 </div>
 

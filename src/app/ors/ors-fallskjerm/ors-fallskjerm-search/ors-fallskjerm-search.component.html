@@ -1,0 +1,133 @@
+<header class="nlf-sticky-toolbar">
+  <div class="container">
+
+    <span class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a [routerLink]="['/ors', 'fallskjerm']">ORS<span class="hidden-sm-down"> Fallskjerm</span></a>
+        <!--[routerLink]="['/organizations', '376']"-->
+      </li>
+      <li class="breadcrumb-item">
+
+        <a>Søk</a>
+        <!--[routerLink]="['/organizations', '376']"-->
+      </li>
+      <li *ngIf="!!text" class="breadcrumb-item active">
+        {{ text }}
+      </li>
+    </span>
+
+    <button *ngIf="!!query" class="btn btn-primary btn-sm pull-right mx-1" (click)="openModal(saveTemplate)">
+      <fa name="save" [fixed]="true"></fa> Lagre søk
+    </button>
+
+    <nlf-help class="pull-right mx-1" key="ors-search-fallskjerm"></nlf-help>
+
+  </div>
+</header>
+
+<div class="container">
+  <div class="row mt-3">
+
+    <div class="col-md-3 bg-light p-2">
+      <label class="lead">
+        <fa name="filter" [fixed]="true"></fa> Filter
+      </label>
+      <div class="form-row">
+        <label>Fritekst:</label>
+        <input placeholder="Fritekst" class="form-control" type="text" (ngModelChange)="debouncedUpdate()" [(ngModel)]="text">
+      </div>
+      <!--
+      <div class="form-row">
+        <label>Fartøy:</label>
+        <input oninput="this.value=this.value.toUpperCase()" placeholder="Kjennetegn" class="form-control" type="text" (ngModelChange)="debouncedUpdate()" [(ngModel)]="filter['aircrafts.aircraft.callsign']">
+      </div>
+    -->
+
+
+      <div class="form-row mt-3">
+        <button (click)="reset()" class="btn btn-secondary btn-block">Reset filter</button>
+      </div>
+    </div>
+
+    <div class="col-md-9">
+      <!-- SEARCH RESULTS -->
+      <div class="lead">
+        <div *ngIf="!!result && !searching">
+          Fant {{ result._meta.total }} resultater
+        </div>
+
+        <div *ngIf="(!result || result._meta.total == 0) && !searching">
+          Ingen resultater
+        </div>
+
+        <div *ngIf="searching">
+          Søker...
+        </div>
+      </div>
+
+      <div class="my-2 p-1 div_hover" *ngFor="let r of result?._items; let isOdd=odd;" [class.bg-light]="isOdd">
+
+        <a [routerLink]="['/ors', activity,'report', r.id]">#{{ r.id }} - {{ r.tags | join: '/'}}</a>
+        <span *ngIf="!!r.rating" class="mx-1 badge badge-{{r.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ r.rating | nlfOrsRatingCalc }}</span>
+
+        <span class="pull-right mx-1">
+          <nlf-resolve-observation-state [activity]="r._model.type" [state]="r.workflow.state" icon="true"></nlf-resolve-observation-state>
+        </span>
+
+        <!--
+        <div class="small" *ngFor="let a of r.aircrafts">
+          <fa name="plane" [fixed]="true"></fa> {{ a.aircraft.callsign }} {{ a.aircraft.model }} {{ a.aircraft.manufacturer }}
+          <div>
+            <span class="small" *ngFor="let route of a.flight; let idx = index">
+              <span *ngIf="idx==0">{{ route.from.icao }}</span>
+              <fa name="long-arrow-right" [fixed]="true"></fa> {{ route.to.icao }}
+            </span>
+          </div>
+        </div>
+      -->
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<ng-template #saveTemplate>
+
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      Lagre søket
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="form-group">
+      <label>Søkenavn</label>
+      <input class="form-control" type="text" [disabled]="true" [value]="text || ''">
+    </div>
+
+    <div class="form-group my-3">
+      <div class="form-check">
+        <input [disabled]="true" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+        <label class="form-check-label" for="defaultCheck1">
+          Varsle meg ved nye resultater
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Søket ga {{ result._meta.total }} resultater</label>
+      <textarea [disabled]="true" class="form-control" [value]="this.getQuery() | json" rows="3"></textarea>
+    </div>
+
+
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="modalRef.close()">Avbryt</button>
+    <button [disabled]="true" class="btn btn-primary" (click)="modalRef.close()">Lagre</button>
+  </div>
+</ng-template>

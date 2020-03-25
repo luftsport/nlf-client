@@ -11,9 +11,9 @@ import { ApiOptionsInterface, ApiNlfMembershipItem, ApiNlfMembershipList } from 
 @Injectable()
 export class ApiNlfMembershipService extends ApiRestService {
 
-  constructor(http: HttpClient) { super(http); }
-
   private relativeUrl = '/legacy/melwin/memberships/';
+
+  constructor(http: HttpClient) { super(http); }
 
   public getMembership(id: string, options?: ApiOptionsInterface): Observable<ApiNlfMembershipItem> {
 

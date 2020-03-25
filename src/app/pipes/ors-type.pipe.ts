@@ -1,22 +1,31 @@
 import { Pipe, PipeTransform, Inject } from '@angular/core';
-import { NLF_CONFIG, NlfConfig } from 'app/nlf-config.module';
+import {  NlfConfigService } from 'app/nlf-config.service';
+import { NlfConfigItem } from 'app/api/api.interface';
 
 @Pipe({
   name: 'nlfOrsType'
 })
 export class NlfOrsTypePipe implements PipeTransform {
+  public config: NlfConfigItem;
 
-  constructor(@Inject(NLF_CONFIG) private config: NlfConfig) {}
+  constructor(private configService: NlfConfigService) {
 
-  transform(value: string): string {
+    this.configService.observableConfig.subscribe(
+      data => {
+        this.config = data;
+      }
+    );
+  }
+
+  transform(value: string, activity: string): string {
     let data = '';
     if (value === '' || typeof value === 'undefined') {
       return 'NA';
     }
 
     try {
-      data = this.config.observation.types[value]['label'];
-    }  catch (e) {
+      data = this.config[activity].observation.types[value]['label'];
+    } catch (e) {
       data = 'Ukjent';
     }
 

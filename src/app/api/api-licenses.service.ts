@@ -9,9 +9,9 @@ import { ApiOptionsInterface, ApiNlfLicenseItem, ApiNlfLicenseList } from './api
 @Injectable()
 export class ApiLicensesService  extends ApiRestService {
 
-  constructor(http: HttpClient) { super(http); }
-
   private relativeUrl = '/legacy/licenses/';
+
+  constructor(http: HttpClient) { super(http); }
 
   public getLicense(id: string, options?: ApiOptionsInterface): Observable<ApiNlfLicenseItem> {
 

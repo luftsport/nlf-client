@@ -1,12 +1,32 @@
-<span *ngIf="dataReady">
+<span *ngIf="dataReady && !popover">
   <span *ngIf="!!link && organization.id !== ''">
-      <a [routerLink]="['/organization', organization.id]">{{ organization.name }}</a>
+    <a [routerLink]="['/organizations', organization.id]" [routerLinkActive]="'active'">{{ organization.name }}</a>
   </span>
   <span *ngIf="!link || organization.id === ''">
-      {{ organization.name }}
+    {{ organization.name }}
   </span>
-  <nlf-resolve-lungo-activity *ngIf="!!organization.main_activity.id && !!show_type" [activity_id]="organization.main_activity.id"></nlf-resolve-lungo-activity>
+  <nlf-resolve-lungo-activity *ngIf="show_type && !!organization.main_activity.id" [activity_id]="organization.main_activity.id"></nlf-resolve-lungo-activity>
 </span>
+
+<!-- POPOVER VIEW -->
+<span *ngIf="dataReady && popover">
+
+  <ng-template #popContent>
+    <p class="lead">
+      <nlf-resolve-lungo-activity *ngIf="!!organization.main_activity.id" [activity_id]="organization.main_activity.id"></nlf-resolve-lungo-activity>
+    </p>
+    <a class="btn btn-secondary btn-block" [routerLink]="['/organizations', organization.id]" [routerLinkActive]="'active'">
+      <fa name="link" [fixed]="true"></fa>{{ organization.name }}
+    </a>
+  </ng-template>
+
+  <ng-template #popTitle>
+    {{ organization.name }}
+  </ng-template>
+
+  <a class="pointer link" [ngbPopover]="popContent" [popoverTitle]="popTitle">{{ organization.name }}</a>
+</span>
+
 <span *ngIf="!dataReady">
   <fa name="spinner" animation="pulse" [size]="1"></fa>
 </span>

@@ -1,0 +1,399 @@
+<div *ngIf="dataReady">
+
+  <!-- BASIC INFO -->
+  <div class="bg-light p-1 mt-3">
+    <h4>Luftfartøydata</h4>
+    <div class="form-row mt-3">
+
+      <div class="col-md-2 col-sm-6">
+        <div class="form-group">
+          <label for="callsign">Callsign</label>
+          <input type="string" class="form-control" id="callsign" aria-describedby="callsign" value="{{ aircraft.callsign }}" disabled>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+          <label for="type">Type</label>
+          <input type="string" class="form-control" id="type" aria-describedby="type" value="{{ aircraft.type }}" disabled>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="form-group">
+          <label for="status">Status</label>
+          <input type="string" class="form-control" [ngClass]="{'bg-success': aircraft.status=='ACTIVE', 'bg-danger': aircraft.status=='DELETED'}" id="status" aria-describedby="status" value="{{ aircraft.status }}" disabled>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="form-group">
+          <label for="updated">Updated</label>
+          <input type="string" class="form-control" id="updated" aria-describedby="updated" value="{{ aircraft._updated | date:'yyyy-MM-dd HH:mm:ss' }}" disabled>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+          <label for="callsign">Model</label>
+          <input type="string" class="form-control" id="model" aria-describedby="model" value="{{ aircraft.model }}" disabled>
+        </div>
+      </div>
+
+      <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+          <label for="manufacturer">Manufacturer</label>
+          <input type="string" class="form-control" id="manufacturer" aria-describedby="manufacturer" value="{{ aircraft.manufacturer }}" disabled>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6">
+        <div class="form-group">
+          <label for="msn">Serial (MSN)</label>
+          <input type="string" class="form-control" id="msn" aria-describedby="msn" value="{{ aircraft.msn }}" disabled>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- E5XAircraft Attributes -->
+  <div class="bg-light p-1 mt-3">
+    <h4>Ytterligere data</h4>
+  </div>
+  <div class="form-row">
+
+    <div class="col-md-4 col-sm-6">
+      <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.attributes.stateOfRegistry.value" path="E5X.Occurrence.Aircraft.StateOfRegistry" id="StateOfRegistry"></nlf-ors-editor-tag-e5x>
+    </div>
+    <div class="col-md-5 col-sm-12">
+      <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.attributes.serialNumber.value" path="E5X.Occurrence.Aircraft.SerialNumber" id="SerialNumber"></nlf-ors-editor-tag-e5x>
+    </div>
+
+    <div class="col-md-3 col-sm-6">
+      <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.attributes.yearBuilt.value" path="E5X.Occurrence.Aircraft.YearBuilt" id="YearBuilt"></nlf-ors-editor-tag-e5x>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="col-md-6 col-sm-12">
+      <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.attributes.manufacturerModel.value" path="E5X.Occurrence.Aircraft.ManufacturerModel" id="ManufacturerModel"></nlf-ors-editor-tag-e5x>
+    </div>
+    <div class="col-md-6 col-sm-12">
+      <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.attributes.propulsionType.value" path="E5X.Occurrence.Aircraft.PropulsionType" id="PropulsionType"></nlf-ors-editor-tag-e5x>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="col-md-6 col-sm-12">
+      <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.attributes.aircraftCategory.value" path="E5X.Occurrence.Aircraft.AircraftCategory" id="AircraftCategory"></nlf-ors-editor-tag-e5x>
+    </div>
+    <div class="col-md-6 col-sm-12">
+      <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.attributes.annex2ACType.value" path="E5X.Occurrence.Aircraft.Annex2ACType" id="Annex2ACType"></nlf-ors-editor-tag-e5x>
+    </div>
+  </div>
+
+
+  <div class="form-row">
+    <div class="col-md-3 col-sm-12">
+      <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.attributes.massGroup.value" path="E5X.Occurrence.Aircraft.MassGroup" id="MassGroup"></nlf-ors-editor-tag-e5x>
+    </div>
+    <div class="col-md-3 col-sm-12">
+      <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.attributes.maximumTOMass.value" path="E5X.Occurrence.Aircraft.MaximumTOMass" id="MaximumTOMass"></nlf-ors-editor-tag-e5x>
+    </div>
+    <div class="col-md-3 col-sm-12">
+      <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.attributes.landingGearType.value" path="E5X.Occurrence.Aircraft.LandingGearType" id="LandingGearType"></nlf-ors-editor-tag-e5x>
+    </div>
+    <div class="col-md-3 col-sm-12">
+      <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.attributes.wakeTurbCategory.value" path="E5X.Occurrence.Aircraft.WakeTurbCategory" id="WakeTurbCategory"></nlf-ors-editor-tag-e5x>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="col-md-12 col-sm-12">
+      <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.attributes.operator.value" path="E5X.Occurrence.Aircraft.Operator" id="Operator"></nlf-ors-editor-tag-e5x>
+    </div>
+  </div>
+
+
+  <div class="form-row bg-info p-2">
+    <div class="col-md-6 col-sm-12">
+      <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.attributes.aircraftTotalTime.value" path="E5X.Occurrence.Aircraft.AircraftTotalTime" id="AircraftTotalTime"></nlf-ors-editor-tag-e5x>
+    </div>
+    <div class="col-md-6 col-sm-12">
+      <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.attributes.totalCyclesAC.value" path="E5X.Occurrence.Aircraft.TotalCyclesAC" id="TotalCyclesAC"></nlf-ors-editor-tag-e5x>
+    </div>
+  </div>
+
+
+
+  <!-- E5X -->
+  <!-- BASIC INFO
+    <div class="row">
+      <div class="col-md-3">
+
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)"  [(items)]="e5x.attributes.rotorcraftMassGroup.value" path="E5X.Occurrence.Aircraft.RotorcraftMassGroup"
+          id="RotorcraftMassGroup"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-3">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)"  [(items)]="e5x.attributes.totalCyclesAC.value" path="E5X.Occurrence.Aircraft.TotalCyclesAC"
+          id="TotalCyclesAC"></nlf-ors-editor-tag-e5x>
+
+      </div>
+      <div class="col-md-3">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)"  [(items)]="e5x.attributes.yearBuilt.value" path="E5X.Occurrence.Aircraft.YearBuilt"
+          id="YearBuilt"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-3">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)"  [(items)]="e5x.attributes.numberOfEngines.value" path="E5X.Occurrence.Aircraft.NumberOfEngines"
+          id="NumberOfEngines"></nlf-ors-editor-tag-e5x>
+
+      </div>
+      <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)"  [(items)]="e5x.attributes.landingGearType.value" path="E5X.Occurrence.Aircraft.LandingGearType"
+        id="LandingGearType"></nlf-ors-editor-tag-e5x>
+    </div>
+
+    ataChapterInvolved: { value: undefined },
+            cyclesSinceInsp: { value: undefined },
+            cyclesSinceNew: { value: undefined },
+            cyclesSinceOverhaul: { value: undefined },
+            dateOfInspection: { value: undefined },
+            dateOfManufacturing: { value: undefined },
+            dateOverhaul: { value: undefined },
+            enginePosition: { value: undefined },
+            engineSerialNumber: { value: undefined },
+            hazardEngEffect: { value: undefined },
+            manufacturerModel: { value: undefined },
+            natureOfEngineInvolvement: { value: undefined },
+            timeSinceInspection: { unit: 'Hour(s)', value: undefined },
+            timeSinceNew: { unit: 'Hour(s)', value: undefined },
+            timeSinceOverhaul: { unit: 'Hour(s)', value: undefined },
+  -->
+  <div class="form-row">
+
+    <div class="col-md-6 col-sm-12">
+
+
+      <div class="bg-light p-2 mb-3" *ngFor="let engine of e5x.entities.engine; let idx = index; let last = last">
+
+        <div class="form-row">
+          <h5>
+            <span class="badge badge-info lead">Engine #{{ idx+1 }}</span>
+            <span *ngIf="last && !disabled" (click)="delEngine(idx)" class="pointer mx-3">
+              <fa name="close" [fixed]="true"></fa>
+            </span>
+          </h5>
+        </div>
+
+        <div class="form-row col-md-12">
+          <!-- ENGINE INFO -->
+          <div class="col-md-12">
+            <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.entities.engine[idx].attributes.engineSerialNumber.value" path="E5X.Occurrence.Aircraft.Engine.EngineSerialNumber" id="EngineSerialNumber">
+            </nlf-ors-editor-tag-e5x>
+          </div>
+          <div class="col-md-12">
+            <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.entities.engine[idx].attributes.manufacturerModel.value" path="E5X.Occurrence.Aircraft.Engine.ManufacturerModel" id="ManufacturerModel">
+            </nlf-ors-editor-tag-e5x>
+          </div>
+          <div class="col-md-12 mt-1">
+            <div class="form-group">
+              <label for="dummy"> </label>
+              <input type="text" readonly class="form-control-plaintext" id="dummy" value=" ">
+            </div>
+          </div>
+        </div>
+        <!-- INSPECTION date, time, cycles-->
+        <div class="form-row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="DateOfManufacturing">Date Of Manufacturing</label>
+              <nlf-ors-editor-date [disabled]="disabled" (change)="onChange($event)" id="DateOfManufacturing" [(date)]="e5x.entities.engine[idx].attributes.dateOfManufacturing.value"></nlf-ors-editor-date>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="DateOfInspection">Date Of Inspection</label>
+              <nlf-ors-editor-date [disabled]="disabled" (change)="onChange($event)" id="DateOfInspection" [(date)]="e5x.entities.engine[idx].attributes.dateOfInspection.value"></nlf-ors-editor-date>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="DateOverhaul">Date Overhaul</label>
+              <nlf-ors-editor-date [disabled]="disabled" (change)="onChange($event)" id="DateOverhaul" [(date)]="e5x.entities.engine[idx].attributes.dateOverhaul.value"></nlf-ors-editor-date>
+            </div>
+          </div>
+        </div>
+        <div class="form-row bg-info">
+
+          <div class="col-md-6">
+            <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.entities.engine[idx].attributes.cyclesSinceNew.value" path="E5X.Occurrence.Aircraft.Engine.CyclesSinceNew" id="CyclesSinceNew">
+            </nlf-ors-editor-tag-e5x>
+          </div>
+          <div class="col-md-6">
+            <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.entities.engine[idx].attributes.timeSinceNew.value" path="E5X.Occurrence.Aircraft.Engine.TimeSinceNew" id="TimeSinceNew"></nlf-ors-editor-tag-e5x>
+          </div>
+
+          <div class="col-md-6">
+            <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.entities.engine[idx].attributes.cyclesSinceOverhaul.value" path="E5X.Occurrence.Aircraft.Engine.CyclesSinceOverhaul" id="CyclesSinceOverhaul">
+            </nlf-ors-editor-tag-e5x>
+          </div>
+          <div class="col-md-6">
+            <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.entities.engine[idx].attributes.timeSinceOverhaul.value" path="E5X.Occurrence.Aircraft.Engine.TimeSinceOverhaul" id="TimeSinceOverhaul">
+            </nlf-ors-editor-tag-e5x>
+          </div>
+          <div class="col-md-6">
+            <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.entities.engine[idx].attributes.cyclesSinceInsp.value" path="E5X.Occurrence.Aircraft.Engine.CyclesSinceInsp" id="CyclesSinceInsp">
+            </nlf-ors-editor-tag-e5x>
+          </div>
+          <div class="col-md-6">
+            <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.entities.engine[idx].attributes.timeSinceInspection.value" path="E5X.Occurrence.Aircraft.Engine.TimeSinceInspection" id="TimeSinceInspection">
+            </nlf-ors-editor-tag-e5x>
+          </div>
+        </div>
+
+      </div>
+      <button [disabled]="disabled" (click)="addEngine()" class="btn btn-primary btn-block my-3">
+        <fa name="plus" [fixed]="true"></fa> Legg til motor
+      </button>
+      <code>{{ engine | json }}</code>
+    </div>
+    <!--//END ENGINE-->
+    <div class="col-md-6 col-sm-12">
+
+      <div class="bg-light p-2 mb-3" *ngFor="let propeller of e5x.entities.propeller; let idx = index; let last = last">
+
+        <div class="form-row">
+          <h5>
+            <span class="badge badge-info lead">Propeller #{{ idx+1 }} </span>
+            <span *ngIf="last && !disabled" (click)="delPropeller(idx)" class="pointer mx-3">
+              <fa name="close" [fixed]="true"></fa>
+            </span>
+          </h5>
+        </div>
+        <div class="form-row">
+          <!-- PROP INFO -->
+          <div class="col-md-12">
+            <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.entities.propeller[idx].attributes.propSerial.value" path="E5X.Occurrence.Aircraft.Propeller.PropSerial" id="PropSerial">
+            </nlf-ors-editor-tag-e5x>
+          </div>
+          <div class="col-md-12">
+            <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.entities.propeller[idx].attributes.makeOfPropeller.value" path="E5X.Occurrence.Aircraft.Propeller.MakeOfPropeller" id="MakeOfPropeller">
+            </nlf-ors-editor-tag-e5x>
+          </div>
+          <div class="col-md-12">
+            <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.entities.propeller[idx].attributes.propellerModel.value" path="E5X.Occurrence.Aircraft.Propeller.PropellerModel" id="PropellerModel">
+            </nlf-ors-editor-tag-e5x>
+          </div>
+
+          <!-- INSPECTION date, time, cycles-->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="DateOfManufacturing">Date Of Manufacturing</label>
+              <nlf-ors-editor-date [disabled]="disabled" (change)="onChange($event)" id="DateOfManufacturing" [(date)]="e5x.entities.propeller[idx].attributes.dateOfManufacturing.value"></nlf-ors-editor-date>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="DateOfInspection">Date Of Inspection</label>
+              <nlf-ors-editor-date [disabled]="disabled" (change)="onChange($event)" id="DateOfInspection" [(date)]="e5x.entities.propeller[idx].attributes.dateOfOverhaul.value"></nlf-ors-editor-date>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="DateRepairInsp">Date Overhaul</label>
+              <nlf-ors-editor-date [disabled]="disabled" (change)="onChange($event)" id="DateRepairInsp" [(date)]="e5x.entities.propeller[idx].attributes.dateRepairInsp.value"></nlf-ors-editor-date>
+            </div>
+          </div>
+
+          <div class="form-row bg-info">
+            <div class="col-md-6">
+              <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.entities.propeller[idx].attributes.cyclesSinceNew.value" path="E5X.Occurrence.Aircraft.Propeller.CyclesSinceNew" id="CyclesSinceNew">
+              </nlf-ors-editor-tag-e5x>
+            </div>
+
+            <div class="col-md-6">
+              <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.entities.propeller[idx].attributes.timeSinceNew.value" path="E5X.Occurrence.Aircraft.Propeller.TimeSinceNew" id="TimeSinceNew">
+              </nlf-ors-editor-tag-e5x>
+            </div>
+
+            <div class="col-md-6">
+              <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.entities.propeller[idx].attributes.cyclesSinceOverh.value" path="E5X.Occurrence.Aircraft.Propeller.CyclesSinceOverh" id="CyclesSinceOverh">
+              </nlf-ors-editor-tag-e5x>
+            </div>
+
+            <div class="col-md-6">
+              <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.entities.propeller[idx].attributes.timeSinceOverhaul.value" path="E5X.Occurrence.Aircraft.Propeller.TimeSinceOverhaul" id="TimeSinceOverhaul">
+              </nlf-ors-editor-tag-e5x>
+            </div>
+
+            <div class="col-md-6">
+              <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.entities.propeller[idx].attributes.cyclesSinceInsp.value" path="E5X.Occurrence.Aircraft.Propeller.CyclesSinceInsp" id="CyclesSinceInsp">
+              </nlf-ors-editor-tag-e5x>
+            </div>
+
+            <div class="col-md-6">
+              <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.entities.propeller[idx].attributes.timeSinceInspection.value" path="E5X.Occurrence.Aircraft.Propeller.TimeSinceInspection"
+                id="TimeSinceInspection">
+              </nlf-ors-editor-tag-e5x>
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+      <button [disabled]="disabled" (click)="addPropeller()" class="btn btn-primary btn-block my-3">
+        <fa name="plus" [fixed]="true"></fa> Legg til propell
+      </button>
+
+      <code>{{ propeller | json }}</code>
+    </div>
+    <!--//END ENGINE-->
+  </div>
+
+  <div class="row bg-light mt-3">
+
+    <div class="col-md-6">
+      <span *ngIf="showImage">
+        <p *ngIf="!aircraft.image && !thumbnail" class="lead">
+          Legg til bilde
+        </p>
+        <img class="img-fluid img-thumbnail" *ngIf="!!aircraft.image && !thumbnail" [src]="domSanitizer.bypassSecurityTrustUrl(aircraft.image)" alt="" id="img">
+        <img class="img-fluid img-thumbnail" *ngIf="!!thumbnail" [src]="domSanitizer.bypassSecurityTrustUrl(thumbnail)" alt="" id="img">
+      </span>
+    </div>
+
+    <div class="col-md-6 align-text-bottom">
+      <p class="lead">
+        Historikk
+      </p>
+      <p>
+        <span class="badge badge-secondary">v{{ aircraft._version }}</span> {{ aircraft._updated | date:'yyyy-MM-dd HH:mm:ss' }}
+        <nlf-resolve-lungo-person *ngIf="!!aircraft.updated_by" [person_id]="aircraft.updated_by" link="true"></nlf-resolve-lungo-person>
+        <span *ngIf="!aircraft.updated_by">Automatisk</span>
+
+      </p>
+
+    </div>
+
+  </div>
+  <div class="row bg-light mt-3">
+    <div class="col-md-6">
+      <input [disabled]="disabled" *ngIf="showImage" placeholder="Velg bilde" class="mt-2" type="file" (change)="onUploadChange($event)" accept=".png, .jpg, .jpeg" />
+    </div>
+    <div class="col-md-6">
+      <button *ngIf="showSave" [disabled]="!changes || disabled" (click)="saveAircraft()" class="btn btn-primary col-md-6 col-sm-12">
+        <fa name="save" [fixed]="true"></fa> Save {{ aircraft.callsign }}
+      </button>
+      <button *ngIf="showSave && changes" [routerLink]="['/aircraft']" class="btn btn-link col-md-6 col-sm-12">
+        Cancel
+      </button>
+      <button *ngIf="showSave && !changes" [routerLink]="['/aircraft']" class="btn btn-link col-md-6 col-sm-12">
+        Tilbake
+      </button>
+    </div>
+
+  </div>
+
+</div>
+<!-- PAGE SPINNER -->
+<div *ngIf="!dataReady">
+  <nlf-ui-page-spinner size="5"></nlf-ui-page-spinner>
+</div>

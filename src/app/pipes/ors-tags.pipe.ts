@@ -10,7 +10,7 @@ export class NlfOrsTagsPipe implements PipeTransform {
 
   transform(value: Array<string>, seperator: string = ' ', length: number = 1000, append: string = ''): string {
 
-    let data = value.join('  '); // double spaces
+    const data = value.join('  '); // double spaces
 
 
     if ( (data.length - (value.length - seperator.length) ) > length) {

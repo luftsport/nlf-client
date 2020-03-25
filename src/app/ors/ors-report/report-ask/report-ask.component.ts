@@ -1,14 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NgClass } from '@angular/common';
 import { ApiObservationAskInterface } from 'app/api/api.interface';
 
 
 @Component({
-  selector: 'nlf-ors-fallskjerm-report-ask',
+  selector: 'nlf-ors-report-ask',
   templateUrl: './report-ask.component.html',
   styleUrls: ['./report-ask.component.css']
 })
-export class NlfOrsFallskjermReportAskComponent implements OnInit {
+export class NlfOrsReportAskComponent implements OnInit {
 
   @Input() ask: ApiObservationAskInterface;
   @Input() verbose: boolean;

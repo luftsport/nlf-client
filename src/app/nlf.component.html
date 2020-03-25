@@ -6,14 +6,16 @@
 
   <nlf-alert-service></nlf-alert-service>
 
-  <nlf-auth *ngIf="!isLoggedIn"></nlf-auth>
-
-  <span *ngIf="!!isLoggedIn">
+  <span *ngIf="loggedInObservable | async as authenticated; else loading">
+    <!-- HEARTBEAT -->
     <router-outlet></router-outlet>
+    <nlf-ui-footer></nlf-ui-footer>
   </span>
 
+  <ng-template #loading>
+    <div class="clearfix">
+      <nlf-auth></nlf-auth>
+    </div>
+  </ng-template>
+
 </main>
-<!--<footer> currently in ui footer
-<nlf-ui-footer></nlf-ui-footer>
-</footer>
--->

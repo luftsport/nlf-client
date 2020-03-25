@@ -12,7 +12,7 @@ import { LungoOrganizationsTypesItem } from 'app/api/lungo.interface';
 export class ResolveLungoOrganizationTypeComponent implements OnInit {
 
 
-  @Input() type_id: string;
+  @Input() type_id: number;
   @Input() link: boolean;
   @Input() long: boolean;
 

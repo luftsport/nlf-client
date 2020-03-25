@@ -1,0 +1,28 @@
+<ng-select
+  [id]="element_id"
+  [disabled]="disable"
+  class="w-auto mw-100"
+  [ngClass]="classes"
+  [items]="tags"
+  [addTag]="false"
+  [multiple]="multiple"
+  [maxSelectedItems]="max"
+  [hideSelected]="true"
+  [(ngModel)]="selectedTags"
+  (change)="onChange($event)"
+  [clearable]="true"
+  bindLabel="label"
+  labelForId="id"
+  autoCapitalize="on"
+  placeholder="Skriv for å søke"
+  notFoundText="Fant ikke noe">
+
+  <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+    <div>
+      <span [ngOptionHighlight]="search">{{item.label}}</span>
+    </div>
+    <small *ngIf="description">{{ item.descr }}</small>
+    <!--<small *ngIf="explanation">{{ item.ex }}</small>-->
+  </ng-template>
+
+</ng-select>

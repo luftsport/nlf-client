@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import { ApiObservationsItem } from 'app/api/api.interface';
+import { ApiObservationsFallskjermItem } from 'app/api/api.interface';
 
 @Component({
   selector: 'nlf-ors-fallskjerm-report-summary',
@@ -9,7 +9,7 @@ import { ApiObservationsItem } from 'app/api/api.interface';
 })
 export class NlfOrsFallskjermReportSummaryComponent implements OnInit {
 
-  @Input() observation: ApiObservationsItem;
+  @Input() observation: ApiObservationsFallskjermItem;
 
   turnaround: string;
   numberOfInvolved = 0;

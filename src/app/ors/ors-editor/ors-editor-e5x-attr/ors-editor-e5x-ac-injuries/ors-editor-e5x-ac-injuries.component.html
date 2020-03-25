@@ -1,0 +1,68 @@
+<button (click)="openModal(modal)" class="btn btn-link">
+  Injuries<fa name="check" class="text-secondary" *ngIf="!_isObjEmpty(attr)"></fa>
+</button>
+
+
+<!-- INJURIES MODAL -->
+<ng-template #modal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      Injuries/Fatalities {{ callsign }}
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+    <div class="row">
+      <div class="col-xs-12 col-md-12">
+
+        <div class="row">
+
+
+          <div class="col-md-12">
+            <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.totalNumberOfPersons.value" path="E5X.Occurrence.Aircraft.TotalNumberOfPersons"
+              id="totalNumberOfPersons"></nlf-ors-editor-tag-e5x>
+          </div>
+
+          <div class="col-md-4">
+            <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.totalNumberMinorInjuries.value" path="E5X.Occurrence.Aircraft.TotalNumberMinorInjuries"
+              id="totalNumberMinorInjuries"></nlf-ors-editor-tag-e5x>
+          </div>
+
+          <div class="col-md-4">
+            <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.totalNumberSeriousInjuries.value" path="E5X.Occurrence.Aircraft.TotalNumberSeriousInjuries"
+              id="totalNumberSeriousInjuries"></nlf-ors-editor-tag-e5x>
+          </div>
+
+          <div class="col-md-4">
+            <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.totalNumberFatalities.value" path="E5X.Occurrence.Aircraft.TotalNumberFatalities"
+              id="totalNumberFatalities"></nlf-ors-editor-tag-e5x>
+          </div>
+
+
+        </div>
+
+        <div class="row">
+
+          <div *ngIf="devDebug" class="row">
+            AC: {{ attr | json }}
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="modalRef.close()">
+      <fa name="times" [fixed]="true"></fa>Avbryt
+    </button>
+    <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate(modalIndex)">
+      <fa name="check" [fixed]="true"></fa>Oppdater
+    </button>
+  </div>
+</ng-template>

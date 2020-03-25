@@ -1,4 +1,4 @@
-import { ApiObservationOrganizationInterface } from 'app/api/api.interface';
+import { ApiObservationFallskjermOrganizationInterface } from 'app/api/api.interface';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class NlfOrsFallskjermReportOrganizationComponent implements OnInit {
 
-  @Input() organization: ApiObservationOrganizationInterface;
+  @Input() organization: ApiObservationFallskjermOrganizationInterface;
   constructor() { }
 
   ngOnInit() {

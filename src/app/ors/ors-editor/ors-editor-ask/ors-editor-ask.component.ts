@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild, Inject } from '@angular/core';
-import { ApiObservationsItem } from 'app/api/api.interface';
+import { ApiObservationsItem, NlfConfigItem } from 'app/api/api.interface';
 
 // import { Observable } from 'rxjs/Observable';
 // import { Subject } from 'rxjs/Subject';
@@ -7,7 +7,7 @@ import { ApiObservationsItem } from 'app/api/api.interface';
 
 
 import { NlfOrsEditorService } from '../ors-editor.service';
-import { NLF_CONFIG, NlfConfig } from 'app/nlf-config.module';
+import {  NlfConfigService } from 'app/nlf-config.service';
 
 
 @Component({
@@ -19,14 +19,30 @@ export class NlfOrsEditorAskComponent implements OnInit {
 
   verbose = true;
   observation: ApiObservationsItem;
+  public config: NlfConfigItem;
 
-  constructor(private subject: NlfOrsEditorService,
-              @Inject(NLF_CONFIG) public config: NlfConfig) {
-                this.subject.observableObservation.subscribe(observation => this.observation = observation); // Observation
-              }
+  constructor(
+    private subject: NlfOrsEditorService,
+    private configService: NlfConfigService) {
+
+    this.configService.observableConfig.subscribe(
+      data => {
+        this.config = data;
+      }
+    );
+
+    this.subject.observableObservation.subscribe(
+      observation => {
+        this.observation = observation; // Observation
+      });
+  }
 
   ngOnInit() {
 
+  }
+
+  private get(p, o) {
+    return p.reduce((xs, x) => (xs && xs[x]) ? xs[x] : {}, o);
   }
 
 

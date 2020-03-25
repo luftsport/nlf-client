@@ -1,4 +1,7 @@
-nav {border-bottom: 1px solid #CCCCCC; }
+nav {
+  border-bottom: 1px solid #CCCCCC;
+}
+
 .fa-fnix-container {
   position: relative;
 }

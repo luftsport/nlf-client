@@ -54,6 +54,7 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
   debouncedGetContent = debounce(this.getContent, 500);
   debouncedUpdateBody = debounce(this.logChange, 200);
   joditInit = false;
+  editorFullscreen = false;
 
   constructor(private apiContent: ApiContentService,
     private route: ActivatedRoute,
@@ -212,6 +213,9 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
       height: 600,
 
       events: {
+        afterResize: (event) => {
+          this.editorFullscreen = !this.editorFullscreen;
+        },
         beforeEnter: (event) => {
           if (this.tribute.isActive) {
             return true; // prevent enter plugin but not prevent default behavior

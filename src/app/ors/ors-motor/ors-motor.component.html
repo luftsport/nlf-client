@@ -1,0 +1,79 @@
+<header class="nlf-sticky-toolbar">
+  <div class="container lead">
+    ORS Motorfly
+
+    <button [routerLink]="['/ors', 'motorfly', 'search']" type="button" class="btn btn-sm btn-primary pull-right"><fa name="search" [fixed]="true"></fa> Søk</button>
+
+    <nlf-help class="pull-right mx-1" key="ors-motorfly"></nlf-help>
+  </div>
+
+
+</header>
+
+<div class="container">
+
+  <div class="row">
+    <!-- MY -->
+    <div class="col-md-6">
+      <div class="nlf-ors-toolbar">
+        <fa name="user" [fixed]="true"></fa> Mine observasjoner
+      </div>
+      <nlf-ors-self-table activity="motorfly"></nlf-ors-self-table>
+    </div>
+    <!-- MY TODO -->
+    <div class="col-md-6">
+      <div class="nlf-ors-toolbar">
+        <fa name="random" [fixed]="true"></fa> Til min behandling
+      </div>
+      <nlf-ors-todo-table activity="motorfly"></nlf-ors-todo-table>
+    </div>
+
+    <!-- Group = tight, with padding deck = spacing, no padding card-body style="padding: 0;"
+      <div class="card-deck">
+
+        <div class="card mb-3 mr-1">
+          <h5 class="card-header">
+            <fa name="user" [fixed]="true"></fa>Mine observasjoner</h5>
+          <div class="card-body table-responsive" style="padding: 0;">
+
+          </div>
+        </div>
+
+        <div class="card mb-3 ml-1">
+          <h5 class="card-header">
+            <fa name="random" [fixed]="true"></fa>Til min behandling</h5>
+          <div class="card-body" style="padding: 0;">
+            <nlf-ors-todo-table  activity="motor"></nlf-ors-todo-table>
+          </div>
+        </div>
+      </div>
+      -->
+  </div>
+</div>
+
+<!-- CREATE -->
+<div class="row">
+  <div class="py-5 nlf-bg-blue col-md-12">
+    <div class="container">
+      <p class="m-0 text-center text-white">
+        <nlf-ors-motor-create></nlf-ors-motor-create>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ALL ORS -->
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card mt-2">
+        <h5 class="card-header">
+          <fa name="list" [fixed]="true"></fa> Alle observasjoner
+        </h5>
+        <div class="card-body table-flush" class="p-0">
+          <nlf-ors-all-table activity="motorfly"></nlf-ors-all-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

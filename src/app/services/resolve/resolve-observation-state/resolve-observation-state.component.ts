@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Inject } from '@angular/core';
 import { environment } from 'environments/environment';
-import { NLF_CONFIG, NlfConfig } from 'app/nlf-config.module';
+import {  NlfConfigService } from 'app/nlf-config.service';
+import { NlfConfigItem } from 'app/api/api.interface';
 
 @Component({
   selector: 'nlf-resolve-observation-state',
@@ -10,15 +11,23 @@ import { NLF_CONFIG, NlfConfig } from 'app/nlf-config.module';
 export class NlfResolveObservationStateComponent implements OnInit {
 
   @Input() state: string;
+  @Input() activity: string;
+  @Input() badge: boolean = true;
   @Input() icon: boolean;
+  public config: NlfConfigItem;
 
-  constructor(@Inject(NLF_CONFIG) public config: NlfConfig) { }
+  constructor(private configService: NlfConfigService) { }
 
   ngOnInit() {
+    this.configService.observableConfig.subscribe(
+      data => {
+        this.config = data;
+        if (!this.state || !this.config[this.activity].observation.state[this.state]) {
+          this.state = 'unknown';
+        }
+      }
+    );
 
-    if (!this.state || !this.config.observation.state[this.state]) {
-      this.state = 'unknown';
-    }
 
   }
 

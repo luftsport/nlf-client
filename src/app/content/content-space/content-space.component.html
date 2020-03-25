@@ -2,8 +2,8 @@
   <div class="row">
     <div class="nlf-sticky-toolbar">
       <div class="container">
-        <fa name="sitemap" fixed="true"></fa>
-        <a [routerLink]="['/content']">Spaces</a> / <a [routerLink]="['/content/view', space.space_key, space._id]">{{ space.title }}</a>
+        <fa name="sitemap" [fixed]="true"></fa>
+        <a [routerLink]="['/content']">Spaces</a> / <a [routerLink]="['/content', space.space_key, space._id]">{{ space.title }}</a>
       </div>
     </div>
   </div>
@@ -16,12 +16,12 @@
           <td class="ngx-easy-table-small">
 
             <span *ngIf="!!row.parent">
-              <fa name="file" fixed="true"></fa>
+              <fa name="file" [fixed]="true"></fa>
             </span>
             <span *ngIf="!row.parent">
-              <fa name="sitemap" fixed="true"></fa>
+              <fa name="sitemap" [fixed]="true"></fa>
             </span>
-            <a [routerLink]="['/content/view/', row.space_key, row.slug]">{{ row.title }}</a>
+            <a [routerLink]="['/content', row.space_key, row.slug]">{{ row.title }}</a>
 
           </td>
           <td class="ngx-easy-table-small">
@@ -32,13 +32,13 @@
           </td>
           <td>
             <span class="pointer" (click)="delete(row)">
-              <fa name="close" fixed="true"></fa>
+              <fa name="close" [fixed]="true"></fa>
             </span>
             <span class="pointer" [routerLink]="['/content/edit/', row._id]">
-              <fa name="edit" fixed="true"></fa>
+              <fa name="edit" [fixed]="true"></fa>
             </span>
             <span class="pointer" [routerLink]="['/content/create/', row._id]">
-              <fa name="plus" fixed="true"></fa>
+              <fa name="plus" [fixed]="true"></fa>
             </span>
           </td>
         </ng-template>

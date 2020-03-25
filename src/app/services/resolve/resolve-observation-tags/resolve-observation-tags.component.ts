@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-// import { NLF_CONFIG, NlfConfig } from 'app/nlf-config.module';
 
 
 
@@ -11,18 +10,19 @@ import { Component, Input, OnInit } from '@angular/core';
 export class NlfResolveObservationTagsComponent implements OnInit {
 
   @Input() tags: Array<string>;
+  @Input() activity: string;
   @Input() seperator?: string;
-  @Input() link?: boolean;
+  @Input() link?: boolean = true;
 
   url = '/ors/fallskjerm/search/tag/';
   html = [];
 
-  //   constructor(@Inject(NLF_CONFIG) private config: NlfConfig) { }
   constructor() { }
 
   ngOnInit() {
 
-    /** 
+
+    /**
     if (typeof this.tags !== 'undefined' && this.tags.length > 0) {
       if (typeof this.seperator === 'undefined') {
         this.seperator = ' ';
@@ -39,6 +39,10 @@ export class NlfResolveObservationTagsComponent implements OnInit {
         }
       }
     }*/
+  }
+
+  public stringify(text) {
+    return JSON.stringify(text);
   }
 
 }

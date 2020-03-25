@@ -1,7 +1,7 @@
 <div *ngIf="involved">
   <table class="table table-condensed table-hover ">
     <tr>
-      <th>Hopper</th>
+      <th></th>
       <th>Lisenser</th>
       <th>Erfaring</th>
       <th>Hopp</th>
@@ -10,14 +10,14 @@
     </tr>
     <tr *ngFor="let p of involved">
       <td>
-        <nlf-resolve-user link="true" [userid]="p.id" [tmpname]="p.tmpname"></nlf-resolve-user>
-        <!-- Hopper {{$index+1}}-->
+        <nlf-resolve-lungo-person link="true" [person_id]="p.id" [tmp_name]="p.tmp_name"></nlf-resolve-lungo-person>
+        <!--  {{$index+1}}-->
       </td>
       <td>
         <span *ngIf="!!p.licenses">
           <small>
             <div *ngFor="let l of p.licenses.rights">
-              <nlf-resolve-license [licenseid]="l"></nlf-resolve-license>
+              <nlf-resolve-license *ngIf="model.version==2" [licenseid]="l"></nlf-resolve-license>
             </div>
           </small>
         </span>
@@ -95,7 +95,7 @@
 
         <label *ngIf="!!p.gear.rigger">MK: </label>
         <span *ngIf="!!p.gear.rigger">
-          <nlf-resolve-user link="true" [userid]="p.gear.rigger.id" [tmpname]="p.gear.rigger.tmpname">
+          <nlf-resolve-user link="true" [userid]="p.gear.rigger.id" [tmp_name]="p.gear.rigger.tmp_name">
           </nlf-resolve-user>
         </span>
         <br *ngIf="!!p.gear.rigger">
@@ -104,8 +104,8 @@
         <span *ngIf="!!p.gear.rigger">{{ p.gear.riggerdate | date:'yyyy-MM-dd' }}</span>
         <br *ngIf="!!p.gear.riggerdate">
 
-        <label *ngIf="!!p.gear.other">Annet utstyr: </label>
-        <span *ngIf="!!p.gear.other">{{ p.gear.other | join: ', ' }}</span>
+        <label *ngIf="!!p.gear.other">Annet utstyr:</label>
+        <span class="ml-1" *ngIf="!!p.gear.other">{{ p.gear.other | join: ', ' }}</span>
         <br *ngIf="!!p.gear.other">
       </div>
       </td>

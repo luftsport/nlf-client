@@ -1,0 +1,27 @@
+<ng-select
+style="width: 100% !important"
+[ngClass]="{'form-control': fc}"
+[disabled]="disabled"
+class="w-100"
+id="{{elementId}}"
+[items]="locations$ | async"
+bindLabel="name"
+[addTag]="allowAdd"
+[multiple]="false"
+[hideSelected]="true"
+[loading]="locationsLoading"
+[typeahead]="locationsInput$"
+[(ngModel)]="selectedLocations"
+(change)="onChange($event)"
+[clearable]="clearable"
+autoCapitalize="on"
+addTagText="+Opprett ny location"
+placeholder="Skriv for å søke"
+notFoundText="Fant ikke noe">
+  <ng-template *ngIf="details" ng-option-tmp let-item="item" let-search="searchTerm">
+    <div>
+      <span [ngOptionHighlight]="search">{{item.name}}</span>
+    </div>
+    <small><b>Kommune</b> {{item.municipality}} | <b>Fylke</b> {{ item.county }} | <b>Type</b> {{ item.geo_type }}</small>
+  </ng-template>
+</ng-select>

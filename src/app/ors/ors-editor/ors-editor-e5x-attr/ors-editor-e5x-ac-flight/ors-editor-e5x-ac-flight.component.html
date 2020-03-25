@@ -1,0 +1,128 @@
+<button *ngIf="!showOnlyBtn" (click)="openModal(attrModal)" class="btn btn-link">
+  Flight Data
+</button>
+
+<div *ngIf="showOnlyBtn">
+  <button class="btn btn-secondary btn-block" (click)="openModal(attrModal)">
+    <fa name="tachometer" [fixed]="true"></fa>Flight Data
+  </button>
+</div>
+<!-- MODAL -->
+<ng-template #attrModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      Aircraft Flight Data {{ callsign }}
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+
+    <div class="row">
+
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.lastDeparturePoint.value" path="E5X.Occurrence.Aircraft.LastDeparturePoint" id="LastDeparturePoint"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.plannedDestination.value" path="E5X.Occurrence.Aircraft.PlannedDestination" id="plannedDestination"></nlf-ors-editor-tag-e5x>
+      </div>
+
+      <div class="col-md-12">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.operationType.value" path="E5X.Occurrence.Aircraft.OperationType" id="operationType"></nlf-ors-editor-tag-e5x>
+      </div>
+
+      <div class="col-md-12">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.flightPhase.value" path="E5X.Occurrence.Aircraft.FlightPhase" id="flightPhase"></nlf-ors-editor-tag-e5x>
+      </div>
+
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.aircraftAltitude.value" path="E5X.Occurrence.Aircraft.AircraftAltitude" id="aircraftAltitude"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.acFlightLevel.value" path="E5X.Occurrence.Aircraft.ACFlightLevel" id="acFlightLevel"></nlf-ors-editor-tag-e5x>
+      </div>
+
+
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.clearedAltitude.value" path="E5X.Occurrence.Aircraft.ClearedAltitude" id="clearedAltitude"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.clearedFlightLevel.value" path="E5X.Occurrence.Aircraft.ClearedFlightLevel" id="clearedFlightLevel"></nlf-ors-editor-tag-e5x>
+      </div>
+
+
+
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.clearanceValidity.value" path="E5X.Occurrence.Aircraft.ClearanceValidity" id="clearanceValidity"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.clearedFLAfter.value" path="E5X.Occurrence.Aircraft.ClearedFLAfter" id="clearedFLAfter"></nlf-ors-editor-tag-e5x>
+      </div>
+
+      <div class="col-md-12">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.timeDeviatingFL.value" path="E5X.Occurrence.Aircraft.TimeDeviatingFL" id="timeDeviatingFL"></nlf-ors-editor-tag-e5x>
+      </div>
+
+      <div class="col-md-12">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.controllingAgency.value" path="E5X.Occurrence.Aircraft.ControllingAgency" id="controllingAgency"></nlf-ors-editor-tag-e5x>
+      </div>
+
+      <div class="col-md-12">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.flightPlanType.value" path="E5X.Occurrence.Aircraft.FlightPlanType" id="flightPlanType"></nlf-ors-editor-tag-e5x>
+      </div>
+
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.currentFlightRules.value" path="E5X.Occurrence.Aircraft.CurrentFlightRules" id="currentFlightRules"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.filedFlightRules.value" path="E5X.Occurrence.Aircraft.FiledFlightRules" id="filedFlightRules"></nlf-ors-editor-tag-e5x>
+      </div>
+
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.currentTrafficType.value" path="E5X.Occurrence.Aircraft.CurrentTrafficType" id="currentTrafficType"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.filedTrafficType.value" path="E5X.Occurrence.Aircraft.FiledTrafficType" id="filedTrafficType"></nlf-ors-editor-tag-e5x>
+      </div>
+
+
+
+
+      <div class="col-md-12">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.flightNumber.value" path="E5X.Occurrence.Aircraft.FlightNumber" id="flightNumber"></nlf-ors-editor-tag-e5x>
+      </div>
+
+
+      <div class="col-md-12">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.instrumentApprType.value" path="E5X.Occurrence.Aircraft.InstrumentApprType" id="instrumentApprType"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-12">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.sidRoute.value" path="E5X.Occurrence.Aircraft.SIDRoute" id="sidRoute"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-12">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.ssrMode.value" path="E5X.Occurrence.Aircraft.SSRMode" id="ssrMode"></nlf-ors-editor-tag-e5x>
+      </div>
+
+      <div class="col-md-12">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.atsRouteName.value" path="E5X.Occurrence.Aircraft.ATSRouteName" id="atsRouteName"></nlf-ors-editor-tag-e5x>
+      </div>
+
+      <div *ngIf="devDebug" class="row">
+        AC: {{ classification | json }}
+      </div>
+
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="modalRef.close()">
+      <fa name="times" [fixed]="true"></fa>Avbryt
+    </button>
+    <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate(modalIndex)">
+      <fa name="check" [fixed]="true"></fa>Oppdater
+    </button>
+  </div>
+</ng-template>

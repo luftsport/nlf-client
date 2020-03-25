@@ -1,0 +1,25 @@
+<div *ngIf="dataReady">
+
+
+  <ngx-table [configuration]="tableConf" [data]="functions" [columns]="columns">
+
+    <ng-template let-row let-index="index">
+      <td>
+        <nlf-resolve-lungo-function-type [type_id]="row.type_id"></nlf-resolve-lungo-function-type>
+      </td>
+      <td>
+        <nlf-resolve-lungo-person [person_id]="row.person_id" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
+      </td>
+    </ng-template>
+  </ngx-table>
+  <!--
+    <div *ngFor="let f of functions" class="row">
+      <div class="col-md-6 font-weight-bold">
+        <nlf-resolve-lungo-function-type [type_id]="f.type_id"></nlf-resolve-lungo-function-type>
+      </div>
+      <div class="col-md-6">
+        <nlf-resolve-lungo-person [person_id]="f.person_id" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
+      </div>
+    </div>
+-->
+</div>

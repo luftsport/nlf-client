@@ -1,0 +1,128 @@
+<div class="row">
+  <div class="col-md-12">
+
+    <button [disabled]="disabled" class="btn btn-secondary btn-block mb-3" (click)="add();openModal(modal, modalIdx)">
+      <fa name="plus" [fixed]="true"></fa>Partinformation
+    </button>
+
+    <div class="mx-1 my-1" *ngFor="let part of partinformation; let idx = index">
+      <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="part.attributes.partName.value" path="E5X.Occurrence.Aircraft.PartInformation.PartName"></nlf-ors-editor-tag-e5x-render>
+      &nbsp;
+      <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="part.attributes.manufacturer.value" path="E5X.Occurrence.Aircraft.PartInformation.Manufacturer"></nlf-ors-editor-tag-e5x-render>
+
+      <fa class="mx-1" name="edit" (click)="openModal(modal, idx)"></fa>
+      <fa class="mx-1" name="close" (click)="delete(idx)"></fa>
+    </div>
+
+
+
+
+  </div>
+</div>
+
+<!-- ATM MODAL -->
+<ng-template #modal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      Add new part information {{ callsign }}
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+    <div class="row">
+
+      <div class="col-md-12">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.attributes.partName.value" path="E5X.Occurrence.Aircraft.PartInformation.PartName" id="partName"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-12">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.attributes.manufacturer.value" path="E5X.Occurrence.Aircraft.PartInformation.Manufacturer" id="manufacturer"></nlf-ors-editor-tag-e5x>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.attributes.serialNumber.value" path="E5X.Occurrence.Aircraft.PartInformation.SerialNumber" id="serialNumber"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.attributes.partNumber.value" path="E5X.Occurrence.Aircraft.PartInformation.PartNumber" id="artNumber"></nlf-ors-editor-tag-e5x>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.attributes.ataChapterNumber.value" path="E5X.Occurrence.Aircraft.PartInformation.ATAChapterNumber" id="ataChapterNumber"></nlf-ors-editor-tag-e5x>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.attributes.timeSinceNew.value" path="E5X.Occurrence.Aircraft.PartInformation.TimeSinceNew" id="timeSinceNew"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-4">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.attributes.timeSinceOverhaul.value" path="E5X.Occurrence.Aircraft.PartInformation.TimeSinceOverhaul" id="timeSinceOverhaul"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-4">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.attributes.timeSinceInspection.value" path="E5X.Occurrence.Aircraft.PartInformation.TimeSinceInspection" id="timeSinceInspection"></nlf-ors-editor-tag-e5x>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.attributes.cyclesSinceNew.value" path="E5X.Occurrence.Aircraft.PartInformation.CyclesSinceNew" id="cyclesSinceNew"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-4">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.attributes.cyclesSinceOverhaul.value" path="E5X.Occurrence.Aircraft.PartInformation.CyclesSinceOverhaul" id="cyclesSinceOverhaul"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-4">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.attributes.cyclesSinceInsp.value" path="E5X.Occurrence.Aircraft.PartInformation.CyclesSinceInsp" id="cyclesSinceInsp"></nlf-ors-editor-tag-e5x>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="dateOfManufacturing">Date Of Manufacturing</label>
+          <nlf-ors-editor-date [disabled]="disabled" id="dateOfManufacturing" [(date)]="modalValue.attributes.dateOfManufacturing.value"></nlf-ors-editor-date>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="dateOfOverhaul">Date Of Overhaul</label>
+          <nlf-ors-editor-date [disabled]="disabled" id="dateOfOverhaul" [(date)]="modalValue.attributes.dateOfOverhaul.value"></nlf-ors-editor-date>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="dateRepairInsp">Date Of Repair</label>
+          <nlf-ors-editor-date [disabled]="disabled" id="dateRepairInsp" [(date)]="modalValue.attributes.dateRepairInsp.value"></nlf-ors-editor-date>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+
+
+    </div>
+
+    <div class="row">
+
+      <div *ngIf="devDebug" class="row">
+        AC: {{ atm | json }}
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="modalRef.close()">
+      <fa name="times" [fixed]="true"></fa>Avbryt
+    </button>
+    <button [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate()">
+      <fa name="check" [fixed]="true"></fa>Oppdater
+    </button>
+  </div>
+</ng-template>

@@ -8,12 +8,10 @@ import { ApiOptionsInterface, ApiUserItem, ApiUserList } from './api.interface';
 
 @Injectable()
 export class ApiUserService extends ApiRestService {
-
-  constructor( http: HttpClient
-              // , private cookieService: CookieService
-            ) { super(http); }
-
+  
   private relativeUrl = '/users/';
+
+  constructor(http: HttpClient) { super(http); }
 
   public getUser(id: number, options?: ApiOptionsInterface): Observable<ApiUserItem> {
 
@@ -25,22 +23,26 @@ export class ApiUserService extends ApiRestService {
     return this.getList(this.relativeUrl, options);
   }
 
+  public save(_id: string, payload, etag?: string, options?: ApiOptionsInterface): Observable<ApiUserItem> {
+    return this.patch(this.relativeUrl, _id, payload, options, etag);
+  }
+
   public getAvatar(id: number) {
 
-    let options: ApiOptionsInterface = {
+    const options: ApiOptionsInterface = {
       query: {
-        projection: {'avatar': 1}
-        },
+        projection: { 'avatar': 1 }
+      },
     };
     return this.getItem(this.relativeUrl, id, options);
   }
 
-/**
-  public getsomething: Observable<Article> = this.http.get("https://api.github.com/users/seeschweiler");
-
-  public getto(): Observable<Article> {
-    return this.getsomething; //this.http.get<Article>("https://api.github.com/users/seeschweiler");
-  }
-  **/
+  /**
+    public getsomething: Observable<Article> = this.http.get("https://api.github.com/users/seeschweiler");
+  
+    public getto(): Observable<Article> {
+      return this.getsomething; //this.http.get<Article>("https://api.github.com/users/seeschweiler");
+    }
+    **/
 
 }

@@ -1,0 +1,7 @@
+<div class="px-1 mt-3">
+  <span *ngFor="let cat of config[observation._model.type]['observation']['categories']" class="badge badge-info mx-1 pointer" (click)="toggle(cat)" [ngClass]="{'badge-success': hasCat(cat), 'badge-light': !hasCat(cat)}">
+
+    {{ cat }}
+
+  </span>
+</div>

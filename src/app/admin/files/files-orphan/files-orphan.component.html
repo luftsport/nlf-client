@@ -1,0 +1,42 @@
+<span *ngIf="!!dataReady">
+  <ngx-table id="files_table" [configuration]="tableConf" [data]="data" [columns]="columns" [(pagination)]="pagination" (event)="eventEmitted($event)">
+
+    <!--
+
+    { key: 'contentType', title: 'Type', sort: true },
+    { key: 'length', title: 'Size', sort: true },
+    { key: 'uploadDate', title: 'Uploaded', sort: true },
+    { key: 'md5', title: 'MD5', sort: true },
+    { key: 'ref_count', title: 'Ref Col', sort: true },
+
+    -->
+    <ng-template let-row>
+
+      <td class="ngx-easy-table-small">
+        {{ row.contentType }}
+      </td>
+
+      <td class="ngx-easy-table-small">
+        {{ row.length | bytes : 2 }}
+      </td>
+
+      <td class="ngx-easy-table-small">
+        {{ row.uploadDate | date:'yyyy-MM-dd HH:mm' }}
+      </td>
+
+      <td class="ngx-easy-table-small">
+        {{ row.md5 }}
+      </td>
+
+      <td class="ngx-easy-table-small">
+        {{ row.ref_count }}
+      </td>
+
+    </ng-template>
+  </ngx-table>
+</span>
+<span *ngIf="!dataReady">
+  <p class="align-middle text-center  text-secondary">
+    <fa name="spinner" animation="pulse" size="3x"></fa>
+  </p>
+</span>

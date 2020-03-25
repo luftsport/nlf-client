@@ -14,7 +14,7 @@ import { catchError } from 'rxjs/operators';
 export class NlfResolveUserComponent implements OnInit {
 
   @Input() userid: number;
-  @Input() tmpname?: string;
+  @Input() tmp_name?: string;
   @Input() link?: boolean;
   @Input() avatar?: boolean;
 
@@ -22,25 +22,26 @@ export class NlfResolveUserComponent implements OnInit {
 
   fullname = '';
 
-  constructor(private melwinUserService: ApiNlfUserService,
+  constructor(
+    private melwinUserService: ApiNlfUserService,
     private userService: ApiUserService,
     private apiCache: ApiCacheService) { }
 
   ngOnInit() {
     if (!this.avatar) { this.avatar = false; }
     if (!this.link) { this.link = false; }
-    // if (!this.tmpname ) { this.tmpname = ''; }
+    // if (!this.tmp_name ) { this.tmp_name = ''; }
 
-    if (this.userid < 0 && !this.tmpname) {
+    if (this.userid < 0 && !this.tmp_name) {
 
-      this.fullname = 'Hopper ' + (-1 * this.userid);
+      this.fullname = 'Person ' + (-1 * this.userid);
       this.dataReady = true;
 
-    } else if (!!this.tmpname && this.userid <= 0) {
+    } else if (!!this.tmp_name && this.userid <= 0) {
 
       this.avatar = false;
       this.link = false;
-      this.fullname = this.tmpname;
+      this.fullname = this.tmp_name;
       this.dataReady = true;
 
     } else if (typeof this.userid === 'undefined') {

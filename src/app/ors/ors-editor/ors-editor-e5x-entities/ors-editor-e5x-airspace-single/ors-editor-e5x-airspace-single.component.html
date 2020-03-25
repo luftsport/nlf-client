@@ -1,0 +1,53 @@
+<button class="btn btn-secondary btn-block" (click)="openModal(modal)">
+  <fa name="circle-o" [fixed]="true"></fa>Airspace
+</button>
+
+<!-- AIRSPACE MODAL -->
+<ng-template #modal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      Airspace
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+    <div class="row">
+
+      <div class="col-md-4">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="airspace.attributes.airspaceName.value" path="E5X.Occurrence.AirSpace.AirspaceName" id="AirspaceName"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-4">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="airspace.attributes.airspaceClass.value" path="E5X.Occurrence.AirSpace.AirspaceClass" id="AirspaceClass"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-4">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="airspace.attributes.airspaceType.value" path="E5X.Occurrence.AirSpace.AirspaceType" id="AirspaceType"></nlf-ors-editor-tag-e5x>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="airspace.attributes.firuirName.value" path="E5X.Occurrence.AirSpace.FIRUIRName" id="FIRUIRName"></nlf-ors-editor-tag-e5x>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="airspace.attributes.specialActivities.value" path="E5X.Occurrence.AirSpace.SpecialActivities" id="SpecialActivities"></nlf-ors-editor-tag-e5x>
+      </div>
+    </div>
+    <div *ngIf="devDebug" class="row">
+      AC: {{ airspace | json }}
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="modalRef.close()">
+      <fa name="times" [fixed]="true"></fa>Avbryt
+    </button>
+    <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate()">
+      <fa name="check" [fixed]="true"></fa>Oppdater
+    </button>
+  </div>
+</ng-template>

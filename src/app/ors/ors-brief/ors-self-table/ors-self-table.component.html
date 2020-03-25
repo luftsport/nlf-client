@@ -1,0 +1,30 @@
+<span *ngIf="!!dataReady">
+    <ngx-table id="ors_self_table"  [configuration]="tableConf" [data]="data" [columns]="columns" [(pagination)]="pagination" (event)="eventEmitted($event)">
+
+        <ng-template let-row>
+            <td class="ngx-easy-table-small">
+                <a *ngIf="row.workflow.state==='closed'" [routerLink]="['/ors', row._model.type, 'report', row.id]">{{ row.id }}</a>
+                <a *ngIf="row.workflow.state!=='closed'" [routerLink]="['/ors', row._model.type, 'edit', row.id]">{{ row.id }}</a>
+            </td>
+            <td class="ngx-easy-table-small">
+                {{ row.when | amTimeAgo }}
+            </td>
+            <td class="ngx-easy-table-small">
+                <a *ngIf="row.workflow.state==='closed'" [routerLink]="['/ors', row._model.type, 'report', row.id]">{{ row.tags | nlfOrsTags: '/':23:'..' }}</a>
+                <a *ngIf="row.workflow.state!=='closed'" [routerLink]="['/ors', row._model.type, 'edit', row.id]">{{ row.tags | nlfOrsTags: '/':23:'..' }}</a>
+            </td>
+            <td class="ngx-easy-table-small">
+              {{ row.workflow.state | nlfOrsState: row._model.type }}
+            </td>
+            <td class="text-right ngx-easy-table-small text-right">
+              <nlf-resolve-observation-types [type]="row.type" [activity]="row._model.type" [badge]="true"></nlf-resolve-observation-types>
+            </td>
+
+        </ng-template>
+    </ngx-table>
+</span>
+<span *ngIf="!dataReady">
+    <p class="align-middle text-center  text-secondary">
+        <fa name="spinner" animation="pulse" size="3x"></fa>
+    </p>
+</span>

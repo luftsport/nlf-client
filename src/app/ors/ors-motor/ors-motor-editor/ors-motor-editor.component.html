@@ -1,0 +1,541 @@
+<div *ngIf="!!dataReady && !error">
+
+  <!-- STICKY TOP BAR -->
+  <header class="nlf-sticky-toolbar">
+
+    <div class="container lead">
+      <!-- TITLE -->
+
+      <!-- <fa name="file-text-o" [fixed]="true"></fa>&nbsp;-->
+      <!-- {{ data.tags | nlfOrsTags: ' / '}} -->
+      <span class="overflow-hidden">
+        <a [routerLink]="['/ors', 'motorfly']">ORS</a>#{{ observation.id }}
+        <nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type" link="true" seperator="/"></nlf-resolve-observation-tags>&nbsp;
+        <span *ngIf="!!observation.rating" class="badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{
+          observation.rating | nlfOrsRatingCalc }}</span>
+      </span>
+      <!-- WORKFLOW STATE -->
+      <span class="pull-right">
+
+        <!-- SAVE -->
+        <span *ngIf="!!observation">
+          <span (click)="saveIfChanges()" *ngIf="!!changes && observation.acl_user.w" class="pointer badge badge-warning mx-1">
+            <fa name="save" [fixed]="true"></fa>
+          </span>
+        </span>
+
+        <!-- HELP -->
+        <a class="badge badge-light pointer text-info mx-1" (click)="openHelp()">
+          <fa name="question" [fixed]="true"></fa>
+        </a>
+
+        <!-- FLAGS -->
+        <span *ngIf="hasFlag()" class="text-danger mx-1">
+          <fa name="flag" [fixed]="true"></fa>
+        </span>
+
+        <!-- ABOUT -->
+        <a (click)="openAbout()" class="badge badge-secondary text-white pointer mx-1">
+          <fa name="info-circle" [fixed]="true"></fa>
+          <fa *ngIf="!observation.acl_user.w" name="lock" [fixed]="true" class="text-danger" title="Ingen skrivetilgang"></fa>
+          {{ observation._updated | amTimeAgo }}
+        </a>
+
+        <!-- VERSION -->
+        <a class="badge badge-success mx-1 text-white pointer" (click)="openVersions(modalVersions)">v{{ observation._version }}</a>
+
+        <!-- WORKFLOW -->
+        <a class="pointer mx-1" *ngIf="observation.acl_user.x" (click)="openWorkflow()">
+          <nlf-resolve-observation-state [activity]="observation._model.type" [state]="observation.workflow.state" [icon]="true" [badge]="true"></nlf-resolve-observation-state>
+        </a>
+        <a class="mx-1" *ngIf="!observation.acl_user.x">
+          <nlf-resolve-observation-state [activity]="observation._model.type" [state]="observation.workflow.state" [icon]="true" [badge]="true"></nlf-resolve-observation-state>
+        </a>
+
+        <!-- E5X on change get data again!-->
+        <nlf-ors-e5x (click)="saveIfChanges()" (change)="getData()"></nlf-ors-e5x>
+
+        <!-- DEBUG MODAL -->
+        <a *ngIf="['local', 'dev'].indexOf(ENV._name)>-1" (click)="openDebugModal(modalDebug)" class="pointer badge badge-secondary text-white mx-1">
+          <fa name="bug" [fixed]="true"></fa>
+        </a>
+
+        <!-- ACTIVITIES
+        <span class="pointer badge badge-info mx-1" [routerLink]="['/ors', observation._model.type , 'activities', observation.id]">
+          <fa name="history"></fa> Aktivitet
+        </span>
+        -->
+
+        <!-- USERS!!! -->
+        <nlf-ors-editor-users [model]="observation._model.type" [_id]="observation._id" [observation]="observation"></nlf-ors-editor-users>
+
+        <a [routerLink]="['/ors', observation._model.type , 'report', observation.id]" *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge badge-primary text-white mx-1">
+						<fa name="file" [fixed]="true"></fa> Report
+				</a>
+
+      </span>
+      <!-- /WORKFLOW STATE -->
+    </div>
+  </header>
+
+  <!-- CONTAINER -->
+  <div class="container">
+
+    <!-- TITLE/TAGS-->
+    <div class="row my-3">
+      <div class="col-sm-12 col-md-12">
+
+        <!-- WELCOME FIRST TIME -->
+        <nlf-ors-editor-first *ngIf="observation.acl_user.w"></nlf-ors-editor-first>
+
+        <!-- TITLE -->
+        <div class="nlf-ors-toolbar">
+          Tittel <nlf-help class="pull-right" key="ors-editor-motorfly-title"></nlf-help>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-12 my-3 lead">
+
+        <nlf-ors-editor-tag [disabled]="!observation.acl_user.w" limit="15" preload="true" details="true" group="observation" [activity]="observation._model.type" [(initialTags)]="observation.tags" (change)="update($event)"></nlf-ors-editor-tag>
+        <!--<nlf-ors-editor-title></nlf-ors-editor-title>-->
+        <div *ngIf="!!devDebug">
+          <code>{{ observation.tags | json}} </code>
+        </div>
+
+      </div>
+    </div>
+    <!--
+    <div>
+
+        @Input() items: any; //numbernumber[] = [];
+  @Output() itemsChange: EventEmitter<any> = new EventEmitter();
+
+  @Input() path: string; //Occurrence.DewPoint
+
+  @Input() classes: string = '';
+  @Input() disable: boolean = false;
+  @Input() element_id: string = '';
+
+  OccurrenceCategory multiple
+
+
+      <nlf-ors-editor-tag-e5x path="E5X.Occurrence.DetectionPhase" [(items)]="observation.aircrafts[0].flight[0].incident.classification.DetectionPhase"></nlf-ors-editor-tag-e5x>
+      {{ observation.aircrafts[0].flight[0].incident.classification.DetectionPhase | json }}
+
+      <nlf-ors-editor-tag-e5x path="E5X.Occurrence.ReportingHistory.ReportingEntity" [(items)]="observation.aircrafts[0].flight[0].incident.classification.ReportingEntity"></nlf-ors-editor-tag-e5x>
+      {{ observation.aircrafts[0].flight[0].incident.classification.ReportingEntity | json}}
+
+       <nlf-ors-editor-tag-e5x path="E5X.Occurrence.DewPoint" [(items)]="observation.aircrafts[0].flight[0].incident.classification.DewPoint"></nlf-ors-editor-tag-e5x>
+       Decimal {{ observation.aircrafts[0].flight[0].incident.classification.DewPoint | json }}
+
+       <nlf-ors-editor-tag-e5x path="E5X.Occurrence.OccurrenceCategory" [(items)]="observation.aircrafts[0].flight[0].incident.classification.OccurrenceCategory"></nlf-ors-editor-tag-e5x>
+       Multiple {{ observation.aircrafts[0].flight[0].incident.classification.OccurrenceCategory | json }}
+
+       <nlf-ors-editor-tag-e5x path="E5X.Occurrence.Aircraft.PartsDamaged" [(items)]="observation.aircrafts[0].flight[0].incident.classification.PartsDamaged"></nlf-ors-editor-tag-e5x>
+       String {{ observation.aircrafts[0].flight[0].incident.classification.PartsDamaged | json }}
+
+      </div>
+    -->
+
+    <!--Type, When & Flags-->
+    <div class="row my-3">
+      <!-- WHEN -->
+      <div class="col-sm-12 col-md-4">
+        <div class="card">
+          <div class="card-header">
+            <h5>Tidspunkt [UTC]<nlf-help class="pull-right" key="ors-editor-when"></nlf-help>
+            </h5>
+          </div>
+          <div class="card-body">
+            <nlf-ors-editor-when tz="utc"></nlf-ors-editor-when>
+            <div *ngIf="!!devDebug">{{ observation.when }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TYPE -->
+      <div class="col-sm-12 col-md-4">
+        <div class="card">
+          <div class="card-header">
+            <h5>Type <nlf-help class="pull-right" key="ors-editor-motorfly-type"></nlf-help>
+            </h5>
+          </div>
+          <div class="card-body">
+            <nlf-ors-editor-type [title]="true"></nlf-ors-editor-type>
+            <div *ngIf="!!devDebug">{{ observation.type }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FLAGS-->
+      <div class="col-sm-12 col-md-4">
+        <div class="card">
+          <div class="card-header">
+            <h5>Flagg <nlf-help class="pull-right" key="ors-editor-motorfly-flags"></nlf-help>
+            </h5>
+          </div>
+          <div class="card-body">
+            <nlf-ors-editor-flags></nlf-ors-editor-flags>
+            <div *ngIf="!!devDebug">{{ observation.flags | json }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- LOCATION: Removed  -->
+
+    <!-- NARRATIVE -->
+    <div class="row mt-3">
+      <div class="nlf-ors-toolbar">
+        Hva skjedde? <nlf-help class="pull-right" key="ors-e5x-narrative"></nlf-help>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-12 bg-light">
+        <nlf-ors-editor-e5x-narrative [disabled]="!observation.acl_user.w" (change)="update()" [(narrative)]="observation.occurrence.entities.narrative"></nlf-ors-editor-e5x-narrative>
+      </div>
+    </div>
+
+    <!-- FILES ALT 1 -->
+    <div class="row">
+      <div class="nlf-ors-toolbar">
+        Vedlegg ({{ observation.files.length }})
+        <nlf-help class="pull-right" key="ors-editor-files"></nlf-help>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-12">
+        <nlf-ors-editor-files [dropzone]="true" (fileChange)="save($event)"></nlf-ors-editor-files>
+      </div>
+    </div>
+    <!-- FILES ALT 2 -->
+    <!--
+    <div class="row my-3">
+      <div class="col-sm-12 col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h5>Vedlegg ({{ observation.files.length }})
+              <nlf-help class="pull-right" key="ors-editor-files"></nlf-help>
+            </h5>
+          </div>
+          <div class="card-body table-responsive">
+            <nlf-ors-editor-files [dropzone]="true" (fileChange)="save($event)"></nlf-ors-editor-files>
+            <div *ngIf="!!devDebug">
+              {{ observation.files | json }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  -->
+
+    <!-- AIRCRAFTS / FLIGHT / INCIDENTS-->
+    <div class="row">
+      <div class="nlf-ors-toolbar">
+        Fartøy
+        <nlf-help class="pull-right" key="ors-e5x-aircrafts"></nlf-help>
+        <button class="pull-right btn btn-link">preview</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-12 mt-3">
+        <nlf-ors-editor-e5x-aircraft></nlf-ors-editor-e5x-aircraft>
+      </div>
+    </div>
+    <!-- OCCURRENCE TEST -->
+    <!--
+    <div class="nlf-ors-toolbar">
+      Occurrence
+      <nlf-help class="pull-right" key="ors-editor-e5x-occurrence"></nlf-help>
+    </div>
+    <div class="col-md-12 col-sm-12">
+      <nlf-ors-editor-e5x-occurrence [disabled]="!observation.acl_user.w" [modal]="false"></nlf-ors-editor-e5x-occurrence>
+    </div>
+    -->
+    <nlf-ors-editor-e5x-occurrence [disabled]="!observation.acl_user.w" [modal]="false"></nlf-ors-editor-e5x-occurrence>
+    <!-- CLASSIFICATION -->
+    <!--
+    <div class="nlf-ors-toolbar">
+      Klassifisering
+      <nlf-help class="pull-right" key="ors-editor-e5x-classification"></nlf-help>
+    </div>
+    <div class="col-md-12 col-sm-12 bg-danger">
+      <nlf-ors-editor-e5x-classification [disabled]="!observation.acl_user.w" (change)="update()" [(attr)]="observation.occurrence.attributes" [modal]="false"></nlf-ors-editor-e5x-classification>
+    </div>
+  -->
+    <!-- E5X ATTRIBUTES -->
+    <!--
+    <div class="nlf-ors-toolbar">
+      Legg til relevante attributter
+    </div>
+    <div class="my-3">
+      <nlf-ors-editor-e5x-where [disabled]="!observation.acl_user.w" [modal]="true" (change)="update()" [(attr)]="observation.occurrence.attributes"></nlf-ors-editor-e5x-where>
+    </div>
+    <div class="my-3">
+      <nlf-ors-editor-e5x-weather [disabled]="!observation.acl_user.w" (change)="update()" [(attr)]="observation.occurrence.attributes"></nlf-ors-editor-e5x-weather>
+    </div>
+    <div class="my-3">
+      <nlf-ors-editor-e5x-injuries [disabled]="!observation.acl_user.w" (change)="update()" [(attr)]="observation.occurrence.attributes"></nlf-ors-editor-e5x-injuries>
+    </div>
+    <div class="my-3">
+      <nlf-ors-editor-e5x-damage [disabled]="!observation.acl_user.w" (change)="update()" [(attr)]="observation.occurrence.attributes"></nlf-ors-editor-e5x-damage>
+    </div>
+    -->
+
+    <!-- E5X OCCURRENCE ENTITIES -->
+    <!--
+    <div class="nlf-ors-toolbar">
+      Legg til relevante enheter
+    </div>
+    <nlf-ors-editor-e5x-entities></nlf-ors-editor-e5x-entities>
+    -->
+
+    <!-- RSIK ASSESMENT I REPORTING HISTORY
+    <nlf-ors-editor-e5x-assessment (change)="update()" [(reportingHistory)]="observation.occurrence.entities.reportingHistory"></nlf-ors-editor-e5x-assessment>
+    -->
+
+    <!-- REPORTING HISTORY -->
+    <nlf-ors-editor-e5x-reportinghistory [disabled]="!observation.acl_user.w" (change)="update()" [(reportingHistory)]="observation.occurrence.entities.reportingHistory"></nlf-ors-editor-e5x-reportinghistory>
+    <!-- RISK ASSESSMENT -->
+    <nlf-ors-editor-e5x-risk [disabled]="!observation.acl_user.w" (change)="update()" [(riskAssessment)]="observation.occurrence.entities.riskAssessment"></nlf-ors-editor-e5x-risk>
+    <!-- NARRATIVE Moved top
+    <div class="row my-3">
+      <div class="col-xs-12 col-md-12">
+        <div class="nlf-ors-toolbar">
+          Narrative <nlf-help class="pull-right" key="ors-e5x-narrative"></nlf-help>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-12 bg-light">
+        <nlf-ors-editor-e5x-narrative [disabled]="!observation.acl_user.w" (change)="update()" [(narrative)]="observation.occurrence.entities.narrative"></nlf-ors-editor-e5x-narrative>
+      </div>
+    </div>
+  -->
+    <!-- ORGANIZATION: Removed -->
+
+
+    <!-- INVOLVERTE
+    <div class="row my-3">
+      <div class="col-xs-12 col-md-12">
+        <div class="nlf-ors-toolbar">
+          Andre Involverte <nlf-help class="pull-right" key="ors-editor-involved"></nlf-help>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-12">
+        <nlf-ors-editor-people-motorfly [disabled]="!observation.acl_user.w" [who]="observation.involved" path="involved"></nlf-ors-editor-people-motorfly>
+        <div *ngIf="!!devDebug">{{ observation.involved | json }}</div>
+      </div>
+    </div>
+    -->
+
+    <!-- COMPONENTS
+    <div class="row my-3">
+      <div class="col-xs-12 col-md-12">
+        <div class="nlf-ors-toolbar nlf-ors-block-bottom">
+          Forløpet
+          <nlf-help class="pull-right" key="ors-editor-components"></nlf-help>
+          <button (click)="openPreview(modalPreview, 'components', 'Forløpet')" class="pull-right btn btn-link">
+            preview
+          </button>
+        </div>
+        <nlf-ors-editor-components></nlf-ors-editor-components>
+        <div *ngIf="devDebug" class="col-md-12 bg-light">
+          {{ observation.components | json }}
+        </div>
+      </div>
+    </div>
+    -->
+
+    <!-- WEATHER
+    <div class="row my-3">
+      <div class="nlf-ors-toolbar nlf-ors-block-bottom">
+        Været
+        <nlf-help class="pull-right" key="ors-editor-weather"></nlf-help>
+      </div>
+      <div class="col-xs-12 col-md-6">
+        <nlf-ors-editor-met></nlf-ors-editor-met>
+      </div>
+      <div class="col-xs-12 col-md-6">
+        <nlf-ors-editor-weather></nlf-ors-editor-weather>
+      </div>
+      <div class="col-xs-12 col-md-12">
+        <div *ngIf="devDebug">
+          {{ observation.weather.auto | json }}
+        </div>
+      </div>
+    </div>
+    -->
+    <!-- NARRATIVE -->
+
+
+
+    <!-- RATING -->
+    <div class="row mt-3">
+      <div class="nlf-ors-toolbar">
+        Alvorlighetsgrad <nlf-help class="pull-right" key="ors-editor-motorfly-rating"></nlf-help>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-12 bg-light py-1">
+        <nlf-ors-editor-rating></nlf-ors-editor-rating>
+        <div *ngIf="!!devDebug">Rating for observation {{ observation.rating | json }}</div>
+      </div>
+    </div>
+
+
+
+
+
+    <!-- VURDERINGER-->
+    <div class="row">
+      <div class="nlf-ors-toolbar">
+        Vurdering
+        <nlf-help class="pull-right" key="ors-editor-ask"></nlf-help>
+      </div>
+    </div>
+
+    <!-- ASK -->
+    <div class="row bg-light" style="py-2">
+
+      <!-- ASK TOGGLE -->
+      <div class="col-md-4 col-sm-12">
+        <p class="mt-3">
+          <nlf-ors-editor-ask></nlf-ors-editor-ask>
+          <nlf-help key="ors-editor-ask-toggle"></nlf-help>
+        </p>
+      </div>
+      <!-- ASK TEXT -->
+      <div class="col-md-8 col-sm-12">
+        <p class="mt-1">
+          <nlf-ors-editor-ask-text></nlf-ors-editor-ask-text>
+          <nlf-help key="ors-editor-motorfly-ask-text"></nlf-help>
+        </p>
+      </div>
+
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="row">
+      <div class="nlf-ors-toolbar nlf-ors-block-bottom">
+        Tiltak
+        <nlf-help class="pull-right" key="ors-editor-motorfly-actions"></nlf-help>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <nlf-ors-editor-actions></nlf-ors-editor-actions>
+      </div>
+      <div *ngIf="!!devDebug">{{ observation.actions | json }}</div>
+    </div>
+
+
+    <!-- /// END FORM -->
+
+    <!-- SEND BTN -->
+    <div class="row my-3">
+      <span class="pointer mx-1 pull-right" *ngIf="observation.acl_user.x && observation.workflow.state=='draft'" (click)="openWorkflow()">
+        <button class="btn btn-success"><fa name="upload" [fixed]="true"></fa>Send ORS koordinator</button>
+      </span>
+    </div>
+
+    <div *ngIf="!!devDebug">
+      {{ observation.ask | json }}
+    </div>
+
+  </div><!-- /CONTAINER-->
+
+  <div *ngIf="!!devDebug" class="container">
+    <div>{{ observation |json }}</div>
+  </div>
+
+</div>
+
+<!-- PAGE SPINNER -->
+<div *ngIf="!dataReady">
+  <nlf-ui-page-spinner size="5"></nlf-ui-page-spinner>
+</div>
+
+<!-- PAGE ERROR -->
+<div *ngIf="!!dataReady && !!error">
+  <nlf-ors-error [id]="id" activity="motorfly" [error]="error"></nlf-ors-error>
+</div>
+
+<!-- MODAL VERSIONS -->
+<ng-template #modalVersions>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      ORS#{{ observation.id }} version {{ observation._version }}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Not implemented yet
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="modalRef.close()">Ferdig</button>
+  </div>
+</ng-template>
+<!-- /MODAL VERSIONS -->
+
+<!-- MODAL PREVIEW -->
+<ng-template #modalPreview>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      {{ preview.title }}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div *ngIf="preview.what==='components'">
+      <nlf-report-components-timeline [components]="observation.components" [activity]="observation._model.type"></nlf-report-components-timeline>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="modalRef.close()">Ferdig</button>
+  </div>
+</ng-template>
+<!-- /MODAL PREVIEW -->
+
+<!-- MODAL DEBUG -->
+<ng-template #modalDebug>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      DEBUG #{{observation.id}}
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <ngb-tabset>
+      <ngb-tab title="ORS">
+        <ng-template ngbTabContent>
+          <div class="py-3">
+            <pre>{{observation | json}}</pre>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab title="E5X">
+        <ng-template ngbTabContent>
+          <div class="py-3">
+            <pre *ngIf="!!e5xobservation" class="list-group-item-text"> {{ e5xobservation | json }} </pre>
+          </div>
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
+
+  </div>
+  <div class="modal-footer">
+    <a download="observation_{{observation.id}}_v{{observation._version}}.json" [href]="getJsonFile()" class="btn btn-outline-dark mr-auto">
+      <fa name="download" [fixed]="true"></fa>Last ned Json
+    </a>
+    <button class="btn btn-outline-dark" (click)="modalRef.close()">Ferdig</button>
+  </div>
+</ng-template>
+<div *ngIf="!!devDebug">
+  <pre>{{observation | json}}</pre>
+</div>

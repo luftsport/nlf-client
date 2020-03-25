@@ -5,5 +5,7 @@ export const environment = {
     _scope: 'read',
     _shebang: 0,
     _response_type: 'access_token',
+    _name: 'beta',
+    _e5x_submission: false
 };
 

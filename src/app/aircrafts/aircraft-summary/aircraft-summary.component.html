@@ -1,0 +1,13 @@
+<div *ngIf="!!aircraft">
+  <div class="media">
+    <div class="col-md-3">
+      <img *ngIf="!!aircraft.image" [src]="domSanitizer.bypassSecurityTrustUrl(aircraft.image)" class="mr-3 ml-0 p-0 img-fluid" alt="{{ callsign }}">
+      <img *ngIf="!aircraft.image" src="https://dummyimage.com/64x64/595659/e3e4e8" class="mr-3 ml-0 p-0 img-fluid">
+    </div>
+    <div class="media-body col-md-9">
+      <h5 class="mt-0">{{ callsign }}</h5>
+      {{ aircraft.model }} {{ aircraft.manufacturer }}
+    </div>
+  </div>
+</div>
+<nlf-ui-component-spinner *ngIf="!aircraft"></nlf-ui-component-spinner>

@@ -1,0 +1,94 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">
+    Hjelp for #{{ observation.id }}</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p>
+    Du redigerer nå observasjon #{{ observation.id }}. Denne siden er det vi kaller editoren. Du vil også kunne se
+    rapporten i rapportvisning.
+  </p>
+  <p>
+    For hver logiske komponent i editoren vil du kunne se hjelpetekst for respektive bolker ved å trykke på
+    spørsmålstegnet
+    <fa class="text-info mx-1" name="question" [fixed]="true"></fa> .
+  </p>
+  <p>
+    Øverst på siden har du verktøylinjen som bla viser løpenummer, tittel og rating (til venstre) og til høyre finner
+    du følgende:
+  </p>
+  <p>
+    <fa class="text-info mx-1" name="question" [fixed]="true"></fa>
+
+    <span (click)="save()" *ngIf="changes" class="pointer badge badge-warning mx-1">
+      <fa name="save" [fixed]="true"></fa>
+    </span>
+
+    <span class="badge badge-secondary mx-1">{{ observation._updated | amTimeAgo }}</span>
+
+    <span class="badge badge-success mx-1">v{{ observation._version }}</span>
+
+    <nlf-resolve-observation-state activity="fallskjerm" [state]="observation.workflow.state" icon="true"></nlf-resolve-observation-state>
+
+    <!-- E5X -->
+    <nlf-ors-e5x *ngIf="observation._model.type=='motorfly'"></nlf-ors-e5x>
+  </p>
+  <p>
+    <span class="badge badge-secondary mx-1">{{ observation._updated | amTimeAgo }}</span>
+    sier noe om hvor lenge det er siden du har lagret. Klikker du på Denne vil du få opp informasjon om observasjonen
+    du redigerer.
+
+  </p>
+  <p>
+    Om du har endringer vil også
+    <span class="badge pointer badge-warning mx-1">
+      <fa name="save" [fixed]="true"></fa>
+    </span>
+    vises og indikerer at du kan lagre ved å klikke på det.
+  </p>
+  <p>
+    <span class="badge badge-success mx-1">v{{ observation._version }}</span> viser hvilken versjon av observasjonen du
+    jobber på. Dette er altså versjon {{ observation._version }}.
+    Alle endringer tas vare på og ved å klikke på denne kan du se alle versjoner av denne observasjonen og videre
+    kan du se endringer mellom versjonene.
+  </p>
+  <p>
+    Når du er ferdig med å redigere skal du trykke på:
+  </p>
+  <p>
+    <nlf-resolve-observation-state [activity]="observation._model.type" [state]="observation.workflow.state" icon="true"></nlf-resolve-observation-state>
+    <!--
+    <span class="pointer mx-1" [routerLink]="['/ors', observation._model.type,'edit', 'workflow', observation.id]"
+      (click)="activeModal.close()">
+      <nlf-resolve-observation-state [activity]="observation._model.type" [state]="observation.workflow.state" icon="true"></nlf-resolve-observation-state>
+    </span>
+  -->
+  </p>
+  <p>
+    Denne knappen aktiverer arbeidsflyten (saksgangen) og du får et nytt vindu hvor du kan legge inn kommentarer før
+    du godkjenner
+    og sender videre eller avslår og sender tilbake (avhengig hvor du er).
+  </p>
+  <p>
+    Om du har opprettet ved en feiltagelse eller noe annet og du ønsker å slette eller avbryte observasjonen så
+    velger du "Trekk
+    tilbake". Ombestemmer du deg etter å ha trukket observasjonen kan du "Gjenåpne".
+  </p>
+
+  <p *ngIf="observation._model.type=='motorfly'">
+    <!-- E5X -->
+    <nlf-ors-e5x></nlf-ors-e5x> viser status på innsendelse av rapporten til Luftfartstilsynet (LT). Formatet det
+    sendes på kalles E5X. Denne knappen aktiverer vinduet for å behandle generering av fil, innsendelse og historikk.
+  </p>
+
+  <p>
+    <strong>Hurtigtaster</strong><br />
+    <span class="badge badge-secondary">CTRL+s</span>/<span class="badge badge-secondary">COMMAND+s</span> Save ORS<br>
+    <span class="badge badge-secondary">CTRL+e</span>/<span class="badge badge-secondary">COMMAND+h</span> ORS Help (denne)<br>
+  </p>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-outline-dark" (click)="activeModal.close()">Ferdig</button>
+</div>

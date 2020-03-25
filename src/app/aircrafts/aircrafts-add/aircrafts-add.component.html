@@ -1,0 +1,118 @@
+<button title="Legg til nytt fly i flyregisteret" (click)="openModal(modalTemplate)" style="margin:1px;" class="btn btn-primary btn-sm">
+  <fa name="plus" [fixed]="true"></fa>Nytt fly
+</button>
+
+<!-- ROUTE MODAL -->
+<ng-template #modalTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      Add Aircraft
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+
+        <div class="input-group mb-3">
+          <input (keyup.enter)="checkAircraft()" [(ngModel)]="callsign" type="text" class="form-control" placeholder="Regnummer"
+            aria-label="Regnummer" aria-describedby="Regnummer">
+          <div class="input-group-append">
+            <button (click)="checkAircraft()" class="btn btn-primary" id="Regnummer">Check</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="dataReady">
+      <div *ngIf="!!error" class="alert alert-danger" role="alert">
+        {{ error }}
+      </div>
+
+      <!-- ADD A AIRCRAFT -->
+      <div class="col-md-12 col-sm-12" *ngIf="aircraft_listing.length === 0">
+
+        <div class="form-row">
+          <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+              <label for="type">Aircraft Type</label>
+              <select class="form-control" id="type" [(ngModel)]="new_aircraft.type" value="ENGINEPOWERED AIRPLANE">
+                <option *ngFor="let row of aircraft_types">{{ row._id.type }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+              <label for="status">Aircraft Status</label>
+              <select class="form-control" id="status" [(ngModel)]="new_aircraft.status" value="ACTIVE">
+                <option>ACTIVE</option>
+                <option>DEACTIVE</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+
+          <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+              <label for="manufacturer">Manufacturer</label>
+              <input class="form-control" type="text" id="manufacturer" [(ngModel)]="new_aircraft.manufacturer">
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+              <label for="model">Model</label>
+              <input class="form-control" type="text" id="model" [(ngModel)]="new_aircraft.model">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col-md-12 col-sm-12">
+            <div class="form-group">
+              <label for="msn">Serial</label>
+              <input class="form-control" type="text" id="msn" [(ngModel)]="new_aircraft.msn">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <button (click)="addAircraft()" class="btn btn-primary btn-block">
+            <fa name="plus" [fixed]="true"></fa>Add
+          </button>
+        </div>
+      </div>
+
+
+      <div *ngIf="aircraft_listing.length > 0" class="col-sm-12">
+        <div class="alert alert-danger" role="alert">
+          Fly med regnummer {{ callsign }} eksisterer
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <div *ngFor="let row of aircraft_listing">
+          <a [routerLink]="['/aircraft', 'edit', row._id]">
+            <fa name="edit" [fixed]="true"></fa>{{ row.callsign }}
+          </a> {{ row.manufacturer }} {{ row.model }} <span class="badge" [ngClass]="{'badge-success': row.status=='ACTIVE', 'badge-danger': row.status=='DELETED'}">{{ row.status }}</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="modalRef.close()">
+      <fa name="times" [fixed]="true"></fa>Avbryt
+    </button>
+
+  </div>
+</ng-template>

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { OrsModel } from './ors-model';
 import { DataService } from './data.service';
 import { Routes } from '@angular/router';
-import { NlfOrsChildComponent } from './ors-child/ors-child.component';
 
 /**
 Testing ng2-idle

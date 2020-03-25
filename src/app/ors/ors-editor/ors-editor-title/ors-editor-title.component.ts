@@ -16,10 +16,33 @@ export class NlfOrsEditorTitleComponent implements OnInit {
   observation: ApiObservationsItem;
 
 
-  constructor(private tagService: ApiTagsService, 
-              private subject: NlfOrsEditorService) {
-    this.subject.observableObservation.subscribe(observation => this.observation = observation);
+  constructor(
+    private tagService: ApiTagsService,
+    private subject: NlfOrsEditorService) {
+
+      this.subject.observableObservation.subscribe(observation => this.observation = observation);
   }
+
+  ngOnInit() {
+
+    this.populated = this.observation.tags;
+
+    // this.getTags('test').subscribe( data => console.log(data));
+    let options: ApiOptionsInterface = {
+      query: {
+        where: {
+          group: 'observation',
+          freq: { '$gte': 0 },
+          activity: this.observation._model.type,
+        },
+        max_results: 1000,
+        sort: [{ freq: -1 }, { tag: 1 }]
+
+      }
+    };
+    this.tagService.getTags(options).subscribe(data => this.apidata = data._items);
+  }
+
 
   toUpper(value): string {
     return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
@@ -29,25 +52,31 @@ export class NlfOrsEditorTitleComponent implements OnInit {
     return array.indexOf(value) > -1;
   }
 
-/**
-  uniqueArray(a) {
-    let temp = {};
-    for (let i = 0; i < a.length; i++)
-      temp[a[i]] = true;
-    return Object.keys(temp);
-  }
-**/
+  /**
+    uniqueArray(a) {
+      let temp = {};
+      for (let i = 0; i < a.length; i++)
+        temp[a[i]] = true;
+      return Object.keys(temp);
+    }
+  **/
   onAdd(item): void {
 
     console.log('Adding:');
     console.log(item);
-    if (typeof item === 'object' && item.tag !== item._id) {
+
+    if (typeof item === 'object' && item.hasOwnProperty('_id')) {
       this.tagService.freq(item._id, 1).subscribe(
         res => this.onChange(),
         err => console.log(err)
       );
-    } else if (item.tag === item._id) {
-      this.tagService.create({ tag: this.toUpper(item.tag), group: 'observation', related: [] }).subscribe(
+    } else if (!!item.tag && !item.hasOwnProperty('_id')) {
+      this.tagService.create({
+        tag: this.toUpper(item.tag),
+        group: 'observation',
+        activity: this.observation._model.type,
+        related: []
+      }).subscribe(
         res => {
           this.populated[this.populated.length - 1] = { tag: res.tag, _id: res._id };
           this.tagService.freq(res._id, 1).subscribe(
@@ -93,19 +122,6 @@ export class NlfOrsEditorTitleComponent implements OnInit {
     this.subject.update(this.observation);
   }
 
-  ngOnInit() {
 
-    this.populated = this.observation.tags;
-
-    // this.getTags('test').subscribe( data => console.log(data));
-    let options: ApiOptionsInterface = {
-      query: {
-        where: { group: 'observation', freq: { '$gte': 0 } },
-        sort: [{ freq: -1 }, { tag: 1 }],
-        max_results: 5000
-      }
-    };
-    this.tagService.getTags(options).subscribe(data => this.apidata = data._items);
-  }
 
 }

@@ -1,6 +1,6 @@
-import { ApiObservationComponentAttributesInterface } from 'app/api/api.interface';
+import { ApiObservationComponentAttributesInterface, NlfConfigItem } from 'app/api/api.interface';
 import { Component, Input, OnInit, Inject } from '@angular/core';
-import { NLF_CONFIG, NlfConfig } from 'app/nlf-config.module';
+import {  NlfConfigService } from 'app/nlf-config.service';
 
 @Component({
   selector: 'nlf-resolve-observation-component-attributes',
@@ -10,11 +10,19 @@ import { NLF_CONFIG, NlfConfig } from 'app/nlf-config.module';
 export class NlfResolveObservationComponentAttributesComponent implements OnInit {
 
   @Input() attributes: ApiObservationComponentAttributesInterface;
+  @Input() activity: string;
   @Input() badge?: boolean;
   @Input() icon?: boolean;
+  public config: NlfConfigItem;
 
 
-  constructor(@Inject(NLF_CONFIG) public config: NlfConfig) { }
+  constructor(private configService: NlfConfigService) {
+    this.configService.observableConfig.subscribe(
+      data => {
+        this.config = data;
+      }
+    );
+  }
 
   ngOnInit() {
 

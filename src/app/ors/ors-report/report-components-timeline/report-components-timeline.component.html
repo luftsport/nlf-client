@@ -1,0 +1,115 @@
+<div *ngIf="!!components" class="col-xs-12  col-md-12">
+
+  <label class="control-label">
+    <h3>
+      <fa name="random" [fixed]="true"></fa>Forløp
+    </h3>
+  </label>
+
+  <div *ngIf="components.length == 0" class="text-danger">
+    <strong>
+      <i class="fa fa-fw fa-warning"></i>Intent forløp</strong>
+  </div>
+
+  <div class="clearfix"></div>
+
+
+  <button *ngIf="components?.length > 0" type="button" class="btn btn-outline-primary" (click)="componentCollapsed = !componentCollapsed"
+    [attr.aria-expanded]="!componentCollapsed" aria-controls="collapseid">Collapse</button>
+
+  <ul class="timeline" *ngIf="components?.length > 0">
+
+
+    <li *ngFor="let c of components; let i = index">
+
+      <div class="timeline-badge" [ngClass]="{'bg-secondary': !!c.flags.barrier,
+                                              'bg-info': !!c.flags.incident,
+                                              'bg-warning': !!c.flags.cause || !!c.flags.root_cause, 
+                                              'bg-danger': !!c.flags.consequence || !!c.flags.final_consequence}">
+        {{ i+1 }}
+      </div>
+
+      <div class="timeline-panel">
+        <div class="timeline-heading">
+          <h4 class="timeline-title">
+            <small class="pull-right">
+              <span *ngIf="!!c.attributes">
+                <span *ngIf="!!c.attributes.injury || !!c.attributes.death">
+                  <fa name="ambulance" [fixed]="true"></fa>
+                </span>
+                <span *ngIf="!!c.attributes.violation">
+                  <fa name="gavel" [fixed]="true"></fa>
+                </span>
+              </span>
+
+              <span *ngIf="!!c.flags.barrier" class="badge badge-secondary ml-1">Barriære</span>
+              <span *ngIf="!!c.flags.incident" class="badge badge-info ml-1">Hendelse</span>
+              <span *ngIf="!!c.flags.cause" class="badge badge-warning ml-1">Årsak</span>
+              <span *ngIf="!!c.flags.root_cause" class="badge badge-warning ml-1">Rot Årsak</span>
+              <span *ngIf="!!c.flags.consequence" class="badge badge-danger ml-1">Konsekvens</span>
+              <span *ngIf="!!c.flags.final_consequence" class="badge badge-danger ml-1">Sluttkonsekvens</span>
+              <!--<nlf-resolve-observation-ask  [activity]="activity" [ask]="c.ask"></nlf-resolve-observation-ask> NOT ANYMORE! -->
+            </small>
+          </h4>
+          <h4 class="timeline-title">
+            {{ c.what }}
+            <!-- @TODO remove tags -->
+            <!--<nlf-resolve-observation-tags [tags]="c.tags" link="true"></nlf-resolve-observation-tags>-->
+
+          </h4>
+        </div>
+
+        <div class="timeline-body" *ngIf="componentCollapsed">
+          <span *ngIf="!!c.attributes">
+            <nlf-resolve-observation-component-attributes [activity]="activity" [attributes]="c.attributes" badge="true"></nlf-resolve-observation-component-attributes>
+          </span>
+        </div>
+
+        <div class="timeline-body" id="collapseide" [ngbCollapse]="componentCollapsed">
+
+          <dl class="row">
+            <dt class="col-sm-3">Hvem:</dt>
+            <dd class="col-sm-9">
+              <span class="mr-1" *ngFor="let p of c.involved">
+                <nlf-resolve-lungo-person link="true" [person_id]="p.id" [tmp_name]="p.tmp_name"></nlf-resolve-lungo-person>
+              </span>
+            </dd>
+            <dt class="col-sm-3">Hva:</dt>
+            <dd class="col-sm-9">
+              {{ c.what }}
+              <!--<tags tag="::c.what"></tags>-->
+            </dd>
+            <dt class="col-sm-3">Hvor</dt>
+
+            <dd class="col-sm-9">
+              <span *ngIf="!!c.where">
+                <span *ngIf="!!c.where.at">{{ c.where.at }}:</span>
+                <!--<tags tag="::c.where.at"></tags>-->
+                <span class="ml-2" *ngIf="!!c.where.altitude">{{ c.where.altitude }}fot</span>
+              </span>
+            </dd>
+
+            <dt class="col-sm-3">Hvordan:</dt>
+            <dd class="col-sm-9">
+              <!--<tags tags="::c.tags"></tags>-->
+              <br *ngIf="c.tags">
+              <small>
+                <i>{{ c.how }}</i>
+              </small>
+
+            </dd>
+            <dt class="col-sm-3">Flagg:</dt>
+            <dd class="col-sm-9">
+              <!--<span *ngFor="let att of c.attributes">-->
+              <span *ngIf="!!c.attributes">
+                <nlf-resolve-observation-component-attributes [activity]="activity" [attributes]="c.attributes" badge="true"></nlf-resolve-observation-component-attributes>
+              </span>
+              <!--<flags attributes="c.attributes"></flags>-->
+            </dd>
+          </dl>
+        </div>
+      </div>
+    </li>
+  </ul>
+
+</div>

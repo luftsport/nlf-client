@@ -12,9 +12,23 @@ export class NlfOrsEditorRatingComponent implements OnInit {
   observation: ApiObservationsItem;
 
   modalRef;
+  hover_potential;
+  hover_actual;
 
   constructor(private subject: NlfOrsEditorService) {
     this.subject.observableObservation.subscribe(observation => this.observation = observation);
+  }
+
+  onHoverPotential(rating) {
+    this.hover_potential = rating;
+  }
+  onHoverActual(rating) {
+    this.hover_actual = rating;
+  }
+
+  onHoverLeave() {
+    this.hover_potential = undefined;
+    this.hover_actual = undefined;
   }
 
   ngOnInit() {

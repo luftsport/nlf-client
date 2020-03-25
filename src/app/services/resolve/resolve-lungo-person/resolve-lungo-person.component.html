@@ -1,13 +1,17 @@
 <!-- Should have option to show avatar, with or without link to public profile and popover with info! -->
 <span *ngIf="dataReady">
-  <span *ngIf="!!avatar">[]</span>
+  <span *ngIf="avatar" class="mr-1">
+    <span class="avatar avatar-xs">
+      <img [src]="avatar_img||avatar_tmp_image" alt="user" class="avatar-img rounded-circle">
+    </span>
+  </span>
   <!-- Link to profile -->
   <span *ngIf="!!link && person_id > 0">
     <a title="Se {{ full_name }}'s profil" [routerLink]="['/user/', person_id]">{{ full_name }}</a>
   </span>
   <!-- No profile, no link -->
   <span *ngIf="!link && person_id > 0" title="{{ full_name }} har ingen profil">{{ full_name }}</span>
-  <!-- Anonymous or tmpname sup eller attr? -->
+  <!-- Anonymous or tmp_name sup eller attr? -->
   <span *ngIf="person_id < 1">{{ full_name }}<sup class="text-info" title="Midlertidig navn eller anonymisert">
       <fa name="question"></fa>
     </sup></span>

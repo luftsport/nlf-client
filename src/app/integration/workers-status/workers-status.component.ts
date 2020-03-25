@@ -2,8 +2,7 @@ import { Component, TemplateRef, ViewChild, OnInit } from '@angular/core';
 import { LungoSyncdaemonWorkersStatusItem, LungoIntegrationChangesStatusItem } from 'app/api/lungo.interface';
 import { LungoIntegrationService } from 'app/api/lungo-integration.service';
 import { NlfAlertService } from 'app/services/alert/alert.service';
-import { map } from 'rxjs/operators';
-
+import { Columns, Config, DefaultConfig, STYLE } from 'ngx-easy-table';
 // import { Config } from './ngx-easy-table/model/config';
 
 @Component({
@@ -23,41 +22,7 @@ export class NlfWorkersStatusComponent implements OnInit {
   entityTypes = [];
   entityTypesReady = false;
 
-  @ViewChild('detailsTemplate') detailsTemplateRef: TemplateRef<any>;
-  tableConfig = {
-    searchEnabled: false,
-    headerEnabled: true,
-    orderEnabled: true,
-    globalSearchEnabled: false,
-    paginationEnabled: true,
-    exportEnabled: false,
-    clickEvent: false,
-    selectRow: true,
-    selectCol: false,
-    selectCell: false,
-    rows: 10,
-    additionalActions: false,
-    serverPagination: false,
-    isLoading: false,
-    detailsTemplate: true,
-    showDetailsArrow: true,
-    groupRows: false,
-    paginationRangeEnabled: true,
-    collapseAllRows: false,
-    checkboxes: false,
-    resizeColumn: false,
-    fixedColumnWidth: false,
-    horizontalScroll: false,
-    draggable: false,
-    logger: false,
-    showContextMenu: false,
-    persistState: false,
-    tableLayout: {
-      borderless: false,
-      hover: true,
-      striped: true,
-    },
-  };
+  tableConfig: Config;
 
   /**
   "name": "klubb-214063",
@@ -107,15 +72,26 @@ export class NlfWorkersStatusComponent implements OnInit {
   next_run_time: Date;
   last_synced: Date;
 
-  constructor(private lungo: LungoIntegrationService,
-    private alertService: NlfAlertService) {
+  daemonStatus = false;
+  workersStarted = false;
 
-
-  }
+  constructor(
+    private lungo: LungoIntegrationService,
+    private alertService: NlfAlertService
+  ) { }
 
   ngOnInit() {
 
+    this.tableConfig = DefaultConfig;
+    this.tableConfig.tableLayout.style = STYLE.TINY;
+    this.tableConfig.tableLayout.hover = true;
+    this.tableConfig.headerEnabled = true;
+    this.tableConfig.detailsTemplate = true;
+    this.tableConfig.showDetailsArrow = true;
+    this.tableConfig.orderEnabled = true;
+
     this.getWorkers();
+    this.getSyncdaemonStatus();
 
   }
 
@@ -251,6 +227,47 @@ export class NlfWorkersStatusComponent implements OnInit {
       },
       () => this.entityTypesReady = true
     );
+  }
+
+
+  getSyncdaemonStatus() {
+    this.lungo.getSyncdaemonStatus().subscribe(
+      data => {
+        if (data['status'] === true) {
+          this.daemonStatus = true;
+          this.lungo.getWorkersStatus().subscribe(
+            status => {
+              if (!!status['_error']) {
+                this.workersStarted = false;
+              }
+            }
+          );
+        }
+      },
+      err => {
+
+      }
+    );
+  }
+  startWorkers() {
+
+    this.lungo.startSyncdaemonWorkers().subscribe(
+      data => {
+
+      },
+      err => {
+
+      },
+      () => this.getSyncdaemonStatus()
+    );
+  }
+
+  rebootWorker(index) {
+    this.lungo.rebootSyncdaemonWorker(index).subscribe(
+      data => { },
+      err => { },
+      () => this.getSyncdaemonStatus()
+    )
   }
 
 

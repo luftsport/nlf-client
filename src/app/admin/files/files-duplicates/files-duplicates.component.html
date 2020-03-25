@@ -1,0 +1,44 @@
+<span *ngIf="!!dataReady">
+  <ngx-table id="files_table" [configuration]="tableConf" [data]="data" [columns]="columns" [(pagination)]="pagination" (event)="eventEmitted($event)">
+
+    <!--
+
+    { key: 'contentType', title: 'Type', sort: true },
+    { key: 'length', title: 'Size', sort: true },
+    { key: 'num', title: 'Num', sort: true },
+    { key: 'ref_ids', title: 'Files', sort: true },
+
+    -->
+    <ng-template let-row>
+
+      <td class="ngx-easy-table-small">
+        {{ row.content_type }}
+      </td>
+
+      <td class="ngx-easy-table-small">
+        {{ row.length | bytes : 2 }}
+      </td>
+
+      <td class="ngx-easy-table-small">
+        {{ row.num }}
+      </td>
+
+      <td class="ngx-easy-table-small">
+        {{ row.md5 }}
+      </td>
+
+      <td class="ngx-easy-table-small">
+
+        <div *ngFor="let f of row.ref_ids">
+          <nlf-resolve-reverse-file [fs_file_id]="f"></nlf-resolve-reverse-file>
+        </div>
+      </td>
+
+    </ng-template>
+  </ngx-table>
+</span>
+<span *ngIf="!dataReady">
+  <p class="align-middle text-center  text-secondary">
+    <fa name="spinner" animation="pulse" size="3x"></fa>
+  </p>
+</span>

@@ -16,9 +16,9 @@ import {
 })
 export class LungoIntegrationService extends ApiRestService {
 
-  constructor(http: HttpClient) { super(http); }
-
   private relativeUrl = '/integration/';
+
+  constructor(http: HttpClient) { super(http); }
 
   public getWorkersStatus(options?: ApiOptionsInterface): Observable<LungoSyncdaemonWorkersStatusList> {
     const localUrl = 'syncdaemon/workers/status';
@@ -53,5 +53,28 @@ export class LungoIntegrationService extends ApiRestService {
     return this.getList(this.relativeUrl + localUrl, options);
   }
 
+  public startSyncdaemonWorkers(): Observable<any> {
+    return this.post(this.relativeUrl + 'syncdaemon/workers/start', null);
+  }
+
+  public stopSyncdaemonWorkers(): Observable<any> {
+    return this.post(this.relativeUrl + 'syncdaemon/workers/shutdown', null);
+  }
+
+  public rebootSyncdaemonWorkers(): Observable<any> {
+    return this.post(this.relativeUrl + 'syncdaemon/workers/reboot', null);
+  }
+
+  public stopSyncdaemon(): Observable<any> {
+    return this.post(this.relativeUrl + 'syncdaemon/shutdown', null);
+  }
+
+  public getSyncdaemonStatus(): Observable<any> {
+    return this.getList(this.relativeUrl + 'syncdaemon/status');
+  }
+
+  public rebootSyncdaemonWorker(index: number): Observable<any> {
+    return this.post(this.relativeUrl + 'syncdaemon/worker/reboot/' + index, null);
+  }
 
 }

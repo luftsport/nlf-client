@@ -1,16 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { ApiRestService } from './api-rest.service';
-import { ApiOptionsInterface, ApiObservationsItem, ApiObservationsList } from './api.interface';
+import { ApiOptionsInterface } from './api.interface';
 
 @Injectable()
 export class ApiObservationsAggService extends ApiRestService {
 
+  private relativeUrl: string;
+
   constructor(http: HttpClient) { super(http); }
 
-  private relativeUrl = '/f/observations/aggregate';
+  public setActivity(activity: string) {
+    this.relativeUrl = '/' + activity + '/observations/aggregate';
+  }
 
   /**
    * 

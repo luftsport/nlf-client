@@ -11,9 +11,9 @@ import { LungoLicensesItem, LungoLicensesList } from 'app/api/lungo.interface';
 })
 export class LungoLicensesService extends ApiRestService {
 
-  constructor(http: HttpClient) { super(http); }
-
   private relativeUrl = '/integration/licenses/';
+
+  constructor(http: HttpClient) { super(http); }
 
   public getLicense(id: string, options?: ApiOptionsInterface): Observable<LungoLicensesItem> {
 

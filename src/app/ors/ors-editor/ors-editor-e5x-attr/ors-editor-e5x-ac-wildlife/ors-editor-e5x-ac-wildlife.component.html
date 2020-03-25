@@ -1,0 +1,75 @@
+<button (click)="openModal(modal)" class="btn btn-secondary btn-block">
+  <fa name="bandcamp" [fixed]="true"></fa>Wildlife
+</button>
+
+<!-- MODAL -->
+<ng-template #modal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      Wildlife {{ callsign }}
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+
+    <div class="row">
+
+      <div class="col-md-6">
+
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.birdsWildlifeSeen.value" path="E5X.Occurrence.Aircraft.BirdsWildlifeSeen"
+          id="BirdsWildlifeSeen"></nlf-ors-editor-tag-e5x>
+      </div>
+
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.birdSize.value" path="E5X.Occurrence.Aircraft.BirdSize" id="BirdSize"></nlf-ors-editor-tag-e5x>
+      </div>
+
+
+
+      <div class="col-md-12">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.speciesDescription.value" path="E5X.Occurrence.Aircraft.SpeciesDescription"
+          id="SpeciesDescription"></nlf-ors-editor-tag-e5x>
+      </div>
+
+
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.birdsWildlifeStruck.value" path="E5X.Occurrence.Aircraft.BirdsWildlifeStruck"
+          id="BirdsWildlifeStruck"></nlf-ors-editor-tag-e5x>
+      </div>
+
+
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.pilotAdvisedOfBirds.value" path="E5X.Occurrence.Aircraft.PilotAdvisedOfBirds"
+          id="PilotAdvisedOfBirds"></nlf-ors-editor-tag-e5x>
+      </div>
+
+      <div class="col-md-12">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.partsStruck.value" path="E5X.Occurrence.Aircraft.PartsStruck"
+          id="PartsStruck"></nlf-ors-editor-tag-e5x>
+      </div>
+
+      <div class="col-md-12">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.partsDamaged.value" path="E5X.Occurrence.Aircraft.PartsDamaged"
+          id="PartsDamaged"></nlf-ors-editor-tag-e5x>
+      </div>
+
+      <div *ngIf="devDebug" class="row">
+        AC: {{ classification | json }}
+      </div>
+
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="modalRef.close()">
+      <fa name="times" [fixed]="true"></fa>Avbryt
+    </button>
+    <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate(modalIndex)">
+      <fa name="check" [fixed]="true"></fa>Oppdater
+    </button>
+  </div>
+</ng-template>

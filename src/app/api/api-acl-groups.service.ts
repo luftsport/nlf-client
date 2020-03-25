@@ -10,11 +10,11 @@ import { ApiOptionsInterface, ApiAclGroupItem, ApiAclGroupList } from './api.int
 @Injectable()
 export class ApiAclGroupsService extends ApiRestService {
 
-  constructor(http: HttpClient) { super(http); }
-
   private relativeUrl = '/acl/groups/';
 
-  public getGroup( id: string, options?: ApiOptionsInterface): Observable<ApiAclGroupItem> {
+  constructor(http: HttpClient) { super(http); }
+
+  public getGroup(id: string, options?: ApiOptionsInterface): Observable<ApiAclGroupItem> {
 
     return this.getItem(this.relativeUrl, id, options);
   }

@@ -8,9 +8,9 @@ import { ApiOptionsInterface, ApiContentItem, ApiContentList } from './api.inter
 @Injectable()
 export class ApiContentService extends ApiRestService {
 
-  constructor( http: HttpClient ) { super(http); }
-
   private relativeUrl = '/content/';
+
+  constructor( http: HttpClient ) { super(http); }
 
   public getContent(key: string, options?: ApiOptionsInterface): Observable<ApiContentItem> {
     return this.getItem(this.relativeUrl, key, options);

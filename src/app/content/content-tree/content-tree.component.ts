@@ -1,16 +1,16 @@
-import { Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
- @Component({
- selector: 'nlf-content-tree',
- template: `
+@Component({
+  selector: 'nlf-content-tree',
+  template: `
  <div *ngIf="!tree.parent">
-  <a *ngIf="tree._id!==current" [routerLink]="['/content/view', tree.space_key, tree.slug]">{{ tree.title }}</a>
+  <a *ngIf="tree._id!==current" [routerLink]="['/content/space', tree.space_key, tree.slug]">{{ tree.title }}</a>
   <span *ngIf="tree._id===current" class="text-muted">{{ tree.title }}</span>
  </div>
  <ul style="list-style: none">
    <li *ngFor="let tree of tree.children">
    <span *ngIf="!!tree.parent">
-    <a *ngIf="tree._id!==current" [routerLink]="['/content/view', tree.space_key, tree.slug]">{{ tree.title }}</a>
+    <a *ngIf="tree._id!==current" [routerLink]="['/content/space', tree.space_key, tree.slug]">{{ tree.title }}</a>
     <span *ngIf="tree._id===current" class="text-muted">{{ tree.title }}</span>
   </span>
      <nlf-content-tree  [tree]="tree" [current]="current"></nlf-content-tree>
@@ -19,9 +19,9 @@ import { Component, Input} from '@angular/core';
  `
 })
 export class NlfContentTreeComponent {
-  
+
   @Input() tree;
   @Input() current: string;
 
-  constructor() {}
+  constructor() { }
 }

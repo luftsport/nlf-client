@@ -1,6 +1,6 @@
 <header class="nlf-sticky-toolbar">
     <div class="container">
-    <nlf-breadcrumb></nlf-breadcrumb>
+    Header breadcrumbish
     </div>
 </header>
 
@@ -19,7 +19,7 @@
                     </td>
                     <td>
                         <span class="pointer" (click)="delete(row)">
-                            <fa name="close" fixed="true"></fa>
+                            <fa name="close" [fixed]="true"></fa>
                         </span>
                         <nlf-help [key]="row.key" [details]="true"></nlf-help>
                     </td>
@@ -33,7 +33,7 @@
         </span>
 
         <a [routerLink]="['/admin/help/create']" class="btn btn-primary">
-            <fa name="plus" fixed="true"></fa>Ny hjelpetekst
+            <fa name="plus" [fixed]="true"></fa>Ny hjelpetekst
         </a>
 
     </div>

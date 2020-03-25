@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { ApiUserService } from 'app/api/api-user.service';
 import { ApiOptionsInterface } from 'app/api/api.interface';
 import { DomSanitizer } from '@angular/platform-browser';
-import { NlfLocalStorageService } from 'app/services/storage/local-storage.service';
+import { NlfUserSubjectService } from 'app/user/user-subject.service';
 
 @Component({
   selector: 'nlf-user',
@@ -13,29 +13,39 @@ import { NlfLocalStorageService } from 'app/services/storage/local-storage.servi
 export class NlfUserComponent implements OnInit {
 
   user: any = {};
+  person_id: number;
   something = 'testit';
   currentUser: any;
   avatar = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
   dataReady = false;
 
+  
   constructor(private apiUserService: ApiUserService,
-              public domSanitizer: DomSanitizer,
-              private storage: NlfLocalStorageService) {
-      this.user.id = storage.getId();
+    public domSanitizer: DomSanitizer,
+    private userSubject: NlfUserSubjectService) {
+
+    this.userSubject.observable.subscribe(
+      data => {
+        if (!!data) {
+          this.person_id = data.person_id;
+        }
+      },
+      err => console.log('Error getting user data: ', err)
+    );
   }
 
   public getAvatar() {
-    this.apiUserService.getAvatar(this.user.id).subscribe(
+    this.apiUserService.getAvatar(this.person_id).subscribe(
       data => {
 
         if (data.avatar) {
-          this.avatar  = 'data:' + data.avatar.content_type + ';base64,' + data.avatar.file;
+          this.avatar = 'data:' + data.avatar.content_type + ';base64,' + data.avatar.file;
         }
         // this.user.id = storage.getId();
       },
       err => console.error(err),
       () => { this.dataReady = true; }
-      );
+    );
   }
 
 
@@ -77,3 +87,4 @@ else {
     }
     **/
 }
+

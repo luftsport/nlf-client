@@ -7,10 +7,9 @@ import { ApiOptionsInterface, ApiAclUserInterface } from './api.interface';
 
 @Injectable()
 export class ApiUsersAclService extends ApiRestService {
-
-  constructor( http: HttpClient ) { super(http); }
-
   private relativeUrl = '/users/acl/';
+
+  constructor(http: HttpClient) { super(http); }
 
   /**
    * Returns an object with the read, write and execute rights for resource

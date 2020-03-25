@@ -1,12 +1,32 @@
+<!--
 <div class="form-check">
-  <input class="form-check-input" type="checkbox" [(ngModel)]="observation.flags.insurance" (ngModelChange)="onChange($event)" id="defaultInsurance">
+  <input [disabled]="!observation.acl_user.w" class="form-check-input" type="checkbox" [(ngModel)]="observation.flags.insurance" (ngModelChange)="onChange($event)"
+    id="defaultInsurance">
   <label class="form-check-label" for="defaultInsurance">
     Forsikringssak
   </label>
 </div>
 <div class="form-check">
-    <input class="form-check-input" type="checkbox" [(ngModel)]="observation.flags.aviation" (ngModelChange)="onChange($event)" id="defaultAviation">
-    <label class="form-check-label" for="defaultAviation">
-      Luftfartshendelse
-    </label>
-  </div>
+  <input [disabled]="!observation.acl_user.w" class="form-check-input" type="checkbox" [(ngModel)]="observation.flags.aviation" (ngModelChange)="onChange($event)"
+    id="defaultAviation">
+  <label class="form-check-label" for="defaultAviation">
+    Rapporteringspliktig til Luftfartstilsynet
+  </label>
+</div>
+
+<div *ngIf="!!observation.flags.aviation" class="form-check">
+  <input [disabled]="!observation.acl_user.w" class="form-check-input" type="checkbox" [(ngModel)]="observation.flags.e5x" (ngModelChange)="onChange($event)"
+    id="e5x">
+  <label class="form-check-label" for="e5x">
+    Eccair E5X (Rapporteres til LT)
+  </label>
+</div>
+-->
+
+<div class="form-check" *ngFor="let flag of config[observation._model.type]['observation']['flagsArr']">
+  <input [disabled]="!observation.acl_user.w" class="form-check-input" type="checkbox" [(ngModel)]="observation.flags[flag]" (ngModelChange)="onChange($event)"
+    [id]="flag">
+  <label class="form-check-label" for="defaultInsurance">
+    {{ config[observation._model.type]['observation']['flags'][flag]['label'] }}
+  </label>
+</div>

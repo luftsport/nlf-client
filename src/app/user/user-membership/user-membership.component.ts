@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiNlfUserService } from 'app/api/api-nlf-user.service';
-import { NlfLocalStorageService } from 'app/services/storage/local-storage.service';
 import { NlfAlertService } from 'app/services/alert/alert.service';
-
+import { NlfUserSubjectService } from 'app/user/user-subject.service';
 
 @Component({
   selector: 'nlf-user-membership',
@@ -17,23 +16,31 @@ export class NlfUserMembershipComponent implements OnInit {
   hasLicenses = false;
   render = false;
 
-  constructor(private storage: NlfLocalStorageService,
-              private membership: ApiNlfUserService,
-              private alertService: NlfAlertService) {
+  constructor(
+    private userSubject: NlfUserSubjectService,
+    private membership: ApiNlfUserService,
+    private alertService: NlfAlertService) {
 
-    this.id = storage.getId();
+    this.userSubject.observable.subscribe(
+      data => {
+        if (!!data) {
+          this.getuser(data.person_id);
+        }
+      },
+      err => console.log('Error getting user data: ', err)
 
-    this.getuser();
+    );
+
   }
 
-  public getuser() {
+  public getuser(person_id: number) {
 
-    this.membership.getUser(this.id).subscribe(
+    this.membership.getUser(person_id).subscribe(
       data => {
         this.user = data;
         // Only render on data
         this.render = true;
-        if (!!data.licenses && !!data.licenses.rights && data.licenses.rights.length > 0 ) {
+        if (!!data.licenses && !!data.licenses.rights && data.licenses.rights.length > 0) {
           this.hasLicenses = true;
         }
       },
@@ -43,6 +50,7 @@ export class NlfUserMembershipComponent implements OnInit {
       },
       // () => console.log("Done")
     );
+
   }
 
   ngOnInit() {

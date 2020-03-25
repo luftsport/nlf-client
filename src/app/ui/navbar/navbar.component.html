@@ -1,18 +1,44 @@
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-end">
-  <a class="navbar-brand pointer" [routerLink]="['/']">NLF</a>
+  <a class="navbar-brand pointer" [routerLink]="['/']">
+    <!--<i class="nlf nlf-fw nlf-logo-plain nlf-2x"></i>-->NLF</a>
+
+  <span *ngIf="ENV._name!='prod'" class="badge badge-danger">{{ ENV._name }}</span>
+
+  <!-- CURRENT OR LAST ORS -->
+  <span *ngIf="(loggedInObservable | async) && !!current_ors">
+    <span *ngIf="router.url != '/ors/'+current_ors.type+'/'+current_ors.id">
+      <span [routerLink]="['/ors', current_ors.type, 'edit', current_ors.id]" class="badge badge-info lead ml-1 pointer">
+        <fa name="edit" [fixed]="true"></fa>#{{ current_ors.id }}
+      </span>
+    </span>
+  </span>
 
   <span class="ml-auto"></span>
 
-  <button (click)="navbarOpen = !navbarOpen" class="navbar-toggler navbar-toggler-right" type="button" aria-controls="navbarNavAltMarkup"
-    aria-expanded="false" aria-label="Toggle navigation">
-    <fa name="bars" fixed="true"></fa>
+
+
+  <!-- CREATE ORS BTN XS-->
+  <button class="btn btn-success mr-3 d-block d-sm-none" *ngIf="(loggedInObservable | async) && !!user_data && !!user_data.settings.default_discipline" (click)="navbarOpen=false;openCreateOrsModal()">
+    <fa name="plus" fw="true" class="mr-1"></fa>ORS
+  </button>
+
+  <!--MENU TOGGLE-->
+  <button (click)="navbarOpen=!navbarOpen" class="navbar-toggler navbar-toggler-right" type="button" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <fa name="bars" [fixed]="true"></fa>
   </button>
 
 
   <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent2" [ngClass]="{ 'show': navbarOpen }">
 
-    <ul class="navbar-nav text-right">
-<!--
+    <ul *ngIf="!!user_data && loggedInObservable | async as authenticated" class="navbar-nav text-right">
+
+      <!-- CREATE ORS BTN HIDDEN XS-->
+      <button class="btn btn-success mr-2 d-none d-sm-block" *ngIf="!!user_data && !!user_data.settings.default_discipline" (click)="navbarOpen=false;openCreateOrsModal()">
+        <fa name="plus" fw="true" class="mr-1"></fa>ORS
+      </button>
+
+
+      <!--
       <li *ngIf="isLoggedIn" ngbDropdown placement="bottom-right" class="nav-item">
         <span class="nav-link pointer" id="dropdownBasic1" ngbDropdownToggle routerLinkActive="active">ORS</span>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
@@ -21,13 +47,115 @@
           <a class="dropdown-item pointer">Something else is here</a>
         </div>
       </li>
--->
-      <li class="nav-item" routerLinkActive="active">
-        <a *ngIf="isLoggedIn" (click)="authService.logout()" class="nav-item nav-link btn">Logout</a>
+      -->
+
+      <!--TEST
+      <li (click)="navbarOpen=false" *ngIf="authenticated && user_data.person_id==301041" class="nav-item" routerLinkActive="active">
+        <a [routerLink]="['/test']" class="nav-link">Test</a>
+      </li>
+      -->
+
+      <!-- ADMIN -->
+      <li (click)="navbarOpen=false" *ngIf="authenticated && user_data.person_id==301041" class="nav-item" routerLinkActive="active">
+        <a [routerLink]="['/admin']" class="nav-link">Admin</a>
+      </li>
+
+      <!-- DASHBOARD
+      <li (click)="navbarOpen=false" *ngIf="authenticated && user_data.person_id==301041" class="nav-item" routerLinkActive="active">
+        <a [routerLink]="['/dashboard']" class="nav-link">Dashboard</a>
+      </li>
+      -->
+
+      <!-- CONTENT -->
+      <li (click)="navbarOpen=false" *ngIf="authenticated && user_data.person_id==301041" class="nav-item" routerLinkActive="active">
+        <a [routerLink]="['/content']" class="nav-link">Content</a>
+      </li>
+
+      <!-- AIRCRAFTS -->
+      <li (click)="navbarOpen=false" *ngIf="authenticated" class="nav-item" routerLinkActive="active">
+        <a [routerLink]="['/aircraft']" class="nav-link">Aircraft</a>
+      </li>
+
+
+
+      <!-- ORGANIZATIONS -->
+      <li (click)="navbarOpen=false" *ngIf="authenticated && !!user_data.settings.default_discipline" class="nav-item" routerLinkActive="active">
+        <a [routerLink]="['/organizations', user_data.settings.default_discipline]" class="nav-link">Klubber</a>
+      </li>
+
+      <li (click)="navbarOpen=false" *ngIf="authenticated && !user_data.settings.default_discipline" class="nav-item" routerLinkActive="active">
+        <a [routerLink]="['/organizations', 376]" class="nav-link">Klubber</a>
+      </li>
+
+      <!-- AIP -->
+      <li (click)="navbarOpen=false" *ngIf="authenticated" class="nav-item" routerLinkActive="active">
+        <a [routerLink]="['/aip']" class="nav-link">AIP</a>
+      </li>
+
+      <!-- INTEGRATION -->
+      <li (click)="navbarOpen=false" *ngIf="authenticated && [301041,7623313,5502100,4402873,4859230,425529,554002,445648,7897818,6273278].indexOf(user_data.person_id)>-1" class="nav-item" routerLinkActive="active">
+        <a [routerLink]="['/integration']" class="nav-link">Integration</a>
+      </li>
+
+      <!-- ORS -->
+      <li (click)="navbarOpen=false" *ngIf="authenticated && !!user_data.settings.default_activity" class="nav-item" routerLinkActive="active">
+        <a *ngIf="!!config" [routerLink]="['/ors', config.inv_mapping[user_data.settings.default_activity]]" class="nav-link">ORS</a>
+        <!--<a  (click)="navigateORS()" class="nav-link">ORS</a>-->
+      </li>
+
+      <!-- NOTIFICATIONS
+      <li ngbDropdown placement="bottom-right" (click)="navbarOpen=false" *ngIf="authenticated" class="nav-item dropdown pointer" routerLinkActive="active">
+        <span ngbDropdownToggle href="#" class="nav-link">
+          <fa name="bell" [fixed]="true" class="d-inline-block"></fa><small><span class="small badge badge-danger align-top">4</span></small>
+        </span>
+
+        <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">ORS #343 created</a>
+          <a class="dropdown-item" href="#">Placeholder</a>
+
+          <div class="dropdown-divider"></div>
+          <button class="btn btn-secondary btn-block dropdown-item">
+            <fa name="bell-slash" [fixed]="true"></fa>Dismiss All
+          </button>
+          <div class="dropdown-divider"></div>
+          <button class="btn btn-secondary btn-block dropdown-item">
+            <fa name="list-ol" [fixed]="true"></fa>More<span class="badge badge-danger pull-right">2</span>
+          </button>
+        </div>
+
+      </li>
+      -->
+
+      <!-- USER/LOGOUT -->
+      <li ngbDropdown placement="bottom-right" (click)="navbarOpen=false" *ngIf="authenticated" class="nav-item dropdown pointer" routerLinkActive="active">
+
+        <button ngbDropdownToggle class="btn btn-small btn-secondary nav-link dropdown-toggle text-white" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <nlf-resolve-lungo-person [person_id]="user_data.person_id" [only_first_name]="true" [avatar]="true" [link]="false"></nlf-resolve-lungo-person>
+          <!--<span class="mx-1 badge badge-danger">2</span>-->
+        </button>
+
+        <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <!--
+          <a class="dropdown-item" href="#">Placeholder</a>
+          <a class="dropdown-item" href="#">Placeholder</a>
+          -->
+          <div class="dropdown-divider"></div>
+          <button (click)="authService.logout()" class="dropdown-item btn btn-secondary btn-block">
+            <fa name="power-off" [fixed]="true"></fa>Logout
+          </button>
+        </div>
+
       </li>
     </ul>
+
   </div>
 </nav>
+
+<!-- FAB https://medium.com/@aphlps/fab-speed-dial-with-angular-5-2-angular-material-be696fc14967
+<div *ngIf="!!user_data && !!user_data.settings.default_discipline" (click)="navbarOpen=false;openCreateOrsModal()" class="fab bg-success">
+  <span class="fab-icon"><fa name="plus"></fa></span>
+</div>
+-->
 
 <!-- popup template eg workflows -->
 <!--
@@ -57,7 +185,7 @@
 <nav class="navbar navbar-toggleable-sm navbar-dark bg-dark">
   <button (click)="isCollapsed = !isCollapsed" class="navbar-toggler navbar-toggler-right" type="button" aria-controls="navbarNavAltMarkup"
     aria-expanded="false" aria-label="Toggle navigation">
-    <fa name="bars" fixed="true"></fa>
+    <fa name="bars" [fixed]="true"></fa>
   </button>
   <span class="navbar-brand pointer" [routerLink]="['/']">NLF</span>
   <div [ngbCollapse]="isCollapsed" class="collapse navbar-collapse justify-content-between" id="navbar">

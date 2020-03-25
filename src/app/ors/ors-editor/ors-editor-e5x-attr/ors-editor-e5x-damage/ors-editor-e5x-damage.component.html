@@ -1,0 +1,75 @@
+<div *ngIf="!showOnlyBtn" class="row">
+  <div class="col-md-3">
+    <button class="btn btn-secondary btn-block" (click)="openModal(modal)">
+      <fa name="fire" [fixed]="true"></fa>Damage(s)
+    </button>
+  </div>
+  <div class="col-md-9">
+    <nlf-ors-editor-tag-e5x-render *ngIf="!!attr.highestDamage.value" classes="badge badge-danger" [items]="attr.highestDamage.value" path="E5X.Occurrence.HighestDamage"></nlf-ors-editor-tag-e5x-render>
+  </div>
+</div>
+
+<div *ngIf="showOnlyBtn">
+  <button class="btn btn-secondary btn-block" (click)="openModal(modal)">
+    <fa name="fire" [fixed]="true"></fa>Damage(s)
+  </button>
+</div>
+
+<!-- ROUTE MODAL -->
+<ng-template #modal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      Damage(s)
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+    <div class="row">
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.highestDamage.value" path="E5X.Occurrence.HighestDamage" id="HighestDamage"></nlf-ors-editor-tag-e5x>
+      </div>
+
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.damageNotToAC.value" path="E5X.Occurrence.DamageNotToAC" id="DamageNotToAC"></nlf-ors-editor-tag-e5x>
+      </div>
+    </div>
+    <div class="row" *ngIf="!!attr.damageNotToAC.value && attr.damageNotToAC.value != 97">
+      <div class="col-md-12">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.objectDamaged.value" path="E5X.Occurrence.ObjectDamaged" id="ObjectDamaged"></nlf-ors-editor-tag-e5x>
+      </div>
+
+      <div class="col-md-12">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.thirdPartyDamage.value" path="E5X.Occurrence.ThirdPartyDamage" id="ThirdPartyDamage"></nlf-ors-editor-tag-e5x>
+      </div>
+    </div>
+    <div *ngIf="devDebug" class="row">
+      AC: {{ attr | json }}
+    </div>
+
+
+    <!--
+    <div class="row" *ngIf="!!attr.highestDamage.value && attr.highestDamage.value > 0 && [98, 99].indexOf(attr.highestDamage.value)<0">
+        <div class="col-md-12">
+            <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.partsStruck.value" path="E5X.Occurrence.Aircraft.PartsStruck" id="PartsStruck"></nlf-ors-editor-tag-e5x>
+        </div>
+
+        <div class="col-md-12">
+            <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.partsDamaged.value" path="E5X.Occurrence.Aircraft.PartsDamaged" id="PartsDamaged"></nlf-ors-editor-tag-e5x>
+        </div>
+    </div>
+    -->
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="modalRef.close()">
+      <fa name="times" [fixed]="true"></fa>Avbryt
+    </button>
+    <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate(modalIndex)">
+      <fa name="check" [fixed]="true"></fa>Oppdater
+    </button>
+  </div>
+</ng-template>

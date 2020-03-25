@@ -4,22 +4,26 @@ import { RouterModule, Routes } from '@angular/router';
 // Top level app direct routes
 import { NlfUiDummyComponent } from './ui/dummy/dummy.component';
 import { NlfOrsComponent } from './ors/ors.component';
-import { NlfAuthComponent } from './services/auth/auth.component';
-import { NlfDashboardComponent } from './dashboard/dashboard.component';
+import { NlfAuthComponent } from './services/auth/auth.component';
+//import { NlfDashboardComponent } from './dashboard/dashboard.component';
 import { NlfUserTableComponent } from './user/user-table/user-table.component';
 import { NlfContentComponent } from './content/content.component';
-
+import { NlfCustomPreloader } from 'app/nlf-routing-loader';
 
 // Auth guard
-import { NlfAuthGuard } from './services/auth/auth.guard';
+import { NlfAuthGuard } from './services/auth/auth.guard';
 
 // Child appplication internal routes:
 import { NlfOrsRoutingModule } from './ors/ors-routing.module';
 import { NlfUserRoutingModule } from './user/user-routing.module';
 import { NlfErrorRoutingModule } from './error/error-routing.module';
-import { NlfDashboardRoutingModule } from './dashboard/dashboard-routing.module';
-import { NlfAdminRoutingModule } from './admin/admin-routing.module';
+import { NlfErrorComponent } from './error/error.component';
+//import { NlfDashboardRoutingModule } from './dashboard/dashboard-routing.module';
 import { NlfContentRoutingModule } from './content/content-routing.module';
+// import { NlfOrganizationsRoutingModule } from 'app/organizations/organizations-routing.module';
+
+/// T E S T ///
+//import { TestComponent } from 'app/test/test.component';
 /**
   Route object top level
   AuthGuard just tests that user is logged in, nothing more
@@ -30,32 +34,47 @@ import { NlfContentRoutingModule } from './content/content-routing.module';
   For public pages data: { isPublic: true }
 
   @todo investigate lazy-loading
+
   **/
 const routes: Routes = [
-  
-  { path: 'home', component: NlfUiDummyComponent, canActivate: [NlfAuthGuard]  , data: {label: 'Home'}},
-  { path: 'users', component: NlfUserTableComponent, canActivate: [NlfAuthGuard], data: {label: 'Users'}},
-  { path: 'ors', component: NlfOrsComponent, canActivate: [NlfAuthGuard] , data: {label: 'ORS'}},
-  { path: 'dashboard', component: NlfDashboardComponent, canActivate: [NlfAuthGuard], data: {label: 'Dashboard'}},
-  { path: 'admin', loadChildren: 'app/admin/admin.module#NlfAdminModule', canActivate: [NlfAuthGuard], data: {label: 'Admin'}},
-  { path: 'content', component: NlfContentComponent, canActivate: [NlfAuthGuard], data: {label: 'Content'}},
-  { path: 'login', component: NlfAuthComponent , data: {label: 'Login'}},
-  { path: 'integration', loadChildren: './integration/integration.module#NlfIntegrationModule' , data: {label: 'Integration'}},
-  { path: '', redirectTo: '/home', pathMatch: 'full' }, // redirect root
-  { path: '**', component: NlfUiDummyComponent, canActivate: [NlfAuthGuard]  },
+  { path: 'home', component: NlfUiDummyComponent },
+  { path: 'error', component: NlfErrorComponent, data: { bc: 'Error' } },
+
+  // Eager loaded apps
+  //{ path: 'users', component: NlfUserTableComponent, data: { bc: 'Users' } },
+  { path: 'ors', component: NlfOrsComponent, data: { bc: 'ORS' } },
+  //{ path: 'dashboard', component: NlfDashboardComponent, data: { bc: 'Dashboard' } },
+  { path: 'content', component: NlfContentComponent, data: { bc: 'Content' } },
+  //{ path: 'test', component: TestComponent, data: { bc: 'Testing' } },
+
+  // Lazy loaded
+  { path: 'admin', loadChildren: './admin/admin.module#NlfAdminModule', data: { bc: 'Admin', preload: false } },
+  { path: 'integration', loadChildren: './integration/integration.module#NlfIntegrationModule', data: { bc: 'Integration', preload: false } },
+  { path: 'aip', loadChildren: './aip/aip.module#NlfAipModule', data: { bc: 'AIP', preload: false } },
+  { path: 'organizations', loadChildren: './organizations/organizations.module#NlfOrganizationsModule', data: { bc: 'Organizations', preload: false } },
+  { path: 'aircraft', loadChildren: './aircrafts/aircrafts.module#NlfAircraftsModule', data: { bc: 'Aircraft', preload: false } },
+
+  // Permalinks
+  { path: 'app/obs', loadChildren: './permalinks/permalinks.module#NlfPermalinksModule', data: { preload: false } },
+  { path: 'app/obs/', loadChildren: './permalinks/permalinks.module#NlfPermalinksModule', data: { preload: false } },
+
+  // Finishing redirects
+  { path: '', redirectTo: 'home', pathMatch: 'full'}, // redirect root
+  { path: '**', component: NlfUiDummyComponent },
 ];
 
 // , onSameUrlNavigation: 'reload'
 @NgModule({
-  imports: [RouterModule.forRoot(routes), //, { enableTracing: true }),
-            NlfOrsRoutingModule,
-            NlfUserRoutingModule,
-            NlfDashboardRoutingModule,
-            NlfErrorRoutingModule,
-            NlfContentRoutingModule
-          ],
-  exports: [ RouterModule],
-  providers: [NlfAuthGuard],
+  imports: [
+    RouterModule.forRoot(routes, { preloadingStrategy: NlfCustomPreloader }), //, { enableTracing: true }),
+    NlfOrsRoutingModule,
+    NlfUserRoutingModule,
+    //NlfDashboardRoutingModule,
+    NlfErrorRoutingModule,
+    NlfContentRoutingModule
+  ],
+  exports: [RouterModule],
+  providers: [NlfAuthGuard, NlfCustomPreloader],
   declarations: []
 })
 export class NlfRoutingModule { }

@@ -20,7 +20,7 @@ export class NlfResolveRoleComponent implements OnInit {
 
   ngOnInit() {
 
-    let options: ApiOptionsInterface = {
+    const options: ApiOptionsInterface = {
         query: { projection: {name: 1}}
       };
 

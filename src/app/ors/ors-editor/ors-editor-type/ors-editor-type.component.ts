@@ -1,7 +1,8 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { NLF_CONFIG, NlfConfig } from 'app/nlf-config.module';
+import { Component, OnInit, Inject, Input } from '@angular/core';
+import { NlfConfigService } from 'app/nlf-config.service';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
-import {  ApiObservationsItem } from 'app/api/api.interface';
+import { ApiObservationsItem, NlfConfigItem } from 'app/api/api.interface';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'nlf-ors-editor-type',
@@ -12,10 +13,26 @@ export class NlfOrsEditorTypeComponent implements OnInit {
 
   observation: ApiObservationsItem;
 
-  constructor(@Inject(NLF_CONFIG) public config: NlfConfig,
-              private subject: NlfOrsEditorService) {
+  @Input() title: boolean = false;
+  public config: NlfConfigItem;
 
-    this.subject.observableObservation.subscribe(observation => this.observation = observation);
+  constructor(
+    private configService: NlfConfigService,
+    private subject: NlfOrsEditorService) {
+
+    forkJoin([
+      this.subject.observableObservation.subscribe(
+        observation => {
+          this.observation = observation
+        }
+      ),
+
+      this.configService.observableConfig.subscribe(
+        data => {
+          this.config = data;
+        }
+      )
+    ]);
 
   }
 

@@ -10,11 +10,11 @@ import { ApiOptionsInterface, ApiNlfClubItem, ApiNlfClubList } from './api.inter
 @Injectable()
 export class ApiNlfClubsService extends ApiRestService {
 
+  private relativeUrl = '/legacy/clubs/';
+
   constructor(http: HttpClient) { super(http); }
 
-  private relativeUrl = '/legacy/melwin/clubs/';
-
-  public getClub(id: string, options?: ApiOptionsInterface): Observable<ApiNlfClubItem> {
+  public getClub(id: number|string, options?: ApiOptionsInterface): Observable<ApiNlfClubItem> {
 
     return this.getItem(this.relativeUrl, id, options);
   }
@@ -22,6 +22,14 @@ export class ApiNlfClubsService extends ApiRestService {
   public getClubs(options?: ApiOptionsInterface): Observable<ApiNlfClubList> {
 
     return this.getList(this.relativeUrl, options);
+  }
+
+  public create(payload, options?: ApiOptionsInterface): Observable<ApiNlfClubItem> {
+    return this.post(this.relativeUrl, payload, options);
+  }
+
+  public save(_id: string, payload, etag?: string, options?: ApiOptionsInterface): Observable<ApiNlfClubItem> {
+    return this.patch(this.relativeUrl, _id, payload, options, etag);
   }
 
 }

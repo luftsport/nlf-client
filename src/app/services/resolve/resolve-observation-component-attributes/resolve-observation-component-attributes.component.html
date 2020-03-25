@@ -1,5 +1,9 @@
-<span *ngFor="let attr of attributes | keys">
-  <span *ngIf="!!badge && !!config.observation.components.attributes[attr]" class="badge badge-{{ config.observation.components.attributes[attr]['badge'] }}">
-    {{ config.observation.components.attributes[attr]['label'] }}</span>
-  <span *ngIf="!badge && !!config.observation.components.attributes[attr]">{{ config.observation.components.attributes[attr]['label'] }}</span>
+<span *ngFor="let attr of attributes | keys; let last=last">
+  <span *ngIf="!!badge && !!config[activity].observation.components.attributes[attr]"
+  class="badge badge-{{ config[activity].observation.components.attributes[attr]['badge'] }}"
+  [ngClass]="{'mr-1': !last}">
+    {{ config[activity].observation.components.attributes[attr]['label'] }}</span>
+  <span [ngClass]="{'mr-1': !last}" *ngIf="!badge && !!config[activity].observation.components.attributes[attr]">
+    {{ config[activity].observation.components.attributes[attr]['label'] }}
+  </span>
 </span>

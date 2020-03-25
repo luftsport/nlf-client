@@ -1,5 +1,5 @@
 <div *ngIf="dataReady">
-  <nlf-ors-fallskjerm-report-files-thumbnails [filelist]="filelist" size="small"></nlf-ors-fallskjerm-report-files-thumbnails>
+  <nlf-ors-report-files-thumbnails [filelist]="filelist" size="small"></nlf-ors-report-files-thumbnails>
   <div class="table-responsive">
     <table class="table table-sm table-striped table-hover">
       <tbody>
@@ -7,14 +7,14 @@
         <tr *ngFor="let f of filelist">
 
           <td>
-            <fa *ngIf="!!f.r" class="text-danger" name="lock" fixed="true"></fa>
-            <fa *ngIf="!f.r" class="text-success" name="unlock" fixed="true"></fa>
+            <fa *ngIf="!!f.r" class="text-danger" name="lock" [fixed]="true"></fa>
+            <fa *ngIf="!f.r" class="text-success" name="unlock" [fixed]="true"></fa>
             <a [routerLink]="['/file/download/', f._id]">{{f.name}}</a>
           </td>
           <td>{{ f.size | bytes : 2 }}</td>
           <td>{{f.content_type}}&nbsp;</td>
           <td>
-            <fa name="download" fixed="true"></fa>
+            <fa name="download" [fixed]="true"></fa>
           </td>
           <td>&nbsp;</td>
 

@@ -1,0 +1,44 @@
+<div class="container">
+
+  <div class="row" *ngIf="!!org_id">
+    <nlf-organization-stats-age-distribution [org_id]="org_id"></nlf-organization-stats-age-distribution>
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-6 col-sm-12">
+      <nlf-organization-stats-population-pyramid [org_id]="org_id"></nlf-organization-stats-population-pyramid>
+    </div>
+
+    <div class="col-md-6 col-sm-12">
+      <!--<nlf-organization-stats-sankey></nlf-organization-stats-sankey>-->
+    </div>
+
+  </div>
+
+  <!--
+<div>
+  <nlf-organization-stats-dot></nlf-organization-stats-dot>
+</div>
+-->
+  <div *ngIf="org_id==376">
+
+    <div *ngFor="let key of config.activity_orgs | keys">
+      <div class="row">
+        <div class="col-md-12 col-sm-12 mt-3">
+
+          <h4>{{ config.inv_mapping[config.activity_orgs[key]] }}</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+
+          <nlf-organization-stats-population-pyramid [org_id]="key"></nlf-organization-stats-population-pyramid>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

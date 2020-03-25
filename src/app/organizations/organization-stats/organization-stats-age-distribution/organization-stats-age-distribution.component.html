@@ -1,0 +1,36 @@
+<div class="row h-100" *ngIf="dataReady">
+  <div class="col-md-6 col-sm-12 ngx-chart-wrapper">
+    <ngx-charts-bar-vertical [results]="stats" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel"
+      (select)="onSelect($event)">
+    </ngx-charts-bar-vertical>
+  </div>
+
+  <div class="col-md-6 col-sm-12 ngx-chart-wrapper">
+    <ngx-charts-tree-map [results]="stats" (select)="onSelect($event)">
+    </ngx-charts-tree-map>
+  </div>
+</div>
+
+
+
+
+
+<!--
+<ngx-charts-polar-chart
+  *ngIf="dataReady"
+  [animations]="false"
+  [legend]="true"
+  [view]="view"
+  [results]="multi"
+  [xAxis]="true"
+  [yAxis]="true"
+  [autoScale]="true"
+  [roundDomains]="false"
+  (select)="onSelect($event)">
+</ngx-charts-polar-chart>
+-->
+
+<!-- Linechart simple
+<svg width="960" height="500">
+</svg>
+-->
