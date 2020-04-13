@@ -31,6 +31,25 @@ export class pydict  {
 // var obj = { a: { b: 1 } },
 // a = getValue(obj, 'a.b');
 
+/**
+* Calculates the rating by model
+**/
+export function calculateRating(actual, potential) {
+  try {
+    const max = 7;  // 8 - 1 = 7
+    const powa = 2; // Actual
+    const powp = 3; // Potential
+    let calc: number = Math.round(Math.sqrt((Math.pow(actual - 1, powa) + Math.pow(potential - 1, powp)) / (Math.pow(max, powa) + Math.pow(max, powp))) * 100);
+
+    if (calc < 1) {
+      calc = 1;
+    }
+
+    return calc;
+  } catch { }
+  return 1
+}
+
 export function isObjEmpty(obj) {
   for (let key in obj) {
     if (obj.hasOwnProperty(key))
@@ -91,7 +110,7 @@ export function cleanObject(obj, trim?: boolean) {
     else if (value instanceof Array && obj[key].length === 0) {
       delete obj[key];
     }
-    else if (type === "string" && (value.length===0 || value.replace(/\W/g, "") === "")) { ///\s/g
+    else if (type === "string" && (value.length === 0 || value.replace(/\W/g, "") === "")) { ///\s/g
       console.log('IN FUNCTIONS weeee', key, value)
       delete obj[key];
     }

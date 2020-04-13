@@ -20,7 +20,7 @@ export class NlfOrsActivitiesComponent implements OnInit {
   message_text: string = '';
   notifications: ApiNotificationsItem[];
   events: ApiNotificationsItem[];
-  show = { save: false, notifications: true, messages: true, workflow: true, persons: true, dummy: false };
+  show = { save: false, reminders: true, messages: true, workflow: true, persons: true, dummy: false, e5x: true };
   public now: Date = new Date();
   dataReady = false;
   observation_id: number;

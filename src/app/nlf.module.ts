@@ -215,6 +215,8 @@ import { NlfOrsFallskjermReportOrganizationComponent } from 'app/ors/ors-fallskj
 import { NlfOrsFallskjermReportSummaryComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-report/report-summary/report-summary.component';
 // MOTORFLY REPORT
 import {  NlfOrsMotorflyReportSummaryComponent } from 'app/ors/ors-motor/ors-motor-report/report-summary/report-summary.component';
+// ORS STATISTICS & DASHBOARDS
+import { NlfOrsStatsHeatmapComponent } from 'app/ors/ors-stats/ors-stats-heatmap/ors-stats-heatmap.component';
 
 // ORS FALLSKJERM
 import { NlfOrsFallskjermEditorComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-editor/ors-fallskjerm-editor.component';
@@ -232,6 +234,8 @@ import { NlfOrsMotorComponent } from 'app/ors/ors-motor/ors-motor.component';
 import { NlfOrsMotorEditorComponent } from 'app/ors/ors-motor/ors-motor-editor/ors-motor-editor.component';
 import { NlfOrsMotorReportComponent } from 'app/ors/ors-motor/ors-motor-report/ors-motor-report.component';
 import {  NlfOrsMotorSearchComponent } from 'app/ors/ors-motor/ors-motor-search/ors-motor-search.component';
+
+
 // LUNGO Services
 import { LungoIntegrationService } from 'app/api/lungo-integration.service';
 import { LungoPersonsService } from 'app/api/lungo-persons.service';
@@ -401,6 +405,7 @@ import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
     NlfOrsReportWorkflowTimelineComponent,
     NlfOrsFallskjermReportSummaryComponent,
     NlfOrsMotorflyReportSummaryComponent,
+    NlfOrsStatsHeatmapComponent,
     NlfResolveObservationFlagsComponent,
     NlfResolveObservationTypesComponent,
     NlfOrsReportAskComponent,
@@ -553,7 +558,8 @@ import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
     NgxUploaderModule,
     HotkeyModule.forRoot(),
     AgmCoreModule.forRoot({ // Google maps
-      apiKey: 'AIzaSyBW1IdM-nFGiwwfP4H2sJg5YiromIuysJ8'
+      apiKey: 'AIzaSyBW1IdM-nFGiwwfP4H2sJg5YiromIuysJ8',
+      libraries: ['visualization']
     }),
     DiffMatchPatchModule, // DIFF
     // NgbModule.forRoot() // ngx-bootstrap (not good rather shaitolainen!)

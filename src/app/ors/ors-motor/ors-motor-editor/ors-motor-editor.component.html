@@ -60,11 +60,9 @@
           <fa name="bug" [fixed]="true"></fa>
         </a>
 
-        <!-- ACTIVITIES
         <span class="pointer badge badge-info mx-1" [routerLink]="['/ors', observation._model.type , 'activities', observation.id]">
           <fa name="history"></fa> Aktivitet
         </span>
-        -->
 
         <!-- USERS!!! -->
         <nlf-ors-editor-users [model]="observation._model.type" [_id]="observation._id" [observation]="observation"></nlf-ors-editor-users>

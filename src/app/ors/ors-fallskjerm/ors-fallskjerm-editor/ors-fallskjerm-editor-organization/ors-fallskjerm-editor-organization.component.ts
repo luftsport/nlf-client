@@ -44,9 +44,14 @@ export class NlfOrsFallskjermEditorOrganizationComponent implements OnInit {
       (key) => {
         console.log('KEY', key);
         if (!!this.observation.organization[key]) {
+
           this.observation.organization[key].forEach(
             (person) => {
-              this.involvedSubject.add(person['id'], person['full_name'] || person['tmp_name'] || undefined); // || person['tmp_name'] || undefined);
+              if (Number.isInteger(person)) {
+                this.involvedSubject.add(person);
+              } else {
+                this.involvedSubject.add(person['id']); //, person['full_name'] || person['tmp_name'] || undefined); // || person['tmp_name'] || undefined);
+              }
             }
           );
         }

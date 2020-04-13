@@ -1,40 +1,38 @@
 <header class="nlf-sticky-toolbar">
-    <div class="container">
-        <span class="breadcrumb">
-            <li class="breadcrumb-item">
-                <fa name="plug" [fixed]="true" class="mr-1 active"></fa><a [routerLink]="['/', '376']">NIF Integration</a>
-            </li>
-        </span>
+  <div class="container">
+    <span class="breadcrumb">
+      <li class="breadcrumb-item">
+        <fa name="plug" [fixed]="true" class="mr-1 active"></fa><a [routerLink]="['/', '376']">NIF Integration</a>
+      </li>
+    </span>
 
-        <span class="float-right d-inline">
-            <a class="mr-1 btn btn-primary btn-sm" [routerLink]="['/integration']">
-                <fa name="cog" [fixed]="true"></fa>Syncdaemon
-            </a>
-        </span>
+    <span class="float-right d-inline">
+      <a class="mr-1 btn btn-primary btn-sm" [routerLink]="['/integration']">
+        <fa name="cog" [fixed]="true"></fa>Syncdaemon
+      </a>
+    </span>
 
-    </div>
+  </div>
 </header>
 
 <div *ngIf="!dataReady">
-    <nlf-ui-page-spinner></nlf-ui-page-spinner>
+  <nlf-ui-page-spinner></nlf-ui-page-spinner>
 </div>
-<div *ngIf="!!dataReady">
 
-    <div class="row clearfix">
-        <div class="col-md-6 chart-wrapper">
-            <ngx-charts-advanced-pie-chart *ngIf="pieReady" [scheme]="colorScheme" [label]="'Change messages'"
-                [results]="pie" [gradient]="gradient">
-            </ngx-charts-advanced-pie-chart>
-        </div>
-        <div class="col-md-6">
-            <div class="chart-wrapper">
-                <ngx-charts-advanced-pie-chart *ngIf="entityTypesReady" [scheme]="colorScheme" [label]="'Change entities'"
-                    [results]="entityTypes" [gradient]="gradient">
-                </ngx-charts-advanced-pie-chart>
-            </div>
-        </div>
+<div *ngIf="!!dataReady" class="container-fluid">
+  <div class="row clearfix">
+    <div class="col-md-6 chart-wrapper">
+      <ngx-charts-advanced-pie-chart *ngIf="pieReady" [scheme]="colorScheme" [label]="'Change messages'" [results]="pie" [gradient]="gradient">
+      </ngx-charts-advanced-pie-chart>
     </div>
-    <!--
+    <div class="col-md-6">
+      <div class="chart-wrapper">
+        <ngx-charts-advanced-pie-chart *ngIf="entityTypesReady" [scheme]="colorScheme" [label]="'Change entities'" [results]="entityTypes" [gradient]="gradient">
+        </ngx-charts-advanced-pie-chart>
+      </div>
+    </div>
+  </div>
+  <!--
 "": "klubb-214063",
 "id": 214063,
 "status": true,
@@ -51,116 +49,112 @@
 "sync_errors": 0,
 "next_run_time": null
 -->
-
-    <div class="row clearfix">
-        <div class="col-md-2 text-center bg-secondary text-white">
-            <h2>{{ sync }}</h2>
-            <h5>sync</h5>
-        </div>
-        <div class="col-md-2 text-center bg-secondary text-white">
-            <h2>{{ pop }}</h2>
-            <h5>populate</h5>
-        </div>
-        <div class="col-md-2 text-center bg-secondary text-white">
-            <h2>{{ msgs }}</h2>
-            <h5>messages</h5>
-        </div>
-        <div class="col-md-2 text-center bg-success text-white">
-            <h2>{{ online }}</h2>
-            <h5>online</h5>
-        </div>
-        <div class="col-md-2 text-center bg-danger text-white">
-            <h2 *ngIf="!!workers">{{ workers.length-online }}</h2>
-            <h5>offline</h5>
-        </div>
-        <div class="col-md-2 text-center bg-success text-white">
-            <div *ngFor="let s of status">
-                <h2 *ngIf="s._id=='finished'">{{ s.count }}</h2>
-            </div>
-
-            <h5>processed</h5>
-        </div>
-
-
-
+  <div class="row clearfix">
+    <div class="col-md-2 text-center bg-secondary text-white">
+      <h2>{{ sync }}</h2>
+      <h5>sync</h5>
     </div>
-    <!--<button class="btn btn-primary" *ngIf="!workersStarted && syncdaemonStatus" (click)="startWorkers()"><fa name="play"></fa>Start workers</button>-->
+    <div class="col-md-2 text-center bg-secondary text-white">
+      <h2>{{ pop }}</h2>
+      <h5>populate</h5>
+    </div>
+    <div class="col-md-2 text-center bg-secondary text-white">
+      <h2>{{ msgs }}</h2>
+      <h5>messages</h5>
+    </div>
+    <div class="col-md-2 text-center bg-success text-white">
+      <h2>{{ online }}</h2>
+      <h5>online</h5>
+    </div>
+    <div class="col-md-2 text-center bg-danger text-white">
+      <h2 *ngIf="!!workers">{{ workers.length-online }}</h2>
+      <h5>offline</h5>
+    </div>
+    <div class="col-md-2 text-center bg-success text-white">
+      <div *ngFor="let s of status">
+        <h2 *ngIf="s._id=='finished'">{{ s.count }}</h2>
+      </div>
+      <h5>processed</h5>
+    </div>
+  </div>
+  <!--<button class="btn btn-primary" *ngIf="!workersStarted && syncdaemonStatus" (click)="startWorkers()"><fa name="play"></fa>Start workers</button>-->
 
-    <ngx-table *ngIf="!!workers" [configuration]="tableConfig" [data]="workers" [columns]="columns" [(pagination)]="pagination"
-        (event)="eventEmitted($event)" [detailsTemplate]="detailsTemplate">
+  <div class="clearfix">
+    <ngx-table *ngIf="!!workers" [configuration]="tableConfig" [data]="workers" [columns]="columns" [(pagination)]="pagination" (event)="eventEmitted($event)" [detailsTemplate]="detailsTemplate">
 
-        <ng-template let-row>
-            <td>
-                <span class="text-xs-left">
-                    <fa [ngClass]="!!row.status ? 'text-success' : 'text-danger'" name='circle'></fa>
-                </span>
-            </td>
-            <td>
-                <nlf-resolve-lungo-organization *ngIf="row.id != 900001 && row.id != 900002" [organization_id]="row.id"></nlf-resolve-lungo-organization>
-                <span *ngIf="row.id == 900001">*Lisenser</span>
-                <span *ngIf="row.id == 900002">*Kompetanser</span>
-            </td>
-            <td>
-                {{ row.state | upperfirst }}
-            </td>
-            <td>
-                {{ row.mode | upperfirst }}
-            </td>
+      <ng-template let-row>
+        <td>
+          <span class="text-xs-left">
+            <fa [ngClass]="!!row.status ? 'text-success' : 'text-danger'" name='circle'></fa>
+          </span>
+        </td>
+        <td>
+          <nlf-resolve-lungo-organization *ngIf="row.id != 900001 && row.id != 900002" [organization_id]="row.id"></nlf-resolve-lungo-organization>
+          <span *ngIf="row.id == 900001">*Lisenser</span>
+          <span *ngIf="row.id == 900002">*Kompetanser</span>
+        </td>
+        <td>
+          {{ row.state | upperfirst }}
+        </td>
+        <td>
+          {{ row.mode | upperfirst }}
+        </td>
 
-            <td>
-                {{ row.sync_type | upperfirst }}
-            </td>
-            <td>
-                <span class="text-xs-right" [ngClass]="{'text-danger': row.sync_errors > 0}">
-                    {{ row.sync_errors }}
-                </span>
+        <td>
+          {{ row.sync_type | upperfirst }}
+        </td>
+        <td>
+          <span class="text-xs-right" [ngClass]="{'text-danger': row.sync_errors > 0}">
+            {{ row.sync_errors }}
+          </span>
 
-            </td>
-            <td>
-                {{ row.next_run_time | date:"HH:mm:ss" }}
-            </td>
-            <td>
-                <span class="text-xs-right">
-                    {{ row.messages }}
-                </span>
-            </td>
+        </td>
+        <td>
+          {{ row.next_run_time | date:"HH:mm:ss" }}
+        </td>
+        <td>
+          <span class="text-xs-right">
+            {{ row.messages }}
+          </span>
+        </td>
 
-        </ng-template>
+      </ng-template>
 
     </ngx-table>
 
+
     <ng-template #detailsTemplate let-row>
-        <div>Index: {{ row.index }}</div>
-        <div>{{ row.name }}</div>
-        <div>{{ row.id }}</div>
-        <div>{{ row.status }}</div>
-        <div>{{ row.mode }}</div>
-        <div>{{ row.reason }}</div>
-        <div *ngIf="row.uptime.length == 2">{{ row.uptime[0] }} days, {{ uptime(row.uptime[1]) }}</div>
-        <div>{{ row.started | date:"yyyy-MM-dd HH:mm:ss" }}</div>
-        <div>{{ row.messages }}</div>
-        <div>{{ row.sync_type }}</div>
-        <div *ngIf="row.sync_interval.length == 2">Last synced {{ row.sync_interval[1] | amTimeAgo }}</div>
-        <div *ngIf="row.sync_interval.length == 2">{{ row.sync_interval[0] | date:"HH:mm:ss.SSS" }} to {{
+      <div>Index: {{ row.index }}</div>
+      <div>{{ row.name }}</div>
+      <div>{{ row.id }}</div>
+      <div>{{ row.status }}</div>
+      <div>{{ row.mode }}</div>
+      <div>{{ row.reason }}</div>
+      <div *ngIf="row.uptime.length == 2">{{ row.uptime[0] }} days, {{ uptime(row.uptime[1]) }}</div>
+      <div>{{ row.started | date:"yyyy-MM-dd HH:mm:ss" }}</div>
+      <div>{{ row.messages }}</div>
+      <div>{{ row.sync_type }}</div>
+      <div *ngIf="row.sync_interval.length == 2">Last synced {{ row.sync_interval[1] | amTimeAgo }}</div>
+      <div *ngIf="row.sync_interval.length == 2">{{ row.sync_interval[0] | date:"HH:mm:ss.SSS" }} to {{
             row.sync_interval[1] | date:"HH:mm:ss.SSS" }}</div>
-        <div>{{ row.sync_misfires }}</div>
-        <div>{{ row.sync_errors }}</div>
-        <div>{{ row.next_run_time | date:"HH:mm:ss" }}</div>
+      <div>{{ row.sync_misfires }}</div>
+      <div>{{ row.sync_errors }}</div>
+      <div>{{ row.next_run_time | date:"HH:mm:ss" }}</div>
 
-        <div class="col-md-4"></div>
-        <div class="col-md-4"></div>
-        <div class="col-md-4"></div>
-        <button class="btn btn-danger" (click)="rebootWorker(row.index)">Reboot</button>
+      <div class="col-md-4"></div>
+      <div class="col-md-4"></div>
+      <div class="col-md-4"></div>
+      <button class="btn btn-danger" (click)="rebootWorker(row.index)">Reboot</button>
 
-        <button class="btn btn-info">Logs</button>
-        <button class="btn btn-info">Changes</button>
-        <nlf-worker-log [organization_id]="row.id" [index]="row.index"></nlf-worker-log>
+      <button class="btn btn-info">Logs</button>
+      <button class="btn btn-info">Changes</button>
+      <nlf-worker-log [organization_id]="row.id" [index]="row.index"></nlf-worker-log>
 
     </ng-template>
 
+  </div>
 
-
-    <!--
+  <!--
     <ngx-charts-pie-grid
     [scheme]="colorScheme"
     [results]="syncdaemonStatus"
@@ -168,13 +162,13 @@
     >
 </ngx-charts-pie-grid>
 -->
-    <div>
-        <button class="btn btn-success" (click)="refresh()">
-            <fa name="refresh"></fa>Refresh
-        </button>
-    </div>
-    <div>
-        Next run time: {{ next_run_time | date:'HH:mm:ss' }}
-    </div>
+  <div>
+    <button class="btn btn-success" (click)="refresh()">
+      <fa name="refresh"></fa>Refresh
+    </button>
+  </div>
+  <div>
+    Next run time: {{ next_run_time | date:'HH:mm:ss' }}
+  </div>
 
 </div>

@@ -133,6 +133,7 @@ export class NlfAuthComponent implements OnInit {
         expires_in: null,
         error: null,
         error_description: null,
+        scope: null
       },
       queryParamsHandling: 'merge',
       // skipLocationChange: false,

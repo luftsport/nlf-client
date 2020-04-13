@@ -13,8 +13,8 @@ export class NlfResolveLungoLicenseComponent implements OnInit {
 
 
   @Input() license_id: string;
-  @Input() link: boolean;
-  @Input() long: boolean;
+  @Input() link: boolean = false;
+  @Input() long: boolean = false;
 
   license: LungoLicensesItem;
   dataReady = false;

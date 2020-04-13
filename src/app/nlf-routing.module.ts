@@ -41,7 +41,7 @@ const routes: Routes = [
   { path: 'error', component: NlfErrorComponent, data: { bc: 'Error' } },
 
   // Eager loaded apps
-  //{ path: 'users', component: NlfUserTableComponent, data: { bc: 'Users' } },
+  { path: 'users', component: NlfUserTableComponent, data: { bc: 'Users' } },
   { path: 'ors', component: NlfOrsComponent, data: { bc: 'ORS' } },
   //{ path: 'dashboard', component: NlfDashboardComponent, data: { bc: 'Dashboard' } },
   { path: 'content', component: NlfContentComponent, data: { bc: 'Content' } },

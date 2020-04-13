@@ -33,8 +33,7 @@
   <div class="row my-4">
 
     <div class="col-lg-8">
-      <ngx-charts-advanced-pie-chart *ngIf="dataReady" [activeEntries]="activeEntries" [scheme]="colorScheme" [label]="label"
-        [results]="pie" [gradient]="gradient" (select)="onSelect($event)"></ngx-charts-advanced-pie-chart>
+      <ngx-charts-advanced-pie-chart *ngIf="dataReady" [activeEntries]="activeEntries" [scheme]="colorScheme" [label]="label" [results]="pie" [gradient]="gradient" (select)="onSelect($event)"></ngx-charts-advanced-pie-chart>
       <span *ngIf="!dataReady">
         <p class="align-middle text-center text-secondary">
           <fa name="spinner" animation="pulse" size="3x"></fa>
@@ -179,8 +178,7 @@
     </button>
   </div>
   <div class="modal-body">
-    <ngx-charts-advanced-pie-chart *ngIf="dataReady" [activeEntries]="activeEntries" [scheme]="colorScheme" [label]="label"
-      [results]="pie" [gradient]="gradient" (select)="onSelect($event)"></ngx-charts-advanced-pie-chart>
+    <ngx-charts-advanced-pie-chart *ngIf="dataReady" [activeEntries]="activeEntries" [scheme]="colorScheme" [label]="label" [results]="pie" [gradient]="gradient" (select)="onSelect($event)"></ngx-charts-advanced-pie-chart>
     <nlf-ors-last activity="fallskjerm" number="3"></nlf-ors-last>
     <div class="clearfix"></div>
     <div>
@@ -194,8 +192,10 @@
 </ng-template>
 
 <!-- A ROW... -->
-<div class="row">
-  <p></p>
+<div class="container">
+  <div class="row">
+    <p></p>
+  </div>
 </div>
 
 <!-- CARD DECK -->

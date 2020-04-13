@@ -48,30 +48,14 @@ ADD CAUSE
       </div>
 
       <div class="input-group-prepend pointer" (click)="toggleBarrier('causes', i)">
-        <span class="input-group-text font-weight-bold bg-warning lead" [ngClass]="{'component-barrier': cause.flags.barrier}"
-          id="basic-addon2">
+        <span class="input-group-text font-weight-bold bg-warning lead" [ngClass]="{'component-barrier': cause.flags.barrier}" id="basic-addon2">
           Å
         </span>
       </div>
 
-      <ng-select #select [disabled]="!observation.acl_user.w"
-      class="form-control w-auto ml-auto mr-auto mw-100"
-      [id]="i===0 ? 'focuscause' : ''"
-      [items]="tagsCauses$ | async"
-      bindLabel="tag"
-      [addTag]="true"
-      [multiple]="false"
-      [hideSelected]="true"
-      [loading]="tagsCausesLoading"
-      [typeahead]="tagsCausesInput$"
-      [ngModel]="cause.what"
-      (add)="onAdd($event, 'cause', i)"
-      (remove)="onRemove($event, 'cause', i)"
-      (change)="onChange($event, 'cause', i)"
-      autoCapitalize="on"
-      addTagText="+Opprett som ny"
-      placeholder="Skriv for å søke"
-      notFoundText="Fant ikke noe">
+      <ng-select #select [disabled]="!observation.acl_user.w" class="form-control w-auto ml-auto mr-auto mw-100" [id]="i===0 ? 'focuscause' : ''" [items]="tagsCauses$ | async" bindLabel="tag" [addTag]="true" [multiple]="false" [hideSelected]="true"
+        [loading]="tagsCausesLoading" [typeahead]="tagsCausesInput$" [ngModel]="cause.what" (add)="onAdd($event, 'cause', i)" (remove)="onRemove($event, 'cause', i)" (change)="onChange($event, 'cause', i)" autoCapitalize="on"
+        addTagText="+Opprett som ny" placeholder="Skriv for å søke" notFoundText="Fant ikke noe">
         <ng-template *ngIf="details" ng-option-tmp let-item="item" let-search="searchTerm">
           <div>
             <span [ngOptionHighlight]="search">{{ item.tag }}</span>
@@ -104,11 +88,10 @@ ADD CAUSE
 
       <div class="input-group-append">
         <span (click)="openModal(componentModal, 'cause', i)" class="input-group-text pointer" id="basic-addon2">
-          <fa [ngClass]="!cause['what'] || cause['what'] =='' ? 'text-danger' : 'text-success'" name="exclamation" [fixed]="true"></fa>
-          <fa [ngClass]="cause['involved'].length==0 ? 'text-danger' : 'text-success'" name="user" [fixed]="true"></fa>
-          <fa [ngClass]="!cause['where']['at'] || cause['where']['at']=='' ? 'text-danger' : 'text-success'" name="map-marker"
-            [fixed]="true"></fa>
-          <fa [ngClass]="!cause['how'] || cause['how'] =='' ? 'text-danger' : 'text-success'" name="comment" [fixed]="true"></fa>
+          <fa [ngClass]="!cause.hasOwnProperty('what') || cause['what'] =='' ? 'text-danger' : 'text-success'" name="exclamation" [fixed]="true"></fa>
+          <fa [ngClass]="!cause.hasOwnProperty('involved') || cause['involved'].length==0 ? 'text-danger' : 'text-success'" name="user" [fixed]="true"></fa>
+          <fa [ngClass]="!cause.hasOwnProperty('where') || !cause['where'].hasOwnProperty('at') || cause['where']['at']=='' ? 'text-danger' : 'text-success'" name="map-marker" [fixed]="true"></fa>
+          <fa [ngClass]="!cause.hasOwnProperty('how') || cause['how'] =='' ? 'text-danger' : 'text-success'" name="comment" [fixed]="true"></fa>
         </span>
       </div>
 
@@ -136,37 +119,23 @@ ADD CAUSE
       </span>
     </div>
     <div class="input-group-prepend pointer" (click)="toggleBarrier('incidents', i)">
-      <span class="input-group-text font-weight-bold bg-info lead" [ngClass]="{'component-barrier': incident.flags.barrier}"
-        id="basic-addon2">
+      <span class="input-group-text font-weight-bold bg-info lead" [ngClass]="{'component-barrier': incident.flags.barrier}" id="basic-addon2">
         H
       </span>
     </div>
 
 
-    <ng-select #select [disabled]="!observation.acl_user.w"
-      class="form-control"
-      [items]="tagsIncidents$ | async"
-      bindLabel="tag"
-      [addTag]="true"
-      [multiple]="false"
-      [hideSelected]="true"
-      [loading]="tagsIncidentsLoading" [typeahead]="tagsIncidentsInput$"
-      [ngModel]="incident.what"
-      (add)="onAdd($event, 'incident', i)"
-      (remove)="onRemove($event, 'incident', i)"
-      (change)="onChange($event, 'incident', i)"
-      autoCapitalize="on"
-      addTagText="+Opprett som ny"
-      placeholder="Skriv for å søke"
-      notFoundText="Fant ikke noe">
-        <ng-template *ngIf="details" ng-option-tmp let-item="item" let-search="searchTerm">
-          <div>
-            <span [ngOptionHighlight]="search">{{ item.tag }}</span>
-          </div>
-          <small><b>Freq:</b> {{item.freq}} | <b>Group</b> {{ item.group }} | <b>Activity</b> {{ item.activity }}</small>
-        </ng-template>
-      </ng-select>
-      <!--
+    <ng-select #select [disabled]="!observation.acl_user.w" class="form-control" [items]="tagsIncidents$ | async" bindLabel="tag" [addTag]="true" [multiple]="false" [hideSelected]="true" [loading]="tagsIncidentsLoading"
+      [typeahead]="tagsIncidentsInput$" [ngModel]="incident.what" (add)="onAdd($event, 'incident', i)" (remove)="onRemove($event, 'incident', i)" (change)="onChange($event, 'incident', i)" autoCapitalize="on" addTagText="+Opprett som ny"
+      placeholder="Skriv for å søke" notFoundText="Fant ikke noe">
+      <ng-template *ngIf="details" ng-option-tmp let-item="item" let-search="searchTerm">
+        <div>
+          <span [ngOptionHighlight]="search">{{ item.tag }}</span>
+        </div>
+        <small><b>Freq:</b> {{item.freq}} | <b>Group</b> {{ item.group }} | <b>Activity</b> {{ item.activity }}</small>
+      </ng-template>
+    </ng-select>
+    <!--
     <div class="form-control">
       <tag-input class="align-ngx-input" [ngModel]="!!incidents[i].what ? [incidents[i].what] : []" [modelAsStrings]="true"
         inputId="incident" maxItems="1" theme='nothing-theme' (onAdd)="onAddWhat($event, 'incident', 0)" (onRemove)="onRemoveWhat($event, 'incident', 0)"
@@ -182,11 +151,10 @@ ADD CAUSE
 
     <div class="input-group-append">
       <span (click)="openModal(componentModal, 'incident', i)" class="input-group-text pointer" id="basic-addon2">
-        <fa [ngClass]="!incident['what'] || incident['what']=='' ? 'text-danger' : 'text-success'" name="exclamation" [fixed]="true"></fa>
-        <fa [ngClass]="incident['involved'].length==0 ? 'text-danger' : 'text-success'" name="user" [fixed]="true"></fa>
-        <fa [ngClass]="!incident['where']['at'] || incident['where']['at']=='' ? 'text-danger' : 'text-success'" name="map-marker"
-          [fixed]="true"></fa>
-        <fa [ngClass]="!incident['how'] || incident['how']=='' ? 'text-danger' : 'text-success'" name="comment" [fixed]="true"></fa>
+        <fa [ngClass]="!incident.hasOwnProperty('what') || !incident['what'] || incident['what']=='' ? 'text-danger' : 'text-success'" name="exclamation" [fixed]="true"></fa>
+        <fa [ngClass]="!incident.hasOwnProperty('involved') || incident['involved'].length==0 ? 'text-danger' : 'text-success'" name="user" [fixed]="true"></fa>
+        <fa [ngClass]="!incident.hasOwnProperty('where') || !incident['where'].hasOwnProperty('at') || incident['where']['at']=='' ? 'text-danger' : 'text-success'" name="map-marker" [fixed]="true"></fa>
+        <fa [ngClass]="!incident.hasOwnProperty('how') || !incident['how'] || incident['how']=='' ? 'text-danger' : 'text-success'" name="comment" [fixed]="true"></fa>
       </span>
     </div>
 
@@ -212,28 +180,14 @@ ADD CAUSE
         </span>
       </div>
       <div class="input-group-prepend pointer" (click)="toggleBarrier('consequences', i)">
-        <span class="input-group-text font-weight-bold bg-danger lead" [ngClass]="{'component-barrier': consequence.flags.barrier}"
-          id="basic-addon2">
+        <span class="input-group-text font-weight-bold bg-danger lead" [ngClass]="{'component-barrier': consequence.flags.barrier}" id="basic-addon2">
           K
         </span>
       </div>
 
-      <ng-select #select [disabled]="!observation.acl_user.w"
-      class="form-control" [id]="i===(consequences.length-1) ? 'focusconsequence' : ''"
-      [items]="tagsConsequences$ | async"
-      bindLabel="tag"
-      [addTag]="true"
-      [multiple]="false"
-      [hideSelected]="true"
-      [loading]="tagsConsequencesLoading" [typeahead]="tagsConsequencesInput$"
-      [ngModel]="consequence.what"
-      (add)="onAdd($event, 'consequence', i)"
-      (remove)="onRemove($event, 'consequence', i)"
-      (change)="onChange($event, 'consequence', i)"
-      autoCapitalize="on"
-      addTagText="+Opprett som ny"
-      placeholder="Skriv for å søke"
-      notFoundText="Fant ikke noe">
+      <ng-select #select [disabled]="!observation.acl_user.w" class="form-control" [id]="i===(consequences.length-1) ? 'focusconsequence' : ''" [items]="tagsConsequences$ | async" bindLabel="tag" [addTag]="true" [multiple]="false"
+        [hideSelected]="true" [loading]="tagsConsequencesLoading" [typeahead]="tagsConsequencesInput$" [ngModel]="consequence.what" (add)="onAdd($event, 'consequence', i)" (remove)="onRemove($event, 'consequence', i)"
+        (change)="onChange($event, 'consequence', i)" autoCapitalize="on" addTagText="+Opprett som ny" placeholder="Skriv for å søke" notFoundText="Fant ikke noe">
         <ng-template *ngIf="details" ng-option-tmp let-item="item" let-search="searchTerm">
           <div>
             <span [ngOptionHighlight]="search">{{ item.tag }}</span>
@@ -259,13 +213,10 @@ ADD CAUSE
 
       <div class="input-group-append">
         <span (click)="openModal(componentModal, 'consequence', i)" class="input-group-text pointer" id="basic-addon2">
-          <fa [ngClass]="!consequence['what'] || consequence['what']=='' ? 'text-danger' : 'text-success'" name="exclamation"
-            [fixed]="true"></fa>
-          <fa [ngClass]="consequence['involved'].length==0 ? 'text-danger' : 'text-success'" name="user" [fixed]="true"></fa>
-          <fa [ngClass]="!consequence['where']['at'] || consequence['where']['at']=='' ? 'text-danger' : 'text-success'" name="map-marker"
-            [fixed]="true"></fa>
-          <fa [ngClass]="!consequence['how'] || consequence['how']=='' ? 'text-danger' : 'text-success'" name="comment"
-            [fixed]="true"></fa>
+          <fa [ngClass]="!consequence.hasOwnProperty('what') || !consequence['what'] || consequence['what']=='' ? 'text-danger' : 'text-success'" name="exclamation" [fixed]="true"></fa>
+          <fa [ngClass]="!consequence.hasOwnProperty('involved') || consequence['involved'].length==0 ? 'text-danger' : 'text-success'" name="user" [fixed]="true"></fa>
+          <fa [ngClass]="!consequence.hasOwnProperty('where') || !consequence['where'].hasOwnProperty('at') || consequence['where']['at']=='' ? 'text-danger' : 'text-success'" name="map-marker" [fixed]="true"></fa>
+          <fa [ngClass]="!consequence.hasOwnProperty('how')  || consequence['how']=='' ? 'text-danger' : 'text-success'" name="comment" [fixed]="true"></fa>
         </span>
       </div>
       <div class="input-group-append">
@@ -298,9 +249,7 @@ ADD CAUSE
       <span *ngIf="!modalComponent.data.what" class="text-muted">Mangler hva</span>
     </h4>
 
-    <button [disabled]="!observation.acl_user.w" *ngIf="!!modalComponent.data.flags.barrier" (click)="modalToggleBarrier(false)" class="btn btn-dark pull-right">Barriære</button>
-    <button [disabled]="!observation.acl_user.w" *ngIf="!modalComponent.data.flags.barrier" (click)="modalToggleBarrier(true)" class="btn btn-outline-secondary pull-right">Barriære</button>
-
+    <!--<button [disabled]="!observation.acl_user.w" (click)="modalToggleBarrier(!modalComponent.data.flags.barrier)" class="btn btn-outline-secondary ml-auto">Barriære</button>-->
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -313,33 +262,24 @@ ADD CAUSE
         <div class="form-group">
           <label for="whereAt">Hvor</label>
           <!--<input class="form-control" type="text" id="whereAt" [(ngModel)]="modalComponent.data.where.at">-->
-          <ng-select #select [disabled]="!observation.acl_user.w"
-      class="form-control"
-      [items]="tagsWhereAt$ | async"
-      bindLabel="tag"
-      [addTag]="true"
-      [multiple]="false"
-      [hideSelected]="true"
-      [loading]="tagsWhereAtLoading" [typeahead]="tagsWhereAtInput$"
-      [(ngModel)]="modalComponent.data.where.at"
-      (change)="modalWhereAtUpdate($event)"
-      autoCapitalize="on"
-      addTagText="+Opprett som ny"
-      placeholder="Skriv for å søke"
-      notFoundText="Fant ikke noe">
-        <ng-template *ngIf="details" ng-option-tmp let-item="item" let-search="searchTerm">
-          <div>
-            <span [ngOptionHighlight]="search">{{ item.tag }}</span>
-          </div>
-          <small><b>Freq:</b> {{item.freq}} | <b>Group</b> {{ item.group }} | <b>Activity</b> {{ item.activity }}</small>
-        </ng-template>
-      </ng-select>
+          <ng-select #select [disabled]="!observation.acl_user.w" class="form-control" [items]="tagsWhereAt$ | async" bindLabel="tag" [addTag]="true" [multiple]="false" [hideSelected]="true" [loading]="tagsWhereAtLoading"
+            [typeahead]="tagsWhereAtInput$" [(ngModel)]="modalComponent.data['where']['at']" (change)="modalWhereAtUpdate($event)" autoCapitalize="on" addTagText="+Opprett som ny" placeholder="Skriv for å søke" notFoundText="Fant ikke noe">
+            <ng-template *ngIf="details" ng-option-tmp let-item="item" let-search="searchTerm">
+              <div>
+                <span [ngOptionHighlight]="search">{{ item.tag }}</span>
+              </div>
+              <small><b>Freq:</b> {{item.freq}} | <b>Group</b> {{ item.group }} | <b>Activity</b> {{ item.activity }}</small>
+            </ng-template>
+          </ng-select>
         </div>
       </div>
+
+
+
       <div class="col-md-4">
         <div class="form-group">
           <label for="whereAltitude">Høyde</label>
-          <input [disabled]="!observation.acl_user.w" class="form-control" type="number" id="whereAltitude" [(ngModel)]="modalComponent.data.where.altitude">
+          <input [disabled]="!observation.acl_user.w" class="form-control" type="number" id="whereAltitude" [(ngModel)]="modalComponent.data['where']['altitude']">
         </div>
       </div>
     </div>
@@ -378,9 +318,9 @@ ADD CAUSE
 
     Attributter:
     <div class="row">
-      <div *ngFor="let key of config[observation._model.type].observation.components.attributes | keys; let idx = index"
-        class="col-sm-12 col-md-4 mb-1">
-        <button [disabled]="!observation.acl_user.w" *ngIf="modalComponent.data.attributes[key]" (click)="modalToggleAttributes(key, false)" class="btn btn-block btn-{{ config[observation._model.type].observation.components.attributes[key]['badge'] }}">
+      <div *ngFor="let key of config[observation._model.type].observation.components.attributes | keys; let idx = index" class="col-sm-12 col-md-4 mb-1">
+        <button [disabled]="!observation.acl_user.w" *ngIf="modalComponent.data.attributes[key]" (click)="modalToggleAttributes(key, false)"
+          class="btn btn-block btn-{{ config[observation._model.type].observation.components.attributes[key]['badge'] }}">
           {{ config[observation._model.type].observation.components.attributes[key]['label'] }}</button>
 
         <button [disabled]="!observation.acl_user.w" *ngIf="!modalComponent.data.attributes[key]" (click)="modalToggleAttributes(key, true)" class="btn btn-block btn-outline-secondary">
@@ -393,7 +333,7 @@ ADD CAUSE
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
       <fa name="close" [fixed]="true"></fa>Avbryt
     </button>
-    <button [disabled]="!observation.acl_user.w"  class="btn btn-success" (click)="modalComponentUpdate()">
+    <button [disabled]="!observation.acl_user.w" class="btn btn-success" (click)="modalComponentUpdate()">
       <fa name="check" [fixed]="true"></fa>Oppdater
     </button>
   </div>

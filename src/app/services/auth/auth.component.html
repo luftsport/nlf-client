@@ -48,8 +48,15 @@
 
       <!-- LOGIN BTN -->
       <div *ngIf="!!status && status._status && status.message.mongo>0">
-        <a href="{{ ENV._auth_service }}?client_id={{ ENV._client_id }}&response_type={{ ENV._response_type }}&scope={{ ENV._scope }}&shebang={{ ENV._shebang }}&redirect_uri={{ _return_uri }}" class="btn btn-lg btn-primary btn-block" type="submit">
-          <fa name="lock" [fixed]="true"></fa> Logg inn med NLF Auth
+
+        <a (click)="loading=!loading" href="{{ ENV._auth_service }}?client_id={{ ENV._client_id }}&response_type={{ ENV._response_type }}&scope={{ ENV._scope }}&shebang={{ ENV._shebang }}&redirect_uri={{ _return_uri }}" class="btn btn-lg btn-primary btn-block" type="submit">
+          <span *ngIf="!loading">
+            <fa name="lock" [fixed]="true"></fa> Logg inn med NLF Auth
+          </span>
+          <span *ngIf="loading">
+            <fa name="spinner" animation="pulse" size="3x"></fa><p>Authenticating, please wait....</p>
+          </span>
+
         </a>
       </div>
 
@@ -59,6 +66,7 @@
         </li>
 
         <li class="list-group-item">
+
           <!-- MESSAGES -->
           <div *ngIf="ENV.production" class="alert alert-warning" role="alert">
             <strong>Fallskjerm</strong> ORS er tilgjengelig via <a href="https://ors.nlf.no">ors.nlf.no</a>
@@ -74,7 +82,7 @@
             <div *ngIf="!status._status || status.message.mongo < 1" class="alert alert-danger" role="alert">
               <strong>
                 <fa name="exclamation-triangle" [fixed]="true"></fa>Status
-              </strong> det er problemer med noen systemer og det jobbes for å løse det
+              </strong> det er problemer med noen systemer og det jobbes for å løse det. Du kan forsøke å <a href="{{_return_uri}}">refreshe</a> om litt.
             </div>
           </div>
         </li>

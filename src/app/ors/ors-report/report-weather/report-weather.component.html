@@ -1,5 +1,4 @@
 <div *ngIf="!!weather">
-  <div class="row">
 
     <div class="col-xs-4  col-md-4">
       <dl class="dl-horizontal">
@@ -93,10 +92,7 @@
       <div class="clearfix"></div>
     </div>
 
-  </div>
   <!-- AUTO FROM HERE -->
-
-  <div class="row">
 
     <div class="col-md-8 col-xs-12 p-3">
       <p class="lead">Auto</p>
@@ -105,17 +101,18 @@
 
     <div class="col-md-4 col-xs-12 p-3 align-text-bottom">
       <div>
-        <button (click)="openModal(autoModal, 'metar')" [ngClass]="!!weather.auto.metar ? 'btn-success': 'btn-secondary'" class="btn btn-block my-1">METAR</button>
+        <button (click)="openModal(autoModal, 'metar')" [ngClass]="!!weather.auto.metar ? 'btn-success': 'btn-secondary'" class="btn btn-block my-2">METAR</button>
       </div>
       <div>
-        <button (click)="openModal(autoModal, 'taf')" [ngClass]="!!weather.auto.taf ? 'btn-success': 'btn-secondary'" class="btn btn-block my-1">TAF</button>
+        <button (click)="openModal(autoModal, 'taf')" [ngClass]="!!weather.auto.taf ? 'btn-success': 'btn-secondary'" class="btn btn-block my-2">TAF</button>
       </div>
+      <!--
       <div>
         <button (click)="openModal(autoModal, 'yr')" [ngClass]="!!weather.auto.yr ? 'btn-success': 'btn-secondary'" class="btn btn-block my-1">YR</button>
       </div>
+    -->
     </div>
 
-  </div>
 </div>
 
 <ng-template #autoModal>

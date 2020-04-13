@@ -24,33 +24,56 @@ export class NlfOrsFallskjermEditorInvolvedComponent implements OnInit {
 
   constructor(
     private subject: NlfOrsEditorService,
+    private involvedService: NlfOrsEditorInvolvedService,
     private modalService: NgbModal) {
 
     this.subject.observableObservation.subscribe(
       (observation) => {
         this.observation = observation;
-        if(!this.involved) {
+        if (!this.involved) {
           this.involved = [...this.observation.involved];
-          this.smokeMyAss = true;
+          this.involved.forEach(person => {
+            this.involvedService.add(person.id);
+          });
         }
       });
+    this.smokeMyAss = true;
   }
+
 
   ngOnInit() {
   }
 
   onChange(event) {
-    console.log('On change Inv', this.involved);
+    /**
+    Check if adding or removing - kkeping involved subject updated
+    map array of objects to array of id's not in array of ids for the shorter array of objects
+    **/
+    if (this.observation.involved.length > this.involved.length) { // Remove
+      this.involvedService.remove(this.observation.involved.map(item => item.id).filter(x => this.involved.map(i => i.id).indexOf(x) < 0)[0]);
+    } else if (this.observation.involved.length < this.involved.length) { // Add
+      this.involvedService.add(this.involved.map(item => item.id).filter(x => this.observation.involved.map(i => i.id).indexOf(x) < 0)[0]);
+    }
+    //.map(({ id }) => id)
+
     this.observation.involved = [...this.involved];
+    this.observation.involved = this.observation.involved.filter(function(props) {
+      delete props.full_name;
+      return true;
+    });
     this.subject.update(this.observation);
   }
 
+  /**
+  External Remove
+  **/
   onRemove(index) {
     this.smokeMyAss = false;
     console.log('Removal index', index, this.observation.involved[index]);
     console.log(this.observation.involved.length);
     this.deleteExternal = true; // set external flag
-    this.involved.splice(index,1); // delete
+    this.involvedService.remove(this.involved[index]['id']);
+    this.involved.splice(index, 1); // delete
     this.involved = [...this.involved]; // trigger change detection
     this.smokeMyAss = true;
     this.onChange(true);
@@ -63,7 +86,7 @@ export class NlfOrsFallskjermEditorInvolvedComponent implements OnInit {
       this.modalPerson['data'] = {};
     }
     if (!this.modalPerson.data.hasOwnProperty('gear')) {
-      this.modalPerson.data['gear'] = {};
+      this.modalPerson['data']['gear'] = {};
     }
     this.modalRef = this.modalService.open(template, { size: 'lg' });
   }

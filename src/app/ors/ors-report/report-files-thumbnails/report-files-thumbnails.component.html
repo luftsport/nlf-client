@@ -1,6 +1,6 @@
 <!-- THUMBNAILS -->
 
-<div class="row text-center text-lg-left">
+<div class="text-center text-lg-left">
 
   <div *ngFor="let t of thumbnails" class="col-lg-3 col-md-4 col-xs-6">
     <span (click)="openModal(modalImage, t)" class="d-block mb-4 h-100 pointer">
@@ -26,14 +26,14 @@
     </button>
   </div>
   <div class="modal-body">
-    
+
     <img *ngIf="!viewImageLoading" class="img-fluid" [src]="domSanitizer.bypassSecurityTrustUrl(viewimage.src)" alt="file">
-    
+
     <span *ngIf="!!viewImageLoading" class="text-center">
       <!--<nlf-ui-page-spinner></nlf-ui-page-spinner>-->
       <fa class="text-center" name="spinner" animation="pulse" size="5x"></fa>
     </span>
-  
+
   </div>
   <div class="modal-footer">
     <a class="btn btn-secondary" (click)="modalRef.close()">Close</a>

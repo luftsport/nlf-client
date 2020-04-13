@@ -61,7 +61,7 @@
       'btn-danger':a.resource=='reject'||a.resource=='withdraw',
     'btn-success':a.resource=='approve'||a.resource=='reopen',
     'btn-info': a.resource=='dto'||a.resource=='skole'||a.resource=='teknisk',
-    'disabled':processing}" (click)="workflowChange(a.resource)">{{ a.action }}
+    'disabled':processing}" (click)="workflowChange(a.resource, a.action)">{{ a.action }}
     </button>
   </span>
   <button [ngClass]="{'disabled': processing}" class="btn btn-outline-dark" (click)="activeModal.dismiss()">Avbryt</button>

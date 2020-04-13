@@ -4,7 +4,7 @@
   </div>
 </header>
 
-<div *ngIf="dataReady" class="row h-100">
+<div *ngIf="dataReady" class="h-100">
 
   <div class="col-sm-12 h-100">
     <div class="container">
@@ -19,7 +19,7 @@
       </div>
       <!-- tagname, id, defaultvalue, config -->
       <jodit-editor [config]="joditConfig" [defaultValue]="body"></jodit-editor>
-      
+
     </div>
     <div class="nlf-toolbar fixed-bottom">
       <span class="float-right">

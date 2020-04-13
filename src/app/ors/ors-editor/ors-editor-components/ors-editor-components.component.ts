@@ -72,6 +72,7 @@ export class NlfOrsEditorComponentsComponent implements OnInit, OnDestroy {
     this.observationSubject.observableObservation.subscribe(observation => {
       this.observation = observation;
 
+
       // Only on changed components!
       if (this.components !== observation.components || this.observation.involved !== observation.involved) {
 
@@ -426,14 +427,14 @@ export class NlfOrsEditorComponentsComponent implements OnInit, OnDestroy {
     }
 
     // Sanity:
-    if (!this.modalComponent.data['where']) {
+    if (!this.modalComponent.data.hasOwnProperty('where')) {
       this.modalComponent.data['where'] = { at: undefined, altitude: undefined };
     }
-    if (!this.modalComponent.data.where['at']) {
-      this.modalComponent.data.where['at'] = undefined;
+    if (!this.modalComponent.data['where']['at']) {
+      this.modalComponent.data['where']['at'] = undefined;
     }
-    if (!this.modalComponent.data.where['altitude']) {
-      this.modalComponent.data.where['altitude'] = 0;
+    if (!this.modalComponent.data['where']['altitude']) {
+      this.modalComponent.data['where']['altitude'] = 0;
     }
     // this.modalComponent.asObservable
 
@@ -481,13 +482,13 @@ export class NlfOrsEditorComponentsComponent implements OnInit, OnDestroy {
     console.log('Modal where at', event);
     if (event.hasOwnProperty('_id')) {
       this.tagService.freq(event._id, 1).subscribe(() => {
-        this.modalComponent.data.where.at = event.tag;
+        this.modalComponent.data['where']['at'] = event.tag;
       });
     } else {
       this.tagService.create({ tag: event.tag, group: 'where-at', activity: this.observation._model.type })
         .subscribe(
           result => {
-            this.modalComponent.data.where.at = event.tag;
+            this.modalComponent.data['where']['at'] = event.tag;
           },
           err => console.log('Error updating tag')
         );

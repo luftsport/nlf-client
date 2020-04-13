@@ -15,6 +15,7 @@ import { NlfOrsMotorReportComponent } from 'app/ors/ors-motor/ors-motor-report/o
 import { NlfOrsMotorSearchComponent } from 'app/ors/ors-motor/ors-motor-search/ors-motor-search.component';
 import { NlfOrsActivitiesComponent } from 'app/ors/ors-activities/ors-activities.component';
 
+import { NlfOrsStatsHeatmapComponent } from 'app/ors/ors-stats/ors-stats-heatmap/ors-stats-heatmap.component';
 
 import { NlfAuthGuard } from 'app/services/auth/auth.guard';
 
@@ -26,6 +27,7 @@ const nlfOrsRoutes: Routes = [{ path: 'ors/', component: NlfOrsComponent, canAct
 { path: 'ors/fallskjerm/report/:id/version/:version', component: NlfOrsFallskjermReportComponent, canActivate: [NlfAuthGuard] },
 { path: 'ors/fallskjerm/edit/:id', component: NlfOrsFallskjermEditorComponent, canActivate: [NlfAuthGuard] },
 { path: 'ors/fallskjerm/search', component: NlfOrsFallskjermSearchComponent, canActivate: [NlfAuthGuard] },
+{ path: 'ors/fallskjerm/stats', component:  NlfOrsStatsHeatmapComponent, canActivate: [NlfAuthGuard] },
 
 //{ path: 'ors/fallskjerm/edit/workflow/:id', component: NlfOrsEditorWorkflowComponent, canActivate: [NlfAuthGuard]},
 // Motorfly

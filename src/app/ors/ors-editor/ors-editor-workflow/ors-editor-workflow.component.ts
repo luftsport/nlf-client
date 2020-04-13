@@ -5,6 +5,7 @@ import { ApiObservationsItem } from 'app/api/api.interface';
 import { ApiObservationsWorkflowService } from 'app/api/api-observations-workflow.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NlfAlertService } from 'app/services/alert/alert.service';
 
 @Component({
   selector: 'nlf-ors-editor-workflow',
@@ -27,7 +28,8 @@ export class NlfOrsEditorWorkflowComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public domSanitizer: DomSanitizer,
-    public activeModal: NgbActiveModal) { }
+    public activeModal: NgbActiveModal,
+    private alertService: NlfAlertService) { }
 
   ngOnInit() {
 
@@ -47,7 +49,7 @@ export class NlfOrsEditorWorkflowComponent implements OnInit {
     );
   }
 
-  workflowChange(action: string) {
+  workflowChange(action: string, text: string = '') {
     this.processing = true;
 
     this.apiWorkflow.changeWorkflowState(this.observation._id, action, this.comment).subscribe(
@@ -55,10 +57,12 @@ export class NlfOrsEditorWorkflowComponent implements OnInit {
         console.log(resp);
         // this.subject.update(this.observation);
         this.activeModal.close();
+        this.alertService.success(text + ' for ORS #' + this.observation.id + ' gjennomført', false, true, 10);
       },
       err => {
         console.log(err);
         this.processing = false;
+        this.alertService.error('Det oppstod en feil under ' + text + ': ' + JSON.stringify(err), false, true, 10);
       },
       () => { }
     );

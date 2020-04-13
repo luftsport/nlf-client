@@ -3,7 +3,7 @@ import { NlfComponent } from 'app/nlf.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiObservationsAggService } from 'app/api/api-observations-agg.service';
 import { ApiOptionsInterface, NlfConfigItem } from 'app/api/api.interface';
-import {  NlfConfigService } from 'app/nlf-config.service';
+import { NlfConfigService } from 'app/nlf-config.service';
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
 
 //import { Moment } from 'moment';
@@ -163,13 +163,14 @@ export class NlfUiDummyComponent implements OnInit {
 
         this.agg.getPie(options).subscribe(
           data => {
-
             data._items.forEach(el => {
-              if (this.default_activity === 109) {
-                this.pie.push({ 'name': this.config.fallskjerm.observation.types[el._id]['label'], 'value': el.count });
-              } else {
-                this.pie.push({ 'name': this.config.motorfly.observation.types[el._id]['label'], 'value': el.count });
-              }
+              try {
+                if (this.default_activity === 109) {
+                  this.pie.push({ 'name': this.config.fallskjerm.observation.types[el._id]['label'], 'value': el.count });
+                } else {
+                  this.pie.push({ 'name': this.config.motorfly.observation.types[el._id]['label'], 'value': el.count });
+                }
+              } catch { }
 
             });
             this.dataReady = true;

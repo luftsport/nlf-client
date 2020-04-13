@@ -35,28 +35,36 @@ export class NlfOrsEditorMetComponent implements OnInit {
         let changes = false;
         this.observation = observation;
 
-        if (!this.initObservation && !!this.observation.location.geo) {
-          this.tafmetar = this.observation.weather.auto;
-          this.when = this.observation.when;
-          this.where = this.observation.location.geo.coordinates;
-          this.initObservation = true;
+        if (!this.observation.weather.hasOwnProperty('auto')) {
+          this.observation.weather['auto'] = {};
         }
 
-        if (!this.when || this.when !== this.observation.when) {
-          this.when = this.observation.when;
-          changes = true;
-          console.log('New date', this.when);
-        }
+        try {
+          if (!this.initObservation && !!this.observation.location.geo) {
+            this.tafmetar = this.observation.weather.auto;
+            this.when = this.observation.when;
+            this.where = this.observation.location.geo.coordinates;
+            this.initObservation = true;
+          }
+        } catch  { }
+        try {
+          if (!this.when || this.when !== this.observation.when) {
+            console.log('New date', this.when, 'Old date', this.observation.when);
+            this.when = this.observation.when;
+            changes = true;
+          }
+        } catch  { }
 
-        if (!this.where || this.where !== this.observation.location.geo.coordinates) {
-          this.where = this.observation.location.geo.coordinates;
-          changes = true;
-        }
+        try {
+          if (!this.where || this.where !== this.observation.location.geo.coordinates) {
+            this.where = this.observation.location.geo.coordinates;
+            changes = true;
+          }
+        } catch  { }
 
-        if (!this.tafmetar || changes) {
+        if (this.initObservation && (!this.tafmetar || changes)) {
           if (!!this.where && !!this.when) {
             this.getIcao();
-
           }
         }
       });
@@ -75,7 +83,7 @@ export class NlfOrsEditorMetComponent implements OnInit {
 
   private getStringTime(dateObj: Date | string) {
     dateObj = new Date(dateObj);
-    console.log('Time',dateObj, dateObj.getUTCHours(), dateObj.getUTCMinutes());
+    console.log('Time', dateObj, dateObj.getUTCHours(), dateObj.getUTCMinutes());
     const hours = ('0' + (dateObj.getUTCHours())).slice(-2);
     const minutes = ('0' + (dateObj.getUTCMinutes())).slice(-2);
 
@@ -92,7 +100,7 @@ export class NlfOrsEditorMetComponent implements OnInit {
               $maxDistance: 500000
             }
           },
-          type: {$ne: 'closed'},
+          type: { $ne: 'closed' },
           iata_code: { $ne: null },
         },
         max_results: 1,
@@ -127,7 +135,7 @@ export class NlfOrsEditorMetComponent implements OnInit {
   }
 
   private getNearestMetar() {
-    this.metService.getNearestMetar(this.icao, this.getStringDate(this.when)+'T'+this.getStringTime(this.when)).subscribe(
+    this.metService.getNearestMetar(this.icao, this.getStringDate(this.when) + 'T' + this.getStringTime(this.when)).subscribe(
       data => {
         this.observation.weather.auto.metar_nearest = data;
       }
@@ -136,8 +144,8 @@ export class NlfOrsEditorMetComponent implements OnInit {
 
   openModal(template, title) {
 
-        this.modal = {title: title, data: this.observation.weather.auto[title] || []};
-        this.modalRef = this.modalService.open(template, { size: 'lg' });
-}
+    this.modal = { title: title, data: this.observation.weather.auto[title] || [] };
+    this.modalRef = this.modalService.open(template, { size: 'lg' });
+  }
 
 }

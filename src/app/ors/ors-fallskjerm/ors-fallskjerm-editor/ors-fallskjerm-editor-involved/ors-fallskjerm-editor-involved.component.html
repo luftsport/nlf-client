@@ -13,28 +13,49 @@
 
     <tr *ngFor="let p of involved; let idx = index">
 
-      <td class="pointer" (click)="openPersonModal(involvedModal, idx)">
-        <fa *ngIf="p.id>0" name="check" fw="true" class="text-success mr-2" title="Hentet fra medlemssystemet"></fa>
-        <fa *ngIf="p.id<1" name="check" fw="exclamation" class="text-danger mr-2" title="Ukjent person"></fa>
+      <td class="">
+        <fa *ngIf="p.id>0" name="check" [fixed]="true" class="text-success mr-2" title="Hentet fra medlemssystemet"></fa>
+        <fa *ngIf="p.id<1" name="exclamation" [fixed]="true" class="text-danger mr-2" title="Ukjent person"></fa>
         <strong>
           <nlf-resolve-lungo-person [person_id]="p.id" [tmp_name]="p.tmp_name" [link]="false" [avatar]="true"></nlf-resolve-lungo-person>
         </strong>
-        <span class="ml-3">[Edit]</span>
+
       </td>
       <td>
-        <fa *ngIf="p.fu" name="exclamation" fw="true" class="text-danger"></fa>
+
+        <fa *ngIf="!!p.ph" name="ban" title="Permanent Hoppforbud" fw="true" class="text-danger mx-1"></fa>
+        <fa *ngIf="!!p.fu" name="exclamation" title="Farlig Ukontrollert" fw="true" class="text-warning mx-1"></fa>
+
       </td>
       <td>
-        (Summary here)
+
+        <div>
+          <span *ngFor="let license of p?.data?.licenses" class="mx-1">
+            <nlf-resolve-lungo-license [license_id]="license.id"></nlf-resolve-lungo-license>
+            <!--{{license.type_name}}-->
+          </span>
+        </div>
+        <div>
+          <span *ngFor="let competence of p?.data?.competences" class="mx-1">
+            {{competence._code}}
+          </span>
+        </div>
+        <div>
+          <span *ngIf="!!p?.data?.yearinsport" class="mx-1 badge badge-secondary">{{p.data.yearinsport}} år</span>
+          <span *ngIf="!!p?.data?.totalJumps" class="mx-1 badge badge-secondary">{{p.data.totalJumps}} hopp</span>
+          <span *ngIf="!!p?.data?.jumpType" class="mx-1 badge badge-secondary">{{p.data.jumpType}} hopp</span>
+          <span *ngIf="!!p?.data?.activity && p.data.activity.length>0" class="mx-1 badge badge-secondary">{{p.data.activity | join: '/'}}</span>
+        </div>
       </td>
       <td>
-        <span *ngIf="!!p.data && 1==9">
-          <nlf-resolve-lungo-license *ngFor="let l of p.data.licenses" [license_id]="l.id" link="false" long="false"></nlf-resolve-lungo-license>
-          <nlf-resolve-lungo-function *ngFor="let fid of p.data.functions" [function_id]="fid" show_org="true" link="false" long="false"></nlf-resolve-lungo-function>
+        <span *ngIf="!!p?.data && 1==9" class="text-small">
+          <nlf-resolve-lungo-license *ngFor="let l of p.data?.licenses" [license_id]="l.id" link="false" long="false"></nlf-resolve-lungo-license>
+          <nlf-resolve-lungo-function *ngFor="let fid of p.data?.functions" [function_id]="fid" show_org="true" link="false" long="false"></nlf-resolve-lungo-function>
         </span>
       </td>
-      <td>
-        <fa *ngIf="!disabled" class="pointer" (click)="onRemove(idx)" name="times" fw="true"></fa>
+      <td class="text-right">
+        <a (click)="openPersonModal(involvedModal, idx)" class="pointer btn btn-sm btn-secondary">Edit</a>
+        <fa *ngIf="!disabled" class="pointer ml-3" title="Slett person" (click)="onRemove(idx)" name="times" fw="true"></fa>
       </td>
     </tr>
 
