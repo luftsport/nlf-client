@@ -57,7 +57,9 @@ export class NlfOrsEditorWorkflowComponent implements OnInit {
         console.log(resp);
         // this.subject.update(this.observation);
         this.activeModal.close();
-        this.alertService.success(text + ' for ORS #' + this.observation.id + ' gjennomført', false, true, 10);
+        this.alertService.success(text + ' for ORS #' + this.observation.id + ' gjennomført', true, true, 10);
+        this.router.navigate(['/ors', this.observation._model.type, 'report', this.observation.id]);
+
       },
       err => {
         console.log(err);

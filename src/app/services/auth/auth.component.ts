@@ -8,7 +8,7 @@ import { NlfUserFirstLoginComponent } from 'app/user/user-first-login/user-first
 // import { UserAuthService } from '../api/user-auth.service';
 // import { AlertService } from '../services/alert/alert.service';
 import { ApiHeartbeatService } from 'app/api/api-heartbeat.service';
-import {  ApiHeartbeat } from 'app/api/api.interface';
+import { ApiHeartbeat } from 'app/api/api.interface';
 import { NlfAuthService } from './auth.service';
 import { switchMap } from 'rxjs/operators';
 @Component({

@@ -130,7 +130,7 @@ export class NlfWorkersStatusComponent implements OnInit {
       err => {
         this.alertService.error(err.message);
       },
-      () => this.getPieSyncdaemon()
+      () => this.getTypesSyncdaemon()
     );
   }
   getStatus() {
@@ -144,7 +144,7 @@ export class NlfWorkersStatusComponent implements OnInit {
       },
       () => {
         this.dataReady = true;
-        this.getPieStatus();
+        this.getTypesStatus();
         this.getEntityTypes();
       }
     );
@@ -175,7 +175,7 @@ export class NlfWorkersStatusComponent implements OnInit {
     });
   }
   // PIE METHODS
-  getPieStatus() {
+  getTypesStatus() {
     const should = ['pending', 'error', 'finished', 'ready'];
     let has = [];
     this.pie = [];
@@ -194,13 +194,13 @@ export class NlfWorkersStatusComponent implements OnInit {
     this.pieReady = true;
   }
 
-  getPieWorkers() {
+  getTypesWorkers() {
     this.workers.forEach(el => {
       this.pie.push({ 'name': el.id, 'value': el.name });
     });
   }
 
-  getPieSyncdaemon() {
+  getTypesSyncdaemon() {
 
     this.syncdaemonStatus = [
       { name: 'populate', value: this.pop },

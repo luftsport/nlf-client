@@ -1,6 +1,6 @@
 <div *ngIf="!onlyFilepicker">
   <!-- THUMBNAILS -->
-  <div class="row text-center text-lg-left">
+  <div class="row text-center text-lg-left mb-2">
 
     <div *ngFor="let thumb of filelist; let i = index">
       <div *ngIf="thumb.isImage">
@@ -17,8 +17,6 @@
     </div>
 
   </div>
-
-
   <!-- /THUMBNAILS -->
 
   <!-- FILE LIST -->
@@ -40,10 +38,10 @@
             <td>{{f.content_type}}&nbsp;</td>
             <td>
               <!--<fa (click)="download(f)" name="download" [fixed]="true"></fa>-->
-              <a target="_blank" href="{{ f.download }}">
+              <a target="_blank" href="{{ f.download }}" class="mx-1">
                 <fa name="download" [fixed]="true"></fa>
               </a>
-              <fa *ngIf="observation.acl_user.w" class="pointer" (click)="removeFromFilelist(f._id, i)" name="times" [fixed]="true"></fa>
+              <fa *ngIf="observation.acl_user.w" class="pointer mx-1" (click)="removeFromFilelist(f._id, i)" name="times" [fixed]="true"></fa>
             </td>
             <td>&nbsp;</td>
 

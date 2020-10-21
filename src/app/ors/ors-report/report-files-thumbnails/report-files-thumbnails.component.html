@@ -1,10 +1,10 @@
 <!-- THUMBNAILS -->
 
-<div class="text-center text-lg-left">
+<div class="row text-center text-lg-left">
 
-  <div *ngFor="let t of thumbnails" class="col-lg-3 col-md-4 col-xs-6">
-    <span (click)="openModal(modalImage, t)" class="d-block mb-4 h-100 pointer">
-      <img class="img-fluid img-thumbnail" [src]="domSanitizer.bypassSecurityTrustUrl(t.src)" alt="{{ t.filename }}">
+  <div *ngFor="let thumb of thumbnails; let idx = index" class="col-lg-2 col-md-3 col-xs-6 mb-2 mt-1">
+    <span (click)="openModal(modalImage, thumb, idx)" class="pointer text-center">
+      <img class="img-fluid img-thumbnail" [src]="domSanitizer.bypassSecurityTrustUrl(thumb.src)" alt="{{ thumb.filename }}">
     </span>
   </div>
 </div>
@@ -18,14 +18,13 @@
 <!-- Modal -->
 <ng-template #modalImage>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">
-      {{ viewImageName }}</h4>
+    <h4 class="modal-title pull-left">{{ viewImageName }}</h4>
 
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
+  <div class="modal-body text-center">
 
     <img *ngIf="!viewImageLoading" class="img-fluid" [src]="domSanitizer.bypassSecurityTrustUrl(viewimage.src)" alt="file">
 
@@ -36,6 +35,13 @@
 
   </div>
   <div class="modal-footer">
+    <span *ngIf="thumbnails.length>1" class="mr-auto">
+      <span (click)="getModalImage(viewImageData['idx']-1)" class="pointer ml-1 mr-2">
+        <fa name="chevron-left" class="mx-2"></fa>Forrige
+      </span>
+      <span (click)="getModalImage(viewImageData['idx']+1)" class="pointer mr-1 ml-2">Neste<fa name="chevron-right" class="mx-2"></fa></span>
+    </span>
+
     <a class="btn btn-secondary" (click)="modalRef.close()">Close</a>
   </div>
 </ng-template>

@@ -12,44 +12,35 @@ import { FormControl } from '@angular/forms';
 export class NlfOrsFallskjermEditorLocationComponent implements OnInit, AfterViewInit {
 
   observation: ApiObservationsItem;
-  locations;
+  locations = [];
   locationChooser: FormControl;
   selected: string;
   dataReady = false; // render when true
 
   lines = [];
 
-  default_location = {
-    geo_type: 'Flyplass',
-    county: 'Vestfold',
-    nickname: 'Jarlsberg',
-    municipality: 'Tønsberg',
-    icao: 'ENTO',
-    geo: {
-      coordinates: [59.300875, 10.66902777777778],
-      type: 'Point'
-    },
-    name: 'Jarlsberg flyplass'
-  };
+
 
   constructor(private subject: NlfOrsEditorService,
     private clubService: ApiClubsService) {
 
-    this.subject.observableObservation.subscribe(observation => this.observation = observation);
+    this.subject.observableObservation.subscribe(
+      observation => {
+        this.observation = observation
 
-    if (typeof this.observation.location.geo === 'undefined') {
-      this.observation.location = this.default_location;
-    }
+        if (!!this.observation.location.nickname && !this.selected) {
+          this.selected = this.observation.location.nickname;
+        }
+
+      }
+    );
+
+
     // this.subject.update(this.observation);
   }
 
   ngOnInit() {
     this.locationChooser = new FormControl();
-    try {
-      this.selected = this.observation.location.nickname;
-    } catch (e) {
-    }
-
     this.getClubLocations();
   }
 
@@ -94,6 +85,8 @@ export class NlfOrsFallskjermEditorLocationComponent implements OnInit, AfterVie
         if (!this.observation.location || !this.observation.location.nickname) {
           if (this.locations.length > 0) {
             this.observation.location = this.locations[0];
+            this.subject.update(this.observation);
+            this.selected = this.observation.location.nickname;
           }
 
         }

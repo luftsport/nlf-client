@@ -55,21 +55,17 @@
         <!-- E5X on change get data again!-->
         <nlf-ors-e5x (click)="saveIfChanges()" (change)="getData()"></nlf-ors-e5x>
 
-        <!-- DEBUG MODAL -->
-        <a *ngIf="['local', 'dev'].indexOf(ENV._name)>-1" (click)="openDebugModal(modalDebug)" class="pointer badge badge-secondary text-white mx-1">
-          <fa name="bug" [fixed]="true"></fa>
+        <!-- ACTIVITY -->
+        <a *ngIf="observation.workflow.state!='closed'" class="badge badge-info mx-1" [routerLink]="['/ors', observation._model.type , 'activities', observation.id]">
+          <fa name="history"></fa> Aktivitet
         </a>
 
-        <span class="pointer badge badge-info mx-1" [routerLink]="['/ors', observation._model.type , 'activities', observation.id]">
-          <fa name="history"></fa> Aktivitet
-        </span>
-
-        <!-- USERS!!! -->
-        <nlf-ors-editor-users [model]="observation._model.type" [_id]="observation._id" [observation]="observation"></nlf-ors-editor-users>
+        <!-- ACCESS -->
+        <nlf-ors-editor-users *ngIf="observation.acl_user.x" [model]="observation._model.type" [_id]="observation._id" [observation]="observation"></nlf-ors-editor-users>
 
         <a [routerLink]="['/ors', observation._model.type , 'report', observation.id]" *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge badge-primary text-white mx-1">
-						<fa name="file" [fixed]="true"></fa> Report
-				</a>
+          <fa name="file" [fixed]="true"></fa> Report
+        </a>
 
       </span>
       <!-- /WORKFLOW STATE -->
@@ -100,6 +96,20 @@
           <code>{{ observation.tags | json}} </code>
         </div>
 
+      </div>
+    </div>
+
+
+    <!-- FILES mobnile only -->
+    <div class="row my-3 d-block d-sm-none">
+      <div class="col-xs-12 col-md-12">
+        <div class="nlf-ors-toolbar">
+          Vedlegg ({{ observation.files.length }}) <nlf-help class="pull-right" key="ors-editor-files"></nlf-help>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-12 py-3 bg-light table-responsive overflow-auto">
+        <nlf-ors-editor-files [dropzone]="true" (fileChange)="save($event)"></nlf-ors-editor-files>
+        <div *ngIf="!!devDebug">{{ observation.files | json }}</div>
       </div>
     </div>
     <!--
@@ -197,15 +207,17 @@
     </div>
 
     <!-- FILES ALT 1 -->
-    <div class="row">
-      <div class="nlf-ors-toolbar">
-        Vedlegg ({{ observation.files.length }})
-        <nlf-help class="pull-right" key="ors-editor-files"></nlf-help>
-      </div>
-    </div>
-    <div class="row">
+
+    <!-- FILES MD only -->
+    <div class="row my-3 d-none d-sm-block">
       <div class="col-xs-12 col-md-12">
+        <div class="nlf-ors-toolbar">
+          Vedlegg ({{ observation.files.length }}) <nlf-help class="pull-right" key="ors-editor-files"></nlf-help>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-12 py-3 bg-light table-responsive overflow-auto">
         <nlf-ors-editor-files [dropzone]="true" (fileChange)="save($event)"></nlf-ors-editor-files>
+        <div *ngIf="!!devDebug">{{ observation.files | json }}</div>
       </div>
     </div>
     <!-- FILES ALT 2 -->
@@ -381,10 +393,6 @@
       </div>
     </div>
 
-
-
-
-
     <!-- VURDERINGER-->
     <div class="row">
       <div class="nlf-ors-toolbar">
@@ -400,14 +408,12 @@
       <div class="col-md-4 col-sm-12">
         <p class="mt-3">
           <nlf-ors-editor-ask></nlf-ors-editor-ask>
-          <nlf-help key="ors-editor-ask-toggle"></nlf-help>
         </p>
       </div>
       <!-- ASK TEXT -->
       <div class="col-md-8 col-sm-12">
         <p class="mt-1">
           <nlf-ors-editor-ask-text></nlf-ors-editor-ask-text>
-          <nlf-help key="ors-editor-motorfly-ask-text"></nlf-help>
         </p>
       </div>
 
@@ -433,7 +439,9 @@
     <!-- SEND BTN -->
     <div class="row my-3">
       <span class="pointer mx-1 pull-right" *ngIf="observation.acl_user.x && observation.workflow.state=='draft'" (click)="openWorkflow()">
-        <button class="btn btn-success"><fa name="upload" [fixed]="true"></fa>Send ORS koordinator</button>
+        <button class="btn btn-success">
+          <fa name="upload" [fixed]="true"></fa>Send ORS koordinator
+        </button>
       </span>
     </div>
 
@@ -497,43 +505,6 @@
 </ng-template>
 <!-- /MODAL PREVIEW -->
 
-<!-- MODAL DEBUG -->
-<ng-template #modalDebug>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">
-      DEBUG #{{observation.id}}
-    </h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-
-    <ngb-tabset>
-      <ngb-tab title="ORS">
-        <ng-template ngbTabContent>
-          <div class="py-3">
-            <pre>{{observation | json}}</pre>
-          </div>
-        </ng-template>
-      </ngb-tab>
-      <ngb-tab title="E5X">
-        <ng-template ngbTabContent>
-          <div class="py-3">
-            <pre *ngIf="!!e5xobservation" class="list-group-item-text"> {{ e5xobservation | json }} </pre>
-          </div>
-        </ng-template>
-      </ngb-tab>
-    </ngb-tabset>
-
-  </div>
-  <div class="modal-footer">
-    <a download="observation_{{observation.id}}_v{{observation._version}}.json" [href]="getJsonFile()" class="btn btn-outline-dark mr-auto">
-      <fa name="download" [fixed]="true"></fa>Last ned Json
-    </a>
-    <button class="btn btn-outline-dark" (click)="modalRef.close()">Ferdig</button>
-  </div>
-</ng-template>
 <div *ngIf="!!devDebug">
   <pre>{{observation | json}}</pre>
 </div>

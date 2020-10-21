@@ -6,7 +6,8 @@ import { TableEventObject, DefaultTableConfig } from 'app/interfaces/ngx-easy-ta
 import { LungoOrganizationsService } from 'app/api/lungo-organizations.service';
 import {  NlfConfigService } from 'app/nlf-config.service';
 import { cleanObject } from 'app/interfaces/functions';
-import { clone } from 'lodash';
+//import { clone } from 'lodash';
+import { ExportToCsv } from 'export-to-csv';
 
 @Component({
   selector: 'nlf-ors-all-table',
@@ -30,7 +31,7 @@ export class NlfOrsAllTableComponent implements OnInit {
     { key: 'when', title: 'Tid', sort: true },
     { key: 'tags', title: 'Tittel', sort: true },
     { key: 'club', title: 'Klubb', sort: false },
-    { key: 'rating.actual', title: 'Gradering', sort: false },
+    { key: 'rating._rating', title: 'Rating', sort: true },
     { key: 'workflow.state', title: 'Status', sort: true },
     { key: 'type', title: 'Type', sort: true },
   ];
@@ -52,7 +53,7 @@ export class NlfOrsAllTableComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.tableConf = clone(DefaultTableConfig);
+    this.tableConf = {...DefaultTableConfig};
     this.tableConf.paginationRangeEnabled = true;
     this.tableConf.orderEnabled = true;
     this.tableConf.serverPagination = true;
@@ -191,4 +192,20 @@ export class NlfOrsAllTableComponent implements OnInit {
       }
     );
   }
+
+  public exportToCSV(): void {
+   const options = {
+     fieldSeparator: ',',
+     quoteStrings: '"',
+     decimalSeparator: '.',
+     showLabels: true,
+     showTitle: false,
+     useTextFile: false,
+     useBom: true,
+     useKeysAsHeaders: true,
+   };
+   const csvExporter = new ExportToCsv(options);
+
+   csvExporter.generateCsv(this.data);
+}
 }

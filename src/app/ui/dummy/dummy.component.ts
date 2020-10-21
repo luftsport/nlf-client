@@ -19,101 +19,11 @@ export class NlfUiDummyComponent implements OnInit {
   pie = [];
   public config: NlfConfigItem;
 
-  // ngx-charts
-  single = [
-    {
-      'name': 'Deling',
-      'value': 6
-    },
-    {
-      'name': 'Uønsket',
-      'value': 83
-    },
-    {
-      'name': 'Næruhell',
-      'value': 133
-    },
-    {
-      'name': 'Uhell',
-      'value': 15
-    },
-    {
-      'name': 'Ulykke',
-      'value': 3
-    },
-  ];
 
-  multi = [
-    {
-      'name': 'Germany',
-      'label': 'test1',
-      'series': [
-        {
-          'label': 'test3',
-          'name': '2010',
-          'value': 7300000
-        },
-        {
-          'label': 'test3',
-          'name': '2011',
-          'value': 8940000
-        }
-      ]
-    },
-
-    {
-      'name': 'USA',
-      'label': 'test2',
-      'series': [
-        {
-          'label': 'test3',
-          'name': '2010',
-          'value': 7870000
-        },
-        {
-          'label': 'test3',
-          'name': '2011',
-          'value': 8270000
-        }
-      ]
-    },
-
-    {
-      'name': 'France',
-      'series': [
-        {
-          'label': 'test3',
-          'name': '2010',
-          'value': 5000002
-        },
-        {
-          'label': 'test3',
-          'name': '2011',
-          'value': 5800000
-        }
-      ]
-    }
-  ];
-
-  multipie = [
-    {
-      "name": "Tønsberg",
-      "value": 78
-    },
-    {
-      "name": "Oslo",
-      "value": 34
-    },
-    {
-      "name": "Voss",
-      "value": 99
-    }
-  ];
 
   view: any[] = [700, 300];
   label = 'totalt behandlede observasjoner';
 
-  activeEntries = [this.single[0]];
 
   colorScheme = { // BS light '#f9f9f9',
     domain: ['#5cb85c', '#5bc0de', '#428bca', '#d9534f', '#0c0c0c']
@@ -161,7 +71,7 @@ export class NlfUiDummyComponent implements OnInit {
           }
         };
 
-        this.agg.getPie(options).subscribe(
+        this.agg.getTypes(options).subscribe(
           data => {
             data._items.forEach(el => {
               try {

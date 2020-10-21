@@ -30,6 +30,10 @@ export class ApiObservationsService extends ApiRestService {
     return this.getList(this.relativeUrl, options);
   }
 
+  public getObservationsSelf(options?: ApiOptionsInterface): Observable<ApiObservationsList> {
+    return this.getList(this.relativeUrl + 'user', options);
+  }
+
   public create(payload, options?: ApiOptionsInterface): Observable<ApiObservationsItem> {
     return this.post(this.relativeUrl, payload, options);
   }
@@ -42,7 +46,7 @@ export class ApiObservationsService extends ApiRestService {
     //observations/<string:activity>/<objectid:_id>/<string:right>/<int:person_id>
     return this.post('/acl/observations/'+this.activity+'/'+_id +'/' +right +'/'+person_id, payload, options);
   }
-  
+
   public removeAclUser(_id: string, right: string, person_id: number, options?: ApiOptionsInterface): Observable<any> {
     return this.delete('/acl/observations/'+this.activity+'/'+_id +'/' +right +'/', ''+person_id, options);
   }

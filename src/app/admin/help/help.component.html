@@ -1,11 +1,22 @@
 <header class="nlf-sticky-toolbar">
   <div class="container">
-    Header breadcrumbish
+
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active">
+        <fa name="question" [fixed]="true"></fa>
+        <a [routerLink]="['/admin', 'help']">Hjelpesystem</a>
+      </li>
+    </ol>
+
+    <a [routerLink]="['/admin/help/create']" class="pull-right btn btn-sm btn-primary mx-1">
+      <fa name="plus" [fixed]="true"></fa>Ny hjelpetekst
+    </a>
+
   </div>
 </header>
 
 <div class="container">
-  <span *ngIf="!!dataReady">
+  <span *ngIf="!!dataReady" class="overflow-auto">
     <ngx-table [configuration]="tableConfig" [data]="help" [columns]="columns" [(pagination)]="pagination" (event)="eventEmitted($event)">
 
       <ng-template let-row>
@@ -29,9 +40,5 @@
       <fa name="spinner" animation="pulse" size="3x"></fa>
     </p>
   </span>
-
-  <a [routerLink]="['/admin/help/create']" class="btn btn-primary">
-    <fa name="plus" [fixed]="true"></fa>Ny hjelpetekst
-  </a>
 
 </div>

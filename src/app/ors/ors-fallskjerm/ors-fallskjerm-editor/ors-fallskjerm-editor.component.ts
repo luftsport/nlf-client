@@ -10,6 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmService } from 'app/services/confirm/confirm.service';
 import { NlfOrsEditorHelpComponent } from 'app/ors/ors-editor/ors-editor-help/ors-editor-help.component';
 import { NlfOrsEditorAboutComponent } from 'app/ors/ors-editor/ors-editor-about/ors-editor-about.component';
+import { NlfOrsEditorDebugComponent } from 'app/ors/ors-editor/ors-editor-debug/ors-editor-debug.component';
 import { NlfOrsEditorWorkflowComponent } from 'app/ors/ors-editor/ors-editor-workflow/ors-editor-workflow.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { cleanE5XObject, deepCopy, pad } from 'app/interfaces/functions';
@@ -91,6 +92,14 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy {
         return false; // Prevent bubbling
       }))
     );
+    this.hotkeys.push(
+      this.hotkeysService.add(new Hotkey(['command+g', 'ctrl+g'], (event: KeyboardEvent, combo: string): boolean => {
+        this.openDebug();
+        return false; // Prevent bubbling
+      }))
+    );
+
+
   }
 
   ngOnInit() {
@@ -102,12 +111,13 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy {
       if (event instanceof NavigationStart) {
         this.saveIfChanges();
         this.route_sub.unsubscribe();
+        this.subject.reset();
       }
     });
 
     this.route.params.subscribe(params => {
       this.id = params['id'] ? params['id'] : 0;
-      this.app.setTitle(' ORS Editor #' + this.id);
+      this.app.setTitle('ORS Editor #' + this.id);
       this.getData();
     });
   }
@@ -121,11 +131,11 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy {
    */
   ngOnDestroy() {
 
-    this.route_sub.unsubscribe();
+    // this.route_sub.unsubscribe();
 
     this.hotkeysService.remove(this.hotkeys);
 
-    this.saveIfChanges();
+    // this.saveIfChanges();
 
     //this.subject.update(undefined);
   }
@@ -157,6 +167,7 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy {
   }
 
   saveIfChanges() {
+    this.changed();
     if (this.changes && this.observation.acl_user.w) {
       this.save();
     }
@@ -174,10 +185,12 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy {
     if (!!tmp._latest_version) { delete tmp._latest_version; }
     if (!!tmp._updated) { delete tmp._updated; }
     if (!!tmp._version) { delete tmp._version; }
+    if (!!tmp._model) { delete tmp._model; }
     if (!!tmp.id) { delete tmp.id; }
     // if (!!tmp.audit) { delete tmp.audit; }
     if (!!tmp.reporter) { delete tmp.reporter; }
     if (!!tmp.club) { delete tmp.club; }
+    if (!!tmp.discipline) { delete tmp.discipline; }
     if (!!tmp.owner) { delete tmp.owner; }
     if (!!tmp.acl) { delete tmp.acl; }
     if (!!tmp.acl_user) { delete tmp.acl_user; }
@@ -263,6 +276,10 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy {
   }
   openAbout() {
     this.modalRef = this.modalService.open(NlfOrsEditorAboutComponent, { size: 'lg' });
+  }
+
+  openDebug() {
+    this.modalRef = this.modalService.open(NlfOrsEditorDebugComponent, { size: 'lg' });
   }
 
   openModal(template: TemplateRef<any>) {

@@ -1,5 +1,6 @@
 //declare var google: any;
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ApiObservationsService } from 'app/api/api-observations.service';
 import { ApiOptionsInterface, NlfConfigItem } from 'app/api/api.interface';
 import { google } from 'google-maps';
@@ -21,23 +22,38 @@ export class NlfOrsStatsHeatmapComponent implements OnInit {
   private heatmap: google.maps.visualization.HeatmapLayer = null;
   private coords = []; //google.maps.LatLng[] = [];
   public dataReady: boolean = false;
+  organization_id: number = 0;
+  activity: string;
+  sub; // The route subscription
 
   // Heatmap settings
   private radius: number = 50;
 
   constructor(
     //public mapApiWrapper:GoogleMapsAPIWrapper,
+    private route: ActivatedRoute,
     private orsService: ApiObservationsService
-  ) { }
+  ) {
+
+    this.sub = this.route.params.subscribe(params => {
+      this.organization_id = params['id'] ? +params['id'] : 0;
+      this.activity = params['activity'] ? params['activity'] : 'fallskjerm';
+    });
+  }
 
   ngOnInit() {
 
     //this.mapApiWrapper.getNativeMap().then((map)=> {
 
-    this.orsService.setActivity('fallskjerm');
+    this.orsService.setActivity(this.activity);
     this.dataReady = true
     // "location" : { "geo" : { "coordinates" : [ 60.81935432539702, 11.066810783047117 ], "type" : "Point" } }
   }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
+
 
   private getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -55,10 +71,15 @@ export class NlfOrsStatsHeatmapComponent implements OnInit {
 
     let options: ApiOptionsInterface = {
       query: {
+        where: {},
         projection: { "location.geo": 1, rating: 1 },
         max_results: 5000,
       },
     };
+
+    if (this.organization_id>0 && this.activity === 'fallskjerm') {
+      options.query.where = {discipline: this.organization_id}
+    }
 
     this.orsService.getObservations(options).subscribe(
       data => {

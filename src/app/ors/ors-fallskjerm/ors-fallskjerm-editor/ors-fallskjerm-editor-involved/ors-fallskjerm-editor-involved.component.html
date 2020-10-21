@@ -41,9 +41,9 @@
           </span>
         </div>
         <div>
-          <span *ngIf="!!p?.data?.yearinsport" class="mx-1 badge badge-secondary">{{p.data.yearinsport}} år</span>
-          <span *ngIf="!!p?.data?.totalJumps" class="mx-1 badge badge-secondary">{{p.data.totalJumps}} hopp</span>
-          <span *ngIf="!!p?.data?.jumpType" class="mx-1 badge badge-secondary">{{p.data.jumpType}} hopp</span>
+          <span *ngIf="!!p?.data?.years_of_experience" class="mx-1 badge badge-secondary">{{p.data.years_of_experience}} år</span>
+          <span *ngIf="!!p?.data?.total_jumps" class="mx-1 badge badge-secondary">{{p.data.total_jumps}} hopp</span>
+          <span *ngIf="!!p?.data?.jump_type" class="mx-1 badge badge-secondary">{{p.data.jump_type}} hopp</span>
           <span *ngIf="!!p?.data?.activity && p.data.activity.length>0" class="mx-1 badge badge-secondary">{{p.data.activity | join: '/'}}</span>
         </div>
       </td>
@@ -100,7 +100,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="whereAt">Hopptype</label>
-          <nlf-ors-editor-tag-string fc="true" allowAdd="true" preload="false" group="jump_types" activity="fallskjerm" [(tagString)]="modalPerson.data.jumpType" [disabled]="disabled">
+          <nlf-ors-editor-tag-string fc="true" allowAdd="true" preload="false" group="jump_types" activity="fallskjerm" [(tagString)]="modalPerson.data.jump_type" [disabled]="disabled">
           </nlf-ors-editor-tag-string>
         </div>
       </div>
@@ -118,14 +118,14 @@
     <div class="row">
       <div class="col-md-3">
         <div class="form-group">
-          <label for="yearsinsport">År i sporten</label>
-          <input [disabled]="disabled" class="form-control" type="number" id="yearsinsport" [(ngModel)]="modalPerson.data.yearinsport">
+          <label for="years_of_experience">År i sporten</label>
+          <input [disabled]="disabled" class="form-control" type="number" id="years_of_experience" [(ngModel)]="modalPerson.data.years_of_experience">
         </div>
       </div>
       <div class="col-md-3">
         <div class="form-group">
           <label for="jups">Antall hopp</label>
-          <input [disabled]="disabled" class="form-control" type="number" id="jups" [(ngModel)]="modalPerson.data.totalJumps">
+          <input [disabled]="disabled" class="form-control" type="number" id="jups" [(ngModel)]="modalPerson.data.total_jumps">
         </div>
       </div>
       <div class="col-md-3">
@@ -148,20 +148,20 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="mainCanopy">Hovedskjerm</label>
-          <nlf-ors-editor-tag-string fc="true" preload="true" group="main_canopies" activity="fallskjerm" [(tagString)]="modalPerson.data.gear.mainCanopy" [disabled]="disabled">
+          <nlf-ors-editor-tag-string fc="true" preload="true" group="main_canopies" activity="fallskjerm" [(tagString)]="modalPerson.data.gear.main_canopy" [disabled]="disabled">
           </nlf-ors-editor-tag-string>
         </div>
       </div>
       <div class="col-md-3">
         <div class="form-group">
           <label for="mainCanopySize">Størrelse</label>
-          <input [disabled]="disabled" class="form-control" type="number" id="mainCanopySize" [(ngModel)]="modalPerson.data.gear.mainCanopySize">
+          <input [disabled]="disabled" class="form-control" type="number" id="mainCanopySize" [(ngModel)]="modalPerson.data.gear.main_canopy_size">
         </div>
       </div>
       <div class="col-md-3">
         <div class="form-group">
           <label for="mainCanopyExperience">Erfaring Hovedskjerm</label>
-          <input [disabled]="disabled" class="form-control" type="number" id="mainCanopyExperience" [(ngModel)]="modalPerson.data.gear.mainCanopyExperience">
+          <input [disabled]="disabled" class="form-control" type="number" id="mainCanopyExperience" [(ngModel)]="modalPerson.data.gear.main_canopy_experience">
         </div>
       </div>
     </div>
@@ -171,14 +171,14 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="reserveCanopy">Reserveskjerm</label>
-          <nlf-ors-editor-tag-string fc="true" preload="true" group="reserve_canopies" activity="fallskjerm" [disabled]="disabled" [(tagString)]="modalPerson.data.gear.reserveCanopy">
+          <nlf-ors-editor-tag-string fc="true" preload="true" group="reserve_canopies" activity="fallskjerm" [disabled]="disabled" [(tagString)]="modalPerson.data.gear.reserve_canopy">
           </nlf-ors-editor-tag-string>
         </div>
       </div>
       <div class="col-md-3">
         <div class="form-group">
           <label for="reserveCanopySize">Størrelse</label>
-          <input [disabled]="disabled" class="form-control" type="number" id="reserveCanopySize" [(ngModel)]="modalPerson.data.gear.reserveCanopySize">
+          <input [disabled]="disabled" class="form-control" type="number" id="reserveCanopySize" [(ngModel)]="modalPerson.data.gear.reserve_canopy_size">
         </div>
       </div>
     </div>
@@ -194,7 +194,7 @@
         <div class="form-group">
 
           <label for="riggerDate">Pakkedato</label>
-          <nlf-ors-editor-date [disabled]="disabled" id="riggerDate" [(date)]="modalPerson.data.gear.riggerDate"></nlf-ors-editor-date>
+          <nlf-ors-editor-date [disabled]="disabled" id="riggerDate" [(date)]="modalPerson.data.gear.rigger_date"></nlf-ors-editor-date>
           <!--<input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="modalPerson.data.gear.riggerDate"
               ngbDatepicker #d="ngbDatepicker">-->
         </div>
@@ -212,7 +212,7 @@
       <div class="col-md-3">
         <div class="form-group">
           <label for="harnessExperience">Erfaring seletøy</label>
-          <input [disabled]="disabled" class="form-control" type="number" id="harnessExperience" [(ngModel)]="modalPerson.data.gear.harnessExperience">
+          <input [disabled]="disabled" class="form-control" type="number" id="harnessExperience" [(ngModel)]="modalPerson.data.gear.harness_experience">
         </div>
       </div>
       <div class="col-md-3">

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiObservationsItem, ApiTafMetar, ApiOptionsInterface } from 'app/api/api.interface';
+import { ApiObservationsItem, ApiObservationWeatherAutoInterface, ApiOptionsInterface } from 'app/api/api.interface';
 import { ApiNlfMetService } from 'app/api/api-nlf-met.service';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import { ApiAirportsService } from 'app/api/api-airports.service';
@@ -14,7 +14,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class NlfOrsEditorMetComponent implements OnInit {
   observation: ApiObservationsItem;
-  public tafmetar; //: ApiTafMetar;
+  public tafmetar; //: ApiObservationWeatherAutoInterface;
   when;
   icao: string;
   where: number[];
@@ -45,6 +45,7 @@ export class NlfOrsEditorMetComponent implements OnInit {
             this.when = this.observation.when;
             this.where = this.observation.location.geo.coordinates;
             this.initObservation = true;
+            changes = false;
           }
         } catch  { }
         try {
@@ -53,16 +54,20 @@ export class NlfOrsEditorMetComponent implements OnInit {
             this.when = this.observation.when;
             changes = true;
           }
-        } catch  { }
+        } catch  {
+
+        }
 
         try {
           if (!this.where || this.where !== this.observation.location.geo.coordinates) {
             this.where = this.observation.location.geo.coordinates;
             changes = true;
           }
-        } catch  { }
+        } catch  {
 
-        if (this.initObservation && (!this.tafmetar || changes)) {
+        }
+
+        if ((this.initObservation && !this.tafmetar)  || changes){
           if (!!this.where && !!this.when) {
             this.getIcao();
           }

@@ -1,23 +1,31 @@
+<div *ngIf="dataReady">
+  <div *ngFor="let key of comments | keys">
 
-<div *ngFor="let key of comments | keys">
-  <div *ngIf="!excludes || excludes.indexOf(key)<0" class="bg-light my-1">
-    <div class="media p-3">
+    <div *ngIf="!excludes || excludes.indexOf(key)<0" class="bg-light my-1">
+      <div class="media p-3">
 
-      <img class="mr-3 rounded-circle" src="https://dummyimage.com/64x64/595659/e3e4e8">
+        <span class="align-self-start mr-3 avatar avatar-lg">
+          <nlf-resolve-avatar [person_id]="person_mappings[key]"></nlf-resolve-avatar>
+        </span>
 
-      <div class="media-body">
+        <!--<img class="mr-3 rounded-circle" src="https://dummyimage.com/64x64/595659/e3e4e8">-->
 
-        <h5 class="mt-0">
-          {{ roles[key] }}
-        </h5>
+        <div class="media-body">
 
-        <p [innerHTML]="comments[key] | newlines | safe: 'html'"></p>
+          <h5 class="mt-0">
+            {{ roles[key] }}
+          </h5>
 
+          <p [innerHTML]="comments[key] | newlines | safe: 'html'"></p>
+
+        </div>
       </div>
     </div>
   </div>
 </div>
-
+<div *ngIf="!dataReady">
+  laster ask....
+</div>
 
 <!--
 <div *ngIf="!!comments.draft">

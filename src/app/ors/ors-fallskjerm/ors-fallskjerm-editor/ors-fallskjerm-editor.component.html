@@ -48,19 +48,13 @@
           <nlf-resolve-observation-state [activity]="observation._model.type" [state]="observation.workflow.state" icon="true"></nlf-resolve-observation-state>
         </a>
 
-        <!-- DEBUG MODAL -->
-        <span (click)="openDebugModal(modalDebug)" class="pointer badge badge-secondary text-white mx-1">
-          <fa name="bug" [fixed]="true"></fa>
-        </span>
-
-
         <!-- ACTIVITIES -->
-        <a class="badge badge-info mx-1" [routerLink]="['/ors', observation._model.type , 'activities', observation.id]">
+        <a *ngIf="observation.workflow.state!='closed'" class="badge badge-info mx-1" [routerLink]="['/ors', observation._model.type , 'activities', observation.id]">
           <fa name="history"></fa> Aktivitet
         </a>
 
-        <!-- USERS!!! -->
-        <nlf-ors-editor-users *ngIf="['closed', 'withdrawn'].indexOf(observation.workflow.state)<0" [model]="observation._model.type" [_id]="observation._id" [observation]="observation"></nlf-ors-editor-users>
+        <!-- ACCESS!!! -->
+        <nlf-ors-editor-users *ngIf="['closed', 'withdrawn'].indexOf(observation.workflow.state)<0 && observation.acl_user.x" [model]="observation._model.type" [_id]="observation._id" [observation]="observation"></nlf-ors-editor-users>
 
         <!-- REPORT LINK -->
         <a [routerLink]="['/ors', observation._model.type , 'report', observation.id]" *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge badge-primary text-white mx-1">
@@ -79,8 +73,11 @@
     <div class="row my-3">
       <div class="col-sm-12 col-md-12">
 
+        <!-- WELCOME FIRST TIME -->
+        <nlf-ors-editor-first *ngIf="observation.acl_user.w"></nlf-ors-editor-first>
+
         <div class="nlf-ors-toolbar">
-          Tittel <nlf-help class="pull-right" key="ors-editor-title"></nlf-help>
+          Tittel <nlf-help class="pull-right" key="ors-editor-fallskjerm-title"></nlf-help>
         </div>
       </div>
       <div class="col-sm-12 col-md-12 my-3 lead">
@@ -94,13 +91,26 @@
       </div>
     </div>
 
+    <!-- FILES mobnile only -->
+    <div class="row my-3 d-block d-sm-none">
+      <div class="col-xs-12 col-md-12">
+        <div class="nlf-ors-toolbar">
+          Vedlegg ({{ observation.files.length }}) <nlf-help class="pull-right" key="ors-editor-files"></nlf-help>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-12 py-3 bg-light table-responsive overflow-auto">
+        <nlf-ors-editor-files [dropzone]="true" (fileChange)="save($event)"></nlf-ors-editor-files>
+        <div *ngIf="!!devDebug">{{ observation.files | json }}</div>
+      </div>
+    </div>
+
     <!--Type, When & Flags-->
     <div class="row my-3">
       <!-- TYPE -->
       <div class="col-sm-12 col-md-4">
         <div class="card">
           <div class="card-header">
-            <h5>Type <nlf-help class="pull-right" key="ors-editor-type"></nlf-help>
+            <h5>Type <nlf-help class="pull-right" key="ors-editor-fallskjerm-type"></nlf-help>
             </h5>
           </div>
           <div class="card-body">
@@ -126,7 +136,7 @@
       <div class="col-sm-12 col-md-4">
         <div class="card">
           <div class="card-header">
-            <h5>Flagg <nlf-help class="pull-right" key="ors-editor-flags"></nlf-help>
+            <h5>Flagg <nlf-help class="pull-right" key="ors-editor-fallskjerm-flags"></nlf-help>
             </h5>
           </div>
           <div class="card-body">
@@ -163,7 +173,7 @@
     <div class="row my-3">
       <div class="col-xs-12 col-md-12">
         <div class="nlf-ors-toolbar">
-          Alvorlighetsgrad <nlf-help class="pull-right" key="ors-editor-rating"></nlf-help>
+          Alvorlighetsgrad <nlf-help class="pull-right" key="ors-editor-fallskjerm-rating"></nlf-help>
         </div>
       </div>
       <div class="col-xs-12 col-md-12 py-3 bg-light">
@@ -174,31 +184,27 @@
 
     <!-- LOCATION  -->
     <div class="nlf-ors-toolbar">
-      Lokalisasjon <nlf-help class="pull-right" key="ors-editor-location"></nlf-help>
+      Lokalisasjon <nlf-help class="pull-right" key="ors-editor-fallskjerm-location"></nlf-help>
     </div>
     <nlf-ors-fallskjerm-editor-location></nlf-ors-fallskjerm-editor-location>
     <div *ngIf="!!devDebug">{{ observation.location | json }}</div>
 
-    <!-- FILES -->
-    <div class="row my-3">
-      <div class="col-sm-12 col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <h5>Vedlegg ({{ observation.files.length }})
-              <nlf-help class="pull-right" key="ors-editor-files"></nlf-help>
-            </h5>
-          </div>
-          <div class="card-body table-responsive">
-            <nlf-ors-editor-files [dropzone]="true" (fileChange)="save($event)"></nlf-ors-editor-files>
-            <div *ngIf="!!devDebug">{{ observation.files | json }}</div>
-          </div>
+    <!-- FILES MD only -->
+    <div class="row my-3 d-none d-sm-block">
+      <div class="col-xs-12 col-md-12">
+        <div class="nlf-ors-toolbar">
+          Vedlegg ({{ observation.files.length }}) <nlf-help class="pull-right" key="ors-editor-files"></nlf-help>
         </div>
+      </div>
+      <div class="col-xs-12 col-md-12 py-3 bg-light table-responsive overflow-auto">
+        <nlf-ors-editor-files [dropzone]="true" (fileChange)="save($event)"></nlf-ors-editor-files>
+        <div *ngIf="!!devDebug">{{ observation.files | json }}</div>
       </div>
     </div>
 
     <!-- ORGANIZATION -->
     <div class="nlf-ors-toolbar">
-      Organisasjon <nlf-help class="pull-right" key="ors-editor-organization"></nlf-help>
+      Organisasjon <nlf-help class="pull-right" key="ors-editor-fallskjerm-organization"></nlf-help>
     </div>
 
     <nlf-ors-fallskjerm-editor-organization></nlf-ors-fallskjerm-editor-organization>
@@ -207,7 +213,7 @@
     <div class="row my-3">
       <div class="col-xs-12 col-md-12">
         <div class="nlf-ors-toolbar">
-          Involverte <nlf-help class="pull-right" key="ors-editor-involved"></nlf-help>
+          Involverte <nlf-help class="pull-right" key="ors-editor-fallskjerm-involved"></nlf-help>
         </div>
       </div>
       <div class="col-xs-12 col-md-12">
@@ -224,7 +230,7 @@
       <div class="col-xs-12 col-md-12">
         <div class="nlf-ors-toolbar nlf-ors-block-bottom">
           Forløpet
-          <nlf-help class="pull-right" key="ors-editor-components"></nlf-help>
+          <nlf-help class="pull-right" key="ors-editor-fallskjerm-components"></nlf-help>
           <button (click)="openPreview(modalPreview, 'components', 'Forløpet')" class="pull-right btn btn-link">
             <!--<fa name="eye" [fixed]="true"></fa>-->Preview
           </button>
@@ -241,7 +247,7 @@
       <div class="col-xs-12 col-md-12">
         <div class="nlf-ors-toolbar nlf-ors-block-bottom">
           Været
-          <nlf-help class="pull-right" key="ors-editor-weather"></nlf-help>
+          <nlf-help class="pull-right" key="ors-editor-fallskjerm-weather"></nlf-help>
         </div>
       </div>
 
@@ -265,14 +271,14 @@
     <!-- ACTIONS -->
     <div class="nlf-ors-toolbar nlf-ors-block-bottom">
       Tiltak
-      <nlf-help class="pull-right" key="ors-editor-actions"></nlf-help>
+      <nlf-help class="pull-right" key="ors-editor-fallskjerm-actions"></nlf-help>
     </div>
     <nlf-ors-editor-actions></nlf-ors-editor-actions>
     <div *ngIf="!!devDebug">{{ observation.actions | json }}</div>
 
     <div class="nlf-ors-toolbar">
       Vurderinger
-      <nlf-help class="pull-right" key="ors-editor-actions"></nlf-help>
+      <nlf-help class="pull-right" key="ors-editor-ask"></nlf-help>
     </div>
     <div class="row bg-light" style="padding-top:1em;padding-bottom:1em;">
       <div class="col-md-4">
@@ -327,29 +333,3 @@
   </div>
 </ng-template>
 <!-- /MODAL PREVIEW -->
-
-<!-- MODAL DEBUG -->
-<ng-template #modalDebug>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">
-      DEBUG #{{observation.id}}
-    </h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <div class="py-3">
-      <pre>{{observation | json}}</pre>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <a download="observation_{{observation.id}}_v{{observation._version}}.json" [href]="getJsonFile()" class="btn btn-outline-dark mr-auto">
-      <fa name="download" [fixed]="true"></fa>Last ned Json
-    </a>
-    <button class="btn btn-outline-dark" (click)="modalRef.close()">Ferdig</button>
-  </div>
-</ng-template>
-<div *ngIf="!!devDebug">
-  <pre>{{observation | json}}</pre>
-</div>

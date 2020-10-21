@@ -16,14 +16,14 @@
 
   <div class="row">
     <!-- MY -->
-    <div class="col-md-6">
+    <div class="col-md-6 col-xs-12 overflow-auto">
       <div class="nlf-ors-toolbar">
         <fa name="user" [fixed]="true" class="text-secondary"></fa> Mine observasjoner
       </div>
       <nlf-ors-self-table activity="motorfly"></nlf-ors-self-table>
     </div>
     <!-- MY TODO -->
-    <div class="col-md-6">
+    <div class="col-md-6 col-xs-12 overflow-auto">
       <div class="nlf-ors-toolbar">
         <fa name="exchange" [fixed]="true" class="text-secondary"></fa> Til min behandling
       </div>
@@ -65,15 +65,11 @@
 <!-- ALL ORS -->
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
-      <div class="card mt-2">
-        <h5 class="card-header">
-          <fa name="list" [fixed]="true" class="text-secondary"></fa> Alle observasjoner
-        </h5>
-        <div class="card-body table-flush" class="p-0">
-          <nlf-ors-all-table activity="motorfly"></nlf-ors-all-table>
-        </div>
+    <div class="col-md-12 col-xs-12 overflow-auto">
+      <div class="nlf-ors-toolbar">
+        <fa name="list" [fixed]="true" class="text-secondary"></fa> Alle observasjoner
       </div>
+      <nlf-ors-all-table activity="motorfly"></nlf-ors-all-table>
     </div>
   </div>
 </div>

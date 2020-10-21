@@ -9,9 +9,10 @@ import { NlfChangesHourComponent } from './changes-hour/changes-hour.component';
 const routes: Routes = [
 
   // { path: '', redirectTo: '/', pathMatch: 'full' }, // redirect root
-  { path: '', component: NlfWorkersStatusComponent },
-  { path: 'status', component: NlfWorkersStatusComponent },
-  { path: 'hours', component: NlfChangesHourComponent },
+  { path: '', component: NlfWorkersStatusComponent , data: {title: 'Integration'} },
+  { path: 'status', component: NlfWorkersStatusComponent , data: {title: 'Integration - Status'} },
+  { path: 'hours', component: NlfChangesHourComponent , data: {title: 'Integration - Hours'} },
+  { path: '**',  redirectTo: ''}
 
 ];
 

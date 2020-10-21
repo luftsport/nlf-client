@@ -8,8 +8,9 @@ import { NlfAuthGuard } from 'app/services/auth/auth.guard';
 const routes: Routes = [
 
   // { path: '', redirectTo: '/', pathMatch: 'full' }, // redirect root
-  { path: '', component: NlfAipAirspaceComponent },
-  { path: 'airspace', component: NlfAipAirspaceComponent },
+  { path: '', component: NlfAipAirspaceComponent, data: {title: 'AIP'} },
+  { path: 'airspace', component: NlfAipAirspaceComponent , data: {title: 'AIP - Airspace'} },
+  { path: '**',  redirectTo: ''}
 
 ];
 

@@ -55,6 +55,8 @@ export class NlfOrsEditorFilesComponent implements OnInit {
     private userSubject: NlfUserSubjectService,
     private authDataSubject: NlfAuthSubjectService) {
 
+
+    //this.options = { concurrency: 3, maxUploads: 50, maxFileSize: 3000000000 };
     this.subject.observableObservation.subscribe(
       observation => {
         this.observation = observation;
@@ -74,25 +76,25 @@ export class NlfOrsEditorFilesComponent implements OnInit {
     this.humanizeBytes = humanizeBytes;
 
 
-      this.authDataSubject.observableAuthData.subscribe(
-        data => {
-          if (!!data) {
-            this.token = data.token;
-          }
-        },
-        err => console.log('Problem getting token: ', err)
-      );
+    this.authDataSubject.observableAuthData.subscribe(
+      data => {
+        if (!!data) {
+          this.token = data.token;
+        }
+      },
+      err => console.log('Problem getting token: ', err)
+    );
 
 
     this.userSubject.observable.subscribe(
       data => {
-        if(!!data) {
+        if (!!data) {
           this.userData = data
           this.getFiles();
         }
       },
       err => console.log('Error getting user data: ', err)
-      );
+    );
 
   }
 
@@ -126,44 +128,48 @@ export class NlfOrsEditorFilesComponent implements OnInit {
   }
 
   private getFile(f) {
-    // Do not download files
-    const options: ApiOptionsInterface = {
-      query: { projection: { file: 0 } }
-    };
 
-    this.apiFile.getFile(f.f, options).subscribe(
-      data => {
-        data['r'] = f.r;
+    if (f.hasOwnProperty('f')) {
+      // Do not download files
+      const options: ApiOptionsInterface = {
+        query: { projection: { file: 0 } }
+      };
 
-        if (data.content_type.match(/image/g) != null) {
-          // data['image'] = true;
-          // this.getImage(data);
+      this.apiFile.getFile(f.f, options).subscribe(
+        data => {
+          data['r'] = f.r;
 
-          this.apiFile.getImage(data._id, this.thumbnailSize).subscribe(
-            image => {
-              data['src'] = 'data:' + image.mimetype + ';charset=utf8;base64,' + image.src;
-              data['isImage'] = true;
-              data['download'] = this.apiFile.getDirectLink(data._id) + '?token=' + this.token;
-              this.filelist.push(data);
-            },
-            err => {
-              console.log('Error getting image ' + data._id + ' ' + data.name);
-            },
-          );
+          if (data.content_type.match(/image/g) != null) {
+            // data['image'] = true;
+            // this.getImage(data);
 
-        } else {
-          data['isImage'] = false;
-          this.filelist.push(data);
-          data['download'] = this.apiFile.getDirectLink(data._id) + '?token=' + this.token;
-        }
-      },
-      err => console.log(err)
+            this.apiFile.getImage(data._id, this.thumbnailSize).subscribe(
+              image => {
+                data['src'] = 'data:' + image.mimetype + ';charset=utf8;base64,' + image.src;
+                data['isImage'] = true;
+                data['download'] = this.apiFile.getDirectLink(data._id) + '?token=' + this.token;
+                this.filelist.push(data);
+              },
+              err => {
+                console.log('Error getting image ' + data._id + ' ' + data.name);
+              },
+            );
 
-    );
+          } else {
+            data['isImage'] = false;
+            this.filelist.push(data);
+            data['download'] = this.apiFile.getDirectLink(data._id) + '?token=' + this.token;
+          }
+        },
+        err => console.log(err)
+
+      );
+    }
   }
 
 
   public addToFilelist(_id) {
+    console.log('Add to file list', _id);
     this.observation.files.push({ f: _id, r: true });
     this.subject.update(this.observation);
     this.fileChange.emit(true);
@@ -305,7 +311,7 @@ export class NlfOrsEditorFilesComponent implements OnInit {
       this.dragOver = false;
 
     } else if (output.type === 'done') {
-
+      console.log(output.file.response);
       this.addToFilelist(output.file.response._id);
       this.uploading = false;
       // this.observation.files.push({ f: output.file.response._id, r: true });
@@ -360,7 +366,7 @@ export class NlfOrsEditorFilesComponent implements OnInit {
     const fileReader = new FileReader();
     return new Promise(resolve => {
       fileReader.readAsDataURL(file);
-      fileReader.onload = function (e: any) {
+      fileReader.onload = function(e: any) {
         resolve(e.target.result);
       };
     });

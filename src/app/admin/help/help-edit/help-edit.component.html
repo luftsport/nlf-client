@@ -1,6 +1,19 @@
 <header class="nlf-sticky-toolbar">
   <div class="container">
-    Breadcrumb
+
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <fa name="question" [fixed]="true"></fa>
+        <a [routerLink]="['/admin', 'help']">Hjelpesystem</a>
+      </li>
+      <li class="breadcrumb-item active">{{ title }}</li>
+    </ol>
+
+    <!--
+    <a [routerLink]="['/admin/help/create']" class="pull-right btn btn-sm btn-primary mx-1">
+      <fa name="plus" [fixed]="true"></fa>Ny hjelpetekst
+    </a>
+  -->
   </div>
 </header>
 
@@ -24,11 +37,14 @@
     <div class="nlf-toolbar fixed-bottom">
       <span class="float-right">
         <a class="btn" [routerLink]="['/admin/help/']">
-          <fa name="close" [fixed]="true"></fa>Cancel</a>
+          <fa name="close" [fixed]="true"></fa>Cancel
+        </a>
         <button [disabled]="!changed" *ngIf="mode==='edit'" (click)="save()" class="btn btn-primary">
-          <fa name="save" [fixed]="true"></fa>Save</button>
+          <fa name="save" [fixed]="true"></fa>Save
+        </button>
         <button *ngIf="mode==='create'" (click)="create()" class="btn btn-success">
-          <fa name="plus" [fixed]="true"></fa>Create</button>
+          <fa name="plus" [fixed]="true"></fa>Create
+        </button>
       </span>
     </div>
   </div>

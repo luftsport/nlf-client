@@ -89,7 +89,7 @@ export class NlfOrsEditorComponentsComponent implements OnInit, OnDestroy {
             this.incidents.push({
               what: '',
               flags: { incident: true },
-              involved: this.getInvolved(),
+              involved: [],
               where: { at: undefined, altitude: undefined },
               attributes: {}
             });
@@ -206,7 +206,7 @@ export class NlfOrsEditorComponentsComponent implements OnInit, OnDestroy {
 
     this.causes.unshift({
       what: undefined, flags: { cause: true },
-      involved: this.getInvolved(), attributes: {}, how: undefined, where: { at: undefined, altitude: undefined }
+      involved: [], attributes: {}, how: undefined, where: { at: undefined, altitude: undefined }
     });
 
     if (focus) {
@@ -237,7 +237,7 @@ export class NlfOrsEditorComponentsComponent implements OnInit, OnDestroy {
     // push
     this.consequences.push({
       what: undefined, flags: { consequence: true },
-      involved: this.getInvolved(), attributes: {}, how: undefined, where: { at: undefined, altitude: undefined }
+      involved: [], attributes: {}, how: undefined, where: { at: undefined, altitude: undefined }
     });
 
     if (focus) {

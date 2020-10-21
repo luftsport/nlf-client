@@ -10,7 +10,7 @@ import { ApiOptionsInterface, ApiGeoAdminList, ApiGeoAdminItem } from './api.int
 })
 export class ApiGeoAdminService extends ApiRestService {
 
-  relativeUrl = '/geo/admin';
+  relativeUrl = '/integration/geo/admin';
 
   constructor(http: HttpClient) { super(http); }
 

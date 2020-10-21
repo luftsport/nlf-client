@@ -43,7 +43,7 @@ ADD CAUSE
 
       <div class="input-group-prepend">
         <span cdkDragHandle class="input-group-text drag-handle" id="basic-addon2">
-          <fa name="arrows-alt" [fixed]="true"></fa>
+          <fa [ngClass]="{'text-muted': !observation.acl_user.w}" name="arrows-alt" [fixed]="true"></fa>
         </span>
       </div>
 
@@ -97,7 +97,7 @@ ADD CAUSE
 
       <div class="input-group-append">
         <span (click)="removeCause(i)" class="input-group-text pointer" id="basic-addon2">
-          <fa name="trash" [fixed]="true"></fa>
+          <fa [ngClass]="{'text-muted': !observation.acl_user.w}" name="trash" [fixed]="true"></fa>
         </span>
       </div>
 
@@ -176,7 +176,7 @@ ADD CAUSE
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <span cdkDragHandle class="input-group-text drag-handle" id="basic-addon2">
-          <fa name="arrows-alt" [fixed]="true"></fa>
+          <fa [ngClass]="{'text-muted': !observation.acl_user.w}" name="arrows-alt" [fixed]="true"></fa>
         </span>
       </div>
       <div class="input-group-prepend pointer" (click)="toggleBarrier('consequences', i)">
@@ -221,7 +221,7 @@ ADD CAUSE
       </div>
       <div class="input-group-append">
         <span (click)="removeConsequence(i)" class="input-group-text pointer" id="basic-addon2">
-          <fa name="trash" [fixed]="true"></fa>
+          <fa [ngClass]="{'text-muted': !observation.acl_user.w}" name="trash" [fixed]="true"></fa>
         </span>
       </div>
 

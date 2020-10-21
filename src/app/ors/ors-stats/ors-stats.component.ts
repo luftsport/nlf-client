@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './ors-stats.component.html',
   styleUrls: ['./ors-stats.component.css']
 })
-export class OrsStatsComponent implements OnInit {
+export class NlfOrsStatsComponent implements OnInit {
 
   constructor() { }
 

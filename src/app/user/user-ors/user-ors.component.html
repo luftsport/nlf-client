@@ -1,3 +1,36 @@
-<p>
-  app-user-ors works!
-</p>
+<div *ngIf="dataReady" class="overflow-auto">
+
+  <table class="table table-sm table-hover">
+    <tr *ngFor="let ors of observations">
+
+      <td class="text-left">
+        <nlf-resolve-observation-types [type]="ors.type" [activity]="activity" [badge]="true"></nlf-resolve-observation-types>
+      </td>
+
+      <td>
+        <a [routerLink]="['/ors', activity, 'report', ors.id]">
+          #{{ ors.id }} {{ ors.title }}
+        </a>
+      </td>
+
+      <td class=".d-none .d-sm-block">
+        <a [routerLink]="['/ors', activity]">{{ activity }}</a>
+      </td>
+
+      <td>
+        {{ ors.when | amTimeAgo }}
+      </td>
+
+      <td class="text-center">
+        <span class="badge badge-{{ors.rating | nlfOrsRatingCalc | nlfDynamicColor}} badge-pill">{{ ors.rating | nlfOrsRatingCalc }}</span>
+      </td>
+
+    </tr>
+
+  </table>
+  <!--
+  <div *ngIf="observations.length==0">
+    No results for {{ activity }}
+  </div>
+-->
+</div>

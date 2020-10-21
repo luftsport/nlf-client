@@ -2,15 +2,21 @@
   <div class="container lead">
     ORS Fallskjerm
 
+    <!--
     <button [routerLink]="['/ors', 'fallskjerm', 'dashboard']" type="button" class="btn btn-sm btn-link pull-right mx-1">
       <fa name="dashboard" [fixed]="true"></fa> Dash
     </button>
     <button [routerLink]="['/ors', 'fallskjerm', 'stats']" type="button" class="btn btn-sm btn-link pull-right mx-1">
       <fa name="pie-chart" [fixed]="true"></fa> Stats
     </button>
+  -->
 
-    <button [routerLink]="['/ors', 'fallskjerm', 'search']" type="button" class="btn btn-sm btn-primary pull-right">
+    <button [routerLink]="['/ors', 'fallskjerm', 'search']" type="button" class="btn btn-sm btn-primary pull-right mx-1">
       <fa name="search" [fixed]="true"></fa> Søk
+    </button>
+
+    <button *ngIf="!!user_settings && user_settings?.settings?.default_activity==109" [routerLink]="['/ors', 'fallskjerm', 'dashboard', user_settings?.settings?.default_discipline]" type="button" class="btn btn-sm btn-primary pull-right mx-1">
+      <fa name="dashboard" [fixed]="true"></fa> Dashboard
     </button>
 
     <nlf-help class="pull-right mx-1" key="ors-fallskjerm"></nlf-help>
@@ -23,13 +29,13 @@
 
   <div class="row">
 
-    <div class="col-md-6">
+    <div class="col-md-6 col-xs-12 overflow-auto">
       <div class="nlf-ors-toolbar">
         <fa name="user" [fixed]="true" class="text-secondary"></fa> Mine observasjoner
       </div>
       <nlf-ors-self-table activity="fallskjerm"></nlf-ors-self-table>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 col-xs-12 overflow-auto">
       <div class="nlf-ors-toolbar">
         <fa name="exchange" [fixed]="true" class="text-secondary"></fa> Til min behandling
       </div>
@@ -59,7 +65,7 @@
   </div>
 </div>
 
-<div class="py-5 nlf-bg-blue col-md-12">
+<div class="py-5 nlf-bg-blue col-md-12 col-xs-12">
   <div class="container">
     <p class="m-0 text-center text-white">
       <nlf-ors-fallskjerm-create></nlf-ors-fallskjerm-create>
@@ -67,16 +73,14 @@
   </div>
 </div>
 
+<!-- ALL ORS -->
 <div class="container">
-  <div class="col-xl-12">
-    <div class="card mt-2">
-      <h5 class="card-header">
+  <div class="row">
+    <div class="col-md-12 col-xs-12 overflow-auto">
+      <div class="nlf-ors-toolbar">
         <fa name="list" [fixed]="true" class="text-secondary"></fa> Alle observasjoner
-      </h5>
-      <div class="card-body" style="padding: 0;">
-        <nlf-ors-all-table activity="fallskjerm"></nlf-ors-all-table>
       </div>
+      <nlf-ors-all-table activity="fallskjerm"></nlf-ors-all-table>
     </div>
-
   </div>
 </div>

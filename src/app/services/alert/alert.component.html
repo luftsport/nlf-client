@@ -1,7 +1,5 @@
-<ngb-alert style="-webkit-border-radius: 0;
--moz-border-radius: 0;
-border-radius: 0 !important;
-margin-bottom: 0px !important;" 
+<ngb-alert class="page-alert"
+[ngClass]="{'fixed-top': !message.inline}"
 *ngIf="message" [type]="message.type"
 [dismissible]="true" (close)="close()">
   <i [ngClass]="{'fa fa-fw': message,

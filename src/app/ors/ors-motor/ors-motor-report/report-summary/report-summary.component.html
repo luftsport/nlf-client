@@ -15,7 +15,7 @@
   <tr>
     <td>Observatør</td>
     <td>
-      <nlf-resolve-lungo-person link="true" [person_id]="observation.reporter"></nlf-resolve-lungo-person>
+      <nlf-resolve-lungo-person [avatar]="true" [link]="true" [person_id]="observation.reporter"></nlf-resolve-lungo-person>
     </td>
   </tr>
 
@@ -24,7 +24,7 @@
     <td>DTO i klubb</td>
     <td>
       <div *ngFor="let dto of observation.organization.dto">
-        <nlf-resolve-lungo-person [person_id]="dto" link="true"></nlf-resolve-lungo-person>
+        <nlf-resolve-lungo-person [avatar]="true" [link]="true" [person_id]="dto"></nlf-resolve-lungo-person>
       </div>
     </td>
   </tr>
@@ -34,7 +34,7 @@
     <td>ORS Ansvarlig</td>
     <td>
       <div *ngFor="let ors of observation.organization.ors">
-        <nlf-resolve-lungo-person [person_id]="ors" link="true"></nlf-resolve-lungo-person>
+        <nlf-resolve-lungo-person [person_id]="ors" [avatar]="true" [link]="true"></nlf-resolve-lungo-person>
       </div>
     </td>
   </tr>
@@ -69,7 +69,7 @@
     <td>Fartøy</td>
     <td>
       <div *ngFor="let a of observation.aircrafts">
-        {{ a.aircraft.callsign }}
+        <a [routerLink]="['/', 'aircraft', 'view', a.aircraft.callsign]">{{ a.aircraft.callsign }}</a>
       </div>
     </td>
   </tr>

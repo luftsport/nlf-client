@@ -1,16 +1,13 @@
 <div fxFlex="100">
-  <agm-map *ngIf="dataReady" (mapReady)="mapReady($event)" (zoomChange)="zoomChanged($event)" (boundsChange)="debouncedBoundsChange($event)"
-    [latitude]="geo.coords.latitude" [longitude]="geo.coords.longitude" [zoom]="zoom">
+  <agm-map *ngIf="dataReady" (mapReady)="mapReady($event)" (zoomChange)="zoomChanged($event)" (boundsChange)="debouncedBoundsChange($event)" [latitude]="geo.coords.latitude" [longitude]="geo.coords.longitude" [zoom]="zoom">
 
     <span *ngIf="!!paths">
-      <agm-polygon *ngFor="let poly of paths; trackAirspaces" [paths]="poly.paths" [fillColor]="poly.color"
-        [strokeColor]="poly.color" [fillOpacity]="poly.opacity" [strokeOpacity]="poly.opacity" (polyClick)="polyClicked(poly, mapInfoModal)">
+      <agm-polygon *ngFor="let poly of paths; trackAirspaces" [paths]="poly.paths" [fillColor]="poly.color" [strokeColor]="poly.color" [fillOpacity]="poly.opacity" [strokeOpacity]="poly.opacity" (polyClick)="polyClicked(poly, mapInfoModal)">
       </agm-polygon>
     </span>
 
     <span *ngIf="!!airports">
-      <agm-marker *ngFor="let airport of airports; trackBy:trackAirport" [iconUrl]="airport_glyphs[airport.type]"
-        [latitude]="airport.location.coordinates[1]" [longitude]="airport.location.coordinates[0]">
+      <agm-marker *ngFor="let airport of airports; trackBy:trackAirport" [iconUrl]="airport_glyphs[airport.type]" [latitude]="airport.location.coordinates[1]" [longitude]="airport.location.coordinates[0]">
         <agm-info-window [disableAutoPan]="true">
           <strong>{{ airport.icao }}</strong><br />
           Name:
@@ -26,6 +23,7 @@
       <!--[label]="airport.icao"-->
     </span>
   </agm-map>
+  <div class="text-center text-danger" title="Applikasjonen er ikke ferdig utviklet">beta</div>
 
 </div>
 
@@ -82,8 +80,7 @@
     </div>
     <div>
       <agm-map [latitude]="modalGeo[0]" [longitude]="modalGeo[1]" [zoom]="zoom">
-        <agm-polygon [paths]="polyInfo.paths" [fillColor]="polyInfo.color" [strokeColor]="polyInfo.color" [fillOpacity]="polyInfo.opacity"
-          [strokeOpacity]="polyInfo.opacity">
+        <agm-polygon [paths]="polyInfo.paths" [fillColor]="polyInfo.color" [strokeColor]="polyInfo.color" [fillOpacity]="polyInfo.opacity" [strokeOpacity]="polyInfo.opacity">
         </agm-polygon>
       </agm-map>
     </div>

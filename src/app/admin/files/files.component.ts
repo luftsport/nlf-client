@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TableEventObject, DefaultTableConfig } from 'app/interfaces/ngx-easy-table.interface';
 import { ApiFilesService } from 'app/api/api-files.service';
 import { ApiOptionsInterface, ApiFileList, ApiFileItem } from 'app/api/api.interface';
-import { clone } from 'lodash';
+//import { clone } from 'lodash';
 
 @Component({
   selector: 'nlf-admin-files',
@@ -56,7 +56,7 @@ export class NlfAdminFilesComponent implements OnInit {
 
   ngOnInit() {
 
-    this.tableConf = clone(DefaultTableConfig);
+    this.tableConf = {...DefaultTableConfig};
     this.tableConf.paginationRangeEnabled = true;
     this.tableConf.orderEnabled = true;
     this.tableConf.serverPagination = true;

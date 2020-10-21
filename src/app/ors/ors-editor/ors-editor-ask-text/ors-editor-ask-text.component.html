@@ -34,7 +34,7 @@
   </div>
 
   <div class="modal-body">
-    <nlf-ors-report-ask-text [comments]="observation.ask.text" [activity]="observation._model.type"></nlf-ors-report-ask-text>
+    <nlf-ors-report-ask-text [comments]="observation.ask.text" [audit]="observation.workflow.audit" [activity]="observation._model.type"></nlf-ors-report-ask-text>
     <!-- With excludes for current etc
     <nlf-ors-report-ask-text [comments]="observation.ask.text" [excludes]="[observation.workflow.state]" [activity]="observation._model.type"></nlf-ors-report-ask-text>
     <div class="lead mt-2">Din vurdering:</div>

@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { ApiObservationAskTextInterface, NlfConfigItem } from 'app/api/api.interface';
+import { ApiObservationAskTextInterface, NlfConfigItem, ApiWorkflowAuditInterface } from 'app/api/api.interface';
 import { Component, Input, OnInit, AfterContentChecked, Inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NlfConfigService } from 'app/nlf-config.service';
@@ -12,12 +12,16 @@ import { NlfConfigService } from 'app/nlf-config.service';
 export class NlfOrsReportAskTextComponent implements OnInit, AfterContentChecked {
 
   @Input() comments: ApiObservationAskTextInterface;
+  @Input() audit = [];
   @Input() activity: string;
   @Input() excludes = [];
 
   public roles;
   checked = false;
   public config: NlfConfigItem;
+
+  public person_mappings = {};
+  public dataReady = false;
 
   constructor(
     public domSanitizer: DomSanitizer,
@@ -37,11 +41,43 @@ export class NlfOrsReportAskTextComponent implements OnInit, AfterContentChecked
           this.roles = { draft: 'Observatør' };
           console.log('ERR stateRoles ', e);
         }
-      }
+
+        this.fixMapping();
+      },
+      err => { }
     );
 
 
     // this.comments.draft = this.comments.draft.replace(/<(?:.|\n)*?>/gm, '');
+  }
+
+  private fixMapping() {
+
+    for (let i = 0; i < this.audit.length; i++) {
+      if (this.audit[i].s == null && this.audit[i].d === 'draft') {
+        this.person_mappings['draft'] = this.audit[i]['u'];
+      }
+      else if (Object.keys(this.person_mappings).indexOf(this.audit[i].s) < 0) {
+        this.person_mappings[this.audit[i]['s']] = this.audit[i]['u'];
+      }
+    }
+    this.dataReady = true;
+
+    console.log('Preererwer', this.person_mappings);
+
+    /**
+  this.audit.forEach(
+    (element) => {
+      // s=source = role!
+      if(Object.keys(this.person_mappings).indexOf(element.s)<0) {
+        this.person_mappings[element.s] = element.u;
+      }
+
+    }
+  );
+  **/
+
+
   }
 
   ngAfterContentChecked() {

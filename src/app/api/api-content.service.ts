@@ -33,6 +33,14 @@ export class ApiContentService extends ApiRestService {
     return this.delete(this.relativeUrl, _id, options, etag);
   }
 
+  public publish(_id: string, etag?: string, options?: ApiOptionsInterface): Observable<any> {
+    return this.post(this.relativeUrl + 'publish/' + _id, {}, options);
+  }
+
+  public unpublish(_id: string, etag?: string, options?: ApiOptionsInterface): Observable<any> {
+    return this.delete(this.relativeUrl + 'publish/', _id, options, etag);
+  }
+
   public aggregateParents(options?: ApiOptionsInterface): Observable<ApiContentList> {
 
     return this.getList(this.relativeUrl + 'aggregate/parents', options);

@@ -79,7 +79,7 @@
   </div>
   <!--<button class="btn btn-primary" *ngIf="!workersStarted && syncdaemonStatus" (click)="startWorkers()"><fa name="play"></fa>Start workers</button>-->
 
-  <div class="clearfix">
+  <div class="clearfix overflow-auto">
     <ngx-table *ngIf="!!workers" [configuration]="tableConfig" [data]="workers" [columns]="columns" [(pagination)]="pagination" (event)="eventEmitted($event)" [detailsTemplate]="detailsTemplate">
 
       <ng-template let-row>
@@ -89,9 +89,10 @@
           </span>
         </td>
         <td>
-          <nlf-resolve-lungo-organization *ngIf="row.id != 900001 && row.id != 900002" [organization_id]="row.id"></nlf-resolve-lungo-organization>
+          <nlf-resolve-lungo-organization *ngIf="row.id != 900001 && row.id != 900002 && row.id != 900003" [organization_id]="row.id"></nlf-resolve-lungo-organization>
           <span *ngIf="row.id == 900001">*Lisenser</span>
           <span *ngIf="row.id == 900002">*Kompetanser</span>
+          <span *ngIf="row.id == 900003">*Payments</span>
         </td>
         <td>
           {{ row.state | upperfirst }}

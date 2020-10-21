@@ -1,18 +1,27 @@
 <div class="row">
   <div class="col-xs-12 col-md-4 d-flex flex-column">
-
-    <select [attr.disabled]="!observation.acl_user.w ? '' : null" class="form-control mt-3" [formControl]="locationChooser" [(ngModel)]="selected">
+    <!-- Select location -->
+    <select *ngIf="locations.length>0" [attr.disabled]="!observation.acl_user.w ? '' : null" class="form-control mt-3" [formControl]="locationChooser" [(ngModel)]="selected">
       <option *ngFor="let location of locations" [ngValue]="location.nickname">
         {{ location.nickname }} ({{ location.name }})
       </option>
     </select>
 
+    <!-- Alert if no location -->
+    <ngb-alert *ngIf="locations.length==0 && dataReady" type="warning" s[dismissible]="false">
+      <strong>Ingen steder definert for klubben</strong>. Opprett minst ett sted ved å velge &quot;Rediger&quot; under.
+    </ngb-alert>
+
+    <!-- Always show button -->
     <a class="btn btn-secondary btn-block mt-auto" [routerLink]="['/organizations', observation.discipline, 'locations']" [queryParams]="{returl: '/ors/'+observation._model.type+'/edit/'+observation.id}">
       <fa name="edit"></fa> Rediger
     </a>
+
   </div>
+
+  <!-- Map column -->
   <div class="col-xs-12 col-md-8">
-    <agm-map [latitude]="toFloat(observation.location.geo.coordinates[0])" [mapTypeControl]="true" [longitude]="toFloat(observation.location.geo.coordinates[1])" [zoom]="15">
+    <agm-map *ngIf="dataReady && locations.length>0" [latitude]="toFloat(observation.location.geo.coordinates[0])" [mapTypeControl]="true" [longitude]="toFloat(observation.location.geo.coordinates[1])" [zoom]="15">
       <agm-marker [markerDraggable]="observation.acl_user.w" (dragEnd)="markerMoved($event)" [latitude]="toFloat(observation.location.geo.coordinates[0])" [longitude]="toFloat(observation.location.geo.coordinates[1])">
       </agm-marker>
     </agm-map>

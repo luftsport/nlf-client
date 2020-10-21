@@ -1,0 +1,6 @@
+.page-alert {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0 !important;
+  margin-bottom: 0px !important;
+}

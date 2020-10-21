@@ -37,39 +37,36 @@
 		</div>
 	</header>
 	<!-- /END HEADER -->
-	<div class="card">
-		<div class="card-body">
 
-			<div class="container">
+	<div class="container">
 
-				<div class="row">
-					<!-- Summary table -->
-					<div class="col-md-6 table-responsive">
-						<nlf-ors-fallskjerm-report-summary [observation]="observation"></nlf-ors-fallskjerm-report-summary>
-					</div>
+		<div class="row">
+			<!-- Summary table -->
+			<div class="col-md-6 col-xs-12 table-responsive overflow-auto">
+				<nlf-ors-fallskjerm-report-summary [observation]="observation"></nlf-ors-fallskjerm-report-summary>
+			</div>
 
-					<!-- Map -->
-					<div class="col-md-6">
-						<div *ngIf="!!observation.location?.geo?.coordinates">
-							<agm-map [latitude]="toFloat(observation.location.geo.coordinates[0])" [mapTypeControl]="true" [longitude]="toFloat(observation.location.geo.coordinates[1])"
-							 [zoom]="12">
-								<agm-marker [label]="observation.location.nickname" [latitude]="toFloat(observation.location.geo.coordinates[0])" [longitude]="toFloat(observation.location.geo.coordinates[1])">
-									<!--<agm-info-window>{{ observation.location.nickname }}</agm-info-window> -->
-								</agm-marker>
-							</agm-map>
-						</div>
-						<div *ngIf="!observation.location?.geo?.coordinates">
-
-							<ngb-alert type="danger" [dismissible]="false">
-								<fa name="map-marker" [fixed]="true"></fa>
-								Ingen lokalisasjon satt.
-							</ngb-alert>
-
-						</div>
-					</div>
+			<!-- Map -->
+			<div class="col-md-6 col-xs-12 d-none d-sm-block">
+				<div *ngIf="!!observation.location?.geo?.coordinates">
+					<agm-map [latitude]="toFloat(observation.location.geo.coordinates[0])" [mapTypeControl]="true" [longitude]="toFloat(observation.location.geo.coordinates[1])" [zoom]="12">
+						<agm-marker [label]="observation.location.nickname" [latitude]="toFloat(observation.location.geo.coordinates[0])" [longitude]="toFloat(observation.location.geo.coordinates[1])">
+							<!--<agm-info-window>{{ observation.location.nickname }}</agm-info-window> -->
+						</agm-marker>
+					</agm-map>
 				</div>
+				<div *ngIf="!observation.location?.geo?.coordinates">
 
-				<!-- Workflow -->
+					<ngb-alert type="danger" [dismissible]="false">
+						<fa name="map-marker" [fixed]="true"></fa>
+						Ingen lokalisasjon satt.
+					</ngb-alert>
+
+				</div>
+			</div>
+		</div>
+
+		<!-- Workflow
 				<div class="row">
 					<div class="col-md-12">
 
@@ -83,105 +80,107 @@
 						</div>
 					</div>
 				</div>
+				-->
 
-				<!-- Involved -->
-				<div class="row">
-					<div class="col-md-12">
-						<div class="card-header">
-							<fa name="users" [fixed]="true"></fa>Involverte
-						</div>
-						<nlf-ors-fallskjerm-report-involved [model]="observation._model" [involved]="observation.involved"></nlf-ors-fallskjerm-report-involved>
-					</div>
+		<!-- Involved -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card-header">
+					<fa name="users" [fixed]="true"></fa>Involverte
 				</div>
-				<!-- /Involved -->
+				<nlf-ors-fallskjerm-report-involved [model]="observation._model" [involved]="observation.involved"></nlf-ors-fallskjerm-report-involved>
+			</div>
+		</div>
+		<!-- /Involved -->
 
-				<!-- Files -->
-				<div class="row">
-					<div class="col-md-12">
-						<div class="card-header">
-							<fa name="file" [fixed]="true"></fa>Vedlegg
-						</div>
-						<nlf-ors-report-files [files]="observation.files"></nlf-ors-report-files>
-					</div>
+		<!-- Files -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card-header">
+					<fa name="file" [fixed]="true"></fa>Vedlegg
 				</div>
-				<!-- /Files -->
+				<nlf-ors-report-files [files]="observation.files" [state]="observation.workflow.state"></nlf-ors-report-files>
+			</div>
+		</div>
+		<!-- /Files -->
 
-				<!-- Components timeline - forløpet -->
-				<div class="row">
-					<div class="col-md-12">
-						<nlf-report-components-timeline [activity]="observation._model.type" [components]="observation.components"></nlf-report-components-timeline>
-					</div>
+		<!-- Components timeline - forløpet -->
+		<div class="row">
+			<div class="col-md-12">
+				<nlf-report-components-timeline [activity]="observation._model.type" [components]="observation.components"></nlf-report-components-timeline>
+			</div>
+		</div>
+		<!-- /Forløpet -->
+
+		<!-- Organization -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card-header">
+					<fa name="users" [fixed]="true"></fa>Hoppfeltorganisasjon
 				</div>
+				<nlf-ors-fallskjerm-report-organization [organization]="observation.organization"></nlf-ors-fallskjerm-report-organization>
+			</div>
+		</div>
+		<!-- /Organization -->
 
-				<!-- Organization -->
-				<div class="row">
-					<div class="col-md-12">
-						<div class="card-header">
-							<fa name="users" [fixed]="true"></fa>Hoppfeltorganisasjon
-						</div>
-						<nlf-ors-fallskjerm-report-organization [organization]="observation.organization"></nlf-ors-fallskjerm-report-organization>
-					</div>
+		<!-- Weather -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card-header">
+					<fa name="cloud" [fixed]="true"></fa>Været
 				</div>
-				<!-- /Organization -->
+				<nlf-ors-report-weather [weather]="observation.weather"></nlf-ors-report-weather>
+			</div>
+		</div>
+		<!-- /Weather -->
 
-				<!-- Weather -->
-				<div class="row">
-					<div class="col-md-12">
-						<div class="card-header">
-							<fa name="cloud" [fixed]="true"></fa>Været
-						</div>
-						<nlf-ors-report-weather [weather]="observation.weather"></nlf-ors-report-weather>
-					</div>
+		<!-- Actions -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card-header">
+					<fa name="bolt" [fixed]="true"></fa>Tiltak
 				</div>
-				<!-- /Weather -->
+				<nlf-ors-report-actions [actions]="observation.actions"></nlf-ors-report-actions>
+			</div>
+		</div>
+		<!-- /Actions -->
 
-				<!-- Actions -->
-				<div class="row">
-					<div class="col-md-12">
-						<div class="card-header">
-							<fa name="bolt" [fixed]="true"></fa>Tiltak
-						</div>
-						<nlf-ors-report-actions [actions]="observation.actions"></nlf-ors-report-actions>
-					</div>
+		<!-- Verdicts -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card-header">
+					<fa name="comments-o" [fixed]="true"></fa>Vurderinger
 				</div>
-				<!-- /Actions -->
+			</div>
 
-				<!-- Verdicts -->
-				<div class="row">
-					<div class="col-md-12">
-						<div class="card-header">
-							<fa name="comments-o" [fixed]="true"></fa>Vurderinger
-						</div>
-					</div>
+			<!-- ASK matrix -->
+			<div class="col-md-5">
+				<nlf-ors-report-ask [ask]="observation.ask" [verbose]="true"></nlf-ors-report-ask>
+			</div>
 
-					<!-- ASK matrix -->
-					<div class="col-md-5">
-						<nlf-ors-report-ask [ask]="observation.ask" [verbose]="true"></nlf-ors-report-ask>
-					</div>
+			<!-- ASK comments -->
+			<div class="col-md-7">
 
-					<!-- ASK comments -->
-					<div class="col-md-7">
-
-						<div *ngIf="!!observation.ask && !!observation.ask.text">
-							<nlf-ors-report-ask-text [comments]="observation.ask.text" [activity]="observation._model.type"></nlf-ors-report-ask-text>
-						</div>
-					</div>
-
+				<div *ngIf="!!observation.ask && !!observation.ask.text">
+					<nlf-ors-report-ask-text [comments]="observation.ask.text" [audit]="observation.workflow.audit" [activity]="observation._model.type"></nlf-ors-report-ask-text>
 				</div>
-				<!-- /verdicts -->
+			</div>
 
-				<!-- Related -->
-				<div *ngIf="!!observation.related && observation.related?.length > 0" class="row">
-					<div class="col-md-12">
-						<div class="card-header">
-							<fa name="external-link" [fixed]="true"></fa>Relaterte
-						</div>
-						<nlf-ors-report-related [related]="observation.related"></nlf-ors-report-related>
-					</div>
+		</div>
+		<!-- /verdicts -->
+
+		<!-- Related -->
+		<div *ngIf="!!observation.related && observation.related?.length > 0" class="row">
+			<div class="col-md-12">
+				<div class="card-header">
+					<fa name="external-link" [fixed]="true"></fa>Relaterte
 				</div>
-				<!-- /Related -->
+				<nlf-ors-report-related [related]="observation.related"></nlf-ors-report-related>
+			</div>
+		</div>
+		<!-- /Related -->
 
-				<!--
+		<!--
 				<hr>
 				<div class="card-header">
 					<h3>Tester under</h3>
@@ -206,7 +205,7 @@
 				-->
 
 
-				<!--
+		<!--
 				<div class="card" style="width: 22rem;">
 					<img class="card-img-top img-fluid" src="{{ currentImage }}" alt="Card image cap">
 					<div class="card-body">
@@ -220,7 +219,7 @@
 				</div>
 				-->
 
-				<!--
+		<!--
 			<h2>Følgende er registrert:</h2>
 			<label>Id</label>
 			<pre>{{observation.id}}</pre>
@@ -282,8 +281,6 @@
 			<pre>{{observation.workflow | json}}</pre>
 			-->
 
-			</div>
-		</div>
 	</div>
 
 
@@ -293,5 +290,5 @@
 </div>
 
 <div *ngIf="!dataReady && !!error">
-	<nlf-ors-error [id]="id" [activity]="observation._model.type" [error]="error"></nlf-ors-error>
+	<nlf-ors-error [id]="id" activity="fallskjerm" [error]="error"></nlf-ors-error>
 </div>
