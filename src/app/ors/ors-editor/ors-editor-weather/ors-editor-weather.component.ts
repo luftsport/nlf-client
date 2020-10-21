@@ -27,7 +27,13 @@ export class NlfOrsEditorWeatherComponent implements OnInit {
       observation => {
         this.observation = observation;
         if (!this.observation.hasOwnProperty('weather')) {
-          this.observation['weather'] = { manual: undefined, auto: undefined };
+          this.observation['weather'] = { manual: {}, auto: {} };
+        }
+        if (!this.observation.weather.hasOwnProperty('manual')) {
+          this.observation.weather['manual'] = {};
+        }
+        if (!this.observation.weather.hasOwnProperty('auto')) {
+          this.observation.weather['auto'] = {};
         }
         this.wx = this.get(['weather', 'manual'], this.observation);
         this.initWx();

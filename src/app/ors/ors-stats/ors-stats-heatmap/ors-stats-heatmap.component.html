@@ -1,0 +1,10 @@
+
+
+<agm-map *ngIf="dataReady"
+[latitude]="59.3002"
+[mapTypeControl]="true"
+[longitude]="10.3676"
+(mapReady)="onMapLoad($event)"
+ [zoom]="8">
+
+</agm-map>

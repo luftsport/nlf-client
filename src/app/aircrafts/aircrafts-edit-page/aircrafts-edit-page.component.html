@@ -7,10 +7,16 @@
       <li class="breadcrumb-item">
         <span *ngIf="callsign" class="mr-1 active">{{ callsign }}</span>
       </li>
+      <sup class="text-danger mx-1" title="Applikasjonen er ikke ferdig utviklet">beta</sup>
     </span>
+
+    <a [routerLink]="['/', 'aircraft', 'view', callsign]" class="btn btn-sm btn-primary mx-1 pull-right">
+      <fa name="plane" [fixed]="true"></fa> View
+    </a>
 
   </div>
 </header>
+
 <div *ngIf="!!callsign" class="container">
   <nlf-aircrafts-edit [(callsign)]="callsign"></nlf-aircrafts-edit>
 </div>

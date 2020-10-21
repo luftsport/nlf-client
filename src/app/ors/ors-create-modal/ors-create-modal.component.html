@@ -1,6 +1,6 @@
 <div class="modal-header">
   <h4 class="modal-title">
-    <fa name="plus" [fixed]="true"></fa>Opprett ORS
+    Opprett ORS
   </h4>
   <span *ngIf="ENV._name!='prod'" class="badge badge-danger ml-3">{{ ENV._name }}</span>
   <button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.dismiss()">
@@ -30,8 +30,8 @@
 
     <!-- MORE -->
     <div class="my-3 pointer lead">
-      <a (click)="showDefaultActivity=!showDefaultActivity;showDefault=!showDefault">
-        <fa name="plus" [fixed]="true"></fa>Flere valg
+      <a (click)="showDefaultActivity=!showDefaultActivity;showDefault=!showDefault" class="btn btn-link">
+        Flere valg
       </a>
     </div>
   </div>
@@ -43,8 +43,8 @@
       <nlf-ors-motor-create *ngIf="settings.default_activity==238"></nlf-ors-motor-create>
     </div>
     <div class="my-3 pointer lead">
-      <a (click)="showAll=!showAll;showDefaultActivity=!showDefaultActivity">
-        <fa name="plus" [fixed]="true"></fa>Flere valg
+      <a (click)="showAll=!showAll;showDefaultActivity=!showDefaultActivity" class="btn btn-link">
+        Vis flere valg
       </a>
     </div>
   </div>
@@ -65,6 +65,6 @@
 </div>
 
 <div class="modal-footer">
-  <a class="btn btn-link mr-auto" [routerLink]="['/ors', getActivityName()]">ORS {{ getActivityName() }}</a>
+  <a class="btn btn-link mr-auto" [routerLink]="['/ors', getActivityName()]"><fa name="link" [fixed]="true"></fa> ORS {{ getActivityName() }}</a>
   <button class="btn btn-outline-dark" (click)="activeModal.close()">Avbryt</button>
 </div>

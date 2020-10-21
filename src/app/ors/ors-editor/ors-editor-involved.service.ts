@@ -32,7 +32,7 @@ export class NlfOrsEditorInvolvedService {
     private apiCache: ApiCacheService
   ) { }
 
-  public add(person_id: number, name: string) {
+  public add(person_id: number, name?: string) {
 
     if (!!name && name.length > 3) {
       this.list.push({ id: person_id, full_name: name });
@@ -54,6 +54,12 @@ export class NlfOrsEditorInvolvedService {
       );
     }
   }
+
+  public remove(person_id: number) {
+    this.list = this.list.filter(x => x.id != person_id);
+    this.changeArr(this.list);
+  }
+
   public update(list: Array<Object>) {
     this.changeArr(list);
   }

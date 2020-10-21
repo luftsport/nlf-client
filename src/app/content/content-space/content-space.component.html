@@ -1,55 +1,66 @@
-<div *ngIf="!!dataReady">
-  <div class="row">
-    <div class="nlf-sticky-toolbar">
-      <div class="container">
-        <fa name="sitemap" [fixed]="true"></fa>
-        <a [routerLink]="['/content']">Spaces</a> / <a [routerLink]="['/content', space.space_key, space._id]">{{ space.title }}</a>
-      </div>
-    </div>
-  </div>
-  <div class="row">
+<div *ngIf="!!dataReady && !!space && !error">
+  <div class="nlf-sticky-toolbar">
     <div class="container">
-
-      <ngx-table [configuration]="tableSpaces" [data]="spacelist" [columns]="columns" [(pagination)]="pagination" (event)="eventEmitted($event)">
-
-        <ng-template let-row>
-          <td class="ngx-easy-table-small">
-
-            <span *ngIf="!!row.parent">
-              <fa name="file" [fixed]="true"></fa>
-            </span>
-            <span *ngIf="!row.parent">
-              <fa name="sitemap" [fixed]="true"></fa>
-            </span>
-            <a [routerLink]="['/content', row.space_key, row.slug]">{{ row.title }}</a>
-
-          </td>
-          <td class="ngx-easy-table-small">
-            {{ row._updated | amTimeAgo }}
-          </td>
-          <td class="ngx-easy-table-small">
-            <nlf-resolve-user [userid]="row.owner"></nlf-resolve-user>
-          </td>
-          <td>
-            <span class="pointer" (click)="delete(row)">
-              <fa name="close" [fixed]="true"></fa>
-            </span>
-            <span class="pointer" [routerLink]="['/content/edit/', row._id]">
-              <fa name="edit" [fixed]="true"></fa>
-            </span>
-            <span class="pointer" [routerLink]="['/content/create/', row._id]">
-              <fa name="plus" [fixed]="true"></fa>
-            </span>
-          </td>
-        </ng-template>
-      </ngx-table>
-
-      <span *ngIf="!dataReady">
-        <p class="align-middle text-center  text-secondary">
-          <fa name="spinner" animation="pulse" size="3x"></fa>
-        </p>
-      </span>
-
+      <fa name="sitemap" [fixed]="true"></fa>
+      <a [routerLink]="['/content']">Spaces</a> / <a [routerLink]="['/content', space.space_key, space._id]">{{ space.title }}</a>
+      <sup class="text-danger mx-1" title="Applikasjonen er ikke ferdig utviklet">beta</sup>
     </div>
   </div>
+</div>
+<div class="container overflow-auto">
+
+  <ngx-table [configuration]="tableSpaces" [data]="spacelist" [columns]="columns" [(pagination)]="pagination" (event)="eventEmitted($event)">
+
+    <ng-template let-row>
+      <td class="ngx-easy-table-small">
+
+        <span *ngIf="!!row.parent">
+          <fa name="file" [fixed]="true"></fa>
+        </span>
+        <span *ngIf="!row.parent">
+          <fa name="sitemap" [fixed]="true"></fa>
+        </span>
+        <a [routerLink]="['/content','space', row.space_key, row.slug]">{{ row.title }}</a>
+
+      </td>
+      <td class="ngx-easy-table-small">
+        {{ row._updated | amTimeAgo }}
+      </td>
+      <td class="ngx-easy-table-small">
+        <nlf-resolve-lungo-person [person_id]="row.owner" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
+      </td>
+      <td>
+        <span class="pointer" (click)="delete(row)">
+          <fa name="close" [fixed]="true"></fa>
+        </span>
+        <span class="pointer" [routerLink]="['/content/edit/', row._id]">
+          <fa name="edit" [fixed]="true"></fa>
+        </span>
+        <span class="pointer" [routerLink]="['/content/create/', row._id]">
+          <fa name="plus" [fixed]="true"></fa>
+        </span>
+
+        <span *ngIf="!row?.published" class="pointer" (click)="publish(row._id)">
+          <fa name="ban" [fixed]="true"></fa>
+        </span>
+        <span *ngIf="!!row?.published" class="pointer text-success" (click)="unpublish(row._id)">
+          <fa name="check" [fixed]="true"></fa>
+        </span>
+
+      </td>
+    </ng-template>
+  </ngx-table>
+
+  <span *ngIf="!dataReady && !error">
+    <p class="align-middle text-center  text-secondary">
+      <fa name="spinner" animation="pulse" size="3x"></fa>
+    </p>
+  </span>
+
+  <span *ngIf="error">
+    <p class="align-middle text-center  text-secondary">
+      ERROR, please go back to <a [routerLink]="['/content']">content home</a>
+    </p>
+  </span>
+
 </div>

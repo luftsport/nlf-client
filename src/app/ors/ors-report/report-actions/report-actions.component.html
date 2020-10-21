@@ -1,27 +1,25 @@
-<div *ngIf="!!actions">
-  <div class="row">
-    <div class="col-xs-12 col-md-6" *ngIf="!!actions.local">
-      <strong>Lokale:</strong>
-      <ol>
-        <div *ngIf="actions.local?.length == 0">Ingen</div>
-        <div *ngIf="actions.local?.length > 0">
-          <li *ngFor="let l of actions.local">
-            {{ l }}
-          </li>
-        </div>
-      </ol>
-    </div>
+<div *ngIf="!!actions" class="row">
+  <div class="col-xs-12 col-md-6" *ngIf="!!actions.local">
+    <strong>Lokale:</strong>
+    <ol>
+      <div *ngIf="actions.local?.length == 0">Ingen</div>
+      <div *ngIf="actions.local?.length > 0">
+        <li *ngFor="let l of actions.local">
+          {{ l }}
+        </li>
+      </div>
+    </ol>
+  </div>
 
-    <div class="col-xs-12 col-md-6" *ngIf="!!actions.central">
-      <strong>Sentrale:</strong>
-      <ol>
-        <div *ngIf="actions.central?.length == 0">Ingen</div>
-        <div *ngIf="actions.central?.length > 0">
-          <li *ngFor="let c of actions.central">
-            {{ c }}
-          </li>
-        </div>
-      </ol>
-    </div>
+  <div class="col-xs-12 col-md-6" *ngIf="!!actions.central">
+    <strong>Sentrale:</strong>
+    <ol>
+      <div *ngIf="actions.central?.length == 0">Ingen</div>
+      <div *ngIf="actions.central?.length > 0">
+        <li *ngFor="let c of actions.central">
+          {{ c }}
+        </li>
+      </div>
+    </ol>
   </div>
 </div>

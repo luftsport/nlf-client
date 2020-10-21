@@ -1,7 +1,8 @@
 <div *ngIf="dataReady">
 
   <div class="container my-3">
-    <h1>{{ lungo.name }} (<nlf-resolve-lungo-organization-type [type_id]="lungo.type_id"></nlf-resolve-lungo-organization-type>)</h1>
+
+    <h1>{{ lungo.name }}<!--(<nlf-resolve-lungo-organization-type [type_id]="lungo.type_id"></nlf-resolve-lungo-organization-type>)--></h1>
 
     <div class="row">
       <!-- Summary table -->
@@ -96,7 +97,7 @@
           <tr>
             <td>Aktiviteter</td>
             <td>
-              <nlf-resolve-lungo-activity class="mr-1" *ngFor="let activity of lungo.activities" [activity_id]="activity.id" link="true"></nlf-resolve-lungo-activity>
+              <nlf-resolve-lungo-activity class="mr-1" *ngFor="let activity of lungo.activities" [activity_id]="activity.id" link="false"></nlf-resolve-lungo-activity>
             </td>
           </tr>
           <tr *ngIf="lungo.type_id==5">

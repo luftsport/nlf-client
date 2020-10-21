@@ -23,7 +23,8 @@ export class NlfUserSettingsComponent implements OnInit {
   constructor(
     private userSubject: NlfUserSubjectService,
     private apiUserService: ApiUserService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder
+  ) {
 
     this.userSubject.observable.subscribe(
       data => {

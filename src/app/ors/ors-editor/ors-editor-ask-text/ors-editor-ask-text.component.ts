@@ -163,6 +163,7 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
   }
 
   public getInvolved(text, callback) {
+    console.log('INVOLVED', this.list, text, callback);
     callback(this.list);
   }
 

@@ -16,16 +16,19 @@ export class ApiObservationsAggService extends ApiRestService {
     this.relativeUrl = '/' + activity + '/observations/aggregate';
   }
 
-  /**
-   * 
-   * @param options Only query is required
-   * 
-   * @TODO: see if constructing options here is better?
-   * => $in clubs, from and to
-   */
-  public getPie(options?: ApiOptionsInterface): Observable<any> {
+  public getTypes(options?: ApiOptionsInterface): Observable<any> {
 
-    return this.getList(this.relativeUrl, options);
+    return this.getList(this.relativeUrl + '/types', options);
+  }
+
+  public getTypesDiscipline(options?: ApiOptionsInterface): Observable<any> {
+
+    return this.getList(this.relativeUrl + '/types/discipline', options);
+  }
+
+  public getStatesDiscipline(options?: ApiOptionsInterface): Observable<any> {
+
+    return this.getList(this.relativeUrl + '/states/discipline', options);
   }
 
 }

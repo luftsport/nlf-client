@@ -67,7 +67,9 @@ export class NlfAuthInterceptor implements HttpInterceptor {
     if (!!this.token) { // should verify valid?
       request = request.clone({
         setHeaders: {
-          Authorization: 'Basic ' + this.token
+          Authorization: 'Basic ' + this.token,
+          'Cache-Control': 'no-cache',
+          Pragma: 'no-cache'
         }
       });
     }

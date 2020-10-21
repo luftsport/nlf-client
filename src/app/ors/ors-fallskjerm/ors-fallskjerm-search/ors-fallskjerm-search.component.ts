@@ -12,6 +12,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 Save search is simple - save who and search query!
 Run query as that person, save last run as list of id's!
 On completed run check if any new ones not in list - voila!
+sort: [{id:-1}]
 **/
 @Component({
   selector: 'nlf-ors-fallskjerm-search',

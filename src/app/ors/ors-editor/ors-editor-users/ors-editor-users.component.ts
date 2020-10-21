@@ -35,7 +35,10 @@ export class NlfOrsEditorUsersComponent implements OnInit {
 
   ngOnInit() {
     this.orsService.setActivity(this.observation._model.type);
+    //let arrayWithDuplicates = this.observation.acl['read']['users'].concat(this.observation.acl['write']['users']);
+    //this.acl_persons = arrayWithDuplicates.filter((n, i) => arrayWithDuplicates.indexOf(n) === i);
     this.acl_persons = this.observation.acl['read']['users'].concat(this.observation.acl['write']['users'].filter((item) => this.observation.acl['read']['users'].indexOf(item) < 0));
+    console.log('this.acl_persons', this.acl_persons);
   }
 
   public save() {

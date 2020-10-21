@@ -34,6 +34,20 @@
 
     <!-- E5X -->
     <nlf-ors-e5x *ngIf="observation._model.type=='motorfly'"></nlf-ors-e5x>
+
+    <!-- ACTIVITIES -->
+    <a class="badge badge-info mx-1" [routerLink]="['/ors', observation._model.type , 'activities', observation.id]">
+      <fa name="history"></fa> Aktivitet
+    </a>
+
+    <!-- ACCESS!!! -->
+    <nlf-ors-editor-users *ngIf="['closed', 'withdrawn'].indexOf(observation.workflow.state)<0 && observation.acl_user.x" [model]="observation._model.type" [_id]="observation._id" [observation]="observation"></nlf-ors-editor-users>
+
+    <!-- REPORT LINK -->
+    <a [routerLink]="['/ors', observation._model.type , 'report', observation.id]" *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge badge-primary text-white mx-1">
+      <fa name="file" [fixed]="true"></fa> Report
+    </a>
+
   </p>
   <p>
     <span class="badge badge-secondary mx-1">{{ observation._updated | amTimeAgo }}</span>
@@ -55,7 +69,7 @@
     kan du se endringer mellom versjonene.
   </p>
   <p>
-    Når du er ferdig med å redigere skal du trykke på:
+    <strong>Når du er ferdig med å redigere skal du trykke på:</strong>
   </p>
   <p>
     <nlf-resolve-observation-state [activity]="observation._model.type" [state]="observation.workflow.state" icon="true"></nlf-resolve-observation-state>
@@ -84,9 +98,28 @@
   </p>
 
   <p>
+    <!-- ACTIVITIES -->
+    <a *ngIf="observation.workflow.state!='closed'" class="badge badge-info mx-1" [routerLink]="['/ors', observation._model.type , 'activities', observation.id]">
+      <fa name="history"></fa> Aktivitet
+    </a> åpner en side som viser alle hendelser for denne observasjonen. Her kan du purre og sende meldinger til de som behandler denne observasjonen.
+  </p>
+
+  <p *ngIf="['closed', 'withdrawn'].indexOf(observation.workflow.state)<0 && observation.acl_user.x">
+    <!-- ACCESS!!! -->
+    <nlf-ors-editor-users *ngIf="['closed', 'withdrawn'].indexOf(observation.workflow.state)<0 && observation.acl_user.x" [model]="observation._model.type" [_id]="observation._id" [observation]="observation"></nlf-ors-editor-users>
+    gir deg muligheten til å legge til personer til observasjonen både med skrive og lese rettigheter etter ditt eget ønske. Søk de opp, legg de til og husk å huke av for hvilken rettighet de skal ha!
+  </p>
+  <p>
+    <!-- REPORT LINK -->
+    <a [routerLink]="['/ors', observation._model.type , 'report', observation.id]" *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge badge-primary text-white mx-1">
+      <fa name="file" [fixed]="true"></fa> Report
+    </a> åpner observasjonen i rapportvisning og du kan på den måten forhåndsvise hvordan den endelige observasjonen vil komme til å se ut når den er ferdigbehandlet.</p>
+
+  <p>
     <strong>Hurtigtaster</strong><br />
-    <span class="badge badge-secondary">CTRL+s</span>/<span class="badge badge-secondary">COMMAND+s</span> Save ORS<br>
-    <span class="badge badge-secondary">CTRL+e</span>/<span class="badge badge-secondary">COMMAND+h</span> ORS Help (denne)<br>
+    <span class="badge badge-secondary">CTRL+s</span>/<span class="badge badge-secondary">COMMAND+s</span> Lagre<br>
+    <span class="badge badge-secondary">CTRL+h</span>/<span class="badge badge-secondary">COMMAND+h</span> Hjelp (denne)<br>
+    <span class="badge badge-secondary">CTRL+g</span>/<span class="badge badge-secondary">COMMAND+g</span> Debug<br>
   </p>
 </div>
 <div class="modal-footer">

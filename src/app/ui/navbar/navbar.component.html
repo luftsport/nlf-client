@@ -15,8 +15,6 @@
 
   <span class="ml-auto"></span>
 
-
-
   <!-- CREATE ORS BTN XS-->
   <button class="btn btn-success mr-3 d-block d-sm-none" *ngIf="(loggedInObservable | async) && !!user_data && !!user_data.settings.default_discipline" (click)="navbarOpen=false;openCreateOrsModal()">
     <fa name="plus" fw="true" class="mr-1"></fa>ORS
@@ -27,7 +25,6 @@
     <fa name="bars" [fixed]="true"></fa>
   </button>
 
-
   <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent2" [ngClass]="{ 'show': navbarOpen }">
 
     <ul *ngIf="!!user_data && loggedInObservable | async as authenticated" class="navbar-nav text-right">
@@ -36,7 +33,6 @@
       <button class="btn btn-success mr-2 d-none d-sm-block" *ngIf="!!user_data && !!user_data.settings.default_discipline" (click)="navbarOpen=false;openCreateOrsModal()">
         <fa name="plus" fw="true" class="mr-1"></fa>ORS
       </button>
-
 
       <!--
       <li *ngIf="isLoggedIn" ngbDropdown placement="bottom-right" class="nav-item">
@@ -126,26 +122,38 @@
       </li>
       -->
 
-      <!-- USER/LOGOUT -->
-      <li ngbDropdown placement="bottom-right" (click)="navbarOpen=false" *ngIf="authenticated" class="nav-item dropdown pointer" routerLinkActive="active">
 
-        <button ngbDropdownToggle class="btn btn-small btn-secondary nav-link dropdown-toggle text-white" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">
-          <nlf-resolve-lungo-person [person_id]="user_data.person_id" [only_first_name]="true" [avatar]="true" [link]="false"></nlf-resolve-lungo-person>
+      <!-- USER/LOGOUT -->
+      <li ngbDropdown display="dynamic" placement="bottom-right" *ngIf="authenticated" class="nav-item dropdown pointer" routerLinkActive="active">
+
+        <a ngbDropdownToggle placement="bottom-right" class="btn btn-sm btn-secondary nav-link dropdown-toggle text-white" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <!--<span *ngIf="!!avatar" class="avatar avatar-xs mr-1">
+            <img [src]="domSanitizer.bypassSecurityTrustUrl(avatar)" alt="" class="avatar-img rounded-circle">
+          </span>
+        -->
+          <span class="avatar avatar-xs mr-1">
+            <img [src]="avatar||avatar_missing" alt="user" class="avatar-img rounded-circle">
+          </span>
+          <nlf-resolve-lungo-person [person_id]="user_data.person_id" [only_first_name]="true" [avatar]="false" [link]="false"></nlf-resolve-lungo-person>
           <!--<span class="mx-1 badge badge-danger">2</span>-->
-        </button>
+        </a>
 
         <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
           <!--
           <a class="dropdown-item" href="#">Placeholder</a>
           <a class="dropdown-item" href="#">Placeholder</a>
           -->
+
+          <a ngbDropdownItem class="dropdown-item" (click)="$event.preventDefault();navbarOpen=false" [routerLink]="['/user', 'profile']">Profil</a>
+
           <div class="dropdown-divider"></div>
-          <button (click)="authService.logout()" class="dropdown-item btn btn-secondary btn-block">
+          <button ngbDropdownItem (click)="$event.preventDefault();navbarOpen=false;authService.logout()" class="dropdown-item btn btn-secondary btn-block">
             <fa name="power-off" [fixed]="true"></fa>Logout
           </button>
         </div>
 
       </li>
+
     </ul>
 
   </div>
@@ -181,7 +189,7 @@
   <button class="btn btn-block btn-danger">Reject</button>
 </ng-template>
 
-< !-- Navbar itself -- >
+< !ww-- Navbar itself -w- >
 <nav class="navbar navbar-toggleable-sm navbar-dark bg-dark">
   <button (click)="isCollapsed = !isCollapsed" class="navbar-toggler navbar-toggler-right" type="button" aria-controls="navbarNavAltMarkup"
     aria-expanded="false" aria-label="Toggle navigation">
@@ -204,13 +212,13 @@
         </a>
         <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" routerLink="/ors/">ORS</a>
-          < !--<a class="dropdown-item" routerLink="/ors/child">ORS Child</a> only from internal-- >
+          < !ww-w-<a class="dropdown-item" routerLink="/ors/child">ORS Child</a> only from internal-w- >
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" routerLink="/ors/fallskjerm">ORS Fallskjerm</a>
         </div>
       </li>
     </ul>
-    < !-- Right side items -- >
+    < !-w- Right side items -w- >
     <div class="navbar-nav" *ngIf="isLoggedIn">
 
       <div ngbDropdown class="d-inline-block">
@@ -235,7 +243,7 @@
         <fa [name]="'commenting-o'" [fixed]="'true'"></fa>
       </a>
 
-      < !-- Custom css for notifications -- >
+      < !-w- Custom css for notifications -w- >
       <a class="nav-item nav-link" href="#">
         <span class="fa-fnix-container">
           <i class="fa fa-bell-o fa-fw"></i>
@@ -248,7 +256,7 @@
       </a>
 
       <a *ngIf="isLoggedIn" (click)="authService.logout()" class="nav-item nav-link btn">Logout</a>
-      < !--<a *ngIf="!(isLoggedIn | async)" class="nav-item nav-link" routerLink="/login">Login</a>-- >
+      < !-w-<a *ngIf="!(isLoggedIn | async)" class="nav-item nav-link" routerLink="/login">Login</a>-w- >
     </div>
   </div>
 </nav>

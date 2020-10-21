@@ -36,7 +36,7 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy {
   fitBounds: boolean = true;
 
   zoom: number = 17;
-  userGeo;
+  userGeo = { geo: { type: 'Point', coordinates: [59.9, 10.9] } };
 
   types = [
     { key: 'landing_area', val: 'Landingsområde' },
@@ -74,22 +74,16 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy {
       ),
       this.geoLocationService.getLocation({ enableHighAccuracy: true }).subscribe(
         position => {
-          console.log(position);
-          try {
-            if (!!this.currentLocation.geo.coordinates) {
 
-            }
-          } catch (err) {
-            this.userGeo = { geo: { type: 'Point', coordinates: [position.coords.latitude || 59.9, position.coords.longitude] || 10.9 } };
-            this.currentLocation = this.userGeo;
-            console.log('Catched', err);
-          }
+          this.userGeo['geo']['coordinates'] = [position.coords.latitude || 59.9, position.coords.longitude || 10.9];
+          this.currentLocation = this.userGeo;
+          console.log(position);
+
         },
         err => {
           console.log('ERR Position', err);
         },
         () => {
-
         }
       )
     ]);
@@ -105,11 +99,15 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy {
     this.route.params.subscribe(params => {
       this.org_id = params['id'] ? params['id'] : 0;
       this.getOrg();
-      //this.app.setTitle(' Organization locations edit');
+      //this.app.setTitle('Organization locations edit');
     });**/
   }
 
   ngOnInit() {
+
+    if(!this.currentLocation) {
+      this.currentLocation = this.userGeo;
+    }
   }
 
   public goTo(location) {

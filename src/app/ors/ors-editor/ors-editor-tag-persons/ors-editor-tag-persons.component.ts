@@ -149,7 +149,11 @@ export class NlfOrsEditorTagPersonsComponent implements OnInit, OnChanges {
 
       for (let i = 0; i < this.persons.length; i++) {
         if (this.persons[i]['id'] < 0) {
+        if(this.persons[i].hasOwnProperty('tmp_name')) {
           this.selectedTags = [...this.selectedTags, { id: this.persons[i]['id'], full_name: this.persons[i]['tmp_name'] }];
+          } else {
+          this.selectedTags = [...this.selectedTags, { id: this.persons[i]['id'], full_name: 'Person ' + (-1*this.persons[i]['id']) }];
+          }
         } else if (this.persons[i]['id'] > 0) {
           const opts: ApiOptionsInterface = { query: { projection: { id: 1, full_name: 1 } } };
           this.personsService.getUser(this.persons[i]['id'], opts).subscribe(
@@ -167,6 +171,17 @@ export class NlfOrsEditorTagPersonsComponent implements OnInit, OnChanges {
         }
       } //for
     } // else
+  }
+
+  private emitPersons() {
+
+    const newarr = this.persons.map(obj => {
+      const { full_name, ...rest } = obj;
+      return rest;
+    });
+    this.personsChange.emit(newarr);
+    this.change.emit(true);
+
   }
 
   public onAdd(event) {
@@ -197,16 +212,14 @@ export class NlfOrsEditorTagPersonsComponent implements OnInit, OnChanges {
               competences: data.competences
             }
           }];
-          this.personsChange.emit(this.persons);
-          this.change.emit(true);
+          this.emitPersons();
         },
         err => console.log(err)
       );
     }
     else if (!!event.full_name && !event.hasOwnProperty('id')) {
       this.persons = [...this.persons, { id: -1 * Math.floor(Math.random() * 100000), tmp_name: titleCase(event.full_name) }];
-      this.personsChange.emit(this.persons);
-      this.change.emit(true);
+      this.emitPersons();
     }
 
   }
@@ -216,8 +229,7 @@ export class NlfOrsEditorTagPersonsComponent implements OnInit, OnChanges {
     if (!!event.hasOwnProperty('value') && event.value.hasOwnProperty('id')) {
 
       this.persons = this.persons.filter(p => p.id !== event.value.id);
-      this.personsChange.emit(this.persons);
-      this.change.emit(true);
+      this.emitPersons();
 
     }
 
@@ -227,8 +239,7 @@ export class NlfOrsEditorTagPersonsComponent implements OnInit, OnChanges {
     console.log('Clear', event);
     this.persons = [];
     this.selectedTags = [];
-    this.personsChange.emit(this.persons);
-    this.change.emit(true);
+    this.emitPersons();
   }
 
 

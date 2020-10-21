@@ -1,0 +1,6 @@
+<span [title]="membership.from_date||''">
+  <nlf-resolve-lungo-organization [organization_id]="membership.discipline"></nlf-resolve-lungo-organization>
+  <span *ngIf="payment_status && getPaymentStatus()">
+    {{ membership.payment.type }} {{ membership.payment.exception }} {{ membership.payment.year }}
+  </span>
+</span>

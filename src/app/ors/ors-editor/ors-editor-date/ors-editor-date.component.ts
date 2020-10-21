@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbCalendar, NgbDateStruct, NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { debounce } from 'ts-debounce';
 
 @Component({
   selector: 'nlf-ors-editor-date',
@@ -12,6 +13,7 @@ export class NlfOrsEditorDateComponent implements OnInit {
   @Input() disabled = false;
   @Output() dateChange: EventEmitter<string> = new EventEmitter();
 
+  debouncedEmit = debounce(this.onDateSelection, 900);
   model: NgbDateStruct;
   today = this.calendar.getToday();
 

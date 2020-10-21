@@ -46,6 +46,9 @@ import { GridsterModule } from 'angular-gridster2';
 // Jodit editor
 import { JoditAngularModule } from 'jodit-angular';
 
+// Upload to canvas
+import { ImageCropperModule } from 'ngx-image-cropper';
+
 // DIFF
 import { DiffMatchPatchModule } from 'ng-diff-match-patch';
 
@@ -186,6 +189,7 @@ import { NlfOrsEditorWorkflowComponent } from 'app/ors/ors-editor/ors-editor-wor
 import { NlfOrsEditorComponentsComponent } from 'app/ors/ors-editor/ors-editor-components/ors-editor-components.component';
 import { NlfOrsEditorHelpComponent } from 'app/ors/ors-editor/ors-editor-help/ors-editor-help.component';
 import { NlfOrsEditorAboutComponent } from 'app/ors/ors-editor/ors-editor-about/ors-editor-about.component';
+import { NlfOrsEditorDebugComponent } from 'app/ors/ors-editor/ors-editor-debug/ors-editor-debug.component';
 import { NlfOrsEditorMetComponent } from 'app/ors/ors-editor/ors-editor-met/ors-editor-met.component';
 import { NlfOrsEditorWeatherComponent } from 'app/ors/ors-editor/ors-editor-weather/ors-editor-weather.component';
 
@@ -193,6 +197,8 @@ import { NlfOrsEditorOperationalComponent } from 'app/ors/ors-editor/ors-editor
 import { NlfOrsEditorCategoriesComponent } from 'app/ors/ors-editor/ors-editor-categories/ors-editor-categories.component';
 
 import { NlfOrsActivitiesComponent } from 'app/ors/ors-activities/ors-activities.component';
+import { NlfOrsActivitiesTimelineComponent } from 'app/ors/ors-activities/ors-activities-timeline/ors-activities-timeline.component';
+
 
 // USERS ACL
 import { NlfOrsEditorUsersComponent } from 'app/ors/ors-editor/ors-editor-users/ors-editor-users.component';
@@ -215,6 +221,9 @@ import { NlfOrsFallskjermReportOrganizationComponent } from 'app/ors/ors-fallskj
 import { NlfOrsFallskjermReportSummaryComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-report/report-summary/report-summary.component';
 // MOTORFLY REPORT
 import {  NlfOrsMotorflyReportSummaryComponent } from 'app/ors/ors-motor/ors-motor-report/report-summary/report-summary.component';
+// ORS STATISTICS & DASHBOARDS
+import { NlfOrsStatsHeatmapComponent } from 'app/ors/ors-stats/ors-stats-heatmap/ors-stats-heatmap.component';
+import { NlfOrsStatsComponent } from 'app/ors/ors-stats/ors-stats.component';
 
 // ORS FALLSKJERM
 import { NlfOrsFallskjermEditorComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-editor/ors-fallskjerm-editor.component';
@@ -225,13 +234,18 @@ import { NlfOrsFallskjermReportComponent } from 'app/ors/ors-fallskjerm/ors-fall
 import { NlfOrsFallskjermEditorLocationComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-editor/ors-fallskjerm-editor-location/ors-fallskjerm-editor-location.component';
 import { NlfOrsFallskjermEditorOrganizationComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-editor/ors-fallskjerm-editor-organization/ors-fallskjerm-editor-organization.component';
 import { NlfOrsFallskjermEditorInvolvedComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-editor/ors-fallskjerm-editor-involved/ors-fallskjerm-editor-involved.component';
-import {  NlfOrsFallskjermSearchComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-search/ors-fallskjerm-search.component';
+import { NlfOrsFallskjermSearchComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-search/ors-fallskjerm-search.component';
+import { NlfOrsFallskjermDashboardComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-dashboard/ors-fallskjerm-dashboard.component';
+import { NlfOrsFallskjermDashboardTableComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-dashboard/ors-fallskjerm-dashboard-table/ors-fallskjerm-dashboard-table.component';
+
 
 // ORS MOTOR
 import { NlfOrsMotorComponent } from 'app/ors/ors-motor/ors-motor.component';
 import { NlfOrsMotorEditorComponent } from 'app/ors/ors-motor/ors-motor-editor/ors-motor-editor.component';
 import { NlfOrsMotorReportComponent } from 'app/ors/ors-motor/ors-motor-report/ors-motor-report.component';
 import {  NlfOrsMotorSearchComponent } from 'app/ors/ors-motor/ors-motor-search/ors-motor-search.component';
+
+
 // LUNGO Services
 import { LungoIntegrationService } from 'app/api/lungo-integration.service';
 import { LungoPersonsService } from 'app/api/lungo-persons.service';
@@ -259,6 +273,7 @@ import { NlfAuthGuard } from 'app/services/auth/auth.guard';
 import { NlfAuthService } from 'app/services/auth/auth.service';
 import { NlfAuthSubjectService } from 'app/services/auth/auth-subject.service';
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
+import { NlfUserAvatarSubjectService } from 'app/user/user-avatar-subject.service';
 
 // USER ACL
 import { NlfUserAclComponent } from 'app/user/user-acl/user-acl.component';
@@ -388,6 +403,8 @@ import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
     NlfOrsErrorComponent,
     NlfOrsFallskjermComponent,
     NlfOrsFallskjermSearchComponent,
+    NlfOrsFallskjermDashboardComponent,
+    NlfOrsFallskjermDashboardTableComponent,
     NlfOrsMotorComponent,
     NlfOrsMotorReportComponent,
     NlfOrsMotorSearchComponent,
@@ -401,6 +418,8 @@ import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
     NlfOrsReportWorkflowTimelineComponent,
     NlfOrsFallskjermReportSummaryComponent,
     NlfOrsMotorflyReportSummaryComponent,
+    NlfOrsStatsHeatmapComponent,
+    NlfOrsStatsComponent,
     NlfResolveObservationFlagsComponent,
     NlfResolveObservationTypesComponent,
     NlfOrsReportAskComponent,
@@ -445,6 +464,7 @@ import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
 
     // ORS activities
     NlfOrsActivitiesComponent,
+    NlfOrsActivitiesTimelineComponent,
     // USER ACLS
     NlfOrsEditorUsersComponent,
 
@@ -452,6 +472,7 @@ import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
     // modals
     NlfOrsEditorHelpComponent,
     NlfOrsEditorAboutComponent,
+    NlfOrsEditorDebugComponent,
     NlfOrsFallskjermEditorLocationComponent,
     NlfOrsFallskjermEditorOrganizationComponent,
     NlfOrsFallskjermEditorInvolvedComponent,
@@ -522,6 +543,7 @@ import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
     ConfirmModalComponent,
     NlfOrsEditorHelpComponent,
     NlfOrsEditorAboutComponent,
+    NlfOrsEditorDebugComponent,
     NlfOrsEditorWorkflowComponent,
     NlfOrsCreateModalComponent,
 
@@ -539,7 +561,7 @@ import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
     // REMOVE GenericTableModule,
     TableModule, // ngx-easy-table
     // REMOVE RTModule, // right-angled declarative tables
-
+    ImageCropperModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     NgxChartsModule, // Charting
@@ -553,7 +575,8 @@ import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
     NgxUploaderModule,
     HotkeyModule.forRoot(),
     AgmCoreModule.forRoot({ // Google maps
-      apiKey: 'AIzaSyBW1IdM-nFGiwwfP4H2sJg5YiromIuysJ8'
+      apiKey: 'AIzaSyBW1IdM-nFGiwwfP4H2sJg5YiromIuysJ8',
+      libraries: ['visualization']
     }),
     DiffMatchPatchModule, // DIFF
     // NgbModule.forRoot() // ngx-bootstrap (not good rather shaitolainen!)
@@ -612,6 +635,7 @@ import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
     NlfAuthService,
     NlfAuthSubjectService,
     NlfUserSubjectService,
+    NlfUserAvatarSubjectService,
     GeoLocationService,
     NlfOrsEditorService,
     NlfOrsEditorInvolvedService,

@@ -1,13 +1,11 @@
 import { Component, OnInit, ElementRef, ViewChild, Inject } from '@angular/core';
-import { ApiObservationsItem, NlfConfigItem } from 'app/api/api.interface';
+import { ApiObservationsItem, NlfConfigItem, ApiObservationAskInterface } from 'app/api/api.interface';
 
 // import { Observable } from 'rxjs/Observable';
 // import { Subject } from 'rxjs/Subject';
 // import { map, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-
-
 import { NlfOrsEditorService } from '../ors-editor.service';
-import {  NlfConfigService } from 'app/nlf-config.service';
+import { NlfConfigService } from 'app/nlf-config.service';
 
 
 @Component({
@@ -34,6 +32,16 @@ export class NlfOrsEditorAskComponent implements OnInit {
     this.subject.observableObservation.subscribe(
       observation => {
         this.observation = observation; // Observation
+
+        if (!this.observation.hasOwnProperty('ask')) {
+          this.observation['ask'] = {
+            text: {},
+            skills: 0,
+            knowledge: 0,
+            attitude: 0
+          }
+          this.subject.update(this.observation);
+        }
       });
   }
 

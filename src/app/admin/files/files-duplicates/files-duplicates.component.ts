@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TableEventObject, DefaultTableConfig } from 'app/interfaces/ngx-easy-table.interface';
 import { ApiFilesService } from 'app/api/api-files.service';
 import { ApiOptionsInterface, ApiFileList, ApiFileItem } from 'app/api/api.interface';
-import { clone } from 'lodash';
+//import { clone } from 'lodash';
 
 @Component({
   selector: 'nlf-admin-files-duplicates',
@@ -42,7 +42,7 @@ export class NlfAdminFilesDuplicatesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.tableConf = clone(DefaultTableConfig);
+    this.tableConf = {...DefaultTableConfig};
     this.tableConf.paginationRangeEnabled = true;
     this.tableConf.orderEnabled = true;
     this.tableConf.serverPagination = true;
@@ -85,7 +85,7 @@ export class NlfAdminFilesDuplicatesComponent implements OnInit {
     // Always call getData on table event? No only for pagination and order
 
   }
-  
+
   public getData() {
 
     // Using OptionsInterface to build and pass options

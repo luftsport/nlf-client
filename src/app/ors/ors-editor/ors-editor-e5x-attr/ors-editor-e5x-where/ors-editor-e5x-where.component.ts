@@ -34,15 +34,17 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
           this.attr.latitudeOfOcc.value = position.coords.latitude;
           this.attr.longitudeOfOcc.value = position.coords.longitude;
         }
+        this.geoReady = true;
       },
       err => {
         if (!this.attr.latitudeOfOcc.value && !this.attr.longitudeOfOcc.value) {
           this.attr.latitudeOfOcc.value = 51;
           this.attr.longitudeOfOcc.value = 10;
         }
+        this.geoReady = true;
       },
       () => {
-        this.geoReady = true;
+
         if(!this.attr.stateAreaOfOcc.value) {
           this.updateArea();
         }

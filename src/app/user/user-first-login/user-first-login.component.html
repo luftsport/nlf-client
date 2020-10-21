@@ -11,7 +11,7 @@
     <div *ngIf="!success && !!error">
       <h2>{{error}}</h2>
     </div>
-    
+
     <div *ngIf="!!success">
       <p class="lead">Supert! Du har også muligheten til å endre innstillingene senere under kontoinnstillinger.</p>
       <button class="btn btn-block btn-lg btn-success">
@@ -22,11 +22,15 @@
 
     </div>
     <div *ngIf="!success && !error">
-      <p class="lead">Dette er første gangen systemet registrerer du logger inn. Vennligst velg en av dine klubber som
-        hovedmedlemsskap.
-        Du kan senere endre dette under kontoinnstillinger.</p>
+      <p class="lead" *ngIf="!userData?.settings?.default_club">
+        Dette er første gangen systemet registrerer du logger inn. Vennligst velg en av dine klubber som hovedmedlemsskap.
+        Du kan senere endre dette under kontoinnstillinger.
+      </p>
+      <p class="lead" *ngIf="!!userData?.settings?.default_club">Vennligst velg en av dine klubber som hovedmedlemsskap.
+        Du kan senere endre dette under kontoinnstillinger.
+      </p>
       <span *ngIf="!!org">
-        
+
         <p *ngFor="let role of org">
           <button (click)="setDefaultClub(role)" class="btn btn-block btn-lg btn-primary">
             <fa name="plus" fw="true"></fa>

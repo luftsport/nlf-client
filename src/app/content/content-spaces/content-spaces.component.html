@@ -1,40 +1,43 @@
-<div class="row">
   <div class="nlf-sticky-toolbar">
-      <div class="container nlf-dark">
-          <fa name="sitemap" [fixed]="true"></fa>Content spaces
-      </div>
-  </div>
-</div>
-<div class="row">
-  <div class="container">
-      <span *ngIf="!!dataReady">
-          <ngx-table [configuration]="tableSpaces" [data]="spaces" [columns]="columns" [(pagination)]="pagination" (event)="eventEmitted($event)">
+    <div class="container nlf-dark">
+      <fa name="sitemap" [fixed]="true"></fa>Content spaces
 
-              <ng-template let-row>
-                  <td class="ngx-easy-table-small">
-                    <fa name="sitemap" [fixed]="true"></fa>&nbsp;
-                    <a [routerLink]="['space/', row.space_key]">{{ row.space_key }}</a>
-                  </td>
-                  <td class="ngx-easy-table-small">
-                      <a [routerLink]="['space/', row.space_key, row.slug]">{{ row.title }}</a>
-                  </td>
-                  <td>
-                      <span class="pointer" (click)="delete(row)"><fa name="close" [fixed]="true"></fa></span>
-                      <span class="pointer" [routerLink]="['edit/', row._id]"><fa name="edit" [fixed]="true"></fa></span>
-                      <span class="pointer" [routerLink]="['create/', row._id]"><fa name="plus" [fixed]="true"></fa></span>
-                  </td>
-              </ng-template>
-          </ngx-table>
-      </span>
-      <span *ngIf="!dataReady">
-          <p class="align-middle text-center  text-secondary">
-              <fa name="spinner" animation="pulse" size="3x"></fa>
-          </p>
-      </span>
-
-      <a [routerLink]="['create']" class="btn btn-primary">
-          <fa name="plus" [fixed]="true"></fa>Ny space
+      <a [routerLink]="['create']" class="pull-right btn btn-primary btn-sm">
+        <fa name="plus" [fixed]="true"></fa>Ny space
       </a>
+      <sup class="text-danger mx-1" title="Applikasjonen er ikke ferdig utviklet">beta</sup>
+    </div>
+  </div>
+  <div class="container">
+    <span *ngIf="!!dataReady" class="overflow-auto">
+      <ngx-table [configuration]="tableSpaces" [data]="spaces" [columns]="columns" [(pagination)]="pagination" (event)="eventEmitted($event)">
+
+        <ng-template let-row>
+          <td class="ngx-easy-table-small">
+            <fa name="sitemap" [fixed]="true"></fa>&nbsp;
+            <a [routerLink]="['space/', row.space_key]">{{ row.space_key }}</a>
+          </td>
+          <td class="ngx-easy-table-small">
+            <a [routerLink]="['space/', row.space_key, row.slug]">{{ row.title }}</a>
+          </td>
+          <td>
+            <span class="pointer" (click)="delete(row)">
+              <fa name="close" [fixed]="true"></fa>
+            </span>
+            <span class="pointer" [routerLink]="['edit/', row._id]">
+              <fa name="edit" [fixed]="true"></fa>
+            </span>
+            <span class="pointer" [routerLink]="['create/', row._id]">
+              <fa name="plus" [fixed]="true"></fa>
+            </span>
+          </td>
+        </ng-template>
+      </ngx-table>
+    </span>
+    <span *ngIf="!dataReady">
+      <p class="align-middle text-center  text-secondary">
+        <fa name="spinner" animation="pulse" size="3x"></fa>
+      </p>
+    </span>
 
   </div>
-</div>

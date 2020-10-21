@@ -2,7 +2,9 @@
   <div class="container lead">
     ORS Motorfly
 
-    <button [routerLink]="['/ors', 'motorfly', 'search']" type="button" class="btn btn-sm btn-primary pull-right"><fa name="search" [fixed]="true"></fa> Søk</button>
+    <button [routerLink]="['/ors', 'motorfly', 'search']" type="button" class="btn btn-sm btn-primary pull-right">
+      <fa name="search" [fixed]="true"></fa> Søk
+    </button>
 
     <nlf-help class="pull-right mx-1" key="ors-motorfly"></nlf-help>
   </div>
@@ -14,16 +16,16 @@
 
   <div class="row">
     <!-- MY -->
-    <div class="col-md-6">
+    <div class="col-md-6 col-xs-12 overflow-auto">
       <div class="nlf-ors-toolbar">
-        <fa name="user" [fixed]="true"></fa> Mine observasjoner
+        <fa name="user" [fixed]="true" class="text-secondary"></fa> Mine observasjoner
       </div>
       <nlf-ors-self-table activity="motorfly"></nlf-ors-self-table>
     </div>
     <!-- MY TODO -->
-    <div class="col-md-6">
+    <div class="col-md-6 col-xs-12 overflow-auto">
       <div class="nlf-ors-toolbar">
-        <fa name="random" [fixed]="true"></fa> Til min behandling
+        <fa name="exchange" [fixed]="true" class="text-secondary"></fa> Til min behandling
       </div>
       <nlf-ors-todo-table activity="motorfly"></nlf-ors-todo-table>
     </div>
@@ -52,28 +54,22 @@
 </div>
 
 <!-- CREATE -->
-<div class="row">
-  <div class="py-5 nlf-bg-blue col-md-12">
-    <div class="container">
-      <p class="m-0 text-center text-white">
-        <nlf-ors-motor-create></nlf-ors-motor-create>
-      </p>
-    </div>
+<div class="py-5 nlf-bg-blue col-md-12">
+  <div class="container">
+    <p class="m-0 text-center text-white">
+      <nlf-ors-motor-create></nlf-ors-motor-create>
+    </p>
   </div>
 </div>
 
 <!-- ALL ORS -->
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
-      <div class="card mt-2">
-        <h5 class="card-header">
-          <fa name="list" [fixed]="true"></fa> Alle observasjoner
-        </h5>
-        <div class="card-body table-flush" class="p-0">
-          <nlf-ors-all-table activity="motorfly"></nlf-ors-all-table>
-        </div>
+    <div class="col-md-12 col-xs-12 overflow-auto">
+      <div class="nlf-ors-toolbar">
+        <fa name="list" [fixed]="true" class="text-secondary"></fa> Alle observasjoner
       </div>
+      <nlf-ors-all-table activity="motorfly"></nlf-ors-all-table>
     </div>
   </div>
 </div>

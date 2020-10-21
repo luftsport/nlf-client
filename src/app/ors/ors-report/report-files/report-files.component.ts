@@ -10,7 +10,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class NlfOrsReportFilesComponent implements OnInit {
 
   @Input() files: ApiObservationFileInterface[]; // [{f: string, r: boolean}]
-
+  @Input() state: string;
   filelist = []; // : ApiFileItem[] = []; // Not list since list is Eve, we build our own list
   dataReady = false;
 
@@ -24,6 +24,11 @@ export class NlfOrsReportFilesComponent implements OnInit {
       this.dataReady = true;
     }
 
+  }
+
+  public download(_id: string) {
+
+    this.apiFile.downloadFile(_id);
   }
 
   public getFiles() {

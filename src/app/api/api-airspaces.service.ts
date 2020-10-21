@@ -10,7 +10,7 @@ import { ApiAirspace, ApiAirspaces, ApiOptionsInterface } from './api.interface'
 })
 export class ApiAirspacesService extends ApiRestService {
 
-  private relativeUrl = '/aip/airspaces/';
+  private relativeUrl = '/integration/aip/airspaces/';
 
   constructor(http: HttpClient) { super(http); }
 

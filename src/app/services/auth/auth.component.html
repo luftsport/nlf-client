@@ -48,8 +48,15 @@
 
       <!-- LOGIN BTN -->
       <div *ngIf="!!status && status._status && status.message.mongo>0">
-        <a href="{{ ENV._auth_service }}?client_id={{ ENV._client_id }}&response_type={{ ENV._response_type }}&scope={{ ENV._scope }}&shebang={{ ENV._shebang }}&redirect_uri={{ _return_uri }}" class="btn btn-lg btn-primary btn-block" type="submit">
-          <fa name="lock" [fixed]="true"></fa> Logg inn med NLF Auth
+
+        <a (click)="loading=!loading" href="{{ ENV._auth_service }}?client_id={{ ENV._client_id }}&response_type={{ ENV._response_type }}&scope={{ ENV._scope }}&shebang={{ ENV._shebang }}&redirect_uri={{ _return_uri }}" class="btn btn-lg btn-primary btn-block" type="submit">
+          <span *ngIf="!loading">
+            <fa name="lock" [fixed]="true"></fa> Logg inn med NLF Auth
+          </span>
+          <span *ngIf="loading">
+            <fa name="spinner" animation="pulse" size="3x"></fa><p>Authenticating, please wait....</p>
+          </span>
+
         </a>
       </div>
 
@@ -59,10 +66,12 @@
         </li>
 
         <li class="list-group-item">
-          <!-- MESSAGES -->
+
+          <!-- MESSAGES 
           <div *ngIf="ENV.production" class="alert alert-warning" role="alert">
             <strong>Fallskjerm</strong> ORS er tilgjengelig via <a href="https://ors.nlf.no">ors.nlf.no</a>
           </div>
+          -->
 
           <!-- DRIFTSSTATUS -->
           <div *ngIf="!!status">
@@ -74,18 +83,20 @@
             <div *ngIf="!status._status || status.message.mongo < 1" class="alert alert-danger" role="alert">
               <strong>
                 <fa name="exclamation-triangle" [fixed]="true"></fa>Status
-              </strong> det er problemer med noen systemer og det jobbes for å løse det
+              </strong> det er problemer med noen systemer og det jobbes for å løse det. Du kan forsøke å <a href="{{_return_uri}}">refreshe</a> om litt.
             </div>
           </div>
         </li>
         <li class="list-group-item">
-          Innlogging skjer via NLF-auth (https://auth.nlf.no)
+          Innlogging skjer via <a href="https://auth.nlf.no" target="_blank">nlf-auth</a>, NLF's Oauth2 proxy til <a href="https://www.idrettsforbundet.no/digital/idrettens-id/" target="_blank">Idrettens Id</a>
+        </li>
+        <li *ngIf="ENV._name=='prod'" class="list-group-item">
+            Test system finnes på <a href="https://dev.nlf.no">https://dev.nlf.no</a>
+        </li>
+        <li *ngIf="ENV._name!='prod'" class="list-group-item bg-warning">
+            Dette er et testsystem, se <a href="https://app.nlf.no">https://app.nlf.no</a> for skarpt system.
         </li>
         <li class="list-group-item">
-          Du benytter samme brukernavn og passord som ved innlogging i Min Idrett (https://mi.nif.no)
-        </li>
-        <li class="list-group-item">
-          Etter autentisering via NLF-Auth blir du sendt tilbake hit.
         </li>
         <li class="list-group-item">
           <nlf-ui-footer></nlf-ui-footer>

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, TemplateRef } from '@angular/core';
 import { ApiObservationRatingInterface, ApiObservationsItem } from 'app/api/api.interface';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
-
+import { calculateRating } from 'app/interfaces/functions';
 @Component({
   selector: 'nlf-ors-editor-rating',
   templateUrl: './ors-editor-rating.component.html',
@@ -36,6 +36,7 @@ export class NlfOrsEditorRatingComponent implements OnInit {
 
   onChange() {
     console.log('Rating updating now oboy');
+    this.observation.rating['_rating'] = calculateRating(this.observation.rating['actual'], this.observation.rating['potential']);
     this.subject.update(this.observation);
   }
 

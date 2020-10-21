@@ -1,0 +1,33 @@
+<header class="nlf-sticky-toolbar">
+  <div class="container">
+    <span class="breadcrumb">
+      <li class="breadcrumb-item">
+        <fa name="plane" fixed="false" class="mr-1"></fa><a [routerLink]="['/', 'aircraft']">Aircraft</a>
+      </li>
+      <li class="breadcrumb-item">
+        <span *ngIf="!!callsign" class="mr-1 active">{{ callsign }}</span>
+      </li>
+      <sup class="text-danger mx-1" title="Applikasjonen er ikke ferdig utviklet">beta</sup>
+    </span>
+
+    <a [routerLink]="['/', 'aircraft', 'edit', callsign]" class="btn btn-sm btn-primary mx-1 pull-right">
+      <fa name="edit" [fixed]="true"></fa> Edit
+    </a>
+
+  </div>
+</header>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <div *ngIf="!!callsign" class="my-3">
+        <nlf-aircraft-summary [callsign]="callsign"></nlf-aircraft-summary>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="my-3">
+        <h5>ORS</h5>
+        <nlf-aircraft-ors [callsign]="callsign"></nlf-aircraft-ors>
+      </div>
+    </div>
+  </div>
+</div>

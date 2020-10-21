@@ -55,6 +55,7 @@ export class ApiFilesService extends ApiRestService {
       response => {
         const blob = new Blob([response.file], { type: response.content_type });
         saveAs(blob, response.name);
+        //window.location.href = response.url;
       },
       err => console.log(err)
     );

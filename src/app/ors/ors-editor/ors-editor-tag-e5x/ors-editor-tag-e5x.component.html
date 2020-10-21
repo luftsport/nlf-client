@@ -12,7 +12,7 @@
 
     <!-- Simple within limits, all populated -->
     <span *ngIf="choices.length>0 && !search">
-      <nlf-ors-editor-tag-static (change)="update($event)" [disable]="disabled" [(items)]="items" [tags]="choices" [multiple]="(attribute.max>1 || attribute.max==-1) ? true : false" [max]="attribute.max>1 ? attribute.max : undefined" [id]="path">
+      <nlf-ors-editor-tag-static (change)="debouncedUpdate($event)" [disable]="disabled" [(items)]="items" [tags]="choices" [multiple]="(attribute.max>1 || attribute.max==-1) ? true : false" [max]="attribute.max>1 ? attribute.max : undefined" [id]="path">
       </nlf-ors-editor-tag-static>
     </span>
 
@@ -36,18 +36,18 @@
       <!-- Number -->
       <span *ngIf="!!attribute.restrictions">
         <input *ngIf="attribute.restrictions.type=='decimal' || attribute.restrictions.type=='integer' || attribute.restrictions.type=='int'" type="number" [max]="attribute.restrictions.max" [min]="attribute.restrictions.min"
-          [step]="attribute.restrictions.inc" [disabled]="disabled" (change)="update($event)" [(ngModel)]="items" [id]="path" class="form-control">
+          [step]="attribute.restrictions.inc" [disabled]="disabled" (change)="debouncedUpdate($event)" [(ngModel)]="items" [id]="path" class="form-control">
 
         <!-- String -->
-        <input *ngIf="attribute.restrictions.type=='string'" type="{{ type || 'text'}}" [max]="attribute.restrictions.max" [min]="attribute.restrictions.min || 0" [disabled]="disabled" (change)="update($event)" [(ngModel)]="items" [id]="path"
+        <input *ngIf="attribute.restrictions.type=='string'" type="{{ type || 'text'}}" [max]="attribute.restrictions.max" [min]="attribute.restrictions.min || 0" [disabled]="disabled" (change)="debouncedUpdate($event)" [(ngModel)]="items" [id]="path"
           class="form-control">
       </span>
 
       <span *ngIf="!attribute.restrictions">
         <!-- String -->
-        <input *ngIf="attribute.type=='string'" type="{{ type || 'text'}}" [disabled]="disabled" (change)="update($event)" [(ngModel)]="items" [id]="path" class="form-control">
+        <input *ngIf="attribute.type=='string'" type="{{ type || 'text'}}" [disabled]="disabled" (change)="debouncedUpdate($event)" [(ngModel)]="items" [id]="path" class="form-control">
         <!-- Number -->
-        <input *ngIf="attribute.type!='string'" type="number" [disabled]="disabled" (change)="update($event)" [(ngModel)]="items" [id]="path" class="form-control">
+        <input *ngIf="attribute.type!='string'" type="number" [disabled]="disabled" (change)="debouncedUpdate($event)" [(ngModel)]="items" [id]="path" class="form-control">
       </span>
 
 
