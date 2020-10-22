@@ -147,6 +147,11 @@ export class NlfOrsMotorCreateComponent implements OnInit, AfterViewInit {
 
       // Defaults! Always make them!!!
       let occurrence = new E5XClass().occurrence;
+      try {
+        occurrence.entities.reportingHistory[0].attributes.reportingEntity = { value: 101311 };
+      }  catch (err) {
+        consoile.error(err);
+      }
       /*
       occurrence.entities.narrative.push(new E5XNarrativeClass().narrative);
       occurrence.entities.reportingHistory.push(new E5XReportingHistoryClass().reportingHistory);

@@ -170,7 +170,8 @@ export class NlfOrsE5xComponent implements OnInit {
 
     // Reporting history - to be moved to ....
     if (this.observation.occurrence.entities.reportingHistory.length > 0) {
-      this.observation.occurrence.entities.reportingHistory[0].attributes.reportingEntity.value = 101311;
+      // this.observation.occurrence.entities.reportingHistory[0].attributes.reportingEntity.value = 101311;
+      // moved to flags!
       let rdate = new Date();
       //this.e5xobservation.entities.reportingHistory[0].attributes.reportingDate.value = [rdate.getFullYear(), pad(rdate.getMonth() + 1), pad(rdate.getDate())].join('-'); //+ ' ' + [rdate.getHours(), rdate.getMinutes(), rdate.getSeconds()].join(':');
       this.observation.occurrence.entities.reportingHistory[0].attributes.reportVersion.value = this.observation._version;

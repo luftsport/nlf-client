@@ -32,8 +32,33 @@ export class NlfOrsEditorFlagsComponent implements OnInit {
     }
   }
 
+  private school(event) {
+    if (event) {
+      const options: ApiOptionsInterface = {
+        query: { projection: { name: 1, id: 1 } }
+      };
+
+      this.apiCache.get(['get-lungo-organization', this.observation.discipline, options.query],
+        this.orgService.getOrganization(this.observation.discipline, options)).subscribe(
+          data => {
+            this.observation.occurrence.entities.reportingHistory[0].attributes.reportingEntity = {value: 100479, additionalText: data.name, additionalTextEncoding = 'xs:string'};
+          },
+          err => this.observation.occurrence.entities.reportingHistory[0].attributes.reportingEntity = {value: 100479, additionalText: 'Ukjent navn', additionalTextEncoding = 'xs:string'};
+
+        );
+
+    } else {
+      this.observation.occurrence.entities.reportingHistory[0].attributes.reportingEntity = {value: 101311};
+    }
+  }
+
   onChange(event, flag) {
     console.log('Event', event, flag);
+
+    if (flag === 'school') {
+      this.school(event);
+    }
+
     this.subject.update(this.observation);
   }
 
