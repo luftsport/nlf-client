@@ -1,6 +1,6 @@
 <div class="modal-header">
   <h4 class="modal-title">
-    Opprett ORS
+    Opprett {{ getORSName() }}
   </h4>
   <span *ngIf="ENV._name!='prod'" class="badge badge-danger ml-3">{{ ENV._name }}</span>
   <button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.dismiss()">

@@ -9,7 +9,7 @@ import { NlfUserSubjectService } from 'app/user/user-subject.service';
 import { NlfAlertService } from 'app/services/alert/alert.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'environments/environment';
-import {  NlfConfigService } from 'app/nlf-config.service';
+import { NlfConfigService } from 'app/nlf-config.service';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 // import { ApiObservationsItem} from 'app/api/api.interface';
 
@@ -94,6 +94,10 @@ export class NlfOrsCreateModalComponent implements OnInit {
 
   public getActivityName() {
     return this.config.inv_mapping[this.settings.default_activity];
+  }
+
+  public getORSName() {
+    return this.config[this.getActivityName()]['observation']['app_name'];
   }
 
   public canCreateDefault() {

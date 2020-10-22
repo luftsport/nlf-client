@@ -127,6 +127,7 @@ export const NLF_DI_CONFIG: NlfConfig = {
     id: 109,
     org_id: 90972,
     observation: {
+      app_name: 'ORS',
       e5x: {
         enabled: false
       },
@@ -223,6 +224,7 @@ export const NLF_DI_CONFIG: NlfConfig = {
     id: 238,
     org_id: 203025,
     observation: {
+      app_name: 'OBSREG',
       e5x: {
         enabled: true,
         rit_version: '4.1.0.3'
@@ -315,6 +317,7 @@ export const NLF_DI_CONFIG: NlfConfig = {
     id: 327,
     org_id: 203030,
     observation: {
+      app_name: 'OBSREG',
       e5x: {
         enabled: true,
         rit_version: '4.1.0.3'
