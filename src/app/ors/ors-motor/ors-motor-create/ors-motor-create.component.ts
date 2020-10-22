@@ -150,7 +150,7 @@ export class NlfOrsMotorCreateComponent implements OnInit, AfterViewInit {
       try {
         occurrence.entities.reportingHistory[0].attributes.reportingEntity = { value: 101311 };
       }  catch (err) {
-        consoile.error(err);
+        console.error(err);
       }
       /*
       occurrence.entities.narrative.push(new E5XNarrativeClass().narrative);
