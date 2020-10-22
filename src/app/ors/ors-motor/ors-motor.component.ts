@@ -12,7 +12,7 @@ export class NlfOrsMotorComponent implements OnInit {
   constructor(private app: NlfComponent) { }
 
   ngOnInit() {
-    this.app.setTitle('ORS Oversikt');
+    this.app.setTitle('OBSREG Oversikt');
   }
 
 }

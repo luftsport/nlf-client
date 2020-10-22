@@ -9,7 +9,7 @@
       <!-- <fa name="file-text-o" [fixed]="true"></fa>&nbsp;-->
       <!-- {{ data.tags | nlfOrsTags: ' / '}} -->
       <span class="overflow-hidden">
-        <a [routerLink]="['/ors', 'motorfly']">ORS</a>#{{ observation.id }}
+        <a [routerLink]="['/ors', 'motorfly']">OBSREG</a>#{{ observation.id }}
         <nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type" link="true" seperator="/"></nlf-resolve-observation-tags>&nbsp;
         <span *ngIf="!!observation.rating" class="badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{
           observation.rating | nlfOrsRatingCalc }}</span>
@@ -440,7 +440,7 @@
     <div class="row my-3">
       <span class="pointer mx-1 pull-right" *ngIf="observation.acl_user.x && observation.workflow.state=='draft'" (click)="openWorkflow()">
         <button class="btn btn-success">
-          <fa name="upload" [fixed]="true"></fa>Send ORS koordinator
+          <fa name="upload" [fixed]="true"></fa>Send OBSREG koordinator
         </button>
       </span>
     </div>
@@ -471,7 +471,7 @@
 <ng-template #modalVersions>
   <div class="modal-header">
     <h4 class="modal-title pull-left">
-      ORS#{{ observation.id }} version {{ observation._version }}</h4>
+      OBSREG#{{ observation.id }} version {{ observation._version }}</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>

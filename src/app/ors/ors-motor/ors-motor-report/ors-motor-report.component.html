@@ -8,7 +8,7 @@
 
 			<!-- <fa name="file-text-o" [fixed]="true"></fa>&nbsp;-->
 			<!-- {{ observation.tags | nlfOrsTags: ' / '}} -->
-			<a [routerLink]="['/ors', observation._model.type]">ORS</a>#{{ observation.id }}
+			<a [routerLink]="['/ors', observation._model.type]">OBSREG</a>#{{ observation.id }}
 			<nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type" link="true" seperator="/"></nlf-resolve-observation-tags>&nbsp;
 			<!-- /TITLE -->
 			<!-- RATING -->

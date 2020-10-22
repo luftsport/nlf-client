@@ -35,12 +35,14 @@ const nlfOrsRoutes: Routes = [
   { path: 'ors/:activity/stats/:id', component: NlfOrsStatsHeatmapComponent, canActivate: [NlfAuthGuard], data: { title: 'ORS - statistikk' } },
 
   //{ path: 'ors/fallskjerm/edit/workflow/:id', component: NlfOrsEditorWorkflowComponent, canActivate: [NlfAuthGuard]},
+
+  
   // Motorfly
-  { path: 'ors/motorfly', component: NlfOrsMotorComponent, canActivate: [NlfAuthGuard], data: { title: 'ORS - Motorfly oversikt' } },
-  { path: 'ors/motorfly/report/:id', component: NlfOrsMotorReportComponent, canActivate: [NlfAuthGuard], data: { title: 'ORS - Motorfly rapportvisning' } },
-  { path: 'ors/motorfly/report/:id/version/:version', component: NlfOrsMotorReportComponent, canActivate: [NlfAuthGuard], data: { title: 'ORS - Motorfly viser version' } },
-  { path: 'ors/motorfly/edit/:id', component: NlfOrsMotorEditorComponent, canActivate: [NlfAuthGuard], data: { title: 'ORS - Motorfly editor' } },
-  { path: 'ors/motorfly/search', component: NlfOrsMotorSearchComponent, canActivate: [NlfAuthGuard], data: { title: 'ORS - Motorfly søk' } },
+  { path: 'ors/motorfly', component: NlfOrsMotorComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Motorfly oversikt' } },
+  { path: 'ors/motorfly/report/:id', component: NlfOrsMotorReportComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Motorfly rapportvisning' } },
+  { path: 'ors/motorfly/report/:id/version/:version', component: NlfOrsMotorReportComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Motorfly viser version' } },
+  { path: 'ors/motorfly/edit/:id', component: NlfOrsMotorEditorComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Motorfly editor' } },
+  { path: 'ors/motorfly/search', component: NlfOrsMotorSearchComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Motorfly søk' } },
 
   // Stndalones
   { path: 'ors/:activity/activities/:id', component: NlfOrsActivitiesComponent, canActivate: [NlfAuthGuard], data: { title: 'ORS - Aktivitet' } }
