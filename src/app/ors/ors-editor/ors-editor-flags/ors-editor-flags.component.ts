@@ -32,8 +32,8 @@ export class NlfOrsEditorFlagsComponent implements OnInit {
     }
   }
 
-  onChange(event) {
-    console.log('Event', event);
+  onChange(event, flag) {
+    console.log('Event', event, flag);
     this.subject.update(this.observation);
   }
 

@@ -202,7 +202,7 @@
     </div>
     <div class="row">
       <div class="col-xs-12 col-md-12 bg-light">
-        <nlf-ors-editor-e5x-reportinghistory-reporters-description [disabled]="!observation.acl_user.w" (change)="update()" [(narrative)]="observation.occurrence.entities.reportingHistory[0].attributes.reporterSDescription" [(language)]="observation.occurrence.entities.reportingHistory[0].attributes.reporterSLanguage"></nlf-ors-editor-e5x-reportinghistory-reporters-description>
+        <nlf-ors-editor-e5x-reportinghistory-reporters-description *ngIf="!!observation.occurrence.entities.reportingHistory[0].attributes" [disabled]="!observation.acl_user.w" (change)="update()" [(narrative)]="observation.occurrence.entities.reportingHistory[0].attributes.reporterSDescription" [(language)]="observation.occurrence.entities.reportingHistory[0].attributes.reporterSLanguage"></nlf-ors-editor-e5x-reportinghistory-reporters-description>
       </div>
     </div>
 
