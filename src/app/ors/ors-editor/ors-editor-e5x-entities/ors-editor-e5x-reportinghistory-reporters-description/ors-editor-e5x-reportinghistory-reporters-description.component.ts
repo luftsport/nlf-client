@@ -8,8 +8,10 @@ import { debounce } from 'ts-debounce';
 })
 export class NlfOrsEditorE5xReportinghistoryReportersDescriptionComponent implements OnInit {
 
-  @Input() reportingHistory: any;
-  @Output() reportingHistoryChange: EventEmitter<any> = new EventEmitter(true);
+  @Input() narrative: any;
+  @Output() narrativeChange: EventEmitter<any> = new EventEmitter(true);
+  @Input() language: any;
+  @Output() languageChange: EventEmitter<any> = new EventEmitter(true);
   @Output() change: EventEmitter<boolean> = new EventEmitter(true);
   @Input() disabled: boolean = false;
   @Input() showLang: boolean = true;
@@ -21,17 +23,22 @@ export class NlfOrsEditorE5xReportinghistoryReportersDescriptionComponent implem
 
   ngOnInit() {
 
-    if (!this.reportingHistory.attributes.hasProperty('reporterSLanguage')) {
-      this.reportingHistory.attributes['reporterSLanguage'] = {value: 43};
+    if (!this.language) {
+      this.language = {value: 43};
       this.update();
     }
 
-    if(!this.reportingHistory.attributes.reporterSLanguage.value || this.reportingHistory.attributes.reporterSLanguage.value<1) {
-      this.reportingHistory.attributes.reporterSLanguage.value = 43;
+    if(!this.language.value || this.language.value<1) {
+      this.language['value'] = 43;
     }
 
-    if (!this.reportingHistory.attributes.hasProperty('reporterSDescription')) {
-      this.reportingHistory.attributes['reporterSDescription'] = {plainText: ''};
+    if (!this.narrative) {
+      this.narrative = {plainText: ''};
+      this.update();
+    }
+
+    if (!this.narrative.hasOwnProperty('plainText')) {
+      this.narrative['plainText'] = '';
       this.update();
     }
 
@@ -39,13 +46,14 @@ export class NlfOrsEditorE5xReportinghistoryReportersDescriptionComponent implem
   }
   public write() {
     if (this.capitalize) {
-      this.reportingHistory.attributes.reporterSDescription.plainText = this.reportingHistory.attributes.reporterSDescription.plainText.toUpperCase().replace(/!/g,'.');
+      this.narrative.plainText = this.narrative.plainText.toUpperCase().replace(/!/g,'.');
     }
     this.update();
   }
   public update() {
 
-    this.reportingHistoryChange.emit(this.reportingHistory);
+    this.narrativeChange.emit(this.narrative);
+    this.languageChange.emit(this.language);
     this.change.emit(true);
 
   }

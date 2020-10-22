@@ -33,6 +33,7 @@ export class NlfOrsEditorFlagsComponent implements OnInit {
   }
 
   onChange(event) {
+    console.log('Event', event);
     this.subject.update(this.observation);
   }
 
