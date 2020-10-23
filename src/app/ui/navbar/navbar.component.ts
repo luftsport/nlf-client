@@ -29,11 +29,12 @@ export class NlfUiNavbarComponent implements OnInit {
   isCollapsed = true;
   modalRef;
   ENV = environment;
-  user_data: ApiUserDataSubjectItem;
+  public user_data: ApiUserDataSubjectItem;
   public config: NlfConfigItem;
   current_ors: { id: number, type: string };
   public avatar: string;
   public avatar_missing =  avatar_tmp_image;
+  public dataReady = false;
 
   constructor(
     public authSubject: NlfAuthSubjectService,

@@ -61,15 +61,19 @@ export class NlfOrsCreateModalComponent implements OnInit {
     this.configService.observableConfig.subscribe(
       data => {
         this.config = data;
+
+        this.userData.observable.subscribe(
+          user_data => {
+            if (!!user_data && user_data.hasOwnProperty('settings')) {
+              this.settings = user_data.settings;
+              this.dataReady = true;
+            }
+          });
+
       }
     );
 
-    this.userData.observable.subscribe(
-      data => {
-        if (!!data && data.hasOwnProperty('settings')) {
-          this.settings = data.settings;
-        }
-      });
+
 
     // Need to access reset
     this.subject.observableObservation.subscribe(
@@ -97,7 +101,8 @@ export class NlfOrsCreateModalComponent implements OnInit {
   }
 
   public getORSName() {
-    return this.config[this.getActivityName()]['observation']['app_name'];
+    console.log(this.config, this.userData);
+    return this.config[this.config.inv_mapping[this.settings.default_activity]]['observation']['app_name'];
   }
 
   public canCreateDefault() {

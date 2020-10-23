@@ -1,14 +1,20 @@
 <div class="modal-header">
-  <h4 class="modal-title">
-    Opprett {{ getORSName() }}
+  <h4 class="modal-title" *ngIf="dataReady">
+    Opprett {{ config[config.inv_mapping[settings.default_activity]]['observation']['app_name'] || 'ORSX' }}
   </h4>
   <span *ngIf="ENV._name!='prod'" class="badge badge-danger ml-3">{{ ENV._name }}</span>
   <button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.dismiss()">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-
-<div class="modal-body text-center">
+<div class="modal-body text-center" *ngIf="!dataReady">
+  <p>
+  <ngb-alert [dismissible]="false" type="danger">
+    <strong>Error!</strong> Kunne ikke laste nøvendig konfigurasjon.
+  </ngb-alert>
+</p>
+</div>
+<div class="modal-body text-center" *ngIf="dataReady">
 
   <!--Default discipline-->
   <div class="my-3" *ngIf="showDefault">
@@ -65,6 +71,6 @@
 </div>
 
 <div class="modal-footer">
-  <a class="btn btn-link mr-auto" [routerLink]="['/ors', getActivityName()]"><fa name="link" [fixed]="true"></fa> ORS {{ getActivityName() }}</a>
+  <a class="btn btn-link mr-auto" [routerLink]="['/ors', getActivityName()]"><fa name="link" [fixed]="true"></fa> {{ config[config.inv_mapping[settings.default_activity]]['observation']['app_name'] || 'ORSX' }} {{ getActivityName() }}</a>
   <button class="btn btn-outline-dark" (click)="activeModal.close()">Avbryt</button>
 </div>
