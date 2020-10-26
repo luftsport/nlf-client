@@ -143,6 +143,11 @@ export class NlfOrsE5xComponent implements OnInit {
     //DEFAULTS
     // Title
     this.observation.occurrence.attributes.headline = this.observation.tags.join(' ') || '';
+    if(ENV._name!='prod') {
+      this.observation.occurrence.attributes.headline = this.observation.occurrence.attributes.headline + ' TEST [' + ENV._name + ']';
+    }
+
+    if(this.config
 
     // Times this.currentWhen.toISOString().substr(0,10)
     let t = new Date(this.observation.when);
