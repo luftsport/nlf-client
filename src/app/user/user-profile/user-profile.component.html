@@ -119,7 +119,7 @@
 		<div class="row">
 			<div class="col-xs-12 col-md-12 mt-6">
 				<div class="my-3">
-					<h4>Mine ORS som involvert</h4>
+					<h4>Mine {{ config[config.inv_mapping[user.settings.default_activity]]['observation']['app_name'] || 'ORSX' }} som involvert</h4>
 					<nlf-user-ors activity="fallskjerm"></nlf-user-ors>
 					<nlf-user-ors activity="motorfly"></nlf-user-ors>
 				</div>
