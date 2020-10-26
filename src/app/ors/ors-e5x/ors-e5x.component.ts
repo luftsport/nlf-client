@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
-import {  NlfConfigService } from 'app/nlf-config.service';
+import { NlfConfigService } from 'app/nlf-config.service';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import { ApiAirportsService } from 'app/api/api-airports.service';
 import { ApiOptionsInterface, ApiObservationsItem, ApiAirport, ApiAirports, ApiObservationAircraftsItem, NlfConfigItem } from 'app/api/api.interface';
@@ -143,11 +143,14 @@ export class NlfOrsE5xComponent implements OnInit {
     //DEFAULTS
     // Title
     this.observation.occurrence.attributes.headline = this.observation.tags.join(' ') || '';
-    if(ENV._name!='prod') {
+
+    /**
+    Norwegian CAA needs "TEST" for test reports
+    Testklubb IR should always be marked "TEST"
+    */
+    if (ENV._name != 'prod' || this.observation.club === 781765) {
       this.observation.occurrence.attributes.headline = this.observation.occurrence.attributes.headline + ' TEST [' + ENV._name + ']';
     }
-
-    if(this.config
 
     // Times this.currentWhen.toISOString().substr(0,10)
     let t = new Date(this.observation.when);
