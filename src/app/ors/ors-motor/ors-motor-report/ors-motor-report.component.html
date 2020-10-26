@@ -128,38 +128,43 @@
 				<div class="card-header">
 					<fa name="bolt" [fixed]="true"></fa> E5X
 				</div>
-				<div *ngIf="observation.e5x.audit.length==0" class="alert alert-info">
-					<strong>Ingen historikk</strong> hvilket betyr at denne observasjonen ikke har blitt sendt LT tidligere.
-				</div>
-				<div class="overflow-auto">
-					<table *ngIf="observation.e5x.audit.length>0" class="my-3 table table-striped table-sm">
-						<tbody>
-							<tr *ngFor="let audit of observation.e5x.audit" [ngClass]="{'bg-info':observation._version==audit.version}">
-								<td>
-									<nlf-ors-editor-tag-e5x-render classes="badge badge-secondary" [showLabel]="false" [items]="audit.status" path="E5X.Occurrence.ReportingHistory.ReportStatus"></nlf-ors-editor-tag-e5x-render>
-								</td>
-								<td>
-									{{ audit.date | date:'yyyy-MM-dd HH:mm'}}
-								</td>
-								<td>
-									<nlf-resolve-lungo-person [person_id]="audit.person_id"></nlf-resolve-lungo-person>
-								</td>
-								<td>
-									v{{ audit.version }}
-								</td>
-								<td>
-									<span *ngIf="audit.sent" class="badge badge-success">OK</span>
-									<span *ngIf="!audit.sent" class="badge badge-danger">Ikke sendt</span>
-								</td>
-								<td class="text-right">
-									<a *ngIf="!!token" target="_blank" href="/api/v1/e5x/download/{{observation._model.type}}/{{observation.id}}/{{audit.version}}?token={{token}}">
-										<fa name="download" [fixed]="true"></fa>
-									</a>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+
+				<ng-container *ngIf="observation.hasOwnProperty('e5x')">
+					<div *ngIf="observation.e5x.audit.length==0" class="alert alert-info">
+						<strong>Ingen historikk</strong> hvilket betyr at denne observasjonen ikke har blitt sendt LT tidligere.
+					</div>
+
+					<div class="overflow-auto">
+						<table *ngIf="observation.e5x.audit.length>0" class="my-3 table table-striped table-sm">
+							<tbody>
+								<tr *ngFor="let audit of observation.e5x.audit" [ngClass]="{'bg-info':observation._version==audit.version}">
+									<td>
+										<nlf-ors-editor-tag-e5x-render classes="badge badge-secondary" [showLabel]="false" [items]="audit.status" path="E5X.Occurrence.ReportingHistory.ReportStatus"></nlf-ors-editor-tag-e5x-render>
+									</td>
+									<td>
+										{{ audit.date | date:'yyyy-MM-dd HH:mm'}}
+									</td>
+									<td>
+										<nlf-resolve-lungo-person [person_id]="audit.person_id"></nlf-resolve-lungo-person>
+									</td>
+									<td>
+										v{{ audit.version }}
+									</td>
+									<td>
+										<span *ngIf="audit.sent" class="badge badge-success">OK</span>
+										<span *ngIf="!audit.sent" class="badge badge-danger">Ikke sendt</span>
+									</td>
+									<td class="text-right">
+										<a *ngIf="!!token" target="_blank" href="/api/v1/e5x/download/{{observation._model.type}}/{{observation.id}}/{{audit.version}}?token={{token}}">
+											<fa name="download" [fixed]="true"></fa>
+										</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</ng-container>
+
 			</div>
 		</div>
 
@@ -169,9 +174,16 @@
 				<div class="card-header">
 					<fa name="commenting-o" [fixed]="true"></fa> Narrative
 				</div>
-				<div class="p-3">
-					{{ observation.occurrence.entities.narrative[0].attributes.narrativeText.plainText }}
-				</div>
+				<ng-container *ngIf="observation.occurrence.entities.hasOwnProperty('narrative') && observation.occurrence.entities.narrative.length>0">
+					<div class="p-3">
+						{{ observation.occurrence.entities.narrative[0].attributes.narrativeText.plainText }}
+					</div>
+				</ng-container>
+				<ng-container *ngIf="observation.occurrence.entities.reportingHistory[0].attributes.hasOwnProperty('reporterSDescription')">
+					<div class="p-3">
+						{{ observation.occurrence.entities.reportingHistory[0].attributes.reporterSDescription.plainText }}
+					</div>
+				</ng-container>
 			</div>
 		</div>
 		<!-- /NARRATIVE -->

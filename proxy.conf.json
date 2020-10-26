@@ -1,6 +1,6 @@
 {
   "/api/*": {
-    "target": "http://127.0.0.1:8082/",
+    "target": "https://dev.nlf.no/",
     "changeOrigin": true,
     "logLevel": "debug",
     "secure": false

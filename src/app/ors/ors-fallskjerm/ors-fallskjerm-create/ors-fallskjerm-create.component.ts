@@ -7,7 +7,7 @@ import { ApiUserService } from 'app/api/api-user.service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
 import { NlfAlertService } from 'app/services/alert/alert.service';
-import {  NlfConfigService } from 'app/nlf-config.service';
+import { NlfConfigService } from 'app/nlf-config.service';
 import { environment } from 'environments/environment';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 // import { ApiObservationsItem} from 'app/api/api.interface';
@@ -84,7 +84,7 @@ export class NlfOrsFallskjermCreateComponent implements OnInit, AfterViewInit {
   public canCreate() {
     try {
       return this.config.fallskjerm.observation.create[this.ENV._name];
-    } catch(e) {
+    } catch (e) {
       return false;
     }
   }
@@ -132,41 +132,42 @@ export class NlfOrsFallskjermCreateComponent implements OnInit, AfterViewInit {
   public createObservation() {
     if (this.selected === '' || this.selected === {}) {
       this.alertService.error('Ingen klubb valgt, velg klubb først', false, true, 10);
-      return;
+
       // @TODO: alert here!
-    }
-    this.loading = true;
-    this.alertService.clear();
+    } else {
+      this.loading = true;
+      this.alertService.clear();
 
-    console.log(this.selected);
+      console.log('Selected org', this.selected);
 
-    this.clubs.forEach(element => {
+      this.clubs.forEach(element => {
 
-      if (element.id == this.selected) {
+        if (element.id == this.selected) {
 
-        this.orsService.create({ 'discipline': this.selected, 'club': element.parent_id }).subscribe(
-          data => {
-            this.subject.reset();
-            console.log('ORS Created', data);
-            if (!!data._id && !!data.id) {
+          this.orsService.create({ 'discipline': this.selected, 'club': element.parent_id }).subscribe(
+            data => {
+              this.subject.reset();
+              console.log('ORS Created', data);
+              if (!!data._id && !!data.id) {
 
-              this.router.navigateByUrl('/ors/fallskjerm/edit/' + data.id);
+                this.router.navigateByUrl('/ors/fallskjerm/edit/' + data.id);
+              }
+            },
+            err => {
+              this.alertService.error('Kunne ikke opprette ORS: ' + err.message);
+              this.loading = false;
+            },
+            () => {
+              console.log('Created observation');
+              this.loading = false;
             }
-          },
-          err => {
-            this.alertService.error('Kunne ikke opprette ORS: ' + err.message);
-            this.loading = false;
-          },
-          () => {
-            console.log('Created observation');
-            this.loading = false;
-          }
-        );
+          );
 
-      }
+        }
 
-    });
+      });
 
+    }
   }
 
 }

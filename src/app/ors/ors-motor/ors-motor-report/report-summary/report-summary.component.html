@@ -19,6 +19,16 @@
     </td>
   </tr>
 
+  <!-- FTL -->
+  <tr *ngIf="observation.organization.hasOwnProperty('ftl')">
+    <td>FTL i klubb</td>
+    <td>
+      <div *ngFor="let ftl of observation.organization.ftl">
+        <nlf-resolve-lungo-person [avatar]="true" [link]="true" [person_id]="ftl"></nlf-resolve-lungo-person>
+      </div>
+    </td>
+  </tr>
+
   <!-- DTO -->
   <tr>
     <td>DTO i klubb</td>
@@ -31,7 +41,7 @@
 
   <!-- OBSREG KOORDINATORER -->
   <tr>
-    <td>OBSREG Ansvarlig</td>
+    <td>OBSREG Koordinator</td>
     <td>
       <div *ngFor="let ors of observation.organization.ors">
         <nlf-resolve-lungo-person [person_id]="ors" [avatar]="true" [link]="true"></nlf-resolve-lungo-person>

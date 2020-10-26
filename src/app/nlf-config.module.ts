@@ -11,6 +11,7 @@ export class NlfItemConfig {
   org_id?: number;
 
   observation?: {
+    app_name: string,
     create?: { local?: boolean, dev?: boolean, beta?: boolean, prod?: boolean },
     components?: { attributes: Object, flags: Object },
     flagsArr?: Array<string>,
@@ -50,6 +51,7 @@ export class NlfConfig {
   fallskjerm?: NlfItemConfig;
   motorfly?: NlfItemConfig;
   mikrofly?: NlfItemConfig;
+  sportsfly?: NlfItemConfig;
   seilfly?: NlfItemConfig;
   ballong?: NlfItemConfig;
   hps?: NlfItemConfig;
