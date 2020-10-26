@@ -50,6 +50,7 @@ export class NlfOrsFallskjermDashboardComponent implements OnInit {
   };
   sub;
 
+
   constructor(
     private route: ActivatedRoute,
     private agg: ApiObservationsAggService,
@@ -181,25 +182,41 @@ export class NlfOrsFallskjermDashboardComponent implements OnInit {
         this.pieStates = [];
         //this.pieStates = data[1]._items.map(el => [{ name: this.config.fallskjerm.observation.state[el._id]['label'], value: el.count, state: el._id }));
         //this.pieStatesReady = true;
-        this.pieTypes = data[0]._items.map(el => ({ name: this.config.fallskjerm.observation.types[el._id]['label'], value: el.count, type: el._id }));
-        this.pieStates = data[1]._items.map(elm => ({ name: this.config.fallskjerm.observation.state[elm._id]['label'], value: elm.count, state: elm._id }));
+        try {
+          this.pieTypes = data[0]._items.map(el => ({ name: this.config.fallskjerm.observation.types[el._id]['label'], value: el.count, type: el._id }), err => { console.log('ERR', err) });
+        } catch (e) {
+          console.log('ERR pie', e);
+          console.log(data[0]._items);
+        }
+
+        try {
+          this.pieStates = data[1]._items.map(elm => ({ name: this.config.fallskjerm.observation.state[elm._id]['label'], value: elm.count, state: elm._id }), err => { console.log('ERR', err) });
+        } catch (e) {
+          console.log('ERR pie', e);
+          console.log(data[1]._items);
+        }
+
 
         const a = this.pieTypes.reduce(
-          (accumulator, type) => {
-            return accumulator + type.value;
+          (accumulator, ors_type) => {
+            return accumulator + ors_type.value;
           }, 0);
+
         const b = this.pieTypes.reduce(
-          (accumulator, type) => {
-            if (['accident', 'incident'].indexOf(type.type) > -1) {
-              console.log('HEI!');
-              return accumulator + type.value;
+          (accumulator, ors_type) => {
+            if (['accident', 'incident'].indexOf(ors_type.type) > -1) {
+              return accumulator + ors_type.value;
+            } else {
+              return accumulator
             }
           }, 0);
 
         const c = this.pieStates.reduce(
-          (accumulator, state) => {
-            if (['closed', 'withdrawn'].indexOf(state.state) < 0) {
-              return accumulator + state.value;
+          (accumulator, ors_state) => {
+            if (['closed', 'withdrawn'].indexOf(ors_state.state) < 0) {
+              return accumulator + ors_state.value;
+            } else {
+              return accumulator
             }
           }, 0);
 
@@ -208,7 +225,7 @@ export class NlfOrsFallskjermDashboardComponent implements OnInit {
           total_injury: b,
           total_processing: c
         };
-        delay(1000);
+
         this.pieTypesReady = true;
         this.pieStatesReady = true;
 

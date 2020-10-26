@@ -103,21 +103,20 @@
 
 <!-- STATUSBAR -->
 <div *ngIf="pieTypesReady && pieStatesReady" class="col-xs-12 clearfix my-3 bg-light">
-{{ stats | json }}
   <div class="container">
     <div class="row">
       <div class="col-md-2 text-center bg-danger text-white">
-        <h2>{{ stats.total_processing }}</h2>
+       <h2>{{ (stats.total_injury / stats.total_ors) | number:'1.2-2'}}</h2>
         <h5>skade per ors</h5>
       </div>
 
       <div class="col-md-2 text-center bg-secondary text-white">
-        <h2>{{ stats.total_ors }}%</h2>
+        <h2>{{ stats.total_processing }}</h2>
         <h5>ubehandlede</h5>
       </div>
 
       <div class="col-md-2 text-center bg-secondary text-white">
-        <h2>{{ stats.total_injury }}</h2>
+        <h2>-</h2><!--<h2>{{ stats.total_injury }}</h2>-->
         <h5>hopp {{ current_year }}</h5>
       </div>
 
