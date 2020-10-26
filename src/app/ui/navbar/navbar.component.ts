@@ -60,12 +60,10 @@ export class NlfUiNavbarComponent implements OnInit {
       this.configSubject.observableConfig.subscribe(
         config => {
           this.config = config;
-          console.log('[CONFIG]', config);
         }
       ),
       this.userSubject.observable.subscribe(
         data => {
-          console.log('NAVBAR SETTING', data);
           if (!!data && Object.keys(data).length > 0) {
             this.user_data = data;
           }
