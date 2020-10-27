@@ -146,7 +146,7 @@ export class NlfOrsMotorCreateComponent implements OnInit {
 
           if (element.id == this.selected) {
             this.orsService.setActivity('motorfly');
-            this.orsService.create({ 'discipline': this.selected, 'club': element.parent_id }).subscribe(
+            this.orsService.create({ discipline: this.selected, club: element.parent_id, occurrence: occurrence}).subscribe(
               data => {
                 this.subject.reset();
                 console.log('ORS Created', data);
