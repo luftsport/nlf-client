@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
-import { ApiObservationsItem } from 'app/api/api.interface';
+import { ApiObservationsItem, ApiObservationsMotorflyItem, ApiObservationsFallskjermItem } from 'app/api/api.interface';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'environments/environment';
 import { ApiAclService } from 'app/api/api-acl.service';
@@ -18,7 +18,7 @@ export class NlfOrsEditorAboutComponent {
   isWorkflowTimelineCollapsed = false;
   ENV = environment;
 
-  public observation: ApiObservationsItem;
+  public observation; //: ApiObservationsItem;
   public config: NlfConfigItem;
 
   acl_list;

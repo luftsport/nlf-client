@@ -16,21 +16,32 @@
       <nlf-resolve-observation-types [activity]="observation._model.type" [type]="observation.type" badge="true"></nlf-resolve-observation-types>
     </dd>
 
-    <dl class="row" *ngIf="observation._model.type==='motorfly' && observation._model.version>=3">
+    <dt class="col-sm-3">Status</dt>
+    <dd class="col-sm-9">
+      <nlf-resolve-observation-state [activity]="observation._model.type" [state]="observation.workflow.state" icon="true"></nlf-resolve-observation-state>
+    </dd>
+
+    <!-- Fra og med versjon 3 har vi disse for motor: -->
+    <ng-container *ngIf="observation._model.type==='motorfly' && observation._model.version>=3">
       <dt class="col-sm-3">E5X Type</dt>
       <dd class="col-sm-9">
         <span *ngIf="observation.occurrence.entities.reportingHistory[0].attributes.reportingEntity.value===101311">PRIVAT</span>
         <span *ngIf="observation.occurrence.entities.reportingHistory[0].attributes.reportingEntity.value===100479">DTO</span>
       </dd>
+
+      <dt class="col-sm-3">Annet</dt>
+      <dd class="col-sm-9">
+        <div *ngIf="observation.workflow.settings.do_not_process_in_club"><fa name="ban" [fixed]="true" class="text-danger"></fa> Behandles ikke i klubb</div>
+        <div *ngIf="!observation.workflow.settings.do_not_process_in_club"><fa name="check" [fixed]="true" class="text-success"></fa> Kan behandles i klubb</div>
+        <div *ngIf="observation.workflow.settings.do_not_publish"><fa name="ban" [fixed]="true" class="text-danger"></fa> Ikke offentlig når lukket</div>
+        <div *ngIf="!observation.workflow.settings.do_not_publish"><fa name="check" [fixed]="true" class="text-success"></fa> Offentlig når lukket</div>
+      </dd>
       <!--
       <span *ngIf="observation.workflow.settings.do_not_process_in_club">Behandles ikke i klubb</span>
     -->
-    </dl>
+    </ng-container>
 
-    <dt class="col-sm-3">Status</dt>
-    <dd class="col-sm-9">
-      <nlf-resolve-observation-state [activity]="observation._model.type" [state]="observation.workflow.state" icon="true"></nlf-resolve-observation-state>
-    </dd>
+
 
     <dt class="col-sm-3">Opprettet</dt>
     <dd class="col-sm-9">
