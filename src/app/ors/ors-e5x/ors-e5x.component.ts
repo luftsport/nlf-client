@@ -148,8 +148,8 @@ export class NlfOrsE5xComponent implements OnInit {
     Norwegian CAA needs "TEST" for test reports
     Testklubb IR should always be marked "TEST"
     */
-    if (ENV._name != 'prod' || this.observation.club === 781765) {
-      this.observation.occurrence.attributes.headline = this.observation.occurrence.attributes.headline + ' TEST [' + ENV._name + ']';
+    if (this.ENV._name != 'prod' || this.observation.club === 781765) {
+      this.observation.occurrence.attributes.headline = this.observation.occurrence.attributes.headline + ' TEST [' + this.ENV._name + ']';
     }
 
     // Times this.currentWhen.toISOString().substr(0,10)
