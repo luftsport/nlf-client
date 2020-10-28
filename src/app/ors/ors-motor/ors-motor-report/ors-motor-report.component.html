@@ -195,7 +195,7 @@
 					<fa name="plane" [fixed]="true"></fa> Fly
 				</div>
 				<div *ngFor="let aircraft of observation.aircrafts" class="my-2">
-					<nlf-aircraft-summary [callsign]="aircraft.aircraft.callsign"></nlf-aircraft-summary>
+					<nlf-aircraft-summary [callsign]="aircraft.aircraft.callsign" [model]="aircraft.aircraft.model || undefined" [manufacturer]="aircraft.aircraft.manufacturer || undefined"></nlf-aircraft-summary>
 				</div>
 			</div>
 		</div>

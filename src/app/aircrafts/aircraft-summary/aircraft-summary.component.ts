@@ -11,6 +11,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class NlfAircraftSummaryComponent implements OnInit {
 
   @Input() callsign: string;
+  // Optional if anon
+  @Input() model: string;
+  @Input() manufacturer: string;
 
   dataReady = false;
   aircraft: ApiAircraftsItem;
