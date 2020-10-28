@@ -34,10 +34,18 @@
         <label>Fritekst:</label>
         <input placeholder="Fritekst" class="form-control" type="text" (ngModelChange)="debouncedUpdate()" [(ngModel)]="text">
       </div>
-
+      
+      <!-- ANON DO NOT WORK ANYMORE
       <div class="form-row">
         <label>Fartøy:</label>
         <input oninput="this.value=this.value.toUpperCase()" placeholder="Kjennetegn" class="form-control" type="text" (ngModelChange)="debouncedUpdate()" [(ngModel)]="filter['aircrafts.aircraft.callsign']">
+      </div>
+      -->
+      
+      <div class="form-row">
+        <label>Fartøy:</label>
+        <input placeholder="Produsent" class="form-control" type="text" (ngModelChange)="debouncedUpdate()" [(ngModel)]="filter['aircrafts.aircraft.manufacturer']">
+        <input placeholder="Model" class="form-control" type="text" (ngModelChange)="debouncedUpdate()" [(ngModel)]="filter['aircrafts.aircraft.model']">
       </div>
 
       <div class="form-row">
