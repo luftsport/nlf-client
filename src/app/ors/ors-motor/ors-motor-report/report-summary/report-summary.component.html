@@ -79,7 +79,8 @@
     <td>Fartøy</td>
     <td>
       <div *ngFor="let a of observation.aircrafts">
-        <a [routerLink]="['/', 'aircraft', 'view', a.aircraft.callsign]">{{ a.aircraft.callsign }}</a>
+        <a *ngIf="!a.aircraft.callsign.startsWith('FLY')" [routerLink]="['/', 'aircraft', 'view', a.aircraft.callsign]">{{ a.aircraft.callsign }}</a>
+        <span *ngIf="a.aircraft.callsign.startsWith('FLY')">{{ a.aircraft.callsign }}</span>
       </div>
     </td>
   </tr>
