@@ -538,6 +538,11 @@ export interface ApiWorkflowInterface {
   audit?: ApiWorkflowAuditInterface[];
   settings?: ApiWorkflowSettingsInterface;
 }
+export interface ApiWorkflowPayloadInterface {
+  comment: string;
+  do_not_publish?: boolean;
+  do_not_process_in_club?: boolean;
+}
 
 export interface ApiWorkflowAuditInterface {
   c?: string;
