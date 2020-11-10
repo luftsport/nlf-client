@@ -34,7 +34,8 @@ export class NlfUserOrsComponent implements OnInit {
         this.observations = data['_items'];
         this.dataReady = true;
       },
-      err => console.log(err)
+      err => console.log(err),
+      () => this.dataReady = true
     )
   }
 
