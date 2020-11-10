@@ -38,8 +38,8 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
       },
       err => {
         if (!this.attr.latitudeOfOcc.value && !this.attr.longitudeOfOcc.value) {
-          this.attr.latitudeOfOcc.value = 51;
-          this.attr.longitudeOfOcc.value = 10;
+          this.attr.latitudeOfOcc.value = 59.91655557650091;
+          this.attr.longitudeOfOcc.value = 10.748440347823207;
         }
         this.geoReady = true;
       },
