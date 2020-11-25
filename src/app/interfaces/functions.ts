@@ -164,23 +164,27 @@ export function cleanE5XObject(obj) {
 
 // Parse label for E5X from path!
 export function e5xParseLabel(path) {
-  let label = '';
-  let tmp = path.split('.').pop().split(/(?=[A-Z])/);
+  try {
+    let label = '';
+    let tmp = path.split('.').pop().split(/(?=[A-Z])/);
 
-  for (var idx = 0; idx < tmp.length; idx++) {
+    for (var idx = 0; idx < tmp.length; idx++) {
 
-    if (tmp[idx].length === 1 && tmp[idx] === tmp[idx].toUpperCase()) {
-      if ((idx - 1) > -1 && tmp[(idx - 1)].length === 1 && tmp[(idx - 1)] === tmp[(idx - 1)].toUpperCase()) {
-        label += tmp[idx];
+      if (tmp[idx].length === 1 && tmp[idx] === tmp[idx].toUpperCase()) {
+        if ((idx - 1) > -1 && tmp[(idx - 1)].length === 1 && tmp[(idx - 1)] === tmp[(idx - 1)].toUpperCase()) {
+          label += tmp[idx];
+        } else {
+          label = label + ' ' + tmp[idx];
+        }
+
       } else {
         label = label + ' ' + tmp[idx];
       }
-
-    } else {
-      label = label + ' ' + tmp[idx];
     }
+    return label;
+  } catch (error) {
+    return '';
   }
-  return label;
 }
 
 export function deepCopy(obj) {
