@@ -34,6 +34,9 @@
       <label class="form-check-label" for="do_not_process_in_club">
         <strong>Ikke</strong> behandle rapporten i klubb
       </label>
+      <ngb-alert *ngIf="payload.do_not_process_in_club" type="info" (close)="close()">
+        <fa name="info" [fixed]="true"></fa> Denne observasjonen vil ikke kunne bli behandlet i klubb, kun av OBSREG koordinator. Klubbnavnet vil også bli anonymisert når denne observasjonen er ferdig behandlet.
+      </ngb-alert>
     </div>
 
     <div *ngIf="observation._model.type==='motorfly' && observation._model.version>=3 && observation.workflow.state==='pending_review_ors'" class="form-group">
@@ -43,6 +46,14 @@
       <label class="form-check-label" for="do_not_publish">
         <strong>Ikke</strong> publiser rapport når lukket
       </label>
+      <ngb-alert *ngIf="payload.do_not_publish" type="warning" (close)="close()">
+        <fa name="info-circle" [fixed]="true"></fa> Denne observasjonen vil ikke bli allment tilgjengelig når denne observasjonen er ferdig behandlet og lukket.
+      </ngb-alert>
+
+      <ngb-alert *ngIf="payload.do_not_process_in_club" type="info" (close)="close()">
+        <fa name="info-circle" [fixed]="true"></fa> Denne observasjonen skal <strong>ikke</strong> behandles i klubb
+      </ngb-alert>
+
     </div>
 
 
@@ -77,10 +88,10 @@
     <fa name="random" [fixed]="true"></fa>Vis skjema
   </button>
   <span *ngIf="!!dataReady">
-    <button *ngFor="let a of workflow.actions" type="button" [disabled]="!observation.acl_user.x" class="btn mx-1" [ngClass]="{
+    <button *ngFor="let a of workflow.actions" type="button" [disabled]="!a.permission" class="btn mx-1" [ngClass]="{
       'btn-danger':a.resource=='reject'||a.resource=='withdraw',
-    'btn-success':a.resource=='approve'||a.resource=='reopen',
-    'btn-info': a.resource=='dto'||a.resource=='skole'||a.resource=='teknisk',
+    'btn-success':a.resource=='approve'||a.resource=='reopen'||a.resource=='ors',
+    'btn-info': a.resource=='ftl'||a.resource=='flytjenesten'||a.resource=='dto'||a.resource=='skole'||a.resource=='teknisk',
     'disabled':processing}" (click)="workflowChange(a.resource, a.action)">{{ a.action }}
     </button>
   </span>
