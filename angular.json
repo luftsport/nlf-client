@@ -33,7 +33,9 @@
               "node_modules/@yaireo/tagify/dist/tagify.css",
               "node_modules/@ng-select/ng-select/themes/default.theme.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/blueimp-canvas-to-blob/js/canvas-to-blob.min.js"
+            ]
           },
           "configurations": {
             "prod": {

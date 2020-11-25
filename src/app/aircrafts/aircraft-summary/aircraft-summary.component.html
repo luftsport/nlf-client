@@ -1,4 +1,4 @@
-<div *ngIf="!!aircraft">
+<div *ngIf="dataReady">
   <div class="media">
     <div class="col-md-3">
       <img *ngIf="!!aircraft.image" [src]="domSanitizer.bypassSecurityTrustUrl(aircraft.image)" class="mr-3 ml-0 p-0 img-fluid" alt="{{ callsign }}">
@@ -6,8 +6,8 @@
     </div>
     <div class="media-body col-md-9">
       <h5 class="mt-0">{{ callsign }}</h5>
-      {{ aircraft.model }} {{ aircraft.manufacturer }}
+      {{ aircraft.model || model || 'Ukjent modell'}} {{ aircraft.manufacturer || manufacturer || 'Ukjent produsent' }}
     </div>
   </div>
 </div>
-<nlf-ui-component-spinner *ngIf="!aircraft"></nlf-ui-component-spinner>
+<nlf-ui-component-spinner *ngIf="!dataReady"></nlf-ui-component-spinner>

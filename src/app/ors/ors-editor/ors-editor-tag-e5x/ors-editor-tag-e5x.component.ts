@@ -8,6 +8,8 @@ import { ApiCacheService } from 'app/api/api-cache.service';
 import { e5xParseLabel } from 'app/interfaces/functions';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NlfConfigService } from 'app/nlf-config.service';
+import { debounce } from 'ts-debounce';
+import { NlfAlertService } from 'app/services/alert/alert.service';
 
 export interface TagInterface {
   value: number;
@@ -56,15 +58,18 @@ export class NlfOrsEditorTagE5XComponent implements OnInit {
   rit_version: string;
   public config: NlfConfigItem;
 
+  public debouncedUpdate = debounce(this.update, 600);
+  public debouncedOnChange = debounce(this.onChange, 400);
+
   constructor(
     private attributeService: ApiE5XAttributesService,
     private choicesService: ApiE5XChoicesService,
     private apiCache: ApiCacheService,
     private modalService: NgbModal,
+    private alertService: NlfAlertService,
     private configService: NlfConfigService
-  ) { }
+  ) {
 
-  ngOnInit() {
     this.configService.observableConfig.subscribe(
       data => {
         this.config = data;
@@ -72,10 +77,17 @@ export class NlfOrsEditorTagE5XComponent implements OnInit {
         this.init();
       }
     );
+
+  }
+
+  ngOnInit() {
+
   }
 
   ngOnChanges(changes) {
-    this.init();
+    if (!!this.rit_version) {
+      this.init();
+    }
   }
 
   private init() {
@@ -184,6 +196,36 @@ export class NlfOrsEditorTagE5XComponent implements OnInit {
    * @param event
    */
   public update(event) {
+
+    // Max min values!
+    try {
+      if (['decimal', 'integer', 'int', 'number'].indexOf(this.attribute.restrictions.type) > -1) {
+        if (this.items > this.attribute.restrictions.max) {
+          this.items = this.attribute.restrictions.max;
+          this.alertService.warning('For høy verdi for ' + this.label + ' satt til ' + this.attribute.restrictions.max, false, true, 5, false);
+        }
+        if (this.items < this.attribute.restrictions.min) {
+          this.items = this.attribute.restrictions.min;
+          this.alertService.warning('For lav verdi for ' + this.label + ' satt til ' + this.attribute.restrictions.min, false, true, 5, false);
+        }
+      }
+    } catch { }
+
+    try {
+      if (this.attribute.restrictions.type === 'string' && +this.attribute.restrictions.max > 0) {
+        if (this.items.length > +this.attribute.restrictions.max) {
+          this.items = this.items.substr(0, this.attribute.restrictions.max);
+          this.alertService.warning('For lang tekst for ' + this.label + ' satt til ' + this.attribute.restrictions.max + ' tegn', false, true, 5, false);
+        }
+      }
+    } catch { }
+    // Make sure floats are corrected - to 2 digits
+    try {
+      if (this.attribute.restrictions.type === 'decimal') {
+        this.items = String(parseFloat(this.items).toFixed(2));
+      }
+    } catch { }
+
     this.itemsChange.emit(this.items);
     this.change.emit(true);
   }

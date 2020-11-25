@@ -52,7 +52,7 @@ export class NlfOrsMotorReportComponent implements OnInit {
       this.route.params.subscribe(params => {
         this.id = params['id'] ? params['id'] : 0;
         this.version = params['version'] ? params['version'] : 0;
-        this.app.setTitle('NLF - ORS Rapport #' + this.id);
+        this.app.setTitle('OBSREG Rapport #' + this.id);
         this.getData();
       });
     }

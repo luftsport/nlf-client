@@ -1,40 +1,44 @@
 <header class="nlf-sticky-toolbar">
-    <div class="container">
-    Header breadcrumbish
-    </div>
+  <div class="container">
+
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active">
+        <fa name="question" [fixed]="true"></fa>
+        <a [routerLink]="['/admin', 'help']">Hjelpesystem</a>
+      </li>
+    </ol>
+
+    <a [routerLink]="['/admin/help/create']" class="pull-right btn btn-sm btn-primary mx-1">
+      <fa name="plus" [fixed]="true"></fa>Ny hjelpetekst
+    </a>
+
+  </div>
 </header>
 
-<div class="row">
-    <div class="container">
-        <span *ngIf="!!dataReady">
-            <ngx-table [configuration]="tableConfig" [data]="help" [columns]="columns" [(pagination)]="pagination"
-                (event)="eventEmitted($event)">
+<div class="container">
+  <span *ngIf="!!dataReady" class="overflow-auto">
+    <ngx-table [configuration]="tableConfig" [data]="help" [columns]="columns" [(pagination)]="pagination" (event)="eventEmitted($event)">
 
-                <ng-template let-row>
-                    <td class="ngx-easy-table-small">
-                        <a [routerLink]="['/admin/help/edit/', row.key]">{{ row.key }}</a>
-                    </td>
-                    <td class="ngx-easy-table-small">
-                        <a [routerLink]="['/admin/help/edit/', row.key]">{{ row.title }}</a>
-                    </td>
-                    <td>
-                        <span class="pointer" (click)="delete(row)">
-                            <fa name="close" [fixed]="true"></fa>
-                        </span>
-                        <nlf-help [key]="row.key" [details]="true"></nlf-help>
-                    </td>
-                </ng-template>
-            </ngx-table>
-        </span>
-        <span *ngIf="!dataReady">
-            <p class="align-middle text-center  text-secondary">
-                <fa name="spinner" animation="pulse" size="3x"></fa>
-            </p>
-        </span>
+      <ng-template let-row>
+        <td class="ngx-easy-table-small">
+          <a [routerLink]="['/admin/help/edit/', row.key]">{{ row.key }}</a>
+        </td>
+        <td class="ngx-easy-table-small">
+          <a [routerLink]="['/admin/help/edit/', row.key]">{{ row.title }}</a>
+        </td>
+        <td>
+          <span class="pointer" (click)="delete(row)">
+            <fa name="close" [fixed]="true"></fa>
+          </span>
+          <nlf-help [key]="row.key" [details]="true"></nlf-help>
+        </td>
+      </ng-template>
+    </ngx-table>
+  </span>
+  <span *ngIf="!dataReady">
+    <p class="align-middle text-center  text-secondary">
+      <fa name="spinner" animation="pulse" size="3x"></fa>
+    </p>
+  </span>
 
-        <a [routerLink]="['/admin/help/create']" class="btn btn-primary">
-            <fa name="plus" [fixed]="true"></fa>Ny hjelpetekst
-        </a>
-
-    </div>
 </div>

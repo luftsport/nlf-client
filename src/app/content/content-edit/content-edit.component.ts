@@ -5,6 +5,7 @@ import { ApiObservationsService } from 'app/api/api-observations.service';
 import { ApiNlfUserService } from 'app/api/api-nlf-user.service';
 import { ApiOptionsInterface, ApiContentItem, ApiObservationsItem, ApiNlfUserItem, ApiNlfUserList } from 'app/api/api.interface';
 import { BehaviorSubject } from 'rxjs';
+import { NlfAlertService } from 'app/services/alert/alert.service';
 
 import Tribute from 'tributejs/src';
 import { debounce } from 'ts-debounce';
@@ -60,7 +61,8 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private nlfUsers: ApiNlfUserService,
-    private orsService: ApiObservationsService) { }
+    private orsService: ApiObservationsService,
+    private alertService: NlfAlertService) { }
 
   test(event) {
     console.log(event);
@@ -137,14 +139,14 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
       trigger: '@',
       iframe: null,
       selectClass: 'highlight',
-      selectTemplate: function (item) {
+      selectTemplate: function(item) {
         return '<macro href="#" data-url="/user/' + item.original.id + '" contenteditable="false" class="badge badge-danger macrolink pointer" id="' + item.original.id + '">@' + item.original.fullname + '</macro>';
       },
-      menuItemTemplate: function (item) {
+      menuItemTemplate: function(item) {
         return item.string;
       },
       noMatchTemplate: 'Fant ingen',
-      lookup: function (item) {
+      lookup: function(item) {
         return item.fullname + ' (' + item.id + ')';
       },
       fillAttr: 'fullname',
@@ -159,10 +161,10 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
       trigger: '[',
       iframe: null,
       selectClass: 'highlight',
-      selectTemplate: function (item) {
+      selectTemplate: function(item) {
         return '<a href="javascript:void(0);" class="macrolink" data-url="/content/view/' + item.original.space_key + '/' + item.original.slug + '">' + item.original.title + '</a>';
       },
-      menuItemTemplate: function (item) {
+      menuItemTemplate: function(item) {
         if (!item.original.parent) {
           return '<i class="fa fa-sitemap fa-fw"></i>&nbsp;' + item.string;
         } else {
@@ -170,7 +172,7 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
         }
       },
       noMatchTemplate: 'Fant ingen',
-      lookup: function (item) {
+      lookup: function(item) {
         return item.title;
       },
       fillAttr: 'title',
@@ -185,11 +187,11 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
       trigger: '#',
       iframe: null,
       selectClass: 'highlight',
-      selectTemplate: function (item) {
+      selectTemplate: function(item) {
         return '<macro href="#" data-url="/ors/fallskjerm/report/' + item.original.id + '" contenteditable="false" class="badge badge-danger macrolink pointer" id="' + item.original.id + '"> \
         #' + item.original.id + ' ' + item.original.title + '</macro>';
       },
-      menuItemTemplate: function (item) {
+      menuItemTemplate: function(item) {
         return item.string;
       },
       noMatchTemplate: 'Fant ingen',
@@ -366,7 +368,7 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
         query: {
           // max_results: 20,
           sort: [{ id: -1 }],
-          where: { $text: { $search: text }},
+          where: { $text: { $search: text } },
           // projection: { score: { $meta: "textScore" } },
         },
       };
@@ -431,7 +433,10 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
           console.log(result);
           this.router.navigate(['/content']);
         },
-        err => console.log(err),
+        err => {
+          console.log(err);
+          this.alertService.error('Error message: ' + err.error.error);
+        },
         () => console.log('Done')
       );
     }
@@ -451,7 +456,10 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
           console.log(result);
           this.changed = false;
         },
-        err => console.log(err),
+        err => {
+          console.log(err);
+          this.alertService.error('Error message: ' + err.error.error);
+        },
         () => this.router.navigate(['/content/view/', this.content.space_key, this.content.slug])
       );
 

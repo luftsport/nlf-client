@@ -13,6 +13,23 @@ export class NlfOrsEditorTypeComponent implements OnInit {
 
   observation: ApiObservationsItem;
 
+  /**
+  For config:
+  "unsafe_act" : {
+      "label" : "Utrygg adferd",
+      "badge" : "secondary",
+      "title" : "Utrygge eller farlige forhold"
+  },
+  "unsafe_condition" : {
+      "label" : "Utrygge forhold",
+      "badge" : "secondary",
+      "title" : "Utrygg eller farlig adferd"
+  },
+
+  "unsafe_act",
+  "unsafe_condition", 
+  **/
+
   @Input() title: boolean = false;
   public config: NlfConfigItem;
 

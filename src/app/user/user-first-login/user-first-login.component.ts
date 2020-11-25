@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
-import {  NlfConfigService } from 'app/nlf-config.service';
+import { NlfConfigService } from 'app/nlf-config.service';
 import { LungoOrganizationsService } from 'app/api/lungo-organizations.service';
 import { NlfConfigItem } from 'app/api/api.interface';
 
@@ -30,7 +30,6 @@ export class NlfUserFirstLoginComponent implements OnInit {
         this.userSubject.observable.subscribe(
           data => {
             if (!!data) {
-              console.log('SETTINGS', data);
               this.userData = data;
               if (!!data.acl) {
                 this.org = [];
@@ -59,7 +58,6 @@ export class NlfUserFirstLoginComponent implements OnInit {
 
   }
   public setDefaultClub(role) {
-    console.log('FIRST TIME ROLE', role);
 
     this.orgService.getOrganization(role.org).subscribe(
       data => {
@@ -71,7 +69,9 @@ export class NlfUserFirstLoginComponent implements OnInit {
       () => {
         this.userData.settings.default_discipline = role.org;
         this.userData.settings.default_activity = role.activity;
-        this.userData.settings.ors = { first_report: undefined };
+        if (!this.userData.settings.ors.hasOwnProperty('first_report')) {
+          this.userData.settings.ors = { first_report: undefined };
+        }
         this.userSubject.update(this.userData);
         this.success = true;
       }

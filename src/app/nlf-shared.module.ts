@@ -41,12 +41,15 @@ import { NlfResolveLungoPersonComponent } from 'app/services/resolve/resolve-lun
 import { NlfResolveLungoOrganizationComponent } from 'app/services/resolve/resolve-lungo-organization/resolve-lungo-organization.component';
 import { NlfResolveLungoLicenseComponent } from 'app/services/resolve/resolve-lungo-license/resolve-lungo-license.component';
 import { NlfResolveLungoFunctionComponent } from 'app/services/resolve/resolve-lungo-function/resolve-lungo-function.component';
+import { NlfResolveLungoMembershipComponent } from 'app/services/resolve/resolve-lungo-membership/resolve-lungo-membership.component';
 import { NlfResolveLungoActivityComponent } from 'app/services/resolve/resolve-lungo-activity/resolve-lungo-activity.component';
 import { ResolveLungoOrganizationTypeComponent } from 'app/services/resolve/resolve-lungo-organization-type/resolve-lungo-organization-type.component';
 import { ResolveLungoFunctionTypeComponent } from 'app/services/resolve/resolve-lungo-function-type/resolve-lungo-function-type.component';
 import { ResolveLungoCompetenceComponent } from 'app/services/resolve/resolve-lungo-competence/resolve-lungo-competence.component';
 import {  ResolveLungoCountryComponent } from 'app/services/resolve/resolve-lungo-country/resolve-lungo-country.component';
 import {  ResolveLungoCountyComponent } from 'app/services/resolve/resolve-lungo-county/resolve-lungo-county.component';
+
+
 
 import { NlfResolveAvatarsComponent } from 'app/services/resolve/resolve-avatars/resolve-avatars.component';
 import { NlfResolveAvatarComponent } from 'app/services/resolve/resolve-avatar/resolve-avatar.component';
@@ -121,6 +124,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-
     NlfResolveLungoOrganizationComponent,
     NlfResolveLungoLicenseComponent,
     NlfResolveLungoFunctionComponent,
+    NlfResolveLungoMembershipComponent,
     NlfResolveLungoActivityComponent,
     ResolveLungoOrganizationTypeComponent,
     ResolveLungoFunctionTypeComponent,
@@ -180,6 +184,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-
     NlfResolveLungoOrganizationComponent,
     NlfResolveLungoLicenseComponent,
     NlfResolveLungoFunctionComponent,
+    NlfResolveLungoMembershipComponent,
     NlfResolveLungoActivityComponent,
     ResolveLungoOrganizationTypeComponent,
     ResolveLungoFunctionTypeComponent,

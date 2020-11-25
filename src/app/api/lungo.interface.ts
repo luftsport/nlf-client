@@ -264,10 +264,22 @@ export interface LungoCountriesList extends ApiEveBaseList {
 /**
  * Persons
  */
-export interface LungoMembershipsItem {
+export interface LungoPersonsMembershipsPaymentItem {
+  id?: number;
+  year?: number;
+  exception?: string;
+  type?: string;
+  amount?: number;
+  paid?: Date;
+}
+
+export interface LungoPersonsMembershipsItem {
+    id?: number;
     club?: number;
     discipline?: number;
     activity?: number;
+    from_date?: Date;
+    payment?: LungoPersonsMembershipsPaymentItem;
 }
 
 export interface LungoPersonsCompetenceItem {
@@ -299,7 +311,7 @@ export interface LungoPersonsItem extends ApiEveBaseItem {
     functions?: number[] | LungoFunctionsItem[];
     clubs?: number[] | LungoOrganizationsItem[];
     activities?: number[] | LungoActivitiesItem[];
-    memberships?: LungoMembershipsItem[];
+    memberships?: LungoPersonsMembershipsItem[];
     competences?: LungoPersonsCompetenceItem[] | LungoCompetencesItem[];
     licenses?: LungoPersonsLicenseItem[] | LungoLicensesItem[];
     nationality_id?: number;

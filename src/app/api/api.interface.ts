@@ -64,6 +64,20 @@ export interface AuthDataSubjectInterface {
   valid: Date;
 }
 
+
+export interface ApiUserORSItem extends ApiEveBaseItem {
+  id: number;
+  title?: string;
+  discipline?: number;
+  state?: string;
+  when?: Date;
+  rating?: ApiObservationRatingInterface;
+}
+
+export interface ApiUserORSList extends ApiEveBaseList {
+  _items: ApiUserORSItem[];
+}
+
 /**
  * Membership specific interfaces
  *
@@ -447,22 +461,22 @@ export interface ApiObservationMotorflyInvolvedInterface {
 
 
 }
-
+export interface ApiObservationWeatherManualInterface {
+  wind?: { dir?: string, max?: number, avg?: number, min?: number, turbulence?: boolean, gusting?: boolean },
+  clouds?: { base?: number, rain?: boolean, fog?: boolean, hail?: boolean, snow?: boolean, thunder?: boolean },
+  temp?: { ground?: number, altitude?: number },
+  description?: string
+}
+export interface ApiObservationWeatherAutoInterface {
+  yr?: any,
+  metar?: string | string[],
+  metar_nearest?: { metar?: string, parsed?: string };
+  taf?: string | string[],
+  shorttaf?: string | string[]
+}
 export interface ApiObservationWeatherInterface {
-  manual?: {
-    wind?: { dir?: string, max?: number, avg?: number, min?: number, turbulence?: boolean, gusting?: boolean },
-    clouds?: { base?: number, rain?: boolean, fog?: boolean, hail?: boolean, snow?: boolean, thunder?: boolean },
-    temp?: { ground?: number, altitude?: number },
-    description?: string
-  };
-  auto?: {
-    yr?: any,
-    metar?: string | string[],
-    metar_nearest?: { metar?: string, parsed?: string };
-    taf?: string | string[],
-    shorttaf?: string | string[]
-  };
-
+  manual?: ApiObservationWeatherManualInterface;
+  auto?: ApiObservationWeatherAutoInterface;
 }
 
 export interface ApiObservationComponentInterface {
@@ -511,6 +525,10 @@ export interface ApiObservationAskTextInterface {
   pending_review_fs?: string;
   pending_review_su?: string;
 }
+export interface ApiWorkflowSettingsInterface {
+  do_not_publish?: boolean;
+  do_not_process_in_club?: boolean;
+}
 export interface ApiWorkflowInterface {
   state: string;
   comment?: string;
@@ -518,6 +536,12 @@ export interface ApiWorkflowInterface {
   expires?: Date;
   name?: string;
   audit?: ApiWorkflowAuditInterface[];
+  settings?: ApiWorkflowSettingsInterface;
+}
+export interface ApiWorkflowPayloadInterface {
+  comment: string;
+  do_not_publish?: boolean;
+  do_not_process_in_club?: boolean;
 }
 
 export interface ApiWorkflowAuditInterface {

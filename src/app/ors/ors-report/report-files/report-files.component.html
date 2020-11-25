@@ -7,14 +7,21 @@
         <tr *ngFor="let f of filelist">
 
           <td>
-            <fa *ngIf="!!f.r" class="text-danger" name="lock" [fixed]="true"></fa>
-            <fa *ngIf="!f.r" class="text-success" name="unlock" [fixed]="true"></fa>
-            <a [routerLink]="['/file/download/', f._id]">{{f.name}}</a>
+            <span *ngIf="state!='closed'">
+              <fa *ngIf="!!f.r" class="text-danger" name="lock" [fixed]="true"></fa>
+              <fa *ngIf="!f.r" class="text-success" name="unlock" [fixed]="true"></fa>
+            </span>
+            <!-- <a [routerLink]="['/file/download/', f._id]">{{f.name}}</a> -->
+            {{f.name}}
           </td>
           <td>{{ f.size | bytes : 2 }}</td>
           <td>{{f.content_type}}&nbsp;</td>
           <td>
-            <fa name="download" [fixed]="true"></fa>
+            <fa class="pointer" name="download" (click)="download(f._id)" [fixed]="true" title="Last ned"></fa>
+            <!--
+            <fa *ngIf="f.size<=10000000" class="pointer" name="download" (click)="download(f._id)" [fixed]="true" title="Last ned"></fa>
+            <a *ngIf="f.size>10000000" target="_blank" [routerLink]="['/api', 'v1', 'files', f._id]"><fa name="download" [fixed]="true" title="Last ned"></fa></a>
+            -->
           </td>
           <td>&nbsp;</td>
 

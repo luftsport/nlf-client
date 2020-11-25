@@ -75,6 +75,13 @@ export class NlfOrsEditorTagPersonComponent implements OnInit {
     this.searchTags();
   }
 
+  private emitPerson() {
+
+    const { full_name, ...rest } = this._person;
+    this.personChange.emit(rest);
+    this.change.emit(true);
+
+  }
   private initTags() {
     if (!this._person) {
       this._person = undefined;
@@ -92,6 +99,9 @@ export class NlfOrsEditorTagPersonComponent implements OnInit {
 
       if (!!this._person.tmp_name) {
         this.selectedTags = { id: this._person.id, full_name: this._person.tmp_name };
+        this.selectedTags = {...this.selectedTags};
+      } else {
+        this.selectedTags = { id: this._person.id, full_name: 'Person ' +  (-1*this._person.id)};
         this.selectedTags = {...this.selectedTags};
       }
     }
@@ -119,8 +129,7 @@ export class NlfOrsEditorTagPersonComponent implements OnInit {
 
     this.selectedTags = event;
 
-    this.personChange.emit(this._person);
-    this.change.emit(event);
+    this.emitPerson();
   }
 
   private searchTags() {

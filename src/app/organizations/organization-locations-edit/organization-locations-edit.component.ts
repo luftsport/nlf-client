@@ -26,7 +26,7 @@ export class NlfOrganizationLocationsEditComponent implements OnInit {
       this.idx = params['idx'] ? params['idx'] : 0;
 
       this.getOrg();
-      //this.app.setTitle(' Organization locations edit');
+      //this.app.setTitle('Organization locations edit');
     });
   }
 

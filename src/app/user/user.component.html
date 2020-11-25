@@ -1,76 +1,21 @@
-<div *ngIf="dataReady" class="container">
-	<div class="row">
-		<div class="container">
-			<div class="col-12">
-				<ngb-tabset justify="justified">
-
-					<ngb-tab title="Profil">
-						<ng-template ngbTabContent>
-
-							<div class="row">
-								<div class="col-3">
-
-									<!-- To become user-avatar-->
-									<div class="card">
-										<img class="card-img-top" [src]="domSanitizer.bypassSecurityTrustUrl(avatar)" alt="Avatar">
-
-										<div class="card-body">
-											<h4 class="card-title text-center">
-												<nlf-resolve-user [userid]=user.id></nlf-resolve-user>
-											</h4>
-											<p class="card-text"></p>
-										</div>
-										<div class="card-footer">
-											<a href="#" class="btn btn-block btn-primary">Endre profilbilde</a>
-										</div>
-									</div>
-									<div class="clearfix"></div>
-								</div>
-
-								<div class="col-9">
-
-									<nlf-user-membership></nlf-user-membership>
-
-								</div>
-
-							</div>
-						</ng-template>
-
-					</ngb-tab>
-
-					<ngb-tab title="Settings">
-						<ng-template ngbTabContent>
-							<nlf-user-settings></nlf-user-settings>
-						</ng-template>
-					</ngb-tab>
-
-					<ngb-tab title="Medlemsskap">
-						<ng-template ngbTabContent>
-							<nlf-user-membership></nlf-user-membership>
-						</ng-template>
-					</ngb-tab>
-
-					<ngb-tab title="Notifications">
-						<ng-template ngbTabContent>
-							Settings for varslinger og slikt
-						</ng-template>
-
-					</ngb-tab>
-
-					<ngb-tab title="ORS">
-						<ng-template ngbTabContent>
-							Dine ORS'er
-						</ng-template>
-
-					</ngb-tab>
-
-				</ngb-tabset>
-
-
+<div class="container">
+	<div class="row mt-3">
+		<div *ngIf="dataReady">
+			<div class="media">
+				<!--align-self-start-->
+				<span class="align-self-start mr-3 avatar avatar-xl">
+					<nlf-resolve-avatar [person_id]="person_id"></nlf-resolve-avatar>
+				</span>
+				<div class="media-body">
+					<h2 class="mt-0">
+						<nlf-resolve-lungo-person [person_id]="person_id" [link]="false" [avatar]="false"></nlf-resolve-lungo-person>
+					</h2>
+					<p></p>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<div *ngIf="!dataReady">
-	<nlf-ui-page-spinner size="5"></nlf-ui-page-spinner>
+	<div class="text-center row mt-6">
+		<p class="text-center mt-4"><a [routerLink]="" (click)="goBack()">tilbake</a></p>
+	</div>
 </div>

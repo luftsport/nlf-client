@@ -7,6 +7,9 @@ import { NlfAircraftsRoutingModule } from './aircrafts-routing.module';
 import { NlfAircraftsListComponent } from './aircrafts-list/aircrafts-list.component';
 import { AircraftsComponent } from './aircrafts/aircrafts.component';
 import { NlfAircraftsEditPageComponent } from './aircrafts-edit-page/aircrafts-edit-page.component';
+import { NlfAircraftsViewComponent } from './aircrafts-view/aircrafts-view.component';
+import { NlfAircraftSummaryComponent } from './aircraft-summary/aircraft-summary.component';
+import { NlfAircraftOrsComponent } from './aircraft-ors/aircraft-ors.component';
 
 import { TableModule } from 'ngx-easy-table';
 import { FontAwesomeModule } from 'ngx-icons';
@@ -15,6 +18,9 @@ import { FontAwesomeModule } from 'ngx-icons';
   declarations: [
     NlfAircraftsListComponent,
     NlfAircraftsEditPageComponent,
+    NlfAircraftsViewComponent,
+    NlfAircraftsViewComponent ,
+    NlfAircraftOrsComponent,
     AircraftsComponent,
   ],
   imports: [

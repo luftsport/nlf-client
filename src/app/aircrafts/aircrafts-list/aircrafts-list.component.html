@@ -4,9 +4,11 @@
       <li class="breadcrumb-item">
         <fa name="plane" [fixed]="true" class="mr-1 active"></fa><a [routerLink]="['/', 'aircraft']">Aircraft</a>
       </li>
+      <sup class="text-danger mx-1" title="Applikasjonen er ikke ferdig utviklet">beta</sup>
     </span>
 
     <!--Note difference between federation, sections/activity and clubs! Section->show all club aircrafts? -->
+
     <span class="float-right d-inline">
       <nlf-aircrafts-add></nlf-aircrafts-add>
     </span>
@@ -18,7 +20,7 @@
 
 
 
-  <div *ngIf="!!dataReady">
+  <div *ngIf="!!dataReady" class="overflow-auto">
     <ngx-table [configuration]="tableAll" [data]="data" [columns]="columns" [(pagination)]="pagination"
       [filtersTemplate]="filtersTemplate" (event)="eventEmitted($event)">
 
@@ -58,9 +60,9 @@
     </ngx-table>
 
     <!--FILTERS-->
-    
-    
-    <!-- Summary 
+
+
+    <!-- Summary
     <span class="mx-1" *ngFor="let x of aircraft_types">
         {{ x._id.type | upperfirst }} ({{ x.count}})
     </span>

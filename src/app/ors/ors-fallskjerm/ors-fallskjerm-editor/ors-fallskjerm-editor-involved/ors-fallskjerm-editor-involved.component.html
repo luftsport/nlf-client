@@ -13,28 +13,49 @@
 
     <tr *ngFor="let p of involved; let idx = index">
 
-      <td class="pointer" (click)="openPersonModal(involvedModal, idx)">
-        <fa *ngIf="p.id>0" name="check" fw="true" class="text-success mr-2" title="Hentet fra medlemssystemet"></fa>
-        <fa *ngIf="p.id<1" name="check" fw="exclamation" class="text-danger mr-2" title="Ukjent person"></fa>
+      <td class="">
+        <fa *ngIf="p.id>0" name="check" [fixed]="true" class="text-success mr-2" title="Hentet fra medlemssystemet"></fa>
+        <fa *ngIf="p.id<1" name="exclamation" [fixed]="true" class="text-danger mr-2" title="Ukjent person"></fa>
         <strong>
           <nlf-resolve-lungo-person [person_id]="p.id" [tmp_name]="p.tmp_name" [link]="false" [avatar]="true"></nlf-resolve-lungo-person>
         </strong>
-        <span class="ml-3">[Edit]</span>
+
       </td>
       <td>
-        <fa *ngIf="p.fu" name="exclamation" fw="true" class="text-danger"></fa>
+
+        <fa *ngIf="!!p.ph" name="ban" title="Permanent Hoppforbud" fw="true" class="text-danger mx-1"></fa>
+        <fa *ngIf="!!p.fu" name="exclamation" title="Farlig Ukontrollert" fw="true" class="text-warning mx-1"></fa>
+
       </td>
       <td>
-        (Summary here)
+
+        <div>
+          <span *ngFor="let license of p?.data?.licenses" class="mx-1">
+            <nlf-resolve-lungo-license [license_id]="license.id"></nlf-resolve-lungo-license>
+            <!--{{license.type_name}}-->
+          </span>
+        </div>
+        <div>
+          <span *ngFor="let competence of p?.data?.competences" class="mx-1">
+            {{competence._code}}
+          </span>
+        </div>
+        <div>
+          <span *ngIf="!!p?.data?.years_of_experience" class="mx-1 badge badge-secondary">{{p.data.years_of_experience}} år</span>
+          <span *ngIf="!!p?.data?.total_jumps" class="mx-1 badge badge-secondary">{{p.data.total_jumps}} hopp</span>
+          <span *ngIf="!!p?.data?.jump_type" class="mx-1 badge badge-secondary">{{p.data.jump_type}} hopp</span>
+          <span *ngIf="!!p?.data?.activity && p.data.activity.length>0" class="mx-1 badge badge-secondary">{{p.data.activity | join: '/'}}</span>
+        </div>
       </td>
       <td>
-        <span *ngIf="!!p.data && 1==9">
-          <nlf-resolve-lungo-license *ngFor="let l of p.data.licenses" [license_id]="l.id" link="false" long="false"></nlf-resolve-lungo-license>
-          <nlf-resolve-lungo-function *ngFor="let fid of p.data.functions" [function_id]="fid" show_org="true" link="false" long="false"></nlf-resolve-lungo-function>
+        <span *ngIf="!!p?.data && 1==9" class="text-small">
+          <nlf-resolve-lungo-license *ngFor="let l of p.data?.licenses" [license_id]="l.id" link="false" long="false"></nlf-resolve-lungo-license>
+          <nlf-resolve-lungo-function *ngFor="let fid of p.data?.functions" [function_id]="fid" show_org="true" link="false" long="false"></nlf-resolve-lungo-function>
         </span>
       </td>
-      <td>
-        <fa *ngIf="!disabled" class="pointer" (click)="onRemove(idx)" name="times" fw="true"></fa>
+      <td class="text-right">
+        <a (click)="openPersonModal(involvedModal, idx)" class="pointer btn btn-sm btn-secondary">Edit</a>
+        <fa *ngIf="!disabled" class="pointer ml-3" title="Slett person" (click)="onRemove(idx)" name="times" fw="true"></fa>
       </td>
     </tr>
 
@@ -79,7 +100,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="whereAt">Hopptype</label>
-          <nlf-ors-editor-tag-string fc="true" allowAdd="true" preload="false" group="jump_types" activity="fallskjerm" [(tagString)]="modalPerson.data.jumpType" [disabled]="disabled">
+          <nlf-ors-editor-tag-string fc="true" allowAdd="true" preload="false" group="jump_types" activity="fallskjerm" [(tagString)]="modalPerson.data.jump_type" [disabled]="disabled">
           </nlf-ors-editor-tag-string>
         </div>
       </div>
@@ -97,14 +118,14 @@
     <div class="row">
       <div class="col-md-3">
         <div class="form-group">
-          <label for="yearsinsport">År i sporten</label>
-          <input [disabled]="disabled" class="form-control" type="number" id="yearsinsport" [(ngModel)]="modalPerson.data.yearinsport">
+          <label for="years_of_experience">År i sporten</label>
+          <input [disabled]="disabled" class="form-control" type="number" id="years_of_experience" [(ngModel)]="modalPerson.data.years_of_experience">
         </div>
       </div>
       <div class="col-md-3">
         <div class="form-group">
           <label for="jups">Antall hopp</label>
-          <input [disabled]="disabled" class="form-control" type="number" id="jups" [(ngModel)]="modalPerson.data.totalJumps">
+          <input [disabled]="disabled" class="form-control" type="number" id="jups" [(ngModel)]="modalPerson.data.total_jumps">
         </div>
       </div>
       <div class="col-md-3">
@@ -127,20 +148,20 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="mainCanopy">Hovedskjerm</label>
-          <nlf-ors-editor-tag-string fc="true" preload="true" group="main_canopies" activity="fallskjerm" [(tagString)]="modalPerson.data.gear.mainCanopy" [disabled]="disabled">
+          <nlf-ors-editor-tag-string fc="true" preload="true" group="main_canopies" activity="fallskjerm" [(tagString)]="modalPerson.data.gear.main_canopy" [disabled]="disabled">
           </nlf-ors-editor-tag-string>
         </div>
       </div>
       <div class="col-md-3">
         <div class="form-group">
           <label for="mainCanopySize">Størrelse</label>
-          <input [disabled]="disabled" class="form-control" type="number" id="mainCanopySize" [(ngModel)]="modalPerson.data.gear.mainCanopySize">
+          <input [disabled]="disabled" class="form-control" type="number" id="mainCanopySize" [(ngModel)]="modalPerson.data.gear.main_canopy_size">
         </div>
       </div>
       <div class="col-md-3">
         <div class="form-group">
           <label for="mainCanopyExperience">Erfaring Hovedskjerm</label>
-          <input [disabled]="disabled" class="form-control" type="number" id="mainCanopyExperience" [(ngModel)]="modalPerson.data.gear.mainCanopyExperience">
+          <input [disabled]="disabled" class="form-control" type="number" id="mainCanopyExperience" [(ngModel)]="modalPerson.data.gear.main_canopy_experience">
         </div>
       </div>
     </div>
@@ -150,14 +171,14 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="reserveCanopy">Reserveskjerm</label>
-          <nlf-ors-editor-tag-string fc="true" preload="true" group="reserve_canopies" activity="fallskjerm" [disabled]="disabled" [(tagString)]="modalPerson.data.gear.reserveCanopy">
+          <nlf-ors-editor-tag-string fc="true" preload="true" group="reserve_canopies" activity="fallskjerm" [disabled]="disabled" [(tagString)]="modalPerson.data.gear.reserve_canopy">
           </nlf-ors-editor-tag-string>
         </div>
       </div>
       <div class="col-md-3">
         <div class="form-group">
           <label for="reserveCanopySize">Størrelse</label>
-          <input [disabled]="disabled" class="form-control" type="number" id="reserveCanopySize" [(ngModel)]="modalPerson.data.gear.reserveCanopySize">
+          <input [disabled]="disabled" class="form-control" type="number" id="reserveCanopySize" [(ngModel)]="modalPerson.data.gear.reserve_canopy_size">
         </div>
       </div>
     </div>
@@ -173,7 +194,7 @@
         <div class="form-group">
 
           <label for="riggerDate">Pakkedato</label>
-          <nlf-ors-editor-date [disabled]="disabled" id="riggerDate" [(date)]="modalPerson.data.gear.riggerDate"></nlf-ors-editor-date>
+          <nlf-ors-editor-date [disabled]="disabled" id="riggerDate" [(date)]="modalPerson.data.gear.rigger_date"></nlf-ors-editor-date>
           <!--<input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="modalPerson.data.gear.riggerDate"
               ngbDatepicker #d="ngbDatepicker">-->
         </div>
@@ -191,7 +212,7 @@
       <div class="col-md-3">
         <div class="form-group">
           <label for="harnessExperience">Erfaring seletøy</label>
-          <input [disabled]="disabled" class="form-control" type="number" id="harnessExperience" [(ngModel)]="modalPerson.data.gear.harnessExperience">
+          <input [disabled]="disabled" class="form-control" type="number" id="harnessExperience" [(ngModel)]="modalPerson.data.gear.harness_experience">
         </div>
       </div>
       <div class="col-md-3">

@@ -7,7 +7,7 @@ import { ApiClubItem, ApiOptionsInterface, NlfConfigItem } from 'app/api/api.int
 import { NlfAlertService } from 'app/services/alert/alert.service';
 import { GeoLocationService } from 'app/services/geo/geo-location.service';
 import { NlfConfigService } from 'app/nlf-config.service';
-import { forkJoin } from 'rxjs';
+// import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'nlf-organization-details',

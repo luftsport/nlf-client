@@ -1,21 +1,29 @@
+<div class="card-header">
+  <fa name="random" [fixed]="true"></fa>Forløpet
+
+  <span *ngIf="components?.length > 0" class="pull-right px-1 pointer" (click)="componentCollapsed = !componentCollapsed">
+    <fa *ngIf="componentCollapsed" name="plus-square" size="2" [fixed]="true"></fa>
+    <fa *ngIf="!componentCollapsed" name="minus-square" size="2" [fixed]="true"></fa>
+  </span>
+</div>
+
 <div *ngIf="!!components" class="col-xs-12  col-md-12">
 
-  <label class="control-label">
-    <h3>
-      <fa name="random" [fixed]="true"></fa>Forløp
-    </h3>
-  </label>
 
   <div *ngIf="components.length == 0" class="text-danger">
-    <strong>
-      <i class="fa fa-fw fa-warning"></i>Intent forløp</strong>
+    <strong><i class="fa fa-fw fa-warning"></i>Intent forløp</strong>
   </div>
 
   <div class="clearfix"></div>
 
-
-  <button *ngIf="components?.length > 0" type="button" class="btn btn-outline-primary" (click)="componentCollapsed = !componentCollapsed"
+  <!--
+  <button *ngIf="components?.length > 0" type="button" class="btn btn-outline-primary btn-sm" (click)="componentCollapsed = !componentCollapsed"
     [attr.aria-expanded]="!componentCollapsed" aria-controls="collapseid">Collapse</button>
+    <span *ngIf="components?.length > 0">
+
+    </span>
+  -->
+
 
   <ul class="timeline" *ngIf="components?.length > 0">
 
@@ -24,7 +32,7 @@
 
       <div class="timeline-badge" [ngClass]="{'bg-secondary': !!c.flags.barrier,
                                               'bg-info': !!c.flags.incident,
-                                              'bg-warning': !!c.flags.cause || !!c.flags.root_cause, 
+                                              'bg-warning': !!c.flags.cause || !!c.flags.root_cause,
                                               'bg-danger': !!c.flags.consequence || !!c.flags.final_consequence}">
         {{ i+1 }}
       </div>

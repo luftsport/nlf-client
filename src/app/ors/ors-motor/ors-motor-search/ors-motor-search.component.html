@@ -3,7 +3,7 @@
 
     <span class="breadcrumb">
       <li class="breadcrumb-item">
-        <a [routerLink]="['/ors', 'motorfly']">ORS</a>
+        <a [routerLink]="['/ors', 'motorfly']">OBSREG</a>
         <!--[routerLink]="['/organizations', '376']"-->
       </li>
       <li class="breadcrumb-item">
@@ -16,7 +16,7 @@
       </li>
     </span>
 
-    <button *ngIf="!!query" class="btn btn-primary btn-sm pull-right mx-1" (click)="openModal(saveTemplate)">
+    <button *ngIf="!!query" class="btn btn-primary btn-sm pull-right mx-1" (click)="openModal(saveTemplate)" title="Funksjonen kommer snart" disabled>
       <fa name="save" [fixed]="true"></fa> Lagre søk
     </button>
 
@@ -34,10 +34,18 @@
         <label>Fritekst:</label>
         <input placeholder="Fritekst" class="form-control" type="text" (ngModelChange)="debouncedUpdate()" [(ngModel)]="text">
       </div>
-
+      
+      <!-- ANON DO NOT WORK ANYMORE
       <div class="form-row">
         <label>Fartøy:</label>
         <input oninput="this.value=this.value.toUpperCase()" placeholder="Kjennetegn" class="form-control" type="text" (ngModelChange)="debouncedUpdate()" [(ngModel)]="filter['aircrafts.aircraft.callsign']">
+      </div>
+      -->
+      
+      <div class="form-row">
+        <label>Fartøy:</label>
+        <input placeholder="Produsent" class="form-control" type="text" (ngModelChange)="debouncedUpdate()" [(ngModel)]="filter['aircrafts.aircraft.manufacturer']">
+        <input placeholder="Model" class="form-control" type="text" (ngModelChange)="debouncedUpdate()" [(ngModel)]="filter['aircrafts.aircraft.model']">
       </div>
 
       <div class="form-row">
@@ -69,10 +77,11 @@
       <div class="my-2 p-1 div_hover" *ngFor="let r of result?._items; let isOdd=odd;" [class.bg-light]="isOdd">
 
         <a [routerLink]="['/ors', activity,'report', r.id]">#{{ r.id }} - {{ r.tags | join: '/'}}</a>
-        <span *ngIf="!!r.rating" class="mx-1 badge badge-{{r.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ r.rating | nlfOrsRatingCalc }}</span>
+
 
         <span class="pull-right mx-1">
           <nlf-resolve-observation-state [activity]="r._model.type" [state]="r.workflow.state" icon="true"></nlf-resolve-observation-state>
+          <span *ngIf="!!r.rating" class="mx-1 badge badge-{{r.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ r.rating | nlfOrsRatingCalc }}</span>
         </span>
 
         <div class="small" *ngFor="let a of r.aircrafts">

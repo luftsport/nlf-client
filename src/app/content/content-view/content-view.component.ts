@@ -12,6 +12,7 @@ export class NlfContentViewComponent implements OnInit, AfterContentChecked {
 
   content: ApiContentItem;
   dataReady = false;
+  error = false;
   checked = false;
   parents = [];
   children = [];
@@ -45,7 +46,10 @@ export class NlfContentViewComponent implements OnInit, AfterContentChecked {
             this.getSiblings(data.parent, data._id);
             this.getSpaceTree(data.space_key);
           },
-          err => console.log(err),
+          err => {
+            console.log(err);
+            this.error = true;
+          },
           () => this.dataReady = true
         );
       });
@@ -169,17 +173,17 @@ export class NlfContentViewComponent implements OnInit, AfterContentChecked {
  * use fnlf-dev;
 db.content.aggregate(
     [
-        { 
+        {
             "$graphLookup" : {
-                "from" : "content", 
-                "startWith" : "$parent", 
-                "connectFromField" : "parent", 
-                "connectToField" : "_id", 
+                "from" : "content",
+                "startWith" : "$parent",
+                "connectFromField" : "parent",
+                "connectToField" : "_id",
                 "as" : "parents"
             }
         }
-    ], 
-    { 
+    ],
+    {
         "allowDiskUse" : false
     }
 );

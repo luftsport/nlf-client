@@ -7,33 +7,33 @@
   </span>
 </div>
 <div class="clearfix"></div>
-<nlf-help key="ors-editor-ask"></nlf-help>
+<!--<nlf-help key="ors-editor-ask"></nlf-help>-->
 <div *ngIf="verbose">
   <br />
   <ul class="list-unstyled">
     <li>
       <span *ngIf="isPositive('knowledge')">
-        <b>Gode</b> kunnskaper hadde innvirkning</span>
+        <strong class="text-success">Gode</strong> kunnskaper hadde innvirkning</span>
       <span *ngIf="isNeutral('knowledge')">Kunnskapen til de involverte hadde
-        <b>ingen</b> innvirkning</span>
+        <strong>ingen</strong> innvirkning</span>
       <span *ngIf="isNegative('knowledge')">
-        <b>Mangelfulle</b> kunnskaper hadde betydning</span>
+        <strong class="text-danger">Mangelfulle</strong> kunnskaper hadde betydning</span>
     </li>
     <li>
       <span *ngIf="isPositive('skills')">
-        <b>Gode</b> ferdigheter hadde innvirkning</span>
+        <strong class="text-success">Gode</strong> ferdigheter hadde innvirkning</span>
       <span *ngIf="isNeutral('skills')">Ferdighetene til de involverte hadde
-        <b>ingen</b> innvirkning</span>
+        <strong>ingen</strong> innvirkning</span>
       <span *ngIf="isNegative('skills')">
-        <b>Mangelfulle</b> ferdigheter hadde betydning</span>
+        <strong class="text-danger">Mangelfulle</strong> ferdigheter hadde betydning</span>
     </li>
     <li>
       <span *ngIf="isPositive('attitude')">
-        <b>Gode</b> holdninger hadde innvirkning</span>
+        <strong class="text-success">Gode</strong> holdninger hadde innvirkning</span>
       <span *ngIf="isNeutral('attitude')">Holdningene til de involverte hadde
-        <b>ingen</b> innvirkning</span>
+        <strong>ingen</strong> innvirkning</span>
       <span *ngIf="isNegative('attitude')">
-        <b>Dårlige</b> holdninger hadde betydning</span>
+        <strong class="text-danger">Dårlige</strong> holdninger hadde betydning</span>
     </li>
   </ul>
 </div>

@@ -3,6 +3,7 @@ cmds.txt
 src/app/.dashboard/
 src/app/.test/
 src/app/track-js.handler.ts
+src/environments/version.ts
 # compiled output
 /dist
 /tmp

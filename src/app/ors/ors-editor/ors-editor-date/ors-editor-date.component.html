@@ -1,5 +1,5 @@
 <div class="input-group">
-  <input [disabled]="disabled" class="form-control" placeholder="yyyy-mm-dd" name="dp" (dateSelect)="onDateSelection($event.next)" [(ngModel)]="model"
+  <input [disabled]="disabled" class="form-control" placeholder="yyyy-mm-dd" name="dp" (dateSelect)="debouncedEmit($event.next)" [(ngModel)]="model"
     ngbDatepicker [footerTemplate]="footerTemplate" #d="ngbDatepicker" [maxDate]="today">
   <div class="input-group-append">
     <button [disabled]="disabled" class="btn btn-outline-secondary" (click)="d.toggle()" type="button">

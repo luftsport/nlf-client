@@ -21,10 +21,11 @@ export class NlfOrsReportFilesThumbnailsComponent implements OnInit {
   viewimage;
   viewImageLoading = false;
   viewImageName = '';
+  viewImageData = { idx: 0, num: 0 };
 
   constructor(private apiFile: ApiFilesService,
-              public domSanitizer: DomSanitizer,
-              private modalService: NgbModal) { }
+    public domSanitizer: DomSanitizer,
+    private modalService: NgbModal) { }
 
   ngOnInit() {
     if (!this.size) {
@@ -79,15 +80,47 @@ export class NlfOrsReportFilesThumbnailsComponent implements OnInit {
 
   }
 
-  openModal(template: TemplateRef<any>, image) {
+
+  getModalImage(idx) {
+
+    if (idx < 0) {
+      idx = this.thumbnails.length - 1;
+    } else if (idx >= this.thumbnails.length) {
+      idx = 0;
+    }
+    this.viewImageData['idx'] = idx;
+    this.viewImageData['num'] = this.thumbnails.length;
     this.viewImageLoading = true;
     this.viewImageName = 'Laster bilde...';
-    this.modalRef = this.modalService.open(template, {size: 'lg'});
+    this.apiFile.getImage(this.thumbnails[idx]._id, 'large').subscribe(
+      data => {
+        this.viewimage = {
+          src: 'data:' + data.mimetype + ';charset=utf8;base64,' + data.src,
+          name: this.thumbnails[idx].filename, size: this.thumbnails[idx].filesize
+        };
+        this.viewImageName = this.thumbnails[idx].filename;
+        this.viewImageLoading = false;
+      },
+      err => console.log(err),
+      () => this.viewImageLoading = false
+
+    );
+
+  }
+
+  openModal(template: TemplateRef<any>, image, idx) {
+    this.viewImageData['idx'] = idx;
+    this.viewImageData['num'] = this.thumbnails.length;
+    this.viewImageLoading = true;
+    this.viewImageName = 'Laster bilde...';
+    this.modalRef = this.modalService.open(template, { size: 'lg' });
 
     this.apiFile.getImage(image._id, 'large').subscribe(
       data => {
-        this.viewimage = {src: 'data:' + data.mimetype + ';charset=utf8;base64,' + data.src,
-                          name: image.filename, size: image.filesize};
+        this.viewimage = {
+          src: 'data:' + data.mimetype + ';charset=utf8;base64,' + data.src,
+          name: image.filename, size: image.filesize
+        };
         this.viewImageName = image.filename;
         this.viewImageLoading = false;
       },

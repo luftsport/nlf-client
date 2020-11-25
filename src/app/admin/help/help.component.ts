@@ -55,7 +55,7 @@ export class NlfAdminHelpComponent implements OnInit {
     logger: false,
     showDetailsArrow: false,
     showContextMenu: false,
-    persistState: false,
+    persistState: true,
     tableLayout: {
       borderless: false,
       hover: true,

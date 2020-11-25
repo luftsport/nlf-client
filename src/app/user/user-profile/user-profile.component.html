@@ -1,23 +1,163 @@
-<div *ngIf="dataReady">
+<header class="nlf-sticky-toolbar">
+	<div class="container">
 
-	<div class="card" style="width: 22rem;">
-		<img class="card-img-top img-fluid" [src]="domSanitizer.bypassSecurityTrustUrl(avatar)" alt="Profilbilde">
-		<div class="card-body">
-
-			<h3>
-				<nlf-resolve-user [userid]="user.id" [link]="false"></nlf-resolve-user>
-				<span *ngIf="myself">
-					<a [routerLink]="['/user/profile']">
-						<fa name="edit" [fixed]="true"></fa>
-					</a>
-				<span *ngIf="!!geo">{{ geo.coords.latitude }} {{ geo.coords.longitude }}</span>
+		<span class="breadcrumb">
+			<li class="breadcrumb-item">
+				<span class="avatar avatar-xs mr-1">
+					<img [src]="avatar||avatar_missing" alt="user" class="avatar-img rounded-circle">
 				</span>
-			</h3>
+				<span class="hidden-sm-down">
+					<nlf-resolve-lungo-person [person_id]="user.person_id" [avatar]="false"></nlf-resolve-lungo-person>
+				</span>
+			</li>
+
+			<li class="breadcrumb-item active">
+				<a>profil</a>
+				<!--[routerLink]="['/organizations', '376']"-->
+			</li>
+		</span>
+
+		<!--
+		<button *ngIf="dataReady" class="btn btn-primary btn-sm pull-right mx-1" (click)="openModal(saveTemplate)" title="">
+			<fa name="cog" [fixed]="true"></fa> Settings
+		</button>
+		-->
+
+		<a [routerLink]="['/user', person_id]" class="btn btn-sm btn-primary mx-1 pull-right">
+			<fa name="user-o" [fixed]="true"></fa> View
+		</a>
+
+		<nlf-help class="pull-right mx-1" key="user-profile"></nlf-help>
+
+	</div>
+</header>
+
+<div *ngIf="dataReady" class="mt-3">
+	<div class="container">
+		<div class="row">
+
+			<div class="col-md-3 col-xs-12 text-center">
+
+				<img class="img-fluid img-thumbnail rounded" [src]="avatar||avatar_missing">
+
+
+				<!-- UPLOAD BUTTON -->
+				<label class="btn btn-primary btn-file btn-block my-1">
+					<fa name="user-circle-o" [fixed]="true"></fa>Browse
+					<input type="file" (change)="fileChangeEvent($event);openModal(cropTemplate);" hidden>
+					<!--<input type="file"  ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple>-->
+				</label>
+				<!-- Remove avatar: not yet since !!avatar in subject save loop! Needs nullable in backend too...
+				<a class="btn btn-danger btn-block my-3" (click)="removeImage()" *ngIf="!!avatar">Remove</a>
+				-->
+
+			</div>
+
+			<div class="col-md-9 col-xs-12">
+
+				<div class="my-3">
+					<h4>Hovedklubb</h4>
+					<strong>
+						<nlf-resolve-lungo-organization [organization_id]="user.settings.default_discipline" [show_type]="true" [long]="true" [link]="true"></nlf-resolve-lungo-organization>
+						<fa (click)="openDefaultClub()" class="ml-3 pointer" name="pencil"></fa>
+					</strong>
+				</div>
+				<div class="my-3">
+					<h4>Mine Medlemsskap</h4>
+					<div *ngFor="let role of user.acl">
+						<div *ngIf="role.org>0 && role.role===10000000 && [2,19,14].indexOf(role.type)>-1">
+							<nlf-resolve-lungo-organization [organization_id]="role.org" [link]="true" [show_type]="true"></nlf-resolve-lungo-organization>:
+							<strong>
+								<nlf-resolve-lungo-function-type [type_id]="role.role"></nlf-resolve-lungo-function-type>
+							</strong>
+						</div>
+					</div>
+				</div>
+				<div class="my-3">
+					<h4>Mine funksjoner</h4>
+					<div *ngFor="let role of user.acl">
+						<div *ngIf="role.org>0 && role.activity>0 && role.role!=10000000">
+							<nlf-resolve-lungo-organization [organization_id]="role.org" [link]="true"></nlf-resolve-lungo-organization>:
+							<strong>
+								<nlf-resolve-lungo-function-type [type_id]="role.role"></nlf-resolve-lungo-function-type>
+							</strong>
+						</div>
+					</div>
+				</div>
+
+				<!--
+				<div class="my-3">
+					<h4>Mine Kompetanser</h4>
+					<div *ngFor="let role of user.acl">
+						<div *ngIf="role.org>0 && role.role!=10000000">
+							<nlf-resolve-lungo-organization [organization_id]="role.org" [link]="true"></nlf-resolve-lungo-organization>:
+							<strong>
+								<nlf-resolve-lungo-function-type [type_id]="role.role"></nlf-resolve-lungo-function-type>
+							</strong>
+						</div>
+					</div>
+				</div>
+
+				<div class="my-3">
+					<h4>Mine Lisenser</h4>
+					<div *ngFor="let role of user.acl">
+						<div *ngIf="role.org>0 && role.role!=10000000">
+							<nlf-resolve-lungo-organization [organization_id]="role.org" [link]="true"></nlf-resolve-lungo-organization>:
+							<strong>
+								<nlf-resolve-lungo-function-type [type_id]="role.role"></nlf-resolve-lungo-function-type>
+							</strong>
+						</div>
+					</div>
+				</div>
+			-->
+
+				<!--{{ user | json }}-->
+
+			</div>
 
 		</div>
-	</div>
+		<div class="row">
+			<div class="col-xs-12 col-md-12 mt-6">
+				<div class="my-3">
+					<h4>Mine {{ config[config.inv_mapping[user.settings.default_activity]]['observation']['app_name'] || 'ORSX' }} som involvert</h4>
+					<nlf-user-ors activity="fallskjerm"></nlf-user-ors>
+					<nlf-user-ors activity="motorfly"></nlf-user-ors>
+				</div>
+			</div>
+		</div>
 
+	</div>
 </div>
-<div *ngIf="!dataReady">
+<div *ngIf="!dataReady" class="text-center">
 	<fa name="spinner" animation="pulse" size="3x"></fa>
 </div>
+
+<ng-template #cropTemplate>
+
+	<div class="modal-header">
+		<h4 class="modal-title pull-left">
+			<img class="mr-3 avatar avatar-sm img-fluid img-rounded" [src]="modal_avatar||avatar">Profilbilde
+		</h4>
+		<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+
+	<div class="modal-body">
+		<img class="img-fluid avatar avatar-lg" [src]="modal_avatar||avatar" />
+
+		<nlf-ui-component-spinner *ngIf="!avatarReady">loading...</nlf-ui-component-spinner>
+		<image-cropper class="img-fluid" resizeToWidth="300" cropperMinWidth="300" [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" alignImage="center" [aspectRatio]="1 / 1" format="png" (imageCropped)="imageCropped($event)"
+			(imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()">
+		</image-cropper>
+	</div>
+
+	<div class="modal-footer">
+		<button class="btn btn-outline-dark" (click)="cancelModal()">
+			<fa name="times" [fixed]="true"></fa>Avbryt
+		</button>
+		<button class="btn btn-success" (click)="closeModal()">
+			<fa name="check" [fixed]="true"></fa>Bruk
+		</button>
+	</div>
+</ng-template>

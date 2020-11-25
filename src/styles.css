@@ -23,24 +23,25 @@ agm-map {
     height: calc(100% - 12px) !important;
     width: 100%;
 }
-  
+
 .ngx-chart-wrapper {
     min-height: 400px !important;
 }
 
+
 /* FAB BUTTON */
 .fab {
    width: 60px;
-   
+
    height: 60px;
    font-size: 18px;
    padding-top: 18px;
-   
+
    background-color: #ccc;
    border-radius: 50%;
    box-shadow: 0 6px 10px 0 #666;
    transition: all 0.1s ease-in-out;
- 
+
    vertical-align:middle;
    color: white;
    text-align: center;
@@ -49,14 +50,14 @@ agm-map {
     font-size: 60px;
     */
    position: fixed;
-   
+
    right: 50px;
    bottom: 50px;
    z-index: 999999;
 }
- 
+
 .fab:hover {
-   cursor: pointer; 
+   cursor: pointer;
    box-shadow: 0 6px 14px 0 #666;
    transform: scale(1.05);
 }
@@ -71,7 +72,7 @@ agm-map {
     padding: 0;
     width: 100%;
 }
-.ng-select.form-control .ng-select-container  {            
+.ng-select.form-control .ng-select-container  {
     min-height: 0px;
     height: 100%;
     width: 100%;
@@ -171,13 +172,13 @@ agm-map {
 /** TRIBUTE JS **/
 .tribute-container {
   position: absolute;
-  /** Only when triangle 
+  /** Only when triangle
   margin-top: 8px;*/
   top: 0px;
   left: 0;
   height: auto;
   /*overflow: auto; */
-  overflow-y: auto; 
+  overflow-y: auto;
   overflow-x: hidden;
   max-height: 300px;
   max-width: 500px;
@@ -186,7 +187,7 @@ agm-map {
   border: 1px solid #DDDDDD;
   border-radius: 4px;
 }
-/** Triangle up, don't work with overflow auto... 
+/** Triangle up, don't work with overflow auto...
 .tribute-container:before {
   content: "";
   position: absolute;
@@ -222,21 +223,21 @@ agm-map {
 }
 .tribute-container li {
   padding: 5px 5px;
-  cursor: pointer; 
+  cursor: pointer;
 }
 .tribute-container li.highlight, .tribute-container li:hover {
   background: #DDDDDD;
 }
 .tribute-container li span {
-  font-weight: bold; 
+  font-weight: bold;
 }
 .tribute-container li.no-match {
-  cursor: default; 
+  cursor: default;
 }
 .tribute-container .menu-highlighted {
-  font-weight: bold; 
+  font-weight: bold;
 }
-  
+
 .ngx-easy-table-small{font-size: 0.8rem !important;}
 
 .pointer {cursor: pointer;}
@@ -296,7 +297,7 @@ ins{
     color: black;
     background: #bbffbb;
   }
-  
+
   del{
     color: black;
     background: #ffbbbb;
@@ -578,7 +579,7 @@ ins{
 }
 
 .avatar.avatar-xs {
-    font-size: 1.2rem;
+    font-size: 1rem;
     width: 1.2rem;
     height: 1.2rem;
 }
@@ -1026,7 +1027,7 @@ ins{
     border-radius: 50%
 }
 
-.btn-add-gray {    
+.btn-add-gray {
   border-radius: 50%;
   background: transparent;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
@@ -1034,4 +1035,3 @@ ins{
     color: #8f9eb5 !important;
  margin-left: 5px !important;
 }
-

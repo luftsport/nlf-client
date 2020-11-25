@@ -1,20 +1,8 @@
 <div class="row">
-  <div class="col-sm-9">
 
-    <div class="row">
-      <div class="col-sm-4 lead">
-        Faktisk:
-      </div>
-      <div class="col-sm-4">
-        <ngb-rating (hover)="onHoverActual($event)" (leave)="onHoverLeave()" [readonly]="!observation.acl_user.w" [(rate)]="observation.rating.actual" [starTemplate]="t" (rateChange)="onChange()" max="8"></ngb-rating>
-      </div>
-      <div class="col-sm-4">
-        <span *ngIf="!hover_actual">{{ observation.rating.actual | nlfOrsRating:observation._model.type }}</span>
-        <span *ngIf="!!hover_actual">{{ hover_actual | nlfOrsRating:observation._model.type }}</span>
-      </div>
+  <div class="col-sm-10">
 
-    </div>
-
+    <!-- Potential -->
     <div class="row">
       <div class="col-sm-4 lead">
         Potensiell:
@@ -27,15 +15,34 @@
         <span *ngIf="!!hover_potential">{{ hover_potential | nlfOrsRating:observation._model.type }}</span>
       </div>
     </div>
+
+    <!-- Actual -->
+    <div class="row">
+      <div class="col-sm-4 lead">
+        Faktisk:
+      </div>
+      <div class="col-sm-4">
+        <ngb-rating (hover)="onHoverActual($event)" (leave)="onHoverLeave()" [readonly]="!observation.acl_user.w" [(rate)]="observation.rating.actual" [starTemplate]="t" (rateChange)="onChange()" max="8"></ngb-rating>
+      </div>
+      <div class="col-sm-4">
+        <span *ngIf="!hover_actual">{{ observation.rating.actual | nlfOrsRating:observation._model.type }}</span>
+        <span *ngIf="!!hover_actual">{{ hover_actual | nlfOrsRating:observation._model.type }}</span>
+      </div>
+    </div>
+
   </div>
 
-  <div class="col-sm-3">
+  <!-- Caluclated rating -->
+  <div class="col-sm-2">
     <h1>
       <!--<nlf-resolve-observation-rating [rating]="observation.rating"></nlf-resolve-observation-rating>-->
       <span class="badge badge-{{ observation.rating | nlfOrsRatingCalc | nlfDynamicColor }}">{{ observation.rating | nlfOrsRatingCalc }}</span>
     </h1>
   </div>
+  
 </div>
+
+<!-- Warning -->
 <div *ngIf="observation.rating.potential < observation.rating.actual" class="row">
   <div class="col-md-12">
     <ngb-alert [dismissible]="true" type="warning">
@@ -44,6 +51,7 @@
   </div>
 </div>
 
+<!-- Tempalte for rating dots -->
 <ng-template #t let-fill="fill" let-index="index">
   <span class="rating-star" [class.rating-filled]="fill === 100" [class.rating-bad]="index < 5 && index >= 2" [class.rating-worst]="index >= 5">&#9679;</span>
 </ng-template>

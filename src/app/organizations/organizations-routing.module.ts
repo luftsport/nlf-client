@@ -14,18 +14,17 @@ import { NlfOrganizationDetailsComponent } from 'app/organizations/organization
 const routes: Routes = [
   //{ path: '', component: NlfOrganizationsComponent, canActivate: [NlfAuthGuard]},
 
-  { path: '', component: NlfOrganizationsComponent, canActivate: [NlfAuthGuard] },
+  { path: '', component: NlfOrganizationsComponent, canActivate: [NlfAuthGuard], data: {title: 'Organisasjoner'} },
 
   {
-    path: ':id', component: NlfOrganizationComponent, canActivate: [NlfAuthGuard],
+    path: ':id', component: NlfOrganizationComponent, canActivate: [NlfAuthGuard], data: {title: 'Organisasjon'},
     children: [
-      { path: '', component: NlfOrganizationDetailsComponent, canActivate: [NlfAuthGuard] },
-      { path: 'aircraft', component: NlfOrganizationAircraftsComponent, canActivate: [NlfAuthGuard] },
-      { path: 'locations', component: NlfOrganizationLocationsComponent, canActivate: [NlfAuthGuard] },
-      { path: 'location/edit/:idx', component: NlfOrganizationLocationsEditComponent, canActivate: [NlfAuthGuard] },
+      { path: '', component: NlfOrganizationDetailsComponent, canActivate: [NlfAuthGuard], data: {title: 'Organisasjon'} },
+      { path: 'aircraft', component: NlfOrganizationAircraftsComponent, canActivate: [NlfAuthGuard] , data: {title: 'Organisasjon - Fly'} },
+      { path: 'locations', component: NlfOrganizationLocationsComponent, canActivate: [NlfAuthGuard] , data: {title: 'Organisasjon - Steder'} },
+      { path: 'location/edit/:idx', component: NlfOrganizationLocationsEditComponent, canActivate: [NlfAuthGuard] , data: {title: 'Organisasjon - Rediger sted'} },
       // ORS is just a redirect
-
-      { path: 'stats', component: NlfOrganizationStatsComponent, canActivate: [NlfAuthGuard] }
+      { path: 'stats', component: NlfOrganizationStatsComponent, canActivate: [NlfAuthGuard], data: {title: 'Organisasjon - Statistikk'} }
     ]
   },
   { path: ':id/ors', redirectTo: '/ors', pathMatch: 'full' },
@@ -41,7 +40,7 @@ const routes: Routes = [
   { path: 'modellfly/:id', component: NlfOrganizationComponent, canActivate: [NlfAuthGuard] },
   { path: 'seilfly/:id', component: NlfOrganizationComponent, canActivate: [NlfAuthGuard] },
 
-  { path: '**', component: NlfOrganizationsComponent, canActivate: [NlfAuthGuard] }
+  { path: '**',  redirectTo: ''}
 ];
 
 @NgModule({

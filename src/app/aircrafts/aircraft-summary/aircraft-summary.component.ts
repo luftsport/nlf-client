@@ -11,6 +11,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class NlfAircraftSummaryComponent implements OnInit {
 
   @Input() callsign: string;
+  // Optional if anon
+  @Input() model: string;
+  @Input() manufacturer: string;
 
   dataReady = false;
   aircraft: ApiAircraftsItem;
@@ -32,7 +35,11 @@ export class NlfAircraftSummaryComponent implements OnInit {
       data => {
         this.aircraft = data;
       },
-      err => console.log('ERR getting aircraft ', err.message),
+      err => {
+        console.log('ERR getting aircraft ', err.message);
+        this.aircraft = { callsign: this.callsign, image: undefined };
+        this.dataReady = true;
+      },
       () => this.dataReady = true
     );
 

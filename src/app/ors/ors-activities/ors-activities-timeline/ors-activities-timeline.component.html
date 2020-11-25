@@ -1,0 +1,365 @@
+<!-- FILTER -->
+<div class="my-3 text-right">
+  <span class="pointer mx-1" [ngClass]="show.reminders ? 'text-info' : 'text-secondary'" (click)="show.reminders=!show.reminders">
+    <fa name="bell"></fa> purringer
+  </span>
+  <span class="pointer mx-1" [ngClass]="show.messages ? 'text-info' : 'text-secondary'" (click)="show.messages=!show.messages">
+    <fa name="comments-o"></fa> meldinger
+  </span>
+  <span class="pointer mx-1" [ngClass]="show.workflow ? 'text-info' : 'text-secondary'" (click)="show.workflow=!show.workflow">
+    <fa name="exchange"></fa> arbeidsflyt
+  </span>
+  <!-- ONLY motorfly shows E5X *ngIf="activity=='motorfly'" -->
+  <span class="pointer mx-1" [ngClass]="show.e5x ? 'text-info' : 'text-secondary'" (click)="show.e5x=!show.e5x">
+    <fa name="paper-plane-o"></fa> e5x
+  </span>
+
+  <span class="pointer mx-1" [ngClass]="show.save ? 'text-info' : 'text-secondary'" (click)="show.save=!show.save">
+    <fa name="floppy-o"></fa> lagring
+  </span>
+  <span class="pointer mx-1" [ngClass]="show.persons ? 'text-info' : 'text-secondary'" (click)="show.persons=!show.persons">
+    <fa name="user-plus"></fa> personer
+  </span>
+</div>
+
+<ul class="cbp_tmtimeline">
+
+  <!-- NEW -->
+  <li>
+    <time class="cbp_tmtime" dateTime="{{ now | date:'y-M-dTHH:mm' }}"><span class="hidden">{{ now | date:'y-M-d' }}</span>
+      <span class="large">
+
+        <!--{{ now | date:'HH:mm' }}-->now</span>
+    </time>
+
+    <!--
+    <fa name="comment-o" [fixed]="true"></fa>
+
+      <div class="cbp_tmicon avatar">
+      <img src="https://www.bootdey.com/img/Content/avatar/avatar2.png" style="margin-top: -3px !important" alt="user" class="avatar-img rounded-circle">
+      </div>
+    -->
+
+    <div class="cbp_tmicon bg-light">
+      <fa name="commenting-o" [fixed]="true"></fa>
+    </div>
+
+    <div *ngIf="observation.workflow.state!='closed'" class="cbp_tmlabel empty">
+
+      <!-- observation.ask.text[observation.workflow.state]" (ngModelChange)="debouncedUpdateText()" (paste)="onPaste($event) -->
+      <div [ngClass]="{'bg-secondary': !observation.acl_user.r}" [disabled]="!observation.acl_user.r" class="bg-white border mt-2" style="min-height:100px; width: 100%;display: inline-block;overflow: hidden;padding:2px;"
+        contenteditable="true" propValueAccessor="innerHTML" name="myAskDiv" [(ngModel)]="message_text">
+        Send noe tekst her
+      </div>
+
+      <div>
+
+        <!-- PURRINGER -->
+
+        <button *ngIf="is_reminding" class="btn btn-link text-danger mx-1">
+          <!--<fa [name]="is_reminding ? 'commenting' : 'bell'" [fixed]="true"></fa> Purring-->
+          <fa name="spinner" animation="pulse"></fa> Sender...
+        </button>
+        <button [disabled]="!observation.acl_user.r" *ngIf="!is_reminding" class="btn btn-link text-danger mx-1" (click)="notify()">
+          <fa name="bell" [fixed]="true"></fa> Purring
+        </button>
+
+
+        <!--
+      <button class="btn btn-add-gray">
+        <fa name="plus"></fa>
+      </button>
+    -->
+
+        <span class="pull-right">
+          <nlf-resolve-avatars [persons]="current_acl_users||[]" max="5"></nlf-resolve-avatars>
+
+          <!-- ADD RECEPIENT
+              <div class="avatar">
+              <a href="#">
+                <span class="add-new-plus">
+                  <fa name="plus"></fa>
+                </span>
+              </a>
+              </div>
+              -->
+
+
+          <!-- /ADD RECEPIENT -->
+          <!-- /AVATARS -->
+
+          <!-- SEND BTN -->
+          <button *ngIf="!is_sending_msg" [disabled]="message_text.length<4" class="btn btn-primary ml-3" (click)="sendMessage()">
+            <fa name="comment" [fixed]="true"></fa> Melding
+          </button>
+          <button *ngIf="is_sending_msg" [disabled]="message_text.length<4" class="btn btn-primary ml-3">
+            <fa name="spinner" animation="pulse"></fa> Sending
+          </button>
+
+        </span>
+
+      </div>
+    </div><!-- /btns filter -->
+    <div *ngIf="observation.workflow.state=='closed'" class="cbp_tmlabel">
+      <h2>Observasjonen er lukket.</h2>
+    </div>
+
+  </li>
+
+  <!-- ITERATE -->
+  <li *ngFor="let row of events; trackBy: trackByRowId; let idx = index">
+
+
+
+    <!-- MESSAGE -->
+    <!-- NOTIFICATION -->
+    <!-- PERSON -->
+
+    <!-- WORKFLOW -->
+    <span *ngIf="row.type=='ors_workflow'">
+
+      <!-- INIT -->
+      <span *ngIf="row.data.action=='init' && show.workflow">
+        <time class="cbp_tmtime" [dateTime]="row.event_created"><span>{{ row.event_created | date:'HH:mm' }}</span> <span>{{ row.event_created | amTimeAgo }}</span></time>
+        <div class="cbp_tmicon bg-green">
+          <fa name="plus" [fixed]="true"></fa>
+        </div>
+        <div class="cbp_tmlabel">
+          <h2>
+            <nlf-resolve-lungo-person [person_id]="row.sender" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
+            <span> opprettet observasjonen </span> <a [routerLink]="['/ors', observation._model.type, 'report', observation._id, 'version', 1]"></a>
+            <nlf-resolve-observation-state class="pull-right" [activity]="observation._model.type" [state]="row.data.destination" icon="true"></nlf-resolve-observation-state>
+          </h2>
+
+          <!-- RECEPIENTS AVATARS -->
+          <div>
+            <p *ngIf="!!row.data.comment" class="blockquote blockquote-primary">
+              {{ row.data.comment }}
+            </p>
+
+            <nlf-resolve-avatars [persons]="row.recepients||[]" max="2"></nlf-resolve-avatars>
+            <!--
+            <div class="avatar-group avatar-group-sm avatar-group-overlapped mt-10 text-right">
+              <div *ngFor="let user of row.recepients; let idx=index" class="avatar">
+                <img src="https://www.bootdey.com/img/Content/avatar/avatar{{ idx + 1 }}.png" alt="user" class="avatar-img rounded-circle">
+              </div>
+
+              <div class="avatar">
+                <span class="avatar-text avatar-text-green rounded-circle"><span class="initial-wrap"><span>1+</span></span>
+                </span>
+              </div>
+            </div>
+            -->
+          </div>
+          <!-- /AVATARS -->
+
+        </div>
+      </span>
+
+      <!-- NORMAL WORKFLOWS -->
+      <span *ngIf="row.data.action!='init' && show.workflow">
+        <time class="cbp_tmtime" [dateTime]="row.event_created"><span>{{ row.event_created | date:'HH:mm' }}</span> <span>{{ row.event_created | amTimeAgo }}</span></time>
+
+        <div *ngIf="row.data.action=='approve'" class="cbp_tmicon bg-green">
+          <fa *ngIf="row.data.destination!='closed'" name="exchange" [fixed]="true"></fa>
+          <fa *ngIf="row.data.destination=='closed'" name="check" [fixed]="true"></fa>
+        </div>
+
+        <div *ngIf="row.data.action=='reject'" class="cbp_tmicon bg-blush">
+          <fa name="refresh" [fixed]="true"></fa>
+        </div>
+
+        <div *ngIf="row.data.action=='withdraw'" class="cbp_tmicon bg-dark">
+          <fa name="ban" [fixed]="true"></fa>
+        </div>
+
+        <div *ngIf="row.data.action=='reopen'" class="cbp_tmicon bg-green">
+          <fa name="repeat" [fixed]="true"></fa>
+        </div>
+
+        <div class="cbp_tmlabel">
+          <h2>
+            <nlf-resolve-lungo-person [person_id]="row.sender" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
+            <span *ngIf="row.data.action=='reject'"> sendte observasjonen tilbake </span>
+            <span *ngIf="row.data.action=='approve'"> godkjente observasjonen </span>
+            <span *ngIf="row.data.action=='reopen'"> gjenåpnet observasjonen </span>
+            <span *ngIf="row.data.action=='withdraw'"> trekte tilbake observasjonen </span>
+            <span class="pull-right">
+              <nlf-resolve-observation-state [activity]="observation._model.type" [state]="row.data.source" icon="true"></nlf-resolve-observation-state>
+              <fa class="text-secondary mx-1" name="long-arrow-right"></fa>
+              <nlf-resolve-observation-state [activity]="observation._model.type" [state]="row.data.destination" icon="true"></nlf-resolve-observation-state>
+            </span>
+          </h2>
+          <!-- RECEPIENTS AVATARS -->
+          <div>
+            <p *ngIf="!!row.data.comment" class="blockquote blockquote-primary">
+              {{ row.data.comment }}
+            </p>
+
+            <nlf-resolve-avatars [persons]="row.recepients||[]" max="2"></nlf-resolve-avatars>
+
+            <!--
+            <div class="avatar-group avatar-group-sm avatar-group-overlapped mt-10 text-right">
+              <div *ngFor="let user of row.recepients; let idx=index" class="avatar">
+                <img src="https://www.bootdey.com/img/Content/avatar/avatar{{ idx + 1 }}.png" alt="user" class="avatar-img rounded-circle">
+              </div>
+
+              <div class="avatar">
+                <span class="avatar-text avatar-text-green rounded-circle"><span class="initial-wrap"><span>1+</span></span>
+                </span>
+              </div>
+            </div>
+            -->
+          </div>
+          <!-- /AVATARS -->
+        </div>
+      </span>
+    </span>
+
+    <!-- SAVE -->
+    <span *ngIf="row.type=='ors_save' && show.save">
+      <time class="cbp_tmtime" [dateTime]="row.event_created"><span>{{ row.event_created | date:'HH:mm' }}</span> <span>{{ row.event_created | amTimeAgo }}</span></time>
+      <div class="cbp_tmicon bg-info">
+        <fa name="floppy-o" [fixed]="true">{{ row._version }}</fa>
+      </div>
+      <div class="cbp_tmlabel">
+        <h2>
+          <nlf-resolve-lungo-person [person_id]="row.sender" [link]="true" [avatar]="true"></nlf-resolve-lungo-person> lagret observasjonen
+          <span class="pull-right">
+            <a [routerLink]="['/ors', observation._model.type, 'report', observation._id, 'version', row.data.source]">v{{row.data.source}}</a>
+            <fa name="long-arrow-right text-secondary mx-1"></fa>
+            <a [routerLink]="['/ors', observation._model.type, 'report', observation._id, 'version', row.data.source]">v{{row.data.destination}}</a>
+          </span>
+        </h2>
+        <!--<p>You have a meeting at <strong>Laborator Office</strong> Today.</p>-->
+      </div>
+    </span>
+
+    <!-- PURRING ULEST -->
+    <span *ngIf="row.type=='ors_reminder' && show.reminders">
+      <time class="cbp_tmtime" [dateTime]="row.event_created"><span>{{ row.event_created | date:'HH:mm' }}</span> <span>{{ row.event_created | amTimeAgo }}</span></time>
+      <div class="cbp_tmicon bg-danger">
+        <fa name="bell-o" [fixed]="true"></fa>
+      </div>
+      <div class="cbp_tmlabel">
+        <h2>
+          <nlf-resolve-lungo-person [person_id]="row.sender" [link]="true" [avatar]="true"></nlf-resolve-lungo-person> sendte en purring
+          <span class="pull-right">
+
+            <span class="badge badge-light mx-1">{{ row.transport }}</span>
+          </span>
+        </h2>
+
+        <nlf-resolve-avatars [persons]="row.recepients||[]"></nlf-resolve-avatars>
+        <!--
+        <div *ngFor="let person_id of row.recepients">
+          <fa name="bell-o" [fixed]="true" class="text-danger"></fa>
+          <nlf-resolve-lungo-person [person_id]="person_id" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
+        </div>
+        -->
+        <div class="row clearfix">
+
+          <div *ngIf="1==9" class="col-lg-12">
+            <button class="btn btn-dark btn-outline">
+              <fa name="bell-o"></fa> Purr Jan-Erik Wang igjen
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </span>
+
+    <!-- MESSAGES -->
+    <span *ngIf="row.type=='ors_message' && show.messages">
+      <time class="cbp_tmtime" [dateTime]="row.event_created"><span>{{ row.event_created | date:'HH:mm' }}</span> <span>{{ row.event_created | amTimeAgo }}</span></time>
+      <div class="cbp_tmicon bg-info">
+        <!-- comments-o commenting-o -->
+        <fa name="comment" [fixed]="true"></fa>
+      </div>
+      <div class="cbp_tmlabel">
+        <h2>
+          <nlf-resolve-lungo-person [person_id]="row.sender" [link]="true" [avatar]="true"></nlf-resolve-lungo-person> sendte en melding
+          <span class="pull-right">
+            <span class="badge badge-light mx-1">{{ row.transport }}</span>
+          </span>
+        </h2>
+
+        <p class="blockquote blockquote-primary" [innerHTML]="row.data?.message | newlines">
+        </p>
+
+        <nlf-resolve-avatars [persons]="row.recepients||[]"></nlf-resolve-avatars>
+        <!--
+        <div *ngFor="let person_id of row.recepients">
+          <nlf-resolve-lungo-person [person_id]="person_id" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
+        </div>
+        -->
+      </div>
+    </span>
+
+
+    <!-- E5X -->
+    <span *ngIf="row.type=='ors_e5x' && show.e5x">
+      <time class="cbp_tmtime" [dateTime]="row.event_created"><span>{{ row.event_created | date:'HH:mm' }}</span> <span>{{ row.event_created | amTimeAgo }}</span></time>
+
+      <div *ngIf="row.data.context!='sent'" class="cbp_tmicon bg-orange">
+        <fa name="paper-plane" [fixed]="true"></fa>
+      </div>
+      <div *ngIf="row.data.context=='sent'" class="cbp_tmicon bg-green">
+        <fa name="paper-plane-o" [fixed]="true"></fa>
+      </div>
+      <div class="cbp_tmlabel">
+        <h2>
+          <nlf-resolve-lungo-person [person_id]="row.sender" [link]="true" [avatar]="true"></nlf-resolve-lungo-person> sendte observasjonen til LT
+          <span class="pull-right">
+            <span class="badge badge-light mx-1">{{ row.transport }}</span>
+          </span>
+        </h2>
+
+        <p>
+          Rapport status: <nlf-ors-editor-tag-e5x-render classes="badge badge-secondary" [showLabel]="false" [items]="row.data.status" path="E5X.Occurrence.ReportingHistory.ReportStatus"></nlf-ors-editor-tag-e5x-render>
+        </p>
+        <p *ngIf="row.data.context=='sent'">
+          Observasjonen ble sendt som version {{ row.data.source }} {{ row.data.context }} via {{ row.data.transport }} as {{ row.data.file_name }}
+        </p>
+        <p *ngIf="row.data.context!='sent'">
+          Observasjonen <strong>feilet</strong> under innsendelse!
+        </p>
+
+        <nlf-resolve-avatars [persons]="row.recepients||[]"></nlf-resolve-avatars>
+        <!--
+        <div *ngFor="let person_id of row.recepients">
+          <nlf-resolve-lungo-person [person_id]="person_id" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
+        </div>
+        -->
+      </div>
+    </span>
+
+    <!-- ACCESS -->
+    <span *ngIf="row.type=='ors_acl' && show.persons">
+      <time class="cbp_tmtime" [dateTime]="row.event_created"><span>{{ row.event_created | date:'HH:mm' }}</span> <span>{{ row.event_created | amTimeAgo }}</span></time>
+
+      <div *ngIf="row.data.verb=='add'" class="cbp_tmicon bg-green">
+        <fa name="user-plus" [fixed]="true"></fa>
+      </div>
+
+      <div *ngIf="row.data.verb=='remove'" class="cbp_tmicon bg-blush">
+        <fa name="user-times" [fixed]="true"></fa>
+      </div>
+
+      <div class="cbp_tmlabel">
+        <h2>
+          <!-- KEEP legacy data.message format -->
+          <nlf-resolve-lungo-person [person_id]="row.sender" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>&nbsp;<span *ngIf="!!row.data?.message">{{ row.data.message }}</span><span *ngIf="!row.data?.message">{{ row.data.verb }} <strong>{{ row.data.right }}</strong></span> for
+          <span class="pull-right">
+            <span class="badge badge-light mx-1">{{ row.transport }}</span>
+          </span>
+        </h2>
+
+        <div *ngFor="let person_id of row.recepients">
+          <nlf-resolve-lungo-person [person_id]="person_id" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
+        </div>
+      </div>
+    </span>
+  </li>
+
+</ul>

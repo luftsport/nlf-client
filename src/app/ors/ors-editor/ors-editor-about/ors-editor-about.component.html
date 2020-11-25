@@ -1,6 +1,6 @@
 <div class="modal-header">
   <h4 class="modal-title">
-    {{ observation._model.type | capitalize }} ORS #{{ observation.id }}
+    {{ observation._model.type | capitalize }} {{config[observation._model.type]['observation']['app_name']}} #{{ observation.id }}
     <span *ngIf="ENV._name!='prod'" class="badge badge-danger">{{ ENV._name }}</span>
   </h4>
 
@@ -21,14 +21,36 @@
       <nlf-resolve-observation-state [activity]="observation._model.type" [state]="observation.workflow.state" icon="true"></nlf-resolve-observation-state>
     </dd>
 
+    <!-- Fra og med versjon 3 har vi disse for motor: -->
+    <ng-container *ngIf="observation._model.type==='motorfly' && observation._model.version>=3">
+      <dt class="col-sm-3">E5X Type</dt>
+      <dd class="col-sm-9">
+        <span *ngIf="observation.occurrence.entities.reportingHistory[0].attributes.reportingEntity.value===101311">PRIVAT</span>
+        <span *ngIf="observation.occurrence.entities.reportingHistory[0].attributes.reportingEntity.value===100479">DTO</span>
+      </dd>
+
+      <dt class="col-sm-3">Annet</dt>
+      <dd class="col-sm-9">
+        <div *ngIf="observation.workflow.settings.do_not_process_in_club"><fa name="ban" [fixed]="true" class="text-danger"></fa> Behandles ikke i klubb</div>
+        <div *ngIf="!observation.workflow.settings.do_not_process_in_club"><fa name="check" [fixed]="true" class="text-success"></fa> Kan behandles i klubb</div>
+        <div *ngIf="observation.workflow.settings.do_not_publish"><fa name="ban" [fixed]="true" class="text-danger"></fa> Ikke offentlig når lukket</div>
+        <div *ngIf="!observation.workflow.settings.do_not_publish"><fa name="check" [fixed]="true" class="text-success"></fa> Offentlig når lukket</div>
+      </dd>
+      <!--
+      <span *ngIf="observation.workflow.settings.do_not_process_in_club">Behandles ikke i klubb</span>
+    -->
+    </ng-container>
+
+
+
     <dt class="col-sm-3">Opprettet</dt>
     <dd class="col-sm-9">
-      <fa name="clock-o" [fixed]="true"></fa>{{ observation._created | amTimeAgo }},  {{ observation._created | date:'yyyy-MM-dd HH:mm' }}
+      <fa name="clock-o" [fixed]="true"></fa>{{ observation._created | amTimeAgo }}, {{ observation._created | date:'yyyy-MM-dd HH:mm' }}
     </dd>
 
     <dt class="col-sm-3">Sist endret</dt>
     <dd class="col-sm-9">
-      <fa name="clock-o" [fixed]="true"></fa>{{ observation._updated | amTimeAgo }},  {{ observation._updated | date:'yyyy-MM-dd HH:mm' }}
+      <fa name="clock-o" [fixed]="true"></fa>{{ observation._updated | amTimeAgo }}, {{ observation._updated | date:'yyyy-MM-dd HH:mm' }}
     </dd>
 
 
@@ -37,24 +59,37 @@
       <nlf-resolve-lungo-person [person_id]="observation.reporter" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
     </dd>
 
-      <dt *ngIf="observation._model.type=='fallskjerm'" class="col-sm-3">HI</dt>
-      <dd *ngIf="observation._model.type=='fallskjerm'" class="col-sm-9">
+    <ng-container *ngIf="observation.organization.hasOwnProperty('hi')">
+      <dt class="col-sm-3">HI</dt>
+      <dd class="col-sm-9">
         <nlf-resolve-lungo-person *ngFor="let hi of observation.organization.hi" [person_id]="hi" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
       </dd>
+    </ng-container>
 
-      <dt *ngIf="observation._model.type=='motorfly'" class="col-sm-3">DTO i klubb</dt>
+    <ng-container *ngIf="observation.organization.hasOwnProperty('ftl')">
+      <dt *ngIf="observation._model.type=='motorfly'" class="col-sm-3">FTL i klubb</dt>
       <dd *ngIf="observation._model.type=='motorfly'" class="col-sm-9">
+        <div *ngFor="let ftl of observation.organization.ftl">
+          <nlf-resolve-lungo-person [person_id]="ftl" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
+        </div>
+      </dd>
+    </ng-container>
+    <ng-container *ngIf="observation.organization.hasOwnProperty('dto')">
+      <dt class="col-sm-3">DTO i klubb</dt>
+      <dd class="col-sm-9">
         <div *ngFor="let dto of observation.organization.dto">
           <nlf-resolve-lungo-person [person_id]="dto" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
         </div>
       </dd>
-      <dt *ngIf="observation._model.type=='motorfly'" class="col-sm-3">ORS Ansvarlig</dt>
-      <dd *ngIf="observation._model.type=='motorfly'" class="col-sm-9">
+    </ng-container>
+    <ng-container *ngIf="observation.organization.hasOwnProperty('ors')">
+      <dt class="col-sm-3">OBSREG koordinator</dt>
+      <dd class="col-sm-9">
         <div *ngFor="let ors of observation.organization.ors">
           <nlf-resolve-lungo-person [person_id]="ors" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
         </div>
       </dd>
-
+    </ng-container>
     <dt class="col-sm-3">Version</dt>
     <dd class="col-sm-9">
       {{ observation._version }}
@@ -67,46 +102,54 @@
     <dd class="col-sm-9">
       <nlf-resolve-lungo-organization [organization_id]="observation.discipline" show_type="true" link="true" long="true"></nlf-resolve-lungo-organization>
     </dd>
-    
+
     <dt class="col-sm-3">Tilgang</dt>
     <dd class="col-sm-9">
-      
+
       <dl *ngIf="!!observation.acl_user" class="row">
-        
+
         <dt class="col-sm-4">
-        <fa name="{{observation.acl_user.r ? 'check' : 'ban'}}" [ngClass]="observation.acl_user.r ? 'text-success' : 'text-danger'" [fixed]="true"></fa> Read
+          <fa name="{{observation.acl_user.r ? 'check' : 'ban'}}" [ngClass]="observation.acl_user.r ? 'text-success' : 'text-danger'" [fixed]="true"></fa> Read
         </dt>
         <dd class="col-sm-8">
-        <span *ngIf="!!acl_list"><nlf-resolve-avatars [persons]="acl_list['read']||[]" max="5"></nlf-resolve-avatars></span>
+          <span *ngIf="!!acl_list">
+            <nlf-resolve-avatars [persons]="acl_list['read']||[]" max="5"></nlf-resolve-avatars>
+          </span>
         </dd>
-        
+
         <dt class="col-sm-4">
-        <fa name="{{observation.acl_user.w ? 'check' : 'ban'}}" [ngClass]="observation.acl_user.w ? 'text-success' : 'text-danger'" [fixed]="true"></fa> Write
+          <fa name="{{observation.acl_user.w ? 'check' : 'ban'}}" [ngClass]="observation.acl_user.w ? 'text-success' : 'text-danger'" [fixed]="true"></fa> Write
         </dt>
         <dd class="col-sm-8">
-        <span *ngIf="!!acl_list"><nlf-resolve-avatars [persons]="acl_list['write']||[]" max="5"></nlf-resolve-avatars></span>
+          <span *ngIf="!!acl_list">
+            <nlf-resolve-avatars [persons]="acl_list['write']||[]" max="5"></nlf-resolve-avatars>
+          </span>
         </dd>
-        
+
         <dt class="col-sm-4">
-        <fa name="{{observation.acl_user.x ? 'check' : 'ban'}}" [ngClass]="observation.acl_user.x ? 'text-success' : 'text-danger'" [fixed]="true"></fa> Execute
+          <fa name="{{observation.acl_user.x ? 'check' : 'ban'}}" [ngClass]="observation.acl_user.x ? 'text-success' : 'text-danger'" [fixed]="true"></fa> Execute
         </dt>
         <dd class="col-sm-8">
-        <span *ngIf="!!acl_list"><nlf-resolve-avatars [persons]="acl_list['execute']||[]" max="5"></nlf-resolve-avatars></span>
+          <span *ngIf="!!acl_list">
+            <nlf-resolve-avatars [persons]="acl_list['execute']||[]" max="5"></nlf-resolve-avatars>
+          </span>
         </dd>
-        
+
         <dt class="col-sm-4">
-        <fa name="{{observation.acl_user.d ? 'check' : 'ban'}}" [ngClass]="observation.acl_user.d ? 'text-success' : 'text-danger'" [fixed]="true"></fa> Delete
+          <fa name="{{observation.acl_user.d ? 'check' : 'ban'}}" [ngClass]="observation.acl_user.d ? 'text-success' : 'text-danger'" [fixed]="true"></fa> Delete
         </dt>
         <dd class="col-sm-8">
-        <span *ngIf="!!acl_list"><nlf-resolve-avatars [persons]="acl_list['delete']||[]" max="5"></nlf-resolve-avatars></span>
+          <span *ngIf="!!acl_list">
+            <nlf-resolve-avatars [persons]="acl_list['delete']||[]" max="5"></nlf-resolve-avatars>
+          </span>
         </dd>
-        
+
       </dl>
-      
-      
+
+
     </dd>
 
-    <dt class="col-sm-3">ORS Modell</dt>
+    <dt class="col-sm-3">{{config[observation._model.type]['observation']['app_name']}} Modell</dt>
     <dd class="col-sm-9">
       <dl class="row">
         <dt class="col-sm-4">Type</dt>
@@ -119,7 +162,7 @@
     </dd>
 
   </dl>
-  
+
   <!--
   <div (click)="isWorkflowTimelineCollapsed = !isWorkflowTimelineCollapsed" class="card-header pointer">
     <fa name="random" [fixed]="true"></fa>

@@ -1,9 +1,12 @@
 import { Component, Inject } from '@angular/core';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
-import { ApiObservationsItem } from 'app/api/api.interface';
+import { ApiObservationsItem, ApiObservationsMotorflyItem, ApiObservationsFallskjermItem } from 'app/api/api.interface';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'environments/environment';
-import { ApiAclService } from 'app/api/api-acl.service';
+import { ApiAclService } from 'app/api/api-acl.service';
+import { NlfConfigService } from 'app/nlf-config.service';
+import { NlfConfigItem } from 'app/api/api.interface';
+
 
 @Component({
   selector: 'nlf-ors-editor-about',
@@ -15,19 +18,29 @@ export class NlfOrsEditorAboutComponent {
   isWorkflowTimelineCollapsed = false;
   ENV = environment;
 
-  public observation: ApiObservationsItem;
+  public observation; //: ApiObservationsItem;
+  public config: NlfConfigItem;
 
   acl_list;
 
   constructor(
     private subject: NlfOrsEditorService,
     public activeModal: NgbActiveModal,
-    private aclService: ApiAclService) {
+    private aclService: ApiAclService,
+    private configSubject: NlfConfigService
+) {
+
+    this.configSubject.observableConfig.subscribe(
+      config => {
+        this.config = config;
+        console.log('[CONFIG]', config);
+      }
+    );
 
     this.subject.observableObservation.subscribe(observation => {
       this.observation = observation;
-      
-      if(this.observation['workflow']['state'] != 'closed') {
+
+      if (this.observation['workflow']['state'] != 'closed') {
         this.getAclUsers();
       }
     });
@@ -41,7 +54,7 @@ export class NlfOrsEditorAboutComponent {
         this.acl_list = data;
       },
       err => console.log('ACL User list', err),
-      () => {}
+      () => { }
     )
   }
 }

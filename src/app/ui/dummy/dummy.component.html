@@ -30,24 +30,24 @@
 
 <!-- Heading Row -->
 <div class="container">
-  <div class="row my-4">
 
-    <div class="col-lg-8">
-      <ngx-charts-advanced-pie-chart *ngIf="dataReady" [activeEntries]="activeEntries" [scheme]="colorScheme" [label]="label"
-        [results]="pie" [gradient]="gradient" (select)="onSelect($event)"></ngx-charts-advanced-pie-chart>
-      <span *ngIf="!dataReady">
-        <p class="align-middle text-center text-secondary">
-          <fa name="spinner" animation="pulse" size="3x"></fa>
-        </p>
-      </span>
-    </div>
-    <!-- /.col-lg-8 -->
-    <div class="col-lg-4">
-      <nlf-content-summary key="nlf-platform"></nlf-content-summary>
-    </div>
-    <!-- /.col-md-4 -->
+  <div class="row mt-2 py-3">
+      <div class="col-md-8 col-xs-12 overflow-hidden">
+        <ngx-charts-advanced-pie-chart *ngIf="dataReady" [scheme]="colorScheme" [label]="label" [results]="pie" [gradient]="gradient" (select)="onSelect($event)"></ngx-charts-advanced-pie-chart>
+        <span *ngIf="!dataReady">
+          <p class="align-middle text-center text-secondary">
+            <fa name="spinner" animation="pulse" size="3x"></fa>
+          </p>
+        </span>
+      </div>
+
+      <div class="col-md-4 d-none d-sm-block overflow-hidden">
+        <nlf-content-summary key="nlf-platform"></nlf-content-summary>
+      </div>
+
   </div>
 </div>
+
 <!-- /.row -->
 <span *ngIf="!!activities">
   <div *ngIf="default_activity==109" class="py-5 nlf-bg-blue">
@@ -179,8 +179,7 @@
     </button>
   </div>
   <div class="modal-body">
-    <ngx-charts-advanced-pie-chart *ngIf="dataReady" [activeEntries]="activeEntries" [scheme]="colorScheme" [label]="label"
-      [results]="pie" [gradient]="gradient" (select)="onSelect($event)"></ngx-charts-advanced-pie-chart>
+    <ngx-charts-advanced-pie-chart *ngIf="dataReady" [activeEntries]="activeEntries" [scheme]="colorScheme" [label]="label" [results]="pie" [gradient]="gradient" (select)="onSelect($event)"></ngx-charts-advanced-pie-chart>
     <nlf-ors-last activity="fallskjerm" number="3"></nlf-ors-last>
     <div class="clearfix"></div>
     <div>
@@ -194,8 +193,10 @@
 </ng-template>
 
 <!-- A ROW... -->
-<div class="row">
-  <p></p>
+<div class="container">
+  <div class="row">
+    <p></p>
+  </div>
 </div>
 
 <!-- CARD DECK -->
@@ -219,12 +220,12 @@
         </div>-->
         <!-- END USER OR ORS -->
         <div class="card mb-4">
-          <div class="card-header"><i class="nlf nlf-motorfly nlf-fw"></i> Motorfly ORS</div>
+          <div class="card-header"><i class="nlf nlf-motorfly nlf-fw"></i> Motorfly OBSREG</div>
 
           <nlf-ors-last activity="motorfly" number="8">Ingen registrerte</nlf-ors-last>
 
           <div class="card-footer">
-            <a class="btn btn-secondary btn-block" [routerLink]="['/ors', 'motorfly']" role="button">Motorfly ORS
+            <a class="btn btn-secondary btn-block" [routerLink]="['/ors', 'motorfly']" role="button">Motorfly OBSREG
               &raquo;</a>
           </div>
         </div>

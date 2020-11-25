@@ -25,38 +25,38 @@ export class NlfAlertService {
         });
     }
 
-    private alert(type: string, message: string, keepAfterNavigationChange = false, dismissible = true, timeout = 0) {
+    private alert(type: string, message: string, keepAfterNavigationChange = false, dismissible = true, timeout = 0, inline=true) {
         if (timeout > 0) { this.debounceRemove(timeout); }
         this.keepAfterNavigationChange = keepAfterNavigationChange;
         this.dismissible = dismissible;
-        this.subject.next({ type: type, text: message });
+        this.subject.next({ type: type, text: message, inline: inline });
     }
-    success(message: string, keepAfterNavigationChange = false, dismissible = true, timeout = 0) {
+    success(message: string, keepAfterNavigationChange = false, dismissible = true, timeout = 0, inline=true) {
         this.alert('success', message, keepAfterNavigationChange, dismissible, timeout);
     }
-    info(message: string, keepAfterNavigationChange = false, dismissible = true, timeout = 0) {
+    info(message: string, keepAfterNavigationChange = false, dismissible = true, timeout = 0, inline=true) {
         this.alert('info', message, keepAfterNavigationChange, dismissible, timeout);
     }
-    warning(message: string, keepAfterNavigationChange = false, dismissible = true, timeout = 0) {
+    warning(message: string, keepAfterNavigationChange = false, dismissible = true, timeout = 0, inline=true) {
         this.alert('warning', message, keepAfterNavigationChange, dismissible, timeout);
     }
-    error(message: string, keepAfterNavigationChange = false, dismissible = true, timeout = 0) {
+    error(message: string, keepAfterNavigationChange = false, dismissible = true, timeout = 0, inline=true) {
         this.alert('danger', message, keepAfterNavigationChange, dismissible, timeout);
     }
-    danger(message: string, keepAfterNavigationChange = false, dismissible = true, timeout = 0) {
+    danger(message: string, keepAfterNavigationChange = false, dismissible = true, timeout = 0, inline=true) {
         this.error(message, keepAfterNavigationChange, dismissible, timeout);
     }
-    primary(message: string, keepAfterNavigationChange = false, dismissible = true, timeout = 0) {
+    primary(message: string, keepAfterNavigationChange = false, dismissible = true, timeout = 0, inline=true) {
         this.alert('primary', message, keepAfterNavigationChange, dismissible, timeout);
     }
-    secondary(message: string, keepAfterNavigationChange = false, dismissible = true, timeout = 0) {
+    secondary(message: string, keepAfterNavigationChange = false, dismissible = true, timeout = 0, inline=true) {
         this.alert('secondary', message, keepAfterNavigationChange, dismissible, timeout);
 
     }
-    light(message: string, keepAfterNavigationChange = false, dismissible = true, timeout = 0) {
+    light(message: string, keepAfterNavigationChange = false, dismissible = true, timeout = 0 , inline=true) {
         this.alert('light', message, keepAfterNavigationChange, dismissible, timeout);
     }
-    dark(message: string, keepAfterNavigationChange = false, dismissible = true, timeout = 0) {
+    dark(message: string, keepAfterNavigationChange = false, dismissible = true, timeout = 0, inline=true) {
         this.alert('dark', message, keepAfterNavigationChange, dismissible, timeout);
     }
     clear() {

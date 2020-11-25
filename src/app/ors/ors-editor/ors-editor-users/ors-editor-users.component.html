@@ -1,5 +1,5 @@
 <span class="badge badge-secondary pointer mx-1" (click)="openModal(modal)">
-  <fa name="lock"></fa> Tilgangskontroll
+  <fa name="lock"></fa> Tilgang
 </span>
 
 
@@ -10,7 +10,7 @@
       <fa name="lock"></fa> Tilgangskontroll
     </h4>
 
-    <button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.dismiss()">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>

@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { NlfAuthSubjectService } from 'app/services/auth/auth-subject.service';
 import { NlfConfigService } from 'app/nlf-config.service';
 import { NlfConfigItem } from 'app/api/api.interface';
+
+
+import { filter, map } from "rxjs/operators";
 
 @Component({
   selector: 'nlf-root',
@@ -12,7 +15,7 @@ import { NlfConfigItem } from 'app/api/api.interface';
 })
 export class NlfComponent {
 
-  readonly title = 'NLF';
+  readonly prefix_title = 'NLF';
   private config: NlfConfigItem;
 
   loggedInObservable;
@@ -21,9 +24,31 @@ export class NlfComponent {
     private titleService: Title,
     private authSubject: NlfAuthSubjectService,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private configService: NlfConfigService) {
 
     this.loggedInObservable = this.authSubject.observableAuth;
+
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      map(() => {
+        let child = this.activatedRoute.firstChild;
+        while (child) {
+          if (child.firstChild) {
+            child = child.firstChild;
+          } else if (child.snapshot.data && child.snapshot.data['title']) {
+            return child.snapshot.data['title'];
+          } else {
+            return null;
+          }
+        }
+        return null;
+      })
+    ).subscribe((data: any) => {
+      if (data) {
+        this.titleService.setTitle(data);
+      }
+    });
 
     /**
         this.configService.observableConfig.subscribe(
@@ -35,8 +60,8 @@ export class NlfComponent {
 
   }
 
-  public setTitle(newTitle: string) {
-    this.titleService.setTitle(this.title + ' ' + newTitle);
+  public setTitle(new_title: string, prefix='NLF', seperator = '-') {
+    this.titleService.setTitle(prefix + ' ' + seperator + ' ' + new_title);
   }
 
   /**

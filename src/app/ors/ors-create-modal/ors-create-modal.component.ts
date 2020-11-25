@@ -9,7 +9,7 @@ import { NlfUserSubjectService } from 'app/user/user-subject.service';
 import { NlfAlertService } from 'app/services/alert/alert.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'environments/environment';
-import {  NlfConfigService } from 'app/nlf-config.service';
+import { NlfConfigService } from 'app/nlf-config.service';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 // import { ApiObservationsItem} from 'app/api/api.interface';
 
@@ -61,15 +61,19 @@ export class NlfOrsCreateModalComponent implements OnInit {
     this.configService.observableConfig.subscribe(
       data => {
         this.config = data;
+
+        this.userData.observable.subscribe(
+          user_data => {
+            if (!!user_data && user_data.hasOwnProperty('settings')) {
+              this.settings = user_data.settings;
+              this.dataReady = true;
+            }
+          });
+
       }
     );
 
-    this.userData.observable.subscribe(
-      data => {
-        if (!!data && data.hasOwnProperty('settings')) {
-          this.settings = data.settings;
-        }
-      });
+
 
     // Need to access reset
     this.subject.observableObservation.subscribe(
@@ -94,6 +98,11 @@ export class NlfOrsCreateModalComponent implements OnInit {
 
   public getActivityName() {
     return this.config.inv_mapping[this.settings.default_activity];
+  }
+
+  public getORSName() {
+    console.log(this.config, this.userData);
+    return this.config[this.config.inv_mapping[this.settings.default_activity]]['observation']['app_name'];
   }
 
   public canCreateDefault() {

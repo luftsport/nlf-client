@@ -4,7 +4,7 @@ import { ApiOptionsInterface, ApiUserDataSubjectItem } from 'app/api/api.interfa
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
 import { Columns, Config, STYLE } from 'ngx-easy-table';
 import { TableEventObject, DefaultTableConfig } from 'app/interfaces/ngx-easy-table.interface';
-import { clone } from 'lodash';
+//import { clone } from 'lodash';
 
 
 @Component({
@@ -55,7 +55,7 @@ export class NlfOrsSelfTableComponent implements OnInit {
 
 
   ngOnInit() {
-    this.tableConf = clone(DefaultTableConfig);
+    this.tableConf = {...DefaultTableConfig};
     this.tableConf.paginationRangeEnabled = true;
     this.tableConf.orderEnabled = true;
     this.tableConf.serverPagination = true;
@@ -108,11 +108,10 @@ export class NlfOrsSelfTableComponent implements OnInit {
           page: this.pagination.offset,
           max_results: this.pagination.limit,
           sort: this.sort,
-          where: { reporter: this.userData.person_id }
         },
       };
 
-      this.orsService.getObservations(options).subscribe(
+      this.orsService.getObservationsSelf(options).subscribe(
         data => {
           this.pagination.count = data._meta.total; // this is for pagination
           this.pagination = { ...this.pagination }; // Need to create new object to make change-detection work
