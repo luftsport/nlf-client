@@ -1,6 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ApiUserService } from 'app/api/api-user.service';
 import { ApiOptionsInterface, ApiUserORSList, ApiUserORSItem } from 'app/api/api.interface';
+import { ApiUserDataSubjectItem, NlfConfigItem } from 'app/api/api.interface';
+import { NlfUserSubjectService } from 'app/user/user-subject.service';
+import { NlfConfigService } from 'app/nlf-config.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'nlf-user-ors',
@@ -13,7 +17,11 @@ export class NlfUserOrsComponent implements OnInit {
   observations: any;
   dataReady = false;
 
-  constructor(private userService: ApiUserService) { }
+
+  constructor(
+    private userService: ApiUserService,
+  ) {
+  }
 
   ngOnInit() {
     const options: ApiOptionsInterface = {
@@ -26,7 +34,8 @@ export class NlfUserOrsComponent implements OnInit {
         this.observations = data['_items'];
         this.dataReady = true;
       },
-      err => console.log(err)
+      err => console.log(err),
+      () => this.dataReady = true
     )
   }
 

@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { ApiRestService } from './api-rest.service';
-import { ApiOptionsInterface, ApiObservationsItem, ApiObservationsList } from './api.interface';
+import { ApiOptionsInterface, ApiObservationsItem, ApiObservationsList, ApiWorkflowPayloadInterface } from './api.interface';
 
 @Injectable()
 export class ApiObservationsWorkflowService extends ApiRestService {
@@ -37,8 +37,8 @@ export class ApiObservationsWorkflowService extends ApiRestService {
    * @param comment string
    * @param options ApiOptionsInterface
    */
-  public changeWorkflowState(objectId: string, action: string, comment: string, options?: ApiOptionsInterface): Observable<ApiObservationsList> {
+  public changeWorkflowState(objectId: string, action: string, payload: ApiWorkflowPayloadInterface, options?: ApiOptionsInterface): Observable<ApiObservationsList> {
 
-    return this.post(this.relativeUrl + objectId + '/' + action, { 'comment': comment }, options);
+    return this.post(this.relativeUrl + objectId + '/' + action, payload, options);
   }
 }

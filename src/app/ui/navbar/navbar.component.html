@@ -30,8 +30,8 @@
     <ul *ngIf="!!user_data && loggedInObservable | async as authenticated" class="navbar-nav text-right">
 
       <!-- CREATE ORS BTN HIDDEN XS-->
-      <button class="btn btn-success mr-2 d-none d-sm-block" *ngIf="!!user_data && !!user_data.settings.default_discipline" (click)="navbarOpen=false;openCreateOrsModal()">
-        <fa name="plus" fw="true" class="mr-1"></fa>ORS
+      <button class="btn btn-success mr-2 d-none d-sm-block" *ngIf="!!config && !!user_data && !!user_data.settings.default_discipline" (click)="navbarOpen=false;openCreateOrsModal()">
+        <fa name="plus" fw="true" class="mr-1"></fa>{{ config[config.inv_mapping[user_data.settings.default_activity]]['observation']['app_name'] || 'ORSX' }}
       </button>
 
       <!--
@@ -95,7 +95,7 @@
 
       <!-- ORS -->
       <li (click)="navbarOpen=false" *ngIf="authenticated && !!user_data.settings.default_activity" class="nav-item" routerLinkActive="active">
-        <a *ngIf="!!config" [routerLink]="['/ors', config.inv_mapping[user_data.settings.default_activity]]" class="nav-link">ORS</a>
+        <a *ngIf="!!config" [routerLink]="['/ors', config.inv_mapping[user_data.settings.default_activity]]" class="nav-link">{{ config[config.inv_mapping[user_data.settings.default_activity]]['observation']['app_name'] || 'ORSX' }}</a>
         <!--<a  (click)="navigateORS()" class="nav-link">ORS</a>-->
       </li>
 

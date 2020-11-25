@@ -875,7 +875,8 @@ export class E5XAerodromeGeneralClass {
     attributes: {
       typeOfVehicle: { value: undefined },
       vehicleControlled: { value: undefined },
-    }
+    },
+    id: getE5XId()
   };
 
   narrative = {

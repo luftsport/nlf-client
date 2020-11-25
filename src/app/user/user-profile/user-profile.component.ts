@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationStart, ActivatedRoute, RouterLink } from '@angular/router';
 import { ApiUserService } from 'app/api/api-user.service';
-import { ApiUserDataSubjectItem } from 'app/api/api.interface';
+import { ApiUserDataSubjectItem, NlfConfigItem } from 'app/api/api.interface';
 import { NlfAlertService } from 'app/services/alert/alert.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { GeoLocationService } from 'app/services/geo/geo-location.service';
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
 import { NlfUserAvatarSubjectService } from 'app/user/user-avatar-subject.service';
+import { NlfConfigService } from 'app/nlf-config.service';
 import { includes } from 'lodash';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { avatar_tmp_image } from 'app/interfaces/functions';
+import { avatar_tmp_image } from 'app/interfaces/functions';
 import { NlfUserFirstLoginComponent } from 'app/user/user-first-login/user-first-login.component';
+import { forkJoin } from 'rxjs';
 
 
 @Component({
@@ -21,7 +23,8 @@ import { NlfUserFirstLoginComponent } from 'app/user/user-first-login/user-first
 })
 export class NlfUserProfileComponent implements OnInit {
   person_id: number;
-  user: ApiUserDataSubjectItem;
+  public user: ApiUserDataSubjectItem;
+  public config: NlfConfigItem;
 
   dataReady = false;
   avatarReady = false;
@@ -42,11 +45,12 @@ export class NlfUserProfileComponent implements OnInit {
   imageChangedEvent: any = '';
   avatar: string;
   modal_avatar: string;
-  public avatar_missing =  avatar_tmp_image;
+  public avatar_missing = avatar_tmp_image;
   public default_discipline: number;
 
   constructor(
     private userSubject: NlfUserSubjectService,
+    private configSubject: NlfConfigService,
     private userAvatarSubject: NlfUserAvatarSubjectService,
     private route: ActivatedRoute,
     private userService: ApiUserService,
@@ -56,27 +60,39 @@ export class NlfUserProfileComponent implements OnInit {
     private modalService: NgbModal,
     private router: Router) {
 
-
-    this.userSubject.observable.subscribe(
-      data => {
-        if (!!data) {
-          this.user = data;
-          this.person_id = data.person_id;
-
-          this.userAvatarSubject.observable.subscribe(
-            data => {
-              if (!!data) {
-                this.avatar = data;
-
-              }
-              this.dataReady = true
-            },
-            err => console.log('Error getting user avatar: ', err)
-          );
-
+    forkJoin([
+      this.configSubject.observableConfig.subscribe(
+        config => {
+          this.config = config;
         }
-      },
-      err => console.log('Error getting user data: ', err));
+      ),
+      this.userSubject.observable.subscribe(
+        data => {
+          if (!!data) {
+            this.user = data;
+            this.person_id = data.person_id;
+
+            this.userAvatarSubject.observable.subscribe(
+              data => {
+                if (!!data) {
+                  this.avatar = data;
+
+                }
+                this.dataReady = true
+              },
+              err => console.log('Error getting user avatar: ', err)
+            );
+
+          }
+        },
+        err => console.log('Error getting user data: ', err)
+      )
+
+    ]);
+
+
+
+
 
     this.geoLocationService.getLocation({ enableHighAccuracy: true }).subscribe(
       position => {

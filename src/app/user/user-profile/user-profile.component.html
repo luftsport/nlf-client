@@ -76,6 +76,19 @@
 				<div class="my-3">
 					<h4>Mine funksjoner</h4>
 					<div *ngFor="let role of user.acl">
+						<div *ngIf="role.org>0 && role.activity>0 && role.role!=10000000">
+							<nlf-resolve-lungo-organization [organization_id]="role.org" [link]="true"></nlf-resolve-lungo-organization>:
+							<strong>
+								<nlf-resolve-lungo-function-type [type_id]="role.role"></nlf-resolve-lungo-function-type>
+							</strong>
+						</div>
+					</div>
+				</div>
+
+				<!--
+				<div class="my-3">
+					<h4>Mine Kompetanser</h4>
+					<div *ngFor="let role of user.acl">
 						<div *ngIf="role.org>0 && role.role!=10000000">
 							<nlf-resolve-lungo-organization [organization_id]="role.org" [link]="true"></nlf-resolve-lungo-organization>:
 							<strong>
@@ -84,6 +97,20 @@
 						</div>
 					</div>
 				</div>
+
+				<div class="my-3">
+					<h4>Mine Lisenser</h4>
+					<div *ngFor="let role of user.acl">
+						<div *ngIf="role.org>0 && role.role!=10000000">
+							<nlf-resolve-lungo-organization [organization_id]="role.org" [link]="true"></nlf-resolve-lungo-organization>:
+							<strong>
+								<nlf-resolve-lungo-function-type [type_id]="role.role"></nlf-resolve-lungo-function-type>
+							</strong>
+						</div>
+					</div>
+				</div>
+			-->
+
 				<!--{{ user | json }}-->
 
 			</div>
@@ -92,7 +119,7 @@
 		<div class="row">
 			<div class="col-xs-12 col-md-12 mt-6">
 				<div class="my-3">
-					<h4>Mine ORS som involvert</h4>
+					<h4>Mine {{ config[config.inv_mapping[user.settings.default_activity]]['observation']['app_name'] || 'ORSX' }} som involvert</h4>
 					<nlf-user-ors activity="fallskjerm"></nlf-user-ors>
 					<nlf-user-ors activity="motorfly"></nlf-user-ors>
 				</div>

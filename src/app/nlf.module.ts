@@ -333,7 +333,7 @@ import { NlfOrsEditorE5XClassificationComponent } from 'app/ors/ors-editor/ors-e
 import { NlfOrsEditorE5XWeatherComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-weather/ors-editor-e5x-weather.component';
 import { NlfOrsEditorE5XInjuriesComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-injuries/ors-editor-e5x-injuries.component';
 import { NlfOrsEditorE5XDamageComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-damage/ors-editor-e5x-damage.component';
-import {  NlfOrsEditorE5XWhereComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-where/ors-editor-e5x-where.component';
+import { NlfOrsEditorE5XWhereComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-where/ors-editor-e5x-where.component';
 // OCCURRENCE ENTITIES
 import {  NlfOrsEditorE5xEntitiesComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-entities.component';
 import { NlfOrsEditorE5XRunwayComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-runway/ors-editor-e5x-runway.component';
@@ -350,9 +350,10 @@ import { NlfOrsEditorE5XEventsComponent } from 'app/ors/ors-editor/ors-editor-e5
 
 // dangerous goods here
 import {  NlfOrsEditorE5XNarrativeComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-narrative/ors-editor-e5x-narrative.component';
-import {  NlfOrsEditorE5xReportinghistoryComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-reportinghistory/ors-editor-e5x-reportinghistory.component';
+import { NlfOrsEditorE5xReportinghistoryComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-reportinghistory/ors-editor-e5x-reportinghistory.component';
+import { NlfOrsEditorE5xReportinghistoryReportersDescriptionComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-reportinghistory-reporters-description/ors-editor-e5x-reportinghistory-reporters-description.component';
 import { NlfOrsEditorE5xAssessmentComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-assessment/ors-editor-e5x-assessment.component';
-import {  NlfOrsEditorE5xRiskComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-risk/ors-editor-e5x-risk.component';
+import { NlfOrsEditorE5xRiskComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-risk/ors-editor-e5x-risk.component';
 import { NlfOrsEditorE5xSeparationComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-separation/ors-editor-e5x-separation.component';
 
 // ORS EDITOR MOTORFLY ONLY
@@ -508,6 +509,7 @@ import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
     NlfOrsEditorE5XAerodromeComponent,
     NlfOrsEditorE5XAerodromeSingleComponent,
     NlfOrsEditorE5XNarrativeComponent,
+    NlfOrsEditorE5xReportinghistoryReportersDescriptionComponent,
     NlfOrsEditorE5xAssessmentComponent,
     NlfOrsEditorE5xSeparationComponent,
     NlfOrsEditorE5xAirspaceComponent,

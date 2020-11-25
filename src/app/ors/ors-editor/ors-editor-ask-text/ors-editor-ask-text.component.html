@@ -1,5 +1,7 @@
 <div>
-  <span class="lead">Din vurdering: <nlf-help key="ors-editor-ask-text"></nlf-help></span><button type="button" class="btn btn-link pull-right" (click)="openModal(previewModal)">preview</button>
+  <span *ngIf="observation.workflow.state==='draft'" class="lead">Egenvurdering: <nlf-help key="ors-editor-ask-text"></nlf-help></span>
+  <span *ngIf="observation.workflow.state!='draft'" class="lead">Din vurdering: <nlf-help key="ors-editor-ask-text"></nlf-help></span>
+  <button type="button" class="btn btn-link pull-right" (click)="openModal(previewModal)">preview</button>
 </div>
 <!-- <p style="border:1px lightgrey solid;min-height:88px; width: 100%;" contenteditable="true" propValueAccessor="innerHTML"
     name="myFormName" [(ngModel)]="observation.ask.text[observation.workflow.state]" (ngModelChange)="textChange()" [mention]="list"

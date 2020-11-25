@@ -29,11 +29,12 @@ export class NlfUiNavbarComponent implements OnInit {
   isCollapsed = true;
   modalRef;
   ENV = environment;
-  user_data: ApiUserDataSubjectItem;
+  public user_data: ApiUserDataSubjectItem;
   public config: NlfConfigItem;
   current_ors: { id: number, type: string };
   public avatar: string;
   public avatar_missing =  avatar_tmp_image;
+  public dataReady = false;
 
   constructor(
     public authSubject: NlfAuthSubjectService,
@@ -59,12 +60,10 @@ export class NlfUiNavbarComponent implements OnInit {
       this.configSubject.observableConfig.subscribe(
         config => {
           this.config = config;
-          console.log('[CONFIG]', config);
         }
       ),
       this.userSubject.observable.subscribe(
         data => {
-          console.log('NAVBAR SETTING', data);
           if (!!data && Object.keys(data).length > 0) {
             this.user_data = data;
           }

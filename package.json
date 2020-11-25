@@ -1,6 +1,6 @@
 {
   "name": "nlf-client",
-  "version": "0.9.84",
+  "version": "0.9.103",
   "license": "MIT",
   "scripts": {
     "ng": "ng",

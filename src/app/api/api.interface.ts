@@ -525,6 +525,10 @@ export interface ApiObservationAskTextInterface {
   pending_review_fs?: string;
   pending_review_su?: string;
 }
+export interface ApiWorkflowSettingsInterface {
+  do_not_publish?: boolean;
+  do_not_process_in_club?: boolean;
+}
 export interface ApiWorkflowInterface {
   state: string;
   comment?: string;
@@ -532,6 +536,12 @@ export interface ApiWorkflowInterface {
   expires?: Date;
   name?: string;
   audit?: ApiWorkflowAuditInterface[];
+  settings?: ApiWorkflowSettingsInterface;
+}
+export interface ApiWorkflowPayloadInterface {
+  comment: string;
+  do_not_publish?: boolean;
+  do_not_process_in_club?: boolean;
 }
 
 export interface ApiWorkflowAuditInterface {

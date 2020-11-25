@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
-import {  NlfConfigService } from 'app/nlf-config.service';
+import { NlfConfigService } from 'app/nlf-config.service';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import { ApiAirportsService } from 'app/api/api-airports.service';
 import { ApiOptionsInterface, ApiObservationsItem, ApiAirport, ApiAirports, ApiObservationAircraftsItem, NlfConfigItem } from 'app/api/api.interface';
@@ -144,6 +144,14 @@ export class NlfOrsE5xComponent implements OnInit {
     // Title
     this.observation.occurrence.attributes.headline = this.observation.tags.join(' ') || '';
 
+    /**
+    Norwegian CAA needs "TEST" for test reports
+    Testklubb IR should always be marked "TEST"
+    */
+    if (this.ENV._name != 'prod' || this.observation.club === 781765) {
+      this.observation.occurrence.attributes.headline = this.observation.occurrence.attributes.headline + ' TEST [' + this.ENV._name + ']';
+    }
+
     // Times this.currentWhen.toISOString().substr(0,10)
     let t = new Date(this.observation.when);
     this.observation.occurrence.attributes.uTCDate.value = [t.getUTCFullYear(), pad(t.getUTCMonth() + 1), pad(t.getUTCDate())].join('-');
@@ -170,7 +178,8 @@ export class NlfOrsE5xComponent implements OnInit {
 
     // Reporting history - to be moved to ....
     if (this.observation.occurrence.entities.reportingHistory.length > 0) {
-      this.observation.occurrence.entities.reportingHistory[0].attributes.reportingEntity.value = 101311;
+      // this.observation.occurrence.entities.reportingHistory[0].attributes.reportingEntity.value = 101311;
+      // moved to flags!
       let rdate = new Date();
       //this.e5xobservation.entities.reportingHistory[0].attributes.reportingDate.value = [rdate.getFullYear(), pad(rdate.getMonth() + 1), pad(rdate.getDate())].join('-'); //+ ' ' + [rdate.getHours(), rdate.getMinutes(), rdate.getSeconds()].join(':');
       this.observation.occurrence.entities.reportingHistory[0].attributes.reportVersion.value = this.observation._version;

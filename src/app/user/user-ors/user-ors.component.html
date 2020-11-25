@@ -27,6 +27,10 @@
 
     </tr>
 
+    <tr *ngIf="observations.length===0">
+      <td class="text-left">Ingen</td>
+    </tr>
+
   </table>
   <!--
   <div *ngIf="observations.length==0">

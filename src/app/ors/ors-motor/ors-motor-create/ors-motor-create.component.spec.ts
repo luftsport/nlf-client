@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NlfOrsFallskjermCreateComponent } from './ors-fallskjerm-create.component';
+import { NlfOrsMotorCreateComponent } from './ors-motor-create.component';
 
 describe('NlfOrsCreateComponent', () => {
-  let component: NlfOrsFallskjermCreateComponent;
-  let fixture: ComponentFixture<NlfOrsFallskjermCreateComponent>;
+  let component: NlfOrsMotorCreateComponent;
+  let fixture: ComponentFixture<NlfOrsMotorCreateComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NlfOrsFallskjermCreateComponent ]
+      declarations: [ NlfOrsMotorCreateComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NlfOrsFallskjermCreateComponent);
+    fixture = TestBed.createComponent(NlfOrsMotorCreateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -116,7 +116,7 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy {
 
     this.route.params.subscribe(params => {
       this.id = params['id'] ? params['id'] : 0;
-      this.app.setTitle('ORS Editor #' + this.id);
+      this.app.setTitle('OBSREG Editor #' + this.id);
       this.getData();
     });
   }

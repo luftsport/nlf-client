@@ -68,9 +68,8 @@ export class NlfOrsEditorTagE5XComponent implements OnInit {
     private modalService: NgbModal,
     private alertService: NlfAlertService,
     private configService: NlfConfigService
-  ) { }
+  ) {
 
-  ngOnInit() {
     this.configService.observableConfig.subscribe(
       data => {
         this.config = data;
@@ -78,10 +77,17 @@ export class NlfOrsEditorTagE5XComponent implements OnInit {
         this.init();
       }
     );
+
+  }
+
+  ngOnInit() {
+
   }
 
   ngOnChanges(changes) {
-    this.init();
+    if (!!this.rit_version) {
+      this.init();
+    }
   }
 
   private init() {
