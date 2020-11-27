@@ -124,7 +124,7 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy {
 
   hasFlag() {
 
-    for(let key of Object.keys(this.observation.flags)) {
+    for (let key of Object.keys(this.observation.flags)) {
       if (this.observation.flags[key]) {
         return true;
       }

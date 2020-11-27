@@ -1001,7 +1001,7 @@ export class E5XReportingHistoryClass {
       reportSource: { value: undefined },
       reportStatus: { value: undefined },
       reportVersion: { value: undefined },
-      reporterSDescription: { value: undefined },
+      reporterSDescription: { value: undefined, plainText: undefined },
       reporterSLanguage: { value: undefined },
 
       reportingFormType: { value: undefined },

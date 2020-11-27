@@ -159,6 +159,23 @@ export class NlfOrsE5xComponent implements OnInit {
     this.observation.occurrence.attributes.localDate.value = [t.getFullYear(), pad(t.getMonth() + 1), pad(t.getDate())].join('-');
     this.observation.occurrence.attributes.localTime.value = [pad(t.getHours()), pad(t.getMinutes()), pad(t.getSeconds())].join(':');
 
+
+    //Fix narrative to reporterSDescription
+    if (this.observation._model.version < 3) {
+      try {
+
+        this.observation.occurrence.entities.reportingHistory[0].attributes.reporterSDescription.plainText = this.observation.occurrence.entities.narrative[0]['attributes']['narrativeText']['plainText'] || '';
+        this.observation.occurrence.entities.reportingHistory[0].attributes.reporterSLanguage.value = this.observation.occurrence.entities.narrative[0]['attributes']['narrativeLanguage']['value'] || 43;
+        try {
+          delete this.observation.occurrence.entities.narrative[0]['attributes']['narrativeText']['plainText'];
+          delete this.observation.occurrence.entities.narrative[0]['attributes']['narrativeLanguage']['value'];
+
+        } catch (ee) { console.log('Delete old values failed', ee) }
+
+      } catch (e) { console.log('Model change failed', e); }
+
+    }
+
     /**
      * "100271"	"Norway - Other - Production organisation"
         "100479"	"Norway - Other - Flight Crew Training organisation"
