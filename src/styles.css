@@ -28,6 +28,12 @@ agm-map {
     min-height: 400px !important;
 }
 
+/* Fix for bootstrap error disabled btns should show disabled icon */
+button:disabled {
+  cursor: not-allowed !important;
+  pointer-events: all !important;
+}
+
 
 /* FAB BUTTON */
 .fab {

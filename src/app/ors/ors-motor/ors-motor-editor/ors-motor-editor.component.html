@@ -202,7 +202,14 @@
     </div>
     <div class="row">
       <div class="col-xs-12 col-md-12 bg-light">
-        <nlf-ors-editor-e5x-reportinghistory-reporters-description *ngIf="!!observation.occurrence.entities.reportingHistory[0].attributes" [disabled]="!observation.acl_user.w" (change)="update()" [(narrative)]="observation.occurrence.entities.reportingHistory[0].attributes.reporterSDescription" [(language)]="observation.occurrence.entities.reportingHistory[0].attributes.reporterSLanguage"></nlf-ors-editor-e5x-reportinghistory-reporters-description>
+        <ng-container *ngIf="observation._model.version>2">
+          <nlf-ors-editor-e5x-reportinghistory-reporters-description *ngIf="!!observation.occurrence.entities.reportingHistory[0].attributes" [disabled]="!observation.acl_user.w" (change)="update()"
+            [(narrative)]="observation.occurrence.entities.reportingHistory[0].attributes.reporterSDescription" [(language)]="observation.occurrence.entities.reportingHistory[0].attributes.reporterSLanguage">
+          </nlf-ors-editor-e5x-reportinghistory-reporters-description>
+        </ng-container>
+        <ng-container *ngIf="observation._model.version<3">
+          <nlf-ors-editor-e5x-narrative [disabled]="!observation.acl_user.w" (change)="update()" [(narrative)]="observation.occurrence.entities.narrative"></nlf-ors-editor-e5x-narrative>
+        </ng-container>
       </div>
     </div>
 

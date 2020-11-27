@@ -50,7 +50,7 @@
         <fa name="info-circle" [fixed]="true"></fa> Denne observasjonen vil ikke bli allment tilgjengelig når denne observasjonen er ferdig behandlet og lukket.
       </ngb-alert>
 
-      <ngb-alert *ngIf="payload.do_not_process_in_club" type="info" (close)="close()">
+      <ngb-alert *ngIf="observation.workflow.settings.do_not_process_in_club" type="info" (close)="close()">
         <fa name="info-circle" [fixed]="true"></fa> Denne observasjonen skal <strong>ikke</strong> behandles i klubb
       </ngb-alert>
 
