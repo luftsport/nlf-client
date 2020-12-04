@@ -36,6 +36,7 @@ import { NlfResolveRoleComponent } from 'app/services/resolve/resolve-role/resol
 import { NlfResolveFileComponent } from 'app/services/resolve/resolve-file/resolve-file.component';
 import { NlfResolveReverseFileComponent } from 'app/services/resolve/resolve-reverse-file/resolve-reverse-file.component';
 
+
 // Resolvers - Lungo
 import { NlfResolveLungoPersonComponent } from 'app/services/resolve/resolve-lungo-person/resolve-lungo-person.component';
 import { NlfResolveLungoOrganizationComponent } from 'app/services/resolve/resolve-lungo-organization/resolve-lungo-organization.component';
@@ -46,16 +47,17 @@ import { NlfResolveLungoActivityComponent } from 'app/services/resolve/resolve-l
 import { ResolveLungoOrganizationTypeComponent } from 'app/services/resolve/resolve-lungo-organization-type/resolve-lungo-organization-type.component';
 import { ResolveLungoFunctionTypeComponent } from 'app/services/resolve/resolve-lungo-function-type/resolve-lungo-function-type.component';
 import { ResolveLungoCompetenceComponent } from 'app/services/resolve/resolve-lungo-competence/resolve-lungo-competence.component';
-import {  ResolveLungoCountryComponent } from 'app/services/resolve/resolve-lungo-country/resolve-lungo-country.component';
-import {  ResolveLungoCountyComponent } from 'app/services/resolve/resolve-lungo-county/resolve-lungo-county.component';
+import { ResolveLungoCountryComponent } from 'app/services/resolve/resolve-lungo-country/resolve-lungo-country.component';
+import { ResolveLungoCountyComponent } from 'app/services/resolve/resolve-lungo-county/resolve-lungo-county.component';
 
 
 
 import { NlfResolveAvatarsComponent } from 'app/services/resolve/resolve-avatars/resolve-avatars.component';
 import { NlfResolveAvatarComponent } from 'app/services/resolve/resolve-avatar/resolve-avatar.component';
+import {  NlfResolveAvatarLetterComponent } from 'app/services/resolve/resolve-avatar-letter/resolve-avatar-letter.component';
 
 // First login
-import {  NlfUserFirstLoginComponent } from 'app/user/user-first-login/user-first-login.component';
+import { NlfUserFirstLoginComponent } from 'app/user/user-first-login/user-first-login.component';
 
 // ng-bootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -64,21 +66,21 @@ import { NlfBreadcrumbComponent } from 'app/ui/breadcrumb/breadcrumb.component';
 
 // ORS
 import { NlfOrsEditorTagStaticComponent } from 'app/ors/ors-editor/ors-editor-tag-static/ors-editor-tag-static.component';
-import {  NlfOrsE5xComponent } from 'app/ors/ors-e5x/ors-e5x.component';
+import { NlfOrsE5xComponent } from 'app/ors/ors-e5x/ors-e5x.component';
 import { NlfOrsEditorTagE5XComponent } from 'app/ors/ors-editor/ors-editor-tag-e5x/ors-editor-tag-e5x.component';
-import {  NlfOrsEditorTagE5xRenderComponent } from 'app/ors/ors-editor/ors-editor-tag-e5x-render/ors-editor-tag-e5x-render.component';
+import { NlfOrsEditorTagE5xRenderComponent } from 'app/ors/ors-editor/ors-editor-tag-e5x-render/ors-editor-tag-e5x-render.component';
 // Date normalized
 import { NlfOrsEditorDateComponent } from 'app/ors/ors-editor/ors-editor-date/ors-editor-date.component';
 
 import { NgSelectModule } from '@ng-select/ng-select';
 
 //// OTHER SHARED MODULES!!!
-import {  NlfAircraftsAddComponent } from 'app/aircrafts/aircrafts-add/aircrafts-add.component';
+import { NlfAircraftsAddComponent } from 'app/aircrafts/aircrafts-add/aircrafts-add.component';
 import { NlfAircraftsEditComponent } from 'app/aircrafts/aircrafts-edit/aircrafts-edit.component';
-import {  NlfAircraftSummaryComponent } from 'app/aircrafts/aircraft-summary/aircraft-summary.component';
+import { NlfAircraftSummaryComponent } from 'app/aircrafts/aircraft-summary/aircraft-summary.component';
 
 // SELECTERS @TODO move to seperate universal
-import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-tag-airport/ors-editor-tag-airport.component';
+import {  NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-tag-airport/ors-editor-tag-airport.component';
 
 
 @NgModule({
@@ -119,6 +121,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-
     NlfResolveReverseFileComponent,
     NlfResolveAvatarsComponent,
     NlfResolveAvatarComponent,
+    NlfResolveAvatarLetterComponent,
     // Lungo
     NlfResolveLungoPersonComponent,
     NlfResolveLungoOrganizationComponent,
@@ -179,6 +182,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-
     NlfResolveReverseFileComponent,
     NlfResolveAvatarsComponent,
     NlfResolveAvatarComponent,
+    NlfResolveAvatarLetterComponent,
     // Lungo
     NlfResolveLungoPersonComponent,
     NlfResolveLungoOrganizationComponent,
@@ -207,7 +211,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-
     NlfAircraftsEditComponent,
     NlfAircraftSummaryComponent,
     //SELECTORS
-     NlfOrsEditorTagAirportComponent,
+    NlfOrsEditorTagAirportComponent,
 
   ],
 
