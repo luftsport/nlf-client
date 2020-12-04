@@ -1,0 +1,10 @@
+<img [src]="domSanitizer.bypassSecurityTrustUrl(svg_avatar)" alt="user" [class]="classes" [ngbTooltip]="tippy">
+
+<ng-template #tippy>
+  <!-- if person_id not name or name only -->
+  <!--
+  <nlf-resolve-lungo-person *ngIf="!!person_id&&!person_name" [person_id]="person_id" [link]="false" [avatar]="false"></nlf-resolve-lungo-person>
+  <span *ngIf="!person_id&&!!person_name">{{ person_name || "Ukjent Navn"}}</span>
+-->
+  {{ full_name || "Ukjent Navn"}}
+</ng-template>
