@@ -1,7 +1,10 @@
+<ng-container *ngIf="dataReady">
+  <img *ngIf="!!user.avatar" [src]="user.avatar" alt="user" class="avatar-img rounded-circle" [ngbTooltip]="tippy">
+  <nlf-resolve-avatar-letter *ngIf="!user.avatar" [person_id]="person_id"></nlf-resolve-avatar-letter>
+</ng-container>
 
-<img *ngIf="dataReady" [src]="user.avatar||avatar_tmp_image" alt="user" class="avatar-img rounded-circle" [ngbTooltip]="tippy">
-
-<img *ngIf="error" [src]="avatar_tmp_image" alt="user" class="avatar-img rounded-circle" [ngbTooltip]="tippy">
+<!-- <img  [src]="avatar_tmp_image" alt="user" class="avatar-img rounded-circle" [ngbTooltip]="tippy"> -->
+<nlf-resolve-avatar-letter *ngIf="error" [person_id]="person_id"></nlf-resolve-avatar-letter>
 
 <ng-template #tippy>
   <nlf-resolve-lungo-person [person_id]="person_id" [link]="false" [avatar]="false"></nlf-resolve-lungo-person>
