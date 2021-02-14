@@ -14,22 +14,46 @@
   <div class="modal-body">
 
     <p [innerHTML]="help.body | safe: 'html'"></p>
-    
-    <div *ngIf="!!details">
-      <hr />
-      Key: <span class="badge badge-info">{{ help.key }}</span>
-      <br />
-      Opprettet: {{ help._created | date:'yyyy-MM-dd HH:mm' }}
-      <br />
-      Oppdatert: {{ help._updated | date:'yyyy-MM-dd HH:mm' }}
-      <br />
-      Id: {{ help._id }}
-      <br />
-      Tilgang: <span *ngFor="let r of help.acl.write.roles"><nlf-resolve-role [roleid]="r"></nlf-resolve-role></span>
 
+    <div *ngIf="!!details">
+
+      <hr />
+
+      <dl class="row">
+        <dt class="col-sm-3">Key</dt>
+        <dd class="col-sm-9">{{ key }}</dd>
+
+        <dt class="col-sm-3">Opprettet</dt>
+        <dd class="col-sm-9">{{ help._created | date:'yyyy-MM-dd HH:mm' }}</dd>
+
+        <dt class="col-sm-3">Oppdatert</dt>
+        <dd class="col-sm-9">{{ help._updated | date:'yyyy-MM-dd HH:mm' }}</dd>
+
+        <dt class="col-sm-3">Id</dt>
+        <dd class="col-sm-9">{{ help._id }}</dd>
+
+        <dt class="col-sm-3">Tilganger</dt>
+        <dd class="col-sm-9">
+          <div *ngFor="let r of help.acl.write.roles">
+            <nlf-resolve-role [roleid]="r"></nlf-resolve-role>
+          </div>
+          <div *ngFor="let user_id of help.acl.write.users">
+            <nlf-resolve-lungo-person [person_id]="user_id" link="true" avatar="true"></nlf-resolve-lungo-person>
+          </div>
+        </dd>
+
+        <dt class="col-sm-3"></dt>
+        <dd class="col-sm-9"></dd>
+
+        <dt class="col-sm-3"></dt>
+        <dd class="col-sm-9"></dd>
+
+        <dt class="col-sm-3"></dt>
+        <dd class="col-sm-9"></dd>
+      </dl>
 
     </div>
-   
+
   </div>
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">Ferdig</button>
