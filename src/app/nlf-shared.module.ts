@@ -24,7 +24,7 @@ import { NlfAlertComponent } from 'app/services/alert/alert.component';
 // UI
 import { NlfUiPageSpinnerComponent } from 'app/ui/page-spinner/page-spinner.component';
 import { NlfUiComponentSpinnerComponent } from 'app/ui/component-spinner/component-spinner.component';
-
+import { NlfOrgSelectorComponent } from 'app/ui/org-selector/org-selector.component';
 // Resolvers
 import { NlfResolveComponent } from 'app/services/resolve/resolve.component';
 import { NlfResolveUserComponent } from 'app/services/resolve/resolve-user/resolve-user.component';
@@ -54,7 +54,7 @@ import { ResolveLungoCountyComponent } from 'app/services/resolve/resolve-lungo-
 
 import { NlfResolveAvatarsComponent } from 'app/services/resolve/resolve-avatars/resolve-avatars.component';
 import { NlfResolveAvatarComponent } from 'app/services/resolve/resolve-avatar/resolve-avatar.component';
-import {  NlfResolveAvatarLetterComponent } from 'app/services/resolve/resolve-avatar-letter/resolve-avatar-letter.component';
+import { NlfResolveAvatarLetterComponent } from 'app/services/resolve/resolve-avatar-letter/resolve-avatar-letter.component';
 
 // First login
 import { NlfUserFirstLoginComponent } from 'app/user/user-first-login/user-first-login.component';
@@ -71,6 +71,8 @@ import { NlfOrsEditorTagE5XComponent } from 'app/ors/ors-editor/ors-editor-tag-e
 import { NlfOrsEditorTagE5xRenderComponent } from 'app/ors/ors-editor/ors-editor-tag-e5x-render/ors-editor-tag-e5x-render.component';
 // Date normalized
 import { NlfOrsEditorDateComponent } from 'app/ors/ors-editor/ors-editor-date/ors-editor-date.component';
+// Go to specified ors by id!
+import { NlfOrsGoComponent } from 'app/ors/ors-go/ors-go.component';
 
 import { NgSelectModule } from '@ng-select/ng-select';
 
@@ -80,7 +82,7 @@ import { NlfAircraftsEditComponent } from 'app/aircrafts/aircrafts-edit/aircraft
 import { NlfAircraftSummaryComponent } from 'app/aircrafts/aircraft-summary/aircraft-summary.component';
 
 // SELECTERS @TODO move to seperate universal
-import {  NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-tag-airport/ors-editor-tag-airport.component';
+import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-tag-airport/ors-editor-tag-airport.component';
 
 
 @NgModule({
@@ -110,6 +112,7 @@ import {  NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor
     NlfAlertComponent,
     NlfUiPageSpinnerComponent,
     NlfUiComponentSpinnerComponent,
+    NlfOrgSelectorComponent,
     NlfResolveComponent,
     NlfResolveUserComponent,
     NlfResolveMembershipComponent,
@@ -143,6 +146,7 @@ import {  NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor
     NlfOrsEditorTagE5xRenderComponent,
     NlfOrsEditorTagStaticComponent,
     NlfOrsEditorDateComponent,
+    NlfOrsGoComponent,
     // Aircrafts
     NlfAircraftsAddComponent,
     NlfAircraftsEditComponent,
@@ -166,6 +170,7 @@ import {  NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor
     NgProgressHttpModule,
     NlfUiPageSpinnerComponent,
     NlfUiComponentSpinnerComponent,
+    NlfOrgSelectorComponent,
     NgPipesModule,
     NlfOrsStatePipe,
     NlfOrsPeoplePipe,
@@ -206,6 +211,7 @@ import {  NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor
     NlfOrsEditorTagE5xRenderComponent,
     NlfOrsEditorTagStaticComponent,
     NlfOrsEditorDateComponent,
+    NlfOrsGoComponent,
     // Other
     NlfAircraftsAddComponent,
     NlfAircraftsEditComponent,
