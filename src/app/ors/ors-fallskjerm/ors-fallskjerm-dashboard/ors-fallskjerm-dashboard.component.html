@@ -3,14 +3,14 @@
 
     <span class="breadcrumb">
       <li class="breadcrumb-item">
-        <a [routerLink]="['/ors', 'fallskjerm']">ORS<span class="hidden-sm-down"> Fallskjerm</span></a>
+        <a [routerLink]="['/ors', 'fallskjerm']">ORS<span class="hidden-sm-down"> {{ activity | titlecase}}</span></a>
         <!--[routerLink]="['/organizations', '376']"-->
       </li>
-      <li class="breadcrumb-item">
+      <li *ngIf="isDataReady()" class="breadcrumb-item">
         <nlf-resolve-lungo-organization [organization_id]="discipline_id" [link]="true"></nlf-resolve-lungo-organization>
       </li>
       <li class="breadcrumb-item active">
-        Dashboard
+        Dashboard <sup class="text-danger mx-1" title="Applikasjonen er ikke ferdig utviklet">beta</sup>
       </li>
     </span>
 
@@ -19,14 +19,19 @@
       <fa name="save" [fixed]="true"></fa> Lagre søk
     </button>
     -->
-
     <nlf-help class="pull-right mx-1" key="ors-dashboard-fallskjerm"></nlf-help>
+    <span class="pull-right mx-1 col-2">
+      <nlf-org-selector activity="fallskjerm" [(selected)]="discipline_id" (change)="onOrgChange($event)" size="sm"></nlf-org-selector>
+    </span>
+
 
   </div>
 </header>
 
 <div class="container">
-
+  <div class="row mt-2">
+    viser data fra {{ d1 | date:"yyyy-MM-dd" }} til {{ d2 | date:"yyyy-MM-dd" }}
+  </div>
   <div class="row mt-2 py-3">
 
     <div class="col-md-6 col-xs-12 overflow-hidden">
@@ -106,18 +111,20 @@
   <div class="container">
     <div class="row">
       <div class="col-md-2 text-center bg-danger text-white">
-       <h2>{{ (stats.total_injury / stats.total_ors) | number:'1.2-2'}}</h2>
-        <h5>skade per ors</h5>
+        <h2>{{ ((stats.total_injury / stats.total_ors) | number:'1.2-2') || '-'}}</h2>
+        <h5>skade per ors</h5><!-- Heller antall ors'er per skade -->
       </div>
 
       <div class="col-md-2 text-center bg-secondary text-white">
-        <h2>{{ stats.total_processing }}</h2>
+        <h2>{{ stats.total_processing || '-' }}</h2>
         <h5>ubehandlede</h5>
       </div>
 
-      <div class="col-md-2 text-center bg-secondary text-white">
-        <h2>-</h2><!--<h2>{{ stats.total_injury }}</h2>-->
-        <h5>hopp {{ current_year }}</h5>
+      <div class="col-md-2 text-center text-white bg-secondary" [ngClass]="{'bg-success': stats.avg_ratings_discipline<stats.avg_ratings, 'bg-danger': stats.avg_ratings_discipline>stats.avg_ratings}">
+        <!--<h2>-</h2>-->
+        <h2>{{ (stats.avg_ratings_discipline | number: '1.0-0') || '-' }}/{{ (stats.avg_ratings | number:'1.0-0') || '-' }}</h2>
+        <!--<h5>hopp {{ current_year }}</h5>-->
+        <h5>rating</h5>
       </div>
 
       <div class="col-md-2 text-center bg-success text-white">
@@ -143,7 +150,7 @@
 <div class="container">
   <div class="row my-4">
     <div class="col-md-12 col-xs-12 overflow-auto">
-      <nlf-ors-fallskjerm-dashboard-table *ngIf="!!discipline_id && dateRangeReady" activity="fallskjerm" [discipline]="discipline_id" [dateRange]="dateRange"></nlf-ors-fallskjerm-dashboard-table>
+      <nlf-ors-fallskjerm-dashboard-table *ngIf="isDataReady() && !!discipline_id && dateRangeReady" activity="fallskjerm" [discipline]="discipline_id" [dateRange]="dateRange"></nlf-ors-fallskjerm-dashboard-table>
     </div>
   </div>
 </div>
