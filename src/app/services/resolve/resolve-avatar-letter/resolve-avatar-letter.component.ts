@@ -27,9 +27,10 @@ export class NlfResolveAvatarLetterComponent implements OnInit {
     public domSanitizer: DomSanitizer) { }
 
   ngOnInit() {
+    console.log('Person for avatar letter', this.person_id);
 
-    if (!!this.person_id && !this.person_name) {
-
+    if (!!this.person_id && this.person_id > 0 && !this.person_name) {
+      console.log('Person first if');
       const options: ApiOptionsInterface = {
         query: { projection: { full_name: 1, first_name: 1 } }
       };
@@ -41,15 +42,25 @@ export class NlfResolveAvatarLetterComponent implements OnInit {
         data => {
           this.full_name = data.full_name;
           this.svg_avatar = this.getLetterAvatar();
+          this.dataReady = true
         },
         err => {
-          this.full_name = 'Ukjent Person';
+          this.full_name = 'Anonymisert';
           this.svg_avatar = this.getLetterAvatar();
+          this.dataReady = true
         },
-        () => this.dataReady = true
+        () => { }
       );
     } else if (!!this.person_name) {
       this.full_name = this.person_name;
+      this.svg_avatar = this.getLetterAvatar();
+      this.dataReady = true;
+    } else {
+      if (this.person_id < 0) {
+        this.full_name = 'Person ' + -1 * this.person_id;
+      } else {
+        this.full_name = 'Ukjent Person';
+      }
       this.svg_avatar = this.getLetterAvatar();
       this.dataReady = true;
     }
@@ -66,23 +77,28 @@ export class NlfResolveAvatarLetterComponent implements OnInit {
   }
   svgLetterAvatar(initials: string): string {
     // pointer-events="none"  style="{style}"
-    let color = 'X';
+    let color = 'hsl(120, 30%, 80%)';
     if (!!this.full_name) {
       color = this.stringToHslColor(this.full_name, 30, 80);
-    } else {
-      color = 'hsl(120, 30%, 80%)';
     }
-    return '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"><rect width="100%" height="100%" fill="' + color + '" /><text text-anchor="middle" y="50%" x="50%" dy="0.35em" font-size="0.65em" pointer-events="auto" fill="#ffffff" font-family="Arial, Helvetica, sans-serif">' + initials + '</text></svg>';
+
+    return '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"><rect width="100%" height="100%" fill="' + color + '" /><text text-anchor="middle" y="50%" x="50%" dy="0.35em" font-size="0.65em" pointer-events="auto" fill="#ffffff" font-family="Arial, Helvetica, sans-serif">' + initials.replace(/[^]/g,function(initials){return"&#"+initials.charCodeAt(0)+";"}) + '</text></svg>';
 
   }
 
   getInitials(): string {
-    if (this.full_name && this.full_name.length) {
-      const nameInitials = this.full_name.match(/\b(\w)/g);
+    if (this.full_name && this.full_name.length > 0) {
+      const names = this.full_name.split(" "); //this.full_name.match(/\b([A-ZÆØÅÖa-zæøåö0-9_])/g);//match(/\b(\w)/g);
 
-      if (nameInitials) {
-        const nameLetters = (nameInitials[0] + nameInitials[nameInitials.length-1]) || nameInitials.slice(0, 2).join('') || nameInitials[0];
-        return nameLetters.toUpperCase();
+      if (names.length > 0) {
+        // const nameLetters = (nameInitials[0] + nameInitials[nameInitials.length - 1]) || nameInitials.slice(0, 2).join('') || nameInitials[0];
+        // return nameLetters.toUpperCase();
+        if (names.length === 1) {
+          return names[0][0];
+        }
+        else if (names.length > 1) {
+          return names[0][0] + names[(names.length - 1)][0];
+        }
       } else {
         return this.full_name[0].toUpperCase();
       }

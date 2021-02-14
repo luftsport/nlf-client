@@ -31,7 +31,7 @@
 
       <!-- CREATE ORS BTN HIDDEN XS-->
       <button class="btn btn-success mr-2 d-none d-sm-block" *ngIf="!!config && !!user_data && !!user_data.settings.default_discipline" (click)="navbarOpen=false;openCreateOrsModal()">
-        <fa name="plus" fw="true" class="mr-1"></fa>{{ config[config.inv_mapping[user_data.settings.default_activity]]['observation']['app_name'] || 'ORSX' }}
+        <fa name="plus" fw="true" class="mr-1"></fa>Ny {{ config[config.inv_mapping[user_data.settings.default_activity]]['observation']['app_name'] || 'ORSX' }}
       </button>
 
       <!--
@@ -83,10 +83,11 @@
         <a [routerLink]="['/organizations', 376]" class="nav-link">Klubber</a>
       </li>
 
-      <!-- AIP -->
+      <!-- AIP
       <li (click)="navbarOpen=false" *ngIf="authenticated" class="nav-item" routerLinkActive="active">
         <a [routerLink]="['/aip']" class="nav-link">AIP</a>
       </li>
+      -->
 
       <!-- INTEGRATION -->
       <li (click)="navbarOpen=false" *ngIf="authenticated && [301041,7623313,5502100,4402873,4859230,425529,554002,445648,7897818,6273278].indexOf(user_data.person_id)>-1" class="nav-item" routerLinkActive="active">

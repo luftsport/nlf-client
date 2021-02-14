@@ -6,5 +6,5 @@
   <nlf-resolve-lungo-person *ngIf="!!person_id&&!person_name" [person_id]="person_id" [link]="false" [avatar]="false"></nlf-resolve-lungo-person>
   <span *ngIf="!person_id&&!!person_name">{{ person_name || "Ukjent Navn"}}</span>
 -->
-  {{ full_name || "Ukjent Navn"}}
+  {{ full_name || "Ukjent eller anonymisert navn"}}
 </ng-template>
