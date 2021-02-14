@@ -1,0 +1,8 @@
+<span *ngIf="!!activity" class="input-group input-group-sm" style="max-width: 100px !important">
+  <div class="input-group-prepend bg-transparent">
+    <span class="input-group-text bg-transparent">
+      <fa name="hashtag" [fixed]="true" class="text-secondary"></fa>
+    </span>
+  </div>
+  <input id="orsGO" #orsGO type="text" inputmode="numeric" pattern="[0-9]*" min="1" step="1" (keyup.enter)="orsGOTO()" [(ngModel)]="ors_id" class="form-control form-control-sm border-left-0 nospinner">
+</span>

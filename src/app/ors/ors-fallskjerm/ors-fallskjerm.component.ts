@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
 import { NlfComponent } from 'app/nlf.component';
 import { ApiUserDataSubjectItem } from 'app/api/api.interface';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'nlf-ors-fallskjerm',
@@ -15,7 +15,7 @@ export class NlfOrsFallskjermComponent implements OnInit {
 
   constructor(
     private userSubject: NlfUserSubjectService,
-    private app: NlfComponent
+    private app: NlfComponent    
   ) {
 
     this.userSubject.observable.subscribe(
@@ -33,5 +33,7 @@ export class NlfOrsFallskjermComponent implements OnInit {
   ngOnInit() {
     this.app.setTitle('ORS Oversikt');
   }
+
+
 
 }
