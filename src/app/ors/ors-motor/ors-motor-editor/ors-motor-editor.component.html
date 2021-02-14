@@ -11,7 +11,7 @@
       <span class="overflow-hidden">
         <a [routerLink]="['/ors', 'motorfly']">OBSREG</a>#{{ observation.id }}
         <nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type" link="true" seperator="/"></nlf-resolve-observation-tags>&nbsp;
-        <span *ngIf="!!observation.rating" class="badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{
+        <span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body" *ngIf="!!observation.rating" class="badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{
           observation.rating | nlfOrsRatingCalc }}</span>
       </span>
       <!-- WORKFLOW STATE -->
@@ -253,7 +253,7 @@
       <div class="nlf-ors-toolbar">
         Fartøy
         <nlf-help class="pull-right" key="ors-e5x-aircrafts"></nlf-help>
-        <button class="pull-right btn btn-link">preview</button>
+        <!-- @TODO show modal w/ac information/summary <button class="pull-right btn btn-link">preview</button> -->
       </div>
     </div>
     <div class="row">
@@ -443,7 +443,85 @@
 
     <!-- /// END FORM -->
 
-    <!-- SEND BTN -->
+    <!-- WORKFLOW ACTIONS -->
+    <ng-container *ngIf="observation.acl_user.x">
+
+      <div class="nlf-ors-toolbar">
+        <ng-container *ngIf="observation.workflow.state=='withdrawn'">Gjenåpning</ng-container>
+        <ng-container *ngIf="observation.workflow.state=='draft'">Innsending</ng-container>
+        <ng-container *ngIf="['draft', 'withdrawn'].indexOf(observation.workflow.state)==-1">Behandling</ng-container>
+
+        <nlf-help class="pull-right" key="ors-editor-workflow"></nlf-help>
+      </div>
+      <!-- bg-secondary text-white-->
+      <div class="col-xs-12 col-md-12 py-2">
+        <ng-container *ngIf="['withdrawn', 'closed'].indexOf(observation.workflow.state)>-1">
+          <p>
+            Observasjonen er lukket. Du kan velge å gjenåpne observasjonen om du ønsker fortsette å behandle den.
+          </p>
+          <p>
+            Les mer om arbeidsflyten ved å trykke på <span>
+              <nlf-help key="ors-editor-workflow"></nlf-help>
+            </span>
+          </p>
+          <div class="btn-toolbar pull-right">
+            <button (click)="openWorkflow()" class="btn btn-danger mr-2">Gjenåpne</button>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="observation.workflow.state=='draft'">
+          <p>Når du er ferdig med å redigere observasjonen er det på tide å sende den videre til behandling hos OBSREG koordinator.</p>
+          <p>Du kan alltid aktivere arbeidsflyten ved å trykke på statusknappen for arbeidsflyten <span><a class="pointer mx-1" (click)="openWorkflow()">
+                <nlf-resolve-observation-state [activity]="observation._model.type" [state]="observation.workflow.state" icon="true"></nlf-resolve-observation-state>
+              </a></span> som du finner øverst på siden i &quot;sidemenyen&quot;
+          </p>
+          <p>Behandlingen skjer i en forhåndsdefinert arbeidsflyt som du kan lese mer om ved å trykke på <span>
+              <nlf-help key="ors-editor-workflow"></nlf-help>
+            </span>
+          </p>
+          <p>Ønsker du slette/fjerne observasjonen velger du å &quot;trekke tilbake&quot;. Da forsvinner den ute av syne for alle enn deg. Ingen kan forresten slette observasjoner fra systemet, og du kan når som helst komme tilbake og gjenåpne
+            den skulle du ombestemme deg.</p>
+          <!-- Knapper for innsending -->
+          <div class="btn-toolbar pull-right">
+            <button (click)="openWorkflow()" class="btn btn-success mr-2">Send OBSREG koordinator</button>
+            <button (click)="openWorkflow()" class="btn btn-danger mr-2">Trekk tilbake</button>
+          </div>
+          <!--
+            <div class="form-group row">
+              <div class="col-md-6">
+                  <input type="button" class="btn form-control" id="btn1">
+              </div>
+              <div class="col-md-6">
+                  <input type="button" class="btn form-control" id="btn2">
+              </div>
+            </div>
+            -->
+        </ng-container>
+
+        <ng-container *ngIf="['draft', 'withdrawn', 'closed'].indexOf(observation.workflow.state)==-1">
+          <p>Observasjonen har status
+            <span><a class="pointer mx-1" (click)="openWorkflow()">
+                <nlf-resolve-observation-state [activity]="observation._model.type" [state]="observation.workflow.state" icon="true"></nlf-resolve-observation-state>
+              </a></span>.</p>
+          <p>
+            Når du har gjennomgått observasjonen skal du aktivere arbeidsflyten for å behandle observasjonen.
+          </p>
+          <p>
+            Les mer om arbeidsflyten ved å trykke på <span>
+              <nlf-help key="ors-editor-workflow"></nlf-help>
+            </span>
+          </p>
+
+          <div class="btn-toolbar pull-right">
+            <button (click)="openWorkflow()" class="btn btn-primary mr-2"><fa name="exchange" [fixed]="true"></fa> Behandle #{{observation.id}}</button>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+    <!-- //WORKFLOW ACTIONS -->
+
+
+    <!-- SEND BTN
     <div class="row my-3">
       <span class="pointer mx-1 pull-right" *ngIf="observation.acl_user.x && observation.workflow.state=='draft'" (click)="openWorkflow()">
         <button class="btn btn-success">
@@ -451,7 +529,7 @@
         </button>
       </span>
     </div>
-
+-->
     <div *ngIf="!!devDebug">
       {{ observation.ask | json }}
     </div>

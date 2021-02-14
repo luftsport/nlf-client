@@ -1,16 +1,24 @@
 <div>
   <span *ngIf="observation.workflow.state==='draft'" class="lead">Egenvurdering: <nlf-help key="ors-editor-ask-text"></nlf-help></span>
   <span *ngIf="observation.workflow.state!='draft'" class="lead">Din vurdering: <nlf-help key="ors-editor-ask-text"></nlf-help></span>
-  <button type="button" class="btn btn-link pull-right" (click)="openModal(previewModal)">preview</button>
+  <ng-container *ngIf="observation.workflow.audit.length>1">
+    <button *ngIf="!showAllASK" type="button" class="btn btn-link pull-right" (click)="openModal(previewModal)">vis alle vurderinger</button>
+    <button *ngIf="showAllASK" type="button" class="btn btn-link pull-right" (click)="showAllASK=!showAllASK">lukk forhåndsvisning</button>
+  </ng-container>
 </div>
 <!-- <p style="border:1px lightgrey solid;min-height:88px; width: 100%;" contenteditable="true" propValueAccessor="innerHTML"
     name="myFormName" [(ngModel)]="observation.ask.text[observation.workflow.state]" (ngModelChange)="textChange()" [mention]="list"
     class="form-control" [mentionConfig]="mconf">
   </p>-->
-<div [ngClass]="{'bg-secondary': !observation.acl_user.w}" [disabled]="!observation.acl_user.w" class="bg-white border" style="min-height:100px; width: 100%;display: inline-block;overflow: hidden;padding:2px;" contenteditable="true"
-  propValueAccessor="innerHTML" name="myAskDiv" [(ngModel)]="observation.ask.text[observation.workflow.state]" (ngModelChange)="debouncedUpdateText()" (paste)="onPaste($event)">
+<nlf-ors-report-ask-text *ngIf="showAllASK" [comments]="observation.ask.text" [audit]="observation.workflow.audit" [activity]="observation._model.type"></nlf-ors-report-ask-text>
+<!-- ASK text input #1-->
+<div id="ask" [ngClass]="{'bg-secondary': !observation.acl_user.w}" [disabled]="!observation.acl_user.w" class="bg-white border" style="min-height:100px; width: 100%;display: inline-block;overflow: hidden;padding:2px;" contenteditable="true"
+  propValueAccessor="innerHTML" name="myAskDiv" [(ngModel)]="observation.ask.text[observation.workflow.state]" (ngModelChange)="debouncedUpdateText()" (paste)="onPaste($event)" (keyup.enter)="textChange()">
 </div>
-<button [disabled]="!observation.acl_user.w" class="btn btn-secondary pull-right" (click)="reset()">Reset</button>
+<!-- //ASK text input -->
+
+<!--<button [disabled]="!observation.acl_user.w" class="btn btn-link pull-right" (click)="reset()">Reset</button>-->
+
 <!--(searchTerm)="search($event)"
 <p>Arr: {{ involved.currentArr | async | json }}</p>
 <p>List: {{ list | json }}</p>
@@ -22,7 +30,6 @@
      [textContent]="ask.text[state]" (input)="ask.text[state]=$event.target.textContent"></div>-->
 <!--<div #asktext contenteditable="true" [textContent]="ask.text[state]" (input)="model=asktext.innerText" style="border:1px lightgrey solid;min-height:88px" [mention]="items" class="form-control" (searchTerm)="search($event)" [mentionConfig]="mconf"></div>-->
 <!--<div [(ngModel)]="ask.text[state]" [mention]="items" class="form-control" (searchTerm)="search($event)" [mentionConfig]="mconf" contenteditable="true" style="border:1px lightgrey solid;min-height:88px"></div>-->
-
 
 <!-- MODAL -->
 <ng-template #previewModal>
@@ -37,6 +44,16 @@
 
   <div class="modal-body">
     <nlf-ors-report-ask-text [comments]="observation.ask.text" [audit]="observation.workflow.audit" [activity]="observation._model.type"></nlf-ors-report-ask-text>
+    <!-- ASK text input #2-->
+    <div class="mt-2">
+      <span *ngIf="observation.workflow.state==='draft'" class="lead">Egenvurdering: <nlf-help key="ors-editor-ask-text"></nlf-help></span>
+      <span *ngIf="observation.workflow.state!='draft'" class="lead">Din vurdering: <nlf-help key="ors-editor-ask-text"></nlf-help></span>
+    </div>
+    <div id="askModal" [ngClass]="{'bg-secondary': !observation.acl_user.w}" [disabled]="!observation.acl_user.w" class="bg-white border" style="min-height:100px; width: 100%;display: inline-block;overflow: hidden;padding:2px;" contenteditable="true"
+      propValueAccessor="innerHTML" name="myAskDivModal" [(ngModel)]="observation.ask.text[observation.workflow.state]" (ngModelChange)="debouncedUpdateText()" (paste)="onPaste($event)" (keyup.enter)="textChange()">
+    </div>
+    <!-- //ASK text input -->
+
     <!-- With excludes for current etc
     <nlf-ors-report-ask-text [comments]="observation.ask.text" [excludes]="[observation.workflow.state]" [activity]="observation._model.type"></nlf-ors-report-ask-text>
     <div class="lead mt-2">Din vurdering:</div>
@@ -46,8 +63,8 @@
   </div>
 
   <div class="modal-footer">
-    <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa name="times" [fixed]="true"></fa>Ok
+    <button class="btn btn-outline-dark" (click)="closeModal()">
+      <!--<fa name="times" [fixed]="true"></fa>-->Ferdig
     </button>
   </div>
 </ng-template>

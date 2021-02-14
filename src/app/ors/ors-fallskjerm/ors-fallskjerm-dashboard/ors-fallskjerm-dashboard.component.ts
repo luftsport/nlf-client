@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiObservationsAggService } from 'app/api/api-observations-agg.service';
 import { ApiOptionsInterface, NlfConfigItem } from 'app/api/api.interface';
 import { NlfConfigService } from 'app/nlf-config.service';
@@ -15,6 +15,8 @@ import { map, mergeMap, reduce, delay } from 'rxjs/operators';
   styleUrls: ['./ors-fallskjerm-dashboard.component.css']
 })
 export class NlfOrsFallskjermDashboardComponent implements OnInit {
+
+  activity = 'fallskjerm';
 
   dataReady = false;
   discipline_id: number;
@@ -53,6 +55,7 @@ export class NlfOrsFallskjermDashboardComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private agg: ApiObservationsAggService,
     private configService: NlfConfigService,
     private calendar: NgbCalendar,
@@ -60,29 +63,35 @@ export class NlfOrsFallskjermDashboardComponent implements OnInit {
   ) {
 
 
-    this.agg.setActivity('fallskjerm');
+    this.agg.setActivity(this.activity);
 
     this.sub = this.route.params.subscribe(
       params => {
+        this.dataReady = false;
         this.discipline_id = params['id'] ? +params['id'] : -1;
 
-        this.configService.observableConfig.subscribe(
-          data => {
-            this.config = data;
-            const d = new Date();
-            this.current_year = d.getFullYear();
+        if (!this.config) {
+          this.configService.observableConfig.subscribe(
+            data => {
+              this.config = data;
+              const d = new Date();
+              this.current_year = d.getFullYear();
 
-            // Calendar
-            //this.fromDate = { year: d.getFullYear(), month: 1, day: 1 };
+              // Calendar
+              //this.fromDate = { year: d.getFullYear(), month: 1, day: 1 };
 
-            //this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
-            //this.firstDayOfYear= new Date(new Date().getFullYear(), 0, 1);
-            this.resetDate();
+              //this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
+              //this.firstDayOfYear= new Date(new Date().getFullYear(), 0, 1);
+              this.resetDate();
 
-          }
-        );
+            }
+          );
 
-      });
+        } else {
+          this.updateDashboard();
+        }
+      }
+    );
 
   }
 
@@ -92,6 +101,19 @@ export class NlfOrsFallskjermDashboardComponent implements OnInit {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  public onOrgChange(event) {
+    if (this.isDataReady()) {
+      //this.router.navigate(['/ors', this.activity, 'dashboard', this.discipline_id]);
+      this.updateDashboard();
+      this.router.navigate(
+        [],
+        {
+          relativeTo: this.route,
+          queryParams: {},
+        });
+    }
   }
 
   public isDataReady(): boolean {
@@ -115,6 +137,8 @@ export class NlfOrsFallskjermDashboardComponent implements OnInit {
       let _to = moment().subtract(i, 'quarter').endOf('quarter');
 
       this.quarts.push({ label: _to.year() + '-Q' + (_to.month() + 1) / 3, from: moment().subtract(i + 1, 'quarter').startOf('quarter'), to: _to });
+
+      //console.log(i, moment().subtract(i + 1, 'quarter').startOf('quarter')._d, _to._d);
     }
 
     console.log('Quarts:', this.quarts);
@@ -123,7 +147,7 @@ export class NlfOrsFallskjermDashboardComponent implements OnInit {
   }
 
   public setDatesFromQuarter(quarter) {
-
+    console.log('From quarter', quarter.from._d, quarter.to._d);
     this.fromDate = { year: quarter.from.year(), month: quarter.from.month(), day: quarter.from.day(), equals: undefined, after: undefined, before: undefined };
     this.toDate = { year: quarter.to.year(), month: quarter.to.month(), day: quarter.to.day(), equals: undefined, after: undefined, before: undefined };
     this.setAsDate();
@@ -133,19 +157,22 @@ export class NlfOrsFallskjermDashboardComponent implements OnInit {
     this.dateRangeReady = false;
     this.d1 = new Date(this.fromDate['year'], this.fromDate['month'], this.fromDate['day']);
     this.d2 = new Date(this.toDate['year'], this.toDate['month'], this.toDate['day']);
-    this.dateRange = [this.d1, this.d2];
+    this.dateRange = [new Date(this.fromDate['year'], this.fromDate['month'] + 1, this.fromDate['day']), new Date(this.toDate['year'], this.toDate['month'] + 1, this.toDate['day'])];
     this.dateRangeReady = true;
-    this.doShit();
+    this.updateDashboard();
   }
   // calendar
   public onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
+      this.fromDate['month'] = this.fromDate['month'] - 1;
     } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
       this.toDate = date;
+      this.toDate['month'] = this.toDate['month'] - 1;
     } else {
       this.toDate = null;
       this.fromDate = date;
+      this.fromDate['month'] = this.fromDate['month'] - 1;
     }
 
     this.setAsDate();
@@ -166,11 +193,13 @@ export class NlfOrsFallskjermDashboardComponent implements OnInit {
   }
 
 
-  doShit() {
+  updateDashboard() {
 
     forkJoin(
       this._getTypesPie(),
-      this._getStatesPie()
+      this._getStatesPie(),
+      this._getAvgRatingsDiscipline(),
+      this._getAvgRatings()
     ).subscribe(
 
       data => {
@@ -195,6 +224,7 @@ export class NlfOrsFallskjermDashboardComponent implements OnInit {
           console.log('ERR pie', e);
           console.log(data[1]._items);
         }
+
 
 
         const a = this.pieTypes.reduce(
@@ -223,11 +253,32 @@ export class NlfOrsFallskjermDashboardComponent implements OnInit {
         this.stats = {
           total_ors: a,
           total_injury: b,
-          total_processing: c
+          total_processing: c,
         };
 
         this.pieTypesReady = true;
         this.pieStatesReady = true;
+
+
+        try {
+          this.stats['avg_ratings_discipline'] = data[2]['_items'][0]['avg'];
+
+        } catch (e) {
+          console.log('AVG Err discipline', e);
+        }
+
+        try {
+          // const tmp = data[3]['_items'].reduce((total, next) => (total + next.avg, 0)) / data[3]['_items'].length;
+          // this.stats['avg_ratings'] = tmp;
+          let sum = 0;
+          for (let i = 0; i < data[3]['_items'].length; i++) {
+            sum += data[3]['_items'][i]['avg'];
+          }
+          this.stats['avg_ratings'] = sum / data[3]['_items'].length;
+        } catch (e) {
+          console.log('AVG Err ratings', e);
+        }
+
 
         /**
         forkJoin(
@@ -266,6 +317,7 @@ export class NlfOrsFallskjermDashboardComponent implements OnInit {
           err => console.log('Piefork ERR', err),
           () => { }
         ) **/
+        console.log('STATS', this.stats);
       },
       err => console.log('API piefork ERR', err),
       () => console.log('Done')
@@ -273,7 +325,7 @@ export class NlfOrsFallskjermDashboardComponent implements OnInit {
 
   }
 
-  doShitLEGACYWORKS() {
+  updateDashboardLEGACYWORKS() {
 
     forkJoin(
       this._getTypesPie(),
@@ -392,6 +444,35 @@ export class NlfOrsFallskjermDashboardComponent implements OnInit {
     };
 
     return this.agg.getStatesDiscipline(options);
+  }
+
+  _getAvgRatingsDiscipline() {
+    this.pieStatesReady = false;
+
+    let options: ApiOptionsInterface = {
+      query: {
+        aggregate: {
+          $from: this.d1.toISOString(),
+          $to: this.d2.toISOString(),
+          $discipline: this.discipline_id
+        }
+      }
+    };
+    return this.agg.getAvgRatingsDiscipline(options);
+  }
+
+  _getAvgRatings() {
+    this.pieStatesReady = false;
+
+    let options: ApiOptionsInterface = {
+      query: {
+        aggregate: {
+          $from: this.d1.toISOString(),
+          $to: this.d2.toISOString(),
+        }
+      }
+    };
+    return this.agg.getAvgRatings(options);
   }
 
   getStatInjuryOrs() {

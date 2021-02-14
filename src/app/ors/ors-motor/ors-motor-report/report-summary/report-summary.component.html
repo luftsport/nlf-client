@@ -29,7 +29,7 @@
     </td>
   </tr>
 
-  <!-- DTO -->
+  <!-- DTO @TODO Remove
   <tr>
     <td>DTO i klubb</td>
     <td>
@@ -38,6 +38,7 @@
       </div>
     </td>
   </tr>
+-->
 
   <!-- OBSREG KOORDINATORER -->
   <tr>
@@ -63,26 +64,22 @@
 
   <!-- TYPE E5X-->
   <tr>
-    <td>Type</td>
+    <td title="Occurence Class">Klassifisering</td>
     <td>
       <nlf-ors-editor-tag-e5x-render [showLabel]="false" [items]="observation.occurrence.attributes.occurrenceClass.value" path="E5X.Occurrence.OccurrenceClass"></nlf-ors-editor-tag-e5x-render>
-        <span class="pull-right">
-          <nlf-ors-editor-tag-e5x-render [showLabel]="false" [items]="observation.occurrence.attributes.injuryLevel.value" path="E5X.Occurrence.InjuryLevel"></nlf-ors-editor-tag-e5x-render>
-            /
-            <nlf-ors-editor-tag-e5x-render [showLabel]="false" [items]="observation.occurrence.attributes.highestDamage.value" path="E5X.Occurrence.HighestDamage"></nlf-ors-editor-tag-e5x-render>
-        </span>
+      <span class="pull-right">
+        <nlf-ors-editor-tag-e5x-render [showLabel]="false" [items]="observation.occurrence.attributes.injuryLevel.value" path="E5X.Occurrence.InjuryLevel"></nlf-ors-editor-tag-e5x-render>
+        /
+        <nlf-ors-editor-tag-e5x-render [showLabel]="false" [items]="observation.occurrence.attributes.highestDamage.value" path="E5X.Occurrence.HighestDamage"></nlf-ors-editor-tag-e5x-render>
+      </span>
     </td>
   </tr>
 
-  <!-- INJURIES-->
-  <tr>
-    <td>Fartøy</td>
-    <td>
-      <div *ngFor="let a of observation.aircrafts">
-        <a *ngIf="!a.aircraft.callsign.startsWith('FLY')" [routerLink]="['/', 'aircraft', 'view', a.aircraft.callsign]">{{ a.aircraft.callsign }}</a>
-        <span *ngIf="a.aircraft.callsign.startsWith('FLY')">{{ a.aircraft.callsign }}</span>
-      </div>
-    </td>
+  <!-- RATING -->
+  <tr *ngIf="!!observation.rating">
+    <td>Alvorlighetsgrad</td>
+    <!--<td>{{ observation.rating.actual }} av {{ observation.rating.potential }} <span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body" class="pull-right badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating | nlfOrsRatingCalc }}</span></td>-->
+    <td><span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body" class="badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating | nlfOrsRatingCalc }}</span></td>
   </tr>
 
   <!-- FLAGG -->
@@ -103,11 +100,20 @@
 
   </tr>
 
-  <!-- RATING -->
-  <tr *ngIf="!!observation.rating">
-    <td>Alvorlighetsgrad</td>
-    <td>{{ observation.rating.actual }} av {{ observation.rating.potential }} <span class="pull-right badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating | nlfOrsRatingCalc }}</span></td>
+  <!-- FARTØY-->
+  <tr>
+    <td>Fartøy</td>
+    <td>
+      <div *ngFor="let a of observation.aircrafts">
+        <a *ngIf="!a.aircraft.callsign.startsWith('FLY')" [routerLink]="['/', 'aircraft', 'view', a.aircraft.callsign]">{{ a.aircraft.callsign }}</a>
+        <span *ngIf="a.aircraft.callsign.startsWith('FLY')">{{ a.aircraft.callsign }}</span>
+      </div>
+    </td>
   </tr>
+
+
+
+
 
   <!-- WHEN -->
   <tr>

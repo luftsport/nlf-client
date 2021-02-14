@@ -1,0 +1,6 @@
+<select *ngIf="dataReady" class="form-control" [ngClass]="{'form-control-sm': size=='sm', 'form-control-lg': size=='lg'}" id="organizations" [(ngModel)]="selected" (change)="update($event)">
+  <option *ngFor="let org of orgs" [ngValue]="org.id">
+    {{ org.name }}
+  </option>
+</select>
+<nlf-ui-component-spinner *ngIf="!dataReady" size="1"></nlf-ui-component-spinner>

@@ -31,4 +31,15 @@ export class ApiObservationsAggService extends ApiRestService {
     return this.getList(this.relativeUrl + '/states/discipline', options);
   }
 
+  public getAvgRatingsDiscipline(options?: ApiOptionsInterface): Observable<any> {
+
+    return this.getList(this.relativeUrl + '/ratings/discipline', options);
+  }
+
+  public getAvgRatings(options?: ApiOptionsInterface): Observable<any> {
+
+    return this.getList(this.relativeUrl + '/ratings', options);
+  }
+
+
 }

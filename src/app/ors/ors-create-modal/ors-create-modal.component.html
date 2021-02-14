@@ -1,6 +1,6 @@
 <div class="modal-header">
   <h4 class="modal-title" *ngIf="dataReady">
-    Opprett {{ config[config.inv_mapping[settings.default_activity]]['observation']['app_name'] || 'ORSX' }}
+    Opprett ny {{ config[config.inv_mapping[settings.default_activity]]['observation']['app_name'] || 'ORSX' }}
   </h4>
   <span *ngIf="ENV._name!='prod'" class="badge badge-danger ml-3">{{ ENV._name }}</span>
   <button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.dismiss()">

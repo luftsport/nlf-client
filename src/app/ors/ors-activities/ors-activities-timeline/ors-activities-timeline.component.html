@@ -72,7 +72,12 @@
     -->
 
         <span class="pull-right">
-          <nlf-resolve-avatars [persons]="current_acl_users||[]" max="5"></nlf-resolve-avatars>
+          <!--<fa class="pointer" (click)="openReceipentsModal(recepientModalTemplate, current_acl_users||[])" name="envelope-open-o" [fw]="true"></fa> -->
+          <!--<nlf-resolve-avatars [persons]="row.recepients||[]" max="2"></nlf-resolve-avatars>-->
+          <span><nlf-resolve-avatars [persons]="current_acl_users||[]" modal_title="Mottakere" max="5"></nlf-resolve-avatars></span>
+
+
+
 
           <!-- ADD RECEPIENT
               <div class="avatar">
@@ -90,7 +95,7 @@
 
           <!-- SEND BTN -->
           <button *ngIf="!is_sending_msg" [disabled]="message_text.length<4" class="btn btn-primary ml-3" (click)="sendMessage()">
-            <fa name="comment" [fixed]="true"></fa> Melding
+            <fa name="comment" [fixed]="true"></fa> Send<!--Melding-->
           </button>
           <button *ngIf="is_sending_msg" [disabled]="message_text.length<4" class="btn btn-primary ml-3">
             <fa name="spinner" animation="pulse"></fa> Sending
@@ -99,6 +104,12 @@
         </span>
 
       </div>
+      <!--
+      <div>
+        <span class="pointer link mr-1 pull-right" (click)="openReceipentsModal(recepientModalTemplate, current_acl_users||[])" title="Vis liste over mottakere">vis mottakere</span>
+      </div>
+    -->
+
     </div><!-- /btns filter -->
     <div *ngIf="observation.workflow.state=='closed'" class="cbp_tmlabel">
       <h2>Observasjonen er lukket.</h2>
@@ -137,7 +148,6 @@
               {{ row.data.comment }}
             </p>
 
-            <nlf-resolve-avatars [persons]="row.recepients||[]" max="2"></nlf-resolve-avatars>
             <!--
             <div class="avatar-group avatar-group-sm avatar-group-overlapped mt-10 text-right">
               <div *ngFor="let user of row.recepients; let idx=index" class="avatar">
@@ -150,6 +160,7 @@
               </div>
             </div>
             -->
+            <nlf-resolve-avatars [persons]="row.recepients||[]" modal_title="Mottakere" max="2"></nlf-resolve-avatars>
           </div>
           <!-- /AVATARS -->
 
@@ -196,7 +207,7 @@
               {{ row.data.comment }}
             </p>
 
-            <nlf-resolve-avatars [persons]="row.recepients||[]" max="2"></nlf-resolve-avatars>
+            <nlf-resolve-avatars [persons]="row.recepients||[]" modal_title="Mottakere" max="2"></nlf-resolve-avatars>
 
             <!--
             <div class="avatar-group avatar-group-sm avatar-group-overlapped mt-10 text-right">
@@ -250,7 +261,7 @@
           </span>
         </h2>
 
-        <nlf-resolve-avatars [persons]="row.recepients||[]"></nlf-resolve-avatars>
+        <nlf-resolve-avatars [persons]="row.recepients||[]" modal_title="Mottakere"></nlf-resolve-avatars>
         <!--
         <div *ngFor="let person_id of row.recepients">
           <fa name="bell-o" [fixed]="true" class="text-danger"></fa>
@@ -287,7 +298,7 @@
         <p class="blockquote blockquote-primary" [innerHTML]="row.data?.message | newlines">
         </p>
 
-        <nlf-resolve-avatars [persons]="row.recepients||[]"></nlf-resolve-avatars>
+        <nlf-resolve-avatars [persons]="row.recepients||[]" modal_title="Mottakere"></nlf-resolve-avatars>
         <!--
         <div *ngFor="let person_id of row.recepients">
           <nlf-resolve-lungo-person [person_id]="person_id" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
@@ -325,7 +336,7 @@
           Observasjonen <strong>feilet</strong> under innsendelse!
         </p>
 
-        <nlf-resolve-avatars [persons]="row.recepients||[]"></nlf-resolve-avatars>
+        <nlf-resolve-avatars [persons]="row.recepients||[]" modal_title="Mottakere"></nlf-resolve-avatars>
         <!--
         <div *ngFor="let person_id of row.recepients">
           <nlf-resolve-lungo-person [person_id]="person_id" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
@@ -363,3 +374,26 @@
   </li>
 
 </ul>
+
+
+<ng-template #recepientModalTemplate>
+
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">
+        Mottakere
+      </h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div *ngFor="let person_id of this.modalRecepients">
+        <nlf-resolve-lungo-person [person_id]="person_id" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-outline-dark" (click)="modalRef.dismiss()">Lukk</button>
+    </div>
+</ng-template>

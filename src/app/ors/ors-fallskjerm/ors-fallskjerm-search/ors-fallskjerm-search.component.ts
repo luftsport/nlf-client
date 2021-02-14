@@ -22,6 +22,7 @@ sort: [{id:-1}]
 export class NlfOrsFallskjermSearchComponent implements OnInit {
 
   dataReady = false;
+  err = false;
   searching = false;
   public query: ApiEveQueryInterface = { where: {} };
   public activity = 'fallskjerm';
@@ -33,9 +34,7 @@ export class NlfOrsFallskjermSearchComponent implements OnInit {
     callsign: { value: undefined, path: "aircrafts.aircraft.callsign" },
   };*/
   public filter = {
-    "aircrafts.aircraft.callsign": undefined,
-    "aircrafts.flight.from.icao": undefined,
-    "aircrafts.flight.to.icao": undefined
+    "id": undefined
   }
   public filterOperator = '$or';
 
@@ -142,9 +141,12 @@ export class NlfOrsFallskjermSearchComponent implements OnInit {
 
     this.orsService.getObservations(cleanObject(options)).subscribe(
       data => {
+        this.err = false;
         this.result = data;
       },
-      err => { },
+      err => {
+        this.err = true;
+      },
       () => {
         this.dataReady = true;
         // Set url

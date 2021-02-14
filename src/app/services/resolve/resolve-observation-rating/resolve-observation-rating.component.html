@@ -1,1 +1,1 @@
-<span class="badge badge-{{ rating | nlfOrsRatingCalc | nlfDynamicColor }}">{{ rating | nlfOrsRatingCalc }}</span>
+<span ngbTooltip="{{ rating.actual }} av {{ rating.potential }}" container="body" class="badge badge-{{ rating | nlfOrsRatingCalc | nlfDynamicColor }}">{{ rating | nlfOrsRatingCalc }}</span>

@@ -4,10 +4,11 @@ import { ApiOptionsInterface, NlfConfigItem } from 'app/api/api.interface';
 import { Columns, Config, STYLE } from 'ngx-easy-table';
 import { TableEventObject, DefaultTableConfig } from 'app/interfaces/ngx-easy-table.interface';
 import { LungoOrganizationsService } from 'app/api/lungo-organizations.service';
-import {  NlfConfigService } from 'app/nlf-config.service';
+import { NlfConfigService } from 'app/nlf-config.service';
 import { cleanObject } from 'app/interfaces/functions';
 //import { clone } from 'lodash';
 import { ExportToCsv } from 'export-to-csv';
+import { debounce } from 'ts-debounce';
 
 @Component({
   selector: 'nlf-ors-all-table',
@@ -24,17 +25,20 @@ export class NlfOrsAllTableComponent implements OnInit {
   dataReady = false;
   public config: NlfConfigItem;
 
-  filter = { club: null, discipline: null, type: null, state: null };
+  filter = { club: null, discipline: null, type: null, state: null, id: null, tags: null };
   tableConf: Config;
   columns = [
-    { key: 'id', title: 'ID', sort: true },
-    { key: 'when', title: 'Tid', sort: true },
+    { key: 'id', title: 'Id', sort: true },
+    { key: 'when', title: 'Når', sort: true },
     { key: 'tags', title: 'Tittel', sort: true },
     { key: 'club', title: 'Klubb', sort: false },
     { key: 'rating._rating', title: 'Rating', sort: true },
     { key: 'workflow.state', title: 'Status', sort: true },
     { key: 'type', title: 'Type', sort: true },
   ];
+
+  debouncedFilterId = debounce(this.filterId, 700);
+  debouncedFilterTitle = debounce(this.filterTitle, 800);
 
   // Pagination settings
   pagination = {
@@ -124,13 +128,37 @@ export class NlfOrsAllTableComponent implements OnInit {
     this.getData();
   }
 
+  public filterId(ors_id) {
+    console.log('ID FILTER', ors_id);
+    if (!!ors_id && ors_id != '') {
+      this.filter.id = +ors_id;
+    } else {
+      this.filter.id = null;
+    }
+    this.getData();
+  }
+
+  public filterTitle(tag) {
+    console.log('TITLE FILTER', tag);
+    if (!!tag && tag != '') {
+      this.filter.tags = tag; //= {$in: [tag.charAt(0).toUpperCase() + tag.slice(1), tag.toLowerCase(), tag]};
+    } else {
+      this.filter.tags = null;
+    }
+    this.getData();
+
+  }
+
   private getWhere() {
     let where = {};
     Object.keys(this.filter).forEach(key => {
       if (!!this.filter[key] && this.filter[key] !== null) {
         if (key === 'state') {
           where['workflow.state'] = this.filter[key];
-        } else {
+        } else if (key === 'tags') {
+          where['$text'] = {$search: this.filter[key]};
+        }
+        else {
           where[key] = this.filter[key];
         }
       }

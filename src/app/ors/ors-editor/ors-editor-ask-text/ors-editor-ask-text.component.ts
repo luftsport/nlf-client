@@ -4,7 +4,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ConfirmService } from 'app/services/confirm/confirm.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ApiOptionsInterface, ApiObservationsItem, ApiNlfUserItem, ApiNlfUserList } from 'app/api/api.interface';
+import { ApiOptionsInterface, ApiObservationsItem, ApiNlfUserItem, ApiNlfUserList, ApiObservationAskTextInterface } from 'app/api/api.interface';
 import { NlfOrsEditorInvolvedService } from 'app/ors/ors-editor/ors-editor-involved.service';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import Tribute from 'tributejs/src';
@@ -27,6 +27,11 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
   rs: any;
   tribute: Tribute;
   modalRef;
+
+  elementAsk;
+  elementAskModal;
+
+  showAllASK = false;
 
   debouncedGetOrs = debounce(this.getOrs, 900);
   debouncedGetUsers = debounce(this.getUsers, 900);
@@ -157,7 +162,15 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
         this.positionMenu = positionMenu | true
      */
     this.tribute = new Tribute({ collection: [users, remote, ors], allowSpaces: true });
-    this.tribute.attach(document.getElementsByName('myAskDiv'));
+
+    this.elementAsk = document.getElementById('ask'); //getElementsByName('myAskDiv');
+    this.tribute.attach(this.elementAsk);
+
+    this.elementAsk.addEventListener('tribute-replaced', (event) => {
+      //this.tribute.insertTextAtCursor(' ');
+      this.debouncedUpdateText();
+    });
+    console.log('Tribute:', this.tribute);
 
 
   }
@@ -249,7 +262,7 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
           }
         },
         err => callback([]),
-        () => {}
+        () => { }
       );
     } else {
       callback([]);
@@ -279,7 +292,7 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
 
   textChange() {
     //Always check for html tags!
-
+    //this.observation.ask.text[this.observation.workflow.state] = this.observation.ask.text[this.observation.workflow.state];
     this.subject.update(this.observation);
   }
 
@@ -301,6 +314,23 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
 
   public openModal(template) {
 
+    this.showAllASK = true;
+    /**
+    this.textChange();
     this.modalRef = this.modalService.open(template, { size: 'lg', backdrop: 'static', keyboard: false });
+    this.elementAskModal = document.getElementById('askModal'); //getElementsByName('myAskDivModal');
+    this.tribute.attach(this.elementAskModal);
+
+    this.elementAskModal.addEventListener('tribute-replaced', (event) => {
+      this.debouncedUpdateText();
+    });
+    **/
+  }
+
+  public closeModal() {
+    this.textChange();
+    this.tribute.detach(this.elementAskModal);
+    //this.elementAskModal.removeEventListener('tribute-replaced');
+    this.modalRef.close();
   }
 }

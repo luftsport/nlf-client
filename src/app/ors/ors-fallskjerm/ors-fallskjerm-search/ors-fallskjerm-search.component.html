@@ -36,12 +36,11 @@
         <label>Fritekst:</label>
         <input placeholder="Fritekst" class="form-control" type="text" (ngModelChange)="debouncedUpdate()" [(ngModel)]="text">
       </div>
-      <!--
+
       <div class="form-row">
-        <label>Fartøy:</label>
-        <input oninput="this.value=this.value.toUpperCase()" placeholder="Kjennetegn" class="form-control" type="text" (ngModelChange)="debouncedUpdate()" [(ngModel)]="filter['aircrafts.aircraft.callsign']">
+        <label>Id:</label>
+        <input placeholder="Id" class="form-control" type="text" (ngModelChange)="debouncedUpdate()" [(ngModel)]="filter['id']">
       </div>
-    -->
 
 
       <div class="form-row mt-3">
