@@ -12,7 +12,7 @@
 			<nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type" link="true" seperator="/"></nlf-resolve-observation-tags>&nbsp;
 			<!-- /TITLE -->
 			<!-- RATING -->
-			<span *ngIf="!!observation.rating" class="badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating
+			<span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body" *ngIf="!!observation.rating" class="badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating
 				| nlfOrsRatingCalc }}</span>
 
 
@@ -297,7 +297,7 @@
 			<div class="col-md-7">
 
 				<div *ngIf="!!observation.ask && !!observation.ask.text">
-					<nlf-ors-report-ask-text [comments]="observation.ask.text" [activity]="observation._model.type"></nlf-ors-report-ask-text>
+					<nlf-ors-report-ask-text [comments]="observation.ask.text" [audit]="observation.workflow.audit" [activity]="observation._model.type"></nlf-ors-report-ask-text>
 				</div>
 			</div>
 
