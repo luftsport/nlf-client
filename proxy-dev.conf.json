@@ -1,6 +1,6 @@
 {
   "/api/*": {
-    "target": "https://dev.nlf.no/",
+    "target": "https://dev.nlf.no",
     "changeOrigin": true,
     "logLevel": "debug",
     "secure": false
