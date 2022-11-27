@@ -1,0 +1,178 @@
+<header class="nlf-sticky-toolbar">
+  <div class="container">
+
+    <span class="breadcrumb">
+      <li class="breadcrumb-item">
+        <fa name="users" [fixed]="true"></fa> <a [routerLink]="['/medlem']">NLF Medlemssjekk</a>
+      </li>
+      <li class="breadcrumb-item active">
+        Medlemsliste <sup class="text-danger mx-1" title="Applikasjonen er ikke ferdig utviklet">beta</sup>
+      </li>
+    </span>
+
+    <!--
+    <button *ngIf="!!query" class="btn btn-primary btn-sm pull-right mx-1" (click)="openModal(saveTemplate)" title="Funksjonen kommer snart" disabled>
+      <fa name="save" [fixed]="true"></fa> Lagre søk
+    </button>
+    -->
+    <nlf-help class="pull-right mx-1" key="nlf-member"></nlf-help>
+
+  </div>
+</header>
+
+
+<span *ngIf="!!dataReady">
+
+  <ngx-table class="table table-flush" [id]="'member-table'" [configuration]="tableConf" [data]="data"
+    [columns]="columns" [(pagination)]="pagination" [filtersTemplate]="filtersTemplate" (event)="eventEmitted($event)">
+
+    <!-- ROWS -->
+    <ng-template let-row>
+
+      <!-- person id -->
+      <td class="ngx-easy-table-small">
+        {{ row.id }}
+      </td>
+
+      <!--first_name -->
+      <td class="ngx-easy-table-small">
+        {{ row.first_name }}
+      </td>
+
+      <!-- last_name -->
+      <td class="ngx-easy-table-small">
+        {{ row.last_name}}
+      </td>
+
+      <!-- memberships -->
+      <td class="ngx-easy-table-small">
+
+        <div *ngFor="let membership of row.memberships" class="overflow-hidden">
+          <fa *ngIf="!!membership.payment && checkExpiryYear(membership.payment.year)" name="check"
+            class="text-success mr-1"></fa>
+          <fa *ngIf="!membership.payment || !checkExpiryYear(membership.payment.year)" name="remove"
+            class="text-danger mr-1"></fa>
+          <nlf-resolve-lungo-organization [organization_id]="membership.discipline" [link]="false" [long]="true"
+            [show_activity]="true"></nlf-resolve-lungo-organization>
+          <span *ngIf="!!membership.payment">{{ membership.payment.exception || '' }} {{ membership.payment.type ||
+            'Ukjent'
+            }}</span>
+        </div>
+        <div *ngIf="!row.memberships||row.memberships.length==0">
+        </div>
+
+      </td>
+
+      <!-- competences -->
+      <td class="ngx-easy-table-small">
+        <div *ngFor="let competence of row.competences" class="overflow-hidden">
+
+          <fa *ngIf="checkExpiry(competence.expiry)" name="check" class="text-success mr-1"></fa>
+          <fa *ngIf="!checkExpiry(competence.expiry)" name="remove" class="text-danger mr-1"></fa>
+          {{ competence._code }} {{ competence.expiry | date:'yyyy-MM-dd':'+0000' }}
+        </div>
+        <div *ngIf="!row.competences||row.competences.length==0">
+        </div>
+      </td>
+
+      <!-- licenses -->
+      <td class="ngx-easy-table-small text-right">
+
+        <!-- HPS obligatorisk forsikring hack -->
+        <ng-container *ngIf="row.hasOwnProperty('activities') && row.activities.indexOf(110)>-1">
+          <div *ngFor="let m of row.magazines" class="overflow-hidden">
+            <span *ngIf="m.name=='Unknown Name' && m.year==2022">
+              <fa name="check" class="text-success mr-1"></fa>HPS Personal accident insurance and third party liability
+              insurance valid through 31.12.2022
+            </span>
+          </div>
+        </ng-container>
+
+        <div *ngFor="let license of row.licenses" class="overflow-hidden">
+          <fa *ngIf="checkExpiry(license.expiry) && license.status_id===3" name="check" class="text-success mr-1"></fa>
+          <fa *ngIf="!checkExpiry(license.expiry) || license.status_id!=3" name="remove" class="text-danger mr-1"></fa>
+          <nlf-resolve-lungo-license [license_id]="license.id" [link]="false" [long]="true"></nlf-resolve-lungo-license>
+        </div>
+        <div *ngIf="!row.licenses||row.licenses.length==0">
+
+        </div>
+
+      </td>
+
+      <td class="ngx-easy-table-small text-left">
+        <div *ngFor="let federation of row.federation" class="overflow-hidden">
+          <fa *ngIf="checkExpiryYear(federation.year)" name="check" class="text-success mr-1"></fa>
+          <fa *ngIf="!checkExpiryYear(federation.year)" name="remove" class="text-danger mr-1"></fa>
+          {{ federation.name }} {{ federation.type }}
+          <nlf-resolve-lungo-activity [activity_id]="federation.activity"></nlf-resolve-lungo-activity> {{
+          federation.year }} <span *ngIf="!!federation.exception">{{federation.exception}}</span>
+        </div>
+      </td>
+
+      <!-- federation -->
+      <td class="ngx-easy-table-small">
+        {{ row._updated | date:"yyyy-MM-dd HH:mm" }}
+      </td>
+
+    </ng-template>
+  </ngx-table>
+  <!--<button class="btn btn-link" (click)="exportToCSV()">Eksporter</button>-->
+
+  <!--FILTERS-->
+  <ng-template #filtersTemplate>
+
+    <th>
+      <!-- ID -->
+    </th>
+
+    <!-- FIRST -->
+    <th>
+      <input
+        class="form-input"
+        (input)="debouncedFilterFirstName($event, 'firstName')"
+        type="text"
+        id="filter-company"
+        placeholder="Fornavn"
+      />
+    </th>
+    <!-- LAST -->
+    <th>
+      <input
+      class="form-input"
+      (input)="debouncedFilterLastName($event, 'lastName')"
+      type="text"
+      id="filter-company"
+      placeholder="Etternavn"
+    />
+    </th>
+
+    <!--CLUBS-->
+    <th>
+      <select class="form-control form-control-sm" (change)="clubChooser($event)">
+        <option [value]=""></option>
+        <option *ngFor="let club of clubs" [value]="club.id">
+          <!--
+          <nlf-resolve-lungo-organization organization_id="club.id"></nlf-resolve-lungo-organization>-->
+          {{ club.name }} ({{ club.main_activity.name }})
+        </option>
+      </select>
+    </th>
+
+    <th></th>
+    <!--STATUS-->
+    <th>
+
+    </th>
+    <!--TYPE-->
+    <th>
+
+    </th>
+  </ng-template>
+</span>
+<span *ngIf="!dataReady">
+  <p class="align-middle text-center  text-secondary">
+    <fa name="spinner" animation="pulse" size="3x"></fa>
+  </p>
+</span>
+
+<button class="btn btn-primary" (click)="exportToCSV()">Eksporter til csv</button>

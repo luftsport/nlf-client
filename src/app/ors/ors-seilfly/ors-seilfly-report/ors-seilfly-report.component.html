@@ -1,0 +1,428 @@
+<div *ngIf="dataReady  && !error" id="testpdf">
+
+	<header class="nlf-sticky-toolbar">
+
+		<div class="container lead">
+			<hotkeys-cheatsheet title="Hotkeys Rock!"></hotkeys-cheatsheet>
+			<!-- TITLE -->
+
+			<!-- <fa name="file-text-o" [fixed]="true"></fa>&nbsp;-->
+			<!-- {{ observation.tags | nlfOrsTags: ' / '}} -->
+			<a [routerLink]="['/ors', observation._model.type]">OBSREG</a>#{{ observation.id }}
+			<nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type" link="true" seperator="/"></nlf-resolve-observation-tags>&nbsp;
+			<!-- /TITLE -->
+			<!-- RATING -->
+			<span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body" *ngIf="!!observation.rating" class="badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating
+				| nlfOrsRatingCalc }}</span>
+
+
+			<!-- DIFFERENT VERSION -->
+			<span *ngIf="observation._version !== observation._latest_version" class="badge badge-warning">
+				<a [routerLink]="['/ors', observation._model.type, 'report', observation.id]">v{{ observation._version }} av {{ observation._latest_version }}</a>
+			</span>
+			<!-- /DIFFERENT VERSION -->
+
+			<!-- RATING TEST
+			<rating [ngModel]="observation.rating.actual" max="8" readonly="true"></rating> / <rating [ngModel]="observation.rating.potential" max="8" readonly="true"></rating>
+			 /RATING TEST -->
+
+
+			<!-- WORKFLOW STATE -->
+			<span class="pull-right">
+				<a [routerLink]="['/ors', observation._model.type, 'edit', observation.id]" *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge badge-primary text-white mx-1">
+					<fa name="edit" [fixed]="true"></fa> Editor
+				</a>
+				<nlf-resolve-observation-state [activity]="observation._model.type" [state]="observation.workflow.state" icon="true"></nlf-resolve-observation-state>
+			</span>
+			<!-- /WORKFLOW STATE -->
+		</div>
+	</header>
+	<!-- /END HEADER -->
+	<div class="container">
+
+		<div class="row">
+			<!-- Summary table -->
+			<div class="col-md-6 table-responsive">
+				<nlf-ors-seilfly-report-summary [observation]="observation"></nlf-ors-seilfly-report-summary>
+			</div>
+
+			<!-- MAP -->
+			<div class="col-md-6">
+				<div fxFlex="100" *ngIf="!!observation.occurrence.attributes.latitudeOfOcc.value || !!observation.occurrence.attributes.longitudeOfOcc.value">
+
+					<agm-map style=" max-height: 25rem !important;" [latitude]="observation.occurrence.attributes.latitudeOfOcc.value" [longitude]="observation.occurrence.attributes.longitudeOfOcc.value" [mapTypeControl]="true" [zoom]="7">
+
+						<!-- STAR STOP ROUTE
+					    <agm-marker *ngIf="route.length>0" [markerDraggable]="observation.acl_user.w" (dragEnd)="markerMoved($event)"
+					      [latitude]="route[0].from.location.coordinates[1]" [longitude]="route[0].from.location.coordinates[0]" [label]="'S'">
+					    </agm-marker>
+					    <agm-marker *ngIf="route.length>0" [markerDraggable]="observation.acl_user.w" (dragEnd)="markerMoved($event)"
+					      [latitude]="route[route.length-1].to.location.coordinates[1]" [longitude]="route[route.length-1].to.location.coordinates[0]"
+					      [label]="'E'">
+					    </agm-marker>
+					    -->
+						<!-- OCCURRENCE LOCATION -->
+						<agm-marker [markerDraggable]="false" [latitude]="observation.occurrence.attributes.latitudeOfOcc.value" [longitude]="observation.occurrence.attributes.longitudeOfOcc.value" [label]="'X'">
+						</agm-marker>
+						<!-- ALL AIRPORTS -->
+						<div *ngFor="let aircraft of observation.aircrafts">
+							<!--
+								<agm-marker *ngFor="let current_route of route; let ix = index;" [markerDraggable]="observation.acl_user.w" (dragEnd)="markerMoved($event)" [latitude]="current_route.to.location.coordinates[1]"
+						      [longitude]="current_route.to.location.coordinates[0]" [label]="'L'">
+						    </agm-marker>
+						    <agm-marker *ngFor="let current_route of route; let ix = index;" [markerDraggable]="observation.acl_user.w" (dragEnd)="markerMoved($event)" [latitude]="current_route.from.location.coordinates[1]"
+						      [longitude]="current_route.from.location.coordinates[0]" [label]="'T'">
+						    </agm-marker>
+							-->
+
+							<!--https://github.com/SebastianM/angular-google-maps/pull/1621-->
+							<agm-polyline *ngFor="let route of aircraft.flight; let ix = index;" [editable]="false">
+								<agm-polyline-point *ngFor="let coordinates of route.path" [latitude]="coordinates[1]" [longitude]="coordinates[0]">
+								</agm-polyline-point>
+							</agm-polyline>
+						</div>
+					</agm-map>
+
+					<div class="mt-2">
+						<fa name="map-marker" [fixed]="true"></fa> {{ observation.occurrence.attributes.locationName.value || "Sted ikke angitt" }}
+						<span class="mx-2 badge badge-secondary pull-right">Lat: {{ observation.occurrence.attributes.latitudeOfOcc.value | round: 4 }}</span>
+						<span class="mx-2 badge badge-secondary pull-right">Lng: {{ observation.occurrence.attributes.longitudeOfOcc.value | round: 4}}</span>
+					</div>
+					<div>
+						<nlf-ors-editor-tag-e5x-render [showLabel]="false" [items]="observation.occurrence.attributes.stateAreaOfOcc.value" path="E5X.Occurrence.StateAreaOfOcc"></nlf-ors-editor-tag-e5x-render>
+					</div>
+				</div>
+
+				<div *ngIf="!observation.occurrence.attributes.latitudeOfOcc.value || !observation.occurrence.attributes.longitudeOfOcc.value">
+					<ngb-alert type="danger" [dismissible]="false">
+						<fa name="map-marker" [fixed]="true"></fa>
+						Ingen lokalisasjon satt.
+					</ngb-alert>
+				</div>
+
+			</div>
+
+		</div>
+
+		<!-- Workflow
+				<div class="row">
+					<div class="col-md-12">
+
+						<div (click)="isWorkflowTimelineCollapsed = !isWorkflowTimelineCollapsed" class="card-header pointer">
+							<fa name="random" [fixed]="true"></fa>
+							Arbeidsflyt
+							<i class="fa fa-fw" [ngClass]="{'fa-angle-down': isWorkflowTimelineCollapsed, 'fa-angle-up': !isWorkflowTimelineCollapsed}"></i>
+						</div>
+						<div [ngbCollapse]="isWorkflowTimelineCollapsed">
+							<nlf-ors-report-workflow-timeline [activity]="observation._model.type" [_id]="observation._id" [workflow]="observation.workflow"></nlf-ors-report-workflow-timeline>
+						</div>
+					</div>
+				</div>
+				-->
+
+		<!-- E5X -->
+
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card-header">
+					<fa name="bolt" [fixed]="true"></fa> E5X
+				</div>
+
+				<ng-container *ngIf="observation.hasOwnProperty('e5x')">
+					<div *ngIf="observation.e5x.audit.length==0" class="alert alert-info">
+						<strong>Ingen historikk</strong> hvilket betyr at denne observasjonen ikke har blitt sendt LT tidligere.
+					</div>
+
+					<div class="overflow-auto">
+						<table *ngIf="observation.e5x.audit.length>0" class="my-3 table table-striped table-sm">
+							<tbody>
+								<tr *ngFor="let audit of observation.e5x.audit" [ngClass]="{'bg-info':observation._version==audit.version}">
+									<td>
+										<nlf-ors-editor-tag-e5x-render classes="badge badge-secondary" [showLabel]="false" [items]="audit.status" path="E5X.Occurrence.ReportingHistory.ReportStatus"></nlf-ors-editor-tag-e5x-render>
+									</td>
+									<td>
+										{{ audit.date | date:'yyyy-MM-dd HH:mm'}}
+									</td>
+									<td>
+										<nlf-resolve-lungo-person [person_id]="audit.person_id"></nlf-resolve-lungo-person>
+									</td>
+									<td>
+										v{{ audit.version }}
+									</td>
+									<td>
+										<span *ngIf="audit.sent" class="badge badge-success">OK</span>
+										<span *ngIf="!audit.sent" class="badge badge-danger">Ikke sendt</span>
+									</td>
+									<td class="text-right">
+										<a *ngIf="!!token" target="_blank" href="/api/v1/e5x/download/{{observation._model.type}}/{{observation.id}}/{{audit.version}}?token={{token}}">
+											<fa name="download" [fixed]="true"></fa>
+										</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</ng-container>
+
+			</div>
+		</div>
+
+		<!-- NARRATIVE -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card-header">
+					<fa name="commenting-o" [fixed]="true"></fa> Narrative
+				</div>
+				<ng-container *ngIf="observation.occurrence.entities.hasOwnProperty('narrative') && observation.occurrence.entities.narrative.length>0">
+					<div class="p-3 narrative">
+						{{ observation.occurrence.entities.narrative[0].attributes.narrativeText.plainText }}
+					</div>
+				</ng-container>
+				<ng-container *ngIf="observation.occurrence.entities.reportingHistory[0].attributes.hasOwnProperty('reporterSDescription')">
+					<div class="p-3 narrative">
+						{{ observation.occurrence.entities.reportingHistory[0].attributes.reporterSDescription.plainText }}
+					</div>
+				</ng-container>
+			</div>
+		</div>
+		<!-- /NARRATIVE -->
+
+		<!-- Involved -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card-header">
+					<fa name="plane" [fixed]="true"></fa> Fly
+				</div>
+				<div *ngFor="let aircraft of observation.aircrafts" class="my-2">
+					<nlf-aircraft-summary [callsign]="aircraft.aircraft.callsign" [model]="aircraft.aircraft.model || undefined" [manufacturer]="aircraft.aircraft.manufacturer || undefined"></nlf-aircraft-summary>
+				</div>
+			</div>
+		</div>
+		<!-- /Involved -->
+
+		<!-- Files -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card-header">
+					<fa name="file" [fixed]="true"></fa> Vedlegg
+				</div>
+				<nlf-ors-report-files [files]="observation.files" [state]="observation.workflow.state"></nlf-ors-report-files>
+				<div class="p-2" *ngIf="observation.files.length==0">
+					Ingen Vedlegg
+				</div>
+			</div>
+		</div>
+		<!-- /Files -->
+
+		<!-- Components timeline - forløpet
+				<div class="row">
+					<div class="col-md-12">
+						<nlf-report-components-timeline [activity]="observation._model.type" [components]="observation.components"></nlf-report-components-timeline>
+					</div>
+				</div>
+				-->
+
+		<!-- ON GROUND -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card-header">
+					<fa name="street-view" [fixed]="true"></fa> På bakken
+				</div>
+
+			</div>
+		</div>
+		<!-- /ON GROUND -->
+
+		<!-- Weather -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card-header">
+					<fa name="cloud" [fixed]="true"></fa> Været
+				</div>
+
+			</div>
+		</div>
+		<!-- /Weather -->
+
+		<!-- ATM -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card-header">
+					<fa name="users" [fixed]="true"></fa> ATM involvert
+				</div>
+
+			</div>
+		</div>
+		<!-- /ATM -->
+
+		<!-- AERODROME -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card-header">
+					<fa name="road" [fixed]="true"></fa> Aerodrome
+				</div>
+
+			</div>
+		</div>
+		<!-- /AERODROME -->
+
+
+		<!-- Actions -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card-header">
+					<fa name="bolt" [fixed]="true"></fa>Tiltak
+				</div>
+				<nlf-ors-report-actions [actions]="observation.actions"></nlf-ors-report-actions>
+			</div>
+		</div>
+		<!-- /Actions -->
+
+		<!-- Verdicts -->
+		<div class="row">
+
+			<div class="col-md-12">
+				<div class="card-header">
+					<fa name="comments-o" [fixed]="true"></fa>Vurderinger
+				</div>
+			</div>
+
+			<!-- ASK matrix -->
+			<div class="col-md-5">
+				<nlf-ors-report-ask [ask]="observation.ask" [verbose]="true"></nlf-ors-report-ask>
+			</div>
+
+			<!-- ASK comments -->
+			<div class="col-md-7">
+
+				<div *ngIf="!!observation.ask && !!observation.ask.text">
+					<nlf-ors-report-ask-text [comments]="observation.ask.text" [audit]="observation.workflow.audit" [activity]="observation._model.type"></nlf-ors-report-ask-text>
+				</div>
+			</div>
+
+		</div>
+		<!-- /verdicts -->
+
+		<!-- Related -->
+		<div *ngIf="!!observation.related && observation.related?.length > 0" class="row">
+			<div class="col-md-12">
+				<div class="card-header">
+					<fa name="external-link" [fixed]="true"></fa>Relaterte
+				</div>
+				<nlf-ors-report-related [related]="observation.related"></nlf-ors-report-related>
+			</div>
+		</div>
+		<!-- /Related -->
+
+		<!--
+				<hr>
+				<div class="card-header">
+					<h3>Tester under</h3>
+				</div>
+				<div class="card-header">DIFF TEST</div>
+				<pre semanticDiff [left]="left" [right]="right"></pre>
+
+
+
+				<div *ngIf="!!observationDiff" class="row">
+
+					<div class="col-md-6">
+						<p class="lead">Forrige</p>{{ observationDiff[1] | json }}
+					</div>
+
+					<div class="col-md-6">
+						<p class="lead">Siste</p>{{ observationDiff[0] | json }}
+					</div>
+
+
+				</div>
+				-->
+
+
+		<!--
+				<div class="card" style="width: 22rem;">
+					<img class="card-img-top img-fluid" src="{{ currentImage }}" alt="Card image cap">
+					<div class="card-body">
+						<h5 class="card-header">Your image</h5>
+						<form>
+							<div class="form-group">
+								<input class="form-control-file" type="file" (change)="onUpload($event)">
+							</div>
+						</form>
+					</div>
+				</div>
+				-->
+
+		<!--
+			<h2>Følgende er registrert:</h2>
+			<label>Id</label>
+			<pre>{{observation.id}}</pre>
+			<pre>{{observation._id}}</pre>
+
+			<label>Created</label>
+			<pre>{{observation._created | date:'yyyy-MM-dd HH:mm'}}</pre>
+
+			<label>Club</label>
+			<pre>{{observation.club | json}}</pre>
+
+			<label>Acl</label>
+			<pre>{{observation.acl | json}}</pre>
+
+			<label>Type</label>
+			<pre>{{observation.type | json}}</pre>
+
+			<label>Flags</label>
+			<pre>{{observation.flags | json}}</pre>
+
+			<label>Rating</label>
+			<pre>{{observation.rating | json}}</pre>
+
+			<label>Kunnskap ferdigheter holdning</label>
+			<pre>{{observation.ask | json}}</pre>
+
+			<label>Location</label>
+			<pre>{{observation.location | json}}</pre>
+
+			<label>Files</label>
+			<pre>{{observation.files | json}}</pre>
+
+			<label>When</label>
+			<pre>{{observation.when | json}}</pre>
+
+			<label>Tags</label>
+			<pre>{{observation.tags | json}}</pre>
+
+			<label>Organization</label>
+			<pre>{{observation.organization | json}}</pre>
+
+			<label>Involved</label>
+			<pre>{{observation.involved | json}}</pre>
+
+			<label>Components</label>
+			<pre>{{observation.components | json}}</pre>
+
+			<label>Weather</label>
+			<pre>{{observation.weather | json}}</pre>
+
+			<label>Vurdering</label>
+			<pre>{{observation.ask | json}}</pre>
+
+			<label>Tiltak</label>
+			<pre>{{observation.actions | json}}</pre>
+
+
+			<label>Workflow</label>
+			<pre>{{observation.workflow | json}}</pre>
+			-->
+
+	</div>
+
+</div>
+<div *ngIf="!dataReady && !error">
+	<nlf-ui-page-spinner size="5"></nlf-ui-page-spinner>
+</div>
+
+<div *ngIf="!dataReady && !!error">
+	<nlf-ors-error [id]="id" activity="seilfly" [error]="error"></nlf-ors-error>
+</div>
