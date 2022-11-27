@@ -13,7 +13,7 @@ export class NlfResolveLungoOrganizationComponent implements OnInit {
 
 
   @Input() organization_id: number;
-  @Input() show_type: boolean = false;
+  @Input() show_activity: boolean = false;
   @Input() link?: boolean;
   @Input() long?: boolean;
   @Input() popover: boolean = false;

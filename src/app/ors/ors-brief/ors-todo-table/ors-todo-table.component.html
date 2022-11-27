@@ -1,5 +1,5 @@
 <span *ngIf="!!dataReady">
-  <ngx-table id="ors_todo_table" [configuration]="tableConf" [data]="data" [columns]="columns" [(pagination)]="pagination" (event)="eventEmitted($event)">
+  <ngx-table [id]="'ors-todo-table'" [configuration]="tableConf" [data]="data" [columns]="columns" [(pagination)]="pagination" (event)="eventEmitted($event)">
 
     <ng-template let-row>
       <td class="ngx-easy-table-small">

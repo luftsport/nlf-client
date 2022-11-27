@@ -2,11 +2,12 @@
     <div class="form-group" *ngFor="let nrt of narrative; let idx=index">
       <nlf-ors-editor-tag-e5x *ngIf="showLang" [disabled]="disabled"
         [(items)]="narrative[idx].attributes.narrativeLanguage.value"
+        customLabel="Språk benyttet"
         path="E5X.Occurrence.ReportingHistory.ReporterSLanguage">
       </nlf-ors-editor-tag-e5x>
       <textarea [disabled]="disabled"
         placeholder="Beskriv med egne ord hva som skjedde eller kunne ha skjedd - kortfattet og presist hendelsesforløp med konsekvenser"
-        class="form-control"
+        class="form-control narrative"
         id="E5X.Narrative.NarrativeText" rows="5"
         (blur)="update()"
         (ngModelChange)="debouncedUpdate()"

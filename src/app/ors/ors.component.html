@@ -1,29 +1,95 @@
-  <div class="container">
-    <h3>ORS Form test</h3>
-    <form #appOrsForm="ngForm">
-      <div class="form-group">
-        <label for="id">Id</label>
-        <input [(ngModel)]="model.id" name="id" type="number" class="form-control" id="id" required>
-      </div>
+<header class="nlf-sticky-toolbar">
+  <div class="container lead">
+    NLF OBSREG 
 
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input [(ngModel)]="model.name" name="name" type="text" class="form-control" id="name">
-      </div>
-      <div class="form-group">
-        Value from child: {{model.other}}
-      </div>
-      <div class="form-group">
-        <a routerLink="/ors/child/{{model.id}}" class="btn btn-primary">Add other from child</a>
-      </div>
-      <button type="submit" class="btn btn-success">Submit</button>
+    <!--
+    <button [routerLink]="['/ors', 'fallskjerm', 'search']" type="button" class="btn btn-sm btn-primary pull-right mx-1">
+      <fa name="search" [fixed]="true"></fa> Søk
+    </button>
 
-    </form>
+    <button *ngIf="!!user_settings && user_settings?.settings?.default_activity==109" [routerLink]="['/ors', 'fallskjerm', 'dashboard', user_settings?.settings?.default_discipline]" type="button" class="btn btn-sm btn-primary pull-right mx-1">
+      <fa name="dashboard" [fixed]="true"></fa> Dashboard
+    </button>
+
+    <nlf-ors-go activity="fallskjerm" class="pull-right mx-1" title="Hurtigvalg, skriv inn OBSREG nummer etterfulgt av enter for å gå til OBSREG"></nlf-ors-go>
+
+    <nlf-help class="pull-right mx-1" key="ors-fallskjerm"></nlf-help>
+
+  -->
+
   </div>
-  <div class="container">
 
-    <ngb-alert type="success">
-      <fa [name]="'angellist'" [size]="'2x'" [fixed]="'true'"></fa>{{diagnostic}}
-    </ngb-alert>
+
+</header>
+
+<!-- CARD DECK -->
+<div class="container">
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <div class="card-deck">
+        <!--<nlf-user-profile></nlf-user-profile>-->
+        <!--
+        <div class="card">
+          <div class="card-header">Opprett Observasjon</div>
+
+         <div class="card-body">
+            <span class="text-center">
+              <nlf-ors-create></nlf-ors-create>
+            </span>
+          </div>
+          <div class="card-footer">
+            <a class="btn btn-primary btn-block" [routerLink]="['/user/profile']" role="button">Oppdater profil &raquo;</a>
+          </div>
+        </div>-->
+        <!-- END USER OR OBSREG -->
+        <div class="card mb-3">
+          <div class="card-header"><i class="nlf nlf-motorfly nlf-fw"></i> Motorfly OBSREG</div>
+
+          <nlf-ors-last activity="motorfly" number="8">Ingen registrerte</nlf-ors-last>
+
+          <div class="card-footer">
+            <a class="btn btn-secondary btn-block" [routerLink]="['/ors', 'motorfly']" role="button">Motorfly OBSREG
+              &raquo;</a>
+          </div>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="nlf nlf-fallskjerm nlf-fw"></i> Fallskjerm OBSREG
+          </div>
+          <nlf-ors-last activity="fallskjerm" number="8">Ingen registrerte</nlf-ors-last>
+          <div class="card-footer">
+            <a class="btn btn-secondary btn-block" [routerLink]="['/ors', 'fallskjerm']" role="button">Fallskjerm OBSREG
+              &raquo;</a>
+          </div>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="nlf nlf-mikrofly nlf-fw"></i> Sportsfly OBSREG
+          </div>
+          <nlf-ors-last activity="sportsfly" number="8">Ingen registrerte</nlf-ors-last>
+          <div class="card-footer">
+            <a class="btn btn-secondary btn-block" [routerLink]="['/ors', 'sportsfly']" role="button">Sportsfly OBSREG
+              &raquo;</a>
+          </div>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="nlf nlf-seilfly nlf-fw"></i> Seilfly OBSREG
+          </div>
+          <nlf-ors-last activity="seilfly" number="8">Ingen registrerte</nlf-ors-last>
+          <div class="card-footer">
+            <a class="btn btn-secondary btn-block" [routerLink]="['/ors', 'seilfly']" role="button">Seilfly OBSREG
+              &raquo;</a>
+          </div>
+        </div>
+        <!-- /CARD DECK -->
+
+      </div>
+
+    </div>
   </div>
-  <button (click)="change()" class="btn btn-success">Click me to change!</button>
+</div>
+

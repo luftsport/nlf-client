@@ -10,6 +10,7 @@ import { NlfConfigService } from 'app/nlf-config.service';
 import { Router } from '@angular/router'; // ActivatedRoute
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
 import { ApiUserDataSubjectItem, AuthDataSubjectInterface, NlfConfigItem } from 'app/api/api.interface';
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class NlfAuthService {
@@ -18,7 +19,7 @@ export class NlfAuthService {
   private authData: AuthDataSubjectInterface;
   private message: string;
 
-
+  ENV = environment;
   // ng2-idle
   idleState: string;
   timedOut = false;
@@ -211,7 +212,7 @@ export class NlfAuthService {
 
     // Remove stored on user, let this handle everything
 
-
+    let initial_auth = this.isAuth;
     // Cleanup api cache
     this.apiCache.clear();
 
@@ -234,6 +235,10 @@ export class NlfAuthService {
     }
     **/
 
+    // Only when actually logged out
+   if(initial_auth && !this.isAuth) {
+    (window as any).open(this.ENV._logout_service + '?client_id=' + this.ENV._client_id + '&post_logout_redirect_uri='+ window.location.href, '_self');
+   }
   }
 
   public idleStop() {
@@ -250,4 +255,6 @@ export class NlfAuthService {
       this.timedOut = false;
     }
   }
+ 
+  
 }

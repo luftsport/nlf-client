@@ -17,6 +17,7 @@ import { NlfOrsStatePipe } from 'app/pipes/ors-state.pipe';
 import { NlfOrsTypePipe } from 'app/pipes/ors-type.pipe';
 import { NlfOrsPeoplePipe } from 'app/pipes/ors-people.pipe';
 import { SafePipe } from 'app/pipes/safe.pipe';
+import { HighliteTextPipe } from 'app/pipes/highlite-text.pipe';
 import { NgPipesModule } from 'angular-pipes'; // Angular pipes, love them!
 
 // NB services in nlf.module
@@ -64,7 +65,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { NlfBreadcrumbComponent } from 'app/ui/breadcrumb/breadcrumb.component';
 
-// ORS
+// OBSREG
 import { NlfOrsEditorTagStaticComponent } from 'app/ors/ors-editor/ors-editor-tag-static/ors-editor-tag-static.component';
 import { NlfOrsE5xComponent } from 'app/ors/ors-e5x/ors-e5x.component';
 import { NlfOrsEditorTagE5XComponent } from 'app/ors/ors-editor/ors-editor-tag-e5x/ors-editor-tag-e5x.component';
@@ -108,6 +109,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     NlfOrsStatePipe,
     NlfOrsPeoplePipe,
     SafePipe,
+    HighliteTextPipe,
     NlfOrsTypePipe,
     NlfAlertComponent,
     NlfUiPageSpinnerComponent,
@@ -140,7 +142,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     // Breadcrumb
     NlfBreadcrumbComponent,
     NlfUserFirstLoginComponent,
-    // ORS
+    // OBSREG
     NlfOrsE5xComponent,
     NlfOrsEditorTagE5XComponent,
     NlfOrsEditorTagE5xRenderComponent,
@@ -175,6 +177,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     NlfOrsStatePipe,
     NlfOrsPeoplePipe,
     SafePipe,
+    HighliteTextPipe,
     NlfOrsTypePipe,
     NlfResolveComponent,
     NlfResolveUserComponent,
@@ -205,7 +208,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     NgbModule,
     NlfBreadcrumbComponent,
     NlfUserFirstLoginComponent,
-    // ORS
+    // OBSREG
     NlfOrsE5xComponent,
     NlfOrsEditorTagE5XComponent,
     NlfOrsEditorTagE5xRenderComponent,

@@ -11,12 +11,16 @@
   <ngb-highlight [result]="r.tag" [term]="t"></ngb-highlight>
 </ng-template>
 -->
-<!--
-ADD CAUSE
-<button (click)="addCause()" class="btn btn-warning">
-  <fa name="plus" [fixed]="true" size="lg"></fa>Årsak
-</button>
--->
+<!-- ADD CAUSE -->
+<div class="d-flex">
+  <div class="ml-auto p-2 mb-1">
+    <button (click)="addCause()" class="btn btn-warning">
+      <fa name="plus" [fixed]="true" size="lg"></fa>Årsak
+    </button>
+  </div>
+</div>
+
+
 <!-- tag input as https://github.com/LironHazan/angular-tagify-module/tree/master/src instead?? -->
 
 <!--
@@ -231,11 +235,16 @@ ADD CAUSE
 </span>
 <!-- /CONSEQUENCES -->
 
-<!-- ADD CONSEQUENCE
-<button (click)="addConsequence()" class="btn btn-danger">
-  <fa name="plus" [fixed]="true" size="lg"></fa>Konsekvens
-</button>
--->
+<!-- ADD CUSE / CONSEQUENCE -->
+
+<div class="d-flex">
+  <div class="ml-auto p-2 mb-1">
+    <button (click)="addConsequence()" class="btn btn-danger">
+      <fa name="plus" [fixed]="true" size="lg"></fa>Konsekvens
+    </button>
+  </div>
+</div>
+
 
 <!-- MODAL COMPONENT -->
 <ng-template #componentModal>
@@ -348,3 +357,4 @@ ADD CAUSE
   {{ r.tag}}
 </ng-template>
 -->
+

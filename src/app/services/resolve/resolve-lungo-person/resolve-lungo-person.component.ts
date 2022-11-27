@@ -19,6 +19,7 @@ export class NlfResolveLungoPersonComponent implements OnInit {
   @Input() link?: boolean;
   @Input() avatar?: boolean;
   @Input() only_first_name: boolean = false;
+  @Input() highlite?: string;
 
   dataReady = false;
 
@@ -42,6 +43,11 @@ export class NlfResolveLungoPersonComponent implements OnInit {
       this.full_name = 'Person ' + (-1 * this.person_id);
       this.dataReady = true;
 
+    } else if(this.person_id === 1) {
+      this.avatar = false;
+      this.link = false;
+      this.full_name = 'Housekeeping (bot)';
+      this.dataReady = true;
     } else if (!!this.tmp_name && this.person_id <= 0) {
 
       this.avatar = false;

@@ -80,7 +80,7 @@
   <!--<button class="btn btn-primary" *ngIf="!workersStarted && syncdaemonStatus" (click)="startWorkers()"><fa name="play"></fa>Start workers</button>-->
 
   <div class="clearfix overflow-auto">
-    <ngx-table *ngIf="!!workers" [configuration]="tableConfig" [data]="workers" [columns]="columns" [(pagination)]="pagination" (event)="eventEmitted($event)" [detailsTemplate]="detailsTemplate">
+    <ngx-table [id]="'integration-workers-table'" *ngIf="!!workers" [configuration]="tableConfig" [data]="workers" [columns]="columns" [(pagination)]="pagination" (event)="eventEmitted($event)" [detailsTemplate]="detailsTemplate">
 
       <ng-template let-row>
         <td>

@@ -6,9 +6,11 @@
       <div *ngIf="thumb.isImage">
 
         <!-- <div class="d-block mb-4 h-100">-->
-        <span (click)="openModal(modalEditorImage, i)" class="pointer fa-thumbnail text-center col-lg-3 col-md-4 col-xs-6">
+        <span (click)="openModal(modalEditorImage, i)"
+          class="pointer fa-thumbnail text-center col-lg-3 col-md-4 col-xs-6">
 
-          <img class="img-fluid img-thumbnail" [src]="domSanitizer.bypassSecurityTrustUrl(thumb.src)" alt="{{ thumb.filename }}">
+          <img class="img-fluid img-thumbnail" [src]="domSanitizer.bypassSecurityTrustUrl(thumb.src)"
+            alt="{{ thumb.filename }}">
           <i class="fa fa-3x" [ngClass]="thumb.r ? 'fa-lock text-danger' : 'fa-unlock text-success'"></i>
 
         </span>
@@ -28,11 +30,13 @@
           <tr *ngFor="let f of filelist; let i = index">
 
             <td>
-              <fa (click)="setRestricted(false, f._id, i)" *ngIf="!!f.r" class="text-danger pointer" name="lock" [fixed]="true"></fa>
-              <fa (click)="setRestricted(true, f._id, i)" *ngIf="!f.r" class="text-success pointer" name="unlock" [fixed]="true"></fa>
+              <fa (click)="setRestricted(false, f._id, i)" *ngIf="!!f.r" class="text-danger pointer" name="lock"
+                [fixed]="true"></fa>
+              <fa (click)="setRestricted(true, f._id, i)" *ngIf="!f.r" class="text-success pointer" name="unlock"
+                [fixed]="true"></fa>
 
-              <a target="_blank" *ngIf="!f.isImage" [routerLink]="['/file/download/', f._id]">{{f.name}}</a>
-              <a *ngIf="!!f.isImage" (click)="openModal(modalEditorImage, f)" class="pointer">{{f.name}}</a>
+              <a target="_blank" *ngIf="!f.isImage" href="{{ f.download }}">{{f.name}}</a>
+              <a *ngIf="!!f.isImage" (click)="openModal(modalEditorImage, i)" class="pointer">{{f.name}}</a>
             </td>
             <td>{{ f.size | bytes : 2 }}</td>
             <td>{{f.content_type}}&nbsp;</td>
@@ -41,7 +45,8 @@
               <a target="_blank" href="{{ f.download }}" class="mx-1">
                 <fa name="download" [fixed]="true"></fa>
               </a>
-              <fa *ngIf="observation.acl_user.w" class="pointer mx-1" (click)="removeFromFilelist(f._id, i)" name="times" [fixed]="true"></fa>
+              <fa *ngIf="observation.acl_user.w" class="pointer mx-1" (click)="removeFromFilelist(f._id, i)"
+                name="times" [fixed]="true"></fa>
             </td>
             <td>&nbsp;</td>
 
@@ -59,16 +64,34 @@
 <div *ngIf="observation.acl_user.w">
 
   <div *ngIf="dropzone || (onlyFilepicker && dropzone)">
-    <div class="drop-container" ngFileDrop [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" [ngClass]="{ 'dragover': dragOver }">
+    <div class="drop-container" ngFileDrop [options]="options" (uploadOutput)="onUploadOutput($event)"
+      [uploadInput]="uploadInput" [ngClass]="{ 'dragover': dragOver }">
       <p class="lead">Dra og slipp filer her</p>
       <p></p>
 
-      <!-- UPLOAD BUTTON -->
-      <label class="btn btn-primary btn-file">
-        <fa name="plus" [fixed]="true"></fa>Legg til filer
-        <input type="file" style="display: none;" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple>
-      </label>
-      <!-- /UPLOAD BUTTON -->
+      <div class="btn-toolbar" role="toolbar" aria-label="Upload toolbar">
+        <!-- UPLOAD BUTTON -->
+
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+          <label class="btn btn-primary btn-file">
+            <fa name="plus" [fixed]="true"></fa>Legg til filer
+            <input type="file" style="display: none;" ngFileSelect [options]="options"
+              (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple>
+          </label>
+        </div>
+        <!-- /UPLOAD BUTTON -->
+
+        <!-- CAMERA BUTTON only mobile! -->
+        <div class="btn-group mr-2" role="group" aria-label="Second group">
+          <label class="btn btn-primary btn-file d-sm-none">
+            <fa name="camera" [fixed]="true"></fa>Ta bilde
+            <input type="file" accept="image/*" capture="camera" style="display: none;" ngFileSelect [options]="options"
+              (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput">
+          </label>
+        </div>
+        <!-- /CAMERA BUTTON-->
+      </div>
+
 
       <!-- UPLOAD PROGRESS -->
       <div class="upload-items">
@@ -95,7 +118,8 @@
     <!-- UPLOAD BUTTON -->
     <label class="btn btn-block btn-primary btn-file">
       <fa name="plus" [fixed]="true"></fa>Legg til filer
-      <input type="file" style="display: none;" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple>
+      <input type="file" style="display: none;" ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)"
+        [uploadInput]="uploadInput" multiple>
     </label>
     <!-- /UPLOAD BUTTON -->
     <!-- UPLOAD PROGRESS -->
@@ -146,13 +170,18 @@
       <div class="clearfix"></div>
 
       <span *ngIf="observation.acl_user.w">
-        <fa (click)="setRestricted(false, filelist[viewimage.index]['_id'], viewimage.index)" *ngIf="!!filelist[viewimage.index]['r']" class="text-danger pointer" name="lock" [fixed]="true">
+        <fa (click)="setRestricted(false, filelist[viewimage.index]['_id'], viewimage.index)"
+          *ngIf="!!filelist[viewimage.index]['r']" class="text-danger pointer" name="lock" [fixed]="true">
         </fa>
-        <fa (click)="setRestricted(true, filelist[viewimage.index]['_id'], viewimage.index)" *ngIf="!filelist[viewimage.index]['r']" class="text-success pointer" name="unlock" [fixed]="true">
+        <fa (click)="setRestricted(true, filelist[viewimage.index]['_id'], viewimage.index)"
+          *ngIf="!filelist[viewimage.index]['r']" class="text-success pointer" name="unlock" [fixed]="true">
         </fa>
       </span>
       <span *ngIf="!observation.acl_user.w">
-        <fa [ngClass]="{'text-success': !filelist[viewimage.index]['r'], 'text-danger': !!filelist[viewimage.index]['r']}" class="text-success" name="unlock" [fixed]="true">
+        <fa
+          [ngClass]="{'text-success': !filelist[viewimage.index]['r'], 'text-danger': !!filelist[viewimage.index]['r']}"
+          class="text-success" name="unlock" [fixed]="true"
+          [title]="{'Bildet vises for alle som kan se rapporten': !filelist[viewimage.index]['r'], 'Bildet vises IKKE offentlig': !!filelist[viewimage.index]['r']}">
         </fa>
       </span>
 
@@ -160,12 +189,16 @@
       {{ filelist[viewimage.index]['content_type'] }}
       {{ filelist[viewimage.index]['_created'] | date:'yyyy-MM-dd HH:mm' }}
 
-      <fa *ngIf="!!filelist[viewimage.index-1]" name="chevron-left" class="pointer" (click)="getModalImage(viewimage.index-1)" [fixed]="true"></fa>
-      <fa *ngIf="!!filelist[viewimage.index+1]" name="chevron-right" class="pointer" (click)="getModalImage(viewimage.index+1)" [fixed]="true"></fa>
+      <fa *ngIf="!!filelist[viewimage.index-1]" name="chevron-left" class="pointer"
+        (click)="getModalImage(viewimage.index-1)" [fixed]="true"></fa>
+      <fa *ngIf="!!filelist[viewimage.index+1]" name="chevron-right" class="pointer"
+        (click)="getModalImage(viewimage.index+1)" [fixed]="true"></fa>
 
       <nlf-resolve-lungo-person [person_id]="filelist[viewimage.index]['owner']"></nlf-resolve-lungo-person>
 
-      <fa *ngIf="observation.acl_user.w" class="pointer" (click)="removeFromFilelist(filelist[viewimage.index]['_id'], viewimage.index);modalRef.close()" name="times" [fixed]="true"></fa>
+      <fa *ngIf="observation.acl_user.w" class="pointer"
+        (click)="removeFromFilelist(filelist[viewimage.index]['_id'], viewimage.index);modalRef.close()" name="times"
+        [fixed]="true"></fa>
     </div>
     <span *ngIf="!!viewImageLoading" class="text-center">
       <nlf-ui-component-spinner></nlf-ui-component-spinner>

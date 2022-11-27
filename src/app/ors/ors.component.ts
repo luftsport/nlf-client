@@ -24,34 +24,28 @@ export class NlfOrsComponent implements OnInit {
 
   // public static routes:Routes = [{ path: 'ors/child', component: NlfChildComponent }];
 
-  model = new OrsModel(18, 'Brekt bein');
+  // model = new OrsModel(18, 'Brekt bein');
   message: string;
   submitted = false;
 
   constructor(
-    private data: DataService,
+    //private data: DataService,
     private app: NlfComponent,
     private alertService: NlfAlertService,
     private auth: NlfAuthService) {
 
-    app.setTitle('ORS');
+    app.setTitle('OBSREG');
 
 
   }
 
   ngOnInit() {
-    this.data.currentMessage.subscribe(message => this.model.other = message);
-    this.app.setTitle('ORS');
-  }
-  onSubmit() {
-    this.submitted = true;
+    // this.data.currentMessage.subscribe(message => this.model.other = message);
+    this.app.setTitle('NLF OBSREG');
   }
 
-  change() {
-    this.data.changeMessage('Something else');
-  }
 
-  get diagnostic() { return JSON.stringify(this.model); }
+  get diagnostic() { return JSON.stringify(this.app); }
 
 
 }

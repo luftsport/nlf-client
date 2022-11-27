@@ -16,6 +16,7 @@ export class NlfOrsLastComponent implements OnInit {
   dataReady = false;
   total: number = 0;
   data: any;
+  error = false;
 
   constructor(private orsService: ApiObservationsService,
               private apiCache: ApiCacheService) {
@@ -48,8 +49,13 @@ export class NlfOrsLastComponent implements OnInit {
       data => {
         this.data = data._items;
         this.total = data._meta.total || 0;
+        this.error = false;
       },
-      err => console.log(err),
+      err => {
+        console.log(err);
+        this.error = true;
+      }
+        ,
       () => this.dataReady = true
     );
   }

@@ -6,7 +6,7 @@
 <span *ngIf="dataReady && canCreate() && defaultBtn && settings.default_activity==109">
   <button *ngIf="!!settings && canCreate()" (click)="createObservation(settings.default_discipline, settings.default_club, settings.default_activity)" class="btn btn-block btn-success btn-lg my-1">
     <fa name="plus" [fixed]="true"></fa>
-    <nlf-resolve-lungo-organization [organization_id]="settings.default_discipline" show_type="false"></nlf-resolve-lungo-organization>
+    <nlf-resolve-lungo-organization [organization_id]="settings.default_discipline" show_activity="false"></nlf-resolve-lungo-organization>
   </button>
 </span>
 
@@ -25,7 +25,7 @@
       </div>
       <div class="col">
         <button [disabled]="!selected" (click)="createObservation()" class="btn btn-block btn-success btn-lg">
-          <fa name="plus" [fixed]="true"></fa>Opprett ny ORS
+          <fa name="plus" [fixed]="true"></fa>Opprett ny OBSREG
         </button>
       </div>
     </div>
@@ -33,7 +33,7 @@
 
   <span *ngIf="loading">
     <fa name="spinner" animation="pulse" size="3x"></fa>
-    <p class="lead">Oppretter ORS...</p>
+    <p class="lead">Oppretter OBSREG...</p>
   </span>
 </span>
 

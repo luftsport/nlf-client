@@ -68,8 +68,10 @@ export class NlfUiNavbarComponent implements OnInit {
             this.user_data = data;
           }
         }
-      )
-    ]);
+      ),
+      this.dataReady = true
+    ]
+    );
 
 
     router.events
@@ -83,6 +85,14 @@ export class NlfUiNavbarComponent implements OnInit {
 
   public openCreateOrsModal() {
     this.modalRef = this.modalService.open(NlfOrsCreateModalComponent, { size: 'lg' });
+  }
+
+  public getUserObsreg() {
+    try {
+      return this.config.inv_mapping[this.user_data.settings.default_activity];
+    } catch {}
+
+    return "ors"; // @TODO "obsreg"
   }
 
   ngOnInit() {

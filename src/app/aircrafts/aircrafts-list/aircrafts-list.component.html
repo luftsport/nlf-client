@@ -21,7 +21,7 @@
 
 
   <div *ngIf="!!dataReady" class="overflow-auto">
-    <ngx-table [configuration]="tableAll" [data]="data" [columns]="columns" [(pagination)]="pagination"
+    <ngx-table [id]="'aircraft-table'" [configuration]="tableAll" [data]="data" [columns]="columns" [(pagination)]="pagination"
       [filtersTemplate]="filtersTemplate" (event)="eventEmitted($event)">
 
       <!-- ROWS -->

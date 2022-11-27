@@ -104,7 +104,7 @@
             <td>Klubb</td>
             <td>
               <span *ngFor="let group of lungo._down">
-                <nlf-resolve-lungo-organization class="mr-1" *ngIf="group.type==6" [organization_id]="group.id" show_type="true" link="true" long="true"></nlf-resolve-lungo-organization>
+                <nlf-resolve-lungo-organization class="mr-1" *ngIf="group.type==6" [organization_id]="group.id" show_activity="true" link="true" long="true"></nlf-resolve-lungo-organization>
               </span>
             </td>
           </tr>
@@ -120,7 +120,7 @@
             <td>Gren</td>
             <td>
               <span *ngFor="let gren of lungo._down">
-                <nlf-resolve-lungo-organization class="mr-1" *ngIf="gren.type==14" [organization_id]="gren.id" link="true" long="true" show_type="true"></nlf-resolve-lungo-organization>
+                <nlf-resolve-lungo-organization class="mr-1" *ngIf="gren.type==14" [organization_id]="gren.id" link="true" long="true" show_activity="true"></nlf-resolve-lungo-organization>
               </span>
             </td>
           </tr>

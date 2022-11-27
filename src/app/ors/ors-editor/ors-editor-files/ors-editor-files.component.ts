@@ -56,7 +56,7 @@ export class NlfOrsEditorFilesComponent implements OnInit {
     private authDataSubject: NlfAuthSubjectService) {
 
 
-    //this.options = { concurrency: 3, maxUploads: 50, maxFileSize: 3000000000 };
+    // this.options = { concurrency: 3, maxUploads: 50, maxFileSize: 3000000000 };
     this.subject.observableObservation.subscribe(
       observation => {
         this.observation = observation;

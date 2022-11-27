@@ -117,7 +117,7 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy {
 
     this.route.params.subscribe(params => {
       this.id = params['id'] ? params['id'] : 0;
-      this.app.setTitle('ORS Editor #' + this.id);
+      this.app.setTitle('OBSREG Editor #' + this.id);
       this.getData();
     });
   }
@@ -258,6 +258,11 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy {
         // Deep clone
         this.shadow = cloneDeep(this.observation);
         this.changes = false;
+
+        if(this.observation._created === this.observation._updated) {
+          this.alertService.success('Suksess! Du opprettet akkurat en ny observasjon og den fikk løpenummer #' + this.observation.id, false, true, 60);
+        }
+        
 
       },
       err => {

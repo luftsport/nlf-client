@@ -9,7 +9,7 @@
 </div>
 <div class="container overflow-auto">
 
-  <ngx-table [configuration]="tableSpaces" [data]="spacelist" [columns]="columns" [(pagination)]="pagination" (event)="eventEmitted($event)">
+  <ngx-table [id]="'content-space-table'" [configuration]="tableSpaces" [data]="spacelist" [columns]="columns" [(pagination)]="pagination" (event)="eventEmitted($event)">
 
     <ng-template let-row>
       <td class="ngx-easy-table-small">

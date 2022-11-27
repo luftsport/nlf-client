@@ -58,7 +58,7 @@
 				<div class="my-3">
 					<h4>Hovedklubb</h4>
 					<strong>
-						<nlf-resolve-lungo-organization [organization_id]="user.settings.default_discipline" [show_type]="true" [long]="true" [link]="true"></nlf-resolve-lungo-organization>
+						<nlf-resolve-lungo-organization [organization_id]="user.settings.default_discipline" [show_activity]="true" [long]="true" [link]="true"></nlf-resolve-lungo-organization>
 						<fa (click)="openDefaultClub()" class="ml-3 pointer" name="pencil"></fa>
 					</strong>
 				</div>
@@ -66,7 +66,7 @@
 					<h4>Mine Medlemsskap</h4>
 					<div *ngFor="let role of user.acl">
 						<div *ngIf="role.org>0 && role.role===10000000 && [2,19,14].indexOf(role.type)>-1">
-							<nlf-resolve-lungo-organization [organization_id]="role.org" [link]="true" [show_type]="true"></nlf-resolve-lungo-organization>:
+							<nlf-resolve-lungo-organization [organization_id]="role.org" [link]="true" [show_activity]="true"></nlf-resolve-lungo-organization>:
 							<strong>
 								<nlf-resolve-lungo-function-type [type_id]="role.role"></nlf-resolve-lungo-function-type>
 							</strong>
@@ -77,7 +77,7 @@
 					<h4>Mine funksjoner</h4>
 					<div *ngFor="let role of user.acl">
 						<div *ngIf="role.org>0 && role.activity>0 && role.role!=10000000">
-							<nlf-resolve-lungo-organization [organization_id]="role.org" [link]="true"></nlf-resolve-lungo-organization>:
+							<nlf-resolve-lungo-organization [organization_id]="role.org" [link]="true" [show_activity]="true"></nlf-resolve-lungo-organization>:
 							<strong>
 								<nlf-resolve-lungo-function-type [type_id]="role.role"></nlf-resolve-lungo-function-type>
 							</strong>
@@ -118,10 +118,19 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-12 col-md-12 mt-6">
-				<div class="my-3">
-					<h4>Mine {{ config[config.inv_mapping[user.settings.default_activity]]['observation']['app_name'] || 'ORSX' }} som involvert</h4>
-					<nlf-user-ors activity="fallskjerm"></nlf-user-ors>
-					<nlf-user-ors activity="motorfly"></nlf-user-ors>
+				<div class="my-3"> 
+					<h4>Mine observasjoner som involvert</h4>
+					<!-- Første er default activity -->
+					<nlf-user-ors *ngIf="user.settings.default_activity==109" activity="fallskjerm"></nlf-user-ors>
+					<nlf-user-ors *ngIf="user.settings.default_activity==238" activity="motorfly"></nlf-user-ors>
+					<nlf-user-ors *ngIf="user.settings.default_activity==237" activity="sportsfly"></nlf-user-ors>
+					<nlf-user-ors *ngIf="user.settings.default_activity==111" activity="seilfly"></nlf-user-ors>
+					<!-- Lister så resten -->
+					<nlf-user-ors *ngIf="user.settings.default_activity!=109" activity="fallskjerm"></nlf-user-ors>
+					<nlf-user-ors *ngIf="user.settings.default_activity!=238" activity="motorfly"></nlf-user-ors>
+					<nlf-user-ors *ngIf="user.settings.default_activity!=237" activity="sportsfly"></nlf-user-ors>
+					<nlf-user-ors *ngIf="user.settings.default_activity!=111" activity="seilfly"></nlf-user-ors>
+
 				</div>
 			</div>
 		</div>

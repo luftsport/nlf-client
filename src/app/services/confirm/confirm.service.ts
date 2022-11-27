@@ -17,6 +17,8 @@ interface ConfirmOptions {
 
     yes?: string;
     no?: string;
+    yes_color?: string;
+    no_color?: string;
 }
 
 /**
@@ -59,6 +61,14 @@ export class ConfirmService {
      */
     confirm(options: ConfirmOptions): Promise<any> {
         this.state.options = options;
+
+        if (!this.state.options.no_color) {
+            this.state.options.no_color = 'secondary';
+        }
+        if (!this.state.options.yes_color) {
+            this.state.options.yes_color = 'danger';
+        }
+
         if (!this.state.options.no) {
             this.state.options.no = 'No';
         }
@@ -85,8 +95,8 @@ export class ConfirmService {
     <p [innerHTML]="options.message | safe"></p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-danger" (click)="yes()">{{ options.yes }}</button>
-    <button type="button" class="btn btn-secondary" (click)="no()">{{ options.no }}</button>
+    <button type="button" class="btn btn-{{ options.yes_color }}" (click)="yes()">{{ options.yes }}</button>
+    <button type="button" class="btn btn-{{ options.no_color }}" (click)="no()">{{ options.no }}</button>
   </div>`
 })
 export class ConfirmModalComponent {

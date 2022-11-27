@@ -1,4 +1,5 @@
 
+import { NumberCardModule } from '@swimlane/ngx-charts';
 import { ApiEveLinks, ApiEveBaseItem, ApiEveBaseList, ApiEveQueryInterface } from './api-eve.interface';
 
 
@@ -297,6 +298,16 @@ export interface LungoPersonsLicenseItem {
     type_id?: number;
     type_name?: string;
 }
+export interface LungoPersonsFederationItem {
+    id: number;
+    name?: string;
+    activity?: number;
+    year?: number;
+    exception?: string;
+    type?: string;
+    paid?: Date;
+    amount?: number;
+}
 export interface LungoPersonsItem extends ApiEveBaseItem {
     id: number;
     _merged_to?: number;
@@ -314,6 +325,7 @@ export interface LungoPersonsItem extends ApiEveBaseItem {
     memberships?: LungoPersonsMembershipsItem[];
     competences?: LungoPersonsCompetenceItem[] | LungoCompetencesItem[];
     licenses?: LungoPersonsLicenseItem[] | LungoLicensesItem[];
+    federation?: LungoPersonsFederationItem[];
     nationality_id?: number;
     sport_no?: string;
     user_id?: number;

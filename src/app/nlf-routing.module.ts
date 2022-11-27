@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { environment } from 'environments/environment';
+
 // Top level app direct routes
 import { NlfUiDummyComponent } from 'app/ui/dummy/dummy.component';
 import { NlfOrsComponent } from 'app/ors/ors.component';
@@ -21,7 +23,8 @@ import { NlfErrorComponent } from 'app/error/error.component';
 //import { NlfDashboardRoutingModule } from 'app/dashboard/dashboard-routing.module';
 import { NlfContentRoutingModule } from 'app/content/content-routing.module';
 // import { NlfOrganizationsRoutingModule } from 'app/organizations/organizations-routing.module';
-
+import { NlfMemberComponent } from 'app/member/member.component';
+import { NlfCompetenceTableComponent } from 'app/member/competence-table/competence-table.component';
 /// T E S T ///
 //import { TestComponent } from 'app/test/test.component';
 /**
@@ -42,11 +45,15 @@ const routes: Routes = [
 
   // Eager loaded apps
   // NO! Test only{ path: 'users', component: NlfUserTableComponent, data: { bc: 'Users', title: 'Users' } },
-  { path: 'ors', component: NlfOrsComponent, data: { bc: 'ORS', title: 'ORS'} },
+  { path: 'ors', component: NlfOrsComponent, data: { bc: 'OBSREG', title: 'OBSREG'} },
   //{ path: 'dashboard', component: NlfDashboardComponent, data: { bc: 'Dashboard' } },
   { path: 'content', component: NlfContentComponent, data: { bc: 'Content', title: 'Content'  } },
   //{ path: 'test', component: TestComponent, data: { bc: 'Testing' } },
   // { path: 'user', component: NlfUserProfileComponent, data: { bc: 'Users', title: 'Users' } },
+
+  // Temporarily deactivated - NB check ui -> navbar too!
+  { path: 'medlem', component: NlfMemberComponent, data: {bc: 'Medlemssjekk', title: 'Medlemssjekk'}},
+  { path: 'medlem/kompetanse', component: NlfCompetenceTableComponent, data: {bc: 'Kompetanser', title: 'Kompetanser'}},
 
   // Lazy loaded
   { path: 'admin', loadChildren: 'app/admin/admin.module#NlfAdminModule', data: { bc: 'Admin', preload: false , title: 'Admin' } },

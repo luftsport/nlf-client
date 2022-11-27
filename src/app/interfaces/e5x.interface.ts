@@ -503,8 +503,8 @@ export class E5XClass {
       attributes: {
         // Time and date
         headline: { value: undefined },
-        uTCDate: { value: undefined },
-        uTCTime: { value: undefined },
+        utcDate: { value: undefined },
+        utcTime: { value: undefined },
         localDate: { value: undefined },
         localTime: { value: undefined },
 

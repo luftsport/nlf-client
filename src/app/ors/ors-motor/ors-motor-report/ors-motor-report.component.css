@@ -10,3 +10,7 @@ agm-map {
     border: 1px 0px 1px 0px solid grey;
     width: 100%;
   }
+
+.narrative {
+    white-space: pre-wrap;
+}

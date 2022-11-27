@@ -33,7 +33,7 @@ export class NlfPermaLinksComponent implements OnInit {
               this.orsUrl = url[0];
             }
 
-            // ORS REDIRECTING
+            // OBSREG REDIRECTING FROM LEGACY NG1.x
             if (this.orsUrl.indexOf('observation') > -1) {
               // Get number
               let id = '0';

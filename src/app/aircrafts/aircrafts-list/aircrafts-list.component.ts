@@ -33,7 +33,6 @@ export class NlfAircraftsListComponent implements OnInit {
     { key: 'msn', title: 'MSN', sort: false },
     { key: 'status', title: 'Status', sort: true },
     { key: 'e5x', title: 'E5X', sort: true },
-
   ];
 
   pagination = {

@@ -1,13 +1,15 @@
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-end">
   <a class="navbar-brand pointer" [routerLink]="['/']">
-    <!--<i class="nlf nlf-fw nlf-logo-plain nlf-2x"></i>-->NLF</a>
+    <!--<i class="nlf nlf-fw nlf-logo-plain nlf-2x"></i>-->NLF
+  </a>
 
   <span *ngIf="ENV._name!='prod'" class="badge badge-danger">{{ ENV._name }}</span>
 
-  <!-- CURRENT OR LAST ORS -->
+  <!-- CURRENT OR LAST OBSREG -->
   <span *ngIf="(loggedInObservable | async) && !!current_ors">
     <span *ngIf="router.url != '/ors/'+current_ors.type+'/'+current_ors.id">
-      <span [routerLink]="['/ors', current_ors.type, 'edit', current_ors.id]" class="badge badge-info lead ml-1 pointer">
+      <span [routerLink]="['/ors', current_ors.type, 'edit', current_ors.id]"
+        class="badge badge-info lead ml-1 pointer">
         <fa name="edit" [fixed]="true"></fa>#{{ current_ors.id }}
       </span>
     </span>
@@ -15,13 +17,16 @@
 
   <span class="ml-auto"></span>
 
-  <!-- CREATE ORS BTN XS-->
-  <button class="btn btn-success mr-3 d-block d-sm-none" *ngIf="(loggedInObservable | async) && !!user_data && !!user_data.settings.default_discipline" (click)="navbarOpen=false;openCreateOrsModal()">
-    <fa name="plus" fw="true" class="mr-1"></fa>ORS
+  <!-- CREATE OBSREG BTN XS-->
+  <button class="btn btn-success mr-3 d-block d-sm-none"
+    *ngIf="(loggedInObservable | async) && !!user_data && !!user_data.settings.default_discipline"
+    (click)="navbarOpen=false;openCreateOrsModal()">
+    <fa name="plus" fw="true" class="mr-1"></fa>OBSREG
   </button>
 
   <!--MENU TOGGLE-->
-  <button (click)="navbarOpen=!navbarOpen" class="navbar-toggler navbar-toggler-right" type="button" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+  <button (click)="navbarOpen=!navbarOpen" class="navbar-toggler navbar-toggler-right" type="button"
+    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <fa name="bars" [fixed]="true"></fa>
   </button>
 
@@ -29,14 +34,18 @@
 
     <ul *ngIf="!!user_data && loggedInObservable | async as authenticated" class="navbar-nav text-right">
 
-      <!-- CREATE ORS BTN HIDDEN XS-->
-      <button class="btn btn-success mr-2 d-none d-sm-block" *ngIf="!!config && !!user_data && !!user_data.settings.default_discipline" (click)="navbarOpen=false;openCreateOrsModal()">
-        <fa name="plus" fw="true" class="mr-1"></fa>Ny {{ config[config.inv_mapping[user_data.settings.default_activity]]['observation']['app_name'] || 'ORSX' }}
+      <!-- CREATE OBSREG BTN HIDDEN XS-->
+      <button class="btn btn-success mr-2 d-none d-sm-block"
+        *ngIf="!!config && !!user_data && !!user_data.settings.default_discipline"
+        (click)="navbarOpen=false;openCreateOrsModal()">
+        <fa name="plus" fw="true" class="mr-1"></fa>Ny OBSREG
+        <!--{{ config[config.inv_mapping[user_data.settings.default_activity]]['observation']['app_name'] || 'ORSX' }}-->
+        
       </button>
 
       <!--
       <li *ngIf="isLoggedIn" ngbDropdown placement="bottom-right" class="nav-item">
-        <span class="nav-link pointer" id="dropdownBasic1" ngbDropdownToggle routerLinkActive="active">ORS</span>
+        <span class="nav-link pointer" id="dropdownBasic1" ngbDropdownToggle routerLinkActive="active">OBSREG</span>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
           <a class="dropdown-item pointer">Action - 1</a>
           <a class="dropdown-item pointer">Another Action</a>
@@ -52,7 +61,8 @@
       -->
 
       <!-- ADMIN -->
-      <li (click)="navbarOpen=false" *ngIf="authenticated && user_data.person_id==301041" class="nav-item" routerLinkActive="active">
+      <li (click)="navbarOpen=false" *ngIf="authenticated && user_data.person_id==301041" class="nav-item"
+        routerLinkActive="active">
         <a [routerLink]="['/admin']" class="nav-link">Admin</a>
       </li>
 
@@ -63,24 +73,34 @@
       -->
 
       <!-- CONTENT -->
-      <li (click)="navbarOpen=false" *ngIf="authenticated && user_data.person_id==301041" class="nav-item" routerLinkActive="active">
-        <a [routerLink]="['/content']" class="nav-link">Content</a>
+      <li (click)="navbarOpen=false" *ngIf="authenticated && user_data.person_id==301041" class="nav-item"
+        routerLinkActive="active">
+        <a [routerLink]="['/content']" class="nav-link">Innhold</a>
       </li>
 
-      <!-- AIRCRAFTS -->
-      <li (click)="navbarOpen=false" *ngIf="authenticated" class="nav-item" routerLinkActive="active">
-        <a [routerLink]="['/aircraft']" class="nav-link">Aircraft</a>
-      </li>
-
+      <!-- Medlemssjekk  -->
+      <ng-container *ngIf="ENV._name!='prod'">
+        <li (click)="navbarOpen=false" *ngIf="authenticated" class="nav-item" routerLinkActive="active">
+          <a [routerLink]="['/medlem']" class="nav-link">Medlem</a>
+        </li>
+      </ng-container>
 
 
       <!-- ORGANIZATIONS -->
-      <li (click)="navbarOpen=false" *ngIf="authenticated && !!user_data.settings.default_discipline" class="nav-item" routerLinkActive="active">
+      <li (click)="navbarOpen=false" *ngIf="authenticated && !!user_data.settings.default_discipline" class="nav-item"
+        routerLinkActive="active">
         <a [routerLink]="['/organizations', user_data.settings.default_discipline]" class="nav-link">Klubber</a>
       </li>
-
-      <li (click)="navbarOpen=false" *ngIf="authenticated && !user_data.settings.default_discipline" class="nav-item" routerLinkActive="active">
+      <!-- Defaults to NLF -->
+      <li (click)="navbarOpen=false" *ngIf="authenticated && !user_data.settings.default_discipline" class="nav-item"
+        routerLinkActive="active">
         <a [routerLink]="['/organizations', 376]" class="nav-link">Klubber</a>
+      </li>
+
+
+      <!-- AIRCRAFT -->
+      <li (click)="navbarOpen=false" *ngIf="authenticated" class="nav-item" routerLinkActive="active">
+        <a [routerLink]="['/aircraft']" class="nav-link">Fly</a>
       </li>
 
       <!-- AIP
@@ -90,15 +110,21 @@
       -->
 
       <!-- INTEGRATION -->
-      <li (click)="navbarOpen=false" *ngIf="authenticated && [301041,7623313,5502100,4402873,4859230,425529,554002,445648,7897818,6273278].indexOf(user_data.person_id)>-1" class="nav-item" routerLinkActive="active">
-        <a [routerLink]="['/integration']" class="nav-link">Integration</a>
+      <li (click)="navbarOpen=false"
+        *ngIf="authenticated && [301041,7623313,5502100,4402873,4859230,425529,554002,445648,7897818,6273278].indexOf(user_data.person_id)>-1"
+        class="nav-item" routerLinkActive="active">
+        <a [routerLink]="['/integration']" class="nav-link">Integrasjon</a>
       </li>
 
-      <!-- ORS -->
-      <li (click)="navbarOpen=false" *ngIf="authenticated && !!user_data.settings.default_activity" class="nav-item" routerLinkActive="active">
-        <a *ngIf="!!config" [routerLink]="['/ors', config.inv_mapping[user_data.settings.default_activity]]" class="nav-link">{{ config[config.inv_mapping[user_data.settings.default_activity]]['observation']['app_name'] || 'ORSX' }}</a>
-        <!--<a  (click)="navigateORS()" class="nav-link">ORS</a>-->
-      </li>
+      <!-- OBSREG -->
+      <ng-container *ngIf="dataReady">
+        <li (click)="navbarOpen=false" *ngIf="authenticated" class="nav-item"
+          routerLinkActive="active">
+          <a [routerLink]="['/ors', getUserObsreg()]" class="nav-link">OBSREG</a>
+          <!--<a  (click)="navigateORS()" class="nav-link">OBSREG</a>-->
+        </li>
+      </ng-container>
+
 
       <!-- NOTIFICATIONS
       <li ngbDropdown placement="bottom-right" (click)="navbarOpen=false" *ngIf="authenticated" class="nav-item dropdown pointer" routerLinkActive="active">
@@ -107,7 +133,7 @@
         </span>
 
         <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">ORS #343 created</a>
+          <a class="dropdown-item" href="#">OBSREG #343 created</a>
           <a class="dropdown-item" href="#">Placeholder</a>
 
           <div class="dropdown-divider"></div>
@@ -125,9 +151,12 @@
 
 
       <!-- USER/LOGOUT -->
-      <li ngbDropdown display="dynamic" placement="bottom-right" *ngIf="authenticated" class="nav-item dropdown pointer" routerLinkActive="active">
+      <li ngbDropdown display="dynamic" placement="bottom-right" *ngIf="authenticated" class="nav-item dropdown pointer"
+        routerLinkActive="active">
 
-        <a ngbDropdownToggle placement="bottom-right" class="btn btn-sm btn-secondary nav-link dropdown-toggle text-white" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        <a ngbDropdownToggle placement="bottom-right"
+          class="btn btn-sm btn-secondary nav-link dropdown-toggle text-white" id="navbarDropdown" role="button"
+          aria-haspopup="true" aria-expanded="false">
           <!--<span *ngIf="!!avatar" class="avatar avatar-xs mr-1">
             <img [src]="domSanitizer.bypassSecurityTrustUrl(avatar)" alt="" class="avatar-img rounded-circle">
           </span>
@@ -135,7 +164,8 @@
           <span class="avatar avatar-xs mr-1">
             <img [src]="avatar||avatar_missing" alt="user" class="avatar-img rounded-circle">
           </span>
-          <nlf-resolve-lungo-person [person_id]="user_data.person_id" [only_first_name]="true" [avatar]="false" [link]="false"></nlf-resolve-lungo-person>
+          <nlf-resolve-lungo-person [person_id]="user_data.person_id" [only_first_name]="true" [avatar]="false"
+            [link]="false"></nlf-resolve-lungo-person>
           <!--<span class="mx-1 badge badge-danger">2</span>-->
         </a>
 
@@ -145,11 +175,13 @@
           <a class="dropdown-item" href="#">Placeholder</a>
           -->
 
-          <a ngbDropdownItem class="dropdown-item" (click)="$event.preventDefault();navbarOpen=false" [routerLink]="['/user', 'profile']">Profil</a>
+          <a ngbDropdownItem class="dropdown-item" (click)="$event.preventDefault();navbarOpen=false"
+            [routerLink]="['/user', 'profile']">Profil</a>
 
           <div class="dropdown-divider"></div>
-          <button ngbDropdownItem (click)="$event.preventDefault();navbarOpen=false;authService.logout()" class="dropdown-item btn btn-secondary btn-block">
-            <fa name="power-off" [fixed]="true"></fa>Logout
+          <button ngbDropdownItem (click)="$event.preventDefault();navbarOpen=false;authService.logout()"
+            class="dropdown-item btn btn-secondary btn-block">
+            <fa name="power-off" [fixed]="true"></fa>Logg ut
           </button>
         </div>
 
@@ -209,13 +241,13 @@
       <li ngbDropdown class="nav-item dropdown">
 
         <a ngbDropdownToggle class="nav-item nav-link dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">
-          ORS
+          OBSREG
         </a>
         <div *dropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" routerLink="/ors/">ORS</a>
-          < !ww-w-<a class="dropdown-item" routerLink="/ors/child">ORS Child</a> only from internal-w- >
+          <a class="dropdown-item" routerLink="/ors/">OBSREG</a>
+          < !ww-w-<a class="dropdown-item" routerLink="/ors/child">OBSREG Child</a> only from internal-w- >
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" routerLink="/ors/fallskjerm">ORS Fallskjerm</a>
+          <a class="dropdown-item" routerLink="/ors/fallskjerm">OBSREG Fallskjerm</a>
         </div>
       </li>
     </ul>

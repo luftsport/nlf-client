@@ -56,7 +56,7 @@ export class NlfOrsActivitiesComponent implements OnInit {
       console.log('PARAMS', params);
       this.activity = params['activity'] ? params['activity'] : 0;
       this.observation_id = params['id'] ? params['id'] : 0;
-      this.app.setTitle('ORS Activities #' + this.observation_id);
+      this.app.setTitle('OBSREG Activities #' + this.observation_id);
       if (this.observation_id > 0 && !!this.activity) {
         this.orsService.setActivity(this.activity);
         this.getData();

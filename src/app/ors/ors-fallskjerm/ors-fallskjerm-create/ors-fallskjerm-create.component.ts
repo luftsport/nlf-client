@@ -10,6 +10,7 @@ import { NlfConfigService } from 'app/nlf-config.service';
 import { environment } from 'environments/environment';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 // import { ApiObservationsItem} from 'app/api/api.interface';
+import { ConfirmService } from 'app/services/confirm/confirm.service';
 
 @Component({
   selector: 'nlf-ors-fallskjerm-create',
@@ -20,7 +21,7 @@ export class NlfOrsFallskjermCreateComponent implements OnInit {
 
   @Input() layout: string; // inline, short, datetimepicker, calendar etc
   @Input() defaultBtn: boolean = false;
-
+  @Input() activity: string = 'fallskjerm';
   userid: number;
   bsValue: Date = new Date();
   ismeridian = false;
@@ -48,7 +49,8 @@ export class NlfOrsFallskjermCreateComponent implements OnInit {
     private alertService: NlfAlertService,
     private userData: NlfUserSubjectService,
     private router: Router,
-    private subject: NlfOrsEditorService) {
+    private subject: NlfOrsEditorService,
+    private confirmService: ConfirmService) {
 
 
 this.orsService.setActivity('fallskjerm');
@@ -59,8 +61,6 @@ this.orsService.setActivity('fallskjerm');
           if (data.settings.default_activity === 109) {
             this.selected = data.settings.default_discipline;
           }
-
-          console.log('SELECTED IS??', this.selected)
         }
       });
 
@@ -118,6 +118,24 @@ this.orsService.setActivity('fallskjerm');
   }
 
   public createObservation() {
+
+    const confirmMsg = {
+      title: 'Vennligst bekreft',
+      message: 'Vil du opprette en observasjon for <strong>' + this.clubs.find(x => x.id === +this.selected).name + '</strong> (' + this.activity + ')?',
+      yes: 'Ja',
+      yes_color: 'success',
+      no: 'Nei'
+    };
+    this.confirmService.confirm(confirmMsg).then(
+      () => { // Yes
+        this._createObservation();
+      },
+      () => { // No
+        // Do nothing?
+      }
+    );
+  }
+  private _createObservation() {
     if (!this.selected || this.selected < 1) {
       this.alertService.error('Ingen klubb valgt, velg klubb først', false, true, 10);
 
@@ -135,14 +153,14 @@ this.orsService.setActivity('fallskjerm');
           this.orsService.create({ 'discipline': this.selected, 'club': element.parent_id }).subscribe(
             data => {
               this.subject.reset();
-              console.log('ORS Created', data);
+              console.log('OBSREG Created', data);
               if (!!data._id && !!data.id) {
 
                 this.router.navigateByUrl('/ors/fallskjerm/edit/' + data.id);
               }
             },
             err => {
-              this.alertService.error('Kunne ikke opprette ORS: ' + err.message);
+              this.alertService.error('Kunne ikke opprette OBSREG: ' + err.message);
               this.loading = false;
             },
             () => {

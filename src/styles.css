@@ -1,24 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
-html,body {
-  height: 100%;
+html,
+body {
+    /*height: 100%;*/
+    margin-bottom: 100px; /*as the toolbar*/
 }
 
-nlf-root, main {
-  display: block;
-  height: 100%;
+nlf-root,
+main {
+    display: block;
+    height: 100%;
 }
+
 /** MODULES **/
 agm-map {
-  min-height: 30em;
-  height: 50em;
-  width: 100%;
+    min-height: 30em;
+    height: 50em;
+    width: 100%;
 }
 
 .map-full-content {
-  height: 100% !important;
-  width: 100%;
-  margin: 0;
+    height: 100% !important;
+    width: 100%;
+    margin: 0;
 }
+
 .map-full-content.agm-map {
     height: calc(100% - 12px) !important;
     width: 100%;
@@ -30,46 +35,53 @@ agm-map {
 
 /* Fix for bootstrap error disabled btns should show disabled icon */
 button:disabled {
-  cursor: not-allowed !important;
-  pointer-events: all !important;
+    cursor: not-allowed !important;
+    pointer-events: all !important;
+}
+
+/* Highlite text etc **/
+.highlight {
+    background-color: #fffbce;
+    font-weight: bold;
+    padding: 1px;
 }
 
 
 /* FAB BUTTON */
 .fab {
-   width: 60px;
+    width: 60px;
 
-   height: 60px;
-   font-size: 18px;
-   padding-top: 18px;
+    height: 60px;
+    font-size: 18px;
+    padding-top: 18px;
 
-   background-color: #ccc;
-   border-radius: 50%;
-   box-shadow: 0 6px 10px 0 #666;
-   transition: all 0.1s ease-in-out;
+    background-color: #ccc;
+    border-radius: 50%;
+    box-shadow: 0 6px 10px 0 #666;
+    transition: all 0.1s ease-in-out;
 
-   vertical-align:middle;
-   color: white;
-   text-align: center;
-   /*border: 1px solid #cecece;*/
-   /*line-height: 70px;
+    vertical-align: middle;
+    color: white;
+    text-align: center;
+    /*border: 1px solid #cecece;*/
+    /*line-height: 70px;
     font-size: 60px;
     */
-   position: fixed;
+    position: fixed;
 
-   right: 50px;
-   bottom: 50px;
-   z-index: 999999;
+    right: 50px;
+    bottom: 50px;
+    z-index: 999999;
 }
 
 .fab:hover {
-   cursor: pointer;
-   box-shadow: 0 6px 14px 0 #666;
-   transform: scale(1.05);
+    cursor: pointer;
+    box-shadow: 0 6px 14px 0 #666;
+    transform: scale(1.05);
 }
 
 .fab-icon {
-    margin-top:22px !important;
+    margin-top: 22px !important;
 }
 
 .ng-select.form-control {
@@ -78,7 +90,8 @@ button:disabled {
     padding: 0;
     width: 100%;
 }
-.ng-select.form-control .ng-select-container  {
+
+.ng-select.form-control .ng-select-container {
     min-height: 0px;
     height: 100%;
     width: 100%;
@@ -87,112 +100,122 @@ button:disabled {
 }
 
 .nlf-sticky {
-  background: white;
-  margin-bottom: 0;
-  width: 100%;
-  position:sticky;
-  position: -webkit-sticky;
-  top:0;
-  z-index: 999;
-  overflow:hidden;
+    background: white;
+    margin-bottom: 0;
+    width: 100%;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 998;
+    overflow: hidden;
 }
 
 .nlf-sticky-toolbar {
-  padding: 0.75rem 1.25rem;
-  margin-bottom: 0;
-  background-color: #f7f7f7;
-  border-bottom: 1px solid #868E96;
-  width: 100%;
-  position:sticky;
-  position: -webkit-sticky;
-  top:0;
-  z-index: 999;
-  overflow:hidden;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #868E96;
+    width: 100%;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 998;
+    overflow: hidden;
 }
 
 .nlf-toolbar {
-  padding: 0.65rem 1.05rem;
-  margin-bottom: 0;
-  background-color: #f7f7f7;
-  border-bottom: 1px solid #868E96;
-  width: 100%;
-  overflow:hidden;
+    padding: 0.65rem 1.05rem;
+    margin-bottom: 0;
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #868E96;
+    width: 100%;
+    overflow: hidden;
 }
 
 .nlf-ors-toolbar {
-  font-size: 1.2rem;
-  padding: 0.3rem 0.3rem;
-  margin-bottom: 0;
-  /*background-color: #f7f7f7;*/
-  border-bottom: 2px solid #868E96;
-  width: 100%;
-  overflow:hidden;
-  margin-top: 0.7rem;
-  margin-bottom: 0;
+    font-size: 1.2rem;
+    padding: 0.3rem 0.3rem;
+    margin-bottom: 0;
+    /*background-color: #f7f7f7;*/
+    border-bottom: 2px solid #868E96;
+    width: 100%;
+    overflow: hidden;
+    margin-top: 0.7rem;
+    margin-bottom: 0;
 }
 
 .breadcrumb {
-  background: none !important;
-  padding-top: 2px !important;
-  padding-bottom: 2px !important;
-  margin-bottom: 0px !important;
-  margin-top: 0px !important;
-  display: inline-flex !important;
+    background: none !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    margin-bottom: 0px !important;
+    margin-top: 0px !important;
+    display: inline-flex !important;
 }
 
+.joyride-backdrop{
+    z-index: 9999 !important;
+}
 
 .nlf-ors-block-bottom {
-  margin-bottom: 1rem;
-}
-.nlf-ors-block-top {
-  margin-top: 1rem;
-}
-.nlf-ors-block-blue {
-  border-right: 3px solid #004465;
-  padding-right: 2px;
-}
-.nlf-ors-block-light {
-  border-right: 1px solid #5bbfcc;
-}
-.nlf-ors-block-dark {
-  border-right: 1px solid #1d1d1b;
-}
-.nlf-ors-block-orange {
-  border-right: 1px solid #f07f00;
-}
-.nlf-ors-block-purple {
-  border-right: 1px solid #93648d;
+    margin-bottom: 1rem;
 }
 
-.nlf-page-center{
-    position:absolute;
-    top:50%;
-    left:50%;
-    padding:10px;
+.nlf-ors-block-top {
+    margin-top: 1rem;
+}
+
+.nlf-ors-block-blue {
+    border-right: 3px solid #004465;
+    padding-right: 2px;
+}
+
+.nlf-ors-block-light {
+    border-right: 1px solid #5bbfcc;
+}
+
+.nlf-ors-block-dark {
+    border-right: 1px solid #1d1d1b;
+}
+
+.nlf-ors-block-orange {
+    border-right: 1px solid #f07f00;
+}
+
+.nlf-ors-block-purple {
+    border-right: 1px solid #93648d;
+}
+
+.nlf-page-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 10px;
     -ms-transform: translateX(-50%) translateY(-50%);
-    -webkit-transform: translate(-50%,-50%);
-    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     z-index: 999999;
 }
 
 /** TRIBUTE JS **/
 .tribute-container {
-  position: absolute;
-  /** Only when triangle
+    position: absolute;
+    /** Only when triangle
   margin-top: 8px;*/
-  top: 0px;
-  left: 0;
-  height: auto;
-  /*overflow: auto; */
-  overflow-y: auto;
-  overflow-x: hidden;
-  max-height: 300px;
-  max-width: 500px;
-  display: block;
-  z-index: 9990;
-  border: 1px solid #DDDDDD;
-  border-radius: 4px;
+    top: 0px;
+    left: 0;
+    height: auto;
+    /*overflow: auto; */
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 300px;
+    max-width: 500px;
+    display: block;
+    z-index: 9990;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
 }
+
 /** Triangle up, don't work with overflow auto...
 .tribute-container:before {
   content: "";
@@ -221,93 +244,117 @@ button:disabled {
 **/
 
 .tribute-container ul {
-  margin: 0;
-  margin-top: 0px;
-  padding: 0;
-  list-style: none;
-  background-color: #f7f7f7;
+    margin: 0;
+    margin-top: 0px;
+    padding: 0;
+    list-style: none;
+    background-color: #f7f7f7;
 }
+
 .tribute-container li {
-  padding: 5px 5px;
-  cursor: pointer;
+    padding: 5px 5px;
+    cursor: pointer;
 }
-.tribute-container li.highlight, .tribute-container li:hover {
-  background: #DDDDDD;
+
+.tribute-container li.highlight,
+.tribute-container li:hover {
+    background: #DDDDDD;
 }
+
 .tribute-container li span {
-  font-weight: bold;
+    font-weight: bold;
 }
+
 .tribute-container li.no-match {
-  cursor: default;
+    cursor: default;
 }
+
 .tribute-container .menu-highlighted {
-  font-weight: bold;
+    font-weight: bold;
 }
 
-.ngx-easy-table-small{font-size: 0.8rem !important;}
+.ngx-easy-table-small {
+    font-size: 0.8rem !important;
+}
 
-.pointer {cursor: pointer;}
-.not-allowed:hover { cursor: not-allowed; }
-.drag-handle:hover { cursor: move; }
+.pointer {
+    cursor: pointer;
+}
+
+.not-allowed:hover {
+    cursor: not-allowed;
+}
+
+.drag-handle:hover {
+    cursor: move;
+}
 
 /* NLF colors **/
 
 .nlf-text-blue {
-  color: #004465;
+    color: #004465;
 }
+
 .nlf-text-light {
-  color: #5bbfcc;
+    color: #5bbfcc;
 }
+
 .nlf-text-dark {
-  color: #1d1d1b;
+    color: #1d1d1b;
 }
+
 .nlf-text-orange {
-  color: #f07f00;
+    color: #f07f00;
 }
+
 .nlf-text-purple {
-  color: #93648d;
+    color: #93648d;
 }
 
 .nlf-bg-blue {
-  background-color: #004465;
+    background-color: #004465;
 }
+
 .nlf-bg-light {
-  background-color: #5bbfcc;
+    background-color: #5bbfcc;
 }
+
 .nlf-bg-dark {
-  color: #1d1d1b;
+    color: #1d1d1b;
 }
+
 .nlf-bg-orange {
-  background-color: #f07f00;
+    background-color: #f07f00;
 }
+
 .nlf-bg-purple {
-  background-color: #93648d;
+    background-color: #93648d;
 }
 
 /* Startbootstrap */
 .business-header {
-  height: 50vh;
-  min-height: 300px;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  -o-background-size: cover;
+    height: 50vh;
+    min-height: 300px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
 }
 
 .card {
-  height: 100%;
+    height: 100%;
 }
 
 /** Diffing **/
-ins{
+ins {
     color: black;
     background: #bbffbb;
-  }
+}
 
-  del{
+del {
     color: black;
     background: #ffbbbb;
-  }
+}
 
 /** Fullscreen modals **/
 .modal-full {
@@ -322,9 +369,9 @@ ins{
 
 /** ngx-charts responsive **/
 .chart-wrapper {
-  display: flex;
-  overflow: hidden;
-  min-height: 16em;
+    display: flex;
+    overflow: hidden;
+    min-height: 16em;
 }
 
 
@@ -497,20 +544,24 @@ ins{
     .cbp_tmtimeline:before {
         display: none
     }
+
     .cbp_tmtimeline>li .cbp_tmtime {
         width: 100%;
         position: relative;
         padding: 0 0 20px 0
     }
+
     .cbp_tmtimeline>li .cbp_tmtime span {
         text-align: left
     }
+
     .cbp_tmtimeline>li .cbp_tmlabel {
         margin: 0 0 30px 0;
         padding: 1em;
         font-weight: 400;
         font-size: 95%
     }
+
     .cbp_tmtimeline>li .cbp_tmlabel:after {
         right: auto;
         left: 20px;
@@ -518,12 +569,14 @@ ins{
         border-bottom-color: #f5f5f6;
         top: -20px
     }
+
     .cbp_tmtimeline>li .cbp_tmicon {
         position: relative;
         float: right;
         left: auto;
         margin: -64px 5px 0 0px
     }
+
     .cbp_tmtimeline>li:nth-child(odd) .cbp_tmlabel:after {
         border-right-color: transparent;
         border-bottom-color: #f5f5f6
@@ -615,7 +668,7 @@ ins{
     height: 100%;
 }
 
-.avatar .avatar-text .initial-wrap > span {
+.avatar .avatar-text .initial-wrap>span {
     position: relative;
     display: table-cell;
     vertical-align: middle;
@@ -1034,10 +1087,10 @@ ins{
 }
 
 .btn-add-gray {
-  border-radius: 50%;
-  background: transparent;
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
+    border-radius: 50%;
+    background: transparent;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
     border: 2px dashed #8f9eb5;
     color: #8f9eb5 !important;
- margin-left: 5px !important;
+    margin-left: 5px !important;
 }
