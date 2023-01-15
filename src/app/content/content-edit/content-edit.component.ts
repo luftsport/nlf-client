@@ -137,7 +137,11 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
       }
 
     );
-
+    
+    /**
+     * Tributejs for mentions
+     * See https://github.com/zurb/tribute for more
+     */
     const users = {
       trigger: '@',
       iframe: null,
@@ -186,16 +190,18 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
       positionMenu: true,
     };
 
+    // Only fallskjerm for now
+    // @TODO see how to limit to one activity or get searches from all activities (eg forkJoin?) or '#F' '#M' etc?
     const ors = {
-      trigger: '#',
+      trigger: '#', 
       iframe: null,
       selectClass: 'highlight',
       selectTemplate: function (item) {
         return '<macro href="#" data-url="/ors/fallskjerm/report/' + item.original.id + '" contenteditable="false" class="badge badge-danger macrolink pointer" id="' + item.original.id + '"> \
-        #' + item.original.id + ' ' + item.original.title + '</macro>';
+        #' + item.original.id + ' ' + item.original.title + ' (fallskjerm)</macro>';
       },
       menuItemTemplate: function (item) {
-        return item.string;
+        return item.string + ' (fallskjerm)';
       },
       noMatchTemplate: 'Fant ingen',
       lookup: 'search',
@@ -259,6 +265,9 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
   }
 
   public getOrs(text, callback) {
+
+    this.orsService.setActivity('fallskjerm');
+    
     console.log('searcing for OBSREG, text', text);
 
     let ids = text.replace(/\D+/g, '') // Non digits

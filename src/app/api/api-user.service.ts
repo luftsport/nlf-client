@@ -36,20 +36,15 @@ export class ApiUserService extends ApiRestService {
     };
     return this.getItem(this.relativeUrl, id, options);
   }
-
+  /**
+   * Moved to observations?
+   * @param activity 
+   * @param options 
+   * @returns 
+   */
   public getUserObservations(activity: string, options?: ApiOptionsInterface): Observable<ApiUserORSList> {
 
     return this.getList(this.relativeUrl + 'observations/' + activity, options);
   }
-
-
-
-  /**
-    public getsomething: Observable<Article> = this.http.get("https://api.github.com/users/seeschweiler");
-
-    public getto(): Observable<Article> {
-      return this.getsomething; //this.http.get<Article>("https://api.github.com/users/seeschweiler");
-    }
-    **/
 
 }

@@ -14,7 +14,7 @@
   </span>
   <!-- ONLY motorfly shows E5X *ngIf="activity=='motorfly'" -->
   <span class="pointer mx-1" [ngClass]="show.e5x ? 'text-info' : 'text-secondary'" (click)="show.e5x=!show.e5x">
-    <fa name="paper-plane-o"></fa> e5x
+    <fa name="paper-plane-o"></fa> LT
   </span>
 
   <span class="pointer mx-1" [ngClass]="show.save ? 'text-info' : 'text-secondary'" (click)="show.save=!show.save">
@@ -26,7 +26,7 @@
   </span>
 </div>
 
-<ul class="cbp_tmtimeline">
+<ul *ngIf="!error" class="cbp_tmtimeline">
 
   <!-- NEW -->
   <li>
@@ -144,7 +144,7 @@
     <span *ngIf="row.type=='ors_workflow'">
 
       <!-- INIT -->
-      <span *ngIf="row.data.action=='init' && show.workflow">
+      <span *ngIf="row.data.action=='init' && show.workflow" [title]="row.event_created | date:'yyyy-MM-dd HH:mm'">
         <time class="cbp_tmtime" [dateTime]="row.event_created"><span>{{ row.event_created | date:'HH:mm' }}</span>
           <span>{{ row.event_created | amTimeAgo }}</span></time>
         <div class="cbp_tmicon bg-green">
@@ -185,9 +185,10 @@
       </span>
 
       <!-- NORMAL WORKFLOWS -->
-      <span *ngIf="row.data.action!='init' && show.workflow">
+      <span *ngIf="row.data.action!='init' && show.workflow" [title]="row.event_created | date:'yyyy-MM-dd HH:mm'">
         <time class="cbp_tmtime" [dateTime]="row.event_created"><span>{{ row.event_created | date:'HH:mm' }}</span>
-          <span>{{ row.event_created | amTimeAgo }}</span></time>
+          <span>{{ row.event_created | amTimeAgo }}</span>
+        </time>
 
         <div *ngIf="row.data.action.indexOf('approve')>-1" class="cbp_tmicon bg-green">
           <fa *ngIf="row.data.destination!='closed'" name="exchange" [fixed]="true"></fa>
@@ -212,7 +213,7 @@
             <span *ngIf="row.data.action=='reject'"> sendte observasjonen tilbake </span>
             <span *ngIf="row.data.action.indexOf('approve')>-1"> godkjente observasjonen </span>
             <span *ngIf="row.data.action=='reopen'"> gjenåpnet observasjonen </span>
-            <span *ngIf="row.data.action=='withdraw'"> trekte tilbake observasjonen </span>
+            <span *ngIf="row.data.action=='withdraw'"> trakk tilbake observasjonen </span>
             <span class="pull-right">
               <nlf-resolve-observation-state [activity]="observation._model.type" [state]="row.data.source" icon="true">
               </nlf-resolve-observation-state>
@@ -248,7 +249,7 @@
     </span>
 
     <!-- SAVE -->
-    <span *ngIf="row.type=='ors_save' && show.save">
+    <span *ngIf="row.type=='ors_save' && show.save" [title]="row.event_created | date:'yyyy-MM-dd HH:mm'">
       <time class="cbp_tmtime" [dateTime]="row.event_created"><span>{{ row.event_created | date:'HH:mm' }}</span>
         <span>{{ row.event_created | amTimeAgo }}</span></time>
       <div class="cbp_tmicon bg-info">
@@ -271,7 +272,7 @@
     </span>
 
     <!-- PURRING ULEST -->
-    <span *ngIf="row.type=='ors_reminder' && show.reminders">
+    <span *ngIf="row.type=='ors_reminder' && show.reminders" [title]="row.event_created | date:'yyyy-MM-dd HH:mm'">
       <time class="cbp_tmtime" [dateTime]="row.event_created"><span>{{ row.event_created | date:'HH:mm' }}</span>
         <span>{{ row.event_created | amTimeAgo }}</span></time>
       <div class="cbp_tmicon bg-danger">
@@ -307,7 +308,7 @@
     </span>
 
     <!-- HOUSEKEEPING varsel 1-->
-    <span *ngIf="row.type=='ors_housekeeping_first_warning'">
+    <span *ngIf="row.type=='ors_housekeeping_first_warning' && show.reminders" [title]="row.event_created | date:'yyyy-MM-dd HH:mm'">
       <time class="cbp_tmtime" [dateTime]="row.event_created"><span>{{ row.event_created | date:'HH:mm' }}</span>
         <span>{{ row.event_created | amTimeAgo }}</span></time>
       <div class="cbp_tmicon bg-warning">
@@ -335,7 +336,7 @@
     </span>
 
     <!-- HOUSEKEEPING varsel 2-->
-    <span *ngIf="row.type=='ors_housekeeping_second_warning'">
+    <span *ngIf="row.type=='ors_housekeeping_second_warning' && show.reminders" [title]="row.event_created | date:'yyyy-MM-dd HH:mm'">
       <time class="cbp_tmtime" [dateTime]="row.event_created"><span>{{ row.event_created | date:'HH:mm' }}</span>
         <span>{{ row.event_created | amTimeAgo }}</span></time>
       <div class="cbp_tmicon bg-danger">
@@ -363,7 +364,7 @@
     </span>
 
     <!-- MESSAGES -->
-    <span *ngIf="row.type=='ors_message' && show.messages">
+    <span *ngIf="row.type=='ors_message' && show.messages" [title]="row.event_created | date:'yyyy-MM-dd HH:mm'">
       <time class="cbp_tmtime" [dateTime]="row.event_created"><span>{{ row.event_created | date:'HH:mm' }}</span>
         <span>{{ row.event_created | amTimeAgo }}</span></time>
       <div class="cbp_tmicon bg-info">
@@ -393,7 +394,7 @@
 
 
     <!-- E5X -->
-    <span *ngIf="row.type=='ors_e5x' && show.e5x">
+    <span *ngIf="row.type=='ors_e5x' && show.e5x" [title]="row.event_created | date:'yyyy-MM-dd HH:mm'">
       <time class="cbp_tmtime" [dateTime]="row.event_created"><span>{{ row.event_created | date:'HH:mm' }}</span>
         <span>{{ row.event_created | amTimeAgo }}</span></time>
 
@@ -435,7 +436,7 @@
     </span>
 
     <!-- ACCESS -->
-    <span *ngIf="row.type=='ors_acl' && show.persons">
+    <span *ngIf="row.type=='ors_acl' && show.persons" [title]="row.event_created | date:'yyyy-MM-dd HH:mm'">
       <time class="cbp_tmtime" [dateTime]="row.event_created"><span>{{ row.event_created | date:'HH:mm' }}</span>
         <span>{{ row.event_created | amTimeAgo }}</span></time>
 

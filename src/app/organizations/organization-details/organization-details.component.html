@@ -2,7 +2,7 @@
 
   <div class="container my-3">
 
-    <h1>{{ lungo.name }}<!--(<nlf-resolve-lungo-organization-type [type_id]="lungo.type_id"></nlf-resolve-lungo-organization-type>)--></h1>
+    <h1>{{ lungo.name }}<sup *ngIf="lungo.is_active===false" class="text-danger mx-1" title="Organisasjonen er inaktiv eller slettet">INAKTIV</sup><!--(<nlf-resolve-lungo-organization-type [type_id]="lungo.type_id"></nlf-resolve-lungo-organization-type>)--></h1>
 
     <div class="row">
       <!-- Summary table -->

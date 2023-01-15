@@ -4,6 +4,7 @@ import { ApiOptionsInterface, ApiUserDataSubjectItem } from 'app/api/api.interfa
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
 import { Columns, Config, STYLE } from 'ngx-easy-table';
 import { TableEventObject, DefaultTableConfig } from 'app/interfaces/ngx-easy-table.interface';
+import { timeSince } from 'app/interfaces/functions';
 //import { clone } from 'lodash';
 
 
@@ -98,6 +99,12 @@ export class NlfOrsSelfTableComponent implements OnInit {
     // Always call getData on table event? No only for pagination and order
 
   }
+
+  public timedelta(_updated) {
+    console.dir(_updated);
+    return timeSince(_updated);
+  }
+
 
   public getData() {
 

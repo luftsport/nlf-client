@@ -14,6 +14,10 @@
                 <a *ngIf="row.workflow.state!=='closed'" [routerLink]="['/ors', row._model.type, 'edit', row.id]">{{ row.tags | nlfOrsTags: '/':23:'..' }}</a>
             </td>
             <td class="ngx-easy-table-small">
+                <ng-container *ngIf="['closed', 'withdrawn'].indexOf(row.workflow.state)<0">
+                    <fa *ngIf="timedelta(row._updated)>=5*24*3600&&timedelta(row._updated)<10*24*3600" name="clock-o" class="text-warning" [fixed]="true" ngbTooltip="Det er over 5 dager siden det har vært aktivitet"></fa>
+                    <fa *ngIf="timedelta(row._updated)>=10*24*3600" name="clock-o" class="text-danger" [fixed]="true" ngbTooltip="Det er over 10 dager siden det har vært aktivitet"></fa>
+                </ng-container>
               {{ row.workflow.state | nlfOrsState: row._model.type }}
             </td>
             <td class="text-right ngx-easy-table-small text-right">

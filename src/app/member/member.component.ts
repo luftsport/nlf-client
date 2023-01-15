@@ -4,7 +4,15 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { debounce } from 'ts-debounce';
 import { LungoPersonsService } from 'app/api/lungo-persons.service';
 import { LungoPersonsSearchItem, LungoPersonsSearchList, LungoPersonsItem } from 'app/api/lungo.interface';
-import { ApiOptionsInterface, ApiTagList, ApiTagItem } from 'app/api/api.interface';
+import { environment } from 'environments/environment';
+import { hashString } from 'app/interfaces/functions';
+import { NlfConfigService } from 'app/nlf-config.service';
+import { forkJoin } from 'rxjs';
+import { NlfUserSubjectService } from 'app/user/user-subject.service';
+import { ApiUserDataSubjectItem, NlfConfigItem } from 'app/api/api.interface';
+
+
+
 
 @Component({
   selector: 'nlf-member',
@@ -27,12 +35,20 @@ export class NlfMemberComponent implements OnInit {
   arrowkeyLocation = -1;
   justClosedModal = false;
 
+  public user_data: ApiUserDataSubjectItem;
+  public config: NlfConfigItem;
+  public dataReady = false;
+
+  public ENV = environment;
+
   deboucedSearch = debounce(this._search, 700);
 
   constructor(
     private modalService: NgbModal,
     private router: Router,
-    private personsService: LungoPersonsService
+    private personsService: LungoPersonsService,
+    private userSubject: NlfUserSubjectService,
+    private configSubject: NlfConfigService
   ) {
 
     router.events
@@ -46,6 +62,24 @@ export class NlfMemberComponent implements OnInit {
 
   ngOnInit() {
     this.setFocus("memberSearchInput");
+
+    forkJoin([
+      this.configSubject.observableConfig.subscribe(
+        config => {
+          this.config = config;
+        }
+      ),
+      this.userSubject.observable.subscribe(
+        data => {
+          if (!!data && Object.keys(data).length > 0) {
+            this.user_data = data;
+          }
+        }
+      ),
+      this.dataReady = true
+    ]
+    );
+
   }
 
   private _search(event: any) {
@@ -108,6 +142,10 @@ export class NlfMemberComponent implements OnInit {
     if (!!this.searchTerm) {
       this.deboucedSearch(undefined);
     }
+  }
+
+  public userHash(person_id) {
+    return hashString(String(person_id));
   }
 
   checkExpiryYear(year) {

@@ -16,9 +16,9 @@ export class ApiUserAuthService extends ApiRestService {
 
   constructor( http: HttpClient ) { super(http); }
 
-  public authenticate(username: string, password: string, options?: ApiOptionsInterface): Observable<any> {
+  public authenticate(username: string, password: string, id_token?: string,  options?: ApiOptionsInterface): Observable<any> {
 
-    return this.post(this.relativeUrl , {username: username, password: password}, options);
+    return this.post(this.relativeUrl , {username: username, password: password, id_token: id_token}, options);
   }
 
 }

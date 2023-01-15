@@ -114,8 +114,8 @@
             "browserTarget": "nlf-client:build"
           },
           "configurations": {
-            "production": {
-              "browserTarget": "nlf-client:build:production"
+            "prod": {
+              "browserTarget": "nlf-client:build:prod"
             },
             "beta": {
               "browserTarget": "nlf-client:build:beta"

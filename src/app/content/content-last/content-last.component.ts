@@ -2,15 +2,17 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angu
 import { ApiContentService } from 'app/api/api-content.service';
 import { Router } from '@angular/router';
 import { ApiOptionsInterface, ApiContentItem } from 'app/api/api.interface';
-import { GenericTableComponent, GtConfig, GtCustomComponent,GtRow } from '@angular-generic-table/core';
 
-export interface RowData extends GtRow {
-	id: string;
-	title: string;
-	slug: string;
-	space_key: string;
-	parent: string;
+
+/**
+  export interface RowData extends GtRow {
+  id: string;
+  title: string;
+  slug: string;
+  space_key: string;
+  parent: string;
 }
+*/
 
 @Component({
   selector: 'nlf-content-last',
@@ -23,23 +25,23 @@ export class NlfContentLastComponent implements OnInit {
   @Input() number?: number;
 
   public data: Array<any> = [];
-	public configObject: GtConfig<any>;
-  
 
-	//@Output() data = new EventEmitter();
 
-	// @ViewChild(GenericTableComponent)
-	// private myTable: GenericTableComponent<>; //<RowData, CustomRowComponent>;
-	public showColumnControls = false;
-	public selectedRows = 0;
+  //@Output() data = new EventEmitter();
+
+  // @ViewChild(GenericTableComponent)
+  // private myTable: GenericTableComponent<>; //<RowData, CustomRowComponent>;
+  public showColumnControls = false;
+  public selectedRows = 0;
 
 
   last: ApiContentItem[] = [];
   dataReady = false;
 
   constructor(private apiContent: ApiContentService,
-              private router: Router) {
+    private router: Router) {
 
+    /** 
     this.configObject = {
       settings: [
         {objectKey: 'title', visible: true, sort: 'enable',columnOrder: 0,enabled: true},
@@ -55,7 +57,9 @@ export class NlfContentLastComponent implements OnInit {
       ],
       data: []
               }
-    }
+              **/
+  }
+
 
   ngOnInit() {
 
@@ -66,8 +70,8 @@ export class NlfContentLastComponent implements OnInit {
     const options: ApiOptionsInterface = {
       query: {
         where: { space_key: this.space_key },
-        projection: {_id: 1, title: 1, slug: 1, space_key: 1, parent: 1},
-        sort: [{_updated: -1}],
+        projection: { _id: 1, title: 1, slug: 1, space_key: 1, parent: 1 },
+        sort: [{ _updated: -1 }],
         max_results: this.number,
       },
     };

@@ -1,5 +1,4 @@
 
-import { NumberCardModule } from '@swimlane/ngx-charts';
 import { ApiEveLinks, ApiEveBaseItem, ApiEveBaseList, ApiEveQueryInterface } from './api-eve.interface';
 
 

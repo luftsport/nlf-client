@@ -1,77 +1,80 @@
-<header class="nlf-sticky-toolbar">
-  <div class="container">
+<ng-container *ngIf="dataReady">
+  <header class="nlf-sticky-toolbar">
+    <div class="container">
 
-    <span class="breadcrumb">
-      <li class="breadcrumb-item">
-        <fa name="users" [fixed]="true"></fa> NLF Medlemssjekk
-      </li>
-      <!--
+      <span class="breadcrumb">
+        <li class="breadcrumb-item">
+          <fa name="users" [fixed]="true"></fa> NLF Medlemssjekk
+        </li>
+        <!--
       <li class="breadcrumb-item active">
         Dashboard <sup class="text-danger mx-1" title="Applikasjonen er ikke ferdig utviklet">beta</sup>
       </li>
     -->
-    </span>
+      </span>
 
-    <!--
+      <!--
     <button *ngIf="!!query" class="btn btn-primary btn-sm pull-right mx-1" (click)="openModal(saveTemplate)" title="Funksjonen kommer snart" disabled>
       <fa name="save" [fixed]="true"></fa> Lagre søk
     </button>
     -->
-    <span class="float-right d-inline">
-      <nlf-help class="mx-1" key="nlf-member"></nlf-help>
-      <a [routerLink]="['/medlem', 'kompetanse']">
-        <fa name="table" [fixed]="true"></fa> Medlemsliste
-      </a>
-    </span>
-  </div>
-</header>
+      <span *ngIf="ENV.production===false && [1505923257, 1476506542, -1957053861, 1536523365].indexOf(userHash(user_data.person_id))>-1"
+        class="float-right d-inline">
+        <nlf-help class="mx-1" key="nlf-member"></nlf-help>
+        <a [routerLink]="['/medlem', 'kompetanse']">
+          <fa name="table" [fixed]="true"></fa> Medlemsliste
+        </a>
+      </span>
+    </div>
+  </header>
 
 
-<div class="container">
+  <div class="container">
 
-  <div class="col-12 mt-4 mb-1">
 
-    <!-- SEARCH INPUT -->
-    <div class="row">
-      <div class="d-flex col-12" id="memberSearchInput">
-        <!--#searchField searchField.value <fa name="spinner"  [size]="fasize"></fa> -->
-        <fa *ngIf="!searching" name="search" [fixed]="true" class="form-control-lg position-absolute pl-3 text-muted">
-        </fa>
-        <fa *ngIf="searching" name="spinner" animation="pulse" [fixed]="true"
-          class="form-control-lg position-absolute pl-3 text-muted"></fa>
+    <div class="col-12 mt-4 mb-1">
 
-        <input [(ngModel)]="searchTerm" [disabled]="searching" class="form-control form-control-lg py-4 pl-5 "
-          type="text" placeholder="Søk etter medlem" (keyup)="deboucedSearch($event)" (keyup.enter)="search($event)"
-          (keydown.arrowup)="moveUp()" (keydown.arrowdown)="moveDown()" (keydown.shift.tab)="moveUp()"
-          (keydown.tab)="moveDown()">
+      <!-- SEARCH INPUT -->
+      <div class="row">
+        <div class="d-flex col-12" id="memberSearchInput">
+          <!--#searchField searchField.value <fa name="spinner"  [size]="fasize"></fa> -->
+          <fa *ngIf="!searching" name="search" [fixed]="true" class="form-control-lg position-absolute pl-3 text-muted">
+          </fa>
+          <fa *ngIf="searching" name="spinner" animation="pulse" [fixed]="true"
+            class="form-control-lg position-absolute pl-3 text-muted"></fa>
+
+          <input [(ngModel)]="searchTerm" [disabled]="searching" class="form-control form-control-lg py-4 pl-5 "
+            type="text" placeholder="Søk etter medlem" (keyup)="deboucedSearch($event)" (keyup.enter)="search($event)"
+            (keydown.arrowup)="moveUp()" (keydown.arrowdown)="moveDown()" (keydown.shift.tab)="moveUp()"
+            (keydown.tab)="moveDown()">
+        </div>
       </div>
+
+      <!-- FILTER TOGGLES -->
+      <div class="row mt-1">
+        <div class="col-12">
+          <ng-container
+            *ngFor="let _activity of ['fallskjerm', 'sportsfly', 'motorfly', 'seilfly', 'modellfly', 'ballong', 'hps']">
+            <span class="badge pointer ml-2"
+              [ngClass]="{'badge-secondary': activity!=_activity, 'badge-success': activity==_activity}"
+              (click)="setActivity(_activity)">{{_activity | titlecase }}</span>
+          </ng-container>
+        </div>
+      </div>
+
     </div>
 
-    <!-- FILTER TOGGLES -->
-    <div class="row mt-1">
-      <div class="col-12">
-        <ng-container
-          *ngFor="let _activity of ['fallskjerm', 'sportsfly', 'motorfly', 'seilfly', 'modellfly', 'ballong', 'hps']">
-          <span class="badge pointer ml-2"
-            [ngClass]="{'badge-secondary': activity!=_activity, 'badge-success': activity==_activity}"
-            (click)="setActivity(_activity)">{{_activity | titlecase }}</span>
-        </ng-container>
-      </div>
-    </div>
+    <!-- SEARCH RESULTS -->
+    <div class="col-12 p-4">
+      <div class="member">
+        <ul>
+          <ng-container *ngFor="let row of results; index as idx">
+            <li (click)="openModal(row.id)" class="pointer col-12 row p-1" [class.active]="idx==arrowkeyLocation">
+              <h4>
+                <nlf-resolve-lungo-person [person_id]="row.id" [link]="false" [avatar]="true" [highlite]="searchTerm">
+                </nlf-resolve-lungo-person>
 
-  </div>
-
-  <!-- SEARCH RESULTS -->
-  <div class="col-12 p-4">
-    <div class="member">
-      <ul>
-        <ng-container *ngFor="let row of results; index as idx">
-          <li (click)="openModal(row.id)" class="pointer col-12 row p-1" [class.active]="idx==arrowkeyLocation">
-            <h4>
-              <nlf-resolve-lungo-person [person_id]="row.id" [link]="false" [avatar]="true" [highlite]="searchTerm">
-              </nlf-resolve-lungo-person>
-
-              <!-- Should be able to show icons for memberships? Needs federation...
+                <!-- Should be able to show icons for memberships? Needs federation...
             <ng-container *ngFor="let fed of row.federation">
               <i class="nlf nlf-fw nlf-fallskjerm"></i>
               <i class="nlf nlf-fw nlf-seilfly"></i>
@@ -83,14 +86,15 @@
             </ng-container>
             -->
 
-            </h4>
-          </li>
-        </ng-container>
-      </ul>
+              </h4>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
     </div>
   </div>
-</div>
 
+</ng-container>
 
 <ng-template #personModalTemplate>
 
@@ -141,7 +145,8 @@
         class="text-danger mr-1"></fa>
       <nlf-resolve-lungo-organization [organization_id]="membership.discipline" [link]="false" [long]="true"
         [show_activity]="true"></nlf-resolve-lungo-organization>
-      <span *ngIf="!!membership.payment">{{ membership.payment.exception || '' }} {{ membership.payment.type || 'Ukjent'
+      <span *ngIf="!!membership.payment">{{ membership.payment.exception || '' }} {{ membership.payment.type ||
+        'Ukjent'
         }}</span>
     </div>
     <div *ngIf="!modalPerson.memberships||modalPerson.memberships.length==0">
@@ -174,6 +179,8 @@
       person_id }})
     </div>
   </div>
+
+
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="closeModal($event)">Ferdig</button>

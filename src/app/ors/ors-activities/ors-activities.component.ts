@@ -53,6 +53,7 @@ export class NlfOrsActivitiesComponent implements OnInit {
     */
 
     this.route.params.subscribe(params => {
+      this.error = false;
       console.log('PARAMS', params);
       this.activity = params['activity'] ? params['activity'] : 0;
       this.observation_id = params['id'] ? params['id'] : 0;
@@ -62,6 +63,7 @@ export class NlfOrsActivitiesComponent implements OnInit {
         this.getData();
       } else {
         this.alertService.error('Could not determine activity or observation id');
+        this.error = true;
       }
     });
 
@@ -80,6 +82,7 @@ export class NlfOrsActivitiesComponent implements OnInit {
       },
       err => {
         this.alertService.error(err.message);
+        this.error = true;
       },
       () => { }
     );

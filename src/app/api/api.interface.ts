@@ -52,6 +52,7 @@ export interface ApiUserAuthItem {
   success: boolean;
   token: string;
   token64: string;
+  id_token?: string;
   message?: string;
   valid?: any;
   activities?: string[];
@@ -60,6 +61,7 @@ export interface ApiUserAuthItem {
 
 export interface AuthDataSubjectInterface {
   token: string;
+  id_token?: string;
   person_id: number;
   valid: Date;
 }
