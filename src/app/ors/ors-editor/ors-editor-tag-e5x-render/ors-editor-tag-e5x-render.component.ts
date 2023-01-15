@@ -15,6 +15,7 @@ export class NlfOrsEditorTagE5xRenderComponent implements OnInit {
   @Input() items: any; // Value or array of
   @Input() path: string;
   @Input() unit: string;
+  @Input() customLabel: string;
   @Input() showLabel = true;
   @Input() classes: string;
   @Input() activity: string = 'motorfly';

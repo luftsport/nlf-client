@@ -31,7 +31,7 @@ export class NlfOrsFallskjermComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.app.setTitle('ORS Oversikt');
+    this.app.setTitle('OBSREG Oversikt');
   }
 
 

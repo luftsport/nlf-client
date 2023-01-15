@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
   _auth_service: 'https://auth.nlf.no/auth',
+  _logout_service: 'https://auth.nlf.no/logout',
   _client_id: 'vekvwnndpezv4dqlr35c',
   _scope: 'read',
   _shebang: 0,

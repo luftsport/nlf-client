@@ -4,9 +4,12 @@
       <fa name="plus" [fixed]="true"></fa>ATM Involvement
     </button>
   </div>
+
+  
   <div class="col-md-9">
     <div *ngFor="let a of atm; let idx = index">
-      <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="a.attributes.anspName.value" path="E5X.Occurrence.AirNavigationService.ANSPName"></nlf-ors-editor-tag-e5x-render>
+      <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="a.attributes.anspName.value"
+        path="E5X.Occurrence.AirNavigationService.ANSPName"></nlf-ors-editor-tag-e5x-render>
       &nbsp;
       <fa class="mx-1" name="edit" (click)="openModal(modal, idx)"></fa>
       <fa class="mx-1" *ngIf="!disabled" name="close" (click)="delete(idx)"></fa>
@@ -30,22 +33,24 @@
 
 
 
-        <div class="row">
+    <div class="row">
 
-            <!-- TEST -->
-            NB Testing
-<div class="col-md-6">
-<nlf-ors-editor-tag-e5x [disabled]="disabled" path="E5X.Occurrence.ATMContribution"></nlf-ors-editor-tag-e5x>
-</div>
-<div class="col-md-6">
-<nlf-ors-editor-tag-e5x [disabled]="disabled" path="E5X.Occurrence.EffectOnATMService"></nlf-ors-editor-tag-e5x>
-</div>
-</div>
-<div class="row">
-          <div class="col-md-12">
-            <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.attributes.anspName.value" path="E5X.Occurrence.AirNavigationService.ANSPName" id="ANSPName"></nlf-ors-editor-tag-e5x>
-          </div>
-          <!--
+      <!-- TEST -->
+      NB Testing
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" path="E5X.Occurrence.ATMContribution"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" path="E5X.Occurrence.EffectOnATMService"></nlf-ors-editor-tag-e5x>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.attributes.anspName.value"
+          path="E5X.Occurrence.AirNavigationService.ANSPName" id="ANSPName"></nlf-ors-editor-tag-e5x>
+      </div>
+      <!--
                     <div class="col-md-6">
                         <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.attributes.atmContribution.value" path="E5X.Occurrence.ATMContribution"
                             id="ATMContribution"></nlf-ors-editor-tag-e5x>
@@ -56,29 +61,33 @@
                             id="EffectOnATMService"></nlf-ors-editor-tag-e5x>
                     </div>
                   -->
-        </div>
+    </div>
 
-        <div class="row">
-          <div class="col-md-4">
-            <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.attributes.apwAlerting.value" path="E5X.Occurrence.AirNavigationService.APWAlerting" id="SectorName"></nlf-ors-editor-tag-e5x>
-          </div>
-          <div class="col-md-3">
-            <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.attributes.rimcasAlerting.value" path="E5X.Occurrence.AirNavigationService.RIMCASAlerting" id="RTFFrequency"></nlf-ors-editor-tag-e5x>
-          </div>
-          <div class="col-md-5">
-            <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.attributes.stcaCurrentAlerting.value" path="E5X.Occurrence.AirNavigationService.STCACurrentAlerting" id="WorkloadController"></nlf-ors-editor-tag-e5x>
-          </div>
-
-        </div>
-
-        <div class="row">
-
-          <div *ngIf="devDebug" class="row">
-            AC: {{ atm | json }}
-          </div>
-
-        </div>
+    <div class="row">
+      <div class="col-md-4">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.attributes.apwAlerting.value"
+          path="E5X.Occurrence.AirNavigationService.APWAlerting" id="SectorName"></nlf-ors-editor-tag-e5x>
       </div>
+      <div class="col-md-3">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.attributes.rimcasAlerting.value"
+          path="E5X.Occurrence.AirNavigationService.RIMCASAlerting" id="RTFFrequency"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-5">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.attributes.stcaCurrentAlerting.value"
+          path="E5X.Occurrence.AirNavigationService.STCACurrentAlerting" id="WorkloadController">
+        </nlf-ors-editor-tag-e5x>
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div *ngIf="devDebug" class="row">
+        AC: {{ atm | json }}
+      </div>
+
+    </div>
+  </div>
 
 
   <div class="modal-footer">

@@ -376,16 +376,6 @@ export interface E5XDataLink {
   EmbeddedData?: any;
 }
 
-
-
-
-/**
- * "airTemperature": {
-          "TYPE_NAME": "E5X.Occurrence.ATTRIBUTES.AirTemperature",
-          "unit": "C",
-          "value": 20
-        },
- */
 export interface E5X {
   _status?: any;
   _audit?: any; //list of generations et al?
@@ -482,7 +472,6 @@ export interface Occurrence {
 /**
 * E5X stuff functions
 **/
-// 34!
 function getE5XId() {
   return 'ID'
     + Math.random().toString(36).substring(2, 12).toUpperCase()
@@ -503,8 +492,8 @@ export class E5XClass {
       attributes: {
         // Time and date
         headline: { value: undefined },
-        uTCDate: { value: undefined },
-        uTCTime: { value: undefined },
+        utcDate: { value: undefined },
+        utcTime: { value: undefined },
         localDate: { value: undefined },
         localTime: { value: undefined },
 
@@ -594,7 +583,8 @@ export class E5XClass {
           "dangerousGoods",
           "runwayIncursion",
           "reportingHistory",
-          "riskAssessment"] */
+          "riskAssessment"] 
+          */
       entities: {
         events: [],
         runwayIncursion: [],

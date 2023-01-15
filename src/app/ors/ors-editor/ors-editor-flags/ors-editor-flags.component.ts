@@ -29,13 +29,21 @@ export class NlfOrsEditorFlagsComponent implements OnInit {
         this.config = data;
       }
     );
-    this.subject.observableObservation.subscribe(observation => this.observation = observation);
+    this.subject.observableObservation.subscribe(
+      observation => {
+        this.observation = observation;
+
+        try {
+          if (!this.observation.hasOwnProperty('flags')) {
+            this.observation['flags'] = {};
+          }
+        } catch (e) { }
+      }
+    );
   }
 
   ngOnInit() {
-    if (!this.observation.hasOwnProperty('flags')) {
-      this.observation['flags'] = {};
-    }
+
   }
 
   private school(event) {

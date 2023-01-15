@@ -17,7 +17,7 @@
 
 <div class="container">
   <span *ngIf="!!dataReady" class="overflow-auto">
-    <ngx-table [configuration]="tableConfig" [data]="help" [columns]="columns" [(pagination)]="pagination" (event)="eventEmitted($event)">
+    <ngx-table [id]="'help-text-table'" [configuration]="tableConfig" [data]="help" [columns]="columns" [(pagination)]="pagination" (event)="eventEmitted($event)">
 
       <ng-template let-row>
         <td class="ngx-easy-table-small">

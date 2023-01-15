@@ -33,7 +33,7 @@
     <nlf-resolve-observation-state activity="fallskjerm" [state]="observation.workflow.state" icon="true"></nlf-resolve-observation-state>
 
     <!-- E5X -->
-    <nlf-ors-e5x *ngIf="observation._model.type=='motorfly'"></nlf-ors-e5x>
+    <nlf-ors-e5x *ngIf="['motorfly', 'sportsfly', 'seilfly'].indexOf(observation._model.type)"></nlf-ors-e5x>
 
     <!-- ACTIVITIES -->
     <a class="badge badge-info mx-1" [routerLink]="['/ors', observation._model.type , 'activities', observation.id]">

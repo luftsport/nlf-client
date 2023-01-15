@@ -16,6 +16,11 @@
       "dom"
     ],
     "module": "es2015",
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "paths": {
+      "@angular/*": [
+        "../node_modules/@angular/*"
+      ]
+    },
   }
 }

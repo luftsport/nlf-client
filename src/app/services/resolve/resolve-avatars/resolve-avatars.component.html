@@ -14,7 +14,7 @@
       </span>
     </div>
     <!-- persons modal -->
-    <div *ngIf="show_modal && persons.length<=max" class="avatar pointer" (click)="openPersonsModal(peopleModalTemplate)">
+    <div *ngIf="show_modal && persons.length>0 && persons.length<=max" class="avatar pointer" (click)="openPersonsModal(peopleModalTemplate)">
       <span ngbTooltip="vis liste" class="avatar-text avatar-text-green rounded-circle">
         <span class="initial-wrap"><span><fa name="list"></fa></span></span>
       </span>

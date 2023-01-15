@@ -17,7 +17,7 @@
       <button class="btn btn-block btn-lg btn-success">
         <fa name="check" fw="true"></fa>
         <nlf-resolve-lungo-activity [activity_id]="userData.settings.default_activity"></nlf-resolve-lungo-activity>&nbsp;/&nbsp;
-        <nlf-resolve-lungo-organization [organization_id]="userData.settings.default_discipline" [show_type]="false"></nlf-resolve-lungo-organization>
+        <nlf-resolve-lungo-organization [organization_id]="userData.settings.default_discipline" [show_activity]="false"></nlf-resolve-lungo-organization>
       </button>
 
     </div>
@@ -35,7 +35,7 @@
           <button (click)="setDefaultClub(role)" class="btn btn-block btn-lg btn-primary">
             <fa name="plus" fw="true"></fa>
             <nlf-resolve-lungo-activity [activity_id]="role.activity"></nlf-resolve-lungo-activity>&nbsp;/&nbsp;
-            <nlf-resolve-lungo-organization [organization_id]="role.org" [show_type]="false"></nlf-resolve-lungo-organization>
+            <nlf-resolve-lungo-organization [organization_id]="role.org" [show_activity]="false"></nlf-resolve-lungo-organization>
           </button>
         </p>
         <div *ngIf="org.length==0" class="alert alert-danger">

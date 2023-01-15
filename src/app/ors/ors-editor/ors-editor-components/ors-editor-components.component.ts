@@ -16,7 +16,6 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   selector: 'nlf-ors-editor-components',
   templateUrl: './ors-editor-components.component.html',
   styleUrls: ['./ors-editor-components.component.css']
-  //, './tag-input.scss']
 })
 export class NlfOrsEditorComponentsComponent implements OnInit, OnDestroy {
 
@@ -72,55 +71,60 @@ export class NlfOrsEditorComponentsComponent implements OnInit, OnDestroy {
     this.observationSubject.observableObservation.subscribe(observation => {
       this.observation = observation;
 
+      if (!!this.observation) {
+        // Only on changed components!
+        if (this.components !== observation.components || this.observation.involved !== observation.involved) {
 
-      // Only on changed components!
-      if (this.components !== observation.components || this.observation.involved !== observation.involved) {
+          this.causes = this.observation.components.filter(
+            component => component.flags.cause === true
+          );
+          console.log('Causes', this.causes);
 
-        this.causes = this.observation.components.filter(
-          component => component.flags.cause === true
-        );
-        console.log('Causes', this.causes);
+          this.incidents = this.observation.components.filter(
+            component => component.flags.incident === true
+          );
+          if (this.incidents.length === 0) {
+            setTimeout(() => {
+              this.incidents.push({
+                what: '',
+                flags: { incident: true },
+                involved: [],
+                where: { at: undefined, altitude: undefined },
+                attributes: {}
+              });
+            }, 300);
+          }
+          console.log('Incident', this.incidents);
 
-        this.incidents = this.observation.components.filter(
-          component => component.flags.incident === true
-        );
-        if (this.incidents.length === 0) {
-          setTimeout(() => {
-            this.incidents.push({
-              what: '',
-              flags: { incident: true },
-              involved: [],
-              where: { at: undefined, altitude: undefined },
-              attributes: {}
-            });
-          }, 300);
+          this.consequences = this.observation.components.filter(
+            component => component.flags.consequence === true
+          );
+          console.log('Consequences', this.consequences);
         }
-        console.log('Incident', this.incidents);
+        this.components = observation.components;
 
-        this.consequences = this.observation.components.filter(
-          component => component.flags.consequence === true
+
+        // Preload tags
+        this.configService.observableConfig.subscribe(
+          data => {
+            this.config = data;
+            if (this.observation.acl_user.w) {
+              this.preloadIncidentsTags();
+              this.preloadCausesTags();
+              this.preloadConsequencesTags();
+              this.preloadWhereAtTags();
+            }
+          }
         );
-        console.log('Consequences', this.consequences);
+
       }
-      this.components = observation.components;
 
     });
   }
 
 
   ngOnInit() {
-    // Preload tags
-    this.configService.observableConfig.subscribe(
-      data => {
-        this.config = data;
-        if (this.observation.acl_user.w) {
-          this.preloadIncidentsTags();
-          this.preloadCausesTags();
-          this.preloadConsequencesTags();
-          this.preloadWhereAtTags();
-        }
-      }
-    );
+
 
   }
 

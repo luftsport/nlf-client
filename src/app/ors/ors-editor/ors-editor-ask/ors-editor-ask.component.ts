@@ -32,15 +32,16 @@ export class NlfOrsEditorAskComponent implements OnInit {
     this.subject.observableObservation.subscribe(
       observation => {
         this.observation = observation; // Observation
-
-        if (!this.observation.hasOwnProperty('ask')) {
-          this.observation['ask'] = {
-            text: {},
-            skills: 0,
-            knowledge: 0,
-            attitude: 0
+        if (!!this.observation) {
+          if (!this.observation.hasOwnProperty('ask')) {
+            this.observation['ask'] = {
+              text: {},
+              skills: 0,
+              knowledge: 0,
+              attitude: 0
+            }
+            this.subject.update(this.observation);
           }
-          this.subject.update(this.observation);
         }
       });
   }

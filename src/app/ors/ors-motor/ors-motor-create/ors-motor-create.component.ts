@@ -1,4 +1,4 @@
-import { ApiOptionsInterface, NlfConfigItem } from 'app/api/api.interface';
+import { ApiOptionsInterface, NlfConfigItem, ApiUserDataSubjectItem } from 'app/api/api.interface';
 import { Component, Input, OnInit, AfterViewInit, Inject } from '@angular/core';
 import { ApiObservationsService } from 'app/api/api-observations.service';
 import { Router } from '@angular/router';
@@ -9,6 +9,8 @@ import { NlfAlertService } from 'app/services/alert/alert.service';
 import { NlfConfigService } from 'app/nlf-config.service';
 import { environment } from 'environments/environment';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
+import { ConfirmService } from 'app/services/confirm/confirm.service';
+import { forkJoin } from 'rxjs';
 import {
   E5XClass,
   E5XNarrativeClass,
@@ -27,7 +29,7 @@ export class NlfOrsMotorCreateComponent implements OnInit {
 
   @Input() layout: string; // inline, short, datetimepicker, calendar etc
   @Input() defaultBtn: boolean = false;
-
+  @Input() activity: string = 'motorfly';
   userid: number;
   bsValue: Date = new Date();
   ismeridian = false;
@@ -45,7 +47,10 @@ export class NlfOrsMotorCreateComponent implements OnInit {
   settings;
   dataReady = false; // render when true
   loading = false; // On create
+  error = false;
   public config: NlfConfigItem;
+
+  public userData: ApiUserDataSubjectItem;
 
   constructor(
     private configService: NlfConfigService,
@@ -53,29 +58,34 @@ export class NlfOrsMotorCreateComponent implements OnInit {
     private orgService: LungoOrganizationsService,
     private userService: ApiUserService,
     private alertService: NlfAlertService,
-    private userData: NlfUserSubjectService,
+    private userDataSubject: NlfUserSubjectService,
     private router: Router,
-    private subject: NlfOrsEditorService) {
+    private subject: NlfOrsEditorService,
+    private confirmService: ConfirmService) {
 
-    this.orsService.setActivity('motorfly');
+    this.orsService.setActivity(this.activity);
 
-    this.userData.observable.subscribe(
-      data => {
-        if (!!data && data.hasOwnProperty('settings')) {
-          this.settings = data.settings;
-          if (data.settings.default_activity === 238) {
-            this.selected = data.settings.default_discipline;
+    forkJoin([
+      this.userDataSubject.observable.subscribe(
+        data => {
+          this.userData = data;
+          if (!!data && data.hasOwnProperty('settings')) {
+
+            //this.settings = data.settings;
+            if (data.settings.default_activity === 238) {
+              this.selected = data.settings.default_discipline;
+            }
+
+            console.log('SELECTED IS??', this.selected)
           }
+        }),
 
-          console.log('SELECTED IS??', this.selected)
+      this.subject.observableObservation.subscribe(
+        observation => {
+          // this.observation = observation;
         }
-      });
-
-    this.subject.observableObservation.subscribe(
-      observation => {
-        // this.observation = observation;
-      }
-    );
+      )
+    ]);
   }
 
   ngOnInit() {
@@ -127,6 +137,24 @@ export class NlfOrsMotorCreateComponent implements OnInit {
   }
 
   public createObservation() {
+
+    const confirmMsg = {
+      title: 'Vennligst bekreft',
+      message: 'Vil du opprette en observasjon for <strong>' + this.clubs.find(x => x.id === +this.selected).name + '</strong> (' + this.activity + ')?',
+      yes: 'Ja',
+      yes_color: 'success',
+      no: 'Nei'
+    };
+    this.confirmService.confirm(confirmMsg).then(
+      () => { // Yes
+        this._createObservation();
+      },
+      () => { // No
+        // Do nothing?
+      }
+    );
+  }
+  private _createObservation() {
     if (!this.selected || this.selected < 1) {
       this.alertService.error('Ingen klubb valgt, velg klubb først', false, true, 10);
 
@@ -145,19 +173,31 @@ export class NlfOrsMotorCreateComponent implements OnInit {
         this.clubs.forEach(element => {
 
           if (element.id == this.selected) {
-            this.orsService.setActivity('motorfly');
-            this.orsService.create({ discipline: this.selected, club: element.parent_id, occurrence: occurrence}).subscribe(
+            this.orsService.setActivity(this.activity);
+            this.orsService.create({ discipline: this.selected, club: element.parent_id, occurrence: occurrence }).subscribe(
               data => {
                 this.subject.reset();
-                console.log('ORS Created', data);
+                console.log('OBSREG Created', data);
                 if (!!data._id && !!data.id) {
+
+                  // Assign
+                  if (!this.userData['settings']['ors'].hasOwnProperty(this.activity)) {
+                    this.userData['settings']['ors'][this.activity] = {};
+                    this.userData['settings']['ors'][this.activity][data.id] = { simple_view: true };
+                  }
+                  else if (!this.userData['settings']['ors'][this.activity].hasOwnProperty(data.id)) {
+                    this.userData['settings']['ors'][this.activity][data.id] = { simple_view: true };
+                  }
+
+                  this.userDataSubject.update(this.userData);
 
                   this.router.navigateByUrl('/ors/motorfly/edit/' + data.id);
                 }
               },
               err => {
-                this.alertService.error('Kunne ikke opprette ORS: ' + err.message);
+                this.alertService.error('Kunne ikke opprette OBSREG: ' + err.message);
                 this.loading = false;
+                this.error = true;
               },
               () => {
                 console.log('Created observation');
@@ -170,8 +210,9 @@ export class NlfOrsMotorCreateComponent implements OnInit {
         });
       } catch (err) {
         console.error(err);
-        this.alertService.error('Kunne ikke opprette ORS: ' + err.message);
+        this.alertService.error('Kunne ikke opprette OBSREG: ' + err.message);
         this.loading = false;
+        this.error = true;
       }
       /*
       occurrence.entities.narrative.push(new E5XNarrativeClass().narrative);

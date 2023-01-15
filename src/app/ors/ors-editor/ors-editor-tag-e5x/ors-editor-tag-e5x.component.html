@@ -1,5 +1,6 @@
 <div class="form-group">
-  <label [for]="path">{{ title || label }}
+  
+  <label [for]="path">{{ customLabel || label }}
     <span *ngIf="!!unit">[{{ unit }}]</span>
     <fa (click)="openModal(modalHelp)" *ngIf="show_help" class="ml-1 pointer" name="question" [fixed]="true"></fa>
   </label>
@@ -8,19 +9,25 @@
     <fa name="spinner" animation="pulse" [size]="1"></fa>
   </span>
 
-  <span *ngIf="!!attribute">
+  <!-- -->
+  <ng-container *ngIf="!!attribute">
 
     <!-- Simple within limits, all populated -->
-    <span *ngIf="choices.length>0 && !search">
-      <nlf-ors-editor-tag-static (change)="debouncedUpdate($event)" [disable]="disabled" [(items)]="items" [tags]="choices" [multiple]="(attribute.max>1 || attribute.max==-1) ? true : false" [max]="attribute.max>1 ? attribute.max : undefined" [id]="path">
+    <ng-container *ngIf="choices.length>0 && !search">
+      <nlf-ors-editor-tag-static (change)="debouncedUpdate($event)" [disable]="disabled" [(items)]="items"
+        [tags]="choices" [multiple]="(attribute.max>1 || attribute.max===-1) ? true : false"
+        [max]="attribute.max>1 ? attribute.max : undefined" [id]="path">
       </nlf-ors-editor-tag-static>
-    </span>
+    </ng-container>
+    <!-- /END simple tags -->
 
     <!-- SEARCH MANY -->
-    <span *ngIf="search">
-      <ng-select [id]="path" [disabled]="disabled" class="form-control w-auto mw-100" [items]="tags$ | async" [typeahead]="tagsInput$" [addTag]="false" [multiple]="(attribute.max>1 || attribute.max==-1) ? true : false"
-        [maxSelectedItems]="attribute.max>1 ? attribute.max : undefined" [hideSelected]="true" [(ngModel)]="selectedTags" (change)="onChange($event)" [clearable]="true" bindLabel="label" labelForId="id" autoCapitalize="off"
-        placeholder="Skriv for å søke" notFoundText="Fant ikke noe">
+    <ng-container *ngIf="search">
+      <ng-select [id]="path" [disabled]="disabled" class="form-control w-auto mw-100" [items]="tags$ | async"
+        [typeahead]="tagsInput$" [addTag]="false" [multiple]="(attribute.max>1 || attribute.max===-1) ? true : false"
+        [maxSelectedItems]="attribute.max>1 ? attribute.max : undefined" [hideSelected]="true"
+        [(ngModel)]="selectedTags" (change)="onChange($event)" [clearable]="true" bindLabel="label" labelForId="id"
+        autoCapitalize="off" placeholder="Skriv for å søke" notFoundText="Fant ikke noe">
         <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
           <div>
             <span [ngOptionHighlight]="search">{{item.label}}</span>
@@ -28,32 +35,40 @@
           <small>{{ item.descr }}</small>
         </ng-template>
       </ng-select>
-    </span>
+    </ng-container>
+    <!-- /END SEARCH MANY -->
 
     <!-- Just an Input -->
-    <span *ngIf="!search && !attribute.choices_key && choices.length==0 && attribute.max==1">
+    <ng-container *ngIf="!search && !attribute.choices_key && choices.length===0 && attribute.max===1">
 
       <!-- Number -->
       <span *ngIf="!!attribute.restrictions">
-        <input *ngIf="attribute.restrictions.type=='decimal' || attribute.restrictions.type=='integer' || attribute.restrictions.type=='int'" type="number" [max]="attribute.restrictions.max" [min]="attribute.restrictions.min"
-          [step]="attribute.restrictions.inc" [disabled]="disabled" (change)="debouncedUpdate($event)" [(ngModel)]="items" [id]="path" class="form-control">
+        <input
+          *ngIf="attribute.restrictions.type==='decimal' || attribute.restrictions.type==='integer' || attribute.restrictions.type==='int'"
+          type="number" [max]="attribute.restrictions.max" [min]="attribute.restrictions.min"
+          [step]="attribute.restrictions.inc" [disabled]="disabled" (change)="debouncedUpdate($event)"
+          [(ngModel)]="items" [id]="path" class="form-control">
 
         <!-- String -->
-        <input *ngIf="attribute.restrictions.type=='string'" type="{{ type || 'text'}}" [max]="attribute.restrictions.max" [min]="attribute.restrictions.min || 0" [disabled]="disabled" (change)="debouncedUpdate($event)" [(ngModel)]="items" [id]="path"
-          class="form-control">
+        <input *ngIf="attribute.restrictions.type==='string'" type="{{ type || 'text'}}"
+          [max]="attribute.restrictions.max" [min]="attribute.restrictions.min || 0" [disabled]="disabled"
+          (change)="debouncedUpdate($event)" [(ngModel)]="items" [id]="path" class="form-control">
       </span>
 
       <span *ngIf="!attribute.restrictions">
         <!-- String -->
-        <input *ngIf="attribute.type=='string'" type="{{ type || 'text'}}" [disabled]="disabled" (change)="debouncedUpdate($event)" [(ngModel)]="items" [id]="path" class="form-control">
+        <input *ngIf="attribute.type==='string'" type="{{ type || 'text'}}" [disabled]="disabled"
+          (change)="debouncedUpdate($event)" [(ngModel)]="items" [id]="path" class="form-control">
         <!-- Number -->
-        <input *ngIf="attribute.type!='string'" type="number" [disabled]="disabled" (change)="debouncedUpdate($event)" [(ngModel)]="items" [id]="path" class="form-control">
+        <input *ngIf="attribute.type!='string'" type="number" [disabled]="disabled" (change)="debouncedUpdate($event)"
+          [(ngModel)]="items" [id]="path" class="form-control">
       </span>
 
 
-    </span>
+    </ng-container>
+    <!-- /END Just an input -->
 
-  </span>
+  </ng-container>
   <!-- DEBUG:
   <code>{{ items | json }}</code>
   <code>{{ selectedTags | json }}</code>
@@ -64,8 +79,8 @@
 <!-- RUNWAY MODAL -->
 <ng-template #modalHelp>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">
-      {{ label }}
+    <h4 class="modal-customLabel pull-left">
+      {{ customLabel || label }}
     </h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
@@ -79,7 +94,8 @@
       <div class="col-md-12">
         <dl>
           <div *ngFor="let choice of choices; let idx = index">
-            <dt>{{ choice.label }} <span class="badge badge-secondary" *ngIf="!!choice.icao">{{ choice.icao }}</span></dt>
+            <dt>{{ choice.label }} <span class="badge badge-secondary" *ngIf="!!choice.icao">{{ choice.icao }}</span>
+            </dt>
             <dd>{{ choice.descr }}</dd>
             <dd>{{ choice.expl }}</dd>
           </div>

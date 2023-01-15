@@ -45,7 +45,7 @@ export class NlfOrsE5xComponent implements OnInit {
   public config: NlfConfigItem;
 
 
-  allowedReportStatus = [2, 3]; // 2=open, 3=closed
+  allowedReportStatus: number[] = [2, 3]; // 2=open, 3=closed
 
   /**
   report_status = [
@@ -72,27 +72,33 @@ export class NlfOrsE5xComponent implements OnInit {
     this.authSubject.observableAuthData.subscribe(
       data => {
         console.log('Auth subject', data);
-        this.token = data.token;
+        try {
+          this.token = data.token;
+        } catch {
+          this.token = undefined;
+        }
       }
     );
 
     this.subject.observableObservation.subscribe(
-      data => {
-        this.observation = data;
+      observation => {
+        this.observation = observation;
+        console.log('E5X in E5X NOW!!!!', observation);
         this.configService.observableConfig.subscribe(
           data => {
             this.config = data;
-            this.e5x_enabled = this.config[this.observation._model.type]['observation']['e5x']['enabled'];
-            if (!this.observation.hasOwnProperty('e5x')) {
-              this.observation['e5x'] = {};
-              this.observation.e5x._status = 2; //2=open, 3=closed
-              if (!this.observation.e5x.hasOwnProperty('audit')) {
-                this.observation.e5x['audit'] = [];
+            try {
+              this.e5x_enabled = this.config[this.observation._model.type]['observation']['e5x']['enabled'];
+              if (!!this.config[this.observation._model.type]['observation']['e5x']['enabled'] && !this.observation.hasOwnProperty('e5x')) {
+                this.observation['e5x'] = {};
+                this.observation.e5x._status = 2; //2=open, 3=closed
+                if (!this.observation.e5x.hasOwnProperty('audit')) {
+                  this.observation.e5x['audit'] = [];
+                }
               }
-            }
+            } catch (e) { }
           }
         );
-
       }
     );
   }
@@ -109,6 +115,7 @@ export class NlfOrsE5xComponent implements OnInit {
     this.e5xService.generate(
       this.observation._id,
       this.observation._etag,
+      this.observation._model.type,
       this.e5xobservation,
       this.config[this.observation._model.type]['observation']['e5x']['rit_version']
     ).subscribe(
@@ -126,7 +133,7 @@ export class NlfOrsE5xComponent implements OnInit {
     if (this.observation.acl_user.x && this.observation.workflow.state === 'pending_review_ors') {
       const confirmMsg = {
         title: 'Please confirm',
-        message: 'Er du sikker på du vil sende rapport til LT?',
+        message: 'Er du sikker på du vil sende rapporten til LT?',
         yes: 'Ja, send inn',
         no: 'Nei'
       };
@@ -152,10 +159,26 @@ export class NlfOrsE5xComponent implements OnInit {
       this.observation.occurrence.attributes.headline = this.observation.occurrence.attributes.headline + ' TEST [' + this.ENV._name + ']';
     }
 
+    // Backporting utctime and date case bug:
+    if (this.observation.occurrence.attributes.hasOwnProperty('uTCDate')) {
+      try {
+        delete this.observation.occurrence.attributes['uTCDate'];
+        this.observation.occurrence.attributes['utcDate'] = { value: undefined };
+      } catch { }
+    }
+    if (this.observation.occurrence.attributes.hasOwnProperty('uTCTime')) {
+      try {
+        delete this.observation.occurrence.attributes['uTCTime'];
+        this.observation.occurrence.attributes['utcTime'] = { value: undefined };
+      } catch { }
+    }
+    // End backporting
+
+
     // Times this.currentWhen.toISOString().substr(0,10)
     let t = new Date(this.observation.when);
-    this.observation.occurrence.attributes.uTCDate.value = [t.getUTCFullYear(), pad(t.getUTCMonth() + 1), pad(t.getUTCDate())].join('-');
-    this.observation.occurrence.attributes.uTCTime.value = [pad(t.getUTCHours()), pad(t.getUTCMinutes()), pad(t.getUTCSeconds())].join(':');
+    this.observation.occurrence.attributes.utcDate.value = [t.getUTCFullYear(), pad(t.getUTCMonth() + 1), pad(t.getUTCDate())].join('-');
+    this.observation.occurrence.attributes.utcTime.value = [pad(t.getUTCHours()), pad(t.getUTCMinutes()), pad(t.getUTCSeconds())].join(':');
     this.observation.occurrence.attributes.localDate.value = [t.getFullYear(), pad(t.getMonth() + 1), pad(t.getDate())].join('-');
     this.observation.occurrence.attributes.localTime.value = [pad(t.getHours()), pad(t.getMinutes()), pad(t.getSeconds())].join(':');
 
@@ -198,10 +221,10 @@ export class NlfOrsE5xComponent implements OnInit {
       // this.observation.occurrence.entities.reportingHistory[0].attributes.reportingEntity.value = 101311;
       // moved to flags!
       let rdate = new Date();
-      //this.e5xobservation.entities.reportingHistory[0].attributes.reportingDate.value = [rdate.getFullYear(), pad(rdate.getMonth() + 1), pad(rdate.getDate())].join('-'); //+ ' ' + [rdate.getHours(), rdate.getMinutes(), rdate.getSeconds()].join(':');
+      this.observation.occurrence.entities.reportingHistory[0].attributes.reportingDate.value = [rdate.getFullYear(), pad(rdate.getMonth() + 1), pad(rdate.getDate())].join('-'); //+ ' ' + [rdate.getHours(), rdate.getMinutes(), rdate.getSeconds()].join(':');
       this.observation.occurrence.entities.reportingHistory[0].attributes.reportVersion.value = this.observation._version;
-      this.observation.occurrence.entities.reportingHistory[0].attributes.reportIdentification.value = 'nlf_motorfly_' + + this.observation.id + '_v' + this.observation._version;
-
+      this.observation.occurrence.entities.reportingHistory[0].attributes.reportIdentification.value = 'nlf_' + this.observation._model.type + '_' + + this.observation.id + '_v' + this.observation._version;
+      this.observation.occurrence.entities.reportingHistory[0].attributes.reportSource.value = 2; // 2 er reportable, 3 er voluntary reports, media 4 osv. 
       this.observation.occurrence.entities.reportingHistory[0].attributes.reportingFormType.value = 9823;
 
       if (!!this.observation.actions) {
@@ -225,7 +248,7 @@ export class NlfOrsE5xComponent implements OnInit {
     if (this.observation.files.length > 0) {
       try {
         this.observation.occurrence.entities.reportingHistory[0].attributes['report'] = { attributes: { resourceLocator: this.addFiles() } };
-
+  
       } catch (e) {
         console.log('Error adding files', e);
       }
@@ -237,7 +260,7 @@ export class NlfOrsE5xComponent implements OnInit {
 
     this.e5xobservation.attributes = { ...this.e5xobservation.attributes, ...cleanE5XObject(deepCopy(this.observation.occurrence.attributes)) };
     this.e5xobservation.entities = { ...this.e5xobservation.entities, ...cleanE5XObject(deepCopy(this.observation.occurrence.entities)) };
-    console.log('E5X ORS', this.e5xobservation);
+    console.log('E5X OBSREG', this.e5xobservation);
 
 
 
@@ -362,10 +385,10 @@ export class NlfOrsE5xComponent implements OnInit {
        await this.apiFile.getFile(file.f, options).subscribe(
          data => {
            data['r'] = file.r;
-
+  
            //this.e5xobservation.entities.reportingHistory.attributes.report[0].
            resourceLocator.push({fileName: data['name'], description: ''});
-
+  
            if (data.content_type.match(/image/g) != null) {
            } else {
            }

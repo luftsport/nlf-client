@@ -23,20 +23,20 @@ const routes: Routes = [
       { path: 'aircraft', component: NlfOrganizationAircraftsComponent, canActivate: [NlfAuthGuard] , data: {title: 'Organisasjon - Fly'} },
       { path: 'locations', component: NlfOrganizationLocationsComponent, canActivate: [NlfAuthGuard] , data: {title: 'Organisasjon - Steder'} },
       { path: 'location/edit/:idx', component: NlfOrganizationLocationsEditComponent, canActivate: [NlfAuthGuard] , data: {title: 'Organisasjon - Rediger sted'} },
-      // ORS is just a redirect
+      // OBSREG is just a redirect
       { path: 'stats', component: NlfOrganizationStatsComponent, canActivate: [NlfAuthGuard], data: {title: 'Organisasjon - Statistikk'} }
     ]
   },
   { path: ':id/ors', redirectTo: '/ors', pathMatch: 'full' },
   //{ path: '', redirectTo: '376', pathMatch: 'full' },
-  // ORS, STATS, LOCATIONS & AIRCRAFTS
+  // OBSREG, STATS, LOCATIONS & AIRCRAFTS
 
 
   // Also do it for the fun of it?
   { path: 'fallskjerm/:id', component: NlfOrganizationComponent, canActivate: [NlfAuthGuard] },
   { path: 'motorfly/:id', component: NlfOrganizationComponent, canActivate: [NlfAuthGuard] },
   { path: 'ballong/:id', component: NlfOrganizationComponent, canActivate: [NlfAuthGuard] },
-  { path: 'mikrofly/:id', component: NlfOrganizationComponent, canActivate: [NlfAuthGuard] },
+  { path: 'sportsfly/:id', component: NlfOrganizationComponent, canActivate: [NlfAuthGuard] },
   { path: 'modellfly/:id', component: NlfOrganizationComponent, canActivate: [NlfAuthGuard] },
   { path: 'seilfly/:id', component: NlfOrganizationComponent, canActivate: [NlfAuthGuard] },
 

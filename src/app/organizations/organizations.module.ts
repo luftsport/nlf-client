@@ -65,7 +65,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     // Locations Icao selectors
     NlfLocationSelectComponent,
     // NlfOrganizationsStatsDotComponent,
-    // ORS
+    // OBSREG
     NlfOrganizationOrsComponent,
     NlfOrganizationToolbarComponent,
     NlfOrganizationsNearComponent,

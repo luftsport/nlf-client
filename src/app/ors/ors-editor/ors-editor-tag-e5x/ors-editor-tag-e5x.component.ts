@@ -18,6 +18,22 @@ export interface TagInterface {
   expl?: string;
 }
 
+/**  
+ * Attributes with choices_key: null and restrictions: null
+ * 
+ * datatype:
+ * 15: time
+ * 14: date
+ * 10: attachements
+ * 9: longitude decimal
+ * 8: latitude decimal
+ * 6: wxreports array of
+ * 5: choices array 
+ * 4: descimal
+ * 3: integer
+ * 1: string
+ */
+
 @Component({
   selector: 'nlf-ors-editor-tag-e5x',
   templateUrl: './ors-editor-tag-e5x.component.html',
@@ -25,7 +41,7 @@ export interface TagInterface {
 })
 export class NlfOrsEditorTagE5XComponent implements OnInit {
 
-  @Input() items: any; //numbernumber[] = [];
+  @Input() items: any; //numbernumber[] = []; both array and non-array
   @Output() itemsChange: EventEmitter<any> = new EventEmitter();
   @Output() change: EventEmitter<boolean> = new EventEmitter();
 
@@ -33,10 +49,10 @@ export class NlfOrsEditorTagE5XComponent implements OnInit {
 
   @Input() show_help: boolean = true;
   @Input() unit: string;
-  @Input() title: string;
+  @Input() customLabel: string;
   @Input() type: string;
 
-  @Input() path: string; //Occurrence.DewPoint
+  @Input() path: string;
   @Input() label: string;
   @Input() max_results: number = 100; // Max results searching and populatiing
   @Input() classes: string = '';
@@ -197,6 +213,22 @@ export class NlfOrsEditorTagE5XComponent implements OnInit {
    */
   public update(event) {
 
+    /**
+     * Attributes with choices_key: null and restrictions: null
+     * 
+     * datatype:
+     * 15: time
+     * 14: date
+     * 10: attachements
+     * 9: longitude decimal
+     * 8: latitude decimal
+     * 6: wxreports array of
+     * 5: choices array 
+     * 4: descimal
+     * 3: integer
+     * 1: string
+     */
+
     // Max min values!
     try {
       if (['decimal', 'integer', 'int', 'number'].indexOf(this.attribute.restrictions.type) > -1) {
@@ -211,6 +243,15 @@ export class NlfOrsEditorTagE5XComponent implements OnInit {
       }
     } catch { }
 
+    // Make sure floats are corrected - to 2 digits
+    if (this.attribute.restrictions.type === 'decimal') {
+      try {
+
+        this.items = String(parseFloat(this.items).toFixed(2));
+
+      } catch { }
+    }
+
     try {
       if (this.attribute.restrictions.type === 'string' && +this.attribute.restrictions.max > 0) {
         if (this.items.length > +this.attribute.restrictions.max) {
@@ -219,12 +260,16 @@ export class NlfOrsEditorTagE5XComponent implements OnInit {
         }
       }
     } catch { }
-    // Make sure floats are corrected - to 2 digits
-    try {
-      if (this.attribute.restrictions.type === 'decimal') {
-        this.items = String(parseFloat(this.items).toFixed(2));
+
+
+    // All choices ARE integers!
+    if (this.attribute.choices_key != null || [3, 5].indexOf(this.attribute.datatype) > -1) {
+      try {
+        this.items = this.items.map((x) => +x);
+      } catch {
+        this.items = +this.items;
       }
-    } catch { }
+    }
 
     this.itemsChange.emit(this.items);
     this.change.emit(true);
@@ -238,13 +283,21 @@ export class NlfOrsEditorTagE5XComponent implements OnInit {
 
     if (this.attribute.max > 1) {
       if (!!this.selectedTags) {
-        this.itemsChange.emit(this.selectedTags.map(x => x.id));
+        if (this.attribute.choices_key != null || [3, 5].indexOf(this.attribute.datatype) > -1) {
+          this.itemsChange.emit(this.selectedTags.map(x => +x.id));
+        } else {
+          this.itemsChange.emit(this.selectedTags.map(x => x.id));
+        }
       } else {
         this.itemsChange.emit([]);
       }
     } else {
       if (!!this.selectedTags) {
-        this.itemsChange.emit(this.selectedTags.id);
+        if (this.attribute.choices_key != null || [3, 5].indexOf(this.attribute.datatype) > -1) {
+          this.itemsChange.emit(+this.selectedTags.id);
+        } else {
+          this.itemsChange.emit(this.selectedTags.id);
+        }
       } else {
         this.itemsChange.emit(null);
       }
@@ -260,7 +313,7 @@ export class NlfOrsEditorTagE5XComponent implements OnInit {
       query: {
         where: {
           where: { key: this.attribute.choices_key },
-          max_results: 100,
+          max_results: this.max_results,
           rit_version: this.rit_version
         },
         sort: [{ freq: -1 }]

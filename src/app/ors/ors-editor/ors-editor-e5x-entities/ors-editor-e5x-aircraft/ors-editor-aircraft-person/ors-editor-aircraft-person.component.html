@@ -33,7 +33,7 @@
     <div *ngIf="!disabled" class="row">
       <div class="col-md-12 mb-1">
         <div *ngIf="!anon">
-          <nlf-ors-editor-tag-person [disabled]="disabled" [fc]="true" [(person)]="modalValue.person" activity="motorfly"></nlf-ors-editor-tag-person>
+          <nlf-ors-editor-tag-person [disabled]="disabled" [fc]="true" [(person)]="modalValue.person" [activity]="activity"></nlf-ors-editor-tag-person>
           <button class="btn btn-link" (click)="setAnon()">
             <fa name="user-secret" [fixed]="true"></fa>Sett anonym
           </button>

@@ -1,6 +1,6 @@
-<span *ngIf="e5x_enabled">
-  <span (click)="openModal(modalTemplate)" class="pointer badge mx-1" [ngClass]="{'badge-success':observation.e5x.status=='sent', 'badge-danger': !observation.e5x.status}">
-    <fa name="file-text-o" [fixed]="true"></fa>E5X
+<span *ngIf="e5x_enabled && !!observation">
+  <span (click)="openModal(modalTemplate)" class="pointer badge mx-1" [ngClass]="{'badge-success':observation.e5x.status=='sent', 'badge-secondary': !observation.e5x.status}">
+    <fa name="file-text-o" [fixed]="true"></fa>LT
   </span>
 
   <!-- MODAL PREVIEW -->
@@ -44,7 +44,7 @@
                 </td>
                 <td>
                   <span *ngIf="audit.sent" class="badge badge-success">OK</span>
-                  <span *ngIf="!audit.sent" class="badge badge-danger">Ikke sendt</span>
+                  <span *ngIf="!audit.sent" class="badge badge-info">Ikke sendt</span>
                 </td>
                 <td class="text-right">
                   <a *ngIf="!!token" target="_blank" href="/api/v1/e5x/download/{{observation._model.type}}/{{observation.id}}/{{audit.version}}?token={{token}}">
@@ -60,7 +60,7 @@
       <!-- NO ACCESS -->
       <div *ngIf="!observation.acl_user.x && observation.workflow.state=='pending_review_ors'">
         <div class="alert alert-danger m-3" role="alert">
-          <strong>Ingen tilgang</strong> Kun ORS koordinator har tilgang til å sende inn rapporten til LT.
+          <strong>Ingen tilgang</strong> Kun OBSREG koordinator har tilgang til å sende inn rapporten til LT.
         </div>
       </div>
 

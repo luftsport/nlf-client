@@ -175,12 +175,12 @@
 					<fa name="commenting-o" [fixed]="true"></fa> Narrative
 				</div>
 				<ng-container *ngIf="observation.occurrence.entities.hasOwnProperty('narrative') && observation.occurrence.entities.narrative.length>0">
-					<div class="p-3">
+					<div class="p-3 narrative">
 						{{ observation.occurrence.entities.narrative[0].attributes.narrativeText.plainText }}
 					</div>
 				</ng-container>
 				<ng-container *ngIf="observation.occurrence.entities.reportingHistory[0].attributes.hasOwnProperty('reporterSDescription')">
-					<div class="p-3">
+					<div class="p-3 narrative">
 						{{ observation.occurrence.entities.reportingHistory[0].attributes.reporterSDescription.plainText }}
 					</div>
 				</ng-container>

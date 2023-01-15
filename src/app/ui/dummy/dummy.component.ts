@@ -16,6 +16,7 @@ export class NlfUiDummyComponent implements OnInit {
   dataReady = false;
   activities;
   default_activity;
+  default_activity_obsreg = false;
   pie = [];
   public config: NlfConfigItem;
 
@@ -39,58 +40,71 @@ export class NlfUiDummyComponent implements OnInit {
 
     app.setTitle('Forside');
 
+  }
+
+  ngOnInit() {
+
+    // User settings
     this.userSubject.observable.subscribe(
       userData => {
         this.activities = userData.activities;
         this.default_activity = userData.settings.default_activity;
+
+
+        // App settings
+        this.configService.observableConfig.subscribe(
+          data => {
+            this.config = data;
+
+            // IF activate OBSREG
+            if ([109, 111, 237, 238].indexOf(this.default_activity) > -1) {
+
+              this.default_activity_obsreg = true;
+              // Aggregation for pie data
+              try {
+                this.agg.setActivity(this.config.inv_mapping[this.default_activity]);
+              } catch {
+                this.agg.setActivity('fallskjerm');
+              }
+
+              let d1 = new Date('2014-01-01');
+              let d2 = new Date('2030-01-01');
+              let options: ApiOptionsInterface = {
+                query: {
+                  aggregate: {
+                    $from: d1.toISOString(),
+                    $to: d2.toISOString(),
+                    $state: 'closed'
+                  }
+                }
+              };
+
+              this.agg.getTypes(options).subscribe(
+                data => {
+                  data._items.forEach(el => {
+                    try {
+                      this.pie.push({ 'name': this.config[this.config.inv_mapping[this.default_activity]].observation.types[el._id]['label'], 'value': el.count });
+                    } catch (e) {
+                      console.log("Error assigning types", e);
+                      //this.pie.push({ 'name': this.config.fallskjerm.observation.types[el._id]['label'], 'value': el.count });
+                    }
+
+                  });
+                  this.dataReady = true;
+                  console.log(data);
+
+                },
+                err => console.log(err),
+                () => console.log('Done')
+              );
+            } else {
+              this.default_activity_obsreg = false;
+            }
+
+          }
+        );
       },
       err => console.log('Error getting user acitivites: ', err)
-    );
-
-  }
-
-  ngOnInit() {
-    this.configService.observableConfig.subscribe(
-      data => {
-        this.config = data;
-        if (this.default_activity === 109) {
-          this.agg.setActivity('fallskjerm');
-        } else {
-          this.agg.setActivity('motorfly');
-        }
-
-        let d1 = new Date('2014-01-01');
-        let d2 = new Date('2030-01-01');
-        let options: ApiOptionsInterface = {
-          query: {
-            aggregate: {
-              $from: d1.toISOString(),
-              $to: d2.toISOString(),
-              $state: 'closed'
-            }
-          }
-        };
-
-        this.agg.getTypes(options).subscribe(
-          data => {
-            data._items.forEach(el => {
-              try {
-                if (this.default_activity === 109) {
-                  this.pie.push({ 'name': this.config.fallskjerm.observation.types[el._id]['label'], 'value': el.count });
-                } else {
-                  this.pie.push({ 'name': this.config.motorfly.observation.types[el._id]['label'], 'value': el.count });
-                }
-              } catch { }
-
-            });
-            this.dataReady = true;
-            console.log(data);
-
-          },
-          err => console.log(err),
-          () => console.log('Done')
-        );
-      }
     );
 
   }

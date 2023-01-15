@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ApiObservationsWorkflowService } from 'app/api/api-observations-workflow.service';
 import { ApiOptionsInterface } from 'app/api/api.interface';
 import { TableEventObject, DefaultTableConfig } from 'app/interfaces/ngx-easy-table.interface';
-
+import { timeSince } from 'app/interfaces/functions';
 @Component({
   selector: 'nlf-ors-todo-table',
   templateUrl: './ors-todo-table.component.html',
@@ -44,8 +44,15 @@ export class NlfOrsTodoTableComponent implements OnInit {
     this.tableConf.persistState = true;
 
     this.workflowService.setActivity(this.activity);
-    this.getData();
+    this.
+    getData();
   }
+
+  public timedelta(_updated) {
+    console.dir(_updated);
+    return timeSince(_updated);
+  }
+
   eventEmitted($event) {
     this.parseEvent($event);
   }

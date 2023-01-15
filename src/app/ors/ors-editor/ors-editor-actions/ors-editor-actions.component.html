@@ -1,49 +1,53 @@
-<span *ngIf="dataReady">
-<div class="col-xs-12 col-md-12">
-  <h5>Lokale</h5>
-  <form>
-    <div class="input-group mb-3">
-      <input [disabled]="!observation.acl_user.w" type="text" [(ngModel)]="actionLocal" name="actionLocal" class="form-control"  [ngModelOptions]="{standalone: true}">
-      <span class="input-group-append">
-        <!-- *ngIf="addActionLocal.length > 0"-->
-        <button [disabled]="!observation.acl_user.w" (click)="addActionLocal(actionLocal)" class="btn btn-primary" type="submit">
-          <i class="fa fa-plus fa-fw"></i> Legg til</button>
-      </span>
-    </div>
-  </form>
+<ng-container *ngIf="!!observation">
+  <div class="col-xs-12 col-md-12">
+    <h5>Lokale</h5>
+    <form>
+      <div class="input-group mb-3">
+        <input [disabled]="!observation.acl_user.w" type="text" [(ngModel)]="actionLocal" name="actionLocal"
+          class="form-control" [ngModelOptions]="{standalone: true}">
+        <span class="input-group-append">
+          <!-- *ngIf="addActionLocal.length > 0"-->
+          <button [disabled]="!observation.acl_user.w" (click)="addActionLocal(actionLocal)" class="btn btn-primary"
+            type="submit">
+            <i class="fa fa-plus fa-fw"></i> Legg til</button>
+        </span>
+      </div>
+    </form>
+    <div class="clearfix"></div>
+    <table class="table table-striped table-sm table-hover">
+      <tr *ngFor="let a of observation.actions.local; let idx = index">
+        <td><strong>{{idx+1}}.</strong>&nbsp;{{a}}</td>
+        <td class="text-right">
+          <i *ngIf="observation.acl_user.w" class="fa fa-times fa-fw pointer" (click)="removeActionLocal(idx)"></i>
+        </td>
+      </tr>
+    </table>
+  </div>
   <div class="clearfix"></div>
-  <table class="table table-striped table-sm table-hover">
-    <tr *ngFor="let a of observation.actions.local; let idx = index">
-      <td><strong>{{idx+1}}.</strong>&nbsp;{{a}}</td>
-      <td class="text-right">
-        <i *ngIf="observation.acl_user.w" class="fa fa-times fa-fw pointer" (click)="removeActionLocal(idx)"></i>
-      </td>
-    </tr>
-  </table>
-</div>
-<div class="clearfix"></div>
 
-<div class="col-xs-12 col-md-12">
-  <h5>Sentrale</h5>
-  <form>
-    <div class="input-group mb-3">
-      <input [disabled]="!observation.acl_user.w" type="text" [(ngModel)]="actionCentral" name="actionCentral" class="form-control"  [ngModelOptions]="{standalone: true}">
-      <span class="input-group-append">
-        <!-- *ngIf="actionCentral.length > 0"-->
-        <button [disabled]="!observation.acl_user.w" (click)="addActionCentral(actionCentral)" class="btn btn-primary" type="submit">
-          <i class="fa fa-plus fa-fw"></i> Legg til</button>
-      </span>
-    </div>
-  </form>
+  <div class="col-xs-12 col-md-12">
+    <h5>Sentrale</h5>
+    <form>
+      <div class="input-group mb-3">
+        <input [disabled]="!observation.acl_user.w" type="text" [(ngModel)]="actionCentral" name="actionCentral"
+          class="form-control" [ngModelOptions]="{standalone: true}">
+        <span class="input-group-append">
+          <!-- *ngIf="actionCentral.length > 0"-->
+          <button [disabled]="!observation.acl_user.w" (click)="addActionCentral(actionCentral)" class="btn btn-primary"
+            type="submit">
+            <i class="fa fa-plus fa-fw"></i> Legg til</button>
+        </span>
+      </div>
+    </form>
+    <div class="clearfix"></div>
+    <table class="table table-striped table-sm table-hover">
+      <tr *ngFor="let a of observation.actions.central; let idx = index">
+        <td><strong>{{idx+1}}.</strong>&nbsp;{{a}}</td>
+        <td class="text-right">
+          <i *ngIf="observation.acl_user.w" class="fa fa-times fa-fw pointer" (click)="removeActionCentral(idx)"></i>
+        </td>
+      </tr>
+    </table>
+  </div>
   <div class="clearfix"></div>
-  <table class="table table-striped table-sm table-hover">
-    <tr *ngFor="let a of observation.actions.central; let idx = index">
-      <td><strong>{{idx+1}}.</strong>&nbsp;{{a}}</td>
-      <td class="text-right">
-        <i *ngIf="observation.acl_user.w" class="fa fa-times fa-fw pointer" (click)="removeActionCentral(idx)"></i>
-      </td>
-    </tr>
-  </table>
-</div>
-<div class="clearfix"></div>
-</span>
+</ng-container>

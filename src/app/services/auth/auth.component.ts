@@ -25,6 +25,7 @@ export class NlfAuthComponent implements OnInit {
   private isAuthenticated = false;
 
   access_token: string;
+  id_token: string;
   oauth_error: string;
   oauth_error_descr: string;
   _return_uri: string;
@@ -82,8 +83,9 @@ export class NlfAuthComponent implements OnInit {
         console.log('Params map', params['params']);
         if (!!params['params']['access_token']) {
           this.access_token = params['params']['access_token'];
+          this.id_token = params['params']['id_token'];
           console.log('Query params map access token', params['params']);
-          this.oauthLogin(this.access_token);
+          this.oauthLogin(this.access_token, this.id_token);
           this.removeOauthParams();
 
         } else if (!!params['params']['error']) {
@@ -115,9 +117,9 @@ export class NlfAuthComponent implements OnInit {
     return this.isAuthenticated;
   }
 
-  oauthLogin(token, returnUrl?: string) {
-    console.log('Doing the login', token);
-    this.auth.login('access_token', token, returnUrl);
+  oauthLogin(token, id_token?: string, returnUrl?: string) {
+    console.log('Doing the login', token, id_token);
+    this.auth.login('access_token', token, id_token, returnUrl);
 
     //this.location.go(this.location.path());
 
@@ -133,7 +135,8 @@ export class NlfAuthComponent implements OnInit {
         expires_in: null,
         error: null,
         error_description: null,
-        scope: null
+        scope: null,
+        id_token: null
       },
       queryParamsHandling: 'merge',
       // skipLocationChange: false,

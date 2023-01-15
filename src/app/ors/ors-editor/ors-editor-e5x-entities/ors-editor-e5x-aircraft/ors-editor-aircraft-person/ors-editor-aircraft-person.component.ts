@@ -14,6 +14,7 @@ export class NlfOrsEditorAircraftPersonComponent implements OnInit {
 
   @Input() crew;
   @Input() callsign;
+  @Input() activity: string = 'motorfly';
   @Output() crewChange: EventEmitter<any> = new EventEmitter();
   @Output() change: EventEmitter<any> = new EventEmitter();
   @Input() disabled = false;

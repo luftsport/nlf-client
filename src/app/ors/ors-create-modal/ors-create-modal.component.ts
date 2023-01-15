@@ -140,9 +140,11 @@ export class NlfOrsCreateModalComponent implements OnInit {
     //console.log('Create through modal: ', club_id, discipline, activity);
     //return;
 
+
     if (this.selected === '') {
       this.alertService.error('Ingen klubb valgt, velg klubb først', false, true, 10);
       return;
+      this.loading = false;
       // @TODO: alert here!
     }
     this.loading = true;
@@ -151,14 +153,14 @@ export class NlfOrsCreateModalComponent implements OnInit {
     this.orsService.create({ 'club': this.selected }).subscribe(
       data => {
         this.subject.reset();
-        console.log('ORS Created', data);
+        console.log('OBSREG Created', data);
         if (!!data._id && !!data.id) {
 
           this.router.navigateByUrl('/ors/' + activity + '/edit/' + data.id);
         }
       },
       err => {
-        this.alertService.error('Kunne ikke opprette ORS: ' + err.message);
+        this.alertService.error('Kunne ikke opprette OBSREG: ' + err.message);
         this.loading = false;
       },
       () => console.log('Created observation')

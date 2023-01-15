@@ -27,13 +27,14 @@ export class NlfPermaLinksComponent implements OnInit {
             // Get after shebang!
             const url = event.url.split('#!/');
             console.log('Url splitted: ' + JSON.stringify(url));
+
             if (url.length === 2) {
               this.orsUrl = url[1];
             } else if (url.length === 1) {
               this.orsUrl = url[0];
             }
 
-            // ORS REDIRECTING
+            // OBSREG REDIRECTING FROM LEGACY NG1.x
             if (this.orsUrl.indexOf('observation') > -1) {
               // Get number
               let id = '0';

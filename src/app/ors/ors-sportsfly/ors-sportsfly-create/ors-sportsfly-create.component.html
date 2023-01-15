@@ -1,0 +1,56 @@
+<div *ngIf="dataReady && !canCreate()" class="alert alert-primary" role="alert">
+  Sportsfly er nede for vedlikehold
+</div>
+
+<!-- QUICKSELECT DEFAULT DISCIPLINE -->
+<span *ngIf="dataReady && canCreate() && defaultBtn && userData.settings.default_activity==237">
+
+  <button *ngIf="!!userData.settings && canCreate() && !loading"
+    (click)="createObservation(userData.settings.default_discipline, userData.settings.default_club, userData.settings.default_activity)"
+    class="btn btn-block btn-success btn-lg my-1">
+    <fa name="plus" [fixed]="true"></fa>
+    <nlf-resolve-lungo-organization [organization_id]="userData.settings.default_discipline" show_activity="false">
+    </nlf-resolve-lungo-organization>
+  </button>
+
+</span>
+
+<!-- NORMAL SELECT DROPDOWN -->
+<span *ngIf="dataReady && !defaultBtn && canCreate()">
+
+  <span *ngIf="!loading">
+
+    <div class="row">
+      <div class="col">
+        <select class="form-control" id="sportsflyklubb" [(ngModel)]="selected">
+          <option *ngFor="let club of clubs" [ngValue]="club.id">
+            {{ club.name }}
+          </option>
+        </select>
+      </div>
+      <div class="col">
+        <button [disabled]="!selected" (click)="createObservation()" class="btn btn-block btn-success btn-lg">
+          <fa name="plus" [fixed]="true"></fa>Opprett ny OBSREG
+        </button>
+      </div>
+    </div>
+  </span>
+</span>
+
+
+<span *ngIf="loading">
+  <fa name="spinner" animation="pulse" size="3x"></fa>
+  <p class="lead">Oppretter OBSREG...</p>
+</span>
+
+
+<ngb-alert *ngIf="!!error" type="danger" [dismissible]="true">
+  <fa name="exclamation-triangle" [fixed]="true"></fa>
+  Kunne ikke opprette OBSREG
+</ngb-alert>
+
+
+<!-- End page -->
+<span *ngIf="!dataReady">
+  <fa name="spinner" animation="pulse" size="3x"></fa>
+</span>

@@ -3,11 +3,16 @@
 </div>
 
 <!-- QUICKSELECT DEFAULT DISCIPLINE -->
-<span *ngIf="dataReady && canCreate() && defaultBtn && settings.default_activity==238">
-  <button *ngIf="!!settings && canCreate()" (click)="createObservation(settings.default_discipline, settings.default_club, settings.default_activity)" class="btn btn-block btn-success btn-lg my-1">
+<span *ngIf="dataReady && canCreate() && defaultBtn && userData.settings.default_activity==238">
+
+  <button *ngIf="!!userData.settings && canCreate() && !loading"
+    (click)="createObservation(userData.settings.default_discipline, userData.settings.default_club, userData.settings.default_activity)"
+    class="btn btn-block btn-success btn-lg my-1">
     <fa name="plus" [fixed]="true"></fa>
-    <nlf-resolve-lungo-organization [organization_id]="settings.default_discipline" show_type="false"></nlf-resolve-lungo-organization>
+    <nlf-resolve-lungo-organization [organization_id]="userData.settings.default_discipline" show_activity="false">
+    </nlf-resolve-lungo-organization>
   </button>
+
 </span>
 
 <!-- NORMAL SELECT DROPDOWN -->
@@ -31,11 +36,18 @@
     </div>
   </span>
 
-  <span *ngIf="loading">
-    <fa name="spinner" animation="pulse" size="3x"></fa>
-    <p class="lead">Oppretter OBSREG...</p>
-  </span>
 </span>
+
+<span *ngIf="loading">
+  <fa name="spinner" animation="pulse" size="3x"></fa>
+  <p class="lead">Oppretter OBSREG...</p>
+</span>
+
+
+<ngb-alert *ngIf="!!error" type="danger" [dismissible]="true">
+  <fa name="exclamation-triangle" [fixed]="true"></fa>
+  Kunne ikke opprette OBSREG
+</ngb-alert>
 
 <!-- End page -->
 <span *ngIf="!dataReady">

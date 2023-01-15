@@ -5,7 +5,7 @@
   <span *ngIf="!link || organization.id === ''">
     {{ organization.name }}
   </span>
-  <nlf-resolve-lungo-activity *ngIf="show_type && !!organization.main_activity.id" [activity_id]="organization.main_activity.id"></nlf-resolve-lungo-activity>
+  <nlf-resolve-lungo-activity *ngIf="show_activity && !!organization.main_activity.id" [activity_id]="organization.main_activity.id"></nlf-resolve-lungo-activity>
 </span>
 
 <!-- POPOVER VIEW -->

@@ -35,7 +35,50 @@
   </div>
 
   <div class="modal-body">
-    <ng-container *ngTemplateOutlet="attrTemplate"></ng-container>
+    <!--<ng-container *ngTemplateOutlet="attrTemplate"></ng-container>-->
+    <!-- Modal content -->
+    <div class="row">
+      <agm-map *ngIf="geoReady" [latitude]="toFloat(attr.latitudeOfOcc.value)" [longitude]="toFloat(attr.longitudeOfOcc.value)" (mapClick)="updateLocation($event)" [mapTypeControl]="true" [zoom]="7">
+
+        <agm-marker [markerDraggable]="isDraggable()" (dragEnd)="updateLocation($event)" [latitude]="toFloat(attr.latitudeOfOcc.value)" [longitude]="toFloat(attr.longitudeOfOcc.value)">
+        </agm-marker>
+
+        <!-- PATHS -->
+        <agm-polyline *ngFor="let path of paths">
+          <agm-polyline-point *ngFor="let coordinates of path" [latitude]="coordinates[1]" [longitude]="coordinates[0]">
+          </agm-polyline-point>
+        </agm-polyline>
+
+      </agm-map>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.latitudeOfOcc.value" path="E5X.Occurrence.LatitudeOfOcc" id="latitudeOfOcc"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.longitudeOfOcc.value" path="E5X.Occurrence.LongitudeOfOcc" id="longitudeOfOcc"></nlf-ors-editor-tag-e5x>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.locationName.value" path="E5X.Occurrence.LocationName" id="locationName"></nlf-ors-editor-tag-e5x>
+      </div>
+
+      <div class="col-md-12">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.stateAreaOfOcc.value" path="E5X.Occurrence.StateAreaOfOcc" id="stateAreaOfOcc"></nlf-ors-editor-tag-e5x>
+      </div>
+    </div>
+
+    <div class="row">
+      <div *ngIf="devDebug" class="row">
+        AC: {{ atm | json }}
+      </div>
+    </div>
+    <!-- //Modal content -->
+
   </div>
 
   <div class="modal-footer">
@@ -49,45 +92,5 @@
 </ng-template>
 
 <ng-template #attrTemplate>
-  <div class="row">
-    <agm-map *ngIf="geoReady" [latitude]="toFloat(attr.latitudeOfOcc.value)" [longitude]="toFloat(attr.longitudeOfOcc.value)" (mapClick)="updateLocation($event)" [mapTypeControl]="true" [zoom]="7">
-
-      <agm-marker [markerDraggable]="isDraggable()" (dragEnd)="updateLocation($event)" [latitude]="toFloat(attr.latitudeOfOcc.value)" [longitude]="toFloat(attr.longitudeOfOcc.value)">
-      </agm-marker>
-
-      <!-- PATHS -->
-      <agm-polyline *ngFor="let path of paths">
-        <agm-polyline-point *ngFor="let coordinates of path" [latitude]="coordinates[1]" [longitude]="coordinates[0]">
-        </agm-polyline-point>
-      </agm-polyline>
-
-    </agm-map>
-  </div>
-
-  <div class="row">
-    <div class="col-md-6">
-      <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.latitudeOfOcc.value" path="E5X.Occurrence.LatitudeOfOcc" id="latitudeOfOcc"></nlf-ors-editor-tag-e5x>
-    </div>
-    <div class="col-md-6">
-      <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.longitudeOfOcc.value" path="E5X.Occurrence.LongitudeOfOcc" id="longitudeOfOcc"></nlf-ors-editor-tag-e5x>
-    </div>
-
-  </div>
-
-  <div class="row">
-    <div class="col-md-12">
-      <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.locationName.value" path="E5X.Occurrence.LocationName" id="locationName"></nlf-ors-editor-tag-e5x>
-    </div>
-
-    <div class="col-md-12">
-      <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.stateAreaOfOcc.value" path="E5X.Occurrence.StateAreaOfOcc" id="stateAreaOfOcc"></nlf-ors-editor-tag-e5x>
-    </div>
-  </div>
-
-  <div class="row">
-    <div *ngIf="devDebug" class="row">
-      AC: {{ atm | json }}
-    </div>
-  </div>
 
 </ng-template>

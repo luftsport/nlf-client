@@ -1,4 +1,4 @@
-<div *ngIf="!!dataReady">
+<div *ngIf="!!dataReady && !error">
   <div [id]="activity" class="list-group list-group-flush">
     <a [routerLink]="['/ors', o._model.type, 'report', o.id]" *ngFor="let o of data"
     class="small list-group-item list-group-item-action d-flex justify-content-between align-items-center">
@@ -8,8 +8,13 @@
     </a>
   </div>
 </div>
-<div *ngIf="!dataReady">
+<div *ngIf="!dataReady && !error">
   <p class="align-middle text-center text-secondary">
     <nlf-ui-component-spinner></nlf-ui-component-spinner>
+  </p>
+</div>
+<div *ngIf="!!dataReady && !!error">
+  <p class="align-middle text-center text-secondary">
+    Ingen
   </p>
 </div>
