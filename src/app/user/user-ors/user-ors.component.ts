@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ApiUserService } from 'app/api/api-user.service';
+import { ApiObservationsService } from 'app/api/api-observations.service';
 import { ApiOptionsInterface, ApiUserORSList, ApiUserORSItem } from 'app/api/api.interface';
 import { ApiUserDataSubjectItem, NlfConfigItem } from 'app/api/api.interface';
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
@@ -19,17 +19,18 @@ export class NlfUserOrsComponent implements OnInit {
 
 
   constructor(
-    private userService: ApiUserService,
+    private orsService: ApiObservationsService,
   ) {
   }
 
   ngOnInit() {
+    this.orsService.setActivity(this.activity);
     const options: ApiOptionsInterface = {
       query: {
         sort: [{ 'when': -1 }]
       },
     };
-    this.userService.getUserObservations(this.activity, options).subscribe(
+    this.orsService.getObservationsSelf(options).subscribe(
       data => {
         this.observations = data['_items'];
         this.dataReady = true;

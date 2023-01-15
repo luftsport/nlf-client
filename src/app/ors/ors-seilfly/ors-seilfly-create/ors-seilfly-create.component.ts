@@ -47,6 +47,7 @@ export class NlfOrsSeilflyCreateComponent implements OnInit {
   settings;
   dataReady = false; // render when true
   loading = false; // On create
+  error = false;
   public config: NlfConfigItem;
 
   public userData: ApiUserDataSubjectItem;
@@ -196,6 +197,7 @@ export class NlfOrsSeilflyCreateComponent implements OnInit {
               err => {
                 this.alertService.error('Kunne ikke opprette OBSREG: ' + err.message);
                 this.loading = false;
+                this.error = false;
               },
               () => {
                 console.log('Created observation');
@@ -210,6 +212,7 @@ export class NlfOrsSeilflyCreateComponent implements OnInit {
         console.error(err);
         this.alertService.error('Kunne ikke opprette OBSREG: ' + err.message);
         this.loading = false;
+        this.error = false;
       }
       /*
       occurrence.entities.narrative.push(new E5XNarrativeClass().narrative);

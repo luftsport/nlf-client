@@ -39,6 +39,7 @@ export class NlfOrsFallskjermCreateComponent implements OnInit {
   settings;
   dataReady = false; // render when true
   loading = false; // On create
+  error = false; // Error creating
   public config: NlfConfigItem;
 
   constructor(
@@ -162,6 +163,7 @@ this.orsService.setActivity('fallskjerm');
             err => {
               this.alertService.error('Kunne ikke opprette OBSREG: ' + err.message);
               this.loading = false;
+              this.error = true;
             },
             () => {
               console.log('Created observation');

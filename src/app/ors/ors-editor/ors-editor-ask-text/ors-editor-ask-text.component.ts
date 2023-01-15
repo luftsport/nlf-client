@@ -46,13 +46,15 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
     private confirmService: ConfirmService,
     private modalService: NgbModal) {
 
-    
+
     this.involved.currentArr.subscribe(list => this.list = list); // Involved list
     this.subject.observableObservation.subscribe(observation => {
       this.observation = observation;
-      this.orsService.setActivity(this.observation._model.type);
-      if (typeof this.observation.ask.text[this.observation.workflow.state] === 'undefined') {
-        this.observation.ask.text[this.observation.workflow.state] = '';
+      if (!!this.observation) {
+        this.orsService.setActivity(this.observation._model.type);
+        if (typeof this.observation.ask.text[this.observation.workflow.state] === 'undefined') {
+          this.observation.ask.text[this.observation.workflow.state] = '';
+        }
       }
     });
   }
@@ -63,7 +65,7 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
 
     this.initiateTribute();
-    
+
   }
 
   public getInvolved(text, callback) {
@@ -100,117 +102,117 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
   private initiateTribute() {
     const rs = (length) => Math.round((Math.pow(36, length + 1) - Math.random() * Math.pow(36, length))).toString(36).slice(1);
 
-      const users = {
-        trigger: '!',
-        iframe: null,
-        selectClass: 'highlight',
-        // function called on select that returns the content to insert<macro contenteditable="false" class="badge badge-info"
-        selectTemplate: function (item) {
-          const id = rs(12);
-          return '<macro href="#" data-url="/user/' + item.original.id + '" contenteditable="false"\
+    const users = {
+      trigger: '!',
+      iframe: null,
+      selectClass: 'highlight',
+      // function called on select that returns the content to insert<macro contenteditable="false" class="badge badge-info"
+      selectTemplate: function (item) {
+        const id = rs(12);
+        return '<macro href="#" data-url="/user/' + item.original.id + '" contenteditable="false"\
                 data-type="user" data-id="' + item.original.id + '"\
                 onclick="this.remove()"\
                 class="badge badge-info macrolink pointer" id="' + id + '">\
                 !' + item.original.full_name + '</macro>';
-        },
-        // template for displaying item in menu
-        menuItemTemplate: function (item) {
-          return item.string;
-        },
-        // template for when no match is found (optional),
-        // If no template is provided, menu is hidden.
-        noMatchTemplate: function (text) {
-          return 'No results!';
-        },
-        // column to search against in the object (accepts function or string)
-        lookup: 'full_name',
-        // column that contains the content to insert by default
-        fillAttr: 'full_name',
-        // REQUIRED: array of objects to match
-        values: (text, callback) => this.getInvolved(text, u => callback(u)),
-        // specify whether a space is required before the trigger character
-        requireLeadingSpace: true,
-        // specify whether a space is allowed in the middle of mentions
-        allowSpaces: true,
-        // optionally specify a custom suffix for the replace text
-        // (defaults to empty space if undefined)
-        replaceTextSuffix: '\n',
-        // specify whether the menu should be positioned.  Set to false and use in conjuction with menuContainer to create an inline menu
-        // (defaults to true)
-        positionMenu: true,
-      };
+      },
+      // template for displaying item in menu
+      menuItemTemplate: function (item) {
+        return item.string;
+      },
+      // template for when no match is found (optional),
+      // If no template is provided, menu is hidden.
+      noMatchTemplate: function (text) {
+        return 'No results!';
+      },
+      // column to search against in the object (accepts function or string)
+      lookup: 'full_name',
+      // column that contains the content to insert by default
+      fillAttr: 'full_name',
+      // REQUIRED: array of objects to match
+      values: (text, callback) => this.getInvolved(text, u => callback(u)),
+      // specify whether a space is required before the trigger character
+      requireLeadingSpace: true,
+      // specify whether a space is allowed in the middle of mentions
+      allowSpaces: true,
+      // optionally specify a custom suffix for the replace text
+      // (defaults to empty space if undefined)
+      replaceTextSuffix: '\n',
+      // specify whether the menu should be positioned.  Set to false and use in conjuction with menuContainer to create an inline menu
+      // (defaults to true)
+      positionMenu: true,
+    };
 
-      const remote = {
-        trigger: '@',
-        iframe: null,
-        selectClass: 'highlight',
-        selectTemplate: function (item) {
-          const id = rs(12);
-          return '<macro href="#" data-url="/user/' + item.original.id + '" contenteditable="false" \
+    const remote = {
+      trigger: '@',
+      iframe: null,
+      selectClass: 'highlight',
+      selectTemplate: function (item) {
+        const id = rs(12);
+        return '<macro href="#" data-url="/user/' + item.original.id + '" contenteditable="false" \
                 data-type="user" data-id="' + item.original.id + '"\
                 onclick="this.remove()"\
                 class="badge badge-danger macrolink pointer" id="' + id + '">\
                 @' + item.original.full_name + '</macro>';
-        },
-        menuItemTemplate: function (item) {
-          return item.string;
-        },
-        noMatchTemplate: 'Fant ingen',
-        lookup: function (item) {
-          return item.full_name + ' (' + item.id + ')';
-        },
-        fillAttr: 'full_name',
-        values: (text, callback) => this.debouncedGetUsers(text, u => callback(u)),
-        requireLeadingSpace: true,
-        allowSpaces: true,
-        replaceTextSuffix: '\n',
-        positionMenu: true,
-      };
+      },
+      menuItemTemplate: function (item) {
+        return item.string;
+      },
+      noMatchTemplate: 'Fant ingen',
+      lookup: function (item) {
+        return item.full_name + ' (' + item.id + ')';
+      },
+      fillAttr: 'full_name',
+      values: (text, callback) => this.debouncedGetUsers(text, u => callback(u)),
+      requireLeadingSpace: true,
+      allowSpaces: true,
+      replaceTextSuffix: '\n',
+      positionMenu: true,
+    };
 
-      const ors = {
-        trigger: '#',
-        iframe: null,
-        selectClass: 'highlight',
-        selectTemplate: function (item) {
-          const id = rs(12);
-          return '<macro href="#" data-url="/ors/' + item.original.activity + '/report/' + item.original.id + '" contenteditable="false"\
+    const ors = {
+      trigger: '#',
+      iframe: null,
+      selectClass: 'highlight',
+      selectTemplate: function (item) {
+        const id = rs(12);
+        return '<macro href="#" data-url="/ors/' + item.original.activity + '/report/' + item.original.id + '" contenteditable="false"\
                 data-type="f_ors" data-id="' + item.original.id + '"\
                 onclick="this.remove()"\
                 class="badge badge-danger macrolink pointer" id="' + id + '"> \
                 #' + item.original.id + ' ' + item.original.title + '</macro>';
-        },
-        menuItemTemplate: function (item) {
-          return item.string;
-        },
-        noMatchTemplate: 'Fant ingen',
-        lookup: 'search',
-        fillAttr: 'title',
-        values: (text, callback) => this.debouncedGetOrs(text, u => callback(u)),
-        requireLeadingSpace: true,
-      };
+      },
+      menuItemTemplate: function (item) {
+        return item.string;
+      },
+      noMatchTemplate: 'Fant ingen',
+      lookup: 'search',
+      fillAttr: 'title',
+      values: (text, callback) => this.debouncedGetOrs(text, u => callback(u)),
+      requireLeadingSpace: true,
+    };
 
-      /**
-        @todo https://github.com/ladderio/ngx-tribute
-       *  this.menuSelected = 0
-          this.current = {}
-          this.inputEvent = false
-          this.isActive = false
-          this.menuContainer = menuContainer
-          this.allowSpaces = allowSpaces | true false
-          this.replaceTextSuffix = replaceTextSuffix = '\n'
-          this.positionMenu = positionMenu | true
-       */
-      this.tribute = new Tribute({ collection: [users, remote, ors], allowSpaces: true });
+    /**
+      @todo https://github.com/ladderio/ngx-tribute
+     *  this.menuSelected = 0
+        this.current = {}
+        this.inputEvent = false
+        this.isActive = false
+        this.menuContainer = menuContainer
+        this.allowSpaces = allowSpaces | true false
+        this.replaceTextSuffix = replaceTextSuffix = '\n'
+        this.positionMenu = positionMenu | true
+     */
+    this.tribute = new Tribute({ collection: [users, remote, ors], allowSpaces: true });
 
-      this.elementAsk = document.getElementById('ask'); //getElementsByName('myAskDiv');
-      this.tribute.attach(this.elementAsk);
+    this.elementAsk = document.getElementById('ask'); //getElementsByName('myAskDiv');
+    this.tribute.attach(this.elementAsk);
 
-      this.elementAsk.addEventListener('tribute-replaced', (event) => {
-        //this.tribute.insertTextAtCursor(' ');
-        this.debouncedUpdateText();
-      });
-      console.log('Tribute:', this.tribute);
-   
+    this.elementAsk.addEventListener('tribute-replaced', (event) => {
+      //this.tribute.insertTextAtCursor(' ');
+      this.debouncedUpdateText();
+    });
+    console.log('Tribute:', this.tribute);
+
   }
 
   public getOrs(text, callback) {

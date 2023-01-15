@@ -18,6 +18,22 @@ export interface TagInterface {
   expl?: string;
 }
 
+/**  
+ * Attributes with choices_key: null and restrictions: null
+ * 
+ * datatype:
+ * 15: time
+ * 14: date
+ * 10: attachements
+ * 9: longitude decimal
+ * 8: latitude decimal
+ * 6: wxreports array of
+ * 5: choices array 
+ * 4: descimal
+ * 3: integer
+ * 1: string
+ */
+
 @Component({
   selector: 'nlf-ors-editor-tag-e5x',
   templateUrl: './ors-editor-tag-e5x.component.html',
@@ -227,6 +243,15 @@ export class NlfOrsEditorTagE5XComponent implements OnInit {
       }
     } catch { }
 
+    // Make sure floats are corrected - to 2 digits
+    if (this.attribute.restrictions.type === 'decimal') {
+      try {
+
+        this.items = String(parseFloat(this.items).toFixed(2));
+
+      } catch { }
+    }
+
     try {
       if (this.attribute.restrictions.type === 'string' && +this.attribute.restrictions.max > 0) {
         if (this.items.length > +this.attribute.restrictions.max) {
@@ -236,16 +261,9 @@ export class NlfOrsEditorTagE5XComponent implements OnInit {
       }
     } catch { }
 
-    // Make sure floats are corrected - to 2 digits
-    try {
-      if (this.attribute.restrictions.type === 'decimal') {
-        this.items = String(parseFloat(this.items).toFixed(2));
-      }
-    } catch { }
-
 
     // All choices ARE integers!
-    if (!!this.attribute.choices_key) {
+    if (this.attribute.choices_key != null || [3, 5].indexOf(this.attribute.datatype) > -1) {
       try {
         this.items = this.items.map((x) => +x);
       } catch {
@@ -265,7 +283,7 @@ export class NlfOrsEditorTagE5XComponent implements OnInit {
 
     if (this.attribute.max > 1) {
       if (!!this.selectedTags) {
-        if (!!this.attribute.choices_key) {
+        if (this.attribute.choices_key != null || [3, 5].indexOf(this.attribute.datatype) > -1) {
           this.itemsChange.emit(this.selectedTags.map(x => +x.id));
         } else {
           this.itemsChange.emit(this.selectedTags.map(x => x.id));
@@ -275,7 +293,7 @@ export class NlfOrsEditorTagE5XComponent implements OnInit {
       }
     } else {
       if (!!this.selectedTags) {
-        if (!!this.attribute.choices_key) {
+        if (this.attribute.choices_key != null || [3, 5].indexOf(this.attribute.datatype) > -1) {
           this.itemsChange.emit(+this.selectedTags.id);
         } else {
           this.itemsChange.emit(this.selectedTags.id);

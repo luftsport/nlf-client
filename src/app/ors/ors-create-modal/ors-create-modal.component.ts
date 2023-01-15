@@ -140,9 +140,11 @@ export class NlfOrsCreateModalComponent implements OnInit {
     //console.log('Create through modal: ', club_id, discipline, activity);
     //return;
 
+
     if (this.selected === '') {
       this.alertService.error('Ingen klubb valgt, velg klubb først', false, true, 10);
       return;
+      this.loading = false;
       // @TODO: alert here!
     }
     this.loading = true;

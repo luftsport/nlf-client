@@ -74,29 +74,31 @@ export class NlfOrsE5xComponent implements OnInit {
         console.log('Auth subject', data);
         try {
           this.token = data.token;
-        } catch {
+        } catch {
           this.token = undefined;
         }
       }
     );
 
     this.subject.observableObservation.subscribe(
-      data => {
-        this.observation = data;
+      observation => {
+        this.observation = observation;
+        console.log('E5X in E5X NOW!!!!', observation);
         this.configService.observableConfig.subscribe(
           data => {
             this.config = data;
-            this.e5x_enabled = this.config[this.observation._model.type]['observation']['e5x']['enabled'];
-            if (!this.observation.hasOwnProperty('e5x')) {
-              this.observation['e5x'] = {};
-              this.observation.e5x._status = 2; //2=open, 3=closed
-              if (!this.observation.e5x.hasOwnProperty('audit')) {
-                this.observation.e5x['audit'] = [];
+            try {
+              this.e5x_enabled = this.config[this.observation._model.type]['observation']['e5x']['enabled'];
+              if (!!this.config[this.observation._model.type]['observation']['e5x']['enabled'] && !this.observation.hasOwnProperty('e5x')) {
+                this.observation['e5x'] = {};
+                this.observation.e5x._status = 2; //2=open, 3=closed
+                if (!this.observation.e5x.hasOwnProperty('audit')) {
+                  this.observation.e5x['audit'] = [];
+                }
               }
-            }
+            } catch (e) { }
           }
         );
-
       }
     );
   }
@@ -221,7 +223,7 @@ export class NlfOrsE5xComponent implements OnInit {
       let rdate = new Date();
       this.observation.occurrence.entities.reportingHistory[0].attributes.reportingDate.value = [rdate.getFullYear(), pad(rdate.getMonth() + 1), pad(rdate.getDate())].join('-'); //+ ' ' + [rdate.getHours(), rdate.getMinutes(), rdate.getSeconds()].join(':');
       this.observation.occurrence.entities.reportingHistory[0].attributes.reportVersion.value = this.observation._version;
-      this.observation.occurrence.entities.reportingHistory[0].attributes.reportIdentification.value = 'nlf_' + this.observation._model.type +'_' + + this.observation.id + '_v' + this.observation._version;
+      this.observation.occurrence.entities.reportingHistory[0].attributes.reportIdentification.value = 'nlf_' + this.observation._model.type + '_' + + this.observation.id + '_v' + this.observation._version;
       this.observation.occurrence.entities.reportingHistory[0].attributes.reportSource.value = 2; // 2 er reportable, 3 er voluntary reports, media 4 osv. 
       this.observation.occurrence.entities.reportingHistory[0].attributes.reportingFormType.value = 9823;
 
@@ -246,7 +248,7 @@ export class NlfOrsE5xComponent implements OnInit {
     if (this.observation.files.length > 0) {
       try {
         this.observation.occurrence.entities.reportingHistory[0].attributes['report'] = { attributes: { resourceLocator: this.addFiles() } };
-
+  
       } catch (e) {
         console.log('Error adding files', e);
       }
@@ -383,10 +385,10 @@ export class NlfOrsE5xComponent implements OnInit {
        await this.apiFile.getFile(file.f, options).subscribe(
          data => {
            data['r'] = file.r;
-
+  
            //this.e5xobservation.entities.reportingHistory.attributes.report[0].
            resourceLocator.push({fileName: data['name'], description: ''});
-
+  
            if (data.content_type.match(/image/g) != null) {
            } else {
            }

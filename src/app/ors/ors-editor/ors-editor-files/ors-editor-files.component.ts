@@ -61,6 +61,17 @@ export class NlfOrsEditorFilesComponent implements OnInit {
       observation => {
         this.observation = observation;
 
+        if (!!this.observation && !this.userData) {
+          this.userSubject.observable.subscribe(
+            data => {
+              if (!!data) {
+                this.userData = data
+                this.getFiles();
+              }
+            },
+            err => console.log('Error getting user data: ', err)
+          );
+        }
         /**
         if (!!this.observation.files && this.observation.files.length > 0) {
           this.getFiles();
@@ -86,15 +97,7 @@ export class NlfOrsEditorFilesComponent implements OnInit {
     );
 
 
-    this.userSubject.observable.subscribe(
-      data => {
-        if (!!data) {
-          this.userData = data
-          this.getFiles();
-        }
-      },
-      err => console.log('Error getting user data: ', err)
-    );
+
 
   }
 
@@ -110,21 +113,22 @@ export class NlfOrsEditorFilesComponent implements OnInit {
    */
 
   public getFiles() {
+    try {
+      let processed = 0;
+      this.dataReady = true;
 
-    let processed = 0;
-    this.dataReady = true;
 
+      // @TODO should rather take just the changes, not the whole list
+      this.filelist = [];
 
-    // @TODO should rather take just the changes, not the whole list
-    this.filelist = [];
-
-    this.observation.files.forEach(f => {
-      this.getFile(f);
-      processed++;
-      if (this.observation.files.length === processed) {
-        this.dataReady = true;
-      }
-    });
+      this.observation.files.forEach(f => {
+        this.getFile(f);
+        processed++;
+        if (this.observation.files.length === processed) {
+          this.dataReady = true;
+        }
+      });
+    } catch (e) { }
   }
 
   private getFile(f) {
@@ -366,7 +370,7 @@ export class NlfOrsEditorFilesComponent implements OnInit {
     const fileReader = new FileReader();
     return new Promise(resolve => {
       fileReader.readAsDataURL(file);
-      fileReader.onload = function(e: any) {
+      fileReader.onload = function (e: any) {
         resolve(e.target.result);
       };
     });

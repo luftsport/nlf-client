@@ -1,4 +1,5 @@
-<!--
+<ng-container *ngIf="!!observation">
+  <!--
 <div class="form-check">
   <input [disabled]="!observation.acl_user.w" class="form-check-input" type="checkbox" [(ngModel)]="observation.flags.insurance" (ngModelChange)="onChange($event)"
     id="defaultInsurance">
@@ -23,10 +24,11 @@
 </div>
 -->
 
-<div class="form-check" *ngFor="let flag of config[observation._model.type]['observation']['flagsArr']">
-  <input [disabled]="!observation.acl_user.w" class="form-check-input" type="checkbox" [(ngModel)]="observation.flags[flag]" (ngModelChange)="onChange($event, flag)"
-    [id]="flag">
-  <label class="form-check-label" for="defaultInsurance">
-    {{ config[observation._model.type]['observation']['flags'][flag]['label'] }}
-  </label>
-</div>
+  <div class="form-check" *ngFor="let flag of config[observation._model.type]['observation']['flagsArr']">
+    <input [disabled]="!observation.acl_user.w" class="form-check-input" type="checkbox"
+      [(ngModel)]="observation.flags[flag]" (ngModelChange)="onChange($event, flag)" [id]="flag">
+    <label class="form-check-label" for="defaultInsurance">
+      {{ config[observation._model.type]['observation']['flags'][flag]['label'] }}
+    </label>
+  </div>
+</ng-container>

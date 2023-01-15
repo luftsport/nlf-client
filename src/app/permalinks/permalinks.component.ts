@@ -27,6 +27,7 @@ export class NlfPermaLinksComponent implements OnInit {
             // Get after shebang!
             const url = event.url.split('#!/');
             console.log('Url splitted: ' + JSON.stringify(url));
+
             if (url.length === 2) {
               this.orsUrl = url[1];
             } else if (url.length === 1) {

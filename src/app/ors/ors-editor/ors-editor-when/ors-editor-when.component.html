@@ -1,20 +1,25 @@
-<form class="form-inline">
-  <div class="form-group">
-    <div class="input-group">
-      <input [disabled]="!observation.acl_user.w" class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="date" [maxDate]="maxDate" (ngModelChange)="debouncedUpdate($event.next)"
-        ngbDatepicker #d="ngbDatepicker">
-      <div class="input-group-append">
-        <button [disabled]="!observation.acl_user.w" class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
-          <fa name="calendar" [fixed]="true"></fa>
-        </button>
+<ng-container *ngIf="!!observation">
+  <form class="form-inline">
+    <div class="form-group">
+      <div class="input-group">
+        <input [disabled]="!observation.acl_user.w" class="form-control" placeholder="yyyy-mm-dd" name="dp"
+          [(ngModel)]="date" [maxDate]="maxDate" (ngModelChange)="debouncedUpdate($event.next)" ngbDatepicker
+          #d="ngbDatepicker">
+        <div class="input-group-append">
+          <button [disabled]="!observation.acl_user.w" class="btn btn-outline-secondary" (click)="d.toggle()"
+            type="button">
+            <fa name="calendar" [fixed]="true"></fa>
+          </button>
+        </div>
       </div>
     </div>
+  </form>
+  <div>
+    <ngb-timepicker [readonlyInputs]="!observation.acl_user.w" [(ngModel)]="time"
+      (ngModelChange)="debouncedUpdate($event)"></ngb-timepicker>
   </div>
-</form>
-<div>
-<ngb-timepicker [readonlyInputs]="!observation.acl_user.w" [(ngModel)]="time" (ngModelChange)="debouncedUpdate($event)"></ngb-timepicker>
-</div>
-<!--
+  <!--
 <hr> {{ date | json }} og {{ time | json }}
 <br> {{ maxDate }} {{ observation.when | json }}
 -->
+</ng-container>

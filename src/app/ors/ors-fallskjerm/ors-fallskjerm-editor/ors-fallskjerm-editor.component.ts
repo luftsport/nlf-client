@@ -1,4 +1,4 @@
-import { ApiObservationsItem } from 'app/api/api.interface';
+import { ApiObservationsItem, ApiUserDataSubjectItem } from 'app/api/api.interface';
 import { ApiObservationsService } from 'app/api/api-observations.service';
 import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
 import { NlfAlertService } from 'app/services/alert/alert.service';
@@ -12,9 +12,15 @@ import { NlfOrsEditorHelpComponent } from 'app/ors/ors-editor/ors-editor-help/or
 import { NlfOrsEditorAboutComponent } from 'app/ors/ors-editor/ors-editor-about/ors-editor-about.component';
 import { NlfOrsEditorDebugComponent } from 'app/ors/ors-editor/ors-editor-debug/ors-editor-debug.component';
 import { NlfOrsEditorWorkflowComponent } from 'app/ors/ors-editor/ors-editor-workflow/ors-editor-workflow.component';
+import { NlfUserSubjectService } from 'app/user/user-subject.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { cleanE5XObject, deepCopy, pad } from 'app/interfaces/functions';
+import { reloadCurrentRoute } from 'app/interfaces/functions';
 import { isEqual, cloneDeep } from 'lodash'
+import { ComponentCanDeactivate } from 'app/pending-changes.guard';
+import { HostListener } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { forkJoin } from 'rxjs';
+import 'rxjs/add/operator/takeWhile';
 
 
 @Component({
@@ -22,12 +28,13 @@ import { isEqual, cloneDeep } from 'lodash'
   templateUrl: './ors-fallskjerm-editor.component.html',
   styleUrls: ['./ors-fallskjerm-editor.component.css']
 })
-export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy {
+export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
 
   error;
   id: number | string;
   dataReady = false;
   observation: ApiObservationsItem;
+  modalObservation: ApiObservationsItem;
   differ: any;
   changes = false;
   hotkeys = []; //: Hotkey[];
@@ -38,9 +45,9 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy {
 
   shadow;
   // Generated
-  e5xobservation;
+  public userData: ApiUserDataSubjectItem;
 
-  route_sub;
+  private subject_is_alive: boolean = true;
 
   constructor(
     private router: Router,
@@ -52,7 +59,8 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy {
     private hotkeysService: HotkeysService,
     private modalService: NgbModal,
     private confirmService: ConfirmService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private userDataSubject: NlfUserSubjectService
     // private differs: KeyValueDiffers
   ) {
 
@@ -61,22 +69,47 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy {
     // this.differ = this.differs.find({}).create();
 
     // Instantiate our behavioursubject
-    this.subject.observableObservation.subscribe(
-      observation => {
-        this.observation = observation;
+    forkJoin([
+      // Instantiate our behavioursubject
+      this.subject.observableObservation.takeWhile(() => this.subject_is_alive).subscribe(
+        observation => {
 
-        // Check if reset
-        if (this.observation.id === 0) {
-          this.dataReady = false;
-          this.shadow = undefined;
-        } else {
-          this.changed();
-        }
-      },
-      err => console.log(err),
-      () => { }
+          if (!!observation && !!this.observation) {
+            if (observation['_model']['type'] != this.observation['_model']['type']) {
+              console.error('RELOADING ROUTE');
+              reloadCurrentRoute(router);
+            }
+          }
 
-    );
+          if (!!observation) {
+            this.observation = observation;
+
+            // Check if reset
+            if (this.observation.id === 0) {
+              this.dataReady = false;
+              this.shadow = undefined;
+            } else {
+              this.changed();
+            }
+          } else {
+            this.dataReady = false;
+          }
+        },
+        err => console.log(err),
+        () => { }
+
+      ),
+
+      this.userDataSubject.observable.subscribe(
+        data => {
+          if (!!data) {
+            this.userData = data;
+          }
+        },
+        err => console.log('Error getting user data: ', err)
+      )
+    ]);
+
 
     // Instantiate all hotkeys
     this.hotkeys.push(
@@ -104,16 +137,9 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.orsService.setActivity('fallskjerm');
 
-    // Save on exit
-    this.route_sub = this.router.events.subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        this.saveIfChanges();
-        this.route_sub.unsubscribe();
-        this.subject.reset();
-      }
-    });
+
+    this.orsService.setActivity('fallskjerm');
 
     this.route.params.subscribe(params => {
       this.id = params['id'] ? params['id'] : 0;
@@ -134,16 +160,35 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy {
     // this.route_sub.unsubscribe();
 
     this.hotkeysService.remove(this.hotkeys);
+    //this.subject.observableObservation.take;
 
+    //this.subject.unsubscribe();
     // this.saveIfChanges();
-
+    this.subject_is_alive = false;
+    console.log('DESTROYING SUBSCRIPTION');
     //this.subject.update(undefined);
   }
+
+  // @HostListener allows us to also guard against browser refresh, close, etc.
+  @HostListener('window:beforeunload')
+  canDeactivate(): Observable<boolean> | boolean {
+    // insert logic to check if there are pending changes here;
+    // returning true will navigate without confirmation
+    // returning false will show a confirm dialog before navigating away
+    if (!this.changes || !this.observation.acl_user.w) {
+
+      return true;
+    }
+    return false;
+  }
+
+
 
   public update(event) {
     console.log('EDITOR Update', this.changes, event);
     this.subject.update(this.observation);
   }
+
 
   /**
   Checks if new object is different!
@@ -244,7 +289,7 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy {
   public getData() {
     console.log('Getting data');
     this.dataReady = false;
-
+    
     this.orsService.get(this.id).subscribe(
       data => {
 
@@ -259,10 +304,10 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy {
         this.shadow = cloneDeep(this.observation);
         this.changes = false;
 
-        if(this.observation._created === this.observation._updated) {
-          this.alertService.success('Suksess! Du opprettet akkurat en ny observasjon og den fikk løpenummer #' + this.observation.id, false, true, 60);
-        }
-        
+        //if (this.observation._created === this.observation._updated) {
+        //  this.alertService.success('Suksess! Du opprettet akkurat en ny observasjon og den fikk løpenummer #' + this.observation.id, false, true, 60);
+        //}
+
 
       },
       err => {
@@ -274,6 +319,16 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy {
         this.dataReady = true;
       }
     );
+  }
+
+  openActivities(template) {
+    this.modalObservation = this.observation;
+    this.modalRef = this.modalService.open(template, { size: 'lg' });
+  }
+
+  closeActivities() {
+    this.modalObservation = undefined;
+    this.modalRef.close();
   }
 
   openHelp() {

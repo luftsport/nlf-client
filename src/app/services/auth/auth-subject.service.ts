@@ -20,13 +20,15 @@ export class NlfAuthSubjectService {
     this.observableAuthData = this.authData.asObservable();
 
     const token = localStorage.getItem('auth-token');
-    if (!!token) {
+    const id_token = localStorage.getItem('auth-id-token');
+    if (!!token && !!id_token) {
       try {
         this.update(true);
         this.updateAuthData(
           {
             person_id: +localStorage.getItem('auth-id'),
             token: token,
+            id_token: id_token,
             valid: new Date(localStorage.getItem('auth-valid'))
           });
       } catch (e) {

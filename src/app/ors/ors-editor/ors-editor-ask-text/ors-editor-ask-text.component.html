@@ -1,4 +1,4 @@
-<ng-container *ngIf="observation">
+<ng-container *ngIf="!!observation">
   <!-- PREVIEW ALL -->
   <nlf-ors-report-ask-text *ngIf="showAllASK" [comments]="observation.ask.text" [audit]="observation.workflow.audit"
     [activity]="observation._model.type"></nlf-ors-report-ask-text>

@@ -3,9 +3,9 @@
     <!--<i class="nlf nlf-fw nlf-logo-plain nlf-2x"></i>-->NLF
   </a>
 
-  <span *ngIf="ENV._name!='prod'" class="badge badge-danger">{{ ENV._name }}</span>
+  <span *ngIf="!ENV.production" class="badge badge-danger">{{ ENV._name }}</span>
 
-  <!-- CURRENT OR LAST OBSREG -->
+  <!-- CURRENT OR LAST OBSREG 
   <span *ngIf="(loggedInObservable | async) && !!current_ors">
     <span *ngIf="router.url != '/ors/'+current_ors.type+'/'+current_ors.id">
       <span [routerLink]="['/ors', current_ors.type, 'edit', current_ors.id]"
@@ -14,7 +14,8 @@
       </span>
     </span>
   </span>
-
+  -->
+  
   <span class="ml-auto"></span>
 
   <!-- CREATE OBSREG BTN XS-->
@@ -54,32 +55,22 @@
       </li>
       -->
 
-      <!--TEST
-      <li (click)="navbarOpen=false" *ngIf="authenticated && user_data.person_id==301041" class="nav-item" routerLinkActive="active">
-        <a [routerLink]="['/test']" class="nav-link">Test</a>
-      </li>
-      -->
 
       <!-- ADMIN -->
-      <li (click)="navbarOpen=false" *ngIf="authenticated && user_data.person_id==301041" class="nav-item"
+      <li (click)="navbarOpen=false" *ngIf="authenticated && [1505923257, 1476506542].indexOf(userHash(user_data.person_id))>-1" class="nav-item"
         routerLinkActive="active">
         <a [routerLink]="['/admin']" class="nav-link">Admin</a>
       </li>
 
-      <!-- DASHBOARD
-      <li (click)="navbarOpen=false" *ngIf="authenticated && user_data.person_id==301041" class="nav-item" routerLinkActive="active">
-        <a [routerLink]="['/dashboard']" class="nav-link">Dashboard</a>
-      </li>
-      -->
 
       <!-- CONTENT -->
-      <li (click)="navbarOpen=false" *ngIf="authenticated && user_data.person_id==301041" class="nav-item"
+      <li (click)="navbarOpen=false" *ngIf="authenticated && [1505923257, 1476506542].indexOf(userHash(user_data.person_id))>-1" class="nav-item"
         routerLinkActive="active">
         <a [routerLink]="['/content']" class="nav-link">Innhold</a>
       </li>
 
       <!-- Medlemssjekk  -->
-      <ng-container *ngIf="ENV._name!='prod'">
+      <ng-container *ngIf="!ENV.production">
         <li (click)="navbarOpen=false" *ngIf="authenticated" class="nav-item" routerLinkActive="active">
           <a [routerLink]="['/medlem']" class="nav-link">Medlem</a>
         </li>
@@ -91,6 +82,7 @@
         routerLinkActive="active">
         <a [routerLink]="['/organizations', user_data.settings.default_discipline]" class="nav-link">Klubber</a>
       </li>
+
       <!-- Defaults to NLF -->
       <li (click)="navbarOpen=false" *ngIf="authenticated && !user_data.settings.default_discipline" class="nav-item"
         routerLinkActive="active">
@@ -103,15 +95,14 @@
         <a [routerLink]="['/aircraft']" class="nav-link">Fly</a>
       </li>
 
-      <!-- AIP
-      <li (click)="navbarOpen=false" *ngIf="authenticated" class="nav-item" routerLinkActive="active">
+      <!-- AIP -->
+      <li (click)="navbarOpen=false" *ngIf="authenticated && [1505923257, 1476506542].indexOf(userHash(user_data.person_id))>-1" class="nav-item" routerLinkActive="active">
         <a [routerLink]="['/aip']" class="nav-link">AIP</a>
       </li>
-      -->
 
       <!-- INTEGRATION -->
       <li (click)="navbarOpen=false"
-        *ngIf="authenticated && [301041,7623313,5502100,4402873,4859230,425529,554002,445648,7897818,6273278].indexOf(user_data.person_id)>-1"
+        *ngIf="authenticated && [ 1505923257, -1957053861, 1476506542, -1133184971, 1356267023, 440141138, 559477991, 1536523365, 1567888414, 1538371429, -1069338048, -2130588421 ].indexOf(userHash(user_data.person_id))>-1"
         class="nav-item" routerLinkActive="active">
         <a [routerLink]="['/integration']" class="nav-link">Integrasjon</a>
       </li>

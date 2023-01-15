@@ -1,25 +1,26 @@
-<div class="modal-header">
-  <h4 class="modal-title" *ngIf="dataReady">
-    Opprett ny OBSREG
-  </h4>
-  <span *ngIf="ENV._name!='prod'" class="badge badge-danger ml-3">{{ ENV._name }}</span>
-  <button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.dismiss()">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<div class="modal-body text-center" *ngIf="!dataReady">
-  <p>
-    <ngb-alert [dismissible]="false" type="danger">
-      <strong>Error!</strong> Kunne ikke laste nøvendig konfigurasjon.
-    </ngb-alert>
-  </p>
-</div>
-<div class="modal-body text-center" *ngIf="dataReady">
+<div *ngIf="!loading">
+  <div class="modal-header">
+    <h4 class="modal-title" *ngIf="dataReady">
+      Opprett ny OBSREG
+    </h4>
+    <span *ngIf="ENV._name!='prod'" class="badge badge-danger ml-3">{{ ENV._name }}</span>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body text-center" *ngIf="!dataReady">
+    <p>
+      <ngb-alert [dismissible]="false" type="danger">
+        <strong>Error!</strong> Kunne ikke laste nøvendig konfigurasjon.
+      </ngb-alert>
+    </p>
+  </div>
+  <div class="modal-body text-center" *ngIf="dataReady">
 
-  <!--Default discipline-->
-  <div class="my-3" *ngIf="showDefault">
+    <!--Default discipline-->
+    <div class="my-3" *ngIf="showDefault">
 
-    <!-- QUICKSELECT DEFAULT DISCIPLINE
+      <!-- QUICKSELECT DEFAULT DISCIPLINE
     <button *ngIf="!!settings && canCreateDefault()" (click)="createObservation(settings.default_discipline, settings.default_club, settings.default_activity)"
       class="btn btn-block btn-success btn-lg my-1">
       <fa name="plus" [fixed]="true"></fa>
@@ -30,67 +31,74 @@
     </div>
     -->
 
-    <nlf-ors-fallskjerm-create [defaultBtn]="true"
-      *ngIf="!!settings && canCreateDefault() && settings.default_activity==109"></nlf-ors-fallskjerm-create>
-    <nlf-ors-motor-create [defaultBtn]="true"
-      *ngIf="!!settings && canCreateDefault() && settings.default_activity==238"></nlf-ors-motor-create>
-    <nlf-ors-seilfly-create [defaultBtn]="true"
-      *ngIf="!!settings && canCreateDefault() && settings.default_activity==111"></nlf-ors-seilfly-create>
-    <nlf-ors-sportsfly-create [defaultBtn]="true"
-      *ngIf="!!settings && canCreateDefault() && settings.default_activity==237"></nlf-ors-sportsfly-create>
+      <nlf-ors-fallskjerm-create [defaultBtn]="true"
+        *ngIf="!!settings && canCreateDefault() && settings.default_activity==109"></nlf-ors-fallskjerm-create>
+      <nlf-ors-motor-create [defaultBtn]="true"
+        *ngIf="!!settings && canCreateDefault() && settings.default_activity==238"></nlf-ors-motor-create>
+      <nlf-ors-seilfly-create [defaultBtn]="true"
+        *ngIf="!!settings && canCreateDefault() && settings.default_activity==111"></nlf-ors-seilfly-create>
+      <nlf-ors-sportsfly-create [defaultBtn]="true"
+        *ngIf="!!settings && canCreateDefault() && settings.default_activity==237"></nlf-ors-sportsfly-create>
 
 
-    <!-- MORE -->
-    <div class="my-3 pointer lead">
-      <a (click)="showDefaultActivity=!showDefaultActivity;showDefault=!showDefault" class="btn btn-link">
-        Flere valg
+      <!-- MORE -->
+      <div class="my-3 pointer lead">
+        <a (click)="showDefaultActivity=!showDefaultActivity;showDefault=!showDefault" class="btn btn-link btn-lg">
+          Flere valg
+        </a>
+      </div>
+    </div>
+
+    <!-- SHOW ALL DISCIPLINES IN DEFAULT ACTIVITY -->
+    <div *ngIf="showDefaultActivity">
+      <div class="my-3">
+        <nlf-ors-fallskjerm-create *ngIf="settings.default_activity==109"></nlf-ors-fallskjerm-create>
+        <nlf-ors-motor-create *ngIf="settings.default_activity==238"></nlf-ors-motor-create>
+        <nlf-ors-seilfly-create *ngIf="settings.default_activity==111"></nlf-ors-seilfly-create>
+        <nlf-ors-sportsfly-create *ngIf="settings.default_activity==237"></nlf-ors-sportsfly-create>
+      </div>
+      <div class="my-3 pointer lead">
+        <a (click)="showAll=!showAll;showDefaultActivity=!showDefaultActivity" class="btn btn-link btn-lg">
+          Vis flere valg
+        </a>
+      </div>
+    </div>
+
+    <!--SHOW ALL ACTIVITIES -->
+    <div *ngIf="showAll">
+      <div class="my-3">
+        <p class="lead">Fallskjerm</p>
+        <nlf-ors-fallskjerm-create></nlf-ors-fallskjerm-create>
+      </div>
+      <div class="my-3">
+        <p class="lead">Motorfly</p>
+        <nlf-ors-motor-create></nlf-ors-motor-create>
+      </div>
+      <div class="my-3">
+        <p class="lead">Seilfly</p>
+        <nlf-ors-seilfly-create></nlf-ors-seilfly-create>
+      </div>
+      <div class="my-3">
+        <p class="lead">Sportsfly</p>
+        <nlf-ors-sportsfly-create></nlf-ors-sportsfly-create>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="modal-footer">
+    <ng-container *ngIf="[109, 111, 237, 238].indexOf(settings.default_activity)">
+      <a class="btn btn-link mr-auto" [routerLink]="['/ors', getActivityName()]">
+        <fa name="link" [fixed]="true"></fa> OBSREG {{ getActivityName() }}
       </a>
-    </div>
+      <button class="btn btn-outline-dark" (click)="activeModal.close()">Avbryt</button>
+    </ng-container>
   </div>
-
-  <!-- SHOW ALL DISCIPLINES IN DEFAULT ACTIVITY -->
-  <div *ngIf="showDefaultActivity">
-    <div class="my-3">
-      <nlf-ors-fallskjerm-create *ngIf="settings.default_activity==109"></nlf-ors-fallskjerm-create>
-      <nlf-ors-motor-create *ngIf="settings.default_activity==238"></nlf-ors-motor-create>
-      <nlf-ors-seilfly-create *ngIf="settings.default_activity==111"></nlf-ors-seilfly-create>
-      <nlf-ors-sportsfly-create *ngIf="settings.default_activity==237"></nlf-ors-sportsfly-create>
-    </div>
-    <div class="my-3 pointer lead">
-      <a (click)="showAll=!showAll;showDefaultActivity=!showDefaultActivity" class="btn btn-link">
-        Vis flere valg
-      </a>
-    </div>
-  </div>
-
-  <!--SHOW ALL ACTIVITIES -->
-  <div *ngIf="showAll">
-    <div class="my-3">
-      <p class="lead">Fallskjerm</p>
-      <nlf-ors-fallskjerm-create></nlf-ors-fallskjerm-create>
-    </div>
-    <div class="my-3">
-      <p class="lead">Motorfly</p>
-      <nlf-ors-motor-create></nlf-ors-motor-create>
-    </div>
-    <div class="my-3">
-      <p class="lead">Seilfly</p>
-      <nlf-ors-seilfly-create></nlf-ors-seilfly-create>
-    </div>
-    <div class="my-3">
-      <p class="lead">Sportsfly</p>
-      <nlf-ors-sportsfly-create></nlf-ors-sportsfly-create>
-    </div>
-  </div>
-
-
 </div>
 
-<div class="modal-footer">
-  <ng-container *ngIf="[109, 111, 237, 238].indexOf(settings.default_activity)">
-    <a class="btn btn-link mr-auto" [routerLink]="['/ors', getActivityName()]">
-      <fa name="link" [fixed]="true"></fa> OBSREG {{ getActivityName() }}
-    </a>
-    <button class="btn btn-outline-dark" (click)="activeModal.close()">Avbryt</button>
-  </ng-container>
+
+<!-- PAGE SPINNER -->
+<div *ngIf="!!loading">
+  <nlf-ui-page-spinner size="5"></nlf-ui-page-spinner>
 </div>

@@ -35,9 +35,11 @@ export class NlfOrsEditorMetComponent implements OnInit {
         let changes = false;
         this.observation = observation;
 
-        if (!this.observation.weather.hasOwnProperty('auto')) {
-          this.observation.weather['auto'] = {};
-        }
+        try {
+          if (!this.observation.weather.hasOwnProperty('auto')) {
+            this.observation.weather['auto'] = {};
+          }
+        } catch (e) { }
 
         try {
           if (!this.initObservation && !!this.observation.location.geo) {
@@ -47,14 +49,14 @@ export class NlfOrsEditorMetComponent implements OnInit {
             this.initObservation = true;
             changes = false;
           }
-        } catch  { }
+        } catch { }
         try {
           if (!this.when || this.when !== this.observation.when) {
             console.log('New date', this.when, 'Old date', this.observation.when);
             this.when = this.observation.when;
             changes = true;
           }
-        } catch  {
+        } catch {
 
         }
 
@@ -63,11 +65,11 @@ export class NlfOrsEditorMetComponent implements OnInit {
             this.where = this.observation.location.geo.coordinates;
             changes = true;
           }
-        } catch  {
+        } catch {
 
         }
 
-        if ((this.initObservation && !this.tafmetar)  || changes){
+        if ((this.initObservation && !this.tafmetar) || changes) {
           if (!!this.where && !!this.when) {
             this.getIcao();
           }

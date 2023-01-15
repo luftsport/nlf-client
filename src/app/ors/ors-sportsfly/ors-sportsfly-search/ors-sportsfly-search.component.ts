@@ -7,6 +7,7 @@ import { debounce } from 'ts-debounce';
 import { cleanObject } from 'app/interfaces/functions';
 import { isEmpty } from 'lodash';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { saveAs } from "file-saver";
 
 /**
 Save search is simple - save who and search query!
@@ -159,7 +160,14 @@ export class NlfOrsSportsflySearchComponent implements OnInit {
       }
     );
   }
-
+  public exportTojson() {
+    let exportData = this.result || []; // or only ._items?
+    // exportData is your array which you want to dowanload as json and sample.json is your file name, customize the below lines as per your need.
+    return saveAs(
+      new Blob([JSON.stringify(exportData, null, 2)], { type: 'JSON' }),
+      'query.json'
+    );
+  }
   openModal(template) {
 
     this.modalRef = this.modalService.open(template, { size: 'lg' });

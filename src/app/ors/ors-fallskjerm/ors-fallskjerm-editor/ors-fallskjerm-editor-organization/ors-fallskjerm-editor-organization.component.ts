@@ -30,12 +30,14 @@ export class NlfOrsFallskjermEditorOrganizationComponent implements OnInit {
     this.subject.observableObservation.subscribe(
       (observation) => {
         this.observation = observation;
-
+        try {
+          this.updateInvolved();
+        } catch (e) {}
       });
   }
 
   ngOnInit() {
-    this.updateInvolved();
+    
 
   }
 

@@ -100,10 +100,10 @@
       'disabled':processing
     }"
       (click)="workflowChange(a.resource, a.action)">
-      <fa *ngIf="a.resource=='reject'" name="close"></fa>
-      <fa *ngIf="a.resource=='approve'" name="check"></fa>
-      <fa *ngIf="a.resource=='withdraw'" name="trash-o"></fa>
-      <fa *ngIf="a.resource=='reopen'" name="undo"></fa>
+      <fa *ngIf="a.resource=='reject'" name="reply"></fa>
+      <fa *ngIf="a.resource=='approve'" name="send"></fa>
+      <fa *ngIf="a.resource=='withdraw'" name="reply"></fa>
+      <fa *ngIf="a.resource=='reopen'" name="repeat"></fa>
       <fa *ngIf="['reject', 'approve', 'withdraw', 'reopen'].indexOf(a.resource)==-1" name="send-o"></fa>
       &nbsp;{{ a.action }}
     </button>
