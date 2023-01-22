@@ -35,7 +35,7 @@
         <strong>Ikke</strong> behandle rapporten i klubb
       </label>
       <ngb-alert *ngIf="payload.do_not_process_in_club" type="info" (close)="close()">
-        <fa name="info" [fixed]="true"></fa> Denne observasjonen vil ikke kunne bli behandlet i klubb, kun av OBSREG koordinator. Klubbnavnet vil også bli anonymisert når denne observasjonen er ferdig behandlet.
+        <fa name="info" [fixed]="true"></fa> Denne observasjonen vil ikke kunne bli behandlet i klubb, kun av OBSREG-koordinator. Klubbnavnet vil også bli anonymisert når denne observasjonen er ferdig behandlet.
       </ngb-alert>
     </div>
 
@@ -58,9 +58,9 @@
 
 
     <div class="form-group">
-      <label for="comment">Kommentarer til arbeidsflyten</label>
+      <label for="comment">Kommentarer til arbeidsflyten (benyttes for kommentarer til behandlingen, ikke for vurdering av hendelsen)</label>
       <nlf-help key="ors-editor-workflow"></nlf-help>
-      <textarea [disabled]="!observation.acl_user.x" [ngClass]="{'disabled': processing}" placeholder="Kommentarer" [(ngModel)]="payload.comment" name="payload_comment" class="form-control" rows="3" id="comment"></textarea>
+      <textarea [disabled]="!observation.acl_user.x" [ngClass]="{'disabled': processing}" placeholder="Kommentarer (blir ikke synlig i den endelige rapporten - benytt feltet for vurderinger for vurderinger som skal være offentlig)" [(ngModel)]="payload.comment" name="payload_comment" class="form-control" rows="3" id="comment"></textarea>
     </div>
 
     <nlf-ors-report-workflow-timeline [activity]="observation._model.type" [_id]="observation._id" [workflow]="observation.workflow"></nlf-ors-report-workflow-timeline>
