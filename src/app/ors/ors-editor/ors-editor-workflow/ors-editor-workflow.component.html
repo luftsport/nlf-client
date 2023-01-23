@@ -57,11 +57,15 @@
     </div>
 
 
-    <div class="form-group">
+    <div class="form-group" [hidden]="!showCommentInput">
       <label for="comment">Kommentarer til arbeidsflyten (benyttes for kommentarer til behandlingen, ikke for vurdering av hendelsen)</label>
       <nlf-help key="ors-editor-workflow"></nlf-help>
-      <textarea [disabled]="!observation.acl_user.x" [ngClass]="{'disabled': processing}" placeholder="Kommentarer (blir ikke synlig i den endelige rapporten - benytt feltet for vurderinger for vurderinger som skal være offentlig)" [(ngModel)]="payload.comment" name="payload_comment" class="form-control" rows="3" id="comment"></textarea>
+      <textarea [disabled]="!observation.acl_user.x" [ngClass]="{'disabled': processing}" placeholder="Kommentarer (blir ikke synlig i den endelige rapporten - benytt feltet for vurderinger for vurderinger som skal være offentlig)" [(ngModel)]="payload.comment" name="payload_comment" class="form-control" rows="5" id="comment"></textarea>
     </div>
+
+    <button type="button" class="btn btn-outline-dark mr-auto mb-2 d-none d-sm-block" *ngIf="!showCommentInput" (click)="showCommentInput=true">
+      <fa name="comment" [fixed]="true"></fa>Kommentar til arbeidsflyten
+    </button>
 
     <nlf-ors-report-workflow-timeline [activity]="observation._model.type" [_id]="observation._id" [workflow]="observation.workflow"></nlf-ors-report-workflow-timeline>
 
