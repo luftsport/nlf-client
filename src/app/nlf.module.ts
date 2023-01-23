@@ -577,7 +577,7 @@ import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
     NgxUploaderModule,
     HotkeyModule.forRoot(),
     AgmCoreModule.forRoot({ // Google maps
-      apiKey: 'AIzaSyBW1IdM-nFGiwwfP4H2sJg5YiromIuysJ8',
+      apiKey: 'AIzaSyCt7ni1T6AtGNlx-45DVirffvav8l7hlMw',
       libraries: ['visualization']
     }),
     DiffMatchPatchModule, // DIFF
