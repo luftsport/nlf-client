@@ -226,6 +226,6 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
   ],
 
   // Dynamic components
-  entryComponents: [NlfUserFirstLoginComponent],
+  // remove @9 entryComponents: [NlfUserFirstLoginComponent],
 })
 export class NlfSharedModule { }

@@ -564,12 +564,13 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
   ],
   entryComponents: [
     // WidgetOrsPieComponent,
-    ConfirmModalComponent,
+    /**
     NlfOrsEditorHelpComponent,
     NlfOrsEditorAboutComponent,
     NlfOrsEditorDebugComponent,
     NlfOrsEditorWorkflowComponent,
     NlfOrsCreateModalComponent,
+    **/
 
   ],
   imports: [

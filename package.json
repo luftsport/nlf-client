@@ -96,7 +96,7 @@
     "tributejs": "^3.7.3",
     "ts-debounce": "^1.0.0",
     "types": "^0.1.1",
-    "TypeScript": "npm:typescript@^3.5.3",
+    "typescript": "typescript@^3.5.3",
     "typings": "^2.1.1",
     "videogular2": "^6.4.0",
     "weather-icons": "git+https://github.com/erikflowers/weather-icons.git",
