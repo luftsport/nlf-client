@@ -101,7 +101,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     // NgProgressRouterModule,
     NgPipesModule,
     NgSelectModule,
-    NgbModule.forRoot(), // ng-bootstrap
+    NgbModule, // ng-bootstrap
     // Other shared
 
   ],

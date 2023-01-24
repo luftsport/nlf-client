@@ -6,7 +6,6 @@ import { ApiOptionsInterface, ApiObservationsItem, ApiAirport, ApiAirports, ApiO
 import { distinctUntilChanged, debounceTime, switchMap, tap, catchError, map } from 'rxjs/operators';
 import { Subject, Observable, of, concat } from 'rxjs';
 import { GeoLocationService } from 'app/services/geo/geo-location.service';
-import { routerNgProbeToken } from '@angular/router/src/router_module';
 import { ApiCacheService } from 'app/api/api-cache.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmService } from 'app/services/confirm/confirm.service';

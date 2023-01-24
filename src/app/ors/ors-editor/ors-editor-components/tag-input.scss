@@ -62,26 +62,26 @@ $nothing-icon-theme: (
 );
 
 // apply theme to the container
-/deep/ .ng2-tag-input.nothing-theme {
+::ng-deep .ng2-tag-input.nothing-theme {
     @include tag-input-theme($nothing-theme);
 }
 
 // apply theme to the tags
-/deep/ .ng2-tag-input.nothing-theme tag {
+::ng-deep .ng2-tag-input.nothing-theme tag {
     @include tag-theme($nothing-tag-theme);
 }
 
 // apply theme to the delete icon
-/deep/ .ng2-tag-input.nothing-theme tag delete-icon {
+::ng-deep .ng2-tag-input.nothing-theme tag delete-icon {
     @include icon-theme($nothing-icon-theme);
 }
 
 // apply theme to the form input
-/deep/ .ng2-tag-input.nothing-theme tag input form {
+::ng-deep .ng2-tag-input.nothing-theme tag input form {
     @include icon-theme($nothing-tag-input-form-theme);
 }
 
-/deep/ .ng2-tag-input.nothing-theme input {
+::ng-deep .ng2-tag-input.nothing-theme input {
     border: none;
     box-shadow: none;
     outline: none;

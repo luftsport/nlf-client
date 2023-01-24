@@ -21,7 +21,7 @@ import { ApiUserDataSubjectItem, NlfConfigItem } from 'app/api/api.interface';
 })
 export class NlfMemberComponent implements OnInit {
 
-  @ViewChild('personModalTemplate') personModalTemplate: any;
+  @ViewChild('personModalTemplate', {static: false}) personModalTemplate: any;
   disabled: boolean = false;
   searching: boolean = false;
   modalRef;
