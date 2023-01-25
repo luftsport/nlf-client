@@ -43,10 +43,9 @@ import { NlfConfigModule } from 'app/nlf-config.module';
 // import { NgProgressRouterModule } from '@ngx-progressbar/router';
 import { TableModule } from 'ngx-easy-table';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
-import { AgmCoreModule } from '@agm/core';
 import { HotkeyModule } from 'angular2-hotkeys';
 // File uploader
-import { NgxUploaderModule } from 'ngx-uploader';
+import { NgxUploaderModule } from '@angular-ex/uploader';
 // Charting
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 // Jodit editor
@@ -56,8 +55,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 // DIFF
 import { DiffMatchPatchModule } from 'ng-diff-match-patch';
 // TIME
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
-import { MomentModule } from 'angular2-moment'; // optional, provides moment-style pipes for date formatting
+import { MomentModule } from 'ngx-moment'; // optional, provides moment-style pipes for date formatting
 
 
 // API
@@ -587,23 +585,20 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     TableModule, // ngx-easy-table
     // REMOVE RTModule, // right-angled declarative tables
     ImageCropperModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
     NgxChartsModule, // Charting
     // NgxDatatableModule,
 
     NgIdleKeepaliveModule.forRoot(),
     MomentModule,
     TagInputModule, // ngx-chips
-    // MentionModule, // angular-mentions REMOVE
     BrowserAnimationsModule,
     NgxUploaderModule,
     HotkeyModule.forRoot(),
     JoyrideModule.forRoot(),
-    AgmCoreModule.forRoot({ // Google maps
-      apiKey: 'AIzaSyCt7ni1T6AtGNlx-45DVirffvav8l7hlMw',
-      libraries: ['visualization']
-    }),
+    //AgmCoreModule.forRoot({ // Google maps
+    //  apiKey: 'AIzaSyCt7ni1T6AtGNlx-45DVirffvav8l7hlMw',
+    //  libraries: ['visualization']
+    //}),
     DiffMatchPatchModule, // DIFF
     // NgbModule.forRoot() // ngx-bootstrap (not good rather shaitolainen!)
     //  VgCoreModule,

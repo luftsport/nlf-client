@@ -25,7 +25,7 @@ export class NlfOrsFallskjermReportComponent implements OnInit {
   dataReady = false;
   error;
   spinner = true;
-  currentImage: string;
+  currentImage: string | ArrayBuffer;
   rating: number;
 
   // DIFF

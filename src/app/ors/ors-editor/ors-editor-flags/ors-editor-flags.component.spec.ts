@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { OrsEditorFlagsComponent } from './ors-editor-flags.component';
 
@@ -6,7 +6,7 @@ describe('OrsEditorFlagsComponent', () => {
   let component: OrsEditorFlagsComponent;
   let fixture: ComponentFixture<OrsEditorFlagsComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ OrsEditorFlagsComponent ]
     })

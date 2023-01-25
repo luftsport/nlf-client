@@ -8,7 +8,7 @@ const nlfErrorRoutes: Routes = [{ path: 'error/not-found', component: NlfErrorCo
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(nlfErrorRoutes)],
+  imports: [RouterModule.forRoot(nlfErrorRoutes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule],
   declarations: []
 })

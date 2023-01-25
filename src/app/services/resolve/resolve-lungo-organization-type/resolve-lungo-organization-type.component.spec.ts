@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ResolveLungoOrganizationTypeComponent } from './resolve-lungo-organization-type.component';
 
@@ -6,7 +6,7 @@ describe('ResolveLungoOrganizationTypeComponent', () => {
   let component: ResolveLungoOrganizationTypeComponent;
   let fixture: ComponentFixture<ResolveLungoOrganizationTypeComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ResolveLungoOrganizationTypeComponent ]
     })

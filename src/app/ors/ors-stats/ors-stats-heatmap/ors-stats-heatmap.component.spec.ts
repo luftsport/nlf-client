@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NlfOrsStatsHeatmapComponent } from './ors-stats-heatmap.component';
 
@@ -6,7 +6,7 @@ describe('NlfOrsStatsHeatmapComponent', () => {
   let component: NlfOrsStatsHeatmapComponent;
   let fixture: ComponentFixture<NlfOrsStatsHeatmapComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NlfOrsStatsHeatmapComponent ]
     })

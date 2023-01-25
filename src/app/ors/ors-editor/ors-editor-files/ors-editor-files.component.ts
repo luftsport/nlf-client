@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, Input, TemplateRef, EventEmitter } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ApiObservationFileInterface, ApiObservationsItem, ApiOptionsInterface } from 'app/api/api.interface';
-import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions } from 'ngx-uploader';
+import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions } from '@angular-ex/uploader';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import { ApiFilesService } from 'app/api/api-files.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';

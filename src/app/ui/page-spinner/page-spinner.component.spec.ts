@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NlfUiPageSpinnerComponent } from './page-spinner.component';
 
@@ -6,7 +6,7 @@ describe('NlfUiPageSpinnerComponent', () => {
   let component: NlfUiPageSpinnerComponent;
   let fixture: ComponentFixture<NlfUiPageSpinnerComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NlfUiPageSpinnerComponent ]
     })

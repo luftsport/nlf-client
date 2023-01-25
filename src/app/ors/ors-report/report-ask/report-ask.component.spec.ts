@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NlfOrsReportAskComponent } from './report-ask.component';
 
@@ -6,7 +6,7 @@ describe('NlfOrsFallskjermReportAskComponent', () => {
   let component: NlfOrsReportAskComponent;
   let fixture: ComponentFixture<NlfOrsReportAskComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NlfOrsReportAskComponent ]
     })

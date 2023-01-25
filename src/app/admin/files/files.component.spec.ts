@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NlfAdminFilesComponent } from './files.component';
 
@@ -6,7 +6,7 @@ describe('NlfAdminFilesComponent', () => {
   let component: NlfAdminFilesComponent;
   let fixture: ComponentFixture<NlfAdminFilesComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NlfAdminFilesComponent ]
     })

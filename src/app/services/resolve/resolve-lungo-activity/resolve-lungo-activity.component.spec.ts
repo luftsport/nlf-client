@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ResolveLungoActivityComponent } from './resolve-lungo-activity.component';
 
@@ -6,7 +6,7 @@ describe('ResolveLungoActivityComponent', () => {
   let component: ResolveLungoActivityComponent;
   let fixture: ComponentFixture<ResolveLungoActivityComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ResolveLungoActivityComponent ]
     })

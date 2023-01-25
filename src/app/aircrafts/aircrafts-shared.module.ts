@@ -4,21 +4,14 @@ import { NgModule } from '@angular/core';
 //import { NlfAircraftsEditComponent} from 'app/aircrafts/aircrafts-edit/aircrafts-edit.component';
 
 @NgModule({
-    imports: [
-
-    ],
+    imports: [],
     declarations: [
-         //NlfAircraftsAddComponent,
-         //NlfAircraftsEditComponent
+    //NlfAircraftsAddComponent,
+    //NlfAircraftsEditComponent
     ],
     exports: [
-         //NlfAircraftsAddComponent,
-         //NlfAircraftsEditComponent
-    ],
-
-    // Dynamic components
-    entryComponents: [
-
-    ],
+    //NlfAircraftsAddComponent,
+    //NlfAircraftsEditComponent
+    ]
 })
 export class NlfAircraftsSharedModule { }

@@ -12,7 +12,6 @@ import { LungoPersonsSearchItem, LungoPersonsSearchList } from 'app/api/lungo.in
 
 import Tribute from 'tributejs/src';
 import { debounce } from 'ts-debounce';
-import { VIEWPORT_RULER_PROVIDER_FACTORY } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'nlf-admin-content-edit',

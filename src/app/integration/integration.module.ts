@@ -7,7 +7,7 @@ import { NlfWorkersStatusComponent } from './workers-status/workers-status.compo
 import { WorkersLogsComponent } from './workers-logs/workers-logs.component';
 import { ProcessInfoComponent } from './process-info/process-info.component';
 
-import { MomentModule } from 'angular2-moment'; // optional, provides moment-style pipes for date formatting
+import { MomentModule } from 'ngx-moment'; // optional, provides moment-style pipes for date formatting
 
 
 import { TableModule } from 'ngx-easy-table';

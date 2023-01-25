@@ -44,15 +44,15 @@ let _routes: Routes = [
   { path: 'content', component: NlfContentComponent, data: { bc: 'Content', title: 'Content', prod: true } },
 
   // Lazy loaded
-  { path: 'admin', loadChildren: 'app/admin/admin.module#NlfAdminModule', data: { bc: 'Admin', preload: false, title: 'Admin', prod: true } },
-  { path: 'integration', loadChildren: 'app/integration/integration.module#NlfIntegrationModule', data: { bc: 'Integration', preload: false, title: 'Integration', prod: true } },
-  { path: 'aip', loadChildren: 'app/aip/aip.module#NlfAipModule', data: { bc: 'AIP', preload: false, title: 'AIP', prod: true } },
-  { path: 'organizations', loadChildren: 'app/organizations/organizations.module#NlfOrganizationsModule', data: { bc: 'Organizations', preload: false, title: 'Organizations', prod: true} },
-  { path: 'aircraft', loadChildren: 'app/aircrafts/aircrafts.module#NlfAircraftsModule', data: { bc: 'Aircraft', preload: false, title: 'Aircraft', prod: true } },
+  { path: 'admin', loadChildren: () => import('app/admin/admin.module').then(m => m.NlfAdminModule), data: { bc: 'Admin', preload: false, title: 'Admin', prod: true } },
+  { path: 'integration', loadChildren: () => import('app/integration/integration.module').then(m => m.NlfIntegrationModule), data: { bc: 'Integration', preload: false, title: 'Integration', prod: true } },
+  { path: 'aip', loadChildren: () => import('app/aip/aip.module').then(m => m.NlfAipModule), data: { bc: 'AIP', preload: false, title: 'AIP', prod: true } },
+  { path: 'organizations', loadChildren: () => import('app/organizations/organizations.module').then(m => m.NlfOrganizationsModule), data: { bc: 'Organizations', preload: false, title: 'Organizations', prod: true} },
+  { path: 'aircraft', loadChildren: () => import('app/aircrafts/aircrafts.module').then(m => m.NlfAircraftsModule), data: { bc: 'Aircraft', preload: false, title: 'Aircraft', prod: true } },
 
   // Permalinks
-  { path: 'app/obs', loadChildren: 'app/permalinks/permalinks.module#NlfPermalinksModule', data: { preload: false, prod: true } },
-  { path: 'app/obs/', loadChildren: 'app/permalinks/permalinks.module#NlfPermalinksModule', data: { preload: false, prod: true } },
+  { path: 'app/obs', loadChildren: () => import('app/permalinks/permalinks.module').then(m => m.NlfPermalinksModule), data: { preload: false, prod: true } },
+  { path: 'app/obs/', loadChildren: () => import('app/permalinks/permalinks.module').then(m => m.NlfPermalinksModule), data: { preload: false, prod: true } },
 
   // Member check
   { path: 'medlem', component: NlfMemberComponent, data: { bc: 'Medlemssjekk', title: 'Medlemssjekk', prod: false } },
@@ -82,7 +82,7 @@ if(ENV.production===true) {
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(_routes, { preloadingStrategy: NlfCustomPreloader }), //, { enableTracing: true }),
+    RouterModule.forRoot(_routes, { preloadingStrategy: NlfCustomPreloader, relativeLinkResolution: 'legacy' }), //, { enableTracing: true }),
     NlfOrsRoutingModule,
     NlfUserRoutingModule,
     NlfErrorRoutingModule,

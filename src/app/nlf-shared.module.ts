@@ -4,8 +4,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, NgModel } from '@angular/forms';
 
 // progressbar
-import { NgProgressModule } from '@ngx-progressbar/core';
-import { NgProgressHttpModule } from '@ngx-progressbar/http';
+import { NgProgressModule } from 'ngx-progressbar';
 
 // Select
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -97,7 +96,6 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     FontAwesomeModule, // ngx-icons
     WeatherIconsModule, // ngx-icons],
     NgProgressModule,
-    NgProgressHttpModule,
     // NgProgressRouterModule,
     NgPipesModule,
     NgSelectModule,
@@ -170,7 +168,6 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     FontAwesomeModule, // ngx-icons
     WeatherIconsModule,
     NgProgressModule,
-    NgProgressHttpModule,
     NlfUiPageSpinnerComponent,
     NlfUiComponentSpinnerComponent,
     NlfOrgSelectorComponent,
