@@ -5,11 +5,6 @@ import { ApiObservationsService } from 'app/api/api-observations.service';
 import { ApiOptionsInterface, NlfConfigItem } from 'app/api/api.interface';
 import { google } from 'google-maps';
 import { calculateRating } from 'app/interfaces/functions';
-//import { GoogleMapsAPIWrapper } from '@agm/core';
-
-//import { google } from 'google-maps';
-//declare var google: any;
-//import {} from 'googlemaps';
 
 @Component({
   selector: 'nlf-ors-stats-heatmap',

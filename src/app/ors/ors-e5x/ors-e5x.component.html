@@ -1,6 +1,6 @@
 <span *ngIf="e5x_enabled && !!observation">
   <span (click)="openModal(modalTemplate)" class="pointer badge mx-1" [ngClass]="{'badge-success':observation.e5x.status=='sent', 'badge-secondary': !observation.e5x.status}">
-    <fa name="file-text-o" [fixed]="true"></fa>LT
+    <fa-icon icon="file-text-o" [fixed]="true"></fa-icon>LT
   </span>
 
   <!-- MODAL PREVIEW -->
@@ -20,7 +20,7 @@
       <div class="row">
         <div class="col-md-12">
           <p class="lead">
-            <fa name="history" [fixed]="true"></fa>Historikk
+            <fa-icon icon="history" [fixed]="true"></fa-icon>Historikk
           </p>
 
           <div *ngIf="observation.e5x.audit.length==0" class="alert alert-info">
@@ -48,7 +48,7 @@
                 </td>
                 <td class="text-right">
                   <a *ngIf="!!token" target="_blank" href="/api/v1/e5x/download/{{observation._model.type}}/{{observation.id}}/{{audit.version}}?token={{token}}">
-                    <fa name="download" [fixed]="true"></fa>
+                    <fa-icon icon="download" [fixed]="true"></fa-icon>
                   </a>
                 </td>
               </tr>
@@ -129,7 +129,7 @@
 
               <div class="col-md-12">
                 <button [disabled]="!observation.occurrence.entities.reportingHistory[0].attributes.reportStatus.value" class="btn btn-primary btn-lg btn-block" (click)="send();e5xFile=!e5xFile">
-                  <fa name="paper-plane-o" [fixed]="true"></fa> Send rapport
+                  <fa-icon icon="paper-plane-o" [fixed]="true"></fa-icon> Send rapport
                 </button>
               </div>
 
@@ -142,7 +142,7 @@
           <div *ngIf="!generating && !!e5xResult">
             <div class="alert alert-success">
               <p class="lead">
-                <fa name="check" [fixed]="true"></fa>E5X rapport fil ble generert
+                <fa-icon icon="check" [fixed]="true"></fa-icon>E5X rapport fil ble generert
               </p>
               <p>Filen kan om ønskelig lastes ned ovenfor</p>
             </div>

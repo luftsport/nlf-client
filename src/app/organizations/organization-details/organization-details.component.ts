@@ -7,6 +7,7 @@ import { ApiClubItem, ApiOptionsInterface, NlfConfigItem } from 'app/api/api.int
 import { NlfAlertService } from 'app/services/alert/alert.service';
 import { GeoLocationService } from 'app/services/geo/geo-location.service';
 import { NlfConfigService } from 'app/nlf-config.service';
+import { LeafletOptions, LeafletLayers, latLng, marker, tileLayer } from 'leaflet';
 // import { forkJoin } from 'rxjs';
 
 @Component({
@@ -17,7 +18,7 @@ import { NlfConfigService } from 'app/nlf-config.service';
 export class NlfOrganizationDetailsComponent implements OnInit, OnDestroy {
 
 
-  geo: { timestamp: number, coords: Coordinates };
+  geo: { timestamp: number, coords: number[] };
   zoom = 12;
 
   organization_id: number = 376;
@@ -33,6 +34,9 @@ export class NlfOrganizationDetailsComponent implements OnInit, OnDestroy {
 
 
   sub;
+
+  mapOptions: LeafletOptions = undefined;
+  mapLayers: LeafletLayers = undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -75,6 +79,19 @@ export class NlfOrganizationDetailsComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+  private configureMap() {
+
+    this.mapOptions = {
+      layers: [
+        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
+        marker([this.lungo.contact.location.geo.coordinates[1],this.lungo.contact.location.geo.coordinates[0] ])
+      ],
+      zoom: 5,
+	    center: latLng(this.lungo.contact.location.geo.coordinates[1],this.lungo.contact.location.geo.coordinates[0])
+    }
+
+  }
+
   private run() {
     if (!this.config) {
       this.configService.observableConfig.subscribe(
@@ -89,10 +106,11 @@ export class NlfOrganizationDetailsComponent implements OnInit, OnDestroy {
   }
 
   private getLungoOrganization() {
-
+    this.mapOptions = undefined;
     this.lungoOrgService.getOrganization(this.organization_id).subscribe(
       data => {
         this.lungo = data;
+        this.configureMap();
         if (data.type_id === 6 || data.type_id === 14 || data.type_id === 5) {
           this.federation_id = this.config[this.config.inv_mapping[data.main_activity.id]].org_id;
         } else {

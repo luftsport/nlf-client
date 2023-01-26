@@ -2,9 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NlfSharedModule } from 'app/nlf-shared.module';
 
-import { AgmCoreModule } from '@agm/core';
-import { AgmJsMarkerClustererModule, ClusterManager } from "@agm/js-marker-clusterer";
-
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { NlfOrganizationsRoutingModule } from './organizations-routing.module';
@@ -78,14 +75,10 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     TableModule,
     DragDropModule,
     NgxChartsModule,
-    AgmJsMarkerClustererModule,
-    AgmCoreModule.forRoot({ // Google maps
-      apiKey: 'AIzaSyBW1IdM-nFGiwwfP4H2sJg5YiromIuysJ8'
-    }),
+   
   ],
   providers: [
     GeoLocationService,
-    ClusterManager,
   ]
 })
 export class NlfOrganizationsModule { }

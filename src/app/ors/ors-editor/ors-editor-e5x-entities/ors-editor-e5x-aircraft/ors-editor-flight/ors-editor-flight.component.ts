@@ -48,7 +48,7 @@ export class NlfOrsEditorFlightComponent implements OnInit {
   airportsLoading = false;
   selectedAirports = [];
   dataReady = true;
-  location: Coordinates;
+  location: number[];
   zoom = 5;
   showRouteMap = false;
 

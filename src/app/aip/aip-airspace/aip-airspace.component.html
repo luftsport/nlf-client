@@ -1,4 +1,6 @@
-<div fxFlex="100">
+<div fxFlex="100" >
+  
+  <!--
   <agm-map *ngIf="dataReady" (mapReady)="mapReady($event)" (zoomChange)="zoomChanged($event)" (boundsChange)="debouncedBoundsChange($event)" [latitude]="geo.coords.latitude" [longitude]="geo.coords.longitude" [zoom]="zoom">
 
     <span *ngIf="!!paths">
@@ -20,9 +22,15 @@
         </agm-info-window>
       </agm-marker>
 
-      <!--[label]="airport.icao"-->
+      
     </span>
   </agm-map>
+  -->
+
+  <!-- Leaflet! -->
+  <div leaflet [leafletOptions]="options" [leafletLayers]="layers"></div>
+
+
   <div class="text-center text-danger" title="Applikasjonen er ikke ferdig utviklet">beta</div>
 
 </div>

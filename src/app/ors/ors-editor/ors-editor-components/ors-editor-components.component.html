@@ -16,7 +16,7 @@
   <div class="d-flex">
     <div class="ml-auto p-2 mb-1">
       <button (click)="addCause()" class="btn btn-warning">
-        <fa name="plus" [fixed]="true" size="lg"></fa>Årsak
+        <fa-icon icon="plus" [fixed]="true" size="lg"></fa-icon>Årsak
       </button>
     </div>
   </div>
@@ -48,7 +48,7 @@
 
         <div class="input-group-prepend">
           <span cdkDragHandle class="input-group-text drag-handle" id="basic-addon2">
-            <fa [ngClass]="{'text-muted': !observation.acl_user.w}" name="arrows-alt" [fixed]="true"></fa>
+            <fa-icon [ngClass]="{'text-muted': !observation.acl_user.w}" name="arrows-alt" [fixed]="true"></fa-icon>
           </span>
         </div>
 
@@ -98,22 +98,22 @@
 
         <div class="input-group-append">
           <span (click)="openModal(componentModal, 'cause', i)" class="input-group-text pointer" id="basic-addon2">
-            <fa [ngClass]="!cause.hasOwnProperty('what') || cause['what'] =='' ? 'text-danger' : 'text-success'"
-              name="exclamation" [fixed]="true"></fa>
-            <fa
+            <fa-icon [ngClass]="!cause.hasOwnProperty('what') || cause['what'] =='' ? 'text-danger' : 'text-success'"
+              name="exclamation" [fixed]="true"></fa-icon>
+            <fa-icon
               [ngClass]="!cause.hasOwnProperty('involved') || cause['involved'].length==0 ? 'text-danger' : 'text-success'"
-              name="user" [fixed]="true"></fa>
-            <fa
+              name="user" [fixed]="true"></fa-icon>
+            <fa-icon
               [ngClass]="!cause.hasOwnProperty('where') || !cause['where'].hasOwnProperty('at') || cause['where']['at']=='' ? 'text-danger' : 'text-success'"
-              name="map-marker" [fixed]="true"></fa>
-            <fa [ngClass]="!cause.hasOwnProperty('how') || cause['how'] =='' ? 'text-danger' : 'text-success'"
-              name="comment" [fixed]="true"></fa>
+              name="map-marker" [fixed]="true"></fa-icon>
+            <fa-icon [ngClass]="!cause.hasOwnProperty('how') || cause['how'] =='' ? 'text-danger' : 'text-success'"
+              name="comment" [fixed]="true"></fa-icon>
           </span>
         </div>
 
         <div class="input-group-append">
           <span (click)="removeCause(i)" class="input-group-text pointer" id="basic-addon2">
-            <fa [ngClass]="{'text-muted': !observation.acl_user.w}" name="trash" [fixed]="true"></fa>
+            <fa-icon [ngClass]="{'text-muted': !observation.acl_user.w}" name="trash" [fixed]="true"></fa-icon>
           </span>
         </div>
 
@@ -131,7 +131,7 @@
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <span class="input-group-text not-allowed" id="basic-addon2">
-          <fa name="bolt" [fixed]="true"></fa>
+          <fa-icon icon="bolt" [fixed]="true"></fa-icon>
         </span>
       </div>
       <div class="input-group-prepend pointer" (click)="toggleBarrier('incidents', i)">
@@ -171,25 +171,25 @@
 
       <div class="input-group-append">
         <span (click)="openModal(componentModal, 'incident', i)" class="input-group-text pointer" id="basic-addon2">
-          <fa
+          <fa-icon
             [ngClass]="!incident.hasOwnProperty('what') || !incident['what'] || incident['what']=='' ? 'text-danger' : 'text-success'"
-            name="exclamation" [fixed]="true"></fa>
-          <fa
+            name="exclamation" [fixed]="true"></fa-icon>
+          <fa-icon
             [ngClass]="!incident.hasOwnProperty('involved') || incident['involved'].length==0 ? 'text-danger' : 'text-success'"
-            name="user" [fixed]="true"></fa>
-          <fa
+            name="user" [fixed]="true"></fa-icon>
+          <fa-icon
             [ngClass]="!incident.hasOwnProperty('where') || !incident['where'].hasOwnProperty('at') || incident['where']['at']=='' ? 'text-danger' : 'text-success'"
-            name="map-marker" [fixed]="true"></fa>
-          <fa
+            name="map-marker" [fixed]="true"></fa-icon>
+          <fa-icon
             [ngClass]="!incident.hasOwnProperty('how') || !incident['how'] || incident['how']=='' ? 'text-danger' : 'text-success'"
-            name="comment" [fixed]="true"></fa>
+            name="comment" [fixed]="true"></fa-icon>
         </span>
       </div>
 
       <div class="input-group-append">
         <div class="input-group-append">
           <span class="input-group-text" id="basic-addon2">
-            <fa name="ban" [fixed]="true"></fa>
+            <fa-icon icon="ban" [fixed]="true"></fa-icon>
           </span>
         </div>
 
@@ -204,7 +204,7 @@
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span cdkDragHandle class="input-group-text drag-handle" id="basic-addon2">
-            <fa [ngClass]="{'text-muted': !observation.acl_user.w}" name="arrows-alt" [fixed]="true"></fa>
+            <fa-icon [ngClass]="{'text-muted': !observation.acl_user.w}" name="arrows-alt" [fixed]="true"></fa-icon>
           </span>
         </div>
         <div class="input-group-prepend pointer" (click)="toggleBarrier('consequences', i)">
@@ -247,23 +247,23 @@
         <div class="input-group-append">
           <span (click)="openModal(componentModal, 'consequence', i)" class="input-group-text pointer"
             id="basic-addon2">
-            <fa
+            <fa-icon
               [ngClass]="!consequence.hasOwnProperty('what') || !consequence['what'] || consequence['what']=='' ? 'text-danger' : 'text-success'"
-              name="exclamation" [fixed]="true"></fa>
-            <fa
+              name="exclamation" [fixed]="true"></fa-icon>
+            <fa-icon
               [ngClass]="!consequence.hasOwnProperty('involved') || consequence['involved'].length==0 ? 'text-danger' : 'text-success'"
-              name="user" [fixed]="true"></fa>
-            <fa
+              name="user" [fixed]="true"></fa-icon>
+            <fa-icon
               [ngClass]="!consequence.hasOwnProperty('where') || !consequence['where'].hasOwnProperty('at') || consequence['where']['at']=='' ? 'text-danger' : 'text-success'"
-              name="map-marker" [fixed]="true"></fa>
-            <fa
+              name="map-marker" [fixed]="true"></fa-icon>
+            <fa-icon
               [ngClass]="!consequence.hasOwnProperty('how')  || consequence['how']=='' ? 'text-danger' : 'text-success'"
-              name="comment" [fixed]="true"></fa>
+              name="comment" [fixed]="true"></fa-icon>
           </span>
         </div>
         <div class="input-group-append">
           <span (click)="removeConsequence(i)" class="input-group-text pointer" id="basic-addon2">
-            <fa [ngClass]="{'text-muted': !observation.acl_user.w}" name="trash" [fixed]="true"></fa>
+            <fa-icon [ngClass]="{'text-muted': !observation.acl_user.w}" name="trash" [fixed]="true"></fa-icon>
           </span>
         </div>
 
@@ -278,7 +278,7 @@
   <div class="d-flex">
     <div class="ml-auto p-2 mb-1">
       <button (click)="addConsequence()" class="btn btn-danger">
-        <fa name="plus" [fixed]="true" size="lg"></fa>Konsekvens
+        <fa-icon icon="plus" [fixed]="true" size="lg"></fa-icon>Konsekvens
       </button>
     </div>
   </div>
@@ -390,10 +390,10 @@
     </div>
     <div class="modal-footer">
       <button class="btn btn-outline-dark" (click)="modalRef.close()">
-        <fa name="close" [fixed]="true"></fa>Avbryt
+        <fa-icon icon="close" [fixed]="true"></fa-icon>Avbryt
       </button>
       <button [disabled]="!observation.acl_user.w" class="btn btn-success" (click)="modalComponentUpdate()">
-        <fa name="check" [fixed]="true"></fa>Oppdater
+        <fa-icon icon="check" [fixed]="true"></fa-icon>Oppdater
       </button>
     </div>
   </ng-template>

@@ -3,7 +3,7 @@
 
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
-        <fa name="question" [fixed]="true"></fa>
+        <fa-icon icon="question" [fixed]="true"></fa-icon>
         <a [routerLink]="['/admin', 'help']">Hjelpesystem</a>
       </li>
       <li class="breadcrumb-item active">{{ title }}</li>
@@ -11,7 +11,7 @@
 
     <!--
     <a [routerLink]="['/admin/help/create']" class="pull-right btn btn-sm btn-primary mx-1">
-      <fa name="plus" [fixed]="true"></fa>Ny hjelpetekst
+      <fa-icon icon="plus" [fixed]="true"></fa-icon>Ny hjelpetekst
     </a>
   -->
   </div>
@@ -37,13 +37,13 @@
     <div class="nlf-toolbar fixed-bottom">
       <span class="float-right">
         <a class="btn" [routerLink]="['/admin/help/']">
-          <fa name="close" [fixed]="true"></fa>Cancel
+          <fa-icon icon="close" [fixed]="true"></fa-icon>Cancel
         </a>
         <button [disabled]="!changed" *ngIf="mode==='edit'" (click)="save()" class="btn btn-primary">
-          <fa name="save" [fixed]="true"></fa>Save
+          <fa-icon icon="save" [fixed]="true"></fa-icon>Save
         </button>
         <button *ngIf="mode==='create'" (click)="create()" class="btn btn-success">
-          <fa name="plus" [fixed]="true"></fa>Create
+          <fa-icon icon="plus" [fixed]="true"></fa-icon>Create
         </button>
       </span>
     </div>
@@ -51,6 +51,6 @@
 </div>
 <div *ngIf="!dataReady">
   <p class="align-middle text-center  text-secondary">
-    <fa name="spinner" animation="pulse" size="3x"></fa>
+    <fa-icon icon="spinner" animation="pulse" size="3x"></fa-icon>
   </p>
 </div>

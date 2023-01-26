@@ -1,7 +1,7 @@
 <div *ngIf="!showOnlyBtn" class="row">
   <div class="col-md-3">
     <button class="btn btn-primary btn-block" (click)="openModal(modal)">
-      <fa name="cloud" [fixed]="true"></fa>Weather
+      <fa-icon icon="cloud" [fixed]="true"></fa-icon>Weather
     </button>
   </div>
   <div class="col-md-9">
@@ -14,7 +14,7 @@
 
 <div *ngIf="showOnlyBtn">
   <button class="btn btn-secondary btn-block" (click)="openModal(attrModal)">
-    <fa name="cloud" [fixed]="true"></fa>Weather
+    <fa-icon icon="cloud" [fixed]="true"></fa-icon>Weather
   </button>
 </div>
 
@@ -83,10 +83,10 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa name="times" [fixed]="true"></fa>Avbryt
+      <fa-icon icon="times" [fixed]="true"></fa-icon>Avbryt
     </button>
     <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate(modalIndex)">
-      <fa name="check" [fixed]="true"></fa>Oppdater
+      <fa-icon icon="check" [fixed]="true"></fa-icon>Oppdater
     </button>
   </div>
 

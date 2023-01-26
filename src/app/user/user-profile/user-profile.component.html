@@ -19,12 +19,12 @@
 
 		<!--
 		<button *ngIf="dataReady" class="btn btn-primary btn-sm pull-right mx-1" (click)="openModal(saveTemplate)" title="">
-			<fa name="cog" [fixed]="true"></fa> Settings
+			<fa-icon icon="cog" [fixed]="true"></fa-icon> Settings
 		</button>
 		-->
 
 		<a [routerLink]="['/user', person_id]" class="btn btn-sm btn-primary mx-1 pull-right">
-			<fa name="user-o" [fixed]="true"></fa> View
+			<fa-icon icon="user-o" [fixed]="true"></fa-icon> View
 		</a>
 
 		<nlf-help class="pull-right mx-1" key="user-profile"></nlf-help>
@@ -43,7 +43,7 @@
 
 				<!-- UPLOAD BUTTON -->
 				<label class="btn btn-primary btn-file btn-block my-1">
-					<fa name="user-circle-o" [fixed]="true"></fa>Browse
+					<fa-icon icon="user-circle-o" [fixed]="true"></fa-icon>Browse
 					<input type="file" (change)="fileChangeEvent($event);openModal(cropTemplate);" hidden>
 					<!--<input type="file"  ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple>-->
 				</label>
@@ -59,7 +59,7 @@
 					<h4>Hovedklubb</h4>
 					<strong>
 						<nlf-resolve-lungo-organization [organization_id]="user.settings.default_discipline" [show_activity]="true" [long]="true" [link]="true"></nlf-resolve-lungo-organization>
-						<fa (click)="openDefaultClub()" class="ml-3 pointer" name="pencil"></fa>
+						<fa-icon (click)="openDefaultClub()" class="ml-3 pointer" name="pencil"></fa-icon>
 					</strong>
 				</div>
 				<div class="my-3">
@@ -138,7 +138,7 @@
 	</div>
 </div>
 <div *ngIf="!dataReady" class="text-center">
-	<fa name="spinner" animation="pulse" size="3x"></fa>
+	<fa-icon icon="spinner" animation="pulse" size="3x"></fa-icon>
 </div>
 
 <ng-template #cropTemplate>
@@ -163,10 +163,10 @@
 
 	<div class="modal-footer">
 		<button class="btn btn-outline-dark" (click)="cancelModal()">
-			<fa name="times" [fixed]="true"></fa>Avbryt
+			<fa-icon icon="times" [fixed]="true"></fa-icon>Avbryt
 		</button>
 		<button class="btn btn-success" (click)="closeModal()">
-			<fa name="check" [fixed]="true"></fa>Bruk
+			<fa-icon icon="check" [fixed]="true"></fa-icon>Bruk
 		</button>
 	</div>
 </ng-template>

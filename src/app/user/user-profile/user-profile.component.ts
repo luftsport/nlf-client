@@ -29,7 +29,7 @@ export class NlfUserProfileComponent implements OnInit {
   dataReady = false;
   avatarReady = false;
   myself = false;
-  geo: Coordinates;
+  geo: number[];
 
   imageError: string;
   isImageSaved: boolean;

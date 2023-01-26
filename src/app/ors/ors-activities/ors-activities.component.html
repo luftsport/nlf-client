@@ -5,7 +5,7 @@
     <div class="container lead">
       <!-- TITLE -->
 
-      <!-- <fa name="file-text-o" [fixed]="true"></fa>&nbsp;-->
+      <!-- <fa-icon icon="file-text-o" [fixed]="true"></fa-icon>&nbsp;-->
       <!-- {{ data.tags | nlfOrsTags: ' / '}} -->
       <span class="overflow-hidden">
         <a [routerLink]="['/ors', observation._model.type]">OBSREG</a>#<a [routerLink]="['/ors', observation._model.type, 'edit', observation.id]">{{ observation.id }}
@@ -20,18 +20,18 @@
 
         <!-- HELP
       <span class="badge badge-light pointer text-info mx-1" (click)="openHelp()">
-        <fa name="question" [fixed]="true"></fa>
+        <fa-icon icon="question" [fixed]="true"></fa-icon>
       </span>
       -->
        <nlf-help class="mx-1" key="ors-editor-activities"></nlf-help>
 
         <a [routerLink]="['/ors', observation._model.type, 'edit', observation.id]" class="badge badge-secondary mx-1">
-          <fa name="undo" [fixed]="true"></fa>Tilbake
+          <fa-icon icon="undo" [fixed]="true"></fa-icon>Tilbake
         </a>
         <!-- ABOUT -->
         <span class="badge badge-secondary mx-1">
-          <fa name="info-circle" [fixed]="true"></fa>
-          <fa *ngIf="!observation.acl_user.w" name="lock" [fixed]="true" class="text-danger" title="Ingen skrivetilgang"></fa>
+          <fa-icon icon="info-circle" [fixed]="true"></fa-icon>
+          <fa-icon *ngIf="!observation.acl_user.w" name="lock" [fixed]="true" class="text-danger" title="Ingen skrivetilgang"></fa-icon>
           {{ observation._updated | amTimeAgo }}
         </span>
 
@@ -47,7 +47,7 @@
         </span>
 
         <a [routerLink]="['/ors', observation._model.type , 'report', observation.id]" *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge badge-primary text-white mx-1">
-          <fa name="file" [fixed]="true"></fa> Report
+          <fa-icon icon="file" [fixed]="true"></fa-icon> Report
         </a>
 
       </span>

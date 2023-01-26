@@ -19,13 +19,14 @@
       <a class="btn btn-secondary btn-block mt-auto"
         [routerLink]="['/organizations', observation.discipline, 'locations']"
         [queryParams]="{returl: '/ors/'+observation._model.type+'/edit/'+observation.id}">
-        <fa name="edit"></fa> Rediger
+        <fa-icon icon="edit"></fa-icon> Rediger
       </a>
 
     </div>
 
     <!-- Map column -->
     <div class="col-xs-12 col-md-8">
+      <!--
       <agm-map *ngIf="dataReady && locations.length>0" [latitude]="toFloat(observation.location.geo.coordinates[0])"
         [mapTypeControl]="true" [longitude]="toFloat(observation.location.geo.coordinates[1])" [zoom]="15">
         <agm-marker [markerDraggable]="observation.acl_user.w" (dragEnd)="markerMoved($event)"
@@ -33,6 +34,7 @@
           [longitude]="toFloat(observation.location.geo.coordinates[1])">
         </agm-marker>
       </agm-map>
+      -->
     </div>
   </div>
 </ng-container>

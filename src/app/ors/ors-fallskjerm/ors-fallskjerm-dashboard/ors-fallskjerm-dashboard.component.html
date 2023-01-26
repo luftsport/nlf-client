@@ -16,7 +16,7 @@
 
     <!--
     <button *ngIf="!!query" class="btn btn-primary btn-sm pull-right mx-1" (click)="openModal(saveTemplate)" title="Funksjonen kommer snart" disabled>
-      <fa name="save" [fixed]="true"></fa> Lagre søk
+      <fa-icon icon="save" [fixed]="true"></fa-icon> Lagre søk
     </button>
     -->
     <nlf-help class="pull-right mx-1" key="ors-dashboard-fallskjerm"></nlf-help>
@@ -74,7 +74,7 @@
             <input #dpFromDate class="form-control" placeholder="yyyy-mm-dd" name="dpFromDate" [value]="formatter.format(fromDate)" (input)="fromDate">
             <div class="input-group-append">
               <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button">
-                <fa name="calendar"></fa>
+                <fa-icon icon="calendar"></fa-icon>
               </button>
             </div>
           </div>
@@ -84,7 +84,7 @@
             <input #dpToDate class="form-control" placeholder="yyyy-mm-dd" name="dpToDate" [value]="formatter.format(toDate)" (input)="toDate">
             <div class="input-group-append">
               <button class="btn btn-outline-secondary" (click)="datepicker.toggle()" type="button">
-                <fa name="calendar"></fa>
+                <fa-icon icon="calendar"></fa-icon>
               </button>
             </div>
           </div>

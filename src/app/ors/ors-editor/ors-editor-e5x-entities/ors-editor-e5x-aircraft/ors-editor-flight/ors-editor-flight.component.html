@@ -1,8 +1,6 @@
 <!-- ROUTE MAP -->
 <div fxFlex="100">
-  <agm-map style="max-height: 25rem !important;" *ngIf="showRouteMap && location" [latitude]="location.latitude" [longitude]="location.longitude" [zoom]="zoom">
-
-    <!-- STAR STOP ROUTE
+      <!-- START STOP ROUTE
     <agm-marker *ngIf="route.length>0" [markerDraggable]="observation.acl_user.w" (dragEnd)="markerMoved($event)"
       [latitude]="route[0].from.location.coordinates[1]" [longitude]="route[0].from.location.coordinates[0]" [label]="'S'">
     </agm-marker>
@@ -12,35 +10,41 @@
     </agm-marker>
     -->
 
+    <!--
+  <agm-map style="max-height: 25rem !important;" *ngIf="showRouteMap && location" [latitude]="location.latitude" [longitude]="location.longitude" [zoom]="zoom">
 
-    <!-- ALL AIRPORTS -->
+
+    ALL AIRPORTS
+
     <agm-marker *ngFor="let current_route of route; let ix = index;" [markerDraggable]="observation.acl_user.w" (dragEnd)="markerMoved($event)" [latitude]="current_route.to.location.coordinates[1]"
       [longitude]="current_route.to.location.coordinates[0]" [label]="'L'">
     </agm-marker>
     <agm-marker *ngFor="let current_route of route; let ix = index;" [markerDraggable]="observation.acl_user.w" (dragEnd)="markerMoved($event)" [latitude]="current_route.from.location.coordinates[1]"
       [longitude]="current_route.from.location.coordinates[0]" [label]="'T'">
     </agm-marker>
+  
+    
 
-    <!--https://github.com/SebastianM/angular-google-maps/pull/1621-->
     <agm-polyline *ngFor="let current_route of route; let ix = index;" [editable]="observation.acl_user.w" (lineDragEnd)="lineDragEnd($event)" (polyPathChange)="onPathChanged($event, ix)">
       <agm-polyline-point *ngFor="let coordinates of current_route.path" [latitude]="coordinates[1]" [longitude]="coordinates[0]">
       </agm-polyline-point>
     </agm-polyline>
 
   </agm-map>
+  -->
 </div>
 
 <!-- ADD AIRPORTS ROW -->
 <div class="row my-2">
   <!-- FROM -->
   <div class="col-md-1 text-center">
-    <fa name="plane" [fixed]="true"></fa>
+    <fa-icon icon="plane" [fixed]="true"></fa-icon>
   </div>
   <div class="col-md-3">
     <nlf-ors-editor-tag-airport [(airport)]="from_airport" (change)="onChange($event,'to_airport')" [disabled]="from_airport_disable" element_id="from_airport"></nlf-ors-editor-tag-airport>
   </div>
   <div class="col-md-1 text-center">
-    <fa name="long-arrow-right" [fixed]="true"></fa>
+    <fa-icon icon="long-arrow-right" [fixed]="true"></fa-icon>
   </div>
 
   <!-- TO -->
@@ -50,13 +54,13 @@
   <!-- ADD -->
   <div class="col-md-2">
     <button [disabled]="!observation.acl_user.w" class="btn btn-primary btn-block" id="add_airport" (click)="addSegment()">
-      <fa name="plus" [fixed]="true"></fa>Legg Til
+      <fa-icon icon="plus" [fixed]="true"></fa-icon>Legg Til
     </button>
   </div>
   <!-- MAP -->
   <div class="col-md-2 text-right">
-    <button class="btn btn-link" (click)="showRouteMap=!showRouteMap">Kart <fa *ngIf="showRouteMap" name="eye-slash" [fixed]="true"></fa>
-      <fa *ngIf="!showRouteMap" name="eye" [fixed]="true"></fa>
+    <button class="btn btn-link" (click)="showRouteMap=!showRouteMap">Kart <fa-icon *ngIf="showRouteMap" name="eye-slash" [fixed]="true"></fa-icon>
+      <fa-icon *ngIf="!showRouteMap" name="eye" [fixed]="true"></fa-icon>
     </button>
   </div>
 </div>
@@ -80,7 +84,7 @@
 
           <div class="col-md-3 pointer text-center" style="border-right: 1px solid #CCC" (click)="openRouteModal(routeModal, idx)">
             {{ segment.from.icao }}
-            <fa name="long-arrow-right" [fixed]="true"></fa>{{ segment.to.icao }}
+            <fa-icon icon="long-arrow-right" [fixed]="true"></fa-icon>{{ segment.to.icao }}
             <div class="small">Klikk for detaljer</div>
           </div>
 
@@ -91,15 +95,15 @@
           <div class="col-md-2">
             <!-- TOGGLE INCIDENT ON OFF -->
             <button [disabled]="!observation.acl_user.w" *ngIf="!hasIncident()" class="btn btn-warning btn-block" (click)="addSegmentIncident(idx)">
-              <fa name="plus"></fa> Hendelse
+              <fa-icon icon="plus"></fa-icon> Hendelse
             </button>
             <button [disabled]="!observation.acl_user.w" *ngIf="hasSegmentIncident(idx)" class="btn btn-outline-dark btn-block" (click)="removeSegmentIncident(idx)">
-              <fa name="minus"></fa> Fjern Hendelse
+              <fa-icon icon="minus"></fa-icon> Fjern Hendelse
             </button>
           </div>
 
           <div class="col-md-1 text-right">
-            <fa *ngIf="last && observation.acl_user.w" name="times" (click)="removeSegment()" class="pointer" [fixed]="true"></fa>
+            <fa-icon *ngIf="last && observation.acl_user.w" name="times" (click)="removeSegment()" class="pointer" [fixed]="true"></fa-icon>
           </div>
         </div>
 
@@ -295,7 +299,7 @@
     <div class="modal-header">
       <h4 class="modal-title pull-left">
         {{ modalRoute.from.icao }}
-        <fa name="long-arrow-right" [fixed]="true"></fa>{{ modalRoute.to.icao }}
+        <fa-icon icon="long-arrow-right" [fixed]="true"></fa-icon>{{ modalRoute.to.icao }}
       </h4>
       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
         <span aria-hidden="true">&times;</span>
@@ -388,7 +392,7 @@
 
     <div class="modal-footer">
       <button class="btn btn-outline-dark" (click)="modalRef.close()">
-        <fa name="times" [fixed]="true"></fa>Ferdig
+        <fa-icon icon="times" [fixed]="true"></fa-icon>Ferdig
       </button>
     </div>
   </ng-template>
@@ -423,11 +427,11 @@
   <tr *ngFor="let airport of selectedAirports; let idx = index">
     <td class="pointer">
 
-      <fa *ngIf="!!airport._id" name="check" fw="true" class="text-success mr-2" title="Hentet fra flyplassregisteret"></fa>
-      <fa *ngIf="!airport.hasOwnProperty('_id')" name="check" fw="exclamation" class="text-danger mr-2" title="Ukjent sted"></fa>
+      <fa-icon *ngIf="!!airport._id" name="check" fw="true" class="text-success mr-2" title="Hentet fra flyplassregisteret"></fa-icon>
+      <fa-icon *ngIf="!airport.hasOwnProperty('_id')" name="check" fw="exclamation" class="text-danger mr-2" title="Ukjent sted"></fa-icon>
 
-      <fa *ngIf="airport.type !== 'HELICOPTER'" name="airplane" fw="true"></fa>
-      <fa *ngIf="airport.type === 'HELICOPTER'" name="helicopter" fw="true"></fa>
+      <fa-icon *ngIf="airport.type !== 'HELICOPTER'" name="airplane" fw="true"></fa-icon>
+      <fa-icon *ngIf="airport.type === 'HELICOPTER'" name="helicopter" fw="true"></fa-icon>
       <strong>
         {{ airport.icao }}<span *ngIf="!!selectedAirports[idx+1]">-{{ selectedAirports[idx+1].icao }}</span>
       </strong>
@@ -439,7 +443,7 @@
       {{ airport.type }}
     </td>
     <td>
-      <fa *ngIf="!observation.acl_user.w" class="pointer" name="times" fw="true"></fa>
+      <fa-icon *ngIf="!observation.acl_user.w" class="pointer" name="times" fw="true"></fa-icon>
     </td>
   </tr>
 </table>

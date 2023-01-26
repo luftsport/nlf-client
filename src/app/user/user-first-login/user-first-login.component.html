@@ -15,7 +15,7 @@
     <div *ngIf="!!success">
       <p class="lead">Supert! Du har også muligheten til å endre innstillingene senere under kontoinnstillinger.</p>
       <button class="btn btn-block btn-lg btn-success">
-        <fa name="check" fw="true"></fa>
+        <fa-icon icon="check" fw="true"></fa-icon>
         <nlf-resolve-lungo-activity [activity_id]="userData.settings.default_activity"></nlf-resolve-lungo-activity>&nbsp;/&nbsp;
         <nlf-resolve-lungo-organization [organization_id]="userData.settings.default_discipline" [show_activity]="false"></nlf-resolve-lungo-organization>
       </button>
@@ -33,7 +33,7 @@
 
         <p *ngFor="let role of org">
           <button (click)="setDefaultClub(role)" class="btn btn-block btn-lg btn-primary">
-            <fa name="plus" fw="true"></fa>
+            <fa-icon icon="plus" fw="true"></fa-icon>
             <nlf-resolve-lungo-activity [activity_id]="role.activity"></nlf-resolve-lungo-activity>&nbsp;/&nbsp;
             <nlf-resolve-lungo-organization [organization_id]="role.org" [show_activity]="false"></nlf-resolve-lungo-organization>
           </button>

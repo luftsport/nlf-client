@@ -46,11 +46,11 @@
   <tr *ngFor="let aircraft of observation.aircrafts; let idx = index">
     <td>
 
-      <fa *ngIf="!!aircraft.aircraft._id" name="check" fw="true" class="text-success mr-2" title="Hentet fra flyregisteret"></fa>
-      <fa *ngIf="!aircraft.aircraft.hasOwnProperty('_id')" name="check" fw="exclamation" class="text-danger mr-2" title="Ukjent fly"></fa>
+      <fa-icon *ngIf="!!aircraft.aircraft._id" name="check" fw="true" class="text-success mr-2" title="Hentet fra flyregisteret"></fa-icon>
+      <fa-icon *ngIf="!aircraft.aircraft.hasOwnProperty('_id')" name="check" fw="exclamation" class="text-danger mr-2" title="Ukjent fly"></fa-icon>
 
-      <fa *ngIf="aircraft.aircraft.type !== 'HELICOPTER'" name="airplane" fw="true"></fa>
-      <fa *ngIf="aircraft.aircraft.type === 'HELICOPTER'" name="helicopter" fw="true"></fa>
+      <fa-icon *ngIf="aircraft.aircraft.type !== 'HELICOPTER'" name="airplane" fw="true"></fa-icon>
+      <fa-icon *ngIf="aircraft.aircraft.type === 'HELICOPTER'" name="helicopter" fw="true"></fa-icon>
       <strong>
         {{ aircraft.aircraft.callsign }}
       </strong>
@@ -61,12 +61,12 @@
     <td>
       <div *ngIf="!aircraft.aircraft.e5x">
         <button class="btn btn-secondary" (click)="openAircraftModal(aircraftModal, idx)">
-          <fa name="warning" [fixed]="true"></fa>Aircraft Data
+          <fa-icon icon="warning" [fixed]="true"></fa-icon>Aircraft Data
         </button>
       </div>
       <div *ngIf="!!aircraft.aircraft.e5x">
         <button class="btn btn-success mb-3" (click)="openAircraftModal(aircraftModal, idx)">
-          <fa name="check" [fixed]="true"></fa>Aircraft Data
+          <fa-icon icon="check" [fixed]="true"></fa-icon>Aircraft Data
         </button>
       </div>
 
@@ -140,13 +140,13 @@
 
   <div class="modal-footer">
     <a [routerLink]="['/aircraft', 'edit', (modalAircraft._id || modalAircraft.callsign)]" class="btn btn-outline-dark mr-auto" (click)="modalRef.close()">
-      <fa name="edit" [fixed]="true"></fa>{{ modalAircraft.callsign }} i registeret
+      <fa-icon icon="edit" [fixed]="true"></fa-icon>{{ modalAircraft.callsign }} i registeret
     </a>
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa name="times" [fixed]="true"></fa>Avbryt
+      <fa-icon icon="times" [fixed]="true"></fa-icon>Avbryt
     </button>
     <button [disabled]="!observation.acl_user.w" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="nlfaircraftedit.saveAircraft();modalAircraftUpdate(modalIndex)">
-      <fa name="check" [fixed]="true"></fa>Oppdater
+      <fa-icon icon="check" [fixed]="true"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>

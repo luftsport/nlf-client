@@ -601,11 +601,14 @@ export interface ApiObservationCommentInterface {
 /**
  * Generic interfaces
  */
+export interface ApiGeoCoordinates {
+  coordinates: number[];
+}
 
 export interface ApiGeoInterface {
 
   type: string;
-  coordinates: number[];
+  coordinates: ApiGeoCoordinates["coordinates"];
 }
 
 export interface ApiLocationItem {

@@ -8,7 +8,7 @@
   <button *ngIf="!!userData.settings && canCreate() && !loading"
     (click)="createObservation(userData.settings.default_discipline, userData.settings.default_club, userData.settings.default_activity)"
     class="btn btn-block btn-success btn-lg my-1">
-    <fa name="plus" [fixed]="true"></fa>
+    <fa-icon icon="plus" [fixed]="true"></fa-icon>
     <nlf-resolve-lungo-organization [organization_id]="userData.settings.default_discipline" show_activity="false">
     </nlf-resolve-lungo-organization>
   </button>
@@ -30,7 +30,7 @@
       </div>
       <div class="col">
         <button [disabled]="!selected" (click)="createObservation()" class="btn btn-block btn-success btn-lg">
-          <fa name="plus" [fixed]="true"></fa>Opprett ny OBSREG
+          <fa-icon icon="plus" [fixed]="true"></fa-icon>Opprett ny OBSREG
         </button>
       </div>
     </div>
@@ -39,18 +39,18 @@
 
 
 <span *ngIf="loading">
-  <fa name="spinner" animation="pulse" size="3x"></fa>
+  <fa-icon icon="spinner" animation="pulse" size="3x"></fa-icon>
   <p class="lead">Oppretter OBSREG...</p>
 </span>
 
 
 <ngb-alert *ngIf="!!error" type="danger" [dismissible]="true">
-  <fa name="exclamation-triangle" [fixed]="true"></fa>
+  <fa-icon icon="exclamation-triangle" [fixed]="true"></fa-icon>
   Kunne ikke opprette OBSREG
 </ngb-alert>
 
 
 <!-- End page -->
 <span *ngIf="!dataReady">
-  <fa name="spinner" animation="pulse" size="3x"></fa>
+  <fa-icon icon="spinner" animation="pulse" size="3x"></fa-icon>
 </span>

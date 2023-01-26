@@ -34,13 +34,13 @@
         <nlf-resolve-observation-types [type]="row.type" [activity]="row._model.type" [badge]="true"></nlf-resolve-observation-types>
       </td>
       <td class="text-right">
-        <fa title="Aktivitet" *ngIf="['withdrawn', 'closed'].indexOf(row.workflow.state)<0" class="mx-2 pointer" (click)="openModal(activityModal, row)" name="commenting-o"></fa>
+        <fa-icon title="Aktivitet" *ngIf="['withdrawn', 'closed'].indexOf(row.workflow.state)<0" class="mx-2 pointer" (click)="openModal(activityModal, row)" name="commenting-o"></fa-icon>
 
-        <fa title="Purring" *ngIf="['withdrawn', 'closed'].indexOf(row.workflow.state)<0" class="mx-2 text-danger pointer" (click)="notify(row)" name="bell"></fa>
+        <fa-icon title="Purring" *ngIf="['withdrawn', 'closed'].indexOf(row.workflow.state)<0" class="mx-2 text-danger pointer" (click)="notify(row)" name="bell"></fa-icon>
 
-        <fa title="Vurderinger" *ngIf="row.workflow.state!='withdrawn'" class="mr-3 pointer" (click)="openModal(askModal, row)" name="comments-o"></fa>
+        <fa-icon title="Vurderinger" *ngIf="row.workflow.state!='withdrawn'" class="mr-3 pointer" (click)="openModal(askModal, row)" name="comments-o"></fa-icon>
         <!-- && row.acl_user.x-->
-        <fa title="Arbeidsflyt" *ngIf="row.workflow.state!='withdrawn'" class="mr-3 pointer" (click)="openModal(workflowModal, row)" name="exchange"></fa>
+        <fa-icon title="Arbeidsflyt" *ngIf="row.workflow.state!='withdrawn'" class="mr-3 pointer" (click)="openModal(workflowModal, row)" name="exchange"></fa-icon>
 
       </td>
 
@@ -79,7 +79,7 @@
 </span>
 <span *ngIf="!dataReady">
   <p class="align-middle text-center  text-secondary">
-    <fa name="spinner" animation="pulse" size="3x"></fa>
+    <fa-icon icon="spinner" animation="pulse" size="3x"></fa-icon>
   </p>
 </span>
 
@@ -102,7 +102,7 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="closeModal()">
-      <fa name="times" [fixed]="true"></fa> Lukk
+      <fa-icon icon="times" [fixed]="true"></fa-icon> Lukk
     </button>
 
   </div>
@@ -129,7 +129,7 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="closeModal()">
-      <fa name="times" [fixed]="true"></fa> Lukk
+      <fa-icon icon="times" [fixed]="true"></fa-icon> Lukk
     </button>
 
   </div>
@@ -155,7 +155,7 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="closeModal()">
-      <fa name="times" [fixed]="true"></fa> Lukk
+      <fa-icon icon="times" [fixed]="true"></fa-icon> Lukk
     </button>
 
   </div>

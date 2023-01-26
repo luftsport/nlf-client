@@ -11,8 +11,6 @@ import { NlfAlertService } from 'app/services/alert/alert.service';
 import { NlfConfigService } from 'app/nlf-config.service';
 import { ConfirmService } from 'app/services/confirm/confirm.service';
 import { forkJoin } from 'rxjs';
-// Seee https://stackoverflow.com/questions/48865595/is-there-a-way-to-set-the-bounds-and-zoom-level-in-agm-map
-//import { AgmMap } from '@agm/core';
 
 @Component({
   selector: 'nlf-organization-locations',

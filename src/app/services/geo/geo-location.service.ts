@@ -1,6 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+export interface GeoLocationCoordinates {
+    accuracy: number;
+    latitude: number;
+    longitude: number;
+    altitude?: number;
+    altitudeAccuracy?: number;
+    heading?: number;
+    speed?: number;
+}
 
 const GEOLOCATION_ERRORS = {
     'errors.location.unsupportedBrowser': 'Browser does not support location services',

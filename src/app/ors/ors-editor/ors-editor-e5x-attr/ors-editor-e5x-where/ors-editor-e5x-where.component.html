@@ -5,22 +5,22 @@
 <div *ngIf="modal && !showOnlyBtn" class="row">
   <div class="col-md-3">
     <button class="btn btn-primary btn-block" (click)="openModal(attrModal)">
-      <fa name="map-marker" [fixed]="true"></fa>Where
+      <fa-icon icon="map-marker" [fixed]="true"></fa-icon>Where
     </button>
   </div>
   <div class="col-md-9">
     <div *ngFor="let a of atm; let idx = index">
       <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="a.attributes.anspName.value" path="E5X.Occurrence.AirNavigationService.ANSPName"></nlf-ors-editor-tag-e5x-render>
       &nbsp;
-      <fa name="edit" (click)="openModal(modal, idx)"></fa>
-      <fa name="close" (click)="delete(idx)"></fa>
+      <fa-icon icon="edit" (click)="openModal(modal, idx)"></fa-icon>
+      <fa-icon icon="close" (click)="delete(idx)"></fa-icon>
     </div>
   </div>
 </div>
 
 <div *ngIf="modal && showOnlyBtn" class="row">
   <button class="btn btn-secondary btn-block" (click)="openModal(attrModal)">
-    <fa name="map-marker" [fixed]="true"></fa>Where
+    <fa-icon icon="map-marker" [fixed]="true"></fa-icon>Where
   </button>
 </div>
 <!-- INJURIES MODAL -->
@@ -38,18 +38,20 @@
     <!--<ng-container *ngTemplateOutlet="attrTemplate"></ng-container>-->
     <!-- Modal content -->
     <div class="row">
+      <!--
       <agm-map *ngIf="geoReady" [latitude]="toFloat(attr.latitudeOfOcc.value)" [longitude]="toFloat(attr.longitudeOfOcc.value)" (mapClick)="updateLocation($event)" [mapTypeControl]="true" [zoom]="7">
 
         <agm-marker [markerDraggable]="isDraggable()" (dragEnd)="updateLocation($event)" [latitude]="toFloat(attr.latitudeOfOcc.value)" [longitude]="toFloat(attr.longitudeOfOcc.value)">
         </agm-marker>
 
-        <!-- PATHS -->
+
         <agm-polyline *ngFor="let path of paths">
           <agm-polyline-point *ngFor="let coordinates of path" [latitude]="coordinates[1]" [longitude]="coordinates[0]">
           </agm-polyline-point>
         </agm-polyline>
 
       </agm-map>
+      -->
     </div>
 
     <div class="row">
@@ -83,10 +85,10 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa name="times" [fixed]="true"></fa>Avbryt
+      <fa-icon icon="times" [fixed]="true"></fa-icon>Avbryt
     </button>
     <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate(modalIndex)">
-      <fa name="check" [fixed]="true"></fa>Oppdater
+      <fa-icon icon="check" [fixed]="true"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>

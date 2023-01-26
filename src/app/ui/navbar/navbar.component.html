@@ -10,7 +10,7 @@
     <span *ngIf="router.url != '/ors/'+current_ors.type+'/'+current_ors.id">
       <span [routerLink]="['/ors', current_ors.type, 'edit', current_ors.id]"
         class="badge badge-info lead ml-1 pointer">
-        <fa name="edit" [fixed]="true"></fa>#{{ current_ors.id }}
+        <fa-icon icon="edit" [fixed]="true"></fa-icon>#{{ current_ors.id }}
       </span>
     </span>
   </span>
@@ -22,13 +22,13 @@
   <button class="btn btn-success mr-3 d-block d-sm-none"
     *ngIf="(loggedInObservable | async) && !!user_data && !!user_data.settings.default_discipline"
     (click)="navbarOpen=false;openCreateOrsModal()">
-    <fa name="plus" fw="true" class="mr-1"></fa>OBSREG
+    <fa-icon icon="plus" fw="true" class="mr-1"></fa-icon>OBSREG
   </button>
 
   <!--MENU TOGGLE-->
   <button (click)="navbarOpen=!navbarOpen" class="navbar-toggler navbar-toggler-right" type="button"
     aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <fa name="bars" [fixed]="true"></fa>
+    <fa-icon icon="bars" [fixed]="true"></fa-icon>
   </button>
 
   <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent2" [ngClass]="{ 'show': navbarOpen }">
@@ -39,7 +39,7 @@
       <button class="btn btn-success mr-2 d-none d-sm-block"
         *ngIf="!!config && !!user_data && !!user_data.settings.default_discipline"
         (click)="navbarOpen=false;openCreateOrsModal()">
-        <fa name="plus" fw="true" class="mr-1"></fa>Ny OBSREG
+        <fa-icon icon="plus" fw="true" class="mr-1"></fa-icon>Ny OBSREG
         <!--{{ config[config.inv_mapping[user_data.settings.default_activity]]['observation']['app_name'] || 'ORSX' }}-->
         
       </button>
@@ -120,7 +120,7 @@
       <!-- NOTIFICATIONS
       <li ngbDropdown placement="bottom-right" (click)="navbarOpen=false" *ngIf="authenticated" class="nav-item dropdown pointer" routerLinkActive="active">
         <span ngbDropdownToggle href="#" class="nav-link">
-          <fa name="bell" [fixed]="true" class="d-inline-block"></fa><small><span class="small badge badge-danger align-top">4</span></small>
+          <fa-icon icon="bell" [fixed]="true" class="d-inline-block"></fa-icon><small><span class="small badge badge-danger align-top">4</span></small>
         </span>
 
         <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -129,11 +129,11 @@
 
           <div class="dropdown-divider"></div>
           <button class="btn btn-secondary btn-block dropdown-item">
-            <fa name="bell-slash" [fixed]="true"></fa>Dismiss All
+            <fa-icon icon="bell-slash" [fixed]="true"></fa-icon>Dismiss All
           </button>
           <div class="dropdown-divider"></div>
           <button class="btn btn-secondary btn-block dropdown-item">
-            <fa name="list-ol" [fixed]="true"></fa>More<span class="badge badge-danger pull-right">2</span>
+            <fa-icon icon="list-ol" [fixed]="true"></fa-icon>More<span class="badge badge-danger pull-right">2</span>
           </button>
         </div>
 
@@ -172,7 +172,7 @@
           <div class="dropdown-divider"></div>
           <button ngbDropdownItem (click)="$event.preventDefault();navbarOpen=false;authService.logout()"
             class="dropdown-item btn btn-secondary btn-block">
-            <fa name="power-off" [fixed]="true"></fa>Logg ut
+            <fa-icon icon="power-off" [fixed]="true"></fa-icon>Logg ut
           </button>
         </div>
 
@@ -185,7 +185,7 @@
 
 <!-- FAB https://medium.com/@aphlps/fab-speed-dial-with-angular-5-2-angular-material-be696fc14967
 <div *ngIf="!!user_data && !!user_data.settings.default_discipline" (click)="navbarOpen=false;openCreateOrsModal()" class="fab bg-success">
-  <span class="fab-icon"><fa name="plus"></fa></span>
+  <span class="fab-icon"><fa-icon icon="plus"></fa-icon></span>
 </div>
 -->
 
@@ -217,7 +217,7 @@
 <nav class="navbar navbar-toggleable-sm navbar-dark bg-dark">
   <button (click)="isCollapsed = !isCollapsed" class="navbar-toggler navbar-toggler-right" type="button" aria-controls="navbarNavAltMarkup"
     aria-expanded="false" aria-label="Toggle navigation">
-    <fa name="bars" [fixed]="true"></fa>
+    <fa-icon icon="bars" [fixed]="true"></fa-icon>
   </button>
   <span class="navbar-brand pointer" [routerLink]="['/']">NLF</span>
   <div [ngbCollapse]="isCollapsed" class="collapse navbar-collapse justify-content-between" id="navbar">
@@ -255,16 +255,16 @@
       </div>
 
       <a class="nav-item nav-link" routerLink="/home">
-        <fa [name]="'home-o'" [fixed]="'true'"></fa>
+        <fa-icon [name]="'home-o'" [fixed]="'true'"></fa-icon>
       </a>
       <a class="nav-item nav-link" routerLink="user/profile">
-        <fa [name]="'user-o'" [fixed]="'true'"></fa>
+        <fa-icon [name]="'user-o'" [fixed]="'true'"></fa-icon>
       </a>
       <a class="nav-item nav-link" [ngbPopover]="popTemplate" placement="bottom" container="body" popoverTitle="Template ref content inside">
-        <fa [name]="'desktop'" [fixed]="'true'"></fa>
+        <fa-icon [name]="'desktop'" [fixed]="'true'"></fa-icon>
       </a>
       <a class="nav-item nav-link" href="#">
-        <fa [name]="'commenting-o'" [fixed]="'true'"></fa>
+        <fa-icon [name]="'commenting-o'" [fixed]="'true'"></fa-icon>
       </a>
 
       < !-w- Custom css for notifications -w- >
@@ -276,7 +276,7 @@
         </span>
       </a>
       <a class="nav-item nav-link text-danger" href="#">
-        <fa [name]="'bell-o'" [fixed]="'true'"></fa>
+        <fa-icon [name]="'bell-o'" [fixed]="'true'"></fa-icon>
       </a>
 
       <a *ngIf="isLoggedIn" (click)="authService.logout()" class="nav-item nav-link btn">Logout</a>

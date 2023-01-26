@@ -1,5 +1,5 @@
 <span class="badge badge-secondary pointer mx-1" (click)="openModal(modal)">
-  <fa name="lock"></fa> Tilgang
+  <fa-icon icon="lock"></fa-icon> Tilgang
 </span>
 
 
@@ -7,7 +7,7 @@
 <ng-template #modal>
   <div class="modal-header">
     <h4 class="modal-title">
-      <fa name="lock"></fa> Tilgangskontroll
+      <fa-icon icon="lock"></fa-icon> Tilgangskontroll
     </h4>
 
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
@@ -28,7 +28,7 @@
     <div class="row" *ngFor="let person_id of acl_persons; let idx = index; odd as isOdd"  [class.bg-light]="isEven">
 
       <div class="col-sm-6">
-        <nlf-resolve-lungo-person [person_id]="person_id" [link]="true" [avatar]="true"></nlf-resolve-lungo-person><fa *ngIf="acl_list['execute'].indexOf(person_id)>-1" class="ml-2 text-danger" name="lock"></fa>
+        <nlf-resolve-lungo-person [person_id]="person_id" [link]="true" [avatar]="true"></nlf-resolve-lungo-person><fa-icon *ngIf="acl_list['execute'].indexOf(person_id)>-1" class="ml-2 text-danger" name="lock"></fa-icon>
       </div>
       <div class="col-sm-3">
         <div class="form-check">
@@ -57,14 +57,14 @@
       </div>
       <div class="col-sm-2">
         <button (click)="addPerson()" class="btn btn-secondary">
-          <fa name="plus"></fa> Legg til
+          <fa-icon icon="plus"></fa-icon> Legg til
         </button>
       </div>
       <!--
         <div class="input-group m-3 mr-auto col-sm-12">
           <nlf-ors-editor-tag-person [(person)]="new_person" [activity]="model" [fc]="true" [allowAdd]="false"></nlf-ors-editor-tag-person>
           <div (click)="persons.push(new_person.id);new_person=null" class="input-group-append">
-            <span class="input-group-text" id="basic-addon2"><fa name="plus"></fa> Legg til</span>
+            <span class="input-group-text" id="basic-addon2"><fa-icon icon="plus"></fa-icon> Legg til</span>
           </div>
         </div>
       -->
@@ -73,7 +73,7 @@
   <div class="modal-footer">
     <!--<button class="btn btn-outline-dark mr-auto" (click)="modalRef.dismiss()">Avbryt</button>-->
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa name="save" [fixed]="true"></fa> Ferdig
+      <fa-icon icon="save" [fixed]="true"></fa-icon> Ferdig
     </button>
   </div>
 </ng-template>

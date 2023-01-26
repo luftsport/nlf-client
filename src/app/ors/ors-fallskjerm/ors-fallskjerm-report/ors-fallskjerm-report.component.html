@@ -6,7 +6,7 @@
 			<hotkeys-cheatsheet title="Hotkeys Rock!"></hotkeys-cheatsheet>
 			<!-- TITLE -->
 
-			<!-- <fa name="file-text-o" [fixed]="true"></fa>&nbsp;-->
+			<!-- <fa-icon icon="file-text-o" [fixed]="true"></fa-icon>&nbsp;-->
 			<!-- {{ observation.tags | nlfOrsTags: ' / '}} -->
 			<a [routerLink]="['/ors', observation._model.type]">OBSREG</a>#{{ observation.id }}
 			<nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type" link="true" seperator="/"></nlf-resolve-observation-tags>&nbsp;
@@ -29,7 +29,7 @@
 			<!-- WORKFLOW STATE -->
 			<span class="pull-right">
 				<a [routerLink]="['/ors', observation._model.type, 'edit', observation.id]" *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge badge-primary text-white mx-1">
-					<fa name="edit" [fixed]="true"></fa> Editor
+					<fa-icon icon="edit" [fixed]="true"></fa-icon> Editor
 				</a>
 				<nlf-resolve-observation-state [activity]="observation._model.type" [state]="observation.workflow.state" icon="true"></nlf-resolve-observation-state>
 			</span>
@@ -54,16 +54,17 @@
 			<!-- Map -->
 			<div class="col-md-6 col-xs-12 d-none d-sm-block">
 				<div *ngIf="!!observation.location?.geo?.coordinates">
+					<!--
 					<agm-map [latitude]="toFloat(observation.location.geo.coordinates[0])" [mapTypeControl]="true" [longitude]="toFloat(observation.location.geo.coordinates[1])" [zoom]="12">
 						<agm-marker [label]="observation.location.nickname" [latitude]="toFloat(observation.location.geo.coordinates[0])" [longitude]="toFloat(observation.location.geo.coordinates[1])">
-							<!--<agm-info-window>{{ observation.location.nickname }}</agm-info-window> -->
 						</agm-marker>
 					</agm-map>
+				-->
 				</div>
 				<div *ngIf="!observation.location?.geo?.coordinates">
 
 					<ngb-alert type="danger" [dismissible]="false">
-						<fa name="map-marker" [fixed]="true"></fa>
+						<fa-icon icon="map-marker" [fixed]="true"></fa-icon>
 						Ingen lokalisasjon satt.
 					</ngb-alert>
 
@@ -76,7 +77,7 @@
 					<div class="col-md-12">
 
 						<div (click)="isWorkflowTimelineCollapsed = !isWorkflowTimelineCollapsed" class="card-header pointer">
-							<fa name="random" [fixed]="true"></fa>
+							<fa-icon icon="random" [fixed]="true"></fa-icon>
 							Arbeidsflyt
 							<i class="fa fa-fw" [ngClass]="{'fa-angle-down': isWorkflowTimelineCollapsed, 'fa-angle-up': !isWorkflowTimelineCollapsed}"></i>
 						</div>
@@ -91,7 +92,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card-header">
-					<fa name="users" [fixed]="true"></fa>Involverte
+					<fa-icon icon="users" [fixed]="true"></fa-icon>Involverte
 				</div>
 				<nlf-ors-fallskjerm-report-involved [model]="observation._model" [involved]="observation.involved"></nlf-ors-fallskjerm-report-involved>
 			</div>
@@ -102,7 +103,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card-header">
-					<fa name="file" [fixed]="true"></fa>Vedlegg
+					<fa-icon icon="file" [fixed]="true"></fa-icon>Vedlegg
 				</div>
 				<nlf-ors-report-files [files]="observation.files" [state]="observation.workflow.state"></nlf-ors-report-files>
 			</div>
@@ -121,7 +122,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card-header">
-					<fa name="users" [fixed]="true"></fa>Hoppfeltorganisasjon
+					<fa-icon icon="users" [fixed]="true"></fa-icon>Hoppfeltorganisasjon
 				</div>
 				<nlf-ors-fallskjerm-report-organization [organization]="observation.organization"></nlf-ors-fallskjerm-report-organization>
 			</div>
@@ -132,7 +133,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card-header">
-					<fa name="cloud" [fixed]="true"></fa>Været
+					<fa-icon icon="cloud" [fixed]="true"></fa-icon>Været
 				</div>
 				<nlf-ors-report-weather [weather]="observation.weather"></nlf-ors-report-weather>
 			</div>
@@ -143,7 +144,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card-header">
-					<fa name="bolt" [fixed]="true"></fa>Tiltak
+					<fa-icon icon="bolt" [fixed]="true"></fa-icon>Tiltak
 				</div>
 				<nlf-ors-report-actions [actions]="observation.actions"></nlf-ors-report-actions>
 			</div>
@@ -154,7 +155,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card-header">
-					<fa name="comments-o" [fixed]="true"></fa>Vurderinger
+					<fa-icon icon="comments-o" [fixed]="true"></fa-icon>Vurderinger
 				</div>
 			</div>
 
@@ -178,7 +179,7 @@
 		<div *ngIf="!!observation.related && observation.related?.length > 0" class="row">
 			<div class="col-md-12">
 				<div class="card-header">
-					<fa name="external-link" [fixed]="true"></fa>Relaterte
+					<fa-icon icon="external-link" [fixed]="true"></fa-icon>Relaterte
 				</div>
 				<nlf-ors-report-related [related]="observation.related"></nlf-ors-report-related>
 			</div>

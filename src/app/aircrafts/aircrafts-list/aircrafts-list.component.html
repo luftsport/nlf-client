@@ -2,7 +2,7 @@
   <div class="container">
     <span class="breadcrumb">
       <li class="breadcrumb-item">
-        <fa name="plane" [fixed]="true" class="mr-1 active"></fa><a [routerLink]="['/', 'aircraft']">Aircraft</a>
+        <fa-icon icon="plane" [fixed]="true" class="mr-1 active"></fa-icon><a [routerLink]="['/', 'aircraft']">Aircraft</a>
       </li>
       <sup class="text-danger mx-1" title="Applikasjonen er ikke ferdig utviklet">beta</sup>
     </span>
@@ -46,11 +46,11 @@
         </td>
         <td class="ngx-easy-table-small text-center">
           <span *ngIf="!!row.e5x">
-            <fa class="text-success" name="check"></fa>
+            <fa-icon class="text-success" name="check"></fa-icon>
           </span>
           <!--
           <span *ngIf="!row.e5x">
-            <fa class="text-danger" name="close"></fa>
+            <fa-icon class="text-danger" name="close"></fa-icon>
           </span>
           -->
         </td>

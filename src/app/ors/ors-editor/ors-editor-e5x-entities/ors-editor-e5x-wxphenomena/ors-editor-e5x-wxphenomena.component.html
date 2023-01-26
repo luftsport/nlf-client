@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-3">
     <button [disabled]="disabled" class="btn btn-secondary btn-block" (click)="add();openModal(modal, modalIdx)">
-      <fa name="plus" [fixed]="true"></fa>Add WX Phenomena
+      <fa-icon icon="plus" [fixed]="true"></fa-icon>Add WX Phenomena
     </button>
   </div>
   <div class="col-md-9">
@@ -9,8 +9,8 @@
       <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="phenomena.attributes.phenomenonType.value" path="E5X.Occurrence.PrecipitationAndOtherWeatherPhenomena.PhenomenonType"></nlf-ors-editor-tag-e5x-render>
       &nbsp;
       <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="phenomena.attributes.phenomenonIntensity.value" path="E5X.Occurrence.PrecipitationAndOtherWeatherPhenomena.PhenomenonIntensity"></nlf-ors-editor-tag-e5x-render>
-      <fa class="mx-1" name="edit" (click)="openModal(modal, idx)"></fa>
-      <fa class="mx-1" *ngIf="!disabled" name="close" (click)="delete(idx)"></fa>
+      <fa-icon class="mx-1" name="edit" (click)="openModal(modal, idx)"></fa-icon>
+      <fa-icon class="mx-1" *ngIf="!disabled" name="close" (click)="delete(idx)"></fa-icon>
     </div>
 
   </div>
@@ -47,10 +47,10 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa name="times" [fixed]="true"></fa>Avbryt
+      <fa-icon icon="times" [fixed]="true"></fa-icon>Avbryt
     </button>
     <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate()">
-      <fa name="check" [fixed]="true"></fa>Oppdater
+      <fa-icon icon="check" [fixed]="true"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>

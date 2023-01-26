@@ -133,21 +133,23 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa name="times" [fixed]="true"></fa>Avbryt
+      <fa-icon icon="times" [fixed]="true"></fa-icon>Avbryt
     </button>
     <button [disabled]="!observation.acl_user.w" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate(modalIndex)">
-      <fa name="check" [fixed]="true"></fa>Oppdater
+      <fa-icon icon="check" [fixed]="true"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>
 
 <ng-template #attrTemplate>
   <div class="row">
+    <!--
     <agm-map *ngIf="geoReady" [latitude]="toFloat(observation.occurrence.attributes.latitudeOfOcc.value)" [longitude]="toFloat(observation.occurrence.attributes.longitudeOfOcc.value)" (mapClick)="mapClicked($event)" [mapTypeControl]="true"
       [zoom]="7">
       <agm-marker [markerDraggable]="isDraggable()" (dragEnd)="markerMoved($event)" [latitude]="toFloat(observation.occurrence.attributes.latitudeOfOcc.value)" [longitude]="toFloat(observation.occurrence.attributes.longitudeOfOcc.value)">
       </agm-marker>
     </agm-map>
+    -->
   </div>
 
   <div class="row">

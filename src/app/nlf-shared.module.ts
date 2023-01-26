@@ -10,9 +10,12 @@ import { NgProgressModule } from 'ngx-progressbar';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 // Icons
-import { FontAwesomeModule, WeatherIconsModule } from 'ngx-icons';
+// import { FontAwesomeModule as r, WeatherIconsModule } from 'ngx-icons';
 // Font awesome modle - NOT installed
-// import { FontAwesomeModule } as NGFontAwesomeModule from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+// MAPS
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 // PIPES
 import { NlfOrsStatePipe } from 'app/pipes/ors-state.pipe';
@@ -94,7 +97,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule, // ngx-icons
-    WeatherIconsModule, // ngx-icons],
+    LeafletModule, // Maps
     NgProgressModule,
     // NgProgressRouterModule,
     NgPipesModule,
@@ -163,10 +166,10 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     FormsModule,
     ReactiveFormsModule,
     // Custom
+    LeafletModule,
     NgSelectModule,
     NlfHelpComponent,
     FontAwesomeModule, // ngx-icons
-    WeatherIconsModule,
     NgProgressModule,
     NlfUiPageSpinnerComponent,
     NlfUiComponentSpinnerComponent,

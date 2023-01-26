@@ -137,23 +137,27 @@
 
       <!-- Map -->
       <div class="col-md-6">
+        <div style="height: 100%" *ngIf="!!mapOptions" leaflet [leafletOptions]="mapOptions"></div>
+
+        <!--
         <div *ngIf="!!lungo.contact?.location">
           <agm-map style="height: 25rem !important" [latitude]="lungo.contact.location.geo.coordinates[1]" [longitude]="lungo.contact.location.geo.coordinates[0]" [zoom]="zoom" mapTypeControl="true">
             <agm-marker [latitude]="lungo.contact.location.geo.coordinates[1]" [longitude]="lungo.contact.location.geo.coordinates[0]">
             </agm-marker>
           </agm-map>
         </div>
-        <!--marker --- label="Dummy label"-->
         <div *ngIf="!lungo.contact?.location">
           <agm-map style="height: 25rem !important" *ngIf="!!geo" [latitude]="geo.coords.latitude" [longitude]="geo.coords.longitude" [zoom]="zoom" mapTypeControl="true">
             <agm-marker [latitude]="geo.coords.latitude" [longitude]="geo.coords.longitude">
             </agm-marker>
           </agm-map>
         </div>
+        -->
+        
         <!--
           <div *ngIf="!data.location?.geo?.coords">
             <ngb-alert type="danger" [dismissible]="false">
-              <fa name="map-marker" [fixed]="true"></fa>
+              <fa-icon icon="map-marker" [fixed]="true"></fa-icon>
               Ingen lokalisasjon satt.
             </ngb-alert>
           </div>
@@ -227,7 +231,7 @@
       <!-- FALLSKJERM LAST OPP-->
       <div *ngIf="1===3 && lungo.main_activity.id==109 && lungo.type_id==5">
         <button class="btn btn-primary">
-          <fa name="upload" [fixed]="true"></fa>Last opp manifest
+          <fa-icon icon="upload" [fixed]="true"></fa-icon>Last opp manifest
         </button>
       </div>
     </div>

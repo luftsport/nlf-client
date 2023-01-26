@@ -25,10 +25,10 @@
 
   <!-- Anonymous or tmp_name sup eller attr? -->
   <span *ngIf="person_id < 1">{{ full_name }}<sup class="text-info" title="Midlertidig navn eller anonymisert">
-      <fa name="question"></fa>
+      <fa-icon icon="question"></fa-icon>
     </sup>
   </span>
 </span>
 <span *ngIf="!dataReady">
-  <fa name="spinner" animation="pulse" [size]="1"></fa>
+  <fa-icon icon="spinner" animation="pulse" [size]="1"></fa-icon>
 </span>

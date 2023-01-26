@@ -17,8 +17,8 @@
       <td class="ngx-easy-table-small">
         <span *ngIf="!!row.workflow.state">
           <ng-container *ngIf="['closed', 'withdrawn'].indexOf(row.workflow.state)<0">
-            <fa *ngIf="timedelta(row._updated)>=5*24*3600&&timedelta(row._updated)<10*24*3600" name="clock-o" class="text-warning" [fixed]="true" ngbTooltip="Det er over 5 dager siden det har vært aktivitet"></fa>
-            <fa *ngIf="timedelta(row._updated)>=10*24*3600" name="clock-o" class="text-danger" [fixed]="true" ngbTooltip="Det er over 10 dager siden det har vært aktivitet"></fa>
+            <fa-icon *ngIf="timedelta(row._updated)>=5*24*3600&&timedelta(row._updated)<10*24*3600" name="clock-o" class="text-warning" [fixed]="true" ngbTooltip="Det er over 5 dager siden det har vært aktivitet"></fa-icon>
+            <fa-icon *ngIf="timedelta(row._updated)>=10*24*3600" name="clock-o" class="text-danger" [fixed]="true" ngbTooltip="Det er over 10 dager siden det har vært aktivitet"></fa-icon>
           </ng-container>
         
           {{ row.workflow.state | nlfOrsState: row._model.type }}
@@ -35,6 +35,6 @@
 </span>
 <span *ngIf="!dataReady">
   <p class="align-middle text-center text-secondary">
-    <fa name="spinner" animation="pulse" size="3x"></fa>
+    <fa-icon icon="spinner" animation="pulse" size="3x"></fa-icon>
   </p>
 </span>

@@ -23,7 +23,7 @@
       <!-- QUICKSELECT DEFAULT DISCIPLINE
     <button *ngIf="!!settings && canCreateDefault()" (click)="createObservation(settings.default_discipline, settings.default_club, settings.default_activity)"
       class="btn btn-block btn-success btn-lg my-1">
-      <fa name="plus" [fixed]="true"></fa>
+      <fa-icon icon="plus" [fixed]="true"></fa-icon>
       <nlf-resolve-lungo-organization [organization_id]="settings.default_discipline" show_activity="false"></nlf-resolve-lungo-organization>
     </button>
     <div *ngIf="!!settings && !canCreateDefault()" class="alert alert-primary" role="alert">
@@ -90,7 +90,7 @@
   <div class="modal-footer">
     <ng-container *ngIf="[109, 111, 237, 238].indexOf(settings.default_activity)">
       <a class="btn btn-link mr-auto" [routerLink]="['/ors', getActivityName()]">
-        <fa name="link" [fixed]="true"></fa> OBSREG {{ getActivityName() }}
+        <fa-icon icon="link" [fixed]="true"></fa-icon> OBSREG {{ getActivityName() }}
       </a>
       <button class="btn btn-outline-dark" (click)="activeModal.close()">Avbryt</button>
     </ng-container>

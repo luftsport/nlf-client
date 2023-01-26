@@ -1,5 +1,5 @@
 <button (click)="openModal(modal)" class="btn btn-secondary btn-block">
-  <fa name="bandcamp" [fixed]="true"></fa>Wildlife
+  <fa-icon icon="bandcamp" [fixed]="true"></fa-icon>Wildlife
 </button>
 
 <!-- MODAL -->
@@ -66,10 +66,10 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa name="times" [fixed]="true"></fa>Avbryt
+      <fa-icon icon="times" [fixed]="true"></fa-icon>Avbryt
     </button>
     <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate(modalIndex)">
-      <fa name="check" [fixed]="true"></fa>Oppdater
+      <fa-icon icon="check" [fixed]="true"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>

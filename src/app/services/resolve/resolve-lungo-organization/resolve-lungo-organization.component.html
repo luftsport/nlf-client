@@ -16,7 +16,7 @@
       <nlf-resolve-lungo-activity *ngIf="!!organization.main_activity.id" [activity_id]="organization.main_activity.id"></nlf-resolve-lungo-activity>
     </p>
     <a class="btn btn-secondary btn-block" [routerLink]="['/organizations', organization.id]" [routerLinkActive]="'active'">
-      <fa name="link" [fixed]="true"></fa>{{ organization.name }}
+      <fa-icon icon="link" [fixed]="true"></fa-icon>{{ organization.name }}
     </a>
   </ng-template>
 
@@ -28,5 +28,5 @@
 </span>
 
 <span *ngIf="!dataReady">
-  <fa name="spinner" animation="pulse" [size]="1"></fa>
+  <fa-icon icon="spinner" animation="pulse" [size]="1"></fa-icon>
 </span>

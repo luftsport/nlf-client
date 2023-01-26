@@ -1,16 +1,16 @@
 <div class="row">
   <div class="col-md-12">
     <button [disabled]="disabled" [ngClass]="[!!crew ? 'btn-success' : 'btn-secondary']" class="btn btn-block mb-3" (click)="add();openModal(personModal, modalIdx)">
-      <fa name="plus" [fixed]="true"></fa>Crew/Pax
+      <fa-icon icon="plus" [fixed]="true"></fa-icon>Crew/Pax
     </button>
 
     <div class="my-1" *ngFor="let c of crew; let idx = index">
       <nlf-resolve-lungo-person (click)="openModal(personModal, idx)" [person_id]="c.person.id" [tmp_name]="c.person.tmp_name" [link]="false" avatar="true"></nlf-resolve-lungo-person>
       &nbsp;
 
-      <fa class="mr-auto" name="edit" (click)="openModal(personModal, idx)"></fa>
+      <fa-icon class="mr-auto" name="edit" (click)="openModal(personModal, idx)"></fa-icon>
       <span *ngIf="!disabled">
-        <fa class="mr-auto" name="close" (click)="delete(idx)"></fa>
+        <fa-icon class="mr-auto" name="close" (click)="delete(idx)"></fa-icon>
       </span>
     </div>
   </div>
@@ -35,12 +35,12 @@
         <div *ngIf="!anon">
           <nlf-ors-editor-tag-person [disabled]="disabled" [fc]="true" [(person)]="modalValue.person" [activity]="activity"></nlf-ors-editor-tag-person>
           <button class="btn btn-link" (click)="setAnon()">
-            <fa name="user-secret" [fixed]="true"></fa>Sett anonym
+            <fa-icon icon="user-secret" [fixed]="true"></fa-icon>Sett anonym
           </button>
         </div>
         <div *ngIf="anon">
           <button class="btn btn-link" (click)="unsetAnon()">
-            <fa name="user-o" [fixed]="true"></fa>Bruk navn
+            <fa-icon icon="user-o" [fixed]="true"></fa-icon>Bruk navn
           </button>
         </div>
       </div>
@@ -184,7 +184,7 @@
         <div class="row">
           <div class="col-md-12 lead bg-light">
             License {{ (idx+1) }}
-            <fa *ngIf="!disabled" (click)="deleteLicense(idx)" class="ml-2 pointer" name="times" [fixed]="true"></fa>
+            <fa-icon *ngIf="!disabled" (click)="deleteLicense(idx)" class="ml-2 pointer" name="times" [fixed]="true"></fa-icon>
           </div>
         </div>
         <div class="form-row">
@@ -225,7 +225,7 @@
         <div class="row">
           <div class="col-md-12 lead bg-light">
             Incapacitation {{ (idx+1) }}
-            <fa *ngIf="!disabled" (click)="deleteIncapacitation(idx)" class="ml-2 pointer" name="times" [fixed]="true"></fa>
+            <fa-icon *ngIf="!disabled" (click)="deleteIncapacitation(idx)" class="ml-2 pointer" name="times" [fixed]="true"></fa-icon>
           </div>
         </div>
         <div class="form-row">
@@ -246,17 +246,17 @@
       <div class="row">
         <div class="col-md-4">
           <button (click)="addLicense()" [disabled]="disabled" class="btn btn-primary btn-block">
-            <fa name="plus" [fixed]="true"></fa>License
+            <fa-icon icon="plus" [fixed]="true"></fa-icon>License
           </button>
         </div>
         <div class="col-md-4">
           <button (click)="addHumanFactors()" [disabled]="disabled || !!modalValue.humanFactors" class="btn btn-primary btn-block">
-            <fa name="plus" [fixed]="true"></fa>Human factors
+            <fa-icon icon="plus" [fixed]="true"></fa-icon>Human factors
           </button>
         </div>
         <div class="col-md-4">
           <button (click)="addIncapacitation()" [disabled]="disabled" class="btn btn-primary btn-block">
-            <fa name="plus" [fixed]="true"></fa>Incapacitation
+            <fa-icon icon="plus" [fixed]="true"></fa-icon>Incapacitation
           </button>
         </div>
       </div>
@@ -266,10 +266,10 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa name="times" [fixed]="true"></fa>Avbryt
+      <fa-icon icon="times" [fixed]="true"></fa-icon>Avbryt
     </button>
     <button [disabled]="disabled" [ngClass]="{'disabled': disable}" class="btn btn-success" (click)="modalUpdate()">
-      <fa name="check" [fixed]="true"></fa>Oppdater
+      <fa-icon icon="check" [fixed]="true"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>

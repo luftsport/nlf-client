@@ -13,17 +13,17 @@
   <p>
     For hver logiske komponent i editoren vil du kunne se hjelpetekst for respektive bolker ved å trykke på
     spørsmålstegnet
-    <fa class="text-info mx-1" name="question" [fixed]="true"></fa> .
+    <fa-icon class="text-info mx-1" name="question" [fixed]="true"></fa-icon> .
   </p>
   <p>
     Øverst på siden har du verktøylinjen som bla viser løpenummer, tittel og rating (til venstre) og til høyre finner
     du følgende:
   </p>
   <p>
-    <fa class="text-info mx-1" name="question" [fixed]="true"></fa>
+    <fa-icon class="text-info mx-1" name="question" [fixed]="true"></fa-icon>
 
     <span (click)="save()" *ngIf="changes" class="pointer badge badge-warning mx-1">
-      <fa name="save" [fixed]="true"></fa>
+      <fa-icon icon="save" [fixed]="true"></fa-icon>
     </span>
 
     <span class="badge badge-secondary mx-1">{{ observation._updated | amTimeAgo }}</span>
@@ -37,7 +37,7 @@
 
     <!-- ACTIVITIES -->
     <a class="badge badge-info mx-1" [routerLink]="['/ors', observation._model.type , 'activities', observation.id]">
-      <fa name="history"></fa> Aktivitet
+      <fa-icon icon="history"></fa-icon> Aktivitet
     </a>
 
     <!-- ACCESS!!! -->
@@ -45,7 +45,7 @@
 
     <!-- REPORT LINK -->
     <a [routerLink]="['/ors', observation._model.type , 'report', observation.id]" *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge badge-primary text-white mx-1">
-      <fa name="file" [fixed]="true"></fa> Report
+      <fa-icon icon="file" [fixed]="true"></fa-icon> Report
     </a>
 
   </p>
@@ -58,7 +58,7 @@
   <p>
     Om du har endringer vil også
     <span class="badge pointer badge-warning mx-1">
-      <fa name="save" [fixed]="true"></fa>
+      <fa-icon icon="save" [fixed]="true"></fa-icon>
     </span>
     vises og indikerer at du kan lagre ved å klikke på det.
   </p>
@@ -100,7 +100,7 @@
   <p>
     <!-- ACTIVITIES -->
     <a *ngIf="observation.workflow.state!='closed'" class="badge badge-info mx-1" [routerLink]="['/ors', observation._model.type , 'activities', observation.id]">
-      <fa name="history"></fa> Aktivitet
+      <fa-icon icon="history"></fa-icon> Aktivitet
     </a> åpner en side som viser alle hendelser for denne observasjonen. Her kan du purre og sende meldinger til de som behandler denne observasjonen.
   </p>
 
@@ -112,7 +112,7 @@
   <p>
     <!-- REPORT LINK -->
     <a [routerLink]="['/ors', observation._model.type , 'report', observation.id]" *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge badge-primary text-white mx-1">
-      <fa name="file" [fixed]="true"></fa> Report
+      <fa-icon icon="file" [fixed]="true"></fa-icon> Report
     </a> åpner observasjonen i rapportvisning og du kan på den måten forhåndsvise hvordan den endelige observasjonen vil komme til å se ut når den er ferdigbehandlet.</p>
 
   <p>

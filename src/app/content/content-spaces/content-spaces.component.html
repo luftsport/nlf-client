@@ -1,9 +1,9 @@
   <div class="nlf-sticky-toolbar">
     <div class="container nlf-dark">
-      <fa name="sitemap" [fixed]="true"></fa>Content spaces
+      <fa-icon icon="sitemap" [fixed]="true"></fa-icon>Content spaces
 
       <a [routerLink]="['create']" class="pull-right btn btn-primary btn-sm">
-        <fa name="plus" [fixed]="true"></fa>Ny space
+        <fa-icon icon="plus" [fixed]="true"></fa-icon>Ny space
       </a>
       <sup class="text-danger mx-1" title="Applikasjonen er ikke ferdig utviklet">beta</sup>
     </div>
@@ -14,7 +14,7 @@
 
         <ng-template let-row>
           <td class="ngx-easy-table-small">
-            <fa name="sitemap" [fixed]="true"></fa>&nbsp;
+            <fa-icon icon="sitemap" [fixed]="true"></fa-icon>&nbsp;
             <a [routerLink]="['space/', row.space_key]">{{ row.space_key }}</a>
           </td>
           <td class="ngx-easy-table-small">
@@ -22,13 +22,13 @@
           </td>
           <td>
             <span class="pointer" (click)="delete(row)">
-              <fa name="close" [fixed]="true"></fa>
+              <fa-icon icon="close" [fixed]="true"></fa-icon>
             </span>
             <span class="pointer" [routerLink]="['edit/', row._id]">
-              <fa name="edit" [fixed]="true"></fa>
+              <fa-icon icon="edit" [fixed]="true"></fa-icon>
             </span>
             <span class="pointer" [routerLink]="['create/', row._id]">
-              <fa name="plus" [fixed]="true"></fa>
+              <fa-icon icon="plus" [fixed]="true"></fa-icon>
             </span>
           </td>
         </ng-template>
@@ -36,7 +36,7 @@
     </span>
     <span *ngIf="!dataReady">
       <p class="align-middle text-center  text-secondary">
-        <fa name="spinner" animation="pulse" size="3x"></fa>
+        <fa-icon icon="spinner" animation="pulse" size="3x"></fa-icon>
       </p>
     </span>
 
