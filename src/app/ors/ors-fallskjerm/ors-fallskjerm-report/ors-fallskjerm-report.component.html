@@ -8,11 +8,11 @@
 
 			<!-- <fa name="file-text-o" [fixed]="true"></fa>&nbsp;-->
 			<!-- {{ observation.tags | nlfOrsTags: ' / '}} -->
-			<a [routerLink]="['/ors', observation._model.type]">ORS</a>#{{ observation.id }}
+			<a [routerLink]="['/ors', observation._model.type]">OBSREG</a>#{{ observation.id }}
 			<nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type" link="true" seperator="/"></nlf-resolve-observation-tags>&nbsp;
 			<!-- /TITLE -->
 			<!-- RATING -->
-			<span *ngIf="!!observation.rating" class="badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating
+			<span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body" *ngIf="!!observation.rating" class="badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating
 				| nlfOrsRatingCalc }}</span>
 
 
@@ -34,6 +34,11 @@
 				<nlf-resolve-observation-state [activity]="observation._model.type" [state]="observation.workflow.state" icon="true"></nlf-resolve-observation-state>
 			</span>
 			<!-- /WORKFLOW STATE -->
+
+			<!-- Go to report by id
+			<nlf-ors-go activity="fallskjerm" class="pull-right mx-1"></nlf-ors-go>
+		-->
+
 		</div>
 	</header>
 	<!-- /END HEADER -->

@@ -7,6 +7,7 @@ import { debounce } from 'ts-debounce';
 import { cleanObject } from 'app/interfaces/functions';
 import { isEmpty } from 'lodash';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { saveAs } from "file-saver";
 
 /**
 Save search is simple - save who and search query!
@@ -22,6 +23,7 @@ sort: [{id:-1}]
 export class NlfOrsFallskjermSearchComponent implements OnInit {
 
   dataReady = false;
+  err = false;
   searching = false;
   public query: ApiEveQueryInterface = { where: {} };
   public activity = 'fallskjerm';
@@ -33,9 +35,7 @@ export class NlfOrsFallskjermSearchComponent implements OnInit {
     callsign: { value: undefined, path: "aircrafts.aircraft.callsign" },
   };*/
   public filter = {
-    "aircrafts.aircraft.callsign": undefined,
-    "aircrafts.flight.from.icao": undefined,
-    "aircrafts.flight.to.icao": undefined
+    "id": undefined
   }
   public filterOperator = '$or';
 
@@ -108,6 +108,15 @@ export class NlfOrsFallskjermSearchComponent implements OnInit {
     this.update();
   }
 
+  public exportTojson() {
+    let exportData = this.result|| []; // or only ._items?
+    // exportData is your array which you want to dowanload as json and sample.json is your file name, customize the below lines as per your need.
+    return saveAs(
+      new Blob([JSON.stringify(exportData, null, 2)], { type: 'JSON' }),
+      'query.json'
+    );
+  }
+
 
   private update() {
     this.searching = true;
@@ -142,9 +151,12 @@ export class NlfOrsFallskjermSearchComponent implements OnInit {
 
     this.orsService.getObservations(cleanObject(options)).subscribe(
       data => {
+        this.err = false;
         this.result = data;
       },
-      err => { },
+      err => {
+        this.err = true;
+      },
       () => {
         this.dataReady = true;
         // Set url

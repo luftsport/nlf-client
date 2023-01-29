@@ -13,8 +13,15 @@
         <span class="initial-wrap"><span>+{{ persons.length-max }}</span></span>
       </span>
     </div>
-    
-    <!-- ADD RECEPIENT 
+    <!-- persons modal -->
+    <div *ngIf="show_modal && persons.length>0 && persons.length<=max" class="avatar pointer" (click)="openPersonsModal(peopleModalTemplate)">
+      <span ngbTooltip="vis liste" class="avatar-text avatar-text-green rounded-circle">
+        <span class="initial-wrap"><span><fa name="list"></fa></span></span>
+      </span>
+    </div>
+    <!--<fa class="pointer" name="envelope-open-o" [fixed]="true"></fa>-->
+
+    <!-- ADD RECEPIENT
     <div *ngIf="1==4" class="avatar">
       <a href="#">
         <span class="add-new-plus">
@@ -24,3 +31,26 @@
     </div>
     -->
   </span>
+
+
+  <ng-template #peopleModalTemplate>
+
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">
+          {{ modal_title }}
+        </h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div *ngFor="let person_id of persons">
+          <nlf-resolve-lungo-person [person_id]="person_id" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline-dark" (click)="modalRef.dismiss()">Lukk</button>
+      </div>
+  </ng-template>

@@ -21,6 +21,14 @@ export class NlfOrsEditorService {
     this.observation.next({id: 0, when: new Date(), club: 0, discipline: 0, location: {}, owner: 0, reporter: 0 });
   }
 
+  public unsubscribe() {
+    //this.observation.unsubscribe();
+    //this.observation.next(undefined);
+    //this.observation.complete();
+    this.reset();
+
+  }
+
 }
 
 /** Cut'n paste stuff

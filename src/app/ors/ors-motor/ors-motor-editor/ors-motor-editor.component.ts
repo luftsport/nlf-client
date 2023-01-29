@@ -1,4 +1,4 @@
-import { ApiObservationsItem } from 'app/api/api.interface';
+import { ApiObservationsItem, ApiUserDataSubjectItem } from 'app/api/api.interface';
 import { ApiObservationsService } from 'app/api/api-observations.service';
 import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
 import { NlfAlertService } from 'app/services/alert/alert.service';
@@ -16,13 +16,19 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { cleanE5XObject, deepCopy, pad } from 'app/interfaces/functions';
 import { isEqual, cloneDeep } from 'lodash'
 import { environment } from 'environments/environment';
+import { NlfUserSubjectService } from 'app/user/user-subject.service';
+import { forkJoin } from 'rxjs';
+import { ComponentCanDeactivate } from 'app/pending-changes.guard';
+import { HostListener } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/takeWhile';
 
 @Component({
   selector: 'nlf-ors-motor-editor',
   templateUrl: './ors-motor-editor.component.html',
   styleUrls: ['./ors-motor-editor.component.css']
 })
-export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy {
+export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
 
   public ENV = environment;
 
@@ -42,7 +48,11 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy {
   // Generated
   e5xobservation;
 
-  route_sub;
+
+  // For simple view or not
+  public userData: ApiUserDataSubjectItem;
+  private subject_is_alive: boolean = true;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -54,30 +64,46 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy {
     private hotkeysService: HotkeysService,
     private modalService: NgbModal,
     private confirmService: ConfirmService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private userDataSubject: NlfUserSubjectService
     // private differs: KeyValueDiffers
   ) {
 
     // Instantiate diff checking:
     // this.differ = this.differs.find({}).create();
 
-    // Instantiate our behavioursubject
-    this.subject.observableObservation.subscribe(
-      observation => {
-        this.observation = observation;
+    forkJoin([
+      // Instantiate our behavioursubject
+      this.subject.observableObservation.takeWhile(() => this.subject_is_alive).subscribe(
+        observation => {
+          if(!!observation) {
+            this.observation = observation;
 
-        // Check if reset
-        if (this.observation.id === 0) {
-          this.dataReady = false;
-          this.shadow = undefined;
-        } else {
-          this.changed();
-        }
-      },
-      err => console.log(err),
-      () => { }
+            // Check if reset
+            if (this.observation.id === 0) {
+              this.dataReady = false;
+              this.shadow = undefined;
+            } else {
+              this.changed();
+            }
+          } else {
+            this.dataReady = false;
+          }
+        },
+        err => console.log(err),
+        () => { }
 
-    );
+      ),
+
+      this.userDataSubject.observable.subscribe(
+        data => {
+          if (!!data) {
+            this.userData = data;
+          }
+        },
+        err => console.log('Error getting user data: ', err)
+      )
+    ]);
 
     // Instantiate all hotkeys
     this.hotkeys.push(
@@ -106,13 +132,6 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy {
 
     this.orsService.setActivity('motorfly');
 
-    // Save on exit
-    this.route_sub = this.router.events.subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        this.saveIfChanges();
-        this.route_sub.unsubscribe();
-      }
-    });
 
     this.route.params.subscribe(params => {
       this.id = params['id'] ? params['id'] : 0;
@@ -138,17 +157,57 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy {
    */
   ngOnDestroy() {
 
-    this.route_sub.unsubscribe();
-
     this.hotkeysService.remove(this.hotkeys);
+    this.subject_is_alive = false;
 
-    this.saveIfChanges();
+    //this.subject.unsubscribe();
+    //this.saveIfChanges();
 
     //this.subject.update(undefined);
+    //this.subject.unsubscribe();
+  }
+
+  // @HostListener allows us to also guard against browser refresh, close, etc.
+  @HostListener('window:beforeunload')
+  canDeactivate(): Observable<boolean> | boolean {
+    // insert logic to check if there are pending changes here;
+    // returning true will navigate without confirmation
+    // returning false will show a confirm dialog before navigating away
+    if (!this.changes || !this.observation.acl_user.w) {
+      return true;
+    }
+    return false;
+  }
+
+
+  public showSimpleView() {
+
+    try {
+      // this.observation.workflow.state==="draft" &&
+      if (this.userData['settings']['ors'][this.observation._model.type][this.observation.id]['simple_view'] === true) {
+        return true;
+      }
+    } catch (e) { }
+
+    return false;
+  }
+
+  public toggleSimpleView() {
+    if (!this.userData['settings']['ors'].hasOwnProperty(this.observation._model.type)) {
+      this.userData['settings']['ors'][this.observation._model.type] = {};
+      this.userData['settings']['ors'][this.observation._model.type][this.observation.id] = { simple_view: false };
+    }
+    else if (!this.userData['settings']['ors'][this.observation._model.type].hasOwnProperty(this.observation.id)) {
+      this.userData['settings']['ors'][this.observation._model.type][this.observation.id] = { simple_view: false };
+    }
+
+    try {
+      this.userData['settings']['ors'][this.observation._model.type][this.observation.id]['simple_view'] = !this.userData['settings']['ors'][this.observation._model.type][this.observation.id]['simple_view'];
+      this.userDataSubject.update(this.userData);
+    } catch (e) { }
   }
 
   public update() {
-    console.log('EDITOR Update', this.changes);
     this.subject.update(this.observation);
   }
 
@@ -263,6 +322,10 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy {
         // Deep clone
         this.shadow = cloneDeep(this.observation);
         this.changes = false;
+
+        if (this.observation._created === this.observation._updated) {
+          this.alertService.success('Suksess! Du opprettet akkurat en ny observasjon og den fikk løpenummer #' + this.observation.id, false, true, 60);
+        }
 
       },
       err => {

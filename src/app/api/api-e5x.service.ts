@@ -12,9 +12,9 @@ export class ApiE5xService  extends ApiRestService {
 
   constructor(http: HttpClient) { super(http); }
 
-  public generate(_id: string, _etag: string, e5x, rit_version, options?: ApiOptionsInterface): Observable<ApiClubItem> {
+  public generate(_id: string, _etag: string, activity: string, e5x, rit_version, options?: ApiOptionsInterface): Observable<ApiClubItem> {
 
-    return this.post(this.relativeUrl + 'generate/' + _id, {_etag: _etag, e5x: e5x, rit_version: rit_version}, options);
+    return this.post(this.relativeUrl + 'generate/' + activity + '/' + _id, {_etag: _etag, e5x: e5x, rit_version: rit_version}, options);
   }
 
   public getFile(options?: ApiOptionsInterface): Observable<ApiClubList> {

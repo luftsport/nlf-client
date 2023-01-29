@@ -9,7 +9,7 @@
   <tr>
     <td>Gren</td>
     <td>
-      <nlf-resolve-lungo-organization [organization_id]="observation.discipline" link="true" show_type="true"></nlf-resolve-lungo-organization>
+      <nlf-resolve-lungo-organization [organization_id]="observation.discipline" link="true" show_activity="true"></nlf-resolve-lungo-organization>
     </td>
   </tr>
   <tr>
@@ -59,7 +59,7 @@
 
   <tr *ngIf="!!observation.rating">
     <td>Alvorlighetsgrad</td>
-    <td>{{ observation.rating.actual }} av {{ observation.rating.potential }} <span class="pull-right badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating | nlfOrsRatingCalc }}</span></td>
+    <td>{{ observation.rating.actual }} av {{ observation.rating.potential }} <span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body" class="pull-right badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating | nlfOrsRatingCalc }}</span></td>
   </tr>
 
 

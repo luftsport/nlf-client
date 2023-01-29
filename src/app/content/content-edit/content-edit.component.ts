@@ -3,9 +3,12 @@ import { ApiContentService } from 'app/api/api-content.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiObservationsService } from 'app/api/api-observations.service';
 import { ApiNlfUserService } from 'app/api/api-nlf-user.service';
-import { ApiOptionsInterface, ApiContentItem, ApiObservationsItem, ApiNlfUserItem, ApiNlfUserList } from 'app/api/api.interface';
+import { ApiOptionsInterface, ApiContentItem, ApiObservationsItem, ApiNlfUserItem, ApiNlfUserList, ApiTagList, ApiTagItem } from 'app/api/api.interface';
 import { BehaviorSubject } from 'rxjs';
 import { NlfAlertService } from 'app/services/alert/alert.service';
+
+import { LungoPersonsService } from 'app/api/lungo-persons.service';
+import { LungoPersonsSearchItem, LungoPersonsSearchList } from 'app/api/lungo.interface';
 
 import Tribute from 'tributejs/src';
 import { debounce } from 'ts-debounce';
@@ -60,7 +63,7 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
   constructor(private apiContent: ApiContentService,
     private route: ActivatedRoute,
     private router: Router,
-    private nlfUsers: ApiNlfUserService,
+    private personsService: LungoPersonsService,
     private orsService: ApiObservationsService,
     private alertService: NlfAlertService) { }
 
@@ -134,22 +137,26 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
       }
 
     );
-
+    
+    /**
+     * Tributejs for mentions
+     * See https://github.com/zurb/tribute for more
+     */
     const users = {
       trigger: '@',
       iframe: null,
       selectClass: 'highlight',
-      selectTemplate: function(item) {
-        return '<macro href="#" data-url="/user/' + item.original.id + '" contenteditable="false" class="badge badge-danger macrolink pointer" id="' + item.original.id + '">@' + item.original.fullname + '</macro>';
+      selectTemplate: function (item) {
+        return '<macro href="#" data-url="/user/' + item.original.id + '" contenteditable="false" class="badge badge-danger macrolink pointer" id="' + item.original.id + '">@' + item.original.full_name + '</macro>';
       },
-      menuItemTemplate: function(item) {
+      menuItemTemplate: function (item) {
         return item.string;
       },
       noMatchTemplate: 'Fant ingen',
-      lookup: function(item) {
-        return item.fullname + ' (' + item.id + ')';
+      lookup: function (item) {
+        return item.full_name + ' (' + item.id + ')';
       },
-      fillAttr: 'fullname',
+      fillAttr: 'full_name',
       values: (text, callback) => this.debouncedGetUsers(text, u => callback(u)),
       requireLeadingSpace: true,
       allowSpaces: true,
@@ -161,10 +168,10 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
       trigger: '[',
       iframe: null,
       selectClass: 'highlight',
-      selectTemplate: function(item) {
+      selectTemplate: function (item) {
         return '<a href="javascript:void(0);" class="macrolink" data-url="/content/view/' + item.original.space_key + '/' + item.original.slug + '">' + item.original.title + '</a>';
       },
-      menuItemTemplate: function(item) {
+      menuItemTemplate: function (item) {
         if (!item.original.parent) {
           return '<i class="fa fa-sitemap fa-fw"></i>&nbsp;' + item.string;
         } else {
@@ -172,7 +179,7 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
         }
       },
       noMatchTemplate: 'Fant ingen',
-      lookup: function(item) {
+      lookup: function (item) {
         return item.title;
       },
       fillAttr: 'title',
@@ -183,16 +190,18 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
       positionMenu: true,
     };
 
+    // Only fallskjerm for now
+    // @TODO see how to limit to one activity or get searches from all activities (eg forkJoin?) or '#F' '#M' etc?
     const ors = {
-      trigger: '#',
+      trigger: '#', 
       iframe: null,
       selectClass: 'highlight',
-      selectTemplate: function(item) {
+      selectTemplate: function (item) {
         return '<macro href="#" data-url="/ors/fallskjerm/report/' + item.original.id + '" contenteditable="false" class="badge badge-danger macrolink pointer" id="' + item.original.id + '"> \
-        #' + item.original.id + ' ' + item.original.title + '</macro>';
+        #' + item.original.id + ' ' + item.original.title + ' (fallskjerm)</macro>';
       },
-      menuItemTemplate: function(item) {
-        return item.string;
+      menuItemTemplate: function (item) {
+        return item.string + ' (fallskjerm)';
       },
       noMatchTemplate: 'Fant ingen',
       lookup: 'search',
@@ -256,7 +265,10 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
   }
 
   public getOrs(text, callback) {
-    console.log('searcing for ORS, text', text);
+
+    this.orsService.setActivity('fallskjerm');
+    
+    console.log('searcing for OBSREG, text', text);
 
     let ids = text.replace(/\D+/g, '') // Non digits
       .split(' ')
@@ -307,14 +319,14 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
             const items = data._items.map((item) => {
               return { id: item.id, title: item['tags'].join(' '), search: '#' + item.id + ' ' + item['tags'].join(' ') };
             });
-            console.log('ORS Items', items);
+            console.log('OBSREG Items', items);
             callback(items);
           } else {
             callback([]);
           }
         },
         err => callback([]),
-        () => console.log('ORS items done:')
+        () => console.log('OBSREG items done:')
       );
     } else {
       console.log('Nothing is long enough!');
@@ -340,7 +352,7 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
       };
 
       // this.apiCache.get(['ors-last', options.query], this.orsService.getObservations(options), 1 * 60 * 1000).subscribe(
-      this.nlfUsers.search(text).subscribe(
+      this.personsService.search(text).subscribe(
         data => {
           callback(data._items);
           console.log('Result', data._items);

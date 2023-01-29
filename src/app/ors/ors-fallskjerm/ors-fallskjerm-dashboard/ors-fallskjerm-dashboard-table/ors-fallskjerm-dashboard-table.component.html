@@ -1,6 +1,6 @@
 <span *ngIf="!!dataReady">
 
-  <ngx-table class="table table-flush" id="ors_dashboard_table" [configuration]="tableConf" [data]="data" [columns]="columns" [(pagination)]="pagination" [filtersTemplate]="filtersTemplate" (event)="eventEmitted($event)">
+  <ngx-table class="table table-flush" [id]="'ors-dashboard-table'" [configuration]="tableConf" [data]="data" [columns]="columns" [(pagination)]="pagination" [filtersTemplate]="filtersTemplate" (event)="eventEmitted($event)">
 
     <!-- ROWS -->
     <ng-template let-row>
@@ -136,7 +136,7 @@
 </ng-template>
 
 
-<!-- ASK MODAL --->
+<!-- WORKFLOW MODAL --->
 <ng-template #workflowModal>
 
   <div class="modal-header">

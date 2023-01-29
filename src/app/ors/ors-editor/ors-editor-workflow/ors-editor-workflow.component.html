@@ -21,7 +21,7 @@
 <div class="modal-body">
 
   <!--
-  <nlf-resolve-lungo-organization [organization_id]="observation.club" show_type="false" link="true" long="false"></nlf-resolve-lungo-organization>
+  <nlf-resolve-lungo-organization [organization_id]="observation.club" show_activity="false" link="true" long="false"></nlf-resolve-lungo-organization>
   {{ workflow.title }}
   <nlf-resolve-observation-state [state]="observation.workflow.state" [activity]="observation._model.type" icon="true"></nlf-resolve-observation-state>
   -->
@@ -35,7 +35,7 @@
         <strong>Ikke</strong> behandle rapporten i klubb
       </label>
       <ngb-alert *ngIf="payload.do_not_process_in_club" type="info" (close)="close()">
-        <fa name="info" [fixed]="true"></fa> Denne observasjonen vil ikke kunne bli behandlet i klubb, kun av OBSREG koordinator. Klubbnavnet vil også bli anonymisert når denne observasjonen er ferdig behandlet.
+        <fa name="info" [fixed]="true"></fa> Denne observasjonen vil ikke kunne bli behandlet i klubb, kun av OBSREG-koordinator. Klubbnavnet vil også bli anonymisert når denne observasjonen er ferdig behandlet.
       </ngb-alert>
     </div>
 
@@ -57,17 +57,27 @@
     </div>
 
 
-    <div class="form-group">
-      <label for="comment">Kommentarer til arbeidsflyten</label>
+    <div class="form-group" [hidden]="!showCommentInput">
+      <label for="comment">Kommentarer til arbeidsflyten (benyttes for kommentarer til behandlingen, ikke for vurdering av hendelsen)</label>
       <nlf-help key="ors-editor-workflow"></nlf-help>
-      <textarea [disabled]="!observation.acl_user.x" [ngClass]="{'disabled': processing}" placeholder="Kommentarer" [(ngModel)]="payload.comment" name="payload_comment" class="form-control" rows="3" id="comment"></textarea>
+      <textarea [disabled]="!observation.acl_user.x" [ngClass]="{'disabled': processing}" placeholder="Kommentarer (blir ikke synlig i den endelige rapporten - benytt feltet for vurderinger for vurderinger som skal være offentlig)" [(ngModel)]="payload.comment" name="payload_comment" class="form-control" rows="5" id="comment"></textarea>
     </div>
+
+    <button type="button" class="btn btn-outline-dark mr-auto mb-2 d-none d-sm-block" *ngIf="!showCommentInput" (click)="showCommentInput=true">
+      <fa name="comment" [fixed]="true"></fa>Kommentar til arbeidsflyten
+    </button>
 
     <nlf-ors-report-workflow-timeline [activity]="observation._model.type" [_id]="observation._id" [workflow]="observation.workflow"></nlf-ors-report-workflow-timeline>
 
     <div *ngIf="graph">
       <img class="img img-fluid" [src]="domSanitizer.bypassSecurityTrustUrl(graph)">
     </div>
+    <button type="button" class="btn btn-outline-dark mr-auto d-none d-sm-block" *ngIf="!graph" (click)="getGraph()">
+      <fa name="random" [fixed]="true"></fa>Vis skjema
+    </button>
+    <button type="button" class="btn btn-outline-dark mr-auto d-none d-sm-block" *ngIf="!!graph" (click)="graph=undefined">
+      <fa name="random" [fixed]="true"></fa>Skjul skjema
+    </button>
 
     <span *ngIf="!!processing" class="text-center">
       <fa name="spinner" [size]="5" [fixed]="true"></fa>
@@ -84,15 +94,22 @@
 <!--FOOTER-->
 <div class="modal-footer">
 
-  <button type="button" class="btn btn-outline-dark mr-auto d-none d-sm-block" *ngIf="!graph" (click)="getGraph()">
-    <fa name="random" [fixed]="true"></fa>Vis skjema
-  </button>
+
   <span *ngIf="!!dataReady">
-    <button *ngFor="let a of workflow.actions" type="button" [disabled]="!a.permission" class="btn mx-1" [ngClass]="{
+    <button *ngFor="let a of workflow.actions" type="button" [disabled]="!a.permission" class="btn mx-1" [title]="a.title"
+    [ngClass]="{
       'btn-danger':a.resource=='reject'||a.resource=='withdraw',
-    'btn-success':a.resource=='approve'||a.resource=='reopen'||a.resource=='ors',
-    'btn-info': a.resource=='ftl'||a.resource=='flytjenesten'||a.resource=='dto'||a.resource=='skole'||a.resource=='teknisk',
-    'disabled':processing}" (click)="workflowChange(a.resource, a.action)">{{ a.action }}
+      'btn-success':a.resource=='approve'||a.resource=='reopen'||a.resource=='ors'||a.resource=='obsreg',
+      'btn-info': a.resource=='ftl'||a.resource=='flytjenesten'||a.resource=='flytjenesteadm'||a.resource=='dto'||a.resource=='skole'||a.resource=='teknisk'||a.resource=='tku'||a.resource=='oou'||a.resource=='operativ',
+      'disabled':processing
+    }"
+      (click)="workflowChange(a.resource, a.action)">
+      <fa *ngIf="a.resource=='reject'" name="reply"></fa>
+      <fa *ngIf="a.resource=='approve'" name="send"></fa>
+      <fa *ngIf="a.resource=='withdraw'" name="reply"></fa>
+      <fa *ngIf="a.resource=='reopen'" name="repeat"></fa>
+      <fa *ngIf="['reject', 'approve', 'withdraw', 'reopen'].indexOf(a.resource)==-1" name="send-o"></fa>
+      &nbsp;{{ a.action }}
     </button>
   </span>
   <button [ngClass]="{'disabled': processing}" class="btn btn-outline-dark" (click)="activeModal.dismiss()">Avbryt</button>

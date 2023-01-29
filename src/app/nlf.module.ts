@@ -1,6 +1,13 @@
-import { NgModule } from '@angular/core';
+/**
+ * NLF MODULE
+ * 
+ *  
+ */
+import { environment } from 'environments/environment';
+const ENV = environment; // Make Global
 
-/** TRACKJS
+
+/** // TRACKJS
 import { TrackJS } from 'trackjs';
 if (location.host.indexOf('127.0.0.1') !== 0) {
   TrackJS.install({
@@ -14,6 +21,11 @@ import { ErrorHandler } from '@angular/core';
 import { TrackJsErrorHandler } from 'app/track-js.handler';
 **/
 
+import { PendingChangesGuard } from './pending-changes.guard';
+
+// ANGULAR
+import { NgModule } from '@angular/core';
+import { Router } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -21,19 +33,15 @@ import { Title } from '@angular/platform-browser';
 
 // APP CUSTOM
 import { NlfSharedModule } from 'app/nlf-shared.module';
-// import { NlfAircraftsSharedModule } from 'app/aircrafts/aircrafts-shared.module';
-
-
+// ROUTING
 import { NlfRoutingModule } from './nlf-routing.module';
 // CONFIG
 import { NlfConfigModule } from 'app/nlf-config.module';
-// LOCAL STORAGE
 
 
 // THIRD PARTY
 // import { NgProgressRouterModule } from '@ngx-progressbar/router';
 import { TableModule } from 'ngx-easy-table';
-// import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
 import { AgmCoreModule } from '@agm/core';
 import { HotkeyModule } from 'angular2-hotkeys';
@@ -41,32 +49,20 @@ import { HotkeyModule } from 'angular2-hotkeys';
 import { NgxUploaderModule } from 'ngx-uploader';
 // Charting
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-// Gridster instead!
-import { GridsterModule } from 'angular-gridster2';
 // Jodit editor
 import { JoditAngularModule } from 'jodit-angular';
-
 // Upload to canvas
 import { ImageCropperModule } from 'ngx-image-cropper';
-
 // DIFF
 import { DiffMatchPatchModule } from 'ng-diff-match-patch';
-
 // TIME
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { MomentModule } from 'angular2-moment'; // optional, provides moment-style pipes for date formatting
 
 
-
-// FOR REMOVAL ////////////////////////////////////
-// Tables
-// import { GenericTableModule } from '@angular-generic-table/core';
-// import { RTModule } from 'right-angled';
-// import { Ng2WeatherIconsModule } from 'ng2-weather-icons'; // Broken - make fa => wi!!
-
 // API
-import { NlfConfigService } from 'app/nlf-config.service';
-import { ApiConfigService } from 'app/api/api-config.service';
+import { NlfConfigService } from 'app/nlf-config.service';
+import { ApiConfigService } from 'app/api/api-config.service';
 import { ApiHeartbeatService } from 'app/api/api-heartbeat.service';
 import { ApiNlfUserService } from 'app/api/api-nlf-user.service';
 import { ApiNlfClubsService } from 'app/api/api-nlf-clubs.service';
@@ -76,7 +72,6 @@ import { ApiAclRolesService } from 'app/api/api-acl-roles.service';
 import { ApiAclGroupsService } from 'app/api/api-acl-groups.service';
 import { ApiUserService } from 'app/api/api-user.service';
 import { ApiUserAuthService } from 'app/api/api-user-auth.service';
-
 import { ApiFilesService } from 'app/api/api-files.service';
 import { ApiTagsService } from 'app/api/api-tags.service';
 import { ApiClubsService } from 'app/api/api-clubs.service';
@@ -84,26 +79,23 @@ import { ApiHelpService } from 'app/api/api-help.service';
 import { ApiContentService } from 'app/api/api-content.service';
 import { ApiAirspacesService } from 'app/api/api-airspaces.service';
 import { ApiAircraftsService } from 'app/api/api-aircrafts.service';
-
-// notifications
-import { ApiNotificationsService } from 'app/api/api-notifications.service';
-// resources
+// API NOTIFICATIONS
+import { ApiNotificationsService } from 'app/api/api-notifications.service';
+// API GEO
 import { ApiGeoAdminService } from 'app/api/api-geo-admin.service';
-import { ApiLocationsService } from 'app/api/api-locations.service';
-
-// ORS API
+import { ApiLocationsService } from 'app/api/api-locations.service';
+// API OBSREG API
 import { ApiObservationsService } from 'app/api/api-observations.service';
 import { ApiObservationsWorkflowService } from 'app/api/api-observations-workflow.service';
-// ORS E5X
-import {  ApiE5xService } from 'app/api/api-e5x.service';
-
-// Api Cache service
+// API OBSREG E5X
+import { ApiE5xService } from 'app/api/api-e5x.service';
+// API Cache service
 import { ApiCacheService } from 'app/api/api-cache.service';
-
 // API AGGREGATION
 import { ApiObservationsAggService } from 'app/api/api-observations-agg.service';
 
-
+// Joyride give UI tours
+import { JoyrideModule } from 'ngx-joyride';
 
 // CUSTOM APPS
 import { NlfConfluenceComponent } from 'app/confluence/confluence.component';
@@ -126,28 +118,28 @@ import { NlfUiFooterComponent } from 'app/ui/footer/footer.component';
 import { NlfUiDummyComponent } from 'app/ui/dummy/dummy.component';
 
 
-// APP root component
+// NLF APP root component
 import { NlfComponent } from 'app/nlf.component';
 
 // Tag
 import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-// ORS
+// OBSREG
 import { NlfOrsComponent } from 'app/ors/ors.component';
 import { NlfOrsErrorComponent } from 'app/ors/ors-error/ors-error.component';
 
-// ORS first
+// OBSREG first
 import { NlfOrsEditorFirstComponent } from 'app/ors/ors-editor/ors-editor-first/ors-editor-first.component';
 
-// ORS BRIEF
+// OBSREG BRIEF
 import { NlfOrsTodoTableComponent } from 'app/ors/ors-brief/ors-todo-table/ors-todo-table.component';
 import { NlfOrsSelfTableComponent } from 'app/ors/ors-brief/ors-self-table/ors-self-table.component';
 import { NlfOrsAllTableComponent } from 'app/ors/ors-brief/ors-all-table/ors-all-table.component';
 import { NlfOrsLastComponent } from 'app/ors/ors-brief/ors-last/ors-last.component';
 
 
-// ORS Resolvers
+// OBSREG Resolvers
 import { NlfResolveObservationFlagsComponent } from 'app/services/resolve/resolve-observation-flags/resolve-observation-flags.component';
 import { NlfResolveObservationTypesComponent } from 'app/services/resolve/resolve-observation-types/resolve-observation-types.component';
 import { NlfResolveObservationComponent } from 'app/services/resolve/resolve-observation/resolve-observation.component';
@@ -156,7 +148,7 @@ import { NlfResolveObservationComponentAttributesComponent } from 'app/services/
 import { NlfResolveObservationTagsComponent } from 'app/services/resolve/resolve-observation-tags/resolve-observation-tags.component';
 import { NlfResolveObservationRatingComponent } from 'app/services/resolve/resolve-observation-rating/resolve-observation-rating.component';
 
-// ORS PIPES
+// OBSREG PIPES
 import { NlfOrsTagsPipe } from 'app/pipes/ors-tags.pipe';
 import { NlfOrsComponentAttributesPipe } from 'app/pipes/ors-component-attributes.pipe';
 import { NlfOrsRatingPipe } from 'app/pipes/ors-rating.pipe';
@@ -165,13 +157,16 @@ import { NlfDynamicColorPipe } from 'app/pipes/dynamic-color.pipe';
 import { NlfActivityPipe } from 'app/pipes/activity.pipe';
 
 
-// ORS CREATE
-import { NlfOrsFallskjermCreateComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-create/ors-fallskjerm-create.component'; // https://github.com/elliotforbes/ng-diff-match-patch/issues/24
-import { NlfOrsMotorCreateComponent } from 'app/ors/ors-motor/ors-motor-create/ors-motor-create.component'; // https://github.com/elliotforbes/ng-diff-match-patch/issues/24
+// OBSREG CREATE 
+import { NlfOrsFallskjermCreateComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-create/ors-fallskjerm-create.component';
+import { NlfOrsMotorCreateComponent } from 'app/ors/ors-motor/ors-motor-create/ors-motor-create.component';
+import { NlfOrsSeilflyCreateComponent } from 'app/ors/ors-seilfly/ors-seilfly-create/ors-seilfly-create.component';
+import { NlfOrsSportsflyCreateComponent } from 'app/ors/ors-sportsfly/ors-sportsfly-create/ors-sportsfly-create.component';
+// Modal
 import { NlfOrsCreateModalComponent } from 'app/ors/ors-create-modal/ors-create-modal.component';
 
 
-// ORS EDITOR
+// OBSREG EDITOR
 import { NlfOrsEditorRouteComponent } from 'app/ors/ors-editor/ors-editor-route/ors-editor-route.component';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import { NlfOrsEditorInvolvedService } from 'app/ors/ors-editor/ors-editor-involved.service';
@@ -193,19 +188,18 @@ import { NlfOrsEditorDebugComponent } from 'app/ors/ors-editor/ors-editor-debug/
 import { NlfOrsEditorMetComponent } from 'app/ors/ors-editor/ors-editor-met/ors-editor-met.component';
 import { NlfOrsEditorWeatherComponent } from 'app/ors/ors-editor/ors-editor-weather/ors-editor-weather.component';
 
-import { NlfOrsEditorOperationalComponent } from 'app/ors/ors-editor/ors-editor-operational/ors-editor-operational.component';
-import { NlfOrsEditorCategoriesComponent } from 'app/ors/ors-editor/ors-editor-categories/ors-editor-categories.component';
+import { NlfOrsEditorOperationalComponent } from 'app/ors/ors-editor/ors-editor-operational/ors-editor-operational.component';
+import { NlfOrsEditorCategoriesComponent } from 'app/ors/ors-editor/ors-editor-categories/ors-editor-categories.component';
 
-import { NlfOrsActivitiesComponent } from 'app/ors/ors-activities/ors-activities.component';
+// OBSREG ACTIVITIES
+import { NlfOrsActivitiesComponent } from 'app/ors/ors-activities/ors-activities.component';
 import { NlfOrsActivitiesTimelineComponent } from 'app/ors/ors-activities/ors-activities-timeline/ors-activities-timeline.component';
 
 
 // USERS ACL
 import { NlfOrsEditorUsersComponent } from 'app/ors/ors-editor/ors-editor-users/ors-editor-users.component';
 
-
-
-// ORS REPORT VIEW
+// OBSREG REPORT VIEW
 import { NlfOrsReportWorkflowTimelineComponent } from 'app/ors/ors-report/report-workflow-timeline/report-workflow-timeline.component';
 import { NlfOrsReportAskComponent } from 'app/ors/ors-report/report-ask/report-ask.component';
 import { NlfOrsReportAskTextComponent } from 'app/ors/ors-report/report-ask-text/report-ask-text.component';
@@ -215,17 +209,8 @@ import { NlfOrsReportWeatherComponent } from 'app/ors/ors-report/report-weather/
 import { NlfOrsReportFilesComponent } from 'app/ors/ors-report/report-files/report-files.component';
 import { NlfOrsReportComponentsTimelineComponent } from 'app/ors/ors-report/report-components-timeline/report-components-timeline.component';
 import { NlfOrsReportFilesThumbnailsComponent } from 'app/ors/ors-report/report-files-thumbnails/report-files-thumbnails.component';
-// FALLSKJERM REPORT
-import { NlfOrsFallskjermReportInvolvedComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-report/report-involved/report-involved.component';
-import { NlfOrsFallskjermReportOrganizationComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-report/report-organization/report-organization.component';
-import { NlfOrsFallskjermReportSummaryComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-report/report-summary/report-summary.component';
-// MOTORFLY REPORT
-import {  NlfOrsMotorflyReportSummaryComponent } from 'app/ors/ors-motor/ors-motor-report/report-summary/report-summary.component';
-// ORS STATISTICS & DASHBOARDS
-import { NlfOrsStatsHeatmapComponent } from 'app/ors/ors-stats/ors-stats-heatmap/ors-stats-heatmap.component';
-import { NlfOrsStatsComponent } from 'app/ors/ors-stats/ors-stats.component';
 
-// ORS FALLSKJERM
+// OBSREG FALLSKJERM
 import { NlfOrsFallskjermEditorComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-editor/ors-fallskjerm-editor.component';
 import { NlfOrsFallskjermComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm.component';
 import { NlfOrsFallskjermMainComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-main/ors-fallskjerm-main.component';
@@ -235,15 +220,92 @@ import { NlfOrsFallskjermEditorLocationComponent } from 'app/ors/ors-fallskjerm/
 import { NlfOrsFallskjermEditorOrganizationComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-editor/ors-fallskjerm-editor-organization/ors-fallskjerm-editor-organization.component';
 import { NlfOrsFallskjermEditorInvolvedComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-editor/ors-fallskjerm-editor-involved/ors-fallskjerm-editor-involved.component';
 import { NlfOrsFallskjermSearchComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-search/ors-fallskjerm-search.component';
-import { NlfOrsFallskjermDashboardComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-dashboard/ors-fallskjerm-dashboard.component';
+import { NlfOrsFallskjermDashboardComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-dashboard/ors-fallskjerm-dashboard.component';
 import { NlfOrsFallskjermDashboardTableComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-dashboard/ors-fallskjerm-dashboard-table/ors-fallskjerm-dashboard-table.component';
 
+// FALLSKJERM REPORT
+import { NlfOrsFallskjermReportInvolvedComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-report/report-involved/report-involved.component';
+import { NlfOrsFallskjermReportOrganizationComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-report/report-organization/report-organization.component';
+import { NlfOrsFallskjermReportSummaryComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-report/report-summary/report-summary.component';
 
-// ORS MOTOR
+// OBSREG MOTOR
 import { NlfOrsMotorComponent } from 'app/ors/ors-motor/ors-motor.component';
 import { NlfOrsMotorEditorComponent } from 'app/ors/ors-motor/ors-motor-editor/ors-motor-editor.component';
 import { NlfOrsMotorReportComponent } from 'app/ors/ors-motor/ors-motor-report/ors-motor-report.component';
-import {  NlfOrsMotorSearchComponent } from 'app/ors/ors-motor/ors-motor-search/ors-motor-search.component';
+import { NlfOrsMotorSearchComponent } from 'app/ors/ors-motor/ors-motor-search/ors-motor-search.component';
+import { NlfOrsMotorflyReportSummaryComponent } from 'app/ors/ors-motor/ors-motor-report/report-summary/report-summary.component';
+
+// OBSREG STATISTICS & DASHBOARDS
+import { NlfOrsStatsHeatmapComponent } from 'app/ors/ors-stats/ors-stats-heatmap/ors-stats-heatmap.component';
+import { NlfOrsStatsComponent } from 'app/ors/ors-stats/ors-stats.component';
+
+// OBSREG SEILFLY
+import { NlfOrsSeilflyComponent } from 'app/ors/ors-seilfly/ors-seilfly.component';
+import { NlfOrsSeilflyEditorComponent } from 'app/ors/ors-seilfly/ors-seilfly-editor/ors-seilfly-editor.component';
+import { NlfOrsSeilflyReportComponent } from 'app/ors/ors-seilfly/ors-seilfly-report/ors-seilfly-report.component';
+import { NlfOrsSeilflySearchComponent } from 'app/ors/ors-seilfly/ors-seilfly-search/ors-seilfly-search.component';
+import { NlfOrsSeilflyReportSummaryComponent } from 'app/ors/ors-seilfly/ors-seilfly-report/report-summary/report-summary.component';
+
+
+// OBSREG SPORTSFLY
+import { NlfOrsSportsflyComponent } from 'app/ors/ors-sportsfly/ors-sportsfly.component';
+import { NlfOrsSportsflyEditorComponent } from 'app/ors/ors-sportsfly/ors-sportsfly-editor/ors-sportsfly-editor.component';
+import { NlfOrsSportsflyReportComponent } from 'app/ors/ors-sportsfly/ors-sportsfly-report/ors-sportsfly-report.component';
+import { NlfOrsSportsflySearchComponent } from 'app/ors/ors-sportsfly/ors-sportsfly-search/ors-sportsfly-search.component';
+import { NlfOrsSportsflyReportSummaryComponent } from 'app/ors/ors-sportsfly/ors-sportsfly-report/report-summary/report-summary.component';
+
+
+// OBSREG EDITOR
+import { NlfOrsEditorTagComponent } from 'app/ors/ors-editor/ors-editor-tag/ors-editor-tag.component';
+import { NlfOrsEditorTagStringComponent } from 'app/ors/ors-editor/ors-editor-tag-string/ors-editor-tag-string.component';
+import { NlfOrsEditorTagPersonComponent } from 'app/ors/ors-editor/ors-editor-tag-person/ors-editor-tag-person.component';
+import { NlfOrsEditorTagPersonsComponent } from 'app/ors/ors-editor/ors-editor-tag-persons/ors-editor-tag-persons.component';
+
+// Aircraft ATTRIBUTES
+import { NlfOrsEditorE5XAcWildlifeComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-ac-wildlife/ors-editor-e5x-ac-wildlife.component';
+import { NlfOrsEditorE5XAcInjuriesComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-ac-injuries/ors-editor-e5x-ac-injuries.component';
+import { NlfOrsEditorE5XAcWeatherComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-ac-weather/ors-editor-e5x-ac-weather.component';
+import { NlfOrsEditorE5XAcFlightComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-ac-flight/ors-editor-e5x-ac-flight.component';
+
+// OCCURRENCE ATTRIBUTES
+import { NlfOrsEditorE5XOccurrenceComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-occurrence/ors-editor-e5x-occurrence.component'
+import { NlfOrsEditorE5XClassificationComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-classification/ors-editor-e5x-classification.component';
+import { NlfOrsEditorE5XWeatherComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-weather/ors-editor-e5x-weather.component';
+import { NlfOrsEditorE5XInjuriesComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-injuries/ors-editor-e5x-injuries.component';
+import { NlfOrsEditorE5XDamageComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-damage/ors-editor-e5x-damage.component';
+import { NlfOrsEditorE5XWhereComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-where/ors-editor-e5x-where.component';
+// OCCURRENCE ENTITIES
+import { NlfOrsEditorE5xEntitiesComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-entities.component';
+import { NlfOrsEditorE5XRunwayComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-runway/ors-editor-e5x-runway.component';
+import { NlfOrsEditorE5XAerodromeComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-aerodrome/ors-editor-e5x-aerodrome.component';
+import { NlfOrsEditorE5XAerodromeSingleComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-aerodrome-single/ors-editor-e5x-aerodrome-single.component';
+import { NlfOrsEditorE5xWxphenomenaComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-wxphenomena/ors-editor-e5x-wxphenomena.component';
+import { NlfOrsEditorE5XAtmComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-atm/ors-editor-e5x-atm.component';
+import { NlfOrsEditorE5xAirspaceComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-airspace/ors-editor-e5x-airspace.component';
+import { NlfOrsEditorE5xAirspaceSingleComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-airspace-single/ors-editor-e5x-airspace-single.component';
+import { NlfOrsEditorE5XAircraftComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-aircraft/ors-editor-e5x-aircraft.component';
+import { NlfOrsEditorE5XPartinformationComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-aircraft/ors-editor-e5x-aircraft-partinformation/ors-editor-e5x-aircraft-partinformation.component';
+import { NlfOrsEditorE5XEventsComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-events/ors-editor-e5x-events.component';
+import { NlfOrsEditorE5XNarrativeComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-narrative/ors-editor-e5x-narrative.component';
+import { NlfOrsEditorE5xReportinghistoryComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-reportinghistory/ors-editor-e5x-reportinghistory.component';
+import { NlfOrsEditorE5xReportinghistoryReportersDescriptionComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-reportinghistory-reporters-description/ors-editor-e5x-reportinghistory-reporters-description.component';
+import { NlfOrsEditorE5xAssessmentComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-assessment/ors-editor-e5x-assessment.component';
+import { NlfOrsEditorE5xRiskComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-risk/ors-editor-e5x-risk.component';
+import { NlfOrsEditorE5xSeparationComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-separation/ors-editor-e5x-separation.component';
+
+// OBSREG EDITOR MOTORFLY ONLY
+import { NlfOrsEditorFlightComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-aircraft/ors-editor-flight/ors-editor-flight.component';
+import { NlfOrsEditorPeopleMotorflyComponent } from 'app/ors/ors-editor/ors-editor-people-motorfly/ors-editor-people-motorfly.component';
+import { NlfOrsEditorAircraftPersonComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-aircraft/ors-editor-aircraft-person/ors-editor-aircraft-person.component';
+
+// E5X services
+import { ApiE5XAttributesService } from 'app/api/api-e5x-attributes.service';
+import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
+
+// Aircrafts edit -> lazyloaded
+// import { NlfAircraftsAddComponent } from 'app/aircrafts/aircrafts-add/aircrafts-add.component';
+// import { NlfAircraftsEditComponent } from 'app/aircrafts/aircrafts-edit/aircrafts-edit.component';
+
 
 
 // LUNGO Services
@@ -264,7 +326,7 @@ import { NlfUserOrsComponent } from 'app/user/user-ors/user-ors.component';
 import { NlfUserComponent } from 'app/user/user.component';
 import { NlfUserTableComponent } from 'app/user/user-table/user-table.component';
 
-// AUTH
+// AUTH INTERCEPTOR
 import { NlfAuthInterceptor } from 'app/services/auth/auth.interceptor';
 
 // USER AUTH
@@ -281,9 +343,10 @@ import { NlfUserAclComponent } from 'app/user/user-acl/user-acl.component';
 // MET
 import { NlfMetMetarComponent } from 'app/met/met-metar/met-metar.component';
 
+// Medlemssjekk
+import { NlfMemberComponent } from 'app/member/member.component';
+import { NlfCompetenceTableComponent } from 'app/member/competence-table/competence-table.component';
 
-// import { MentionModule } from 'angular-mentions/mention'; // @TODO: Remove
-// https://github.com/KostyaTretyak/ng-contenteditable instead?
 
 // CONTENT EDITABLE
 import { ContenteditableDirective } from 'app/services/contenteditable/contenteditable.directive';
@@ -295,6 +358,7 @@ import { ConfirmService, ConfirmState, ConfirmModalComponent, ConfirmTemplateDir
 import { NlfAlertService } from 'app/services/alert/alert.service';
 import { NlfErrorComponent } from 'app/error/error.component';
 
+// @TODO 
 // videogular
 // import { VgCoreModule } from 'videogular2/core';
 // import { VgControlsModule } from 'videogular2/controls';
@@ -305,69 +369,6 @@ import { NlfErrorComponent } from 'app/error/error.component';
 
 // GEO
 import { GeoLocationService } from 'app/services/geo/geo-location.service';
-// Dashboard
-// import { NgDashboardModule } from 'ngx-dashboard';
-// Dashboard widgets
-// import { NlfDashboardComponent } from 'app/dashboard/dashboard.component';
-// import { WidgetOrsPieComponent } from 'app/dashboard/widget-ors-pie/widget-ors-pie.component';
-
-//////  TEST T  E S T TEST
-
-//import { TestComponent } from 'app/test/test.component';
-
-import { NlfOrsEditorTagComponent } from 'app/ors/ors-editor/ors-editor-tag/ors-editor-tag.component';
-import { NlfOrsEditorTagStringComponent } from 'app/ors/ors-editor/ors-editor-tag-string/ors-editor-tag-string.component';
-import { NlfOrsEditorTagPersonComponent } from 'app/ors/ors-editor/ors-editor-tag-person/ors-editor-tag-person.component';
-import { NlfOrsEditorTagPersonsComponent } from 'app/ors/ors-editor/ors-editor-tag-persons/ors-editor-tag-persons.component';
-
-
-// Aircraft ATTRIBUTES
-import { NlfOrsEditorE5XAcWildlifeComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-ac-wildlife/ors-editor-e5x-ac-wildlife.component';
-import { NlfOrsEditorE5XAcInjuriesComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-ac-injuries/ors-editor-e5x-ac-injuries.component';
-import { NlfOrsEditorE5XAcWeatherComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-ac-weather/ors-editor-e5x-ac-weather.component';
-import { NlfOrsEditorE5XAcFlightComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-ac-flight/ors-editor-e5x-ac-flight.component';
-
-// OCCURRENCE ATTRIBUTES
-import {  NlfOrsEditorE5XOccurrenceComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-occurrence/ors-editor-e5x-occurrence.component'
-import { NlfOrsEditorE5XClassificationComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-classification/ors-editor-e5x-classification.component';
-import { NlfOrsEditorE5XWeatherComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-weather/ors-editor-e5x-weather.component';
-import { NlfOrsEditorE5XInjuriesComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-injuries/ors-editor-e5x-injuries.component';
-import { NlfOrsEditorE5XDamageComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-damage/ors-editor-e5x-damage.component';
-import { NlfOrsEditorE5XWhereComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-where/ors-editor-e5x-where.component';
-// OCCURRENCE ENTITIES
-import {  NlfOrsEditorE5xEntitiesComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-entities.component';
-import { NlfOrsEditorE5XRunwayComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-runway/ors-editor-e5x-runway.component';
-import { NlfOrsEditorE5XAerodromeComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-aerodrome/ors-editor-e5x-aerodrome.component';
-import {  NlfOrsEditorE5XAerodromeSingleComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-aerodrome-single/ors-editor-e5x-aerodrome-single.component';
-import {  NlfOrsEditorE5xWxphenomenaComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-wxphenomena/ors-editor-e5x-wxphenomena.component';
-import { NlfOrsEditorE5XAtmComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-atm/ors-editor-e5x-atm.component';
-import {  NlfOrsEditorE5xAirspaceComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-airspace/ors-editor-e5x-airspace.component';
-import { NlfOrsEditorE5xAirspaceSingleComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-airspace-single/ors-editor-e5x-airspace-single.component';
-import { NlfOrsEditorE5XAircraftComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-aircraft/ors-editor-e5x-aircraft.component';
-import {  NlfOrsEditorE5XPartinformationComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-aircraft/ors-editor-e5x-aircraft-partinformation/ors-editor-e5x-aircraft-partinformation.component';
-import { NlfOrsEditorE5XEventsComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-events/ors-editor-e5x-events.component';
-
-
-// dangerous goods here
-import {  NlfOrsEditorE5XNarrativeComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-narrative/ors-editor-e5x-narrative.component';
-import { NlfOrsEditorE5xReportinghistoryComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-reportinghistory/ors-editor-e5x-reportinghistory.component';
-import { NlfOrsEditorE5xReportinghistoryReportersDescriptionComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-reportinghistory-reporters-description/ors-editor-e5x-reportinghistory-reporters-description.component';
-import { NlfOrsEditorE5xAssessmentComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-assessment/ors-editor-e5x-assessment.component';
-import { NlfOrsEditorE5xRiskComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-risk/ors-editor-e5x-risk.component';
-import { NlfOrsEditorE5xSeparationComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-separation/ors-editor-e5x-separation.component';
-
-// ORS EDITOR MOTORFLY ONLY
-import { NlfOrsEditorFlightComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-aircraft/ors-editor-flight/ors-editor-flight.component';
-import { NlfOrsEditorPeopleMotorflyComponent } from 'app/ors/ors-editor/ors-editor-people-motorfly/ors-editor-people-motorfly.component';
-import { NlfOrsEditorAircraftPersonComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-aircraft/ors-editor-aircraft-person/ors-editor-aircraft-person.component';
-
-// E5X services
-import { ApiE5XAttributesService } from 'app/api/api-e5x-attributes.service';
-import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
-
-// Aircrafts edit
-// import { NlfAircraftsAddComponent } from 'app/aircrafts/aircrafts-add/aircrafts-add.component';
-// import { NlfAircraftsEditComponent } from 'app/aircrafts/aircrafts-edit/aircrafts-edit.component';
 
 @NgModule({
   declarations: [
@@ -400,15 +401,40 @@ import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
     NlfUserAclComponent,
 
     NlfOrsComponent,
+    NlfOrsFallskjermCreateComponent,
+    NlfOrsMotorCreateComponent,
+    NlfOrsSeilflyCreateComponent,
+    NlfOrsSportsflyCreateComponent,
+    NlfOrsCreateModalComponent,
+
     NlfOrsEditorFirstComponent,
     NlfOrsErrorComponent,
     NlfOrsFallskjermComponent,
     NlfOrsFallskjermSearchComponent,
     NlfOrsFallskjermDashboardComponent,
     NlfOrsFallskjermDashboardTableComponent,
+    NlfOrsFallskjermReportSummaryComponent,
+
+    NlfOrsEditorPeopleMotorflyComponent,
+
     NlfOrsMotorComponent,
     NlfOrsMotorReportComponent,
     NlfOrsMotorSearchComponent,
+    NlfOrsMotorflyReportSummaryComponent,
+    NlfOrsMotorEditorComponent,
+
+    NlfOrsSeilflyComponent,
+    NlfOrsSeilflyReportComponent,
+    NlfOrsSeilflySearchComponent,
+    NlfOrsSeilflyReportSummaryComponent,
+    NlfOrsSeilflyEditorComponent,
+
+    NlfOrsSportsflyComponent,
+    NlfOrsSportsflyReportComponent,
+    NlfOrsSportsflySearchComponent,
+    NlfOrsSportsflyReportSummaryComponent,
+    NlfOrsSportsflyEditorComponent,
+
     NlfOrsTodoTableComponent,
     NlfOrsSelfTableComponent,
     NlfOrsAllTableComponent,
@@ -417,8 +443,8 @@ import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
     NlfOrsFallskjermMainComponent,
     NlfOrsFallskjermReportComponent,
     NlfOrsReportWorkflowTimelineComponent,
-    NlfOrsFallskjermReportSummaryComponent,
-    NlfOrsMotorflyReportSummaryComponent,
+
+
     NlfOrsStatsHeatmapComponent,
     NlfOrsStatsComponent,
     NlfResolveObservationFlagsComponent,
@@ -446,9 +472,7 @@ import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
     NlfActivityPipe,
     ConfirmTemplateDirective,
     NlfOrsReportFilesThumbnailsComponent,
-    NlfOrsFallskjermCreateComponent,
-    NlfOrsMotorCreateComponent,
-    NlfOrsCreateModalComponent,
+
     NlfOrsEditorTitleComponent,
     NlfOrsEditorTypeComponent,
     NlfOrsEditorWhenComponent,
@@ -463,13 +487,13 @@ import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
     NlfOrsEditorOperationalComponent,
     NlfOrsEditorCategoriesComponent,
 
-    // ORS activities
+    // OBSREG activities
     NlfOrsActivitiesComponent,
     NlfOrsActivitiesTimelineComponent,
     // USER ACLS
     NlfOrsEditorUsersComponent,
 
-    NlfOrsEditorPeopleMotorflyComponent,
+
     // modals
     NlfOrsEditorHelpComponent,
     NlfOrsEditorAboutComponent,
@@ -478,17 +502,17 @@ import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
     NlfOrsFallskjermEditorOrganizationComponent,
     NlfOrsFallskjermEditorInvolvedComponent,
     NlfOrsEditorWorkflowComponent,
-    NlfOrsMotorEditorComponent,
     NlfOrsFallskjermEditorComponent,
     NlfOrsEditorComponentsComponent,
 
     NlfOrsEditorRouteComponent,
 
+    // WX
     NlfOrsEditorMetComponent,
     NlfOrsEditorWeatherComponent,
 
+    // Aircraft
     NlfOrsEditorAircraftPersonComponent,
-
     // Aircraft attributes
     NlfOrsEditorE5XAcWildlifeComponent,
     NlfOrsEditorE5XAcInjuriesComponent,
@@ -520,25 +544,23 @@ import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
     NlfOrsEditorE5xReportinghistoryComponent,
     NlfOrsEditorE5xRiskComponent,
 
-
-    //NlfOrsE5xComponent,
-    //NlfOrsEditorTagE5XComponent,
-
-    NlfErrorComponent,
-    ContenteditableDirective,
-    // NlfDashboardComponent,
-    // WidgetOrsPieComponent,
-    ConfirmModalComponent,
-    //TestComponent,
+    // OBSREG TAG
     NlfOrsEditorTagComponent,
     NlfOrsEditorTagStringComponent,
     NlfOrsEditorTagPersonComponent,
     NlfOrsEditorTagPersonsComponent,
 
-    NlfMetMetarComponent, // metar
-    // Aircrafts
-    //NlfAircraftsEditComponent,
-    //NlfAircraftsAddComponent,
+    // COMMON
+    NlfErrorComponent,
+    ContenteditableDirective,
+    ConfirmModalComponent,
+    
+    // METAR
+    NlfMetMetarComponent, 
+
+    // MEMBERSHIPS
+    NlfMemberComponent,
+    NlfCompetenceTableComponent,
   ],
   entryComponents: [
     // WidgetOrsPieComponent,
@@ -576,6 +598,7 @@ import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
     BrowserAnimationsModule,
     NgxUploaderModule,
     HotkeyModule.forRoot(),
+    JoyrideModule.forRoot(),
     AgmCoreModule.forRoot({ // Google maps
       apiKey: 'AIzaSyCt7ni1T6AtGNlx-45DVirffvav8l7hlMw',
       libraries: ['visualization']
@@ -586,12 +609,11 @@ import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
     //  VgControlsModule,
     //  VgOverlayPlayModule,
     //  VgBufferingModule,
-    // NgDashboardModule, // Dashboards ngx-dashboard
-    // GridsterModule, // Gridster
     JoditAngularModule, // Jodit editor
 
   ],
   providers: [
+    PendingChangesGuard,
     NlfConfigService,
     ApiConfigService,
     ApiHeartbeatService,
@@ -657,4 +679,9 @@ import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
   ],
   bootstrap: [NlfComponent]
 })
-export class NlfModule { }
+export class NlfModule {
+
+  constructor(router: Router) {
+  }
+
+}

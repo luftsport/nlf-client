@@ -1,4 +1,6 @@
-<div class="row">
+<ng-container *ngIf="!!observation">
+
+  <div class="row">
   <div class="col-xs-12 col-md-12">
     <div *ngIf="!!observation.weather.auto?.metar_nearest?.parsed" [innerHTML]="observation.weather.auto?.metar_nearest?.parsed | newlines">
     </div>
@@ -17,6 +19,7 @@
   </div>
 -->
 </div>
+</ng-container>
 
 <ng-template #autoModal>
 

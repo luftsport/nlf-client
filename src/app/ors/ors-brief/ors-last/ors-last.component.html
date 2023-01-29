@@ -1,15 +1,20 @@
-<div *ngIf="!!dataReady">
+<div *ngIf="!!dataReady && !error">
   <div [id]="activity" class="list-group list-group-flush">
     <a [routerLink]="['/ors', o._model.type, 'report', o.id]" *ngFor="let o of data"
     class="small list-group-item list-group-item-action d-flex justify-content-between align-items-center">
       <span>#{{ o.id }} {{ o.tags | nlfOrsTags:'/' }}</span>
       <fa *ngIf="o.files?.length > 0" name="paperclip" [fixed]="true"></fa>
-      <span class="badge badge-{{o.rating | nlfOrsRatingCalc | nlfDynamicColor}} badge-pill">{{ o.rating | nlfOrsRatingCalc }}</span>
+      <span ngbTooltip="{{ o.rating.actual }} av {{ o.rating.potential }}" container="body" class="badge badge-{{o.rating | nlfOrsRatingCalc | nlfDynamicColor}} badge-pill">{{ o.rating | nlfOrsRatingCalc }}</span>
     </a>
   </div>
 </div>
-<div *ngIf="!dataReady">
+<div *ngIf="!dataReady && !error">
   <p class="align-middle text-center text-secondary">
     <nlf-ui-component-spinner></nlf-ui-component-spinner>
+  </p>
+</div>
+<div *ngIf="!!dataReady && !!error">
+  <p class="align-middle text-center text-secondary">
+    Ingen
   </p>
 </div>

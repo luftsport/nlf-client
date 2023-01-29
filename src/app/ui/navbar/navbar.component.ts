@@ -8,12 +8,10 @@ import { NlfOrsCreateModalComponent } from 'app/ors/ors-create-modal/ors-create-
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router, NavigationStart } from '@angular/router';
 import { environment } from 'environments/environment';
-import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import { NlfConfigService } from 'app/nlf-config.service';
 import { forkJoin } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
-import { avatar_tmp_image } from 'app/interfaces/functions';
-
+import { avatar_tmp_image, hashString } from 'app/interfaces/functions';
 // import { Observable } from "rxjs";
 
 
@@ -31,9 +29,8 @@ export class NlfUiNavbarComponent implements OnInit {
   ENV = environment;
   public user_data: ApiUserDataSubjectItem;
   public config: NlfConfigItem;
-  current_ors: { id: number, type: string };
   public avatar: string;
-  public avatar_missing =  avatar_tmp_image;
+  public avatar_missing = avatar_tmp_image;
   public dataReady = false;
 
   constructor(
@@ -41,7 +38,6 @@ export class NlfUiNavbarComponent implements OnInit {
     public authService: NlfAuthService,
     private modalService: NgbModal,
     private router: Router,
-    private orsSubject: NlfOrsEditorService,
     private userSubject: NlfUserSubjectService,
     private userAvatarSubject: NlfUserAvatarSubjectService,
     private configSubject: NlfConfigService,
@@ -68,8 +64,10 @@ export class NlfUiNavbarComponent implements OnInit {
             this.user_data = data;
           }
         }
-      )
-    ]);
+      ),
+      this.dataReady = true
+    ]
+    );
 
 
     router.events
@@ -85,18 +83,19 @@ export class NlfUiNavbarComponent implements OnInit {
     this.modalRef = this.modalService.open(NlfOrsCreateModalComponent, { size: 'lg' });
   }
 
+  public userHash(person_id) {
+    return hashString(String(person_id));
+  }
+
+  public getUserObsreg() {
+    try {
+      return this.config.inv_mapping[this.user_data.settings.default_activity];
+    } catch { }
+
+    return "ors"; // @TODO "obsreg"
+  }
+
   ngOnInit() {
-
-    this.orsSubject.observableObservation.subscribe(
-      data => {
-        if (!!data.id && !!data._model.type) {
-          this.current_ors = { id: data.id, type: data._model.type };
-        }
-      },
-      err => console.log(err),
-      () => console.log('Done subject update')
-
-    );
 
   }
 

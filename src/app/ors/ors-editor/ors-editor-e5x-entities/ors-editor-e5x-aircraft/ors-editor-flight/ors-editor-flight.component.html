@@ -276,7 +276,7 @@
           <div class="col-md-2">
             <div class="form-group">
               <label>Ytterligere info</label>
-              <nlf-ors-editor-e5x-airspace-single (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(airspace)]="aircraft.airspace"></nlf-ors-editor-e5x-airspace-single>
+              <nlf-ors-editor-e5x-atm (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(atm)]="observation.occurrence.entities.airNavigationService[0]"></nlf-ors-editor-e5x-atm>
             </div>
           </div>
 

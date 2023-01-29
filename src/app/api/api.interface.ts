@@ -52,6 +52,7 @@ export interface ApiUserAuthItem {
   success: boolean;
   token: string;
   token64: string;
+  id_token?: string;
   message?: string;
   valid?: any;
   activities?: string[];
@@ -60,6 +61,7 @@ export interface ApiUserAuthItem {
 
 export interface AuthDataSubjectInterface {
   token: string;
+  id_token?: string;
   person_id: number;
   valid: Date;
 }
@@ -162,7 +164,6 @@ export interface ApiUserDefaultSettingsItem {
 }
 export interface ApiUserSettingsItem extends ApiUserDefaultSettingsItem {
   ors?: any; // ors: {has_reported?: boolean, cache?: {}, last_edited: [{activity:, id:}] }
-
 }
 
 export interface ApiUserDataSubjectItem {
@@ -313,6 +314,7 @@ export interface ApiObservationsItem extends ApiEveBaseItem {
 
 }
 
+
 export interface ApiObservationsFallskjermItem extends ApiObservationsItem {
   // Fallskjerm
   organization?: ApiObservationFallskjermOrganizationInterface;
@@ -332,6 +334,32 @@ export interface ApiObservationsMotorflyItem extends ApiObservationsItem {
 export interface ApiObservationsMotorflyList extends ApiEveBaseList {
   _items: ApiObservationsMotorflyItem[];
 }
+
+export interface ApiObservationsSeilflyItem extends ApiObservationsItem {
+  // SEILFLY
+  aircrafts?: ApiObservationAircraftsItem[];
+  organization?: ApiObservationMotorflyOrganizationInterface;
+  // E5X
+  e5x?: any;
+  occurrence?: any;
+}
+export interface ApiObservationsSeilflyList extends ApiEveBaseList {
+  _items: ApiObservationsSeilflyItem[];
+}
+
+export interface ApiObservationsSportsflyItem extends ApiObservationsItem {
+  // SEILFLY
+  aircrafts?: ApiObservationAircraftsItem[];
+  organization?: ApiObservationSportsflyOrganizationInterface;
+  // E5X
+  e5x?: any;
+  occurrence?: any;
+}
+export interface ApiObservationsSportsflyList extends ApiEveBaseList {
+  _items: ApiObservationsSportsflyItem[];
+}
+
+
 
 export interface ApiObservationsList extends ApiEveBaseList {
   _items: ApiObservationsItem[];
@@ -417,6 +445,16 @@ export interface ApiObservationFallskjermOrganizationInterface {
 
 export interface ApiObservationMotorflyOrganizationInterface {
   dto?: ApiPersonInterface[];
+  ors?: ApiPersonInterface[];
+}
+
+export interface ApiObservationSeilflyOrganizationInterface {
+  dto?: ApiPersonInterface[];
+  ors?: ApiPersonInterface[];
+}
+
+export interface ApiObservationSportsflyOrganizationInterface {
+  ftu?: ApiPersonInterface[];
   ors?: ApiPersonInterface[];
 }
 
@@ -759,6 +797,7 @@ import {
   E5XSeparationAircraft,
   E5XVehicle
 } from 'app/interfaces/e5x.interface';
+import { NlfAipAirspaceComponent } from 'app/aip/aip-airspace/aip-airspace.component';
 
 // Choices
 export interface ApiE5XChoicesItem extends ApiEveBaseItem {
@@ -999,6 +1038,13 @@ export interface NlfConfigOrgItem {
 
 }
 
+export interface NlfAppsContentConfig {
+  top_story?: string; // use unique key
+}
+
+export interface NlfApps {
+  content?: NlfAppsContentConfig;
+}
 export interface NlfConfigItem {
   environment?: string;
   apiEndpoint?: string;
@@ -1011,11 +1057,12 @@ export interface NlfConfigItem {
   luftsport?: NlfConfigOrgItem;
   fallskjerm?: NlfConfigOrgItem;
   motorfly?: NlfConfigOrgItem;
-  mikrofly?: NlfConfigOrgItem;
+  sportsfly?: NlfConfigOrgItem;
   seilfly?: NlfConfigOrgItem;
   ballong?: NlfConfigOrgItem;
   hps?: NlfConfigOrgItem;
   modellfly?: NlfConfigOrgItem;
+  apps?: NlfApps;
 }
 
 export interface NlfConfigRating {

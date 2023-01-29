@@ -129,7 +129,7 @@ export const NLF_DI_CONFIG: NlfConfig = {
     id: 109,
     org_id: 90972,
     observation: {
-      app_name: 'ORS',
+      app_name: 'OBSREG',
       e5x: {
         enabled: false
       },

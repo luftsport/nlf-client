@@ -2,12 +2,12 @@
     <div class="col-md-12 col-sm-12">
       <div class="jumbotron bg-light">
         <h1 class="display-4">ERROR {{ error?.status }}</h1>
-        <p class="lead">{{ error?.statusText }}: ORS #{{ id }}</p>
+        <p class="lead">{{ error?.statusText }}: OBSREG #{{ id }}</p>
         <hr class="my-4">
         <p>{{ error?.error?._error?.message }}</p>
         <div class="row">
           <div class="col-md-6 col-sm-12">
-            <a class="btn btn-primary btn-lg btn-block" [routerLink]="['/ors', activity]" role="button">ORS</a>
+            <a class="btn btn-primary btn-lg btn-block" [routerLink]="['/ors', activity]" role="button">OBSREG</a>
           </div>
           <div class="col-md-6 col-sm-12">
             <a class="btn btn-primary btn-lg btn-block" [routerLink]="['/home']" role="button">Home</a>

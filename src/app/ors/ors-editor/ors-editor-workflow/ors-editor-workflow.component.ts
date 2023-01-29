@@ -20,6 +20,7 @@ export class NlfOrsEditorWorkflowComponent implements OnInit {
   workflow;
   dataReady = false;
   graph;
+  showCommentInput = false;
 
   constructor(
     private subject: NlfOrsEditorService,
@@ -34,6 +35,10 @@ export class NlfOrsEditorWorkflowComponent implements OnInit {
 
     this.subject.observableObservation.subscribe(observation => {
       this.observation = observation;
+
+      if (this.observation.workflow.state === 'pending_review_ors') {
+        this.showCommentInput = true;
+      }
 
       if(this.observation._model.type==='motorfly' && this.observation._model.version>=3) {
         if(this.observation.workflow.state === 'draft') {
@@ -67,7 +72,7 @@ export class NlfOrsEditorWorkflowComponent implements OnInit {
         console.log(resp);
         // this.subject.update(this.observation);
         this.activeModal.close();
-        this.alertService.success(text + ' for ORS #' + this.observation.id + ' gjennomført', true, true, 10);
+        this.alertService.success(text + ' for OBSREG #' + this.observation.id + ' gjennomført', true, true, 10);
         this.router.navigate(['/ors', this.observation._model.type, 'report', this.observation.id]);
 
       },

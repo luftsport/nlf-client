@@ -80,7 +80,7 @@
     </td>
     -->
     <td>
-      <nlf-ors-editor-aircraft-person [disabled]="!observation.acl_user.w" (change)="updateObservation()" [callsign]="aircraft.aircraft.callsign" [(crew)]="observation.aircrafts[idx].crew"></nlf-ors-editor-aircraft-person>
+      <nlf-ors-editor-aircraft-person [disabled]="!observation.acl_user.w" (change)="updateObservation()" [callsign]="aircraft.aircraft.callsign" [(crew)]="observation.aircrafts[idx].crew" [activity]="observation._model.type"></nlf-ors-editor-aircraft-person>
     </td>
     <!--
     <td>

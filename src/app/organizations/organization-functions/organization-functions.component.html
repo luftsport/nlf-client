@@ -1,7 +1,7 @@
 <div *ngIf="dataReady" class="overflow-auto">
 
 
-  <ngx-table [configuration]="tableConf" [data]="functions" [columns]="columns">
+  <ngx-table [id]="'organizations-functions-table'" [configuration]="tableConf" [data]="functions" [columns]="columns">
 
     <ng-template let-row let-index="index">
       <td>

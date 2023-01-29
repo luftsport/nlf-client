@@ -10,6 +10,7 @@ import { NlfConfigService } from 'app/nlf-config.service';
 import { Router } from '@angular/router'; // ActivatedRoute
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
 import { ApiUserDataSubjectItem, AuthDataSubjectInterface, NlfConfigItem } from 'app/api/api.interface';
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class NlfAuthService {
@@ -18,7 +19,7 @@ export class NlfAuthService {
   private authData: AuthDataSubjectInterface;
   private message: string;
 
-
+  ENV = environment;
   // ng2-idle
   idleState: string;
   timedOut = false;
@@ -26,6 +27,8 @@ export class NlfAuthService {
   idleTimeout = 60 * 30; // seconds
   logoutTimeout = 60 * 3; // Seconds before logging out after idleTimeout times out
   loading = false;
+
+  id_token: string;
 
   firstLogin = false;
   userData: ApiUserDataSubjectItem;
@@ -51,7 +54,17 @@ export class NlfAuthService {
     );
 
     this.authSubject.observableAuthData.subscribe(
-      data => this.authData = data,
+      data => {
+        console.log('AUTH DATA', data);
+        this.authData = data;
+        try {
+          this.id_token = data.id_token;
+        } catch (e) {
+          this.id_token = null;
+        }
+        
+        
+      },
       err => this.authData = null
     );
 
@@ -62,8 +75,7 @@ export class NlfAuthService {
   }
 
 
-  public login(username: string, password: string, returnUrl?: string): void {
-
+  public login(username: string, password: string, id_token?: string, returnUrl?: string): void {
     this.alertService.clear();
     this.loading = true;
     /**
@@ -77,7 +89,7 @@ export class NlfAuthService {
     }
     **/
 
-    this.userAuthService.authenticate(username, password).subscribe(
+    this.userAuthService.authenticate(username, password, id_token).subscribe(
       data => {
         console.log('Auth', data);
         if (!!data.success && data.success === true) {
@@ -86,7 +98,11 @@ export class NlfAuthService {
 
           localStorage.setItem('auth-id', data.username);
           localStorage.setItem('auth-token', data.token64);
-          localStorage.setItem('auth-valid', data.valid['$date'])
+          localStorage.setItem('auth-valid', data.valid['$date']);
+
+          this.id_token = data.id_token;
+          localStorage.setItem('auth-id-token', data.id_token);
+
 
           this.userData = {
             acl: data.acl,
@@ -107,6 +123,7 @@ export class NlfAuthService {
           this.authSubject.updateAuthData({
             person_id: +data.username,
             token: data.token64,
+            id_token: data.id_token,
             valid: new Date(data.valid['$date'])
           });
 
@@ -209,9 +226,11 @@ export class NlfAuthService {
 
     // if(!returnUrl) { returnUrl = 'home';}
 
+    // Keep copy before nuking
+    const id_token = this.id_token;
+    
     // Remove stored on user, let this handle everything
-
-
+    let initial_auth = this.isAuth;
     // Cleanup api cache
     this.apiCache.clear();
 
@@ -234,6 +253,12 @@ export class NlfAuthService {
     }
     **/
 
+    // Only when actually logged out
+    if (initial_auth && !this.isAuth) {
+      let gg = this.ENV._logout_service + '?client_id=' + this.ENV._client_id + '&id_token_hint=' + id_token + '&redirect_uri=' + window.location.href;
+      console.log('LOGOUT URL:', gg);
+      (window as any).open(gg, '_self');
+    }
   }
 
   public idleStop() {
@@ -250,4 +275,6 @@ export class NlfAuthService {
       this.timedOut = false;
     }
   }
+
+
 }

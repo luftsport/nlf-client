@@ -21,26 +21,35 @@ export class NlfOrsEditorWhenComponent implements OnInit {
   maxDate: { year: number, month: number, day: number };
 
   constructor(private observationSubject: NlfOrsEditorService) {
-    this.observationSubject.observableObservation.subscribe(observation => this.observation = observation);
+    this.observationSubject.observableObservation.subscribe(
+      observation => {
+        this.observation = observation;
+
+        try {
+          if (!(this.observation.when instanceof Date)) {
+            this.observation.when = new Date(this.observation.when);
+          }
+          const now: Date = new Date(this.observation._created);
+          this.maxDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
+
+          //LOCAL TZ
+          if (this.tz === 'local') {
+            this.date = { year: this.observation.when.getFullYear(), month: this.observation.when.getMonth() + 1, day: this.observation.when.getDate() };
+            this.time = { hour: this.observation.when.getHours(), minute: this.observation.when.getMinutes() };
+          } else {
+            // UTC TZ
+            this.date = { year: this.observation.when.getUTCFullYear(), month: this.observation.when.getUTCMonth() + 1, day: this.observation.when.getUTCDate() };
+            this.time = { hour: this.observation.when.getUTCHours(), minute: this.observation.when.getUTCMinutes() };
+          }
+
+        } catch (e) { }
+
+      }
+    );
   }
 
   ngOnInit() {
 
-    if (!(this.observation.when instanceof Date)) {
-      this.observation.when = new Date(this.observation.when);
-    }
-    const now: Date = new Date(this.observation._created);
-    this.maxDate = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
-
-    //LOCAL TZ
-    if (this.tz === 'local') {
-      this.date = { year: this.observation.when.getFullYear(), month: this.observation.when.getMonth()+1, day: this.observation.when.getDate() };
-      this.time = { hour: this.observation.when.getHours(), minute: this.observation.when.getMinutes() };
-    } else {
-      // UTC TZ
-      this.date = { year: this.observation.when.getUTCFullYear(), month: this.observation.when.getUTCMonth()+1, day: this.observation.when.getUTCDate() };
-      this.time = { hour: this.observation.when.getUTCHours(), minute: this.observation.when.getUTCMinutes() };
-    }
 
   }
 

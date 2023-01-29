@@ -3,7 +3,6 @@ import { ApiCacheService } from 'app/api/api-cache.service';
 import { ApiUserService } from 'app/api/api-user.service';
 import { ApiOptionsInterface } from 'app/api/api.interface'
 import { avatar_tmp_image } from 'app/interfaces/functions';
-
 @Component({
   selector: 'nlf-resolve-avatar',
   templateUrl: './resolve-avatar.component.html',
@@ -18,6 +17,8 @@ export class NlfResolveAvatarComponent implements OnInit {
   error = false;
   dataReady = false;
   avatar_tmp_image: string;
+  avatar_tmp_color: string;
+  // avatar_tmp_name: string;
 
   constructor(
     private userService: ApiUserService,
@@ -44,9 +45,11 @@ export class NlfResolveAvatarComponent implements OnInit {
             //  this.user.avatar = this.user.avatar; //'data:'+this.user.avatar.content_type +';base64,'+this.user.avatar.file;
             //  }
             this.dataReady = true;
+
           },
           err => {
             this.error = true;
+
           },
           () => { }
         );
@@ -54,5 +57,7 @@ export class NlfResolveAvatarComponent implements OnInit {
       this.error = true;
     }
   }
+
+
 
 }

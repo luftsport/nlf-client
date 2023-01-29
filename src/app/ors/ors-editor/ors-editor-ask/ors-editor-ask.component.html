@@ -1,39 +1,42 @@
-<div class="btn-group" role="group">
-  <span *ngFor="let key of (config[observation._model.type].observation.ask | keys)">
-    <button [disabled]="!observation.acl_user.w" type="button" [ngClass]="{'btn border':true, 'btn-danger': isNegative(key),
+<ng-container *ngIf="!!observation">
+  <div class="btn-group" role="group">
+    <span *ngFor="let key of (config[observation._model.type].observation.ask | keys)">
+      <button [disabled]="!observation.acl_user.w" type="button" [ngClass]="{'btn border':true, 'btn-danger': isNegative(key),
                   'btn-secondary': isNeutral(key),
-                  'btn-success': isPositive(key)}" (click)="flip(key)">{{ config[observation._model.type].observation.ask[key]['label'] }}
-    </button>
-  </span>
-</div>
-<div class="clearfix"></div>
-<!--<nlf-help key="ors-editor-ask"></nlf-help>-->
-<div *ngIf="verbose">
-  <br />
-  <ul class="list-unstyled">
-    <li>
-      <span *ngIf="isPositive('knowledge')">
-        <strong class="text-success">Gode</strong> kunnskaper hadde innvirkning</span>
-      <span *ngIf="isNeutral('knowledge')">Kunnskapen til de involverte hadde
-        <strong>ingen</strong> innvirkning</span>
-      <span *ngIf="isNegative('knowledge')">
-        <strong class="text-danger">Mangelfulle</strong> kunnskaper hadde betydning</span>
-    </li>
-    <li>
-      <span *ngIf="isPositive('skills')">
-        <strong class="text-success">Gode</strong> ferdigheter hadde innvirkning</span>
-      <span *ngIf="isNeutral('skills')">Ferdighetene til de involverte hadde
-        <strong>ingen</strong> innvirkning</span>
-      <span *ngIf="isNegative('skills')">
-        <strong class="text-danger">Mangelfulle</strong> ferdigheter hadde betydning</span>
-    </li>
-    <li>
-      <span *ngIf="isPositive('attitude')">
-        <strong class="text-success">Gode</strong> holdninger hadde innvirkning</span>
-      <span *ngIf="isNeutral('attitude')">Holdningene til de involverte hadde
-        <strong>ingen</strong> innvirkning</span>
-      <span *ngIf="isNegative('attitude')">
-        <strong class="text-danger">Dårlige</strong> holdninger hadde betydning</span>
-    </li>
-  </ul>
-</div>
+                  'btn-success': isPositive(key)}" (click)="flip(key)">{{
+        config[observation._model.type].observation.ask[key]['label'] }}
+      </button>
+    </span>
+  </div>
+  <div class="clearfix"></div>
+  <!--<nlf-help key="ors-editor-ask"></nlf-help>-->
+  <div *ngIf="verbose">
+    <br />
+    <ul class="list-unstyled">
+      <li>
+        <span *ngIf="isPositive('knowledge')">
+          <strong class="text-success">Gode</strong> kunnskaper hadde innvirkning</span>
+        <span *ngIf="isNeutral('knowledge')">Kunnskapen til de involverte hadde
+          <strong>ingen</strong> innvirkning</span>
+        <span *ngIf="isNegative('knowledge')">
+          <strong class="text-danger">Mangelfulle</strong> kunnskaper hadde betydning</span>
+      </li>
+      <li>
+        <span *ngIf="isPositive('skills')">
+          <strong class="text-success">Gode</strong> ferdigheter hadde innvirkning</span>
+        <span *ngIf="isNeutral('skills')">Ferdighetene til de involverte hadde
+          <strong>ingen</strong> innvirkning</span>
+        <span *ngIf="isNegative('skills')">
+          <strong class="text-danger">Mangelfulle</strong> ferdigheter hadde betydning</span>
+      </li>
+      <li>
+        <span *ngIf="isPositive('attitude')">
+          <strong class="text-success">Gode</strong> holdninger hadde innvirkning</span>
+        <span *ngIf="isNeutral('attitude')">Holdningene til de involverte hadde
+          <strong>ingen</strong> innvirkning</span>
+        <span *ngIf="isNegative('attitude')">
+          <strong class="text-danger">Dårlige</strong> holdninger hadde betydning</span>
+      </li>
+    </ul>
+  </div>
+</ng-container>

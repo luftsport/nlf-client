@@ -3,7 +3,7 @@
 
     <span class="breadcrumb">
       <li class="breadcrumb-item">
-        <a [routerLink]="['/ors', 'fallskjerm']">ORS<span class="hidden-sm-down"> Fallskjerm</span></a>
+        <a [routerLink]="['/ors', 'fallskjerm']">OBSREG<span class="hidden-sm-down"> Fallskjerm</span></a>
         <!--[routerLink]="['/organizations', '376']"-->
       </li>
       <li class="breadcrumb-item">
@@ -12,7 +12,7 @@
         <!--[routerLink]="['/organizations', '376']"-->
       </li>
       <li *ngIf="!!text" class="breadcrumb-item active">
-        {{ text }}
+        {{ text }}
       </li>
     </span>
 
@@ -36,16 +36,19 @@
         <label>Fritekst:</label>
         <input placeholder="Fritekst" class="form-control" type="text" (ngModelChange)="debouncedUpdate()" [(ngModel)]="text">
       </div>
-      <!--
+
       <div class="form-row">
-        <label>Fartøy:</label>
-        <input oninput="this.value=this.value.toUpperCase()" placeholder="Kjennetegn" class="form-control" type="text" (ngModelChange)="debouncedUpdate()" [(ngModel)]="filter['aircrafts.aircraft.callsign']">
+        <label>Id:</label>
+        <input placeholder="Id" class="form-control" type="text" (ngModelChange)="debouncedUpdate()" [(ngModel)]="filter['id']">
       </div>
-    -->
 
 
       <div class="form-row mt-3">
         <button (click)="reset()" class="btn btn-secondary btn-block">Reset filter</button>
+      </div>
+
+      <div *ngIf="!!result?._items" class="mt-3">
+        <button (click)="exportTojson()" class="btn btn-secondary btn-block"><fa name="download"></fa> Last ned</button>
       </div>
     </div>
 

@@ -9,13 +9,14 @@ import { ActivatedRoute, Data } from '@angular/router';
 export class NlfErrorComponent implements OnInit {
 
   error: string;
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute) { }
+
   ngOnInit() {
     this.error = this.route.snapshot.data['error'];
     this.route.data.subscribe(
       (data: Data) => {
         this.error = data['error'];
       }
-     );
+    );
   }
 }

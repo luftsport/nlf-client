@@ -32,18 +32,30 @@
 <div class="container">
 
   <div class="row mt-2 py-3">
-      <div class="col-md-8 col-xs-12 overflow-hidden">
-        <ngx-charts-advanced-pie-chart *ngIf="dataReady" [scheme]="colorScheme" [label]="label" [results]="pie" [gradient]="gradient" (select)="onSelect($event)"></ngx-charts-advanced-pie-chart>
+
+    <!-- PIE CHART OBSREG -->
+    <div class="col-md-8 col-xs-12 overflow-hidden">
+      <ng-container *ngIf="default_activity_obsreg">
+        <ngx-charts-advanced-pie-chart *ngIf="dataReady" [scheme]="colorScheme" [label]="label" [results]="pie"
+          (select)="onSelect($event)"></ngx-charts-advanced-pie-chart>
         <span *ngIf="!dataReady">
           <p class="align-middle text-center text-secondary">
             <fa name="spinner" animation="pulse" size="3x"></fa>
           </p>
         </span>
-      </div>
+      </ng-container>
+      <ng-container *ngIf="!default_activity_obsreg && !!config && default_activity">
+        <div class="text-center">Ingen OBSREG registrert for {{ config.inv_mapping[default_activity] }}</div>
+      </ng-container>
+    </div>
+    <!-- //PIE CHART OBSREG -->
 
-      <div class="col-md-4 d-none d-sm-block overflow-hidden">
-        <nlf-content-summary key="nlf-platform"></nlf-content-summary>
-      </div>
+    <!-- TOP STORY -->
+    <div class="col-md-4 d-none d-sm-block overflow-hidden">
+      <nlf-content-summary *ngIf="!!config" [key]="config.apps.content.top_story || 'nlf-platform'">
+      </nlf-content-summary>
+    </div>
+    <!-- //TOP STORY -->
 
   </div>
 </div>
@@ -64,6 +76,22 @@
       </p>
     </div>
   </div>
+
+  <div *ngIf="default_activity==237" class="py-5 nlf-bg-light">
+    <div class="container">
+      <p class="m-0 text-center text-white">
+        <nlf-ors-sportsfly-create></nlf-ors-sportsfly-create>
+      </p>
+    </div>
+  </div>
+
+  <div *ngIf="default_activity==111" class="py-5 nlf-bg-light">
+    <div class="container">
+      <p class="m-0 text-center text-white">
+        <nlf-ors-seilfly-create></nlf-ors-seilfly-create>
+      </p>
+    </div>
+  </div>
 </span>
 <!-- TESTS
 <div class="py-5 nlf-bg-purple">
@@ -74,7 +102,7 @@
       <button class="btn" [routerLink]="['/admin']">Admin</button><br />
       <button class="btn" [routerLink]="['/aip']">Aip</button><br />
       Person: <nlf-resolve-lungo-person person_id="301041"></nlf-resolve-lungo-person><br />
-      Org: <nlf-resolve-lungo-organization organization_id="22976" show_type="true"></nlf-resolve-lungo-organization><br />
+      Org: <nlf-resolve-lungo-organization organization_id="22976" show_activity="true"></nlf-resolve-lungo-organization><br />
       Lisens: <nlf-resolve-lungo-license license_id="10299159"></nlf-resolve-lungo-license><br />
       Function: <nlf-resolve-lungo-function function_id="28851410"></nlf-resolve-lungo-function><br />
       Activity: <nlf-resolve-lungo-activity activity_id="109"></nlf-resolve-lungo-activity><br />
@@ -91,7 +119,7 @@
 
   <div class="row">
     <div class="col-sm-8">
-      <h2 class="mt-4">Registrer ORS</h2>
+      <h2 class="mt-4">Registrer OBSREG</h2>
       <p>
         <nlf-ors-create></nlf-ors-create>
 
@@ -179,7 +207,8 @@
     </button>
   </div>
   <div class="modal-body">
-    <ngx-charts-advanced-pie-chart *ngIf="dataReady" [activeEntries]="activeEntries" [scheme]="colorScheme" [label]="label" [results]="pie" [gradient]="gradient" (select)="onSelect($event)"></ngx-charts-advanced-pie-chart>
+    <ngx-charts-advanced-pie-chart *ngIf="dataReady" [activeEntries]="activeEntries" [scheme]="colorScheme"
+      [label]="label" [results]="pie" [gradient]="gradient" (select)="onSelect($event)"></ngx-charts-advanced-pie-chart>
     <nlf-ors-last activity="fallskjerm" number="3"></nlf-ors-last>
     <div class="clearfix"></div>
     <div>
@@ -218,8 +247,8 @@
             <a class="btn btn-primary btn-block" [routerLink]="['/user/profile']" role="button">Oppdater profil &raquo;</a>
           </div>
         </div>-->
-        <!-- END USER OR ORS -->
-        <div class="card mb-4">
+        <!-- END USER OR OBSREG -->
+        <div class="card mb-3">
           <div class="card-header"><i class="nlf nlf-motorfly nlf-fw"></i> Motorfly OBSREG</div>
 
           <nlf-ors-last activity="motorfly" number="8">Ingen registrerte</nlf-ors-last>
@@ -230,17 +259,40 @@
           </div>
         </div>
 
-        <div class="card mb-4">
+        <div class="card mb-3">
           <div class="card-header">
-            <i class="nlf nlf-fallskjerm nlf-fw"></i> Fallskjerm ORS
+            <i class="nlf nlf-fallskjerm nlf-fw"></i> Fallskjerm OBSREG
           </div>
           <nlf-ors-last activity="fallskjerm" number="8">Ingen registrerte</nlf-ors-last>
           <div class="card-footer">
-            <a class="btn btn-secondary btn-block" [routerLink]="['/ors', 'fallskjerm']" role="button">Fallskjerm ORS
+            <a class="btn btn-secondary btn-block" [routerLink]="['/ors', 'fallskjerm']" role="button">Fallskjerm OBSREG
               &raquo;</a>
           </div>
         </div>
 
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="nlf nlf-mikrofly nlf-fw"></i> Sportsfly OBSREG
+          </div>
+          <nlf-ors-last activity="sportsfly" number="8">Ingen registrerte</nlf-ors-last>
+          <div class="card-footer">
+            <a class="btn btn-secondary btn-block" [routerLink]="['/ors', 'sportsfly']" role="button">Sportsfly OBSREG
+              &raquo;</a>
+          </div>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="nlf nlf-seilfly nlf-fw"></i> Seilfly OBSREG
+          </div>
+          <nlf-ors-last activity="seilfly" number="8">Ingen registrerte</nlf-ors-last>
+          <div class="card-footer">
+            <a class="btn btn-secondary btn-block" [routerLink]="['/ors', 'seilfly']" role="button">Seilfly OBSREG
+              &raquo;</a>
+          </div>
+        </div>
+
+        <!--
         <div class="card mb-4">
           <div class="card-header">Været</div>
           <div class="card-body">
@@ -249,17 +301,14 @@
               <nlf-met-metar></nlf-met-metar>
             </p>
           </div>
-          <!--
-            <div class="card-footer">
-              <a class="btn btn-primary btn-block" [routerLink]="['/home']" role="button">METAR &raquo;</a>
-            </div>
-            -->
+
         </div>
 
       </div>
+      -->
 
 
-      <!--
+        <!--
       <div class="card-deck">
         < !-- Content -- >
         <div class="card mb-4">
@@ -280,7 +329,7 @@
         </div>
 
         <div class="card mb-4">
-          <div class="card-header lead">Siste i ORS</div>
+          <div class="card-header lead">Siste i OBSREG</div>
           <nlf-content-last space_key="ors" number="8"></nlf-content-last>
           <div class="card-footer">
             <a class="btn btn-secondary btn-block" [routerLink]="['/content/space/ors']" role="button">Se mer &raquo;</a>
@@ -289,14 +338,17 @@
 
       </div>
     -->
-      <!-- /CARD DECK -->
+        <!-- /CARD DECK -->
 
 
+
+      </div>
 
     </div>
-
   </div>
 </div>
+
+
 
 
 <div class="py-5 bg-dark">
@@ -304,13 +356,13 @@
     <p class="m-0 text-center text-white">
 
       <!--<i class="nlf nlf-fw nlf-2x nlf-logo-original"></i>-->
-      <i class="nlf nlf-fw nlf-5x nlf-fallskjerm"></i>
-      <i class="nlf nlf-fw nlf-5x nlf-seilfly"></i>
-      <i class="nlf nlf-fw nlf-5x nlf-motorfly"></i>
-      <i class="nlf nlf-fw nlf-5x nlf-ballong"></i>
-      <i class="nlf nlf-fw nlf-5x nlf-mikrofly"></i>
-      <i class="nlf nlf-fw nlf-5x nlf-modellfly"></i>
-      <i class="nlf nlf-fw nlf-5x nlf-hgpg"></i>
+      <i class="nlf nlf-fw nlf-5x nlf-fallskjerm" title="Fallskjerm"></i>
+      <i class="nlf nlf-fw nlf-5x nlf-seilfly" title="Seilfly"></i>
+      <i class="nlf nlf-fw nlf-5x nlf-motorfly" title="Motorfly"></i>
+      <i class="nlf nlf-fw nlf-5x nlf-ballong" title="Ballong"></i>
+      <i class="nlf nlf-fw nlf-5x nlf-mikrofly" title="Sportsfly"></i>
+      <i class="nlf nlf-fw nlf-5x nlf-modellfly" title="Modellfly"></i>
+      <i class="nlf nlf-fw nlf-5x nlf-hgpg" title="Hps"></i>
     </p>
 
   </div>

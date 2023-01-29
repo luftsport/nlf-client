@@ -26,10 +26,13 @@ export class NlfOrsFallskjermEditorLocationComponent implements OnInit, AfterVie
 
     this.subject.observableObservation.subscribe(
       observation => {
-        this.observation = observation
-
-        if (!!this.observation.location.nickname && !this.selected) {
+        // always assign
+        this.observation = observation;
+        
+        try {
           this.selected = this.observation.location.nickname;
+        } catch (e) {
+          this.selected = undefined;
         }
 
       }

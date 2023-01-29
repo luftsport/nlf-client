@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router, NavigationStart } from '@angular/router';
 import { ApiObservationsItem, ApiOptionsInterface, ApiNotificationsItem, ApiNotificationsList } from 'app/api/api.interface';
 import { ApiNotificationsService } from 'app/api/api-notifications.service';
 import { ConfirmService } from 'app/services/confirm/confirm.service';
@@ -6,6 +7,7 @@ import { NlfAlertService } from 'app/services/alert/alert.service';
 import { ApiAclService } from 'app/api/api-acl.service';
 import { ApiObservationsService } from 'app/api/api-observations.service';
 import { NlfComponent } from 'app/nlf.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'nlf-ors-activities-timeline',
@@ -29,12 +31,25 @@ export class NlfOrsActivitiesTimelineComponent implements OnInit {
   is_sending_msg = false;
   current_acl_users = [];
 
+  modalRef;
+  modalRecepients = [];
+
   constructor(
     private ntfService: ApiNotificationsService,
     private alertService: NlfAlertService,
     private confirmService: ConfirmService,
-    private aclService: ApiAclService
-  ) { }
+    private aclService: ApiAclService,
+    private modalService: NgbModal,
+    private router: Router
+  ) {
+    router.events
+      .filter(event => event instanceof NavigationStart)
+      .subscribe((event: NavigationStart) => {
+        if (!!this.modalService.hasOpenModals()) {
+          this.modalService.dismissAll();
+        }
+      });
+  }
 
   ngOnInit() {
     this.getActivities();
@@ -48,6 +63,11 @@ export class NlfOrsActivitiesTimelineComponent implements OnInit {
       }
     )
 
+  }
+
+  openReceipentsModal(template, recepients) {
+    this.modalRecepients = recepients;
+    this.modalRef = this.modalService.open(template, { size: 'lg' });
   }
 
   getActivities(hide = true) {

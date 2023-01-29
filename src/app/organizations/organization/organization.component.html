@@ -13,7 +13,7 @@
       <!-- SEKSJON -->
       <li *ngIf="federation_id > 0 && dataReady" class="breadcrumb-item">
         <a [routerLink]="['/organizations', federation_id]">
-          <nlf-resolve-lungo-organization [organization_id]="federation_id" [show_type]="false" link="true"></nlf-resolve-lungo-organization>
+          <nlf-resolve-lungo-organization [organization_id]="federation_id" [show_activity]="false" link="true"></nlf-resolve-lungo-organization>
           <!--<nlf-resolve-lungo-activity *ngIf="!!lungo.main_activity['id']" [activity_id]="lungo.main_activity.id"></nlf-resolve-lungo-activity>-->
         </a>
       </li>
@@ -22,7 +22,7 @@
       <li *ngIf="federation_id==0 && [14, 6, 5, 19].indexOf(lungo.type_id)>-1" class="breadcrumb-item" [ngClass]="{active: lungo.type_id==19}">
 
         <!--<a [routerLink]="['/organizations', ]">-->
-        <nlf-resolve-lungo-organization [organization_id]="getFederation(lungo.main_activity)" [show_type]="false" [link]="lungo.type_id==19 ? false : true"></nlf-resolve-lungo-organization>
+        <nlf-resolve-lungo-organization [organization_id]="getFederation(lungo.main_activity)" [show_activity]="false" [link]="lungo.type_id==19 ? false : true"></nlf-resolve-lungo-organization>
         <!--<nlf-resolve-lungo-activity [activity_id]="lungo.main_activity.id"></nlf-resolve-lungo-activity>
         </a>-->
       </li>
@@ -30,7 +30,7 @@
       <!-- GRUPPE, KLUBB, GREN -->
       <li *ngIf="[14, 6, 5].indexOf(lungo.type_id)>-1" class="breadcrumb-item" [ngClass]="{active: [6, 5].indexOf(lungo.type_id)>-1}">
 
-        <nlf-resolve-lungo-organization [organization_id]="lungo.type_id==14 ? lungo.parent_id : lungo.id" [show_type]="false" [link]="lungo.type_id==14 ? true : false"></nlf-resolve-lungo-organization>
+        <nlf-resolve-lungo-organization [organization_id]="lungo.type_id==14 ? lungo.parent_id : lungo.id" [show_activity]="false" [link]="lungo.type_id==14 ? true : false"></nlf-resolve-lungo-organization>
 
       </li>
 
@@ -50,13 +50,18 @@
         <fa name="home" [fixed]="true"></fa>Hjem
       </a>
 
+            
+      <a *ngIf="lungo.id==376" class="mr-1" [routerLink]="['/organizations']">
+        <fa name="map" [fixed]="true"></fa>Kart
+      </a>
+
       <a class="mr-1" [routerLink]="['/organizations', lungo.id, 'locations']" routerLinkActive="text-muted text-reset">
         <fa name="map-marker" [fixed]="true"></fa>Steder
       </a>
 
-      <!-- ORS DASHBOARD Fallskjerm only! -->
+      <!-- OBSREG DASHBOARD Fallskjerm only! -->
       <a *ngIf="lungo.type_id==14 && lungo.main_activity.id==109" class="mr-1" [routerLink]="['/ors', config.inv_mapping[lungo.main_activity.id], 'dashboard', lungo.id]">
-        <fa name="dashboard" [fixed]="true"></fa>ORS
+        <fa name="dashboard" [fixed]="true"></fa>OBSREG
       </a>
 
       <a class="mr-1" [routerLink]="['/organizations', lungo.id, 'stats']" routerLinkActive="text-muted text-reset">

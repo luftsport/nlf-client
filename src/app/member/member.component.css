@@ -1,0 +1,13 @@
+.member .row:nth-child(even){
+ background-color: lightgrey;
+}
+
+.member .row:hover {
+  border-left: 4px solid  #0275d8 !important;
+  background-color: silver !important;
+}
+
+.member .active {
+  border-left: 4px solid  #5bc0de !important;
+  background-color: silver !important;
+}

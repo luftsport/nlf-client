@@ -27,24 +27,31 @@ export class NlfOrsEditorActionsComponent implements OnInit {
   this.data.currentArr.subscribe(list => this.list = list);
 */
   constructor(private subject: NlfOrsEditorService) {
-    this.subject.observableObservation.subscribe(observation => this.observation = observation);
+    this.subject.observableObservation.subscribe(
+      observation => {
+        this.observation = observation;
+        try {
+          if (typeof this.observation.actions === 'undefined') {
+            this.observation.actions = { local: [], central: [] };
+          }
+
+          if (typeof this.observation.actions.local === 'undefined') {
+            this.observation.actions.local = [];
+          }
+
+          if (typeof this.observation.actions.central === 'undefined') {
+            this.observation.actions.central = [];
+          }
+        } catch (e) { }
+
+        this.dataReady = true;
+      }
+    );
 
   }
 
   ngOnInit() {
-    if (typeof this.observation.actions === 'undefined') {
-      this.observation.actions = { local: [], central: [] };
-    }
 
-    if (typeof this.observation.actions.local === 'undefined') {
-      this.observation.actions.local = [];
-    }
-
-    if (typeof this.observation.actions.central === 'undefined') {
-      this.observation.actions.central = [];
-    }
-
-    this.dataReady = true;
   }
 
   /** Mentions
