@@ -3,11 +3,13 @@
 
     <span class="breadcrumb">
       <li class="breadcrumb-item">
-        <a [routerLink]="['/ors', 'fallskjerm']">OBSREG<span class="hidden-sm-down"> {{ activity | titlecase}}</span></a>
+        <a [routerLink]="['/ors', 'fallskjerm']">OBSREG<span class="hidden-sm-down"> {{ activity |
+            titlecase}}</span></a>
         <!--[routerLink]="['/organizations', '376']"-->
       </li>
       <li *ngIf="isDataReady()" class="breadcrumb-item">
-        <nlf-resolve-lungo-organization [organization_id]="discipline_id" [link]="true"></nlf-resolve-lungo-organization>
+        <nlf-resolve-lungo-organization [organization_id]="discipline_id"
+          [link]="true"></nlf-resolve-lungo-organization>
       </li>
       <li class="breadcrumb-item active">
         Dashboard <sup class="text-danger mx-1" title="Applikasjonen er ikke ferdig utviklet">beta</sup>
@@ -16,12 +18,13 @@
 
     <!--
     <button *ngIf="!!query" class="btn btn-primary btn-sm pull-right mx-1" (click)="openModal(saveTemplate)" title="Funksjonen kommer snart" disabled>
-      <fa-icon icon="save" [fixed]="true"></fa-icon> Lagre søk
+      <fa-icon icon="save"></fa-icon> Lagre søk
     </button>
     -->
     <nlf-help class="pull-right mx-1" key="ors-dashboard-fallskjerm"></nlf-help>
     <span class="pull-right mx-1 col-2">
-      <nlf-org-selector activity="fallskjerm" [(selected)]="discipline_id" (change)="onOrgChange($event)" size="sm"></nlf-org-selector>
+      <nlf-org-selector activity="fallskjerm" [(selected)]="discipline_id" (change)="onOrgChange($event)"
+        size="sm"></nlf-org-selector>
     </span>
 
 
@@ -32,8 +35,45 @@
   <div class="row mt-2">
     viser data fra {{ d1 | date:"yyyy-MM-dd" }} til {{ d2 | date:"yyyy-MM-dd" }}
   </div>
+
   <div class="row mt-2 py-3">
 
+    <!-- opprettede -->
+    <div class="col-md-6 chart-wrapper">
+      <ng-container *ngIf="pieStatesReady">
+        <div class="col-md-3">
+          <div echarts class="w-140 h-100 align-top" [loading]="true" [options]="statesChartOption">
+          </div>
+        </div>
+        <div class="col-md-9">
+
+          <div class="row">
+            <h2 class="mt-4">{{ getStatesTotalValue() | number }}</h2>
+            <h4 class="text-secondary">opprettede</h4>
+          </div>
+
+          <div class="row">
+
+            <div class="col" *ngFor="let item of pieStates">
+              <div class="p-0 m-0">
+                <div style="border-left: 3px solid {{ item.itemStyle.color }} !important">
+                  <h4 class="my-1 mx-1 p-0 mt-o text-dark">{{ item.value | number }}</h4>
+                  <p class="mb-0 mx-1 p-0 text-secondary">{{ item.name }}</p>
+                </div>
+                <p class="h4 mb-0 mx-2 p-0 font-20 mb-0 text-secondary">{{ item.value/getStatesTotalValue() | percent }}
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </ng-container>
+      <span *ngIf="!pieStatesReady">
+        <nlf-ui-component-spinner></nlf-ui-component-spinner>
+      </span>
+    </div>
+    <!--
     <div class="col-md-6 col-xs-12 overflow-hidden">
       <ngx-charts-advanced-pie-chart *ngIf="pieTypesReady" [scheme]="colorScheme" [label]="pieTypesLabel" [results]="pieTypes" [gradient]="gradient">
       </ngx-charts-advanced-pie-chart>
@@ -42,14 +82,53 @@
       </span>
 
     </div>
-    <div class="col-md-6 col-xs-12 overflow-hidden">
-      <ngx-charts-advanced-pie-chart *ngIf="pieStatesReady" [scheme]="colorScheme" [label]="pieStatesLabel" [results]="pieStates" [gradient]="gradient">
+  -->
+
+
+    <!-- behandlede/types -->
+    <div class="col-md-6 chart-wrapper">
+      <ng-container *ngIf="pieTypesReady">
+
+        <div class="col-md-3">
+          <div echarts class="w-140 h-100 align-top" [loading]="true" [options]="typesChartOption">
+          </div>
+        </div>
+        <div class="col-md-9">
+
+          <div class="row">
+            <h2 class="mt-4">{{ getTypesTotalValue() | number }}</h2>
+            <h4 class="text-secondary">behandlede</h4>
+          </div>
+
+          <div class="row">
+
+            <div class="col" *ngFor="let item of pieTypes">
+              <div class="p-0 m-0">
+                <div style="border-left: 3px solid {{ item.itemStyle.color }} !important">
+                  <h4 class="my-1 mx-1 p-0 mt-o text-dark">{{ item.value | number }}</h4>
+                  <p class="mb-0 mx-1 p-0 text-secondary">{{ item.name }}</p>
+                </div>
+                <p class="h4 mb-0 mx-2 p-0 font-20 mb-0 text-secondary">{{ item.value/getTypesTotalValue() | percent }}
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </ng-container>
+      <span *ngIf="!pieTypesReady">
+        <nlf-ui-component-spinner></nlf-ui-component-spinner>
+      </span>
+    </div>
+    <!--
+      <ngx-charts-advanced-pie-chart *ngIf="pieStatesReady" [scheme]="colorScheme" [label]="pieStatesLabel"
+        [results]="pieStates" [gradient]="gradient">
       </ngx-charts-advanced-pie-chart>
       <span *ngIf="!pieStatesReady">
         <nlf-ui-component-spinner></nlf-ui-component-spinner>
       </span>
-
-    </div>
+    -->
   </div>
 
   <!-- Date range selector -->
@@ -60,9 +139,13 @@
         <div class="form-group hidden">
           <div class="input-group">
 
-            <input name="datepicker" class="form-control" ngbDatepicker #datepicker="ngbDatepicker" [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden" [startDate]="fromDate!">
+            <input name="datepicker" class="form-control" ngbDatepicker #datepicker="ngbDatepicker"
+              [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
+              outsideDays="hidden" [startDate]="fromDate!">
             <ng-template #t let-date let-focused="focused">
-              <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)" [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">
+              <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+                [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+                (mouseleave)="hoveredDate = null">
                 {{ date.day }}
               </span>
             </ng-template>
@@ -71,7 +154,8 @@
 
         <div class="form-group">
           <div class="input-group">
-            <input #dpFromDate class="form-control" placeholder="yyyy-mm-dd" name="dpFromDate" [value]="formatter.format(fromDate)" (input)="fromDate">
+            <input #dpFromDate class="form-control" placeholder="yyyy-mm-dd" name="dpFromDate"
+              [value]="formatter.format(fromDate)" (input)="fromDate">
             <div class="input-group-append">
               <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button">
                 <fa-icon icon="calendar"></fa-icon>
@@ -81,7 +165,8 @@
         </div>
         <div class="form-group ml-1">
           <div class="input-group">
-            <input #dpToDate class="form-control" placeholder="yyyy-mm-dd" name="dpToDate" [value]="formatter.format(toDate)" (input)="toDate">
+            <input #dpToDate class="form-control" placeholder="yyyy-mm-dd" name="dpToDate"
+              [value]="formatter.format(toDate)" (input)="toDate">
             <div class="input-group-append">
               <button class="btn btn-outline-secondary" (click)="datepicker.toggle()" type="button">
                 <fa-icon icon="calendar"></fa-icon>
@@ -120,9 +205,11 @@
         <h5>ubehandlede</h5>
       </div>
 
-      <div class="col-md-2 text-center text-white bg-secondary" [ngClass]="{'bg-success': stats.avg_ratings_discipline<stats.avg_ratings, 'bg-danger': stats.avg_ratings_discipline>stats.avg_ratings}">
+      <div class="col-md-2 text-center text-white bg-secondary"
+        [ngClass]="{'bg-success': stats.avg_ratings_discipline<stats.avg_ratings, 'bg-danger': stats.avg_ratings_discipline>stats.avg_ratings}">
         <!--<h2>-</h2>-->
-        <h2>{{ (stats.avg_ratings_discipline | number: '1.0-0') || '-' }}/{{ (stats.avg_ratings | number:'1.0-0') || '-' }}</h2>
+        <h2>{{ (stats.avg_ratings_discipline | number: '1.0-0') || '-' }}/{{ (stats.avg_ratings | number:'1.0-0') || '-'
+          }}</h2>
         <!--<h5>hopp {{ current_year }}</h5>-->
         <h5>rating</h5>
       </div>
@@ -150,7 +237,8 @@
 <div class="container">
   <div class="row my-4">
     <div class="col-md-12 col-xs-12 overflow-auto">
-      <nlf-ors-fallskjerm-dashboard-table *ngIf="isDataReady() && !!discipline_id && dateRangeReady" activity="fallskjerm" [discipline]="discipline_id" [dateRange]="dateRange"></nlf-ors-fallskjerm-dashboard-table>
+      <nlf-ors-fallskjerm-dashboard-table *ngIf="isDataReady() && !!discipline_id && dateRangeReady"
+        activity="fallskjerm" [discipline]="discipline_id" [dateRange]="dateRange"></nlf-ors-fallskjerm-dashboard-table>
     </div>
   </div>
 </div>

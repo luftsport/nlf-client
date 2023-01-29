@@ -4,7 +4,7 @@
 
       <span class="breadcrumb">
         <li class="breadcrumb-item">
-          <fa-icon icon="users" [fixed]="true"></fa-icon> NLF Medlemssjekk
+          <fa-icon icon="users"></fa-icon> NLF Medlemssjekk
         </li>
         <!--
       <li class="breadcrumb-item active">
@@ -15,14 +15,14 @@
 
       <!--
     <button *ngIf="!!query" class="btn btn-primary btn-sm pull-right mx-1" (click)="openModal(saveTemplate)" title="Funksjonen kommer snart" disabled>
-      <fa-icon icon="save" [fixed]="true"></fa-icon> Lagre søk
+      <fa-icon icon="save"></fa-icon> Lagre søk
     </button>
     -->
       <span *ngIf="ENV.production===false && [1505923257, 1476506542, -1957053861, 1536523365].indexOf(userHash(user_data.person_id))>-1"
         class="float-right d-inline">
         <nlf-help class="mx-1" key="nlf-member"></nlf-help>
         <a [routerLink]="['/medlem', 'kompetanse']">
-          <fa-icon icon="table" [fixed]="true"></fa-icon> Medlemsliste
+          <fa-icon icon="table"></fa-icon> Medlemsliste
         </a>
       </span>
     </div>
@@ -37,10 +37,10 @@
       <!-- SEARCH INPUT -->
       <div class="row">
         <div class="d-flex col-12" id="memberSearchInput">
-          <!--#searchField searchField.value <fa-icon icon="spinner"  [size]="fasize"></fa-icon> -->
-          <fa-icon *ngIf="!searching" name="search" [fixed]="true" class="form-control-lg position-absolute pl-3 text-muted">
+          <!--#searchField searchField.value <nlf-ui-component-spinner size="3"></nlf-ui-component-spinner> -->
+          <fa-icon *ngIf="!searching" name="search" class="form-control-lg position-absolute pl-3 text-muted">
           </fa-icon>
-          <fa-icon *ngIf="searching" name="spinner" animation="pulse" [fixed]="true"
+          <fa-icon *ngIf="searching" name="spinner" animation="pulse"
             class="form-control-lg position-absolute pl-3 text-muted"></fa-icon>
 
           <input [(ngModel)]="searchTerm" [disabled]="searching" class="form-control form-control-lg py-4 pl-5 "

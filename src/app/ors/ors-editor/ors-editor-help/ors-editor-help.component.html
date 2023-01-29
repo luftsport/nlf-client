@@ -13,17 +13,17 @@
   <p>
     For hver logiske komponent i editoren vil du kunne se hjelpetekst for respektive bolker ved å trykke på
     spørsmålstegnet
-    <fa-icon class="text-info mx-1" name="question" [fixed]="true"></fa-icon> .
+    <fa-icon class="text-info mx-1" name="question"></fa-icon> .
   </p>
   <p>
     Øverst på siden har du verktøylinjen som bla viser løpenummer, tittel og rating (til venstre) og til høyre finner
     du følgende:
   </p>
   <p>
-    <fa-icon class="text-info mx-1" name="question" [fixed]="true"></fa-icon>
+    <fa-icon class="text-info mx-1" name="question"></fa-icon>
 
     <span (click)="save()" *ngIf="changes" class="pointer badge badge-warning mx-1">
-      <fa-icon icon="save" [fixed]="true"></fa-icon>
+      <fa-icon icon="save"></fa-icon>
     </span>
 
     <span class="badge badge-secondary mx-1">{{ observation._updated | amTimeAgo }}</span>
@@ -45,7 +45,7 @@
 
     <!-- REPORT LINK -->
     <a [routerLink]="['/ors', observation._model.type , 'report', observation.id]" *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge badge-primary text-white mx-1">
-      <fa-icon icon="file" [fixed]="true"></fa-icon> Report
+      <fa-icon icon="file"></fa-icon> Report
     </a>
 
   </p>
@@ -58,7 +58,7 @@
   <p>
     Om du har endringer vil også
     <span class="badge pointer badge-warning mx-1">
-      <fa-icon icon="save" [fixed]="true"></fa-icon>
+      <fa-icon icon="save"></fa-icon>
     </span>
     vises og indikerer at du kan lagre ved å klikke på det.
   </p>
@@ -112,7 +112,7 @@
   <p>
     <!-- REPORT LINK -->
     <a [routerLink]="['/ors', observation._model.type , 'report', observation.id]" *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge badge-primary text-white mx-1">
-      <fa-icon icon="file" [fixed]="true"></fa-icon> Report
+      <fa-icon icon="file"></fa-icon> Report
     </a> åpner observasjonen i rapportvisning og du kan på den måten forhåndsvise hvordan den endelige observasjonen vil komme til å se ut når den er ferdigbehandlet.</p>
 
   <p>

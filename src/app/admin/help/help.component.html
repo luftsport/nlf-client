@@ -3,13 +3,13 @@
 
     <ol class="breadcrumb">
       <li class="breadcrumb-item active">
-        <fa-icon icon="question" [fixed]="true"></fa-icon>
+        <fa-icon icon="question"></fa-icon>
         <a [routerLink]="['/admin', 'help']">Hjelpesystem</a>
       </li>
     </ol>
 
     <a [routerLink]="['/admin/help/create']" class="pull-right btn btn-sm btn-primary mx-1">
-      <fa-icon icon="plus" [fixed]="true"></fa-icon>Ny hjelpetekst
+      <fa-icon [icon]="faPlus"></fa-icon>Ny hjelpetekst
     </a>
 
   </div>
@@ -28,7 +28,7 @@
         </td>
         <td>
           <span class="pointer" (click)="delete(row)">
-            <fa-icon icon="close" [fixed]="true"></fa-icon>
+            <fa-icon icon="close"></fa-icon>
           </span>
           <nlf-help [key]="row.key" [details]="true"></nlf-help>
         </td>
@@ -37,7 +37,7 @@
   </span>
   <span *ngIf="!dataReady">
     <p class="align-middle text-center  text-secondary">
-      <fa-icon icon="spinner" animation="pulse" size="3x"></fa-icon>
+      <nlf-ui-component-spinner size="3"></nlf-ui-component-spinner>
     </p>
   </span>
 

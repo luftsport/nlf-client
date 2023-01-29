@@ -38,13 +38,13 @@
 <div class="row my-2">
   <!-- FROM -->
   <div class="col-md-1 text-center">
-    <fa-icon icon="plane" [fixed]="true"></fa-icon>
+    <fa-icon icon="plane"></fa-icon>
   </div>
   <div class="col-md-3">
     <nlf-ors-editor-tag-airport [(airport)]="from_airport" (change)="onChange($event,'to_airport')" [disabled]="from_airport_disable" element_id="from_airport"></nlf-ors-editor-tag-airport>
   </div>
   <div class="col-md-1 text-center">
-    <fa-icon icon="long-arrow-right" [fixed]="true"></fa-icon>
+    <fa-icon icon="long-arrow-right"></fa-icon>
   </div>
 
   <!-- TO -->
@@ -54,13 +54,13 @@
   <!-- ADD -->
   <div class="col-md-2">
     <button [disabled]="!observation.acl_user.w" class="btn btn-primary btn-block" id="add_airport" (click)="addSegment()">
-      <fa-icon icon="plus" [fixed]="true"></fa-icon>Legg Til
+      <fa-icon icon="plus"></fa-icon>Legg Til
     </button>
   </div>
   <!-- MAP -->
   <div class="col-md-2 text-right">
-    <button class="btn btn-link" (click)="showRouteMap=!showRouteMap">Kart <fa-icon *ngIf="showRouteMap" name="eye-slash" [fixed]="true"></fa-icon>
-      <fa-icon *ngIf="!showRouteMap" name="eye" [fixed]="true"></fa-icon>
+    <button class="btn btn-link" (click)="showRouteMap=!showRouteMap">Kart <fa-icon *ngIf="showRouteMap" name="eye-slash"></fa-icon>
+      <fa-icon *ngIf="!showRouteMap" name="eye"></fa-icon>
     </button>
   </div>
 </div>
@@ -84,7 +84,7 @@
 
           <div class="col-md-3 pointer text-center" style="border-right: 1px solid #CCC" (click)="openRouteModal(routeModal, idx)">
             {{ segment.from.icao }}
-            <fa-icon icon="long-arrow-right" [fixed]="true"></fa-icon>{{ segment.to.icao }}
+            <fa-icon icon="long-arrow-right"></fa-icon>{{ segment.to.icao }}
             <div class="small">Klikk for detaljer</div>
           </div>
 
@@ -103,7 +103,7 @@
           </div>
 
           <div class="col-md-1 text-right">
-            <fa-icon *ngIf="last && observation.acl_user.w" name="times" (click)="removeSegment()" class="pointer" [fixed]="true"></fa-icon>
+            <fa-icon *ngIf="last && observation.acl_user.w" name="times" (click)="removeSegment()" class="pointer"></fa-icon>
           </div>
         </div>
 
@@ -299,7 +299,7 @@
     <div class="modal-header">
       <h4 class="modal-title pull-left">
         {{ modalRoute.from.icao }}
-        <fa-icon icon="long-arrow-right" [fixed]="true"></fa-icon>{{ modalRoute.to.icao }}
+        <fa-icon icon="long-arrow-right"></fa-icon>{{ modalRoute.to.icao }}
       </h4>
       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
         <span aria-hidden="true">&times;</span>
@@ -392,7 +392,7 @@
 
     <div class="modal-footer">
       <button class="btn btn-outline-dark" (click)="modalRef.close()">
-        <fa-icon icon="times" [fixed]="true"></fa-icon>Ferdig
+        <fa-icon icon="times"></fa-icon>Ferdig
       </button>
     </div>
   </ng-template>

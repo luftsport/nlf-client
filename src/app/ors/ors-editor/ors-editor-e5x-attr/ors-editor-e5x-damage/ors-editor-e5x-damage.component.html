@@ -1,7 +1,7 @@
 <div *ngIf="!showOnlyBtn" class="row">
   <div class="col-md-3">
     <button class="btn btn-secondary btn-block" (click)="openModal(modal)">
-      <fa-icon icon="fire" [fixed]="true"></fa-icon>Damage(s)
+      <fa-icon icon="fire"></fa-icon>Damage(s)
     </button>
   </div>
   <div class="col-md-9">
@@ -11,7 +11,7 @@
 
 <div *ngIf="showOnlyBtn">
   <button class="btn btn-secondary btn-block" (click)="openModal(modal)">
-    <fa-icon icon="fire" [fixed]="true"></fa-icon>Damage(s)
+    <fa-icon icon="fire"></fa-icon>Damage(s)
   </button>
 </div>
 
@@ -66,10 +66,10 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa-icon icon="times" [fixed]="true"></fa-icon>Avbryt
+      <fa-icon icon="times"></fa-icon>Avbryt
     </button>
     <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate(modalIndex)">
-      <fa-icon icon="check" [fixed]="true"></fa-icon>Oppdater
+      <fa-icon icon="check"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>

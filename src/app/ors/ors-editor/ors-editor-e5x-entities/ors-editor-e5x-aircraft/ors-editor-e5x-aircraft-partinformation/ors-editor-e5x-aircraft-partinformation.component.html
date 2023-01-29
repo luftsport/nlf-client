@@ -2,7 +2,7 @@
   <div class="col-md-12">
 
     <button [disabled]="disabled" class="btn btn-secondary btn-block mb-3" (click)="add();openModal(modal, modalIdx)">
-      <fa-icon icon="plus" [fixed]="true"></fa-icon>Partinformation
+      <fa-icon icon="plus"></fa-icon>Partinformation
     </button>
 
     <div class="mx-1 my-1" *ngFor="let part of partinformation; let idx = index">
@@ -119,10 +119,10 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa-icon icon="times" [fixed]="true"></fa-icon>Avbryt
+      <fa-icon icon="times"></fa-icon>Avbryt
     </button>
     <button [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate()">
-      <fa-icon icon="check" [fixed]="true"></fa-icon>Oppdater
+      <fa-icon icon="check"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>

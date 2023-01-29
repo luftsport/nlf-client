@@ -16,6 +16,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 // MAPS
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+// Charts
+import { NgxEchartsModule } from 'ngx-echarts';
 
 // PIPES
 import { NlfOrsStatePipe } from 'app/pipes/ors-state.pipe';
@@ -102,8 +104,11 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     // NgProgressRouterModule,
     NgPipesModule,
     NgSelectModule,
-    NgbModule, // ng-bootstrap
+    NgbModule, // ng-bootstrap see https://ng-bootstrap.github.io/#/getting-started for alternative import strategies
     // Other shared
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    })
 
   ],
   declarations: [
@@ -167,6 +172,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     ReactiveFormsModule,
     // Custom
     LeafletModule,
+    NgxEchartsModule,
     NgSelectModule,
     NlfHelpComponent,
     FontAwesomeModule, // ngx-icons

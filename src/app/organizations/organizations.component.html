@@ -7,7 +7,7 @@
       <agm-marker *ngIf="!!org?.contact?.location?.geo" [agmFitBounds]="true" [markerDraggable]="false" [latitude]="toFloat(org.contact.location.geo.coordinates[1])" [longitude]="toFloat(org.contact.location.geo.coordinates[0])">
         <agm-info-window>
           <h4>
-            <fa-icon icon="map-marker" [fixed]="true"></fa-icon> {{ org.name }}
+            <fa-icon icon="map-marker"></fa-icon> {{ org.name }}
           </h4>
           <div>{{ org.main_activity.name }}</div>
           <a [routerLink]="['/organizations', org.id]">{{ org.name }}</a>

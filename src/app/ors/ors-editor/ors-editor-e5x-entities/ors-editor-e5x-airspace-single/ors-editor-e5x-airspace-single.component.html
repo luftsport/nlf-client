@@ -1,5 +1,5 @@
 <button class="btn btn-secondary btn-block" (click)="openModal(modal)">
-  <fa-icon icon="circle-o" [fixed]="true"></fa-icon>Airspace
+  <fa-icon icon="circle-o"></fa-icon>Airspace
 </button>
 
 <!-- AIRSPACE MODAL -->
@@ -44,10 +44,10 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa-icon icon="times" [fixed]="true"></fa-icon>Avbryt
+      <fa-icon icon="times"></fa-icon>Avbryt
     </button>
     <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate()">
-      <fa-icon icon="check" [fixed]="true"></fa-icon>Oppdater
+      <fa-icon icon="check"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>

@@ -6,7 +6,7 @@
 			<hotkeys-cheatsheet title="Hotkeys Rock!"></hotkeys-cheatsheet>
 			<!-- TITLE -->
 
-			<!-- <fa-icon icon="file-text-o" [fixed]="true"></fa-icon>&nbsp;-->
+			<!-- <fa-icon icon="file-text-o"></fa-icon>&nbsp;-->
 			<!-- {{ observation.tags | nlfOrsTags: ' / '}} -->
 			<a [routerLink]="['/ors', observation._model.type]">OBSREG</a>#{{ observation.id }}
 			<nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type" link="true" seperator="/"></nlf-resolve-observation-tags>&nbsp;
@@ -29,7 +29,7 @@
 			<!-- WORKFLOW STATE -->
 			<span class="pull-right">
 				<a [routerLink]="['/ors', observation._model.type, 'edit', observation.id]" *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge badge-primary text-white mx-1">
-					<fa-icon icon="edit" [fixed]="true"></fa-icon> Editor
+					<fa-icon icon="edit"></fa-icon> Editor
 				</a>
 				<nlf-resolve-observation-state [activity]="observation._model.type" [state]="observation.workflow.state" icon="true"></nlf-resolve-observation-state>
 			</span>
@@ -64,7 +64,7 @@
 				<div *ngIf="!observation.location?.geo?.coordinates">
 
 					<ngb-alert type="danger" [dismissible]="false">
-						<fa-icon icon="map-marker" [fixed]="true"></fa-icon>
+						<fa-icon icon="map-marker"></fa-icon>
 						Ingen lokalisasjon satt.
 					</ngb-alert>
 
@@ -77,7 +77,7 @@
 					<div class="col-md-12">
 
 						<div (click)="isWorkflowTimelineCollapsed = !isWorkflowTimelineCollapsed" class="card-header pointer">
-							<fa-icon icon="random" [fixed]="true"></fa-icon>
+							<fa-icon icon="random"></fa-icon>
 							Arbeidsflyt
 							<i class="fa fa-fw" [ngClass]="{'fa-angle-down': isWorkflowTimelineCollapsed, 'fa-angle-up': !isWorkflowTimelineCollapsed}"></i>
 						</div>
@@ -92,7 +92,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card-header">
-					<fa-icon icon="users" [fixed]="true"></fa-icon>Involverte
+					<fa-icon icon="users"></fa-icon>Involverte
 				</div>
 				<nlf-ors-fallskjerm-report-involved [model]="observation._model" [involved]="observation.involved"></nlf-ors-fallskjerm-report-involved>
 			</div>
@@ -103,7 +103,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card-header">
-					<fa-icon icon="file" [fixed]="true"></fa-icon>Vedlegg
+					<fa-icon icon="file"></fa-icon>Vedlegg
 				</div>
 				<nlf-ors-report-files [files]="observation.files" [state]="observation.workflow.state"></nlf-ors-report-files>
 			</div>
@@ -122,7 +122,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card-header">
-					<fa-icon icon="users" [fixed]="true"></fa-icon>Hoppfeltorganisasjon
+					<fa-icon icon="users"></fa-icon>Hoppfeltorganisasjon
 				</div>
 				<nlf-ors-fallskjerm-report-organization [organization]="observation.organization"></nlf-ors-fallskjerm-report-organization>
 			</div>
@@ -133,7 +133,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card-header">
-					<fa-icon icon="cloud" [fixed]="true"></fa-icon>Været
+					<fa-icon icon="cloud"></fa-icon>Været
 				</div>
 				<nlf-ors-report-weather [weather]="observation.weather"></nlf-ors-report-weather>
 			</div>
@@ -144,7 +144,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card-header">
-					<fa-icon icon="bolt" [fixed]="true"></fa-icon>Tiltak
+					<fa-icon icon="bolt"></fa-icon>Tiltak
 				</div>
 				<nlf-ors-report-actions [actions]="observation.actions"></nlf-ors-report-actions>
 			</div>
@@ -155,7 +155,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card-header">
-					<fa-icon icon="comments-o" [fixed]="true"></fa-icon>Vurderinger
+					<fa-icon icon="comments-o"></fa-icon>Vurderinger
 				</div>
 			</div>
 
@@ -179,7 +179,7 @@
 		<div *ngIf="!!observation.related && observation.related?.length > 0" class="row">
 			<div class="col-md-12">
 				<div class="card-header">
-					<fa-icon icon="external-link" [fixed]="true"></fa-icon>Relaterte
+					<fa-icon icon="external-link"></fa-icon>Relaterte
 				</div>
 				<nlf-ors-report-related [related]="observation.related"></nlf-ors-report-related>
 			</div>

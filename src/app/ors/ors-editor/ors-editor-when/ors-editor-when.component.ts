@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import { ApiObservationsItem } from 'app/api/api.interface';
 import { debounce } from 'ts-debounce';
+import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-editor-when',
@@ -20,10 +21,16 @@ export class NlfOrsEditorWhenComponent implements OnInit {
   time: { hour: number, minute: number, second?: number };
   maxDate: { year: number, month: number, day: number };
 
+  dataReady = false;
+  // Icons
+  faCalendar = faCalendar;
+ 
+
   constructor(private observationSubject: NlfOrsEditorService) {
     this.observationSubject.observableObservation.subscribe(
       observation => {
         this.observation = observation;
+        this.dataReady = true;
 
         try {
           if (!(this.observation.when instanceof Date)) {

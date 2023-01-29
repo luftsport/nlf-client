@@ -3,6 +3,8 @@ import { LungoSyncdaemonWorkersStatusItem, LungoIntegrationChangesStatusItem } f
 import { LungoIntegrationService } from 'app/api/lungo-integration.service';
 import { NlfAlertService } from 'app/services/alert/alert.service';
 import { Columns, Config, DefaultConfig, STYLE } from 'ngx-easy-table';
+import { EChartsOption } from 'echarts';
+
 // import { Config } from './ngx-easy-table/model/config';
 
 @Component({
@@ -74,6 +76,12 @@ export class NlfWorkersStatusComponent implements OnInit {
 
   daemonStatus = false;
   workersStarted = false;
+
+  // Echart
+  statusChartOption: EChartsOption;
+  statusChartOptionColors = {finished: '#198754', error: '#dc3545', ready: '#428bca', pending: '#ffc107'};
+  entitiesChartOption: EChartsOption;
+  entitiesChartOptionColors = {Person: '#198754', Function: '#dc3545', Competence: '#428bca', License: '#ffc107', Payment: '#343a40', Organization: '#007bff', Qualification: '#6c757d'};
 
   constructor(
     private lungo: LungoIntegrationService,
@@ -180,18 +188,57 @@ export class NlfWorkersStatusComponent implements OnInit {
     let has = [];
     this.pie = [];
 
+    
+
     this.status.forEach(el => {
-      this.pie.push({ name: el._id, value: el.count });
+      this.pie.push({ name: el._id, value: el.count, itemStyle: { color: this.statusChartOptionColors[el._id] } });
       has.push(el._id);
     });
 
     should.forEach(n => {
       if (has.indexOf(n) < 0) {
-        this.pie.push({ name: n, value: 0 });
+        this.pie.push({ name: n, value: 0, itemStyle: { color: this.statusChartOptionColors[n] } });
       }
     });
 
+    this.statusChartOption = {
+      tooltip: {
+        trigger: 'item'
+      },
+      series: [
+        {
+          name: 'Message Status',
+          type: 'pie',
+          radius: ['50%', '70%'],
+          tooltip: {
+            show: false
+          },
+          avoidLabelOverlap: false,
+          label: {
+            show: false,
+            position: 'center'
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: 40,
+              fontWeight: 'bold'
+            }
+          },
+          labelLine: {
+            show: false
+          },
+          data: this.pie
+        }
+      ]
+    };
+
+    
     this.pieReady = true;
+  }
+
+  getPieTotalValue() {
+    return this.pie.reduce((accumulated, obj) => {return accumulated + obj.value},0);
   }
 
   getTypesWorkers() {
@@ -221,6 +268,41 @@ export class NlfWorkersStatusComponent implements OnInit {
         data._items.forEach(el => {
           this.entityTypes.push({ name: el._id, value: el.count });
         });
+
+
+        this.entitiesChartOption = {
+          tooltip: {
+            trigger: 'item'
+          },
+          series: [
+            {
+              name: 'Entity Status',
+              type: 'pie',
+              radius: ['50%', '70%'],
+              tooltip: {
+                show: false
+              },
+              avoidLabelOverlap: false,
+              label: {
+                show: false,
+                position: 'center'
+              },
+              emphasis: {
+                label: {
+                  show: true,
+                  fontSize: 40,
+                  fontWeight: 'bold'
+                }
+              },
+              labelLine: {
+                show: false
+              },
+              data: this.entityTypes
+            }
+          ]
+        };
+
+
       },
       err => {
         this.alertService.error(err.message);

@@ -1,10 +1,10 @@
 <div class="card-header">
-  <fa-icon icon="random" [fixed]="true"></fa-icon>Forløpet
+  <fa-icon icon="random"></fa-icon>Forløpet
 
   <span *ngIf="components?.length > 0" class="pull-right px-1 pointer"
     (click)="componentCollapsed = !componentCollapsed">
-    <fa-icon *ngIf="componentCollapsed" name="plus-square" size="2" [fixed]="true"></fa-icon>
-    <fa-icon *ngIf="!componentCollapsed" name="minus-square" size="2" [fixed]="true"></fa-icon>
+    <fa-icon *ngIf="componentCollapsed" name="plus-square" size="2"></fa-icon>
+    <fa-icon *ngIf="!componentCollapsed" name="minus-square" size="2"></fa-icon>
   </span>
 </div>
 
@@ -44,10 +44,10 @@
               <small class="pull-right">
                 <span *ngIf="!!c.attributes">
                   <span *ngIf="!!c.attributes.injury || !!c.attributes.death">
-                    <fa-icon icon="ambulance" [fixed]="true"></fa-icon>
+                    <fa-icon icon="ambulance"></fa-icon>
                   </span>
                   <span *ngIf="!!c.attributes.violation">
-                    <fa-icon icon="gavel" [fixed]="true"></fa-icon>
+                    <fa-icon icon="gavel"></fa-icon>
                   </span>
                 </span>
 

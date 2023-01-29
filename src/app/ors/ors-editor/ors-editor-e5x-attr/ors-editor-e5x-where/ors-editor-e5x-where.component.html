@@ -5,7 +5,7 @@
 <div *ngIf="modal && !showOnlyBtn" class="row">
   <div class="col-md-3">
     <button class="btn btn-primary btn-block" (click)="openModal(attrModal)">
-      <fa-icon icon="map-marker" [fixed]="true"></fa-icon>Where
+      <fa-icon icon="map-marker"></fa-icon>Where
     </button>
   </div>
   <div class="col-md-9">
@@ -20,7 +20,7 @@
 
 <div *ngIf="modal && showOnlyBtn" class="row">
   <button class="btn btn-secondary btn-block" (click)="openModal(attrModal)">
-    <fa-icon icon="map-marker" [fixed]="true"></fa-icon>Where
+    <fa-icon icon="map-marker"></fa-icon>Where
   </button>
 </div>
 <!-- INJURIES MODAL -->
@@ -85,10 +85,10 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa-icon icon="times" [fixed]="true"></fa-icon>Avbryt
+      <fa-icon icon="times"></fa-icon>Avbryt
     </button>
     <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate(modalIndex)">
-      <fa-icon icon="check" [fixed]="true"></fa-icon>Oppdater
+      <fa-icon icon="check"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>

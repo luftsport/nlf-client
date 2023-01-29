@@ -2,13 +2,14 @@
   <div class="container">
     <span class="breadcrumb">
       <li class="breadcrumb-item">
-        <fa-icon icon="plug" [fixed]="true" class="mr-1 active"></fa-icon><a [routerLink]="['/', '376']">NIF Integration</a>
+        <fa-icon icon="plug" class="mr-1 active"></fa-icon><a [routerLink]="['/', '376']">NIF
+          Integration</a>
       </li>
     </span>
 
     <span class="float-right d-inline">
       <a class="mr-1 btn btn-primary btn-sm" [routerLink]="['/integration']">
-        <fa-icon icon="cog" [fixed]="true"></fa-icon>Syncdaemon
+        <fa-icon icon="cog"></fa-icon>Syncdaemon
       </a>
     </span>
 
@@ -20,18 +21,94 @@
 </div>
 
 <div *ngIf="!!dataReady" class="container-fluid">
+
   <div class="row clearfix">
+
     <div class="col-md-6 chart-wrapper">
-      <ngx-charts-advanced-pie-chart *ngIf="pieReady" [scheme]="colorScheme" [label]="'Change messages'" [results]="pie" [gradient]="gradient">
-      </ngx-charts-advanced-pie-chart>
+      <!--<ngx-charts-advanced-pie-chart *ngIf="pieReady" [scheme]="colorScheme" [label]="'Change messages'" [results]="pie" [gradient]="gradient">
+      </ngx-charts-advanced-pie-chart>-->
+      <div class="col-md-3">
+        <div *ngIf="pieReady" echarts class="w-140 h-100 align-top" [loading]="true" [options]="statusChartOption">
+        </div>
+      </div>
+      <div class="col-md-9">
+
+        <div class="row">
+          <h2 class="mt-4">{{ getPieTotalValue() | number }}</h2>
+          <h4 class="text-secondary">Change message status</h4>
+        </div>
+
+        <div class="row">
+
+          <div class="col" *ngFor="let item of pie">
+            <div class="p-0 m-0">
+              <div style="border-left: 3px solid {{ statusChartOptionColors[item.name] }} !important">
+                <h4 class="my-1 mx-1 p-0 mt-o text-dark">{{ item.value | number }}</h4>
+                <p class="mb-0 mx-1 p-0 text-secondary">{{ item.name }}</p>
+              </div>
+              <p class="h4 mb-0 mx-2 p-0 font-20 mb-0 text-secondary">{{ item.value/getPieTotalValue() | percent }}</p>
+            </div>
+          </div>
+
+        </div>
+        <!--
+          <div class="card-group overflow-auto">
+            <div *ngFor="let item of pie" class="card radius-0 border-0">
+              <div class="card-body px-1">
+                <div class="d-flex align-items-center p-0 m-0">
+                  <div class="p-0 m-0">
+                    <div style="border-left: 3px solid {{ statusChartOptionColors[item.name] }} !important">
+                      <h4 class="my-1 mx-1 p-0 mt-o">{{ item.value | number }}</h4>
+                      <p class="mb-0 mx-1 p-0 text-secondary">{{ item.name }}</p>
+                    </div>
+                    <p class="h4 mb-0 mx-1 p-0 font-20 mb-0 text-dark">{{ item.value/getPieTotalValue() | percent }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+          -->
+      </div>
     </div>
-    <div class="col-md-6">
-      <div class="chart-wrapper">
-        <ngx-charts-advanced-pie-chart *ngIf="entityTypesReady" [scheme]="colorScheme" [label]="'Change entities'" [results]="entityTypes" [gradient]="gradient">
+
+    <div class="col-md-6 chart-wrapper">
+      <!--
+        <ngx-charts-advanced-pie-chart *ngIf="entityTypesReady" [scheme]="colorScheme" [label]="'Change entities'"
+          [results]="entityTypes" [gradient]="gradient">
         </ngx-charts-advanced-pie-chart>
+        -->
+      <!--<ngx-charts-advanced-pie-chart *ngIf="pieReady" [scheme]="colorScheme" [label]="'Change messages'" [results]="pie" [gradient]="gradient">
+      </ngx-charts-advanced-pie-chart>-->
+      <div class="col-md-3">
+        <div *ngIf="pieReady" echarts class="w-140 h-100 align-top" [loading]="true" [options]="entitiesChartOption">
+        </div>
+      </div>
+      <div class="col-md-9">
+
+        <div class="row">
+          <h2 class="mt-4">{{ getPieTotalValue() | number }}</h2>
+          <h4 class="text-secondary">Change messages</h4>
+        </div>
+
+        <div class="row d-flex-row flex-nowrap justify-content-start overflow-scroll"
+          style="overflow-x: auto;white-space: nowrap;">
+
+          <div class="col" *ngFor="let item of entityTypes">
+            <div class="p-0 m-0">
+              <div style="border-left: 3px solid {{ entitiesChartOptionColors[item.name] }} !important">
+                <h4 class="my-1 mx-1 p-0 mt-o text-dark">{{ item.value | number }}</h4>
+                <p class="mb-0 mx-1 p-0 text-secondary">{{ item.name }}</p>
+              </div>
+              <p class="h4 mb-0 mx-2 p-0 font-20 mb-0 text-secondary">{{ item.value/getPieTotalValue() | percent }}</p>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   </div>
+
   <!--
 "": "klubb-214063",
 "id": 214063,
@@ -80,7 +157,9 @@
   <!--<button class="btn btn-primary" *ngIf="!workersStarted && syncdaemonStatus" (click)="startWorkers()"><fa-icon icon="play"></fa-icon>Start workers</button>-->
 
   <div class="clearfix overflow-auto">
-    <ngx-table [id]="'integration-workers-table'" *ngIf="!!workers" [configuration]="tableConfig" [data]="workers" [columns]="columns" [(pagination)]="pagination" (event)="eventEmitted($event)" [detailsTemplate]="detailsTemplate">
+    <ngx-table [id]="'integration-workers-table'" *ngIf="!!workers" [configuration]="tableConfig" [data]="workers"
+      [columns]="columns" [(pagination)]="pagination" (event)="eventEmitted($event)"
+      [detailsTemplate]="detailsTemplate">
 
       <ng-template let-row>
         <td>
@@ -89,7 +168,8 @@
           </span>
         </td>
         <td>
-          <nlf-resolve-lungo-organization *ngIf="row.id != 900001 && row.id != 900002 && row.id != 900003" [organization_id]="row.id"></nlf-resolve-lungo-organization>
+          <nlf-resolve-lungo-organization *ngIf="row.id != 900001 && row.id != 900002 && row.id != 900003"
+            [organization_id]="row.id"></nlf-resolve-lungo-organization>
           <span *ngIf="row.id == 900001">*Lisenser</span>
           <span *ngIf="row.id == 900002">*Kompetanser</span>
           <span *ngIf="row.id == 900003">*Payments</span>
@@ -137,7 +217,7 @@
       <div>{{ row.sync_type }}</div>
       <div *ngIf="row.sync_interval.length == 2">Last synced {{ row.sync_interval[1] | amTimeAgo }}</div>
       <div *ngIf="row.sync_interval.length == 2">{{ row.sync_interval[0] | date:"HH:mm:ss.SSS" }} to {{
-            row.sync_interval[1] | date:"HH:mm:ss.SSS" }}</div>
+        row.sync_interval[1] | date:"HH:mm:ss.SSS" }}</div>
       <div>{{ row.sync_misfires }}</div>
       <div>{{ row.sync_errors }}</div>
       <div>{{ row.next_run_time | date:"HH:mm:ss" }}</div>

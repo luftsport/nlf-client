@@ -10,7 +10,7 @@
     <span *ngIf="router.url != '/ors/'+current_ors.type+'/'+current_ors.id">
       <span [routerLink]="['/ors', current_ors.type, 'edit', current_ors.id]"
         class="badge badge-info lead ml-1 pointer">
-        <fa-icon icon="edit" [fixed]="true"></fa-icon>#{{ current_ors.id }}
+        <fa-icon [icon]="edit"></fa-icon>#{{ current_ors.id }}
       </span>
     </span>
   </span>
@@ -22,13 +22,13 @@
   <button class="btn btn-success mr-3 d-block d-sm-none"
     *ngIf="(loggedInObservable | async) && !!user_data && !!user_data.settings.default_discipline"
     (click)="navbarOpen=false;openCreateOrsModal()">
-    <fa-icon icon="plus" fw="true" class="mr-1"></fa-icon>OBSREG
+    <fa-icon [icon]="faPlus" [fixedWidth]="true" class="mr-1"></fa-icon>OBSREG
   </button>
 
   <!--MENU TOGGLE-->
   <button (click)="navbarOpen=!navbarOpen" class="navbar-toggler navbar-toggler-right" type="button"
     aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <fa-icon icon="bars" [fixed]="true"></fa-icon>
+    <fa-icon [icon]="faBars"></fa-icon>
   </button>
 
   <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent2" [ngClass]="{ 'show': navbarOpen }">
@@ -39,7 +39,7 @@
       <button class="btn btn-success mr-2 d-none d-sm-block"
         *ngIf="!!config && !!user_data && !!user_data.settings.default_discipline"
         (click)="navbarOpen=false;openCreateOrsModal()">
-        <fa-icon icon="plus" fw="true" class="mr-1"></fa-icon>Ny OBSREG
+        <fa-icon [icon]="faPlus" [fixedWidth]="true" class="mr-1"></fa-icon>Ny OBSREG
         <!--{{ config[config.inv_mapping[user_data.settings.default_activity]]['observation']['app_name'] || 'ORSX' }}-->
         
       </button>
@@ -120,7 +120,7 @@
       <!-- NOTIFICATIONS
       <li ngbDropdown placement="bottom-right" (click)="navbarOpen=false" *ngIf="authenticated" class="nav-item dropdown pointer" routerLinkActive="active">
         <span ngbDropdownToggle href="#" class="nav-link">
-          <fa-icon icon="bell" [fixed]="true" class="d-inline-block"></fa-icon><small><span class="small badge badge-danger align-top">4</span></small>
+          <fa-icon [icon]="bell" class="d-inline-block"></fa-icon><small><span class="small badge badge-danger align-top">4</span></small>
         </span>
 
         <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -129,11 +129,11 @@
 
           <div class="dropdown-divider"></div>
           <button class="btn btn-secondary btn-block dropdown-item">
-            <fa-icon icon="bell-slash" [fixed]="true"></fa-icon>Dismiss All
+            <fa-icon [icon]="bell-slash"></fa-icon>Dismiss All
           </button>
           <div class="dropdown-divider"></div>
           <button class="btn btn-secondary btn-block dropdown-item">
-            <fa-icon icon="list-ol" [fixed]="true"></fa-icon>More<span class="badge badge-danger pull-right">2</span>
+            <fa-icon [icon]="list-ol"></fa-icon>More<span class="badge badge-danger pull-right">2</span>
           </button>
         </div>
 
@@ -172,7 +172,7 @@
           <div class="dropdown-divider"></div>
           <button ngbDropdownItem (click)="$event.preventDefault();navbarOpen=false;authService.logout()"
             class="dropdown-item btn btn-secondary btn-block">
-            <fa-icon icon="power-off" [fixed]="true"></fa-icon>Logg ut
+            <fa-icon [icon]="faPowerOff"></fa-icon>Logg ut
           </button>
         </div>
 
@@ -185,7 +185,7 @@
 
 <!-- FAB https://medium.com/@aphlps/fab-speed-dial-with-angular-5-2-angular-material-be696fc14967
 <div *ngIf="!!user_data && !!user_data.settings.default_discipline" (click)="navbarOpen=false;openCreateOrsModal()" class="fab bg-success">
-  <span class="fab-icon"><fa-icon icon="plus"></fa-icon></span>
+  <span class="fab-icon"><fa-icon [icon]="plus"></fa-icon></span>
 </div>
 -->
 
@@ -217,7 +217,7 @@
 <nav class="navbar navbar-toggleable-sm navbar-dark bg-dark">
   <button (click)="isCollapsed = !isCollapsed" class="navbar-toggler navbar-toggler-right" type="button" aria-controls="navbarNavAltMarkup"
     aria-expanded="false" aria-label="Toggle navigation">
-    <fa-icon icon="bars" [fixed]="true"></fa-icon>
+    <fa-icon [icon]="bars"></fa-icon>
   </button>
   <span class="navbar-brand pointer" [routerLink]="['/']">NLF</span>
   <div [ngbCollapse]="isCollapsed" class="collapse navbar-collapse justify-content-between" id="navbar">

@@ -8,8 +8,8 @@
     <tr *ngFor="let p of involved; let idx = index">
 
       <td class="">
-        <fa-icon *ngIf="p.id>0" name="check" [fixed]="true" class="text-success mr-2" title="Hentet fra medlemssystemet"></fa-icon>
-        <fa-icon *ngIf="p.id<1" name="exclamation" [fixed]="true" class="text-danger mr-2" title="Ukjent person"></fa-icon>
+        <fa-icon *ngIf="p.id>0" name="check" class="text-success mr-2" title="Hentet fra medlemssystemet"></fa-icon>
+        <fa-icon *ngIf="p.id<1" name="exclamation" class="text-danger mr-2" title="Ukjent person"></fa-icon>
         <strong>
           <nlf-resolve-lungo-person [person_id]="p.id" [tmp_name]="p.tmp_name" [link]="false" [avatar]="true"></nlf-resolve-lungo-person>
         </strong>
@@ -233,10 +233,10 @@
   </div>
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa-icon icon="times" [fixed]="true"></fa-icon>Avbryt
+      <fa-icon icon="times"></fa-icon>Avbryt
     </button>
     <button [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalInvolvedUpdate(modalIndex)">
-      <fa-icon icon="check" [fixed]="true"></fa-icon>Oppdater
+      <fa-icon icon="check"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>

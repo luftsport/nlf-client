@@ -6,7 +6,7 @@
     <div class="container lead">
       <!-- TITLE -->
 
-      <!-- <fa-icon icon="file-text-o" [fixed]="true"></fa-icon>&nbsp;-->
+      <!-- <fa-icon icon="file-text-o"></fa-icon>&nbsp;-->
       <!-- {{ data.tags | nlfOrsTags: ' / '}} -->
       <span class="overflow-hidden">
         <a [routerLink]="['/ors', 'fallskjerm']">OBSREG</a>#{{ observation.id }}
@@ -24,18 +24,18 @@
         <!-- SAVE -->
         <a (click)="saveIfChanges()" *ngIf="!!observation && !!changes && observation.acl_user.w"
           class="pointer badge badge-warning mx-1">
-          <fa-icon icon="save" [fixed]="true"></fa-icon>
+          <fa-icon icon="save"></fa-icon>
         </a>
 
         <!-- HELP -->
         <a class="badge badge-light pointer text-info mx-1" (click)="openHelp()">
-          <fa-icon icon="question" [fixed]="true"></fa-icon>
+          <fa-icon icon="question"></fa-icon>
         </a>
 
         <!-- ABOUT -->
         <a (click)="openAbout()" class="pointer badge badge-secondary text-white mx-1">
-          <fa-icon icon="info-circle" [fixed]="true"></fa-icon>
-          <fa-icon *ngIf="!observation.acl_user.w" name="lock" [fixed]="true" class="text-danger"
+          <fa-icon icon="info-circle"></fa-icon>
+          <fa-icon *ngIf="!observation.acl_user.w" name="lock" class="text-danger"
             title="Ingen skrivetilgang"></fa-icon>
           {{ observation._updated | amTimeAgo }}
         </a>
@@ -68,7 +68,7 @@
         <!-- REPORT LINK -->
         <a [routerLink]="['/ors', observation._model.type , 'report', observation.id]"
           *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge badge-primary text-white mx-1">
-          <fa-icon icon="file" [fixed]="true"></fa-icon> Report
+          <fa-icon icon="file"></fa-icon> Report
         </a>
 
       </span>
@@ -244,7 +244,7 @@
           Forløpet
           <nlf-help class="pull-right" key="ors-editor-fallskjerm-components"></nlf-help>
           <button (click)="openPreview(modalPreview, 'components', 'Forløpet')" class="pull-right btn btn-link">
-            <!--<fa-icon icon="eye" [fixed]="true"></fa-icon>-->Preview
+            <!--<fa-icon icon="eye"></fa-icon>-->Preview
           </button>
         </div>
         <nlf-ors-editor-components></nlf-ors-editor-components>
@@ -386,7 +386,7 @@
 
             <div class="btn-toolbar pull-right">
               <button (click)="openWorkflow()" class="btn btn-primary mr-2">
-                <fa-icon icon="exchange" [fixed]="true"></fa-icon> Behandle #{{observation.id}}
+                <fa-icon icon="exchange"></fa-icon> Behandle #{{observation.id}}
               </button>
             </div>
           </ng-container>
@@ -509,7 +509,7 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="closeActivities()">
-      <fa-icon icon="times" [fixed]="true"></fa-icon> Lukk
+      <fa-icon icon="times"></fa-icon> Lukk
     </button>
 
   </div>

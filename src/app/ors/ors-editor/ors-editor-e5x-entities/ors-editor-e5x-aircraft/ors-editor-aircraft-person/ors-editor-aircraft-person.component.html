@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-12">
     <button [disabled]="disabled" [ngClass]="[!!crew ? 'btn-success' : 'btn-secondary']" class="btn btn-block mb-3" (click)="add();openModal(personModal, modalIdx)">
-      <fa-icon icon="plus" [fixed]="true"></fa-icon>Crew/Pax
+      <fa-icon icon="plus"></fa-icon>Crew/Pax
     </button>
 
     <div class="my-1" *ngFor="let c of crew; let idx = index">
@@ -35,12 +35,12 @@
         <div *ngIf="!anon">
           <nlf-ors-editor-tag-person [disabled]="disabled" [fc]="true" [(person)]="modalValue.person" [activity]="activity"></nlf-ors-editor-tag-person>
           <button class="btn btn-link" (click)="setAnon()">
-            <fa-icon icon="user-secret" [fixed]="true"></fa-icon>Sett anonym
+            <fa-icon icon="user-secret"></fa-icon>Sett anonym
           </button>
         </div>
         <div *ngIf="anon">
           <button class="btn btn-link" (click)="unsetAnon()">
-            <fa-icon icon="user-o" [fixed]="true"></fa-icon>Bruk navn
+            <fa-icon icon="user-o"></fa-icon>Bruk navn
           </button>
         </div>
       </div>
@@ -184,7 +184,7 @@
         <div class="row">
           <div class="col-md-12 lead bg-light">
             License {{ (idx+1) }}
-            <fa-icon *ngIf="!disabled" (click)="deleteLicense(idx)" class="ml-2 pointer" name="times" [fixed]="true"></fa-icon>
+            <fa-icon *ngIf="!disabled" (click)="deleteLicense(idx)" class="ml-2 pointer" name="times"></fa-icon>
           </div>
         </div>
         <div class="form-row">
@@ -225,7 +225,7 @@
         <div class="row">
           <div class="col-md-12 lead bg-light">
             Incapacitation {{ (idx+1) }}
-            <fa-icon *ngIf="!disabled" (click)="deleteIncapacitation(idx)" class="ml-2 pointer" name="times" [fixed]="true"></fa-icon>
+            <fa-icon *ngIf="!disabled" (click)="deleteIncapacitation(idx)" class="ml-2 pointer" name="times"></fa-icon>
           </div>
         </div>
         <div class="form-row">
@@ -246,17 +246,17 @@
       <div class="row">
         <div class="col-md-4">
           <button (click)="addLicense()" [disabled]="disabled" class="btn btn-primary btn-block">
-            <fa-icon icon="plus" [fixed]="true"></fa-icon>License
+            <fa-icon icon="plus"></fa-icon>License
           </button>
         </div>
         <div class="col-md-4">
           <button (click)="addHumanFactors()" [disabled]="disabled || !!modalValue.humanFactors" class="btn btn-primary btn-block">
-            <fa-icon icon="plus" [fixed]="true"></fa-icon>Human factors
+            <fa-icon icon="plus"></fa-icon>Human factors
           </button>
         </div>
         <div class="col-md-4">
           <button (click)="addIncapacitation()" [disabled]="disabled" class="btn btn-primary btn-block">
-            <fa-icon icon="plus" [fixed]="true"></fa-icon>Incapacitation
+            <fa-icon icon="plus"></fa-icon>Incapacitation
           </button>
         </div>
       </div>
@@ -266,10 +266,10 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa-icon icon="times" [fixed]="true"></fa-icon>Avbryt
+      <fa-icon icon="times"></fa-icon>Avbryt
     </button>
     <button [disabled]="disabled" [ngClass]="{'disabled': disable}" class="btn btn-success" (click)="modalUpdate()">
-      <fa-icon icon="check" [fixed]="true"></fa-icon>Oppdater
+      <fa-icon icon="check"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>

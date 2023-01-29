@@ -2,11 +2,11 @@
   
   <label [for]="path">{{ customLabel || label }}
     <span *ngIf="!!unit">[{{ unit }}]</span>
-    <fa-icon (click)="openModal(modalHelp)" *ngIf="show_help" class="ml-1 pointer" name="question" [fixed]="true"></fa-icon>
+    <fa-icon (click)="openModal(modalHelp)" *ngIf="show_help" class="ml-1 pointer" name="question"></fa-icon>
   </label>
 
   <span *ngIf="!attribute">
-    <fa-icon icon="spinner" animation="pulse" [size]="1"></fa-icon>
+    <nlf-ui-component-spinner></nlf-ui-component-spinner>
   </span>
 
   <!-- -->
@@ -126,7 +126,7 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa-icon icon="times" [fixed]="true"></fa-icon>Ferdig
+      <fa-icon icon="times"></fa-icon>Ferdig
     </button>
   </div>
 </ng-template>

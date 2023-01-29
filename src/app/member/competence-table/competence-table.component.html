@@ -3,7 +3,7 @@
 
     <span class="breadcrumb">
       <li class="breadcrumb-item">
-        <fa-icon icon="users" [fixed]="true"></fa-icon> <a [routerLink]="['/medlem']">NLF Medlemssjekk</a>
+        <fa-icon icon="users"></fa-icon> <a [routerLink]="['/medlem']">NLF Medlemssjekk</a>
       </li>
       <li class="breadcrumb-item active">
         Medlemsliste <sup class="text-danger mx-1" title="Applikasjonen er ikke ferdig utviklet">beta</sup>
@@ -12,7 +12,7 @@
 
     <!--
     <button *ngIf="!!query" class="btn btn-primary btn-sm pull-right mx-1" (click)="openModal(saveTemplate)" title="Funksjonen kommer snart" disabled>
-      <fa-icon icon="save" [fixed]="true"></fa-icon> Lagre søk
+      <fa-icon icon="save"></fa-icon> Lagre søk
     </button>
     -->
     <nlf-help class="pull-right mx-1" key="nlf-member"></nlf-help>
@@ -171,7 +171,7 @@
 </span>
 <span *ngIf="!dataReady">
   <p class="align-middle text-center  text-secondary">
-    <fa-icon icon="spinner" animation="pulse" size="3x"></fa-icon>
+    <nlf-ui-component-spinner size="3"></nlf-ui-component-spinner>
   </p>
 </span>
 

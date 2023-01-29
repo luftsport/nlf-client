@@ -12,7 +12,19 @@ import { NlfConfigService } from 'app/nlf-config.service';
 import { forkJoin } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { avatar_tmp_image, hashString } from 'app/interfaces/functions';
-// import { Observable } from "rxjs";
+import { 
+  faEdit,
+  faPlus,
+  faBars,
+  faBell,
+  faBellSlash,
+  faListOl,
+  faPowerOff,
+  faHomeAlt,
+  faUserAlt,
+  faDesktop,
+  faCommenting
+} from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -21,6 +33,19 @@ import { avatar_tmp_image, hashString } from 'app/interfaces/functions';
   styleUrls: ['./navbar.component.css']
 })
 export class NlfUiNavbarComponent implements OnInit {
+
+  //Icons
+  faEdit = faEdit;
+  faPlus = faPlus;
+  faBars = faBars;
+  faBell = faBell;
+  faBellSlash = faBellSlash;
+  faListOl = faListOl;
+  faPowerOff = faPowerOff;
+  faHomeAlt = faHomeAlt;
+  faUserAlt = faUserAlt;
+  faDesktop = faDesktop;
+  faCommenting = faCommenting;
 
   loggedInObservable;
   navbarOpen = false;

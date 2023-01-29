@@ -177,7 +177,7 @@
           <h5>
             <span class="badge badge-info lead">Engine #{{ idx+1 }}</span>
             <span *ngIf="last && !disabled" (click)="delEngine(idx)" class="pointer mx-3">
-              <fa-icon icon="close" [fixed]="true"></fa-icon>
+              <fa name="close"></fa>
             </span>
           </h5>
         </div>
@@ -250,7 +250,7 @@
 
       </div>
       <button [disabled]="disabled" (click)="addEngine()" class="btn btn-primary btn-block my-3">
-        <fa-icon icon="plus" [fixed]="true"></fa-icon> Legg til motor
+        <fa name="plus"></fa> Legg til motor
       </button>
       <code>{{ engine | json }}</code>
     </div>
@@ -263,7 +263,7 @@
           <h5>
             <span class="badge badge-info lead">Propeller #{{ idx+1 }} </span>
             <span *ngIf="last && !disabled" (click)="delPropeller(idx)" class="pointer mx-3">
-              <fa-icon icon="close" [fixed]="true"></fa-icon>
+              <fa name="close"></fa>
             </span>
           </h5>
         </div>
@@ -340,7 +340,7 @@
         </div>
       </div>
       <button [disabled]="disabled" (click)="addPropeller()" class="btn btn-primary btn-block my-3">
-        <fa-icon icon="plus" [fixed]="true"></fa-icon> Legg til propell
+        <fa name="plus"></fa> Legg til propell
       </button>
 
       <code>{{ propeller | json }}</code>
@@ -380,7 +380,7 @@
     </div>
     <div class="col-md-6">
       <button *ngIf="showSave" [disabled]="!changes || disabled" (click)="saveAircraft()" class="btn btn-primary col-md-6 col-sm-12">
-        <fa-icon icon="save" [fixed]="true"></fa-icon> Save {{ aircraft.callsign }}
+        <fa name="save"></fa> Save {{ aircraft.callsign }}
       </button>
       <button *ngIf="showSave && changes" [routerLink]="['/aircraft']" class="btn btn-link col-md-6 col-sm-12">
         Cancel

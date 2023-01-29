@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-3">
     <button [disabled]="disabled" class="btn btn-primary btn-block" (click)="add();openModal(modal, modalIdx)">
-      <fa-icon icon="plus" [fixed]="true"></fa-icon>Add Airprox/separation
+      <fa-icon icon="plus"></fa-icon>Add Airprox/separation
     </button>
   </div>
   <div class="col-md-9">
@@ -82,10 +82,10 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa-icon icon="times" [fixed]="true"></fa-icon>Avbryt
+      <fa-icon icon="times"></fa-icon>Avbryt
     </button>
     <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate()">
-      <fa-icon icon="check" [fixed]="true"></fa-icon>Oppdater
+      <fa-icon icon="check"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>

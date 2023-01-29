@@ -1,5 +1,5 @@
 <button title="Legg til nytt fly i flyregisteret" (click)="openModal(modalTemplate)" style="margin:1px;" class="btn btn-primary btn-sm">
-  <fa-icon icon="plus" [fixed]="true"></fa-icon>Nytt fly
+  <fa-icon icon="plus"></fa-icon>Nytt fly
 </button>
 
 <!-- ROUTE MODAL -->
@@ -86,7 +86,7 @@
 
         <div class="form-row">
           <button (click)="addAircraft()" class="btn btn-primary btn-block">
-            <fa-icon icon="plus" [fixed]="true"></fa-icon>Add
+            <fa-icon icon="plus"></fa-icon>Add
           </button>
         </div>
       </div>
@@ -100,7 +100,7 @@
       <div class="col-sm-12">
         <div *ngFor="let row of aircraft_listing">
           <a [routerLink]="['/aircraft', 'edit', row._id]">
-            <fa-icon icon="edit" [fixed]="true"></fa-icon>{{ row.callsign }}
+            <fa-icon icon="edit"></fa-icon>{{ row.callsign }}
           </a> {{ row.manufacturer }} {{ row.model }} <span class="badge" [ngClass]="{'badge-success': row.status=='ACTIVE', 'badge-danger': row.status=='DELETED'}">{{ row.status }}</span>
         </div>
       </div>
@@ -111,7 +111,7 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa-icon icon="times" [fixed]="true"></fa-icon>Avbryt
+      <fa-icon icon="times"></fa-icon>Avbryt
     </button>
 
   </div>

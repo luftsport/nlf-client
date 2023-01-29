@@ -52,7 +52,7 @@
         <input id="filterIdInput" #filterIdInput type="search" (keyup)="debouncedFilterId($event.target.value)" class="form-control form-control-sm border-right-0">
         <div class="input-group-append">
           <span class="input-group-text bg-transparent">
-            <fa-icon icon="times" [fixed]="true" class="text-secondary" (click)="filterId(null);filterIdInput.value=''"></fa-icon>
+            <fa-icon icon="times" class="text-secondary" (click)="filterId(null);filterIdInput.value=''"></fa-icon>
           </span>
         </div>
       </div>
@@ -65,7 +65,7 @@
         <input id="filterTitleInput" #filterTitleInput type="search" (keyup)="debouncedFilterTitle($event.target.value)" class="form-control form-control-sm border-right-0">
         <div class="input-group-append">
           <span class="input-group-text bg-transparent">
-            <fa-icon icon="times" [fixed]="true" class="text-secondary" (click)="filterTitle(null);filterTitleInput.value=''"></fa-icon>
+            <fa-icon icon="times" class="text-secondary" (click)="filterTitle(null);filterTitleInput.value=''"></fa-icon>
           </span>
         </div>
       </div>
@@ -104,6 +104,6 @@
 </span>
 <span *ngIf="!dataReady">
   <p class="align-middle text-center  text-secondary">
-    <fa-icon icon="spinner" animation="pulse" size="3x"></fa-icon>
+    <nlf-ui-component-spinner size="3"></nlf-ui-component-spinner>
   </p>
 </span>

@@ -31,7 +31,8 @@ import { WorkerLogComponent } from './worker-log/worker-log.component';
     TableModule,
     NgxChartsModule,
     FontAwesomeModule,
-    MomentModule,
+    MomentModule
+    
   ],
   providers: [
 

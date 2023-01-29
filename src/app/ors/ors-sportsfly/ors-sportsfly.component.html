@@ -3,7 +3,7 @@
     OBSREG Sportsfly
 
     <button [routerLink]="['/ors', 'sportsfly', 'search']" type="button" class="btn btn-sm btn-primary pull-right">
-      <fa-icon icon="search" [fixed]="true"></fa-icon> Søk
+      <fa-icon icon="search"></fa-icon> Søk
     </button>
 
     <nlf-help class="pull-right mx-1" key="ors-sportsfly"></nlf-help>
@@ -18,14 +18,14 @@
     <!-- MY -->
     <div class="col-md-6 col-xs-12 overflow-auto">
       <div class="nlf-ors-toolbar">
-        <fa-icon icon="user" [fixed]="true" class="text-secondary"></fa-icon> Mine observasjoner
+        <fa-icon icon="user" class="text-secondary"></fa-icon> Mine observasjoner
       </div>
       <nlf-ors-self-table activity="sportsfly"></nlf-ors-self-table>
     </div>
     <!-- MY TODO -->
     <div class="col-md-6 col-xs-12 overflow-auto">
       <div class="nlf-ors-toolbar">
-        <fa-icon icon="exchange" [fixed]="true" class="text-secondary"></fa-icon> Til min behandling
+        <fa-icon icon="exchange" class="text-secondary"></fa-icon> Til min behandling
       </div>
       <nlf-ors-todo-table activity="sportsfly"></nlf-ors-todo-table>
     </div>
@@ -35,7 +35,7 @@
 
         <div class="card mb-3 mr-1">
           <h5 class="card-header">
-            <fa-icon icon="user" [fixed]="true"></fa-icon>Mine observasjoner</h5>
+            <fa-icon icon="user"></fa-icon>Mine observasjoner</h5>
           <div class="card-body table-responsive" style="padding: 0;">
 
           </div>
@@ -43,7 +43,7 @@
 
         <div class="card mb-3 ml-1">
           <h5 class="card-header">
-            <fa-icon icon="random" [fixed]="true"></fa-icon>Til min behandling</h5>
+            <fa-icon icon="random"></fa-icon>Til min behandling</h5>
           <div class="card-body" style="padding: 0;">
             <nlf-ors-todo-table  activity="sportsfly"></nlf-ors-todo-table>
           </div>
@@ -67,7 +67,7 @@
   <div class="row">
     <div class="col-md-12 col-xs-12 overflow-auto">
       <div class="nlf-ors-toolbar">
-        <fa-icon icon="list" [fixed]="true" class="text-secondary"></fa-icon> Alle observasjoner
+        <fa-icon icon="list" class="text-secondary"></fa-icon> Alle observasjoner
       </div>
       <nlf-ors-all-table activity="sportsfly"></nlf-ors-all-table>
     </div>

@@ -61,12 +61,12 @@
     <td>
       <div *ngIf="!aircraft.aircraft.e5x">
         <button class="btn btn-secondary" (click)="openAircraftModal(aircraftModal, idx)">
-          <fa-icon icon="warning" [fixed]="true"></fa-icon>Aircraft Data
+          <fa-icon icon="warning"></fa-icon>Aircraft Data
         </button>
       </div>
       <div *ngIf="!!aircraft.aircraft.e5x">
         <button class="btn btn-success mb-3" (click)="openAircraftModal(aircraftModal, idx)">
-          <fa-icon icon="check" [fixed]="true"></fa-icon>Aircraft Data
+          <fa-icon icon="check"></fa-icon>Aircraft Data
         </button>
       </div>
 
@@ -140,13 +140,13 @@
 
   <div class="modal-footer">
     <a [routerLink]="['/aircraft', 'edit', (modalAircraft._id || modalAircraft.callsign)]" class="btn btn-outline-dark mr-auto" (click)="modalRef.close()">
-      <fa-icon icon="edit" [fixed]="true"></fa-icon>{{ modalAircraft.callsign }} i registeret
+      <fa-icon icon="edit"></fa-icon>{{ modalAircraft.callsign }} i registeret
     </a>
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa-icon icon="times" [fixed]="true"></fa-icon>Avbryt
+      <fa-icon icon="times"></fa-icon>Avbryt
     </button>
     <button [disabled]="!observation.acl_user.w" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="nlfaircraftedit.saveAircraft();modalAircraftUpdate(modalIndex)">
-      <fa-icon icon="check" [fixed]="true"></fa-icon>Oppdater
+      <fa-icon icon="check"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>
