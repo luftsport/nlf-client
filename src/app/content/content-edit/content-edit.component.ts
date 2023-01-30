@@ -10,9 +10,9 @@ import { NlfAlertService } from 'app/services/alert/alert.service';
 import { LungoPersonsService } from 'app/api/lungo-persons.service';
 import { LungoPersonsSearchItem, LungoPersonsSearchList } from 'app/api/lungo.interface';
 
-import Tribute from 'tributejs/src';
+import Tribute from "tributejs";
+import TributeOptions from "tributejs";
 import { debounce } from 'ts-debounce';
-import { VIEWPORT_RULER_PROVIDER_FACTORY } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'nlf-admin-content-edit',
@@ -52,7 +52,9 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
   content: ApiContentItem = { title: '', slug: '', body: undefined, space_key: '' };
 
   // Tributejs
-  tribute: Tribute;
+  tribute: any;
+  tributeOptions: TributeOptions;
+
   debouncedGetOrs = debounce(this.getOrs, 500);
   debouncedGetUsers = debounce(this.getUsers, 500);
   debouncedGetContent = debounce(this.getContent, 500);
@@ -209,7 +211,8 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
       values: (text, callback) => this.debouncedGetOrs(text, u => callback(u)),
       requireLeadingSpace: true,
     };
-    this.tribute = new Tribute({ collection: [users, ors, content], allowSpaces: true });
+    this.tributeOptions = { collection: [users, ors, content], allowSpaces: true };
+    this.tribute = new Tribute(this.tributeOptions);
 
     this.joditConfig = {
       buttons: 'paragraph, bold,strikethrough,underline,italic,|, \
