@@ -221,7 +221,7 @@ export class NlfWorkersStatusComponent implements OnInit {
           emphasis: {
             label: {
               show: true,
-              fontSize: 40,
+              fontSize: 20,
               fontWeight: 'bold'
             }
           },
@@ -290,7 +290,7 @@ export class NlfWorkersStatusComponent implements OnInit {
               emphasis: {
                 label: {
                   show: true,
-                  fontSize: 40,
+                  fontSize: 20,
                   fontWeight: 'bold'
                 }
               },
