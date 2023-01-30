@@ -53,7 +53,7 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
 
   // Tributejs
   tribute: any;
-  tributeOptions: TributeOptions;
+  tributeOptions: any;
 
   debouncedGetOrs = debounce(this.getOrs, 500);
   debouncedGetUsers = debounce(this.getUsers, 500);

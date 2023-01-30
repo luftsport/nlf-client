@@ -28,7 +28,7 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
   observation: ApiObservationsItem;
   rs: any;
   tribute: any; //Tribute;
-  tributeOptions: TributeOptions;
+  tributeOptions: any; //TributeOptions;
   tributeInitited = false;
   modalRef;
 
