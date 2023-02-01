@@ -1093,3 +1093,8 @@ del {
     color: #8f9eb5 !important;
     margin-left: 5px !important;
 }
+
+/** LEAFLET **/
+.leaflet-pane.leaflet-shadow-pane {
+    display: none;
+}
