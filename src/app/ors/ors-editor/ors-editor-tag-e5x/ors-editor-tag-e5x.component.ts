@@ -244,13 +244,13 @@ export class NlfOrsEditorTagE5XComponent implements OnInit {
     } catch { }
 
     // Make sure floats are corrected - to 2 digits
-    if (this.attribute.restrictions.type === 'decimal') {
-      try {
 
+    try {
+      if (this.attribute.restrictions.type === 'decimal') {
         this.items = String(parseFloat(this.items).toFixed(2));
+      }
 
-      } catch { }
-    }
+    } catch { }
 
     try {
       if (this.attribute.restrictions.type === 'string' && +this.attribute.restrictions.max > 0) {
