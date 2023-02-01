@@ -7,7 +7,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiOptionsInterface, ApiObservationsItem, ApiNlfUserItem, ApiNlfUserList, ApiObservationAskTextInterface } from 'app/api/api.interface';
 import { NlfOrsEditorInvolvedService } from 'app/ors/ors-editor/ors-editor-involved.service';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
-import Tribute from 'tributejs/src';
+import Tribute from "tributejs";
+import TributeOptions from "tributejs";
 import { debounce } from 'ts-debounce';
 
 /**
@@ -26,7 +27,8 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
   list; // mentions list
   observation: ApiObservationsItem;
   rs: any;
-  tribute: Tribute;
+  tribute: any; //Tribute;
+  tributeOptions: any; //TributeOptions;
   tributeInitited = false;
   modalRef;
 
@@ -202,7 +204,8 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
         this.replaceTextSuffix = replaceTextSuffix = '\n'
         this.positionMenu = positionMenu | true
      */
-    this.tribute = new Tribute({ collection: [users, remote, ors], allowSpaces: true });
+    this.tributeOptions = { collection: [users, remote, ors], allowSpaces: true };
+    this.tribute = new Tribute(this.tributeOptions);
 
     this.elementAsk = document.getElementById('ask'); //getElementsByName('myAskDiv');
     this.tribute.attach(this.elementAsk);
