@@ -3,7 +3,7 @@
 
     <ol class="breadcrumb">
       <li class="breadcrumb-item active">
-        <fa-icon icon="question"></fa-icon>
+        <fa-icon [icon]="faQuestion"></fa-icon>
         <a [routerLink]="['/admin', 'help']">Hjelpesystem</a>
       </li>
     </ol>
@@ -28,7 +28,7 @@
         </td>
         <td>
           <span class="pointer" (click)="delete(row)">
-            <fa-icon icon="close"></fa-icon>
+            <fa-icon [icon]="faClose"></fa-icon>
           </span>
           <nlf-help [key]="row.key" [details]="true"></nlf-help>
         </td>

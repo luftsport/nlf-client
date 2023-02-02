@@ -2,27 +2,27 @@
 <div class="my-3 text-right">
   <span class="pointer mx-1" [ngClass]="show.reminders ? 'text-info' : 'text-secondary'"
     (click)="show.reminders=!show.reminders">
-    <fa-icon icon="bell"></fa-icon> purringer
+    <fa-icon [icon]="faBell"></fa-icon> purringer
   </span>
   <span class="pointer mx-1" [ngClass]="show.messages ? 'text-info' : 'text-secondary'"
     (click)="show.messages=!show.messages">
-    <fa-icon icon="comments-o"></fa-icon> meldinger
+    <fa-icon [icon]="faComments"></fa-icon> meldinger
   </span>
   <span class="pointer mx-1" [ngClass]="show.workflow ? 'text-info' : 'text-secondary'"
     (click)="show.workflow=!show.workflow">
-    <fa-icon icon="exchange"></fa-icon> arbeidsflyt
+    <fa-icon [icon]="faExchange"></fa-icon> arbeidsflyt
   </span>
   <!-- ONLY motorfly shows E5X *ngIf="activity=='motorfly'" -->
   <span class="pointer mx-1" [ngClass]="show.e5x ? 'text-info' : 'text-secondary'" (click)="show.e5x=!show.e5x">
-    <fa-icon icon="paper-plane-o"></fa-icon> LT
+    <fa-icon [icon]="faPaperPlaneRegular"></fa-icon> LT
   </span>
 
   <span class="pointer mx-1" [ngClass]="show.save ? 'text-info' : 'text-secondary'" (click)="show.save=!show.save">
-    <fa-icon icon="floppy-o"></fa-icon> lagring
+    <fa-icon [icon]="faFloppyDisk"></fa-icon> lagring
   </span>
   <span class="pointer mx-1" [ngClass]="show.persons ? 'text-info' : 'text-secondary'"
     (click)="show.persons=!show.persons">
-    <fa-icon icon="user-plus"></fa-icon> personer
+    <fa-icon [icon]="faUserPlus"></fa-icon> personer
   </span>
 </div>
 
@@ -39,7 +39,7 @@
     </time>
 
     <!--
-    <fa-icon icon="comment-o"></fa-icon>
+    <fa-icon [icon]="faComment"></fa-icon>
 
       <div class="cbp_tmicon avatar">
       <img src="https://www.bootdey.com/img/Content/avatar/avatar2.png" style="margin-top: -3px !important" alt="user" class="avatar-img rounded-circle">
@@ -47,7 +47,7 @@
     -->
 
     <div class="cbp_tmicon bg-light">
-      <fa-icon icon="commenting-o"></fa-icon>
+      <fa-icon [icon]="faCommenting"></fa-icon>
     </div>
 
     <div *ngIf="observation.workflow.state!='closed'" class="cbp_tmlabel empty">
@@ -70,13 +70,13 @@
         </button>
         <button [disabled]="!observation.acl_user.r" *ngIf="!is_reminding" class="btn btn-link text-danger mx-1"
           (click)="notify()">
-          <fa-icon icon="bell"></fa-icon> Purring
+          <fa-icon [icon]="faBell"></fa-icon> Purring
         </button>
 
 
         <!--
       <button class="btn btn-add-gray">
-        <fa-icon icon="plus"></fa-icon>
+        <fa-icon [icon]="faPlus"></fa-icon>
       </button>
     -->
 
@@ -95,7 +95,7 @@
               <div class="avatar">
               <a href="#">
                 <span class="add-new-plus">
-                  <fa-icon icon="plus"></fa-icon>
+                  <fa-icon [icon]="faPlus"></fa-icon>
                 </span>
               </a>
               </div>
@@ -108,7 +108,7 @@
           <!-- SEND BTN -->
           <button *ngIf="!is_sending_msg" [disabled]="message_text.length<4" class="btn btn-primary ml-3"
             (click)="sendMessage()">
-            <fa-icon icon="comment"></fa-icon> Send
+            <fa-icon [icon]="faComment"></fa-icon> Send
             <!--Melding-->
           </button>
           <button *ngIf="is_sending_msg" [disabled]="message_text.length<4" class="btn btn-primary ml-3">
@@ -148,7 +148,7 @@
         <time class="cbp_tmtime" [dateTime]="row.event_created"><span>{{ row.event_created | date:'HH:mm' }}</span>
           <span>{{ row.event_created | amTimeAgo }}</span></time>
         <div class="cbp_tmicon bg-green">
-          <fa-icon icon="plus"></fa-icon>
+          <fa-icon [icon]="faPlus"></fa-icon>
         </div>
         <div class="cbp_tmlabel">
           <h2>
@@ -196,15 +196,15 @@
         </div>
 
         <div *ngIf="row.data.action=='reject'" class="cbp_tmicon bg-blush">
-          <fa-icon icon="refresh"></fa-icon>
+          <fa-icon [icon]="faRefresh"></fa-icon>
         </div>
 
         <div *ngIf="row.data.action=='withdraw'" class="cbp_tmicon bg-dark">
-          <fa-icon icon="ban"></fa-icon>
+          <fa-icon [icon]="faBan"></fa-icon>
         </div>
 
         <div *ngIf="row.data.action=='reopen'" class="cbp_tmicon bg-green">
-          <fa-icon icon="repeat"></fa-icon>
+          <fa-icon [icon]="faRepeat"></fa-icon>
         </div>
 
         <div class="cbp_tmlabel">
@@ -253,7 +253,7 @@
       <time class="cbp_tmtime" [dateTime]="row.event_created"><span>{{ row.event_created | date:'HH:mm' }}</span>
         <span>{{ row.event_created | amTimeAgo }}</span></time>
       <div class="cbp_tmicon bg-info">
-        <fa-icon icon="floppy-o">{{ row._version }}</fa-icon>
+        <fa-icon [icon]="faFloppyDisk">{{ row._version }}</fa-icon>
       </div>
       <div class="cbp_tmlabel">
         <h2>
@@ -262,7 +262,7 @@
           <span class="pull-right">
             <a
               [routerLink]="['/ors', observation._model.type, 'report', observation._id, 'version', row.data.source]">v{{row.data.source}}</a>
-            <fa-icon icon="long-arrow-right text-secondary mx-1"></fa-icon>
+            <fa-icon [icon]="faLongArrowRight" class="text-secondary mx-1"></fa-icon>
             <a
               [routerLink]="['/ors', observation._model.type, 'report', observation._id, 'version', row.data.source]">v{{row.data.destination}}</a>
           </span>
@@ -276,7 +276,7 @@
       <time class="cbp_tmtime" [dateTime]="row.event_created"><span>{{ row.event_created | date:'HH:mm' }}</span>
         <span>{{ row.event_created | amTimeAgo }}</span></time>
       <div class="cbp_tmicon bg-danger">
-        <fa-icon icon="bell-o"></fa-icon>
+        <fa-icon [icon]="faBellRegular"></fa-icon>
       </div>
       <div class="cbp_tmlabel">
         <h2>
@@ -291,7 +291,7 @@
         <nlf-resolve-avatars [persons]="row.recepients||[]" modal_title="Mottakere"></nlf-resolve-avatars>
         <!--
         <div *ngFor="let person_id of row.recepients">
-          <fa-icon icon="bell-o" class="text-danger"></fa-icon>
+          <fa-icon [icon]="faBellRegular" class="text-danger"></fa-icon>
           <nlf-resolve-lungo-person [person_id]="person_id" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
         </div>
         -->
@@ -299,7 +299,7 @@
 
           <div *ngIf="1==9" class="col-lg-12">
             <button class="btn btn-dark btn-outline">
-              <fa-icon icon="bell-o"></fa-icon> Purr Jan-Erik Wang igjen
+              <fa-icon [icon]="faBellRegular"></fa-icon> Purr Jan-Erik Wang igjen
             </button>
           </div>
 
@@ -312,7 +312,7 @@
       <time class="cbp_tmtime" [dateTime]="row.event_created"><span>{{ row.event_created | date:'HH:mm' }}</span>
         <span>{{ row.event_created | amTimeAgo }}</span></time>
       <div class="cbp_tmicon bg-warning">
-        <fa-icon icon="clock-o"></fa-icon>
+        <fa-icon [icon]="faClock"></fa-icon>
       </div>
       <div class="cbp_tmlabel">
         <h2>
@@ -328,7 +328,7 @@
         </p>
 
         <nlf-resolve-avatars [persons]="row.recepients||[]" modal_title="Mottakere"></nlf-resolve-avatars>
-        
+
         <div class="row clearfix">
 
         </div>
@@ -340,7 +340,7 @@
       <time class="cbp_tmtime" [dateTime]="row.event_created"><span>{{ row.event_created | date:'HH:mm' }}</span>
         <span>{{ row.event_created | amTimeAgo }}</span></time>
       <div class="cbp_tmicon bg-danger">
-        <fa-icon icon="clock-o"></fa-icon>
+        <fa-icon [icon]="faClock"></fa-icon>
       </div>
       <div class="cbp_tmlabel">
         <h2>
@@ -356,7 +356,7 @@
         </p>
 
         <nlf-resolve-avatars [persons]="row.recepients||[]" modal_title="Mottakere"></nlf-resolve-avatars>
-        
+
         <div class="row clearfix">
 
         </div>
@@ -369,7 +369,7 @@
         <span>{{ row.event_created | amTimeAgo }}</span></time>
       <div class="cbp_tmicon bg-info">
         <!-- comments-o commenting-o -->
-        <fa-icon icon="comment"></fa-icon>
+        <fa-icon [icon]="faComment"></fa-icon>
       </div>
       <div class="cbp_tmlabel">
         <h2>
@@ -399,10 +399,10 @@
         <span>{{ row.event_created | amTimeAgo }}</span></time>
 
       <div *ngIf="row.data.context!='sent'" class="cbp_tmicon bg-orange">
-        <fa-icon icon="paper-plane"></fa-icon>
+        <fa-icon [icon]="faPaperPlane"></fa-icon>
       </div>
       <div *ngIf="row.data.context=='sent'" class="cbp_tmicon bg-green">
-        <fa-icon icon="paper-plane-o"></fa-icon>
+        <fa-icon [icon]="faPaperPlaneRegular"></fa-icon>
       </div>
       <div class="cbp_tmlabel">
         <h2>
@@ -441,11 +441,11 @@
         <span>{{ row.event_created | amTimeAgo }}</span></time>
 
       <div *ngIf="row.data.verb=='add'" class="cbp_tmicon bg-green">
-        <fa-icon icon="user-plus"></fa-icon>
+        <fa-icon [icon]="faUserPlus"></fa-icon>
       </div>
 
       <div *ngIf="row.data.verb=='remove'" class="cbp_tmicon bg-blush">
-        <fa-icon icon="user-times"></fa-icon>
+        <fa-icon [icon]="faUserTimes"></fa-icon>
       </div>
 
       <div class="cbp_tmlabel">

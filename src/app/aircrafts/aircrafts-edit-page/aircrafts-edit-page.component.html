@@ -2,7 +2,7 @@
   <div class="container">
     <span class="breadcrumb">
       <li class="breadcrumb-item">
-        <fa-icon icon="plane" fixed="false" class="mr-1"></fa-icon><a [routerLink]="['/', 'aircraft']">Aircraft</a>
+        <fa-icon [icon]="faPlane" fixed="false" class="mr-1"></fa-icon><a [routerLink]="['/', 'aircraft']">Aircraft</a>
       </li>
       <li class="breadcrumb-item">
         <span *ngIf="callsign" class="mr-1 active">{{ callsign }}</span>
@@ -11,7 +11,7 @@
     </span>
 
     <a [routerLink]="['/', 'aircraft', 'view', callsign]" class="btn btn-sm btn-primary mx-1 pull-right">
-      <fa-icon icon="plane"></fa-icon> View
+      <fa-icon [icon]="faPlane"></fa-icon> View
     </a>
 
   </div>

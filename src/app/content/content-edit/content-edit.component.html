@@ -8,7 +8,7 @@
 
   <div class="nlf-sticky-toolbar">
     <div class="container">
-      <fa-icon icon="edit"></fa-icon>{{ content.title }}
+      <fa-icon [icon]="faEdit"></fa-icon>{{ content.title }}
       <sup class="text-danger mx-1" title="Applikasjonen er ikke ferdig utviklet">beta</sup>
     </div>
   </div>
@@ -56,26 +56,26 @@
 
 
         <a *ngIf="mode==='create_space'" class="btn" [routerLink]="['/content']">
-          <fa-icon icon="close"></fa-icon>Cancel
+          <fa-icon [icon]="faClose"></fa-icon>Cancel
         </a>
 
         <a *ngIf="mode==='create_page'" class="btn" [routerLink]="['/content/space', content.space_key]">
-          <fa-icon icon="close"></fa-icon>Cancel
+          <fa-icon [icon]="faClose"></fa-icon>Cancel
         </a>
 
         <a *ngIf="mode==='edit'" class="btn" [routerLink]="['/content/view', content.space_key, content.slug]">
-          <fa-icon icon="close"></fa-icon>Cancel
+          <fa-icon [icon]="faClose"></fa-icon>Cancel
         </a>
 
         <button [disabled]="!changed" *ngIf="mode==='edit'" (click)="save()" class="btn btn-primary">
-          <fa-icon icon="save"></fa-icon>Save
+          <fa-icon [icon]="faSave"></fa-icon>Save
         </button>
 
         <button *ngIf="mode==='create_space'" (click)="create()" class="btn btn-success">
-          <fa-icon icon="plus"></fa-icon>Create space
+          <fa-icon [icon]="faPlus"></fa-icon>Create space
         </button>
         <button *ngIf="mode==='create_page'" (click)="create()" class="btn btn-success">
-          <fa-icon icon="plus"></fa-icon>Create page
+          <fa-icon [icon]="faPlus"></fa-icon>Create page
         </button>
       </span>
     </div>

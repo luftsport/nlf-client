@@ -3,6 +3,7 @@ import { ApiHelpService } from 'app/api/api-help.service';
 import { ApiHelpItem, ApiHelpList, ApiOptionsInterface } from 'app/api/api.interface';
 import { TableConfig, TableEventObject } from 'app/interfaces/ngx-easy-table.interface';
 import { ConfirmService } from 'app/services/confirm/confirm.service';
+import { faClose, faQuestion } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-admin-help',
@@ -13,6 +14,9 @@ export class NlfAdminHelpComponent implements OnInit {
 
   help: Array<ApiHelpItem>;
   dataReady = false;
+
+  faClose = faClose;
+  faQuestion = faQuestion;
 
   columns = [
     { key: 'key', title: 'Key', sort: true },

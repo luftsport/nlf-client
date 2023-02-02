@@ -14,12 +14,19 @@ import Tribute from "tributejs";
 import TributeOptions from "tributejs";
 import { debounce } from 'ts-debounce';
 
+import { faEdit, faClose, faSave, faPlus } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'nlf-admin-content-edit',
   templateUrl: './content-edit.component.html',
   styleUrls: ['./content-edit.component.css']
 })
 export class NlfContentEditComponent implements OnInit, AfterViewInit {
+
+  faEdit = faEdit;
+  faClose = faClose;
+  faSave = faSave;
+  faPlus = faPlus;
 
   joditConfig: Object;
   jodit;
@@ -139,7 +146,7 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
       }
 
     );
-    
+
     /**
      * Tributejs for mentions
      * See https://github.com/zurb/tribute for more
@@ -195,7 +202,7 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
     // Only fallskjerm for now
     // @TODO see how to limit to one activity or get searches from all activities (eg forkJoin?) or '#F' '#M' etc?
     const ors = {
-      trigger: '#', 
+      trigger: '#',
       iframe: null,
       selectClass: 'highlight',
       selectTemplate: function (item) {
@@ -270,7 +277,7 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
   public getOrs(text, callback) {
 
     this.orsService.setActivity('fallskjerm');
-    
+
     console.log('searcing for OBSREG, text', text);
 
     let ids = text.replace(/\D+/g, '') // Non digits

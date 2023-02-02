@@ -2,6 +2,7 @@ import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import { ApiContentService } from 'app/api/api-content.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiOptionsInterface, ApiContentItem } from 'app/api/api.interface';
+import { faEdit, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-content-view',
@@ -9,6 +10,9 @@ import { ApiOptionsInterface, ApiContentItem } from 'app/api/api.interface';
   styleUrls: ['./content-view.component.css']
 })
 export class NlfContentViewComponent implements OnInit, AfterContentChecked {
+
+  faEdit = faEdit;
+  faPlus = faPlus;
 
   content: ApiContentItem;
   dataReady = false;

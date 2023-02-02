@@ -1,7 +1,7 @@
 <div *ngIf="!!dataReady && !!space && !error">
   <div class="nlf-sticky-toolbar">
     <div class="container">
-      <fa-icon icon="sitemap"></fa-icon>
+      <fa-icon [icon]="faSitemap"></fa-icon>
       <a [routerLink]="['/content']">Spaces</a> / <a [routerLink]="['/content', space.space_key, space._id]">{{ space.title }}</a>
       <sup class="text-danger mx-1" title="Applikasjonen er ikke ferdig utviklet">beta</sup>
     </div>
@@ -15,10 +15,10 @@
       <td class="ngx-easy-table-small">
 
         <span *ngIf="!!row.parent">
-          <fa-icon icon="file"></fa-icon>
+          <fa-icon [icon]="faFile"></fa-icon>
         </span>
         <span *ngIf="!row.parent">
-          <fa-icon icon="sitemap"></fa-icon>
+          <fa-icon [icon]="faSitemap"></fa-icon>
         </span>
         <a [routerLink]="['/content','space', row.space_key, row.slug]">{{ row.title }}</a>
 
@@ -31,20 +31,20 @@
       </td>
       <td>
         <span class="pointer" (click)="delete(row)">
-          <fa-icon icon="close"></fa-icon>
+          <fa-icon [icon]="faClose"></fa-icon>
         </span>
         <span class="pointer" [routerLink]="['/content/edit/', row._id]">
-          <fa-icon icon="edit"></fa-icon>
+          <fa-icon [icon]="faEdit"></fa-icon>
         </span>
         <span class="pointer" [routerLink]="['/content/create/', row._id]">
-          <fa-icon icon="plus"></fa-icon>
+          <fa-icon [icon]="faPlus"></fa-icon>
         </span>
 
         <span *ngIf="!row?.published" class="pointer" (click)="publish(row._id)">
-          <fa-icon icon="ban"></fa-icon>
+          <fa-icon [icon]="faBan"></fa-icon>
         </span>
         <span *ngIf="!!row?.published" class="pointer text-success" (click)="unpublish(row._id)">
-          <fa-icon icon="check"></fa-icon>
+          <fa-icon [icon]="faCheck"></fa-icon>
         </span>
 
       </td>
