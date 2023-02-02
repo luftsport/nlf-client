@@ -2,14 +2,14 @@
   <div class="container">
     <span class="breadcrumb">
       <li class="breadcrumb-item">
-        <fa-icon icon="plug" class="mr-1 active"></fa-icon><a [routerLink]="['/', '376']">NIF
+        <fa-icon [icon]="faPlug" class="mr-1 active"></fa-icon><a [routerLink]="['/', '376']">NIF
           Integration</a>
       </li>
     </span>
 
     <span class="float-right d-inline">
       <a class="mr-1 btn btn-primary btn-sm" [routerLink]="['/integration']">
-        <fa-icon icon="cog"></fa-icon>Syncdaemon
+        <fa-icon [icon]="faCog"></fa-icon>Syncdaemon
       </a>
     </span>
 
@@ -164,7 +164,7 @@
       <ng-template let-row>
         <td>
           <span class="text-xs-left">
-            <fa-icon [ngClass]="!!row.status ? 'text-success' : 'text-danger'" name='circle'></fa-icon>
+            <fa-icon [ngClass]="!!row.status ? 'text-success' : 'text-danger'" [icon]='faCircle'></fa-icon>
           </span>
         </td>
         <td>
@@ -245,7 +245,7 @@
 -->
   <div>
     <button class="btn btn-success" (click)="refresh()">
-      <fa-icon icon="refresh"></fa-icon>Refresh
+      <fa-icon [icon]="faRefresh"></fa-icon>Refresh
     </button>
   </div>
   <div>
