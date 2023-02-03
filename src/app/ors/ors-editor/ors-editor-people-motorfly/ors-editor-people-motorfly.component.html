@@ -12,9 +12,9 @@
 
 
   <!--
-  { "id": 301041, "data": { "date": "2019-02-05T19:21:06.096Z", 
-  "licenses": [ { "id": 8948522, "status_id": 3, "status_date": "2018-05-24T13:46:49.013000Z", "expiry": "2018-12-31T00:00:00.000000Z", "type_id": 205519, "type_name": "Basis" } ], 
-  "functions": [ 20786409, 20786865, 22458282, 25428769 ], 
+  { "id": 301041, "data": { "date": "2019-02-05T19:21:06.096Z",
+  "licenses": [ { "id": 8948522, "status_id": 3, "status_date": "2018-05-24T13:46:49.013000Z", "expiry": "2018-12-31T00:00:00.000000Z", "type_id": 205519, "type_name": "Basis" } ],
+  "functions": [ 20786409, 20786865, 22458282, 25428769 ],
   "private": { "default_club": 22976, "default_activity": 109 } } }
 
 -->
@@ -255,10 +255,10 @@
   </div>
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa-icon icon="times"></fa-icon>Avbryt
+      <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>Avbryt
     </button>
     <button [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalInvolvedUpdate(modalIndex)">
-      <fa-icon icon="check"></fa-icon>Oppdater
+      <fa-icon [icon]="faCheck" [fixedWidth]="true"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>

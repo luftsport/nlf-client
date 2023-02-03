@@ -24,7 +24,7 @@
         <span *ngIf="!!observation">
           <span (click)="saveIfChanges()" *ngIf="!!changes && observation.acl_user.w"
             class="pointer badge badge-warning mx-1">
-            <fa-icon icon="save"></fa-icon>
+            <fa-icon [icon]="faSave"></fa-icon>
           </span>
         </span>
 
@@ -32,24 +32,24 @@
         <a class="badge badge-light pointer text-info mx-1" (click)="openHelp()" joyrideStep="step001"
           stepPosition="bottom" title="Hjelp"
           text='Et "?" indikerer at det er hjelpetekst tilgjengelig. Dette er for siden, og du finner også "?"" i nærheten av komponenter i rapporten'>
-          <fa-icon icon="question"></fa-icon>
+          <fa-icon [icon]="faQuestion"></fa-icon>
         </a>
 
         <!-- FLAGS -->
         <span *ngIf="hasFlag()" class="text-danger mx-1" joyrideStep="step002" stepPosition="bottom" title="Flagg"
           text="Her vil flagg vises. Et flagg er...">
-          <fa-icon icon="flag"></fa-icon>
+          <fa-icon [icon]="faFlag"></fa-icon>
         </span>
 
         <!-- ABOUT -->
         <a (click)="openAbout()" class="badge badge-secondary text-white pointer mx-1" joyrideStep="step002"
           stepPosition="bottom" title="Om" text="Denne viser informasjon om obervasjonen...">
-          <fa-icon icon="info-circle"></fa-icon>
+          <fa-icon [icon]="faInfoCircle"></fa-icon>
           <fa-icon *ngIf="!observation.acl_user.w" name="lock" class="text-danger"
             title="Ingen skrivetilgang"></fa-icon>
           {{ observation._updated | amTimeAgo }}
         </a>
-        <!-- TOUR 
+        <!-- TOUR
         <a class="badge badge-success mx-1 text-white pointer"
           (click)="joyrideService.startTour({ steps: ['step001', 'step002', 'step003', 'step004', 'step005', 'step006', 'step007', 'step008', 'step009'] })">
           Intro
@@ -86,7 +86,7 @@
           [routerLink]="['/ors', observation._model.type , 'activities', observation.id]" joyrideStep="step006"
           stepPosition="bottom" title="Aktivitet"
           text="Denne knappen aktiverer aktivitetsvinduet som viser all aktiviteten vedrørende denne observasjonen. Her kan det også sendes meldinger">
-          <fa-icon icon="history"></fa-icon> Aktivitet
+          <fa-icon [icon]="faHistory"></fa-icon> Aktivitet
         </a>
 
         <!-- ACCESS -->
@@ -100,7 +100,7 @@
           *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge badge-primary text-white mx-1"
           joyrideStep="step009" stepPosition="bottom" title="Rapport"
           text="Denne knappen tar deg videre til visning av observasjonen slik den vil se ut etter at den er ferdig og offentlig.">
-          <fa-icon icon="file"></fa-icon> Report
+          <fa-icon [icon]="faFile"></fa-icon> Report
         </a>
 
       </span>
@@ -589,7 +589,7 @@
 
             <div class="btn-toolbar pull-right">
               <button (click)="openWorkflow()" class="btn btn-primary mr-2">
-                <fa-icon icon="exchange"></fa-icon> Behandle #{{observation.id}}
+                <fa-icon [icon]="faExchange"></fa-icon> Behandle #{{observation.id}}
               </button>
             </div>
           </ng-container>
@@ -622,26 +622,26 @@
 
             <button class="btn btn-success mr-2" (click)="openWorkflow()" title="Send"
               text="Når du er ferdig med observasjonen så sender du den til neste i arbeidsflyten som vil behandle observasjonen videre">
-              <fa-icon icon="send"></fa-icon> Send til OBSREG koordinator
+              <fa-icon [icon]="faPaperPlane"></fa-icon> Send til OBSREG koordinator
             </button>
 
 
             <button class="btn btn-danger mr-2" (click)="openWorkflow()" title="Trekk tilbake"
               text="Om du ikke ønsker sende inn rapporten så velger du trekk tilbake. Da blir rapporten kun tilgjegenlig for deg og du kan når som helst gjenåpne den igjen. Dette er OBSREGs måte å slette på.">
-              <fa-icon icon="reply"></fa-icon> Trekk tilbake
+              <fa-icon [icon]="faReply"></fa-icon> Trekk tilbake
             </button>
 
           </ng-container>
 
           <ng-container *ngIf="observation.workflow.state==='withdrawn'">
             <button class="btn btn-success mr-2" (click)="openWorkflow()" title="Gjenåpne" text="Gjenåpne ">
-              <fa-icon icon="repeat"></fa-icon> Gjenåpne
+              <fa-icon [icon]="faRepeat"></fa-icon> Gjenåpne
             </button>
           </ng-container>
 
           <ng-container *ngIf="['withdrawn','draft'].indexOf(observation.workflow.state)<0">
             <button class="btn btn-primary mr-2" (click)="openWorkflow()" title="Behandle" text="Behandle ">
-              <fa-icon icon="random"></fa-icon> Arbeidsflyt
+              <fa-icon [icon]="faRandom"></fa-icon> Arbeidsflyt
             </button>
           </ng-container>
         </span>
@@ -654,7 +654,7 @@
     <div class="row my-3">
       <span class="pointer mx-1 pull-right" *ngIf="observation.acl_user.x && observation.workflow.state=='draft'" (click)="openWorkflow()">
         <button class="btn btn-success">
-          <fa-icon icon="upload"></fa-icon>Send OBSREG koordinator
+          <fa-icon [icon]="faUpload"></fa-icon>Send OBSREG koordinator
         </button>
       </span>
     </div>
@@ -684,15 +684,15 @@
 
 
           <div class="nav-item">
-            <fa-icon icon="info"></fa-icon>
+            <fa-icon [icon]="faInfo"></fa-icon>
             <fa-icon icon="chat-o"></fa-icon>
-            <fa-icon icon="lock"></fa-icon>
+            <fa-icon [icon]="faLock"></fa-icon>
             <fa-icon icon="document"></fa-icon>
 
           </div>
-          
-        
-        
+
+
+
         </div>
 
         <div class="flex-grow-0 navbar-nav ml-auto" joyrideStep="step003" stepPosition="top" title="Innsending"
@@ -702,13 +702,13 @@
             <button class="btn btn-danger mr-2" (click)="openWorkflow()" joyrideStep="step004" stepPosition="top"
               title="Trekk tilbake"
               text="Om du ikke ønsker sende inn rapporten så velger du trekk tilbake. Da blir rapporten kun tilgjegenlig for deg og du kan når som helst gjenåpne den igjen. Dette er OBSREGs måte å slette på.">
-              <fa-icon icon="times"></fa-icon> Trekk tilbake
+              <fa-icon [icon]="faTimes"></fa-icon> Trekk tilbake
             </button>
 
             <button class="btn btn-success mr-2" (click)="openWorkflow()" joyrideStep="step005" stepPosition="top"
               title="Send"
               text="Når du er ferdig med observasjonen så sender du den til neste i arbeidsflyten som vil behandle observasjonen videre">
-              <fa-icon icon="check"></fa-icon> Send til OBSREG
+              <fa-icon [icon]="faCheck"></fa-icon> Send til OBSREG
               koordinator
             </button>
           </div>

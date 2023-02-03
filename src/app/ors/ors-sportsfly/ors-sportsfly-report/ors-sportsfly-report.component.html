@@ -30,7 +30,7 @@
 			<!-- WORKFLOW STATE -->
 			<span class="pull-right">
 				<a [routerLink]="['/ors', observation._model.type, 'edit', observation.id]" *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge badge-primary text-white mx-1">
-					<fa-icon icon="edit"></fa-icon> Editor
+					<fa-icon [icon]="faEdit"></fa-icon> Editor
 				</a>
 				<nlf-resolve-observation-state [activity]="observation._model.type" [state]="observation.workflow.state" icon="true"></nlf-resolve-observation-state>
 			</span>
@@ -54,9 +54,9 @@
 
 						<agm-marker [markerDraggable]="false" [latitude]="observation.occurrence.attributes.latitudeOfOcc.value" [longitude]="observation.occurrence.attributes.longitudeOfOcc.value" [label]="'X'">
 						</agm-marker>
-						
+
 						<div *ngFor="let aircraft of observation.aircrafts">
-							
+
 							<agm-polyline *ngFor="let route of aircraft.flight; let ix = index;" [editable]="false">
 								<agm-polyline-point *ngFor="let coordinates of route.path" [latitude]="coordinates[1]" [longitude]="coordinates[0]">
 								</agm-polyline-point>
@@ -65,7 +65,7 @@
 					</agm-map>
 -->
 					<div class="mt-2">
-						<fa-icon icon="map-marker"></fa-icon> {{ observation.occurrence.attributes.locationName.value || "Sted ikke angitt" }}
+						<fa-icon [icon]="faMapMarkerAlt"></fa-icon> {{ observation.occurrence.attributes.locationName.value || "Sted ikke angitt" }}
 						<span class="mx-2 badge badge-secondary pull-right">Lat: {{ observation.occurrence.attributes.latitudeOfOcc.value | round: 4 }}</span>
 						<span class="mx-2 badge badge-secondary pull-right">Lng: {{ observation.occurrence.attributes.longitudeOfOcc.value | round: 4}}</span>
 					</div>
@@ -76,7 +76,7 @@
 
 				<div *ngIf="!observation.occurrence.attributes.latitudeOfOcc.value || !observation.occurrence.attributes.longitudeOfOcc.value">
 					<ngb-alert type="danger" [dismissible]="false">
-						<fa-icon icon="map-marker"></fa-icon>
+						<fa-icon [icon]="faMapMarkerAlt"></fa-icon>
 						Ingen lokalisasjon satt.
 					</ngb-alert>
 				</div>
@@ -90,7 +90,7 @@
 					<div class="col-md-12">
 
 						<div (click)="isWorkflowTimelineCollapsed = !isWorkflowTimelineCollapsed" class="card-header pointer">
-							<fa-icon icon="random"></fa-icon>
+							<fa-icon [icon]="faRandom"></fa-icon>
 							Arbeidsflyt
 							<i class="fa fa-fw" [ngClass]="{'fa-angle-down': isWorkflowTimelineCollapsed, 'fa-angle-up': !isWorkflowTimelineCollapsed}"></i>
 						</div>
@@ -107,7 +107,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card-header">
-					<fa-icon icon="bolt"></fa-icon> E5X
+					<fa-icon [icon]="faBolt"></fa-icon> E5X
 				</div>
 
 				<ng-container *ngIf="observation.hasOwnProperty('e5x')">
@@ -137,7 +137,7 @@
 									</td>
 									<td class="text-right">
 										<a *ngIf="!!token" target="_blank" href="/api/v1/e5x/download/{{observation._model.type}}/{{observation.id}}/{{audit.version}}?token={{token}}">
-											<fa-icon icon="download"></fa-icon>
+											<fa-icon [icon]="faDownload"></fa-icon>
 										</a>
 									</td>
 								</tr>
@@ -153,7 +153,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card-header">
-					<fa-icon icon="commenting-o"></fa-icon> Narrative
+					<fa-icon [icon]="faCommenting"></fa-icon> Narrative
 				</div>
 				<ng-container *ngIf="observation.occurrence.entities.hasOwnProperty('narrative') && observation.occurrence.entities.narrative.length>0">
 					<div class="p-3 narrative">
@@ -173,7 +173,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card-header">
-					<fa-icon icon="plane"></fa-icon> Fly
+					<fa-icon [icon]="faPlane"></fa-icon> Fly
 				</div>
 				<div *ngFor="let aircraft of observation.aircrafts" class="my-2">
 					<nlf-aircraft-summary [callsign]="aircraft.aircraft.callsign" [model]="aircraft.aircraft.model || undefined" [manufacturer]="aircraft.aircraft.manufacturer || undefined"></nlf-aircraft-summary>
@@ -186,7 +186,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card-header">
-					<fa-icon icon="file"></fa-icon> Vedlegg
+					<fa-icon [icon]="faFile"></fa-icon> Vedlegg
 				</div>
 				<nlf-ors-report-files [files]="observation.files" [state]="observation.workflow.state"></nlf-ors-report-files>
 				<div class="p-2" *ngIf="observation.files.length==0">
@@ -208,7 +208,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card-header">
-					<fa-icon icon="street-view"></fa-icon> På bakken
+					<fa-icon [icon]="faStreetView"></fa-icon> På bakken
 				</div>
 
 			</div>
@@ -219,7 +219,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card-header">
-					<fa-icon icon="cloud"></fa-icon> Været
+					<fa-icon [icon]="faCloud"></fa-icon> Været
 				</div>
 
 			</div>
@@ -230,7 +230,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card-header">
-					<fa-icon icon="users"></fa-icon> ATM involvert
+					<fa-icon [icon]="faUsers"></fa-icon> ATM involvert
 				</div>
 
 			</div>
@@ -241,7 +241,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card-header">
-					<fa-icon icon="road"></fa-icon> Aerodrome
+					<fa-icon [icon]="faRoad"></fa-icon> Aerodrome
 				</div>
 
 			</div>
@@ -253,7 +253,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card-header">
-					<fa-icon icon="bolt"></fa-icon>Tiltak
+					<fa-icon [icon]="faBolt"></fa-icon>Tiltak
 				</div>
 				<nlf-ors-report-actions [actions]="observation.actions"></nlf-ors-report-actions>
 			</div>
@@ -289,7 +289,7 @@
 		<div *ngIf="!!observation.related && observation.related?.length > 0" class="row">
 			<div class="col-md-12">
 				<div class="card-header">
-					<fa-icon icon="external-link"></fa-icon>Relaterte
+					<fa-icon [icon]="faExternalLink"></fa-icon>Relaterte
 				</div>
 				<nlf-ors-report-related [related]="observation.related"></nlf-ors-report-related>
 			</div>

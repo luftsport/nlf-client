@@ -23,6 +23,7 @@ import { ComponentCanDeactivate } from 'app/pending-changes.guard';
 import { HostListener } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/takeWhile';
+import { faSave, faQuestion, faFlag, faInfoCircle, faHistory, faFile, faExchange, faPaperPlane, faReply, faRepeat, faRandom, faUpload, faInfo, faLock, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-sportsfly-editor',
@@ -30,6 +31,23 @@ import 'rxjs/add/operator/takeWhile';
   styleUrls: ['./ors-sportsfly-editor.component.css']
 })
 export class NlfOrsSportsflyEditorComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
+
+  faSave = faSave;
+  faQuestion = faQuestion;
+  faFlag = faFlag;
+  faInfoCircle = faInfoCircle;
+  faHistory = faHistory;
+  faFile = faFile;
+  faExchange = faExchange;
+  faPaperPlane = faPaperPlane;
+  faReply = faReply;
+  faRepeat = faRepeat;
+  faRandom = faRandom;
+  faUpload = faUpload;
+  faInfo = faInfo;
+  faLock = faLock;
+  faTimes = faTimes;
+  faCheck = faCheck;
 
   public ENV = environment;
 

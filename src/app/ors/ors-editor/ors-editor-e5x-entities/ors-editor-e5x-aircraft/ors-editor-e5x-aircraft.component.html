@@ -143,10 +143,10 @@
       <fa-icon icon="edit"></fa-icon>{{ modalAircraft.callsign }} i registeret
     </a>
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa-icon icon="times"></fa-icon>Avbryt
+      <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>Avbryt
     </button>
     <button [disabled]="!observation.acl_user.w" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="nlfaircraftedit.saveAircraft();modalAircraftUpdate(modalIndex)">
-      <fa-icon icon="check"></fa-icon>Oppdater
+      <fa-icon [icon]="faCheck" [fixedWidth]="true"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>

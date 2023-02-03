@@ -2,7 +2,7 @@
   <div class="col-md-12">
 
     <button [disabled]="disabled" class="btn btn-secondary btn-block mb-3" (click)="add();openModal(modal, modalIdx)">
-      <fa-icon icon="plus"></fa-icon>Partinformation
+      <fa-icon [icon]="faPlus"></fa-icon>Partinformation
     </button>
 
     <div class="mx-1 my-1" *ngFor="let part of partinformation; let idx = index">
@@ -10,8 +10,8 @@
       &nbsp;
       <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="part.attributes.manufacturer.value" path="E5X.Occurrence.Aircraft.PartInformation.Manufacturer"></nlf-ors-editor-tag-e5x-render>
 
-      <fa-icon class="mx-1" name="edit" (click)="openModal(modal, idx)"></fa-icon>
-      <fa-icon class="mx-1" name="close" (click)="delete(idx)"></fa-icon>
+      <fa-icon class="mx-1" [icon]="faEdit" (click)="openModal(modal, idx)"></fa-icon>
+      <fa-icon class="mx-1" [icon]="faClose" (click)="delete(idx)"></fa-icon>
     </div>
 
 
@@ -119,10 +119,10 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa-icon icon="times"></fa-icon>Avbryt
+      <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>Avbryt
     </button>
     <button [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate()">
-      <fa-icon icon="check"></fa-icon>Oppdater
+      <fa-icon [icon]="faCheck" [fixedWidth]="true"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>

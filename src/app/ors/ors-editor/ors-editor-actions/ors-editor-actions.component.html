@@ -9,7 +9,7 @@
           <!-- *ngIf="addActionLocal.length > 0"-->
           <button [disabled]="!observation.acl_user.w" (click)="addActionLocal(actionLocal)" class="btn btn-primary"
             type="submit">
-            <i class="fa fa-plus fa-fw"></i> Legg til</button>
+            <fa-icon [icon]="faPlus" [fixedWidth]="true"></fa-icon> Legg til</button>
         </span>
       </div>
     </form>
@@ -18,7 +18,7 @@
       <tr *ngFor="let a of observation.actions.local; let idx = index">
         <td><strong>{{idx+1}}.</strong>&nbsp;{{a}}</td>
         <td class="text-right">
-          <i *ngIf="observation.acl_user.w" class="fa fa-times fa-fw pointer" (click)="removeActionLocal(idx)"></i>
+          <fa-icon [icon]="faTimes" [fixedWidth]="true" *ngIf="observation.acl_user.w" class="pointer" (click)="removeActionLocal(idx)"></fa-icon>
         </td>
       </tr>
     </table>
@@ -35,7 +35,7 @@
           <!-- *ngIf="actionCentral.length > 0"-->
           <button [disabled]="!observation.acl_user.w" (click)="addActionCentral(actionCentral)" class="btn btn-primary"
             type="submit">
-            <i class="fa fa-plus fa-fw"></i> Legg til</button>
+            <fa-icon [icon]="faPlus" [fixedWidth]="true"></fa-icon> Legg til</button>
         </span>
       </div>
     </form>
@@ -44,7 +44,7 @@
       <tr *ngFor="let a of observation.actions.central; let idx = index">
         <td><strong>{{idx+1}}.</strong>&nbsp;{{a}}</td>
         <td class="text-right">
-          <i *ngIf="observation.acl_user.w" class="fa fa-times fa-fw pointer" (click)="removeActionCentral(idx)"></i>
+          <fa-icon [icon]="faTimes" [fixedWidth]="true" *ngIf="observation.acl_user.w" class="pointer" (click)="removeActionCentral(idx)"></fa-icon>
         </td>
       </tr>
     </table>

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { E5XAircraftClass } from 'app/interfaces/e5x.interface';
+import { faPlus, faTimes, faCheck, faEdit, faClose } from '@fortawesome/free-solid-svg-icons';import {  } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-editor-e5x-aircraft-partinformation',
@@ -17,6 +18,12 @@ export class NlfOrsEditorE5XPartinformationComponent implements OnInit {
   modalRef;
   modalIdx: number;
   modalValue;
+
+  faPlus = faPlus;
+  faTimes = faTimes;
+  faCheck = faCheck;
+  faEdit = faEdit;
+  faClose = faClose;
 
   constructor(private modalService: NgbModal) { }
 

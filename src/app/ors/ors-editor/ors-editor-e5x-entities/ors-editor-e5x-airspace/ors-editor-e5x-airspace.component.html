@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-3">
     <button [disabled]="disabled" class="btn btn-primary btn-block" (click)="add();openModal(modal, modalIdx)">
-      <fa-icon icon="plus"></fa-icon>Add Airspace
+      <fa-icon [icon]="faPlus"></fa-icon>Add Airspace
     </button>
   </div>
   <div class="col-md-9">
@@ -12,8 +12,8 @@
       &nbsp;
       <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="space.attributes.airspaceType.value" path="E5X.Occurrence.AirSpace.AirspaceType"></nlf-ors-editor-tag-e5x-render>
       &nbsp;
-      <fa-icon class="mx-1" name="edit" (click)="openModal(modal, idx)"></fa-icon>
-      <fa-icon class="mx-1" *ngIf="!disabled" name="close" (click)="delete(idx)"></fa-icon>
+      <fa-icon class="mx-1" [icon]="faEdit" (click)="openModal(modal, idx)"></fa-icon>
+      <fa-icon class="mx-1" *ngIf="!disabled" [icon]="faClose" (click)="delete(idx)"></fa-icon>
     </div>
 
   </div>
@@ -61,10 +61,10 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa-icon icon="times"></fa-icon>Avbryt
+      <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>Avbryt
     </button>
     <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate()">
-      <fa-icon icon="check"></fa-icon>Oppdater
+      <fa-icon [icon]="faCheck" [fixedWidth]="true"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>

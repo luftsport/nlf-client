@@ -35,7 +35,7 @@
       <div class="col-md-8 map-full-content">
         <!--
         <agm-map *ngIf="!!currentLocation" [fitBounds]="fitBounds" [latitude]="toFloat(currentLocation.geo.coordinates[0])" [longitude]="toFloat(currentLocation.geo.coordinates[1])" (mapClick)="updateLocation($event)" [mapTypeControl]="true" [zoom]="zoom">
-        
+
 
 
           <agm-circle *ngIf="!!currentLocation" [latitude]="toFloat(currentLocation.geo.coordinates[0])" [longitude]="toFloat(currentLocation.geo.coordinates[1])" [radius]="toFloat(2000)" [circleDraggable]="false" [fillColor]="'red'" [editable]="false"
@@ -59,7 +59,7 @@
 
         </agm-map>
         -->
-        
+
       </div>
 
     </div>
@@ -175,10 +175,10 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa-icon icon="times"></fa-icon>Avbryt
+      <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>Avbryt
     </button>
     <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate(modalIndex)">
-      <fa-icon icon="check"></fa-icon>Oppdater
+      <fa-icon [icon]="faCheck" [fixedWidth]="true"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>

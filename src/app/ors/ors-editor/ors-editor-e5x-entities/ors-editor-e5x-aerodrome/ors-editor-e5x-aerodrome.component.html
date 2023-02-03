@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-3">
     <button [disabled]="disabled" class="btn btn-primary btn-block" (click)="add();openModal(modal, modalIdx)">
-      <fa-icon icon="plus"></fa-icon>Aerodrome
+      <fa-icon [icon]="faPlus"></fa-icon>Aerodrome
     </button>
   </div>
   <div class="col-md-9">
@@ -130,17 +130,17 @@
     <div class="row">
       <div class="col-md-4">
         <button [disabled]="disabled" class="btn btn-primary btn-block" (click)="addRunway()">
-          <fa-icon icon="plus"></fa-icon>Runway
+          <fa-icon [icon]="faPlus" [fixedWidth]="true"></fa-icon>Runway
         </button>
       </div>
       <div class="col-md-4">
         <button [disabled]="disabled" class="btn btn-primary btn-block" (click)="addVehicle()">
-          <fa-icon icon="plus"></fa-icon>Vehicle
+          <fa-icon [icon]="faPlus" [fixedWidth]="true"></fa-icon>Vehicle
         </button>
       </div>
       <div class="col-md-4">
         <button [disabled]="modalValue.entities.narrative.length>0 || disabled" class="btn btn-primary btn-block" (click)="addNarrative()">
-          <fa-icon icon="plus"></fa-icon>Narrative
+          <fa-icon [icon]="faPlus" [fixedWidth]="true"></fa-icon>Narrative
         </button>
       </div>
     </div>
@@ -149,10 +149,10 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa-icon icon="times"></fa-icon>Avbryt
+      <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>Avbryt
     </button>
     <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate()">
-      <fa-icon icon="check"></fa-icon>Oppdater
+      <fa-icon [icon]="faCheck" [fixedWidth]="true"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>

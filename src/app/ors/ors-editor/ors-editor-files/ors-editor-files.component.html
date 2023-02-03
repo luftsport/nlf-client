@@ -75,7 +75,7 @@
 
           <div class="btn-group mr-2" role="group" aria-label="First group">
             <label class="btn btn-primary btn-file">
-              <fa-icon icon="plus"></fa-icon>Legg til filer
+              <fa-icon [icon]="faPlus" [fixedWidth]="true"></fa-icon>Legg til filer
               <input type="file" style="display: none;" ngFileSelect [options]="options"
                 (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple>
             </label>
@@ -85,7 +85,7 @@
           <!-- CAMERA BUTTON only mobile! -->
           <div class="btn-group mr-2" role="group" aria-label="Second group">
             <label class="btn btn-primary btn-file d-sm-none">
-              <fa-icon icon="camera"></fa-icon>Ta bilde
+              <fa-icon [icon]="faCamera"></fa-icon>Ta bilde
               <input type="file" accept="image/*" capture="camera" style="display: none;" ngFileSelect
                 [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput">
             </label>

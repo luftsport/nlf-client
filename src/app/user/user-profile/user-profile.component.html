@@ -118,7 +118,7 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-12 col-md-12 mt-6">
-				<div class="my-3"> 
+				<div class="my-3">
 					<h4>Mine observasjoner som involvert</h4>
 					<!-- Første er default activity -->
 					<nlf-user-ors *ngIf="user.settings.default_activity==109" activity="fallskjerm"></nlf-user-ors>
@@ -163,7 +163,7 @@
 
 	<div class="modal-footer">
 		<button class="btn btn-outline-dark" (click)="cancelModal()">
-			<fa-icon icon="times"></fa-icon>Avbryt
+			<fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>Avbryt
 		</button>
 		<button class="btn btn-success" (click)="closeModal()">
 			<fa-icon icon="check"></fa-icon>Bruk

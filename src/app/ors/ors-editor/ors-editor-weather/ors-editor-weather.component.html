@@ -232,7 +232,7 @@
       <fa-icon icon="close"></fa-icon>Avbryt
     </button>
     <button [disabled]="!observation.acl_user.w" class="btn btn-secondary" (click)="closeModal()">
-      <fa-icon icon="check"></fa-icon>Oppdater
+      <fa-icon [icon]="faCheck" [fixedWidth]="true"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>

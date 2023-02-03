@@ -7,7 +7,8 @@ import { NlfAlertService } from 'app/services/alert/alert.service';
 import { NlfComponent } from 'app/nlf.component';
 import { NgStringPipesModule } from 'angular-pipes';
 import { ApiEveBaseList } from 'app/api/api-eve.interface';
-
+import { faEdit, faMapMarkerAlt, faRandom, faBolt, faDownload, faPlane, faFile, faStreetView, faCloud, faUsers, faRoad, faExternalLink } from '@fortawesome/free-solid-svg-icons';
+import { faComments } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'nlf-ors-sportsfly-report',
@@ -33,6 +34,20 @@ export class NlfOrsSportsflyReportComponent implements OnInit {
   right: string;
 
   isWorkflowTimelineCollapsed = true;
+
+  faEdit = faEdit;
+  faMapMarkerAlt = faMapMarkerAlt;
+  faRandom = faRandom;
+  faBolt = faBolt;
+  faDownload = faDownload;
+  faPlane = faPlane;
+  faFile = faFile;
+  faStreetView = faStreetView;
+  faCloud = faCloud;
+  faUsers = faUsers;
+  faRoad = faRoad;
+  faExternalLink = faExternalLink;
+  faComments = faComments;
 
   constructor(private route: ActivatedRoute,
               private orsService: ApiObservationsService,
