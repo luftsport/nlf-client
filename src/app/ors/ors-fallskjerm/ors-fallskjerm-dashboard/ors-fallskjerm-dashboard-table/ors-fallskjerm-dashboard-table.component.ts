@@ -13,6 +13,7 @@ import { cleanObject } from 'app/interfaces/functions';
 import { ExportToCsv } from 'export-to-csv';
 import { Router, NavigationStart } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-fallskjerm-dashboard-table',
@@ -20,6 +21,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./ors-fallskjerm-dashboard-table.component.css']
 })
 export class NlfOrsFallskjermDashboardTableComponent implements OnInit {
+
+  faTimes = faTimes;
 
   private _dateRange = [];
   @Input() activity: string;

@@ -8,7 +8,7 @@
   <button *ngIf="!!settings && canCreate() && !loading && !error"
     (click)="createObservation(settings.default_discipline, settings.default_club, settings.default_activity)"
     class="btn btn-block btn-success btn-lg my-1">
-    <fa-icon icon="plus"></fa-icon>
+    <fa-icon [icon]="faPlus"></fa-icon>
     <nlf-resolve-lungo-organization [organization_id]="settings.default_discipline" show_activity="false">
     </nlf-resolve-lungo-organization>
   </button>
@@ -32,7 +32,7 @@
       </div>
       <div class="col">
         <button [disabled]="!selected" (click)="createObservation()" class="btn btn-block btn-success btn-lg">
-          <fa-icon icon="plus"></fa-icon>Opprett ny OBSREG
+          <fa-icon [icon]="faPlus"></fa-icon> Opprett ny OBSREG
         </button>
       </div>
     </div>
@@ -48,7 +48,7 @@
 
 
 <ngb-alert *ngIf="!!error" type="danger" [dismissible]="true">
-  <fa-icon icon="exclamation-triangle"></fa-icon>
+  <fa-icon [icon]="faExclamationTriangle"></fa-icon>
   Kunne ikke opprette OBSREG
 </ngb-alert>
 

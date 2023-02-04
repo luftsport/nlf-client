@@ -12,12 +12,20 @@ import { Subject, Observable, of, concat } from 'rxjs';
 
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
+import { faPlus, faBolt, faBan, faClose, faCheck } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'nlf-ors-editor-components',
   templateUrl: './ors-editor-components.component.html',
   styleUrls: ['./ors-editor-components.component.css']
 })
 export class NlfOrsEditorComponentsComponent implements OnInit, OnDestroy {
+
+  faPlus = faPlus;
+  faBolt = faBolt;
+  faBan = faBan;
+  faClose = faClose;
+  faCheck = faCheck;
 
   involved: Array<NlfOrsEditorInvolvedInterface>;
   observation: ApiObservationsItem;

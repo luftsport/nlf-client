@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrsModel } from './ors-model';
 import { DataService } from './data.service';
 import { Routes } from '@angular/router';
+import { faSearch, faDashboard } from '@fortawesome/free-solid-svg-icons';
 
 /**
 Testing ng2-idle
@@ -21,6 +22,9 @@ import { NlfComponent } from '../nlf.component';
 
 })
 export class NlfOrsComponent implements OnInit {
+
+  faSearch = faSearch;
+  faDashboard = faDashboard;
 
   // public static routes:Routes = [{ path: 'ors/child', component: NlfChildComponent }];
 

@@ -6,7 +6,7 @@
     <div class="container lead">
       <!-- TITLE -->
 
-      <!-- <fa-icon icon="file-text-o"></fa-icon>&nbsp;-->
+      <!-- <fa-icon [icon]="fileAlt"></fa-icon>&nbsp;-->
       <!-- {{ data.tags | nlfOrsTags: ' / '}} -->
       <span class="overflow-hidden">
         <a [routerLink]="['/ors', 'sportsfly']">OBSREG</a>#{{ observation.id }}
@@ -685,9 +685,9 @@
 
           <div class="nav-item">
             <fa-icon [icon]="faInfo"></fa-icon>
-            <fa-icon icon="chat-o"></fa-icon>
+            <fa-icon [icon]="chat-o"></fa-icon>
             <fa-icon [icon]="faLock"></fa-icon>
-            <fa-icon icon="document"></fa-icon>
+            <fa-icon [icon]="document"></fa-icon>
 
           </div>
 

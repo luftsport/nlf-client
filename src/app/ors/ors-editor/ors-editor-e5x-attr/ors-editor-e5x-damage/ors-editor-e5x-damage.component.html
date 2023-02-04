@@ -1,7 +1,7 @@
 <div *ngIf="!showOnlyBtn" class="row">
   <div class="col-md-3">
     <button class="btn btn-secondary btn-block" (click)="openModal(modal)">
-      <fa-icon icon="fire"></fa-icon>Damage(s)
+      <fa-icon [icon]="faFire"></fa-icon> Damage(s)
     </button>
   </div>
   <div class="col-md-9">
@@ -11,7 +11,7 @@
 
 <div *ngIf="showOnlyBtn">
   <button class="btn btn-secondary btn-block" (click)="openModal(modal)">
-    <fa-icon icon="fire"></fa-icon>Damage(s)
+    <fa-icon [icon]="faFire"></fa-icon> Damage(s)
   </button>
 </div>
 

@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GeoLocationService } from 'app/services/geo/geo-location.service';
-import {  ApiGeoAdminService } from 'app/api/api-geo-admin.service';
+import { ApiGeoAdminService } from 'app/api/api-geo-admin.service';
 import { ApiOptionsInterface } from 'app/api/api.interface';
+import { faCheck, faClose, faEdit, faMapMarker, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -21,6 +22,13 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
 
   modalRef;
   geoReady = false;
+
+  faMapMarker = faMapMarker;
+  faEdit = faEdit;
+  faClose = faClose;
+  faTimes = faTimes;
+  faCheck = faCheck;
+
   constructor(
     private modalService: NgbModal,
     private geoLocationService: GeoLocationService,

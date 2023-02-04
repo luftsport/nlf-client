@@ -7,7 +7,8 @@ import { NlfAlertService } from 'app/services/alert/alert.service';
 import { NlfComponent } from 'app/nlf.component';
 import { NgStringPipesModule } from 'angular-pipes';
 import { ApiEveBaseList } from 'app/api/api-eve.interface';
-
+import { faEdit, faMapMarker, faRandom, faUsers, faFile, faCloud, faBolt, faExternalLink } from '@fortawesome/free-solid-svg-icons';
+import { faFileAlt, faComments } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'nlf-ors-fallskjerm-report',
@@ -33,6 +34,17 @@ export class NlfOrsFallskjermReportComponent implements OnInit {
   right: string;
 
   isWorkflowTimelineCollapsed = true;
+
+  faEdit = faEdit;
+  faMapMarker = faMapMarker;
+  faRandom = faRandom;
+  faUsers = faUsers;
+  faFile = faFile;
+  faCloud = faCloud;
+  faBolt = faBolt;
+  faExternalLink = faExternalLink;
+  faFileAlt = faFileAlt;
+  faComments = faComments;
 
   constructor(private route: ActivatedRoute,
               private orsService: ApiObservationsService,

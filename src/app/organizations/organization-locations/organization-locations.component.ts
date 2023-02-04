@@ -11,6 +11,7 @@ import { NlfAlertService } from 'app/services/alert/alert.service';
 import { NlfConfigService } from 'app/nlf-config.service';
 import { ConfirmService } from 'app/services/confirm/confirm.service';
 import { forkJoin } from 'rxjs';
+import { faArrowsAlt, faCrosshairs, faPlus, faRefresh, faMapMarker } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-organization-locations',
@@ -18,6 +19,12 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./organization-locations.component.css']
 })
 export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy {
+
+  faArrowsAlt = faArrowsAlt;
+  faCrosshairs = faCrosshairs;
+  faPlus = faPlus;
+  faRefresh = faRefresh;
+  faMapMarker = faMapMarker;
 
   org_id: number;
   org

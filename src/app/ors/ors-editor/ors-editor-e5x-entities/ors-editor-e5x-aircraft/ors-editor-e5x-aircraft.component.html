@@ -140,7 +140,7 @@
 
   <div class="modal-footer">
     <a [routerLink]="['/aircraft', 'edit', (modalAircraft._id || modalAircraft.callsign)]" class="btn btn-outline-dark mr-auto" (click)="modalRef.close()">
-      <fa-icon icon="edit"></fa-icon>{{ modalAircraft.callsign }} i registeret
+      <fa-icon [icon]="faEdit" [fixedWidth]="true"></fa-icon>{{ modalAircraft.callsign }} i registeret
     </a>
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
       <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>Avbryt

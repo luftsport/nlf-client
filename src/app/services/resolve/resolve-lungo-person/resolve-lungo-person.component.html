@@ -25,7 +25,7 @@
 
   <!-- Anonymous or tmp_name sup eller attr? -->
   <span *ngIf="person_id < 1">{{ full_name }}<sup class="text-info" title="Midlertidig navn eller anonymisert">
-      <fa-icon icon="question"></fa-icon>
+      <fa-icon [icon]="faQuestion"></fa-icon>
     </sup>
   </span>
 </span>

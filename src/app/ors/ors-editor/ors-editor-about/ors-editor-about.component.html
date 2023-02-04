@@ -109,7 +109,7 @@
       <dl *ngIf="!!observation.acl_user" class="row">
 
         <dt class="col-sm-4">
-          <fa-icon icon="observation.acl_user.r ? faCheck : faBan" [ngClass]="observation.acl_user.r ? 'text-success' : 'text-danger'"></fa-icon> Read
+          <fa-icon [icon]="observation.acl_user.r ? faCheck : faBan" [ngClass]="observation.acl_user.r ? 'text-success' : 'text-danger'"></fa-icon> Read
         </dt>
         <dd class="col-sm-8">
           <span *ngIf="!!acl_list">
@@ -118,7 +118,7 @@
         </dd>
 
         <dt class="col-sm-4">
-          <fa-icon icon="observation.acl_user.w ? faCheck : faBan" [ngClass]="observation.acl_user.w ? 'text-success' : 'text-danger'"></fa-icon> Write
+          <fa-icon [icon]="observation.acl_user.w ? faCheck : faBan" [ngClass]="observation.acl_user.w ? 'text-success' : 'text-danger'"></fa-icon> Write
         </dt>
         <dd class="col-sm-8">
           <span *ngIf="!!acl_list">
@@ -127,7 +127,7 @@
         </dd>
 
         <dt class="col-sm-4">
-          <fa-icon icon="observation.acl_user.x ? faCheck : faBan" [ngClass]="observation.acl_user.x ? 'text-success' : 'text-danger'"></fa-icon> Execute
+          <fa-icon [icon]="observation.acl_user.x ? faCheck : faBan" [ngClass]="observation.acl_user.x ? 'text-success' : 'text-danger'"></fa-icon> Execute
         </dt>
         <dd class="col-sm-8">
           <span *ngIf="!!acl_list">
@@ -136,7 +136,7 @@
         </dd>
 
         <dt class="col-sm-4">
-          <fa-icon icon="observation.acl_user.d ? faCheck : faBan" [ngClass]="observation.acl_user.d ? 'text-success' : 'text-danger'"></fa-icon> Delete
+          <fa-icon [icon]="observation.acl_user.d ? faCheck : faBan" [ngClass]="observation.acl_user.d ? 'text-success' : 'text-danger'"></fa-icon> Delete
         </dt>
         <dd class="col-sm-8">
           <span *ngIf="!!acl_list">

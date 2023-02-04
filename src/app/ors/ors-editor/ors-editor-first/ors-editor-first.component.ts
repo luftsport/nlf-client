@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { faCheck, faQuestion } from '@fortawesome/free-solid-svg-icons';
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
 
 @Component({
@@ -9,6 +10,9 @@ import { NlfUserSubjectService } from 'app/user/user-subject.service';
 export class NlfOrsEditorFirstComponent {
 
   userData;
+
+  faQuestion = faQuestion;
+  faCheck = faCheck;
 
   constructor(private userSubject: NlfUserSubjectService) {
 

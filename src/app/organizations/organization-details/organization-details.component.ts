@@ -7,7 +7,8 @@ import { ApiClubItem, ApiOptionsInterface, NlfConfigItem } from 'app/api/api.int
 import { NlfAlertService } from 'app/services/alert/alert.service';
 import { GeoLocationService } from 'app/services/geo/geo-location.service';
 import { NlfConfigService } from 'app/nlf-config.service';
-import { LeafletOptions, LeafletLayers, latLng, marker, tileLayer } from 'leaflet';
+import { LeafletOptions, LeafletLayers, latLng, marker, tileLayer } from 'leaflet';
+import { faUpload } from '@fortawesome/free-solid-svg-icons';
 // import { forkJoin } from 'rxjs';
 
 @Component({
@@ -17,6 +18,7 @@ import { LeafletOptions, LeafletLayers, latLng, marker, tileLayer } from 'leafl
 })
 export class NlfOrganizationDetailsComponent implements OnInit, OnDestroy {
 
+  faUpload = faUpload;
 
   geo: { timestamp: number, coords: number[] };
   zoom = 12;

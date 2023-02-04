@@ -4,6 +4,7 @@ import { ApiHelpService } from 'app/api/api-help.service';
 import { ApiHelpItem } from 'app/api/api.interface';
 import { Router, NavigationStart } from '@angular/router';
 import 'rxjs/add/operator/filter';
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-help',
@@ -18,6 +19,8 @@ export class NlfHelpComponent implements OnInit {
   help: ApiHelpItem;
   dataReady = false;
   modalRef;
+
+  faQuestion = faQuestion;
 
   constructor(private modalService: NgbModal,
               private apiHelp: ApiHelpService,

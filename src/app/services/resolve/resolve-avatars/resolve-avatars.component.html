@@ -16,7 +16,7 @@
     <!-- persons modal -->
     <div *ngIf="show_modal && persons.length>0 && persons.length<=max" class="avatar pointer" (click)="openPersonsModal(peopleModalTemplate)">
       <span ngbTooltip="vis liste" class="avatar-text avatar-text-green rounded-circle">
-        <span class="initial-wrap"><span><fa-icon icon="list"></fa-icon></span></span>
+        <span class="initial-wrap"><span><fa-icon [icon]="faList"></fa-icon></span></span>
       </span>
     </div>
     <!--<fa-icon class="pointer" name="envelope-open-o"></fa-icon>-->
@@ -25,7 +25,7 @@
     <div *ngIf="1==4" class="avatar">
       <a href="#">
         <span class="add-new-plus">
-          <fa-icon icon="plus"></fa-icon>
+          <fa-icon [icon]="faPlus"></fa-icon>
         </span>
       </a>
     </div>

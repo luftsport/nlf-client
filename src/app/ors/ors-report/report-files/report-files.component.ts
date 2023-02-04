@@ -1,6 +1,7 @@
 import { ApiFilesService } from 'app/api/api-files.service';
 import { ApiObservationFileInterface, ApiFileItem, ApiOptionsInterface } from 'app/api/api.interface';
 import { Component, Input, OnInit } from '@angular/core';
+import { faDownload } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-report-files',
@@ -13,6 +14,8 @@ export class NlfOrsReportFilesComponent implements OnInit {
   @Input() state: string;
   filelist = []; // : ApiFileItem[] = []; // Not list since list is Eve, we build our own list
   dataReady = false;
+
+  faDownload = faDownload;
 
   constructor(private apiFile: ApiFilesService) { }
 

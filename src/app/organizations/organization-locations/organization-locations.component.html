@@ -11,7 +11,7 @@
           <div class="my-2" *ngFor="let location of org.locations;let idx=index" cdkDrag>
             <!--<a [routerLink]="['/organizations', org.id, 'location', 'edit', idx]">{{ location.nickname}}</a>-->
             <span class="pointer" cdkDragHandle>
-              <fa-icon icon="arrows-alt"></fa-icon>
+              <fa-icon [icon]="faArrowsAlt"></fa-icon>
             </span>
             <span class="pointer ml-1 mr-3" (click)="goTo(location)">{{ location.nickname }} <span *ngIf="idx==0"> (default)</span></span>
             <fa-icon class="pointer mr-1" name="times" (click)="deleteLocation(idx)"></fa-icon>
@@ -20,14 +20,14 @@
 
 
         </div>
-        <button *ngIf="currentLocation!=userGeo" class="btn btn-link" (click)="mapReset()"><fa-icon icon="crosshairs"></fa-icon> reset kart</button>
+        <button *ngIf="currentLocation!=userGeo" class="btn btn-link" (click)="mapReset()"><fa-icon [icon]="faCrosshairs"></fa-icon> reset kart</button>
         <button class="btn btn-block btn-primary mt-auto my-3" (click)="openModal(modal, org.locations.length)">
-          <fa-icon icon="plus"></fa-icon> Nytt sted
+          <fa-icon [icon]="faPlus"></fa-icon> Nytt sted
         </button>
 
         <div class="mt-auto my-3" *ngIf="!!returl">
           <a class="btn btn-block btn-secondary" [routerLink]="returl">
-            <fa-icon icon="refresh"></fa-icon> Tilbake
+            <fa-icon [icon]="faRefresh"></fa-icon> Tilbake
           </a>
         </div>
       </div>
@@ -47,7 +47,7 @@
               (dragEnd)="updateLocation($event)" [latitude]="toFloat(location.geo.coordinates[0])" [longitude]="toFloat(location.geo.coordinates[1])">
               <agm-info-window>
                 <h4>
-                  <fa-icon icon="map-marker"></fa-icon> {{ location.name }}
+                  <fa-icon [icon]="faMapMarker"></fa-icon> {{ location.name }}
                 </h4>
                 <div *ngIf="idx==0"><strong>Default</strong></div>
                 <div>{{ location.municipality }}</div>
@@ -72,7 +72,7 @@
 <ng-template #modal>
   <div class="modal-header">
     <h4 class="modal-title pull-left">
-      <fa-icon icon="map-marker"></fa-icon> {{ modalValue.nickname }} <span class="ml-2 small" *ngIf="modalIndex==0">default</span>
+      <fa-icon [icon]="faMapMarker"></fa-icon> {{ modalValue.nickname }} <span class="ml-2 small" *ngIf="modalIndex==0">default</span>
     </h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>

@@ -17,7 +17,7 @@
     </span>
 
     <button *ngIf="!!query" class="btn btn-primary btn-sm pull-right mx-1" (click)="openModal(saveTemplate)" title="Funksjonen kommer snart" disabled>
-      <fa-icon icon="save"></fa-icon> Lagre søk
+      <fa-icon [icon]="faSave"></fa-icon> Lagre søk
     </button>
 
     <nlf-help class="pull-right mx-1" key="ors-search-fallskjerm"></nlf-help>
@@ -30,7 +30,7 @@
 
     <div class="col-md-3 bg-light p-2">
       <label class="lead">
-        <fa-icon icon="filter"></fa-icon> Filter
+        <fa-icon [icon]="faFilter"></fa-icon> Filter
       </label>
       <div class="form-row">
         <label>Fritekst:</label>
@@ -48,7 +48,7 @@
       </div>
 
       <div *ngIf="!!result?._items" class="mt-3">
-        <button (click)="exportTojson()" class="btn btn-secondary btn-block"><fa-icon icon="download"></fa-icon> Last ned</button>
+        <button (click)="exportTojson()" class="btn btn-secondary btn-block"><fa-icon [icon]="faDownload"></fa-icon> Last ned</button>
       </div>
     </div>
 
@@ -79,11 +79,11 @@
 
         <!--
         <div class="small" *ngFor="let a of r.aircrafts">
-          <fa-icon icon="plane"></fa-icon> {{ a.aircraft.callsign }} {{ a.aircraft.model }} {{ a.aircraft.manufacturer }}
+          <fa-icon [icon]="faPlane"></fa-icon> {{ a.aircraft.callsign }} {{ a.aircraft.model }} {{ a.aircraft.manufacturer }}
           <div>
             <span class="small" *ngFor="let route of a.flight; let idx = index">
               <span *ngIf="idx==0">{{ route.from.icao }}</span>
-              <fa-icon icon="long-arrow-right"></fa-icon> {{ route.to.icao }}
+              <fa-icon [icon]="faLongArrowRight"></fa-icon> {{ route.to.icao }}
             </span>
           </div>
         </div>

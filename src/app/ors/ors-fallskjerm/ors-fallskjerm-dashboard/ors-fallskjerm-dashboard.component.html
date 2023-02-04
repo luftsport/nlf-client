@@ -18,7 +18,7 @@
 
     <!--
     <button *ngIf="!!query" class="btn btn-primary btn-sm pull-right mx-1" (click)="openModal(saveTemplate)" title="Funksjonen kommer snart" disabled>
-      <fa-icon icon="save"></fa-icon> Lagre søk
+      <fa-icon [icon]="faSave"></fa-icon> Lagre søk
     </button>
     -->
     <nlf-help class="pull-right mx-1" key="ors-dashboard-fallskjerm"></nlf-help>
@@ -158,7 +158,7 @@
               [value]="formatter.format(fromDate)" (input)="fromDate">
             <div class="input-group-append">
               <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button">
-                <fa-icon icon="calendar"></fa-icon>
+                <fa-icon [icon]="faCalendar"></fa-icon>
               </button>
             </div>
           </div>
@@ -169,7 +169,7 @@
               [value]="formatter.format(toDate)" (input)="toDate">
             <div class="input-group-append">
               <button class="btn btn-outline-secondary" (click)="datepicker.toggle()" type="button">
-                <fa-icon icon="calendar"></fa-icon>
+                <fa-icon [icon]="faCalendar"></fa-icon>
               </button>
             </div>
           </div>

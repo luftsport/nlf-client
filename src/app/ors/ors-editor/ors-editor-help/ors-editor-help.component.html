@@ -23,7 +23,7 @@
     <fa-icon class="text-info mx-1" name="question"></fa-icon>
 
     <span (click)="save()" *ngIf="changes" class="pointer badge bg-warning mx-1">
-      <fa-icon icon="save"></fa-icon>
+      <fa-icon [icon]="faSave"></fa-icon>
     </span>
 
     <span class="badge bg-secondary mx-1">{{ observation._updated | amTimeAgo }}</span>
@@ -37,7 +37,7 @@
 
     <!-- ACTIVITIES -->
     <a class="badge bg-info mx-1" [routerLink]="['/ors', observation._model.type , 'activities', observation.id]">
-      <fa-icon icon="history"></fa-icon> Aktivitet
+      <fa-icon [icon]="faHistory"></fa-icon> Aktivitet
     </a>
 
     <!-- ACCESS!!! -->
@@ -45,7 +45,7 @@
 
     <!-- REPORT LINK -->
     <a [routerLink]="['/ors', observation._model.type , 'report', observation.id]" *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge bg-primary text-white mx-1">
-      <fa-icon icon="file"></fa-icon> Report
+      <fa-icon [icon]="faFile"></fa-icon> Report
     </a>
 
   </p>
@@ -58,7 +58,7 @@
   <p>
     Om du har endringer vil også
     <span class="badge pointer bg-warning mx-1">
-      <fa-icon icon="save"></fa-icon>
+      <fa-icon [icon]="faSave"></fa-icon>
     </span>
     vises og indikerer at du kan lagre ved å klikke på det.
   </p>
@@ -100,7 +100,7 @@
   <p>
     <!-- ACTIVITIES -->
     <a *ngIf="observation.workflow.state!='closed'" class="badge bg-info mx-1" [routerLink]="['/ors', observation._model.type , 'activities', observation.id]">
-      <fa-icon icon="history"></fa-icon> Aktivitet
+      <fa-icon [icon]="faHistory"></fa-icon> Aktivitet
     </a> åpner en side som viser alle hendelser for denne observasjonen. Her kan du purre og sende meldinger til de som behandler denne observasjonen.
   </p>
 
@@ -112,7 +112,7 @@
   <p>
     <!-- REPORT LINK -->
     <a [routerLink]="['/ors', observation._model.type , 'report', observation.id]" *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge bg-primary text-white mx-1">
-      <fa-icon icon="file"></fa-icon> Report
+      <fa-icon [icon]="faFile"></fa-icon> Report
     </a> åpner observasjonen i rapportvisning og du kan på den måten forhåndsvise hvordan den endelige observasjonen vil komme til å se ut når den er ferdigbehandlet.</p>
 
   <p>

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { faExclamation } from '@fortawesome/free-solid-svg-icons';
 import { ApiObservationsFallskjermItem, ApiOptionsInterface, ApiObservationFallskjermOrganizationInterface } from 'app/api/api.interface';
 import { NlfOrsEditorInvolvedService, NlfOrsEditorInvolvedInterface } from 'app/ors/ors-editor/ors-editor-involved.service';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
@@ -13,6 +14,8 @@ export class NlfOrsFallskjermEditorOrganizationComponent implements OnInit {
   observation: ApiObservationsFallskjermItem;
   involved;
   devDebug: boolean = false;
+
+  faExclamation = faExclamation;
 
   constructor(
     private subject: NlfOrsEditorService,
@@ -37,7 +40,7 @@ export class NlfOrsFallskjermEditorOrganizationComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
 
   }
 

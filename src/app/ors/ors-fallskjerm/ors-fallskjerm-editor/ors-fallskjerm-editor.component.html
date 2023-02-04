@@ -6,7 +6,7 @@
     <div class="container lead">
       <!-- TITLE -->
 
-      <!-- <fa-icon icon="file-text-o"></fa-icon>&nbsp;-->
+      <!-- <fa-icon [icon]="faFileAlt"></fa-icon>&nbsp;-->
       <!-- {{ data.tags | nlfOrsTags: ' / '}} -->
       <span class="overflow-hidden">
         <a [routerLink]="['/ors', 'fallskjerm']">OBSREG</a>#{{ observation.id }}
@@ -24,17 +24,17 @@
         <!-- SAVE -->
         <a (click)="saveIfChanges()" *ngIf="!!observation && !!changes && observation.acl_user.w"
           class="pointer badge bg-warning mx-1">
-          <fa-icon icon="save"></fa-icon>
+          <fa-icon [icon]="faSave"></fa-icon>
         </a>
 
         <!-- HELP -->
         <a class="badge bg-light pointer text-info mx-1" (click)="openHelp()">
-          <fa-icon icon="question"></fa-icon>
+          <fa-icon [icon]="faQuestion"></fa-icon>
         </a>
 
         <!-- ABOUT -->
         <a (click)="openAbout()" class="pointer badge bg-secondary text-white mx-1">
-          <fa-icon icon="info-circle"></fa-icon>
+          <fa-icon [icon]="faInfoCircle"></fa-icon>
           <fa-icon *ngIf="!observation.acl_user.w" name="lock" class="text-danger"
             title="Ingen skrivetilgang"></fa-icon>
           {{ observation._updated | amTimeAgo }}
@@ -57,7 +57,7 @@
         <a *ngIf="observation.workflow.state!='closed'" class="badge bg-info mx-1" [routerLink]="['/ors', observation._model.type , 'activities', observation.id]">-->
         <a *ngIf="observation.workflow.state!='closed'" class="badge bg-info mx-1 pointer"
           (click)="openActivities(activityModal)">
-          <fa-icon icon="history"></fa-icon> Aktivitet
+          <fa-icon [icon]="faHistory"></fa-icon> Aktivitet
         </a>
 
         <!-- ACCESS!!! -->
@@ -68,7 +68,7 @@
         <!-- REPORT LINK -->
         <a [routerLink]="['/ors', observation._model.type , 'report', observation.id]"
           *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge bg-primary text-white mx-1">
-          <fa-icon icon="file"></fa-icon> Report
+          <fa-icon [icon]="faFile"></fa-icon> Report
         </a>
 
       </span>
@@ -244,7 +244,7 @@
           Forløpet
           <nlf-help class="pull-right" key="ors-editor-fallskjerm-components"></nlf-help>
           <button (click)="openPreview(modalPreview, 'components', 'Forløpet')" class="pull-right btn btn-link">
-            <!--<fa-icon icon="eye"></fa-icon>-->Preview
+            <!--<fa-icon [icon]="faEye"></fa-icon>-->Preview
           </button>
         </div>
         <nlf-ors-editor-components></nlf-ors-editor-components>
@@ -386,7 +386,7 @@
 
             <div class="btn-toolbar pull-right">
               <button (click)="openWorkflow()" class="btn btn-primary mr-2">
-                <fa-icon icon="exchange"></fa-icon> Behandle #{{observation.id}}
+                <fa-icon [icon]="faExchange"></fa-icon> Behandle #{{observation.id}}
               </button>
             </div>
           </ng-container>
@@ -421,25 +421,25 @@
 
             <button class="btn btn-success mr-2" (click)="openWorkflow()" title="Send"
               text="Når du er ferdig med observasjonen så sender du den til neste i arbeidsflyten som vil behandle observasjonen videre">
-              <fa-icon icon="send"></fa-icon> Send til HI
+              <fa-icon [icon]="faPaperPlane"></fa-icon> Send til HI
             </button>
 
 
             <button class="btn btn-danger mr-2" (click)="openWorkflow()" title="Trekk tilbake"
               text="Om du ikke ønsker sende inn rapporten så velger du trekk tilbake. Da blir rapporten kun tilgjegenlig for deg og du kan når som helst gjenåpne den igjen. Dette er OBSREGs måte å slette på.">
-              <fa-icon icon="reply"></fa-icon> Trekk tilbake
+              <fa-icon [icon]="faReply"></fa-icon> Trekk tilbake
             </button>
 
           </ng-container>
 
           <ng-container *ngIf="observation.workflow.state==='withdrawn'">
             <button class="btn btn-success mr-2" (click)="openWorkflow()" title="Gjenåpne" text="Gjenåpne ">
-              <fa-icon icon="repeat"></fa-icon> Gjenåpne
+              <fa-icon [icon]="faRepeat"></fa-icon> Gjenåpne
             </button>
           </ng-container>
           <ng-container *ngIf="['withdrawn','draft'].indexOf(observation.workflow.state)<0">
             <button class="btn btn-primary mr-2" (click)="openWorkflow()" title="Behandle" text="Behandle ">
-              <fa-icon icon="random"></fa-icon> Arbeidsflyt
+              <fa-icon [icon]="faRandom"></fa-icon> Arbeidsflyt
             </button>
           </ng-container>
         </span>
@@ -509,7 +509,7 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="closeActivities()">
-      <fa-icon icon="times"></fa-icon> Lukk
+      <fa-icon [icon]="faTimes"></fa-icon> Lukk
     </button>
 
   </div>

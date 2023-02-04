@@ -5,22 +5,22 @@
 <div *ngIf="modal && !showOnlyBtn" class="row">
   <div class="col-md-3">
     <button class="btn btn-primary btn-block" (click)="openModal(attrModal)">
-      <fa-icon icon="map-marker"></fa-icon>Where
+      <fa-icon [icon]="faMapMarker"></fa-icon> Where
     </button>
   </div>
   <div class="col-md-9">
     <div *ngFor="let a of atm; let idx = index">
       <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="a.attributes.anspName.value" path="E5X.Occurrence.AirNavigationService.ANSPName"></nlf-ors-editor-tag-e5x-render>
       &nbsp;
-      <fa-icon icon="edit" (click)="openModal(modal, idx)"></fa-icon>
-      <fa-icon icon="close" (click)="delete(idx)"></fa-icon>
+      <fa-icon [icon]="faEdit" (click)="openModal(modal, idx)"></fa-icon>
+      <fa-icon [icon]="faClose" (click)="delete(idx)"></fa-icon>
     </div>
   </div>
 </div>
 
 <div *ngIf="modal && showOnlyBtn" class="row">
   <button class="btn btn-secondary btn-block" (click)="openModal(attrModal)">
-    <fa-icon icon="map-marker"></fa-icon>Where
+    <fa-icon [icon]="faMapMarker"></fa-icon> Where
   </button>
 </div>
 <!-- INJURIES MODAL -->

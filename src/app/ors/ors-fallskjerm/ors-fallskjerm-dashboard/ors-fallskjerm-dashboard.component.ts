@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import { forkJoin, pipe, from } from 'rxjs';
 import { map, mergeMap, reduce, delay } from 'rxjs/operators';
 import { EChartsOption } from 'echarts';
+import { faCalendar, faSave } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-fallskjerm-dashboard',
@@ -16,6 +17,9 @@ import { EChartsOption } from 'echarts';
   styleUrls: ['./ors-fallskjerm-dashboard.component.css']
 })
 export class NlfOrsFallskjermDashboardComponent implements OnInit {
+
+  faSave = faSave;
+  faCalendar = faCalendar;
 
   activity = 'fallskjerm';
 
@@ -62,7 +66,7 @@ export class NlfOrsFallskjermDashboardComponent implements OnInit {
       }
     ]
   };
-  typesChartOptionColors = { 
+  typesChartOptionColors = {
     unwanted_act: '#0dcaf0',
     sharing: '#198754',
     near_miss: '#fd7e14',

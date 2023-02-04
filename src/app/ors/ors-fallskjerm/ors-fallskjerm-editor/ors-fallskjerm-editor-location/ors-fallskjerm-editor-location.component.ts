@@ -3,6 +3,7 @@ import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import { ApiObservationsItem, ApiOptionsInterface } from 'app/api/api.interface';
 import { ApiClubsService } from 'app/api/api-clubs.service';
 import { FormControl } from '@angular/forms';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-fallskjerm-editor-location',
@@ -19,7 +20,7 @@ export class NlfOrsFallskjermEditorLocationComponent implements OnInit, AfterVie
 
   lines = [];
 
-
+  faEdit = faEdit;
 
   constructor(private subject: NlfOrsEditorService,
     private clubService: ApiClubsService) {
@@ -28,7 +29,7 @@ export class NlfOrsFallskjermEditorLocationComponent implements OnInit, AfterVie
       observation => {
         // always assign
         this.observation = observation;
-        
+
         try {
           this.selected = this.observation.location.nickname;
         } catch (e) {

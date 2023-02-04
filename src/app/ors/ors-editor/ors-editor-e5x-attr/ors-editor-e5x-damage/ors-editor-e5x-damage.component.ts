@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { faCheck, faFire, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -14,6 +15,10 @@ export class NlfOrsEditorE5XDamageComponent implements OnInit {
   @Output() change: EventEmitter<boolean> = new EventEmitter();
   @Input() disabled: boolean = false;
   modalRef;
+
+  faFire = faFire;
+  faTimes = faTimes;
+  faCheck = faCheck;
 
   constructor(private modalService: NgbModal) { }
 

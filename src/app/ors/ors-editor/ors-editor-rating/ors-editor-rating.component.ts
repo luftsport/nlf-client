@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, TemplateRef } from '@an
 import { ApiObservationRatingInterface, ApiObservationsItem } from 'app/api/api.interface';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import { calculateRating } from 'app/interfaces/functions';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'nlf-ors-editor-rating',
   templateUrl: './ors-editor-rating.component.html',
@@ -14,6 +15,8 @@ export class NlfOrsEditorRatingComponent implements OnInit {
   modalRef;
   hover_potential;
   hover_actual;
+
+  faExclamationTriangle = faExclamationTriangle;
 
   constructor(private subject: NlfOrsEditorService) {
     this.subject.observableObservation.subscribe(observation => this.observation = observation);

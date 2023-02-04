@@ -3,7 +3,7 @@
 
     <span class="breadcrumb">
       <li class="breadcrumb-item">
-        <fa-icon icon="users"></fa-icon> <a [routerLink]="['/medlem']">NLF Medlemssjekk</a>
+        <fa-icon [icon]="faUsers"></fa-icon> <a [routerLink]="['/medlem']">NLF Medlemssjekk</a>
       </li>
       <li class="breadcrumb-item active">
         Medlemsliste <sup class="text-danger mx-1" title="Applikasjonen er ikke ferdig utviklet">beta</sup>
@@ -12,7 +12,7 @@
 
     <!--
     <button *ngIf="!!query" class="btn btn-primary btn-sm pull-right mx-1" (click)="openModal(saveTemplate)" title="Funksjonen kommer snart" disabled>
-      <fa-icon icon="save"></fa-icon> Lagre søk
+      <fa-icon [icon]="faSave"></fa-icon> Lagre søk
     </button>
     -->
     <nlf-help class="pull-right mx-1" key="nlf-member"></nlf-help>
@@ -82,7 +82,7 @@
         <ng-container *ngIf="row.hasOwnProperty('activities') && row.activities.indexOf(110)>-1">
           <div *ngFor="let m of row.magazines" class="overflow-hidden">
             <span *ngIf="m.name=='Unknown Name' && m.year==2022">
-              <fa-icon icon="check" class="text-success mr-1"></fa-icon>HPS Personal accident insurance and third party liability
+              <fa-icon [icon]="faCheck" class="text-success mr-1"></fa-icon>HPS Personal accident insurance and third party liability
               insurance valid through 31.12.2022
             </span>
           </div>

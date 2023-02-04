@@ -19,7 +19,7 @@
       <a class="btn btn-secondary btn-block mt-auto"
         [routerLink]="['/organizations', observation.discipline, 'locations']"
         [queryParams]="{returl: '/ors/'+observation._model.type+'/edit/'+observation.id}">
-        <fa-icon icon="edit"></fa-icon> Rediger
+        <fa-icon [icon]="faEdit"></fa-icon> Rediger
       </a>
 
     </div>

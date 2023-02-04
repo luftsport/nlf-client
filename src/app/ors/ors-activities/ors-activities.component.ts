@@ -8,6 +8,8 @@ import { NlfAlertService } from 'app/services/alert/alert.service';
 import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
 import { NlfComponent } from 'app/nlf.component';
 import { ConfirmService } from 'app/services/confirm/confirm.service';
+import { faQuestion, faUndo, faInfoCircle, faFile } from '@fortawesome/free-solid-svg-icons';
+import { faFileAlt } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'nlf-ors-activities',
@@ -30,6 +32,12 @@ export class NlfOrsActivitiesComponent implements OnInit {
   is_reminding: boolean = false;
   is_sending_msg = false;
   current_acl_users = [];
+
+  faQuestion = faQuestion;
+  faUndo = faUndo;
+  faInfoCircle = faInfoCircle;
+  faFile = faFile;
+  faFileAlt = faFileAlt;
 
   constructor(
     private ntfService: ApiNotificationsService,

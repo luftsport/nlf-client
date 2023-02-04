@@ -28,7 +28,7 @@ import {
   E5XReportingHistoryClass,
   E5XRiskAssessmentClass
 } from 'app/interfaces/e5x.interface';
-import { faTimes, faLongArrowRight, faPlane, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faLongArrowRight, faPlane, faPlus, faMinus, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-editor-flight',
@@ -73,6 +73,8 @@ export class NlfOrsEditorFlightComponent implements OnInit {
   faPlane = faPlane;
   faPlus = faPlus;
   faMinus = faMinus;
+  faEye = faEye;
+  faEyeSlash = faEyeSlash;
 
   public debouncedUpdate = debounce(this.update, 600);
 

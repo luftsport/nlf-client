@@ -16,7 +16,7 @@
       <nlf-resolve-lungo-activity *ngIf="!!organization.main_activity.id" [activity_id]="organization.main_activity.id"></nlf-resolve-lungo-activity>
     </p>
     <a class="btn btn-secondary btn-block" [routerLink]="['/organizations', organization.id]" [routerLinkActive]="'active'">
-      <fa-icon icon="link"></fa-icon>{{ organization.name }}
+      <fa-icon [icon]="faLink"></fa-icon>{{ organization.name }}
     </a>
   </ng-template>
 

@@ -20,6 +20,7 @@ import { ComponentCanDeactivate } from 'app/pending-changes.guard';
 import { HostListener } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { forkJoin } from 'rxjs';
+import { faSave, faQuestion, faInfoCircle, faHistory, faFile, faEye, faExchange, faPaperPlane, faReply, faRepeat, faRandom, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import 'rxjs/add/operator/takeWhile';
 
 
@@ -29,6 +30,20 @@ import 'rxjs/add/operator/takeWhile';
   styleUrls: ['./ors-fallskjerm-editor.component.css']
 })
 export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
+
+  faSave = faSave;
+  faQuestion = faQuestion;
+  faInfoCircle = faInfoCircle;
+  faHistory = faHistory;
+  faFile = faFile;
+  faEye = faEye;
+  faExchange = faExchange;
+  faPaperPlane = faPaperPlane;
+  faReply = faReply;
+  faRepeat = faRepeat;
+  faRandom = faRandom;
+  faTimes = faTimes;
+  faCheck = faCheck;
 
   error;
   id: number | string;
@@ -289,7 +304,7 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy, Compo
   public getData() {
     console.log('Getting data');
     this.dataReady = false;
-    
+
     this.orsService.get(this.id).subscribe(
       data => {
 

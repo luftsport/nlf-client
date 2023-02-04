@@ -17,10 +17,10 @@
           <td>{{ f.size | bytes : 2 }}</td>
           <td>{{f.content_type}}&nbsp;</td>
           <td>
-            <fa-icon class="pointer" name="download" (click)="download(f._id)" title="Last ned"></fa-icon>
+            <fa-icon class="pointer" [icon]="faDownload" (click)="download(f._id)" title="Last ned"></fa-icon>
             <!--
             <fa-icon *ngIf="f.size<=10000000" class="pointer" name="download" (click)="download(f._id)" title="Last ned"></fa-icon>
-            <a *ngIf="f.size>10000000" target="_blank" [routerLink]="['/api', 'v1', 'files', f._id]"><fa-icon icon="download" title="Last ned"></fa-icon></a>
+            <a *ngIf="f.size>10000000" target="_blank" [routerLink]="['/api', 'v1', 'files', f._id]"><fa-icon [icon]="faDownload" title="Last ned"></fa-icon></a>
             -->
           </td>
           <td>&nbsp;</td>

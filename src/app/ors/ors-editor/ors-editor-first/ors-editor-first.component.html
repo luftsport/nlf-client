@@ -3,9 +3,9 @@
     <p class="lead"><strong>Hei</strong>, oppretter du en OBSREG rapport for første gang?</p>
     <hr />
     <p>Øverst på siden under navigasjonen finner du det som kalles en toolbar og den er spesifikk for denne siden.</p>
-    <p>Der finner du bla et <fa-icon icon="question"></fa-icon> som vil åpne en hjelpetekst for denne observasjonen</p>
-    <p>Merk at du også finner <fa-icon icon="question"></fa-icon> for hver logiske blokk og for mange felter i selve rapporten.
-      Ved å klikke på <fa-icon icon="question"></fa-icon> får du opp hjelpetekster for disse.</p>
+    <p>Der finner du bla et <fa-icon [icon]="faQuestion"></fa-icon> som vil åpne en hjelpetekst for denne observasjonen</p>
+    <p>Merk at du også finner <fa-icon [icon]="faQuestion"></fa-icon> for hver logiske blokk og for mange felter i selve rapporten.
+      Ved å klikke på <fa-icon [icon]="faQuestion"></fa-icon> får du opp hjelpetekster for disse.</p>
     <p></p>
     <p>
       <strong>
@@ -25,7 +25,7 @@
   </div>
   <div class="col-md-12 mb-1 text-right">
     <button (click)="close()" class="btn btn-primary">
-      <fa-icon icon="check"></fa-icon>Ok, skjønner!
+      <fa-icon [icon]="faCheck"></fa-icon> Ok, skjønner!
     </button>
   </div>
 </ngb-alert>

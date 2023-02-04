@@ -3,6 +3,7 @@ import { ApiFileItem } from 'app/api/api.interface';
 import { ApiFilesService } from 'app/api/api-files.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-report-files-thumbnails',
@@ -10,6 +11,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./report-files-thumbnails.component.css']
 })
 export class NlfOrsReportFilesThumbnailsComponent implements OnInit {
+
+  faChevronLeft = faChevronLeft;
+  faChevronRight = faChevronRight;
 
   @Input() filelist: ApiFileItem[];
   @Input() size: string;

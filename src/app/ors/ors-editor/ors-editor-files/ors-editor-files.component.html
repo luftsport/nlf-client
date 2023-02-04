@@ -44,10 +44,10 @@
               <td>
                 <!--<fa-icon (click)="download(f)" name="download"></fa-icon>-->
                 <a target="_blank" href="{{ f.download }}" class="mx-1">
-                  <fa-icon icon="download"></fa-icon>
+                  <fa-icon [icon]="faDownload"></fa-icon>
                 </a>
                 <fa-icon *ngIf="observation.acl_user.w" class="pointer mx-1" (click)="removeFromFilelist(f._id, i)"
-                  name="times"></fa-icon>
+                  [icon]="faTimes"></fa-icon>
               </td>
               <td>&nbsp;</td>
 
@@ -118,7 +118,7 @@
     <div *ngIf="!dropzone || (onlyFilepicker && !dropzone)">
       <!-- UPLOAD BUTTON -->
       <label class="btn btn-block btn-primary btn-file">
-        <fa-icon icon="plus"></fa-icon>Legg til filer
+        <fa-icon [icon]="faPlus"></fa-icon>Legg til filer
         <input type="file" style="display: none;" ngFileSelect [options]="options"
           (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple>
       </label>

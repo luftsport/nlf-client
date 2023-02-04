@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router, NavigationStart } from '@angular/router';
+import { faList, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -9,6 +10,9 @@ import { Router, NavigationStart } from '@angular/router';
   styleUrls: ['./resolve-avatars.component.css']
 })
 export class NlfResolveAvatarsComponent implements OnInit {
+
+  faList = faList;
+  faPlus = faPlus;
 
   @Input() persons: number[];
   @Input() title: boolean = false;

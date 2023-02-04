@@ -59,8 +59,8 @@
   </div>
   <!-- MAP -->
   <div class="col-md-2 text-right">
-    <button class="btn btn-link" (click)="showRouteMap=!showRouteMap">Kart <fa-icon *ngIf="showRouteMap" name="eye-slash"></fa-icon>
-      <fa-icon *ngIf="!showRouteMap" name="eye"></fa-icon>
+    <button class="btn btn-link" (click)="showRouteMap=!showRouteMap">Kart <fa-icon *ngIf="showRouteMap" [icon]="faEyeSlash"></fa-icon>
+      <fa-icon *ngIf="!showRouteMap" [icon]="faEye"></fa-icon>
     </button>
   </div>
 </div>
@@ -103,7 +103,7 @@
           </div>
 
           <div class="col-md-1 text-right">
-            <fa-icon *ngIf="last && observation.acl_user.w" name="times" (click)="removeSegment()" class="pointer"></fa-icon>
+            <fa-icon *ngIf="last && observation.acl_user.w" [icon]="faTimes" (click)="removeSegment()" class="pointer"></fa-icon>
           </div>
         </div>
 
@@ -342,13 +342,13 @@
           <div class="my-1" *ngIf="exists(aircraft.wx, modalRoute.from.icao, 'metar')">
             <div><strong>METARs</strong></div>
             <div class="small" *ngFor="let metar of aircraft.wx[modalRoute.from.icao].metar">
-              {{ metar }}
+              {{ metar }}
             </div>
           </div>
           <div class="my-1" *ngIf="exists(aircraft.wx, modalRoute.from.icao, 'taf')">
             <div><strong>TAFs</strong></div>
             <div class="small" *ngFor="let taf of aircraft.wx[modalRoute.from.icao].metar">
-              {{taf }}
+              {{ taf }}
             </div>
           </div>
 
@@ -367,13 +367,13 @@
           <div class="my-1" *ngIf="exists(aircraft.wx, modalRoute.to.icao, 'metar')">
             <div><strong>METARs</strong></div>
             <div class="small" *ngFor="let metar of aircraft.wx[modalRoute.to.icao].metar">
-              {{ metar }}
+              {{ metar }}
             </div>
           </div>
           <div class="my-1" *ngIf="exists(aircraft.wx, modalRoute.to.icao, 'taf')">
             <div><strong>TAFs</strong></div>
             <div class="small" *ngFor="let taf of aircraft.wx[modalRoute.to.icao].metar">
-              {{taf }}
+              {{ taf }}
             </div>
           </div>
 
@@ -443,7 +443,7 @@
       {{ airport.type }}
     </td>
     <td>
-      <fa-icon *ngIf="!observation.acl_user.w" class="pointer" name="times" fw="true"></fa-icon>
+      <fa-icon *ngIf="!observation.acl_user.w" class="pointer" [icon]="faTimes" fw="true"></fa-icon>
     </td>
   </tr>
 </table>

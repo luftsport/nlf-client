@@ -1,5 +1,5 @@
 <button (click)="openModal(modal)" class="btn btn-link">
-  Injuries<fa-icon icon="check" class="text-secondary" *ngIf="!_isObjEmpty(attr)"></fa-icon>
+  Injuries<fa-icon [icon]="faCheck" class="text-secondary" *ngIf="!_isObjEmpty(attr)"></fa-icon>
 </button>
 
 

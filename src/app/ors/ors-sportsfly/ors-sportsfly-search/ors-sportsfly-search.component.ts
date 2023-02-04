@@ -8,6 +8,7 @@ import { cleanObject } from 'app/interfaces/functions';
 import { isEmpty } from 'lodash';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { saveAs } from "file-saver";
+import { faDownload, faFilter, faLongArrowRight, faPlane, faSave } from '@fortawesome/free-solid-svg-icons';
 
 /**
 Save search is simple - save who and search query!
@@ -20,6 +21,12 @@ On completed run check if any new ones not in list - voila!
   styleUrls: ['./ors-sportsfly-search.component.css']
 })
 export class NlfOrsSportsflySearchComponent implements OnInit {
+
+  faSave = faSave;
+  faFilter = faFilter;
+  faDownload = faDownload;
+  faPlane = faPlane;
+  faLongArrowRight = faLongArrowRight;
 
   dataReady = false;
   searching = false;

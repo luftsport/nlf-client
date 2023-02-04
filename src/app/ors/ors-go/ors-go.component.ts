@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { faHashtag } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-go',
@@ -8,11 +9,12 @@ import { Router } from '@angular/router';
 })
 export class NlfOrsGoComponent implements OnInit {
 
+  faHashtag = faHashtag;
+
   @Input() activity: string;
   ors_id;
 
   constructor(private router: Router) { }
-
 
   ngOnInit() {
   }

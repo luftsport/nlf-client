@@ -35,7 +35,7 @@
         <strong>Ikke</strong> behandle rapporten i klubb
       </label>
       <ngb-alert *ngIf="payload.do_not_process_in_club" type="info" (close)="close()">
-        <fa-icon icon="info"></fa-icon> Denne observasjonen vil ikke kunne bli behandlet i klubb, kun av OBSREG-koordinator. Klubbnavnet vil også bli anonymisert når denne observasjonen er ferdig behandlet.
+        <fa-icon [icon]="faInfo"></fa-icon> Denne observasjonen vil ikke kunne bli behandlet i klubb, kun av OBSREG-koordinator. Klubbnavnet vil også bli anonymisert når denne observasjonen er ferdig behandlet.
       </ngb-alert>
     </div>
 
@@ -47,11 +47,11 @@
         <strong>Ikke</strong> publiser rapport når lukket
       </label>
       <ngb-alert *ngIf="payload.do_not_publish" type="warning" (close)="close()">
-        <fa-icon icon="info-circle"></fa-icon> Denne observasjonen vil ikke bli allment tilgjengelig når denne observasjonen er ferdig behandlet og lukket.
+        <fa-icon [icon]="faInfoCircle"></fa-icon> Denne observasjonen vil ikke bli allment tilgjengelig når denne observasjonen er ferdig behandlet og lukket.
       </ngb-alert>
 
       <ngb-alert *ngIf="observation.workflow.settings.do_not_process_in_club" type="info" (close)="close()">
-        <fa-icon icon="info-circle"></fa-icon> Denne observasjonen skal <strong>ikke</strong> behandles i klubb
+        <fa-icon [icon]="faInfoCircle"></fa-icon> Denne observasjonen skal <strong>ikke</strong> behandles i klubb
       </ngb-alert>
 
     </div>
@@ -64,7 +64,7 @@
     </div>
 
     <button type="button" class="btn btn-outline-dark mr-auto mb-2 d-none d-sm-block" *ngIf="!showCommentInput" (click)="showCommentInput=true">
-      <fa-icon icon="comment"></fa-icon>Kommentar til arbeidsflyten
+      <fa-icon [icon]="faComment"></fa-icon> Kommentar til arbeidsflyten
     </button>
 
     <nlf-ors-report-workflow-timeline [activity]="observation._model.type" [_id]="observation._id" [workflow]="observation.workflow"></nlf-ors-report-workflow-timeline>
@@ -73,10 +73,10 @@
       <img class="img img-fluid" [src]="domSanitizer.bypassSecurityTrustUrl(graph)">
     </div>
     <button type="button" class="btn btn-outline-dark mr-auto d-none d-sm-block" *ngIf="!graph" (click)="getGraph()">
-      <fa-icon icon="random"></fa-icon>Vis skjema
+      <fa-icon [icon]="faRandom"></fa-icon> Vis skjema
     </button>
     <button type="button" class="btn btn-outline-dark mr-auto d-none d-sm-block" *ngIf="!!graph" (click)="graph=undefined">
-      <fa-icon icon="random"></fa-icon>Skjul skjema
+      <fa-icon [icon]="faRandom"></fa-icon> Skjul skjema
     </button>
 
     <span *ngIf="!!processing" class="text-center">
@@ -104,11 +104,11 @@
       'disabled':processing
     }"
       (click)="workflowChange(a.resource, a.action)">
-      <fa-icon *ngIf="a.resource=='reject'" name="reply"></fa-icon>
-      <fa-icon *ngIf="a.resource=='approve'" name="send"></fa-icon>
-      <fa-icon *ngIf="a.resource=='withdraw'" name="reply"></fa-icon>
-      <fa-icon *ngIf="a.resource=='reopen'" name="repeat"></fa-icon>
-      <fa-icon *ngIf="['reject', 'approve', 'withdraw', 'reopen'].indexOf(a.resource)==-1" name="send-o"></fa-icon>
+      <fa-icon *ngIf="a.resource=='reject'" [icon]="faReply"></fa-icon>
+      <fa-icon *ngIf="a.resource=='approve'" [icon]="faPaperPlane"></fa-icon>
+      <fa-icon *ngIf="a.resource=='withdraw'" [icon]="faReply"></fa-icon>
+      <fa-icon *ngIf="a.resource=='reopen'" [icon]="faRepeat"></fa-icon>
+      <fa-icon *ngIf="['reject', 'approve', 'withdraw', 'reopen'].indexOf(a.resource)==-1" [icon]="faPaperPlaneRegular"></fa-icon>
       &nbsp;{{ a.action }}
     </button>
   </span>

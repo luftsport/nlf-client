@@ -153,11 +153,11 @@
           </agm-map>
         </div>
         -->
-        
+
         <!--
           <div *ngIf="!data.location?.geo?.coords">
             <ngb-alert type="danger" [dismissible]="false">
-              <fa-icon icon="map-marker"></fa-icon>
+              <fa-icon [icon]="faMapMarker"></fa-icon>
               Ingen lokalisasjon satt.
             </ngb-alert>
           </div>
@@ -231,7 +231,7 @@
       <!-- FALLSKJERM LAST OPP-->
       <div *ngIf="1===3 && lungo.main_activity.id==109 && lungo.type_id==5">
         <button class="btn btn-primary">
-          <fa-icon icon="upload"></fa-icon>Last opp manifest
+          <fa-icon [icon]="faUpload"></fa-icon> Last opp manifest
         </button>
       </div>
     </div>
