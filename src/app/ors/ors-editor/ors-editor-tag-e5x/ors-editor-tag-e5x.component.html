@@ -2,7 +2,7 @@
 
   <label [for]="path">{{ customLabel || label }}
     <span *ngIf="!!unit">[{{ unit }}]</span>
-    <fa-icon (click)="openModal(modalHelp)" *ngIf="show_help" class="ms-1 pointer" name="question"></fa-icon>
+    <fa-icon (click)="openModal(modalHelp)" *ngIf="show_help" class="ms-1 pointer" [icon]="faQuestion"></fa-icon>
   </label>
 
   <span *ngIf="!attribute">

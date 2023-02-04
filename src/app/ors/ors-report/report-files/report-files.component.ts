@@ -1,7 +1,7 @@
 import { ApiFilesService } from 'app/api/api-files.service';
 import { ApiObservationFileInterface, ApiFileItem, ApiOptionsInterface } from 'app/api/api.interface';
 import { Component, Input, OnInit } from '@angular/core';
-import { faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faDownload, faLock, faUnlock } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-report-files',
@@ -16,6 +16,8 @@ export class NlfOrsReportFilesComponent implements OnInit {
   dataReady = false;
 
   faDownload = faDownload;
+  faLock = faLock;
+  faUnlock = faUnlock;
 
   constructor(private apiFile: ApiFilesService) { }
 

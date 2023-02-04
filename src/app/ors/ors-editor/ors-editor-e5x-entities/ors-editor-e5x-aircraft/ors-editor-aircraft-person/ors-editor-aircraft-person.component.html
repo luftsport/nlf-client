@@ -8,9 +8,9 @@
       <nlf-resolve-lungo-person (click)="openModal(personModal, idx)" [person_id]="c.person.id" [tmp_name]="c.person.tmp_name" [link]="false" avatar="true"></nlf-resolve-lungo-person>
       &nbsp;
 
-      <fa-icon class="me-auto" name="edit" (click)="openModal(personModal, idx)"></fa-icon>
+      <fa-icon class="me-auto" [icon]="faEdit" (click)="openModal(personModal, idx)"></fa-icon>
       <span *ngIf="!disabled">
-        <fa-icon class="me-auto" name="close" (click)="delete(idx)"></fa-icon>
+        <fa-icon class="me-auto" [icon]="faClose" (click)="delete(idx)"></fa-icon>
       </span>
     </div>
   </div>
@@ -184,7 +184,7 @@
         <div class="row">
           <div class="col-md-12 lead bg-light">
             License {{ (idx+1) }}
-            <fa-icon *ngIf="!disabled" (click)="deleteLicense(idx)" class="ms-2 pointer" name="times"></fa-icon>
+            <fa-icon *ngIf="!disabled" (click)="deleteLicense(idx)" class="ms-2 pointer" [icon]="faTimes"></fa-icon>
           </div>
         </div>
         <div class="form-row">
@@ -225,7 +225,7 @@
         <div class="row">
           <div class="col-md-12 lead bg-light">
             Incapacitation {{ (idx+1) }}
-            <fa-icon *ngIf="!disabled" (click)="deleteIncapacitation(idx)" class="ms-2 pointer" name="times"></fa-icon>
+            <fa-icon *ngIf="!disabled" (click)="deleteIncapacitation(idx)" class="ms-2 pointer" [icon]="faTimes"></fa-icon>
           </div>
         </div>
         <div class="form-row">

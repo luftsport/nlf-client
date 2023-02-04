@@ -8,7 +8,7 @@ import { NlfAlertService } from 'app/services/alert/alert.service';
 import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
 import { NlfComponent } from 'app/nlf.component';
 import { ConfirmService } from 'app/services/confirm/confirm.service';
-import { faQuestion, faUndo, faInfoCircle, faFile } from '@fortawesome/free-solid-svg-icons';
+import { faQuestion, faUndo, faInfoCircle, faFile, faLock } from '@fortawesome/free-solid-svg-icons';
 import { faFileAlt } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
@@ -38,6 +38,7 @@ export class NlfOrsActivitiesComponent implements OnInit {
   faInfoCircle = faInfoCircle;
   faFile = faFile;
   faFileAlt = faFileAlt;
+  faLock = faLock;
 
   constructor(
     private ntfService: ApiNotificationsService,

@@ -3,8 +3,8 @@
 
   <span *ngIf="components?.length > 0" class="pull-right px-1 pointer"
     (click)="componentCollapsed = !componentCollapsed">
-    <fa-icon *ngIf="componentCollapsed" name="plus-square" size="2"></fa-icon>
-    <fa-icon *ngIf="!componentCollapsed" name="minus-square" size="2"></fa-icon>
+    <fa-icon *ngIf="componentCollapsed" [icon]="faPlusSquare" size="2"></fa-icon>
+    <fa-icon *ngIf="!componentCollapsed" [icon]="faMinusSquare" size="2"></fa-icon>
   </span>
 </div>
 

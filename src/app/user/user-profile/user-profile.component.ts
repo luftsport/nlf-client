@@ -14,7 +14,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { avatar_tmp_image } from 'app/interfaces/functions';
 import { NlfUserFirstLoginComponent } from 'app/user/user-first-login/user-first-login.component';
 import { forkJoin } from 'rxjs';
-import { faCog, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faTimes, faCheck, faPencil } from '@fortawesome/free-solid-svg-icons';
 import { faUser, faUserCircle } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
@@ -54,6 +54,7 @@ export class NlfUserProfileComponent implements OnInit {
   faCheck = faCheck;
   faUser = faUser;
   faUserCircle = faUserCircle;
+  faPencil = faPencil;
 
   constructor(
     private userSubject: NlfUserSubjectService,

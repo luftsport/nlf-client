@@ -48,7 +48,7 @@
 
         <div class="input-group-prepend">
           <span cdkDragHandle class="input-group-text drag-handle" id="basic-addon2">
-            <fa-icon [ngClass]="{'text-muted': !observation.acl_user.w}" name="arrows-alt"></fa-icon>
+            <fa-icon [ngClass]="{'text-muted': !observation.acl_user.w}" [icon]="faArrowsAlt"></fa-icon>
           </span>
         </div>
 
@@ -99,21 +99,21 @@
         <div class="input-group-append">
           <span (click)="openModal(componentModal, 'cause', i)" class="input-group-text pointer" id="basic-addon2">
             <fa-icon [ngClass]="!cause.hasOwnProperty('what') || cause['what'] =='' ? 'text-danger' : 'text-success'"
-              name="exclamation"></fa-icon>
+              [icon]="faExclamation"></fa-icon>
             <fa-icon
               [ngClass]="!cause.hasOwnProperty('involved') || cause['involved'].length==0 ? 'text-danger' : 'text-success'"
-              name="user"></fa-icon>
+              [icon]="faUser"></fa-icon>
             <fa-icon
               [ngClass]="!cause.hasOwnProperty('where') || !cause['where'].hasOwnProperty('at') || cause['where']['at']=='' ? 'text-danger' : 'text-success'"
-              name="map-marker"></fa-icon>
+              [icon]="faMapMarker"></fa-icon>
             <fa-icon [ngClass]="!cause.hasOwnProperty('how') || cause['how'] =='' ? 'text-danger' : 'text-success'"
-              name="comment"></fa-icon>
+              [icon]="faComment"></fa-icon>
           </span>
         </div>
 
         <div class="input-group-append">
           <span (click)="removeCause(i)" class="input-group-text pointer" id="basic-addon2">
-            <fa-icon [ngClass]="{'text-muted': !observation.acl_user.w}" name="trash"></fa-icon>
+            <fa-icon [ngClass]="{'text-muted': !observation.acl_user.w}" [icon]="faTrash"></fa-icon>
           </span>
         </div>
 
@@ -173,16 +173,16 @@
         <span (click)="openModal(componentModal, 'incident', i)" class="input-group-text pointer" id="basic-addon2">
           <fa-icon
             [ngClass]="!incident.hasOwnProperty('what') || !incident['what'] || incident['what']=='' ? 'text-danger' : 'text-success'"
-            name="exclamation"></fa-icon>
+            [icon]="faExclamation"></fa-icon>
           <fa-icon
             [ngClass]="!incident.hasOwnProperty('involved') || incident['involved'].length==0 ? 'text-danger' : 'text-success'"
-            name="user"></fa-icon>
+            [icon]="faUser"></fa-icon>
           <fa-icon
             [ngClass]="!incident.hasOwnProperty('where') || !incident['where'].hasOwnProperty('at') || incident['where']['at']=='' ? 'text-danger' : 'text-success'"
-            name="map-marker"></fa-icon>
+            [icon]="faMapMarker"></fa-icon>
           <fa-icon
             [ngClass]="!incident.hasOwnProperty('how') || !incident['how'] || incident['how']=='' ? 'text-danger' : 'text-success'"
-            name="comment"></fa-icon>
+            [icon]="faComment"></fa-icon>
         </span>
       </div>
 
@@ -249,21 +249,21 @@
             id="basic-addon2">
             <fa-icon
               [ngClass]="!consequence.hasOwnProperty('what') || !consequence['what'] || consequence['what']=='' ? 'text-danger' : 'text-success'"
-              name="exclamation"></fa-icon>
+              [icon]="faExclamation"></fa-icon>
             <fa-icon
               [ngClass]="!consequence.hasOwnProperty('involved') || consequence['involved'].length==0 ? 'text-danger' : 'text-success'"
-              name="user"></fa-icon>
+              [icon]="faUser"></fa-icon>
             <fa-icon
               [ngClass]="!consequence.hasOwnProperty('where') || !consequence['where'].hasOwnProperty('at') || consequence['where']['at']=='' ? 'text-danger' : 'text-success'"
-              name="map-marker"></fa-icon>
+              [icon]="faMapMarker"></fa-icon>
             <fa-icon
               [ngClass]="!consequence.hasOwnProperty('how')  || consequence['how']=='' ? 'text-danger' : 'text-success'"
-              name="comment"></fa-icon>
+              [icon]="faComment"></fa-icon>
           </span>
         </div>
         <div class="input-group-append">
           <span (click)="removeConsequence(i)" class="input-group-text pointer" id="basic-addon2">
-            <fa-icon [ngClass]="{'text-muted': !observation.acl_user.w}" name="trash"></fa-icon>
+            <fa-icon [ngClass]="{'text-muted': !observation.acl_user.w}" [icon]="faTrash"></fa-icon>
           </span>
         </div>
 

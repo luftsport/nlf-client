@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { E5XAerodromeGeneralClass } from 'app/interfaces/e5x.interface';
-import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';import {  } from '@fortawesome/free-solid-svg-icons';
+import { faClose, faEdit, faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';import {  } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-editor-e5x-aerodrome',
@@ -20,6 +20,8 @@ export class NlfOrsEditorE5XAerodromeComponent implements OnInit {
 
   faPlus = faPlus;
   faTimes = faTimes;
+  faEdit = faEdit;
+  faClose = faClose;
 
   constructor(private modalService: NgbModal) { }
 

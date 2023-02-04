@@ -14,8 +14,8 @@
               <fa-icon [icon]="faArrowsAlt"></fa-icon>
             </span>
             <span class="pointer ms-1 me-3" (click)="goTo(location)">{{ location.nickname }} <span *ngIf="idx==0"> (default)</span></span>
-            <fa-icon class="pointer me-1" name="times" (click)="deleteLocation(idx)"></fa-icon>
-            <fa-icon class="pointer" name="edit" (click)="openModal(modal, idx)"></fa-icon>
+            <fa-icon class="pointer me-1" [icon]="faTimes" (click)="deleteLocation(idx)"></fa-icon>
+            <fa-icon class="pointer" [icon]="faEdit" (click)="openModal(modal, idx)"></fa-icon>
           </div>
 
 

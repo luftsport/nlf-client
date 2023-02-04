@@ -10,7 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NlfConfigService } from 'app/nlf-config.service';
 import { debounce } from 'ts-debounce';
 import { NlfAlertService } from 'app/services/alert/alert.service';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faQuestion, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 export interface TagInterface {
   value: number;
@@ -43,6 +43,7 @@ export interface TagInterface {
 export class NlfOrsEditorTagE5XComponent implements OnInit {
 
   faTimes = faTimes;
+  faQuestion = faQuestion;
 
   @Input() items: any; //numbernumber[] = []; both array and non-array
   @Output() itemsChange: EventEmitter<any> = new EventEmitter();

@@ -81,7 +81,7 @@
     -->
 
         <span class="pull-right">
-          <!--<fa-icon class="pointer" (click)="openReceipentsModal(recepientModalTemplate, current_acl_users||[])" name="envelope-open-o" [fw]="true"></fa-icon> -->
+          <!--<fa-icon class="pointer" (click)="openReceipentsModal(recepientModalTemplate, current_acl_users||[])" [icon]="envelope-open-o" [fw]="true"></fa-icon> -->
           <!--<nlf-resolve-avatars [persons]="row.recepients||[]" max="2"></nlf-resolve-avatars>-->
           <span>
             <nlf-resolve-avatars [persons]="current_acl_users||[]" modal_title="Mottakere" max="5">
@@ -191,8 +191,8 @@
         </time>
 
         <div *ngIf="row.data.action.indexOf('approve')>-1" class="cbp_tmicon bg-green">
-          <fa-icon *ngIf="row.data.destination!='closed'" name="exchange"></fa-icon>
-          <fa-icon *ngIf="row.data.destination=='closed'" name="check"></fa-icon>
+          <fa-icon *ngIf="row.data.destination!='closed'" [icon]="faExchange"></fa-icon>
+          <fa-icon *ngIf="row.data.destination=='closed'" [icon]="faCheck"></fa-icon>
         </div>
 
         <div *ngIf="row.data.action=='reject'" class="cbp_tmicon bg-blush">
@@ -217,7 +217,7 @@
             <span class="pull-right">
               <nlf-resolve-observation-state [activity]="observation._model.type" [state]="row.data.source" icon="true">
               </nlf-resolve-observation-state>
-              <fa-icon class="text-secondary mx-1" name="long-arrow-right"></fa-icon>
+              <fa-icon class="text-secondary mx-1" [icon]="faLongArrowRight"></fa-icon>
               <nlf-resolve-observation-state [activity]="observation._model.type" [state]="row.data.destination"
                 icon="true"></nlf-resolve-observation-state>
             </span>

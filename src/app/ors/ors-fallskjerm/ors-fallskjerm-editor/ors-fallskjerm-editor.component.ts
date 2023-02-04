@@ -20,7 +20,7 @@ import { ComponentCanDeactivate } from 'app/pending-changes.guard';
 import { HostListener } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { forkJoin } from 'rxjs';
-import { faSave, faQuestion, faInfoCircle, faHistory, faFile, faEye, faExchange, faPaperPlane, faReply, faRepeat, faRandom, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faQuestion, faInfoCircle, faHistory, faFile, faEye, faExchange, faPaperPlane, faReply, faRepeat, faRandom, faTimes, faCheck, faLock } from '@fortawesome/free-solid-svg-icons';
 import 'rxjs/add/operator/takeWhile';
 
 
@@ -44,6 +44,7 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy, Compo
   faRandom = faRandom;
   faTimes = faTimes;
   faCheck = faCheck;
+  faLock = faLock;
 
   error;
   id: number | string;

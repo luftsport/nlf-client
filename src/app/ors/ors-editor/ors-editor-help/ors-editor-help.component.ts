@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import { ApiObservationsItem } from 'app/api/api.interface';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { faSave, faHistory, faFile } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faHistory, faFile, faQuestion } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-editor-help',
@@ -17,6 +17,7 @@ export class NlfOrsEditorHelpComponent {
   faSave = faSave;
   faHistory = faHistory;
   faFile = faFile;
+  faQuestion = faQuestion;
 
   constructor(private subject: NlfOrsEditorService,
     public activeModal: NgbActiveModal) {

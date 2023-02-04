@@ -38,9 +38,9 @@
       <div class="row">
         <div class="d-flex col-12" id="memberSearchInput">
           <!--#searchField searchField.value <nlf-ui-component-spinner size="3"></nlf-ui-component-spinner> -->
-          <fa-icon *ngIf="!searching" name="search" class="form-control-lg position-absolute ps-3 text-muted">
+          <fa-icon *ngIf="!searching" [icon]="faSearch" class="form-control-lg position-absolute ps-3 text-muted">
           </fa-icon>
-          <fa-icon *ngIf="searching" name="spinner" animation="pulse"
+          <fa-icon *ngIf="searching" [icon]="faSpinner" animation="pulse"
             class="form-control-lg position-absolute ps-3 text-muted"></fa-icon>
 
           <input [(ngModel)]="searchTerm" [disabled]="searching" class="form-control form-control-lg py-4 ps-5 "
@@ -126,8 +126,8 @@
 
     <h4>Seksjonsmedlemsskap</h4>
     <div *ngFor="let federation of modalPerson.federation" class="overflow-hidden">
-      <fa-icon *ngIf="checkExpiryYear(federation.year)" name="check" class="text-success me-1"></fa-icon>
-      <fa-icon *ngIf="!checkExpiryYear(federation.year)" name="remove" class="text-danger me-1"></fa-icon>
+      <fa-icon *ngIf="checkExpiryYear(federation.year)" [icon]="faCheck" class="text-success me-1"></fa-icon>
+      <fa-icon *ngIf="!checkExpiryYear(federation.year)" [icon]="faRemove" class="text-danger me-1"></fa-icon>
       {{ federation.name }} {{ federation.type }}
       <nlf-resolve-lungo-activity [activity_id]="federation.activity"></nlf-resolve-lungo-activity> {{ federation.year
       }} <span *ngIf="!!federation.exception">{{federation.exception}}</span>
@@ -139,9 +139,9 @@
 
     <h4>Klubbmedlemsskap</h4>
     <div *ngFor="let membership of modalPerson.memberships" class="overflow-hidden">
-      <fa-icon *ngIf="!!membership.payment && checkExpiryYear(membership.payment.year)" name="check"
+      <fa-icon *ngIf="!!membership.payment && checkExpiryYear(membership.payment.year)" [icon]="faCheck"
         class="text-success me-1"></fa-icon>
-      <fa-icon *ngIf="!membership.payment || !checkExpiryYear(membership.payment.year)" name="remove"
+      <fa-icon *ngIf="!membership.payment || !checkExpiryYear(membership.payment.year)" [icon]="faRemove"
         class="text-danger me-1"></fa-icon>
       <nlf-resolve-lungo-organization [organization_id]="membership.discipline" [link]="false" [long]="true"
         [show_activity]="true"></nlf-resolve-lungo-organization>
@@ -155,8 +155,8 @@
 
     <h4 class="mt-1">Lisenser</h4>
     <div *ngFor="let license of modalPerson.licenses" class="overflow-hidden">
-      <fa-icon *ngIf="checkExpiry(license.expiry) && license.status_id===3" name="check" class="text-success me-1"></fa-icon>
-      <fa-icon *ngIf="!checkExpiry(license.expiry) || license.status_id!=3" name="remove" class="text-danger me-1"></fa-icon>
+      <fa-icon *ngIf="checkExpiry(license.expiry) && license.status_id===3" [icon]="faCheck" class="text-success me-1"></fa-icon>
+      <fa-icon *ngIf="!checkExpiry(license.expiry) || license.status_id!=3" [icon]="faRemove" class="text-danger me-1"></fa-icon>
       <nlf-resolve-lungo-license [license_id]="license.id" [link]="false" [long]="true"></nlf-resolve-lungo-license>
     </div>
     <div *ngIf="!modalPerson.licenses||modalPerson.licenses.length==0">
@@ -166,8 +166,8 @@
     <h4 class="mt-1">Kompetanser</h4>
     <div *ngFor="let competence of modalPerson.competences" class="overflow-hidden">
 
-      <fa-icon *ngIf="checkExpiry(competence.expiry)" name="check" class="text-success me-1"></fa-icon>
-      <fa-icon *ngIf="!checkExpiry(competence.expiry)" name="remove" class="text-danger me-1"></fa-icon>
+      <fa-icon *ngIf="checkExpiry(competence.expiry)" [icon]="faCheck" class="text-success me-1"></fa-icon>
+      <fa-icon *ngIf="!checkExpiry(competence.expiry)" [icon]="faRemove" class="text-danger me-1"></fa-icon>
       {{ competence._code }} {{ competence.expiry | date:'yyyy-MM-dd':'+0000' }}
     </div>
     <div *ngIf="!modalPerson.competences||modalPerson.competences.length==0">

@@ -8,8 +8,8 @@
     <tr *ngFor="let p of involved; let idx = index">
 
       <td class="">
-        <fa-icon *ngIf="p.id>0" name="check" class="text-success me-2" title="Hentet fra medlemssystemet"></fa-icon>
-        <fa-icon *ngIf="p.id<1" name="exclamation" class="text-danger me-2" title="Ukjent person"></fa-icon>
+        <fa-icon *ngIf="p.id>0" [icon]="faCheck" class="text-success me-2" title="Hentet fra medlemssystemet"></fa-icon>
+        <fa-icon *ngIf="p.id<1" [icon]="faExclamation" class="text-danger me-2" title="Ukjent person"></fa-icon>
         <strong>
           <nlf-resolve-lungo-person [person_id]="p.id" [tmp_name]="p.tmp_name" [link]="false" [avatar]="true"></nlf-resolve-lungo-person>
         </strong>
@@ -17,8 +17,8 @@
       </td>
       <td>
 
-        <fa-icon *ngIf="!!p.ph" name="ban" title="Permanent Hoppforbud" fw="true" class="text-danger mx-1"></fa-icon>
-        <fa-icon *ngIf="!!p.fu" name="exclamation" title="Farlig Ukontrollert" fw="true" class="text-warning mx-1"></fa-icon>
+        <fa-icon *ngIf="!!p.ph" [icon]="faBan" title="Permanent Hoppforbud" [fixedWidth]="true" class="text-danger mx-1"></fa-icon>
+        <fa-icon *ngIf="!!p.fu" [icon]="faExclamation" title="Farlig Ukontrollert" [fixedWidth]="true" class="text-warning mx-1"></fa-icon>
 
       </td>
       <td>
@@ -49,13 +49,13 @@
       </td>
       <td class="text-end">
         <a (click)="openPersonModal(involvedModal, idx)" class="pointer btn btn-sm btn-secondary">Edit</a>
-        <fa-icon *ngIf="!disabled" class="pointer ms-3" title="Slett person" (click)="onRemove(idx)" name="times" fw="true"></fa-icon>
+        <fa-icon *ngIf="!disabled" class="pointer ms-3" title="Slett person" (click)="onRemove(idx)" [icon]="faTimes" [fixedWidth]="true"></fa-icon>
       </td>
     </tr>
 
   </table>
 
-  <!--<fa-icon (click)="openPersonModal(involvedModal, idx)" name="id-card-o" fw="true"></fa-icon>-->
+  <!--<fa-icon (click)="openPersonModal(involvedModal, idx)" [icon]="id-card-o" [fixedWidth]="true"></fa-icon>-->
 
   <!-- /dataReady -->
 </span>

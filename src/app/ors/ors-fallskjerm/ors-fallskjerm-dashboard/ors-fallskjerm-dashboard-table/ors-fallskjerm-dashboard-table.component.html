@@ -34,13 +34,13 @@
         <nlf-resolve-observation-types [type]="row.type" [activity]="row._model.type" [badge]="true"></nlf-resolve-observation-types>
       </td>
       <td class="text-end">
-        <fa-icon title="Aktivitet" *ngIf="['withdrawn', 'closed'].indexOf(row.workflow.state)<0" class="mx-2 pointer" (click)="openModal(activityModal, row)" name="commenting-o"></fa-icon>
+        <fa-icon title="Aktivitet" *ngIf="['withdrawn', 'closed'].indexOf(row.workflow.state)<0" class="mx-2 pointer" (click)="openModal(activityModal, row)" [icon]="faCommenting"></fa-icon>
 
-        <fa-icon title="Purring" *ngIf="['withdrawn', 'closed'].indexOf(row.workflow.state)<0" class="mx-2 text-danger pointer" (click)="notify(row)" name="bell"></fa-icon>
+        <fa-icon title="Purring" *ngIf="['withdrawn', 'closed'].indexOf(row.workflow.state)<0" class="mx-2 text-danger pointer" (click)="notify(row)" [icon]="faBell"></fa-icon>
 
-        <fa-icon title="Vurderinger" *ngIf="row.workflow.state!='withdrawn'" class="me-3 pointer" (click)="openModal(askModal, row)" name="comments-o"></fa-icon>
+        <fa-icon title="Vurderinger" *ngIf="row.workflow.state!='withdrawn'" class="me-3 pointer" (click)="openModal(askModal, row)" [icon]="faComments"></fa-icon>
         <!-- && row.acl_user.x-->
-        <fa-icon title="Arbeidsflyt" *ngIf="row.workflow.state!='withdrawn'" class="me-3 pointer" (click)="openModal(workflowModal, row)" name="exchange"></fa-icon>
+        <fa-icon title="Arbeidsflyt" *ngIf="row.workflow.state!='withdrawn'" class="me-3 pointer" (click)="openModal(workflowModal, row)" [icon]="faExchange"></fa-icon>
 
       </td>
 

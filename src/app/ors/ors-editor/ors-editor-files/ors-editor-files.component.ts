@@ -8,7 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmService } from 'app/services/confirm/confirm.service';
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
 import { NlfAuthSubjectService } from 'app/services/auth/auth-subject.service';
-import { faPlus, faCamera, faDownload, faTimes } from '@fortawesome/free-solid-svg-icons';import {  } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faCamera, faDownload, faTimes, faLock, faUnlock, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';import {  } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-editor-files',
@@ -21,6 +21,10 @@ export class NlfOrsEditorFilesComponent implements OnInit {
   faCamera = faCamera;
   faDownload = faDownload;
   faTimes = faTimes;
+  faLock = faLock;
+  faUnlock = faUnlock;
+  faChevronLeft = faChevronLeft;
+  faChevronRight = faChevronRight;
 
   @Input() onlyFilepicker: boolean;
   @Input() dropzone: boolean;

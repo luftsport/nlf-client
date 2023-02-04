@@ -28,7 +28,7 @@
     <div class="row" *ngFor="let person_id of acl_persons; let idx = index; odd as isOdd"  [class.bg-light]="isEven">
 
       <div class="col-sm-6">
-        <nlf-resolve-lungo-person [person_id]="person_id" [link]="true" [avatar]="true"></nlf-resolve-lungo-person><fa-icon *ngIf="acl_list['execute'].indexOf(person_id)>-1" class="ms-2 text-danger" name="lock"></fa-icon>
+        <nlf-resolve-lungo-person [person_id]="person_id" [link]="true" [avatar]="true"></nlf-resolve-lungo-person><fa-icon *ngIf="acl_list['execute'].indexOf(person_id)>-1" class="ms-2 text-danger" [icon]="faLock"></fa-icon>
       </div>
       <div class="col-sm-3">
         <div class="form-check">

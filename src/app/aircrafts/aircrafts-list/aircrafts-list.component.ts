@@ -5,7 +5,7 @@ import { ApiEveBaseAggregateList } from 'app/api/api-eve.interface';
 import { Columns, Config, DefaultConfig, STYLE } from 'ngx-easy-table';
 import { TableEventObject } from 'app/interfaces/ngx-easy-table.interface';
 import { cleanObject } from 'app/interfaces/functions';
-import { faPlane } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faPlane } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-aircrafts-list',
@@ -15,6 +15,7 @@ import { faPlane } from '@fortawesome/free-solid-svg-icons';
 export class NlfAircraftsListComponent implements OnInit {
 
   faPlane = faPlane;
+  faCheck = faCheck;
 
   data: ApiAircraftsItem[];
   aircraft_types: ApiEveBaseAggregateList;

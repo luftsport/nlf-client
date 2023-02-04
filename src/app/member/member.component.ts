@@ -10,7 +10,7 @@ import { NlfConfigService } from 'app/nlf-config.service';
 import { forkJoin } from 'rxjs';
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
 import { ApiUserDataSubjectItem, NlfConfigItem } from 'app/api/api.interface';
-import { faUsers, faSave, faTable } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faSave, faTable, faSearch, faSpinner, faCheck, faRemove } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -45,6 +45,10 @@ export class NlfMemberComponent implements OnInit {
   faUsers = faUsers;
   faSave = faSave;
   faTable = faTable;
+  faSearch = faSearch;
+  faSpinner = faSpinner;
+  faCheck = faCheck;
+  faRemove = faRemove;
 
   constructor(
     private modalService: NgbModal,

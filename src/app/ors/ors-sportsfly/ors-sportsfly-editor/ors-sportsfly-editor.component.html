@@ -45,7 +45,7 @@
         <a (click)="openAbout()" class="badge bg-secondary text-white pointer mx-1" joyrideStep="step002"
           stepPosition="bottom" title="Om" text="Denne viser informasjon om obervasjonen...">
           <fa-icon [icon]="faInfoCircle"></fa-icon>
-          <fa-icon *ngIf="!observation.acl_user.w" name="lock" class="text-danger"
+          <fa-icon *ngIf="!observation.acl_user.w" [icon]="faLock" class="text-danger"
             title="Ingen skrivetilgang"></fa-icon>
           {{ observation._updated | amTimeAgo }}
         </a>
@@ -189,7 +189,7 @@
       <div class="col-sm-12 col-md-4">
         <div class="card">
           <div class="card-header">
-            <h5>Tidspunkt [UTC]<nlf-help class="pull-right" key="ors-editor-when"></nlf-help>
+            <h5>Tidspunkt [UTC] <nlf-help class="pull-right" key="ors-editor-when"></nlf-help>
             </h5>
           </div>
           <div class="card-body">

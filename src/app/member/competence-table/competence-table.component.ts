@@ -12,7 +12,7 @@ import { cleanObject } from 'app/interfaces/functions';
 //import { clone } from 'lodash';
 import { ExportToCsv } from 'export-to-csv';
 import { debounce } from 'ts-debounce';
-import { faUsers, faSave, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faSave, faCheck, faRemove } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -25,6 +25,7 @@ export class NlfCompetenceTableComponent implements OnInit {
   faUsers = faUsers;
   faSave = faSave;
   faCheck = faCheck;
+  faRemove = faRemove;
 
   @Input() activity: string;
 

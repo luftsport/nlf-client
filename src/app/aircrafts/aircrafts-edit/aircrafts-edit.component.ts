@@ -6,6 +6,7 @@ import { ApiOptionsInterface, ApiAircraftsItem } from 'app/api/api.interface';
 import { E5XAircraftClass } from 'app/interfaces/e5x.interface';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ConfirmService } from 'app/services/confirm/confirm.service';
+import { faClose, faPlus, faSave } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-aircrafts-edit',
@@ -29,6 +30,9 @@ export class NlfAircraftsEditComponent implements OnInit {
   thumbnail: string;
   current_image;
 
+  faClose = faClose;
+  faPlus = faPlus;
+  faSave = faSave;
 
   constructor(
     private alertService: NlfAlertService,

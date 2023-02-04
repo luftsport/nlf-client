@@ -8,7 +8,7 @@ import { ApiAclService } from 'app/api/api-acl.service';
 import { ApiObservationsService } from 'app/api/api-observations.service';
 import { NlfComponent } from 'app/nlf.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { faBell, faComment, faExchange, faFloppyDisk, faPaperPlane, faPlus, faRepeat, faBan, faLongArrowRight, faUserPlus, faUserTimes, faRefresh } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faComment, faExchange, faFloppyDisk, faPaperPlane, faPlus, faRepeat, faBan, faLongArrowRight, faUserPlus, faUserTimes, faRefresh, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faBell as faBellRegular, faCommenting, faComments, faPaperPlane as faPaperPlaneRegular, faClock  } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
@@ -37,6 +37,7 @@ export class NlfOrsActivitiesTimelineComponent implements OnInit {
   faFloppyDisk = faFloppyDisk;
   faPaperPlaneRegular = faPaperPlaneRegular;
   faClock = faClock;
+  faCheck = faCheck;
 
   message_text: string = '';
   notifications: ApiNotificationsItem[];

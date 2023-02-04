@@ -35,7 +35,7 @@
         <!-- ABOUT -->
         <a (click)="openAbout()" class="pointer badge bg-secondary text-white mx-1">
           <fa-icon [icon]="faInfoCircle"></fa-icon>
-          <fa-icon *ngIf="!observation.acl_user.w" name="lock" class="text-danger"
+          <fa-icon *ngIf="!observation.acl_user.w" [icon]="faLock" class="text-danger"
             title="Ingen skrivetilgang"></fa-icon>
           {{ observation._updated | amTimeAgo }}
         </a>

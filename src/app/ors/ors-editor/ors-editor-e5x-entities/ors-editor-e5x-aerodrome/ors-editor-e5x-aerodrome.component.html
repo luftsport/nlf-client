@@ -12,8 +12,8 @@
       &nbsp;
       <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="drome.attributes.aerodromeStatus.value" path="E5X.Occurrence.AerodromeGeneral.AerodromeStatus"></nlf-ors-editor-tag-e5x-render>
 
-      <fa-icon class="mx-1" name="edit" (click)="openModal(modal, idx)"></fa-icon>
-      <fa-icon class="mx-1" *ngIf="!disabled" name="close" (click)="delete(idx)"></fa-icon>
+      <fa-icon class="mx-1" [icon]="faEdit" (click)="openModal(modal, idx)"></fa-icon>
+      <fa-icon class="mx-1" *ngIf="!disabled" [icon]="faClose" (click)="delete(idx)"></fa-icon>
     </div>
 
   </div>
@@ -94,7 +94,7 @@
         <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.entities.runway[idx].attributes.surfaceType.value" path="E5X.Occurrence.AerodromeGeneral.Runway.SurfaceType" id="SurfaceType"></nlf-ors-editor-tag-e5x>
       </div>
       <div class="col-md-2 pointer">
-        <fa-icon *ngIf="!disabled" (click)="deleteRunway(idx)" name="close"></fa-icon>
+        <fa-icon *ngIf="!disabled" (click)="deleteRunway(idx)" [icon]="faClose"></fa-icon>
       </div>
     </div>
 
@@ -108,7 +108,7 @@
         <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.entities.vehicle[idx].attributes.vehicleControlled.value" path="E5X.Occurrence.AerodromeGeneral.Vehicle.VehicleControlled" id="vehicleControlled"></nlf-ors-editor-tag-e5x>
       </div>
       <div class="col-md-2 pointer">
-        <fa-icon *ngIf="!disabled" (click)="deleteVehicle(idx)" name="close"></fa-icon>
+        <fa-icon *ngIf="!disabled" (click)="deleteVehicle(idx)" [icon]="faClose"></fa-icon>
       </div>
     </div>
 
@@ -119,7 +119,7 @@
           <nlf-ors-editor-e5x-narrative [disabled]="disabled" [(narrative)]="modalValue.entities.narrative"></nlf-ors-editor-e5x-narrative>
       </div>
       <div class="col-md-2 pointer">
-        <fa-icon *ngIf="!disabled" (click)="deleteNarrative(0)" name="close"></fa-icon>
+        <fa-icon *ngIf="!disabled" (click)="deleteNarrative(0)" [icon]="faClose"></fa-icon>
       </div>
     </div>
 

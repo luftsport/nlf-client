@@ -427,11 +427,11 @@
   <tr *ngFor="let airport of selectedAirports; let idx = index">
     <td class="pointer">
 
-      <fa-icon *ngIf="!!airport._id" [icon]="faCheck" fw="true" class="text-success me-2" title="Hentet fra flyplassregisteret"></fa-icon>
-      <fa-icon *ngIf="!airport.hasOwnProperty('_id')" [icon]="faCheck" fw="exclamation" class="text-danger me-2" title="Ukjent sted"></fa-icon>
+      <fa-icon *ngIf="!!airport._id" [icon]="faCheck" [fixedWidth]="true" class="text-success me-2" title="Hentet fra flyplassregisteret"></fa-icon>
+      <fa-icon *ngIf="!airport.hasOwnProperty('_id')" [icon]="faExclamation" [fixedWidth]="true" class="text-danger me-2" title="Ukjent sted"></fa-icon>
 
-      <fa-icon *ngIf="airport.type !== 'HELICOPTER'" [icon]="faAirplane" fw="true"></fa-icon>
-      <fa-icon *ngIf="airport.type === 'HELICOPTER'" [icon]="faHelicopter" fw="true"></fa-icon>
+      <fa-icon *ngIf="airport.type !== 'HELICOPTER'" [icon]="faAirplane" [fixedWidth]="true"></fa-icon>
+      <fa-icon *ngIf="airport.type === 'HELICOPTER'" [icon]="faHelicopter" [fixedWidth]="true"></fa-icon>
       <strong>
         {{ airport.icao }}<span *ngIf="!!selectedAirports[idx+1]">-{{ selectedAirports[idx+1].icao }}</span>
       </strong>
@@ -443,7 +443,7 @@
       {{ airport.type }}
     </td>
     <td>
-      <fa-icon *ngIf="!observation.acl_user.w" class="pointer" [icon]="faTimes" fw="true"></fa-icon>
+      <fa-icon *ngIf="!observation.acl_user.w" class="pointer" [icon]="faTimes" [fixedWidth]="true"></fa-icon>
     </td>
   </tr>
 </table>
