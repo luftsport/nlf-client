@@ -63,7 +63,7 @@
       <textarea [disabled]="!observation.acl_user.x" [ngClass]="{'disabled': processing}" placeholder="Kommentarer (blir ikke synlig i den endelige rapporten - benytt feltet for vurderinger for vurderinger som skal være offentlig)" [(ngModel)]="payload.comment" name="payload_comment" class="form-control" rows="5" id="comment"></textarea>
     </div>
 
-    <button type="button" class="btn btn-outline-dark mr-auto mb-2 d-none d-sm-block" *ngIf="!showCommentInput" (click)="showCommentInput=true">
+    <button type="button" class="btn btn-outline-dark me-auto mb-2 d-none d-sm-block" *ngIf="!showCommentInput" (click)="showCommentInput=true">
       <fa-icon [icon]="faComment"></fa-icon> Kommentar til arbeidsflyten
     </button>
 
@@ -72,10 +72,10 @@
     <div *ngIf="graph">
       <img class="img img-fluid" [src]="domSanitizer.bypassSecurityTrustUrl(graph)">
     </div>
-    <button type="button" class="btn btn-outline-dark mr-auto d-none d-sm-block" *ngIf="!graph" (click)="getGraph()">
+    <button type="button" class="btn btn-outline-dark me-auto d-none d-sm-block" *ngIf="!graph" (click)="getGraph()">
       <fa-icon [icon]="faRandom"></fa-icon> Vis skjema
     </button>
-    <button type="button" class="btn btn-outline-dark mr-auto d-none d-sm-block" *ngIf="!!graph" (click)="graph=undefined">
+    <button type="button" class="btn btn-outline-dark me-auto d-none d-sm-block" *ngIf="!!graph" (click)="graph=undefined">
       <fa-icon [icon]="faRandom"></fa-icon> Skjul skjema
     </button>
 

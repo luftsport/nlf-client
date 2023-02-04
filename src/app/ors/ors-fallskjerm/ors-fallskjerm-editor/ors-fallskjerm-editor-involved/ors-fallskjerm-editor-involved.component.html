@@ -8,8 +8,8 @@
     <tr *ngFor="let p of involved; let idx = index">
 
       <td class="">
-        <fa-icon *ngIf="p.id>0" name="check" class="text-success mr-2" title="Hentet fra medlemssystemet"></fa-icon>
-        <fa-icon *ngIf="p.id<1" name="exclamation" class="text-danger mr-2" title="Ukjent person"></fa-icon>
+        <fa-icon *ngIf="p.id>0" name="check" class="text-success me-2" title="Hentet fra medlemssystemet"></fa-icon>
+        <fa-icon *ngIf="p.id<1" name="exclamation" class="text-danger me-2" title="Ukjent person"></fa-icon>
         <strong>
           <nlf-resolve-lungo-person [person_id]="p.id" [tmp_name]="p.tmp_name" [link]="false" [avatar]="true"></nlf-resolve-lungo-person>
         </strong>
@@ -47,9 +47,9 @@
           <nlf-resolve-lungo-function *ngFor="let fid of p.data?.functions" [function_id]="fid" show_org="true" link="false" long="false"></nlf-resolve-lungo-function>
         </span>
       </td>
-      <td class="text-right">
+      <td class="text-end">
         <a (click)="openPersonModal(involvedModal, idx)" class="pointer btn btn-sm btn-secondary">Edit</a>
-        <fa-icon *ngIf="!disabled" class="pointer ml-3" title="Slett person" (click)="onRemove(idx)" name="times" fw="true"></fa-icon>
+        <fa-icon *ngIf="!disabled" class="pointer ms-3" title="Slett person" (click)="onRemove(idx)" name="times" fw="true"></fa-icon>
       </td>
     </tr>
 

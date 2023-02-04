@@ -37,7 +37,7 @@
     </ng-select>
   </div>
   <!-- ADD new aircraft -->
-  <div *ngIf="observation.acl_user.w" class="col-md-2 col-sm-4 text-right">
+  <div *ngIf="observation.acl_user.w" class="col-md-2 col-sm-4 text-end">
     <nlf-aircrafts-add></nlf-aircrafts-add>
   </div>
 </div>
@@ -46,8 +46,8 @@
   <tr *ngFor="let aircraft of observation.aircrafts; let idx = index">
     <td>
 
-      <fa-icon *ngIf="!!aircraft.aircraft._id" [icon]="faCheck" fw="true" class="text-success mr-2" title="Hentet fra flyregisteret"></fa-icon>
-      <fa-icon *ngIf="!aircraft.aircraft.hasOwnProperty('_id')" [icon]="faCheck" fw="exclamation" class="text-danger mr-2" title="Ukjent fly"></fa-icon>
+      <fa-icon *ngIf="!!aircraft.aircraft._id" [icon]="faCheck" fw="true" class="text-success me-2" title="Hentet fra flyregisteret"></fa-icon>
+      <fa-icon *ngIf="!aircraft.aircraft.hasOwnProperty('_id')" [icon]="faCheck" fw="exclamation" class="text-danger me-2" title="Ukjent fly"></fa-icon>
 
       <fa-icon *ngIf="aircraft.aircraft.type !== 'HELICOPTER'" [icon]="faPlane" fw="true"></fa-icon>
       <fa-icon *ngIf="aircraft.aircraft.type === 'HELICOPTER'" [icon]="faHelicopter" fw="true"></fa-icon>
@@ -139,7 +139,7 @@
   </div>
 
   <div class="modal-footer">
-    <a [routerLink]="['/aircraft', 'edit', (modalAircraft._id || modalAircraft.callsign)]" class="btn btn-outline-dark mr-auto" (click)="modalRef.close()">
+    <a [routerLink]="['/aircraft', 'edit', (modalAircraft._id || modalAircraft.callsign)]" class="btn btn-outline-dark me-auto" (click)="modalRef.close()">
       <fa-icon [icon]="faEdit" [fixedWidth]="true"></fa-icon>{{ modalAircraft.callsign }} i registeret
     </a>
     <button class="btn btn-outline-dark" (click)="modalRef.close()">

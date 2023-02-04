@@ -20,13 +20,13 @@
             <fa-icon *ngIf="timedelta(row._updated)>=5*24*3600&&timedelta(row._updated)<10*24*3600" name="clock-o" class="text-warning" ngbTooltip="Det er over 5 dager siden det har vært aktivitet"></fa-icon>
             <fa-icon *ngIf="timedelta(row._updated)>=10*24*3600" name="clock-o" class="text-danger" ngbTooltip="Det er over 10 dager siden det har vært aktivitet"></fa-icon>
           </ng-container>
-        
+
           {{ row.workflow.state | nlfOrsState: row._model.type }}
         </span>
       </td>
 
       <!--<td [innerHTML]="row.type | nlfOrsType: row._model.type" class="ngx-easy-table-small">-->
-      <td class="ngx-easy-table-small text-right">
+      <td class="ngx-easy-table-small text-end">
         <nlf-resolve-observation-types [type]="row.type" [activity]="row._model.type" [badge]="true"></nlf-resolve-observation-types>
       </td>
 

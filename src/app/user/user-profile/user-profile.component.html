@@ -3,7 +3,7 @@
 
 		<span class="breadcrumb">
 			<li class="breadcrumb-item">
-				<span class="avatar avatar-xs mr-1">
+				<span class="avatar avatar-xs me-1">
 					<img [src]="avatar||avatar_missing" alt="user" class="avatar-img rounded-circle">
 				</span>
 				<span class="hidden-sm-down">
@@ -59,7 +59,7 @@
 					<h4>Hovedklubb</h4>
 					<strong>
 						<nlf-resolve-lungo-organization [organization_id]="user.settings.default_discipline" [show_activity]="true" [long]="true" [link]="true"></nlf-resolve-lungo-organization>
-						<fa-icon (click)="openDefaultClub()" class="ml-3 pointer" name="pencil"></fa-icon>
+						<fa-icon (click)="openDefaultClub()" class="ms-3 pointer" name="pencil"></fa-icon>
 					</strong>
 				</div>
 				<div class="my-3">
@@ -145,7 +145,7 @@
 
 	<div class="modal-header">
 		<h4 class="modal-title pull-left">
-			<img class="mr-3 avatar avatar-sm img-fluid img-rounded" [src]="modal_avatar||avatar">Profilbilde
+			<img class="me-3 avatar avatar-sm img-fluid img-rounded" [src]="modal_avatar||avatar">Profilbilde
 		</h4>
 		<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
 			<span aria-hidden="true">&times;</span>

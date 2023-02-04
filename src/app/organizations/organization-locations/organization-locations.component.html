@@ -13,8 +13,8 @@
             <span class="pointer" cdkDragHandle>
               <fa-icon [icon]="faArrowsAlt"></fa-icon>
             </span>
-            <span class="pointer ml-1 mr-3" (click)="goTo(location)">{{ location.nickname }} <span *ngIf="idx==0"> (default)</span></span>
-            <fa-icon class="pointer mr-1" name="times" (click)="deleteLocation(idx)"></fa-icon>
+            <span class="pointer ms-1 me-3" (click)="goTo(location)">{{ location.nickname }} <span *ngIf="idx==0"> (default)</span></span>
+            <fa-icon class="pointer me-1" name="times" (click)="deleteLocation(idx)"></fa-icon>
             <fa-icon class="pointer" name="edit" (click)="openModal(modal, idx)"></fa-icon>
           </div>
 
@@ -72,7 +72,7 @@
 <ng-template #modal>
   <div class="modal-header">
     <h4 class="modal-title pull-left">
-      <fa-icon [icon]="faMapMarker"></fa-icon> {{ modalValue.nickname }} <span class="ml-2 small" *ngIf="modalIndex==0">default</span>
+      <fa-icon [icon]="faMapMarker"></fa-icon> {{ modalValue.nickname }} <span class="ms-2 small" *ngIf="modalIndex==0">default</span>
     </h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>

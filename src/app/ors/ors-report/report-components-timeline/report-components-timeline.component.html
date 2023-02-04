@@ -51,12 +51,12 @@
                   </span>
                 </span>
 
-                <span *ngIf="!!c.flags.barrier" class="badge bg-secondary ml-1">Barriære</span>
-                <span *ngIf="!!c.flags.incident" class="badge bg-info ml-1">Hendelse</span>
-                <span *ngIf="!!c.flags.cause" class="badge bg-warning ml-1">Årsak</span>
-                <span *ngIf="!!c.flags.root_cause" class="badge bg-warning ml-1">Rot Årsak</span>
-                <span *ngIf="!!c.flags.consequence" class="badge bg-danger ml-1">Konsekvens</span>
-                <span *ngIf="!!c.flags.final_consequence" class="badge bg-danger ml-1">Sluttkonsekvens</span>
+                <span *ngIf="!!c.flags.barrier" class="badge bg-secondary ms-1">Barriære</span>
+                <span *ngIf="!!c.flags.incident" class="badge bg-info ms-1">Hendelse</span>
+                <span *ngIf="!!c.flags.cause" class="badge bg-warning ms-1">Årsak</span>
+                <span *ngIf="!!c.flags.root_cause" class="badge bg-warning ms-1">Rot Årsak</span>
+                <span *ngIf="!!c.flags.consequence" class="badge bg-danger ms-1">Konsekvens</span>
+                <span *ngIf="!!c.flags.final_consequence" class="badge bg-danger ms-1">Sluttkonsekvens</span>
                 <!--<nlf-resolve-observation-ask  [activity]="activity" [ask]="c.ask"></nlf-resolve-observation-ask> NOT ANYMORE! -->
               </small>
             </h4>
@@ -80,7 +80,7 @@
             <dl class="row">
               <dt class="col-sm-3">Hvem:</dt>
               <dd class="col-sm-9">
-                <span class="mr-1" *ngFor="let p of c.involved">
+                <span class="me-1" *ngFor="let p of c.involved">
                   <nlf-resolve-lungo-person link="true" [person_id]="p.id" [tmp_name]="p.tmp_name">
                   </nlf-resolve-lungo-person>
                 </span>
@@ -96,7 +96,7 @@
                 <span *ngIf="!!c.where">
                   <span *ngIf="!!c.where.at">{{ c.where.at }}:</span>
                   <!--<tags tag="::c.where.at"></tags>-->
-                  <span class="ml-2" *ngIf="!!c.where.altitude">{{ c.where.altitude }}fot</span>
+                  <span class="ms-2" *ngIf="!!c.where.altitude">{{ c.where.altitude }}fot</span>
                 </span>
               </dd>
 

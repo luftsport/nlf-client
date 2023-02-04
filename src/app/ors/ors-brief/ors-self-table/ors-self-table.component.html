@@ -20,7 +20,7 @@
                 </ng-container>
               {{ row.workflow.state | nlfOrsState: row._model.type }}
             </td>
-            <td class="text-right ngx-easy-table-small text-right">
+            <td class="text-end ngx-easy-table-small text-end">
               <nlf-resolve-observation-types [type]="row.type" [activity]="row._model.type" [badge]="true"></nlf-resolve-observation-types>
             </td>
 

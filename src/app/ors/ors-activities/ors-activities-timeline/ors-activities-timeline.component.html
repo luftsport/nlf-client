@@ -1,5 +1,5 @@
 <!-- FILTER -->
-<div class="my-3 text-right">
+<div class="my-3 text-end">
   <span class="pointer mx-1" [ngClass]="show.reminders ? 'text-info' : 'text-secondary'"
     (click)="show.reminders=!show.reminders">
     <fa-icon [icon]="faBell"></fa-icon> purringer
@@ -106,12 +106,12 @@
           <!-- /AVATARS -->
 
           <!-- SEND BTN -->
-          <button *ngIf="!is_sending_msg" [disabled]="message_text.length<4" class="btn btn-primary ml-3"
+          <button *ngIf="!is_sending_msg" [disabled]="message_text.length<4" class="btn btn-primary ms-3"
             (click)="sendMessage()">
             <fa-icon [icon]="faComment"></fa-icon> Send
             <!--Melding-->
           </button>
-          <button *ngIf="is_sending_msg" [disabled]="message_text.length<4" class="btn btn-primary ml-3">
+          <button *ngIf="is_sending_msg" [disabled]="message_text.length<4" class="btn btn-primary ms-3">
             <nlf-ui-component-spinner size="3"></nlf-ui-component-spinner> Sending
           </button>
 
@@ -120,7 +120,7 @@
       </div>
       <!--
       <div>
-        <span class="pointer link mr-1 pull-right" (click)="openReceipentsModal(recepientModalTemplate, current_acl_users||[])" title="Vis liste over mottakere">vis mottakere</span>
+        <span class="pointer link me-1 pull-right" (click)="openReceipentsModal(recepientModalTemplate, current_acl_users||[])" title="Vis liste over mottakere">vis mottakere</span>
       </div>
     -->
 
@@ -166,7 +166,7 @@
             </p>
 
             <!--
-            <div class="avatar-group avatar-group-sm avatar-group-overlapped mt-10 text-right">
+            <div class="avatar-group avatar-group-sm avatar-group-overlapped mt-10 text-end">
               <div *ngFor="let user of row.recepients; let idx=index" class="avatar">
                 <img src="https://www.bootdey.com/img/Content/avatar/avatar{{ idx + 1 }}.png" alt="user" class="avatar-img rounded-circle">
               </div>
@@ -231,7 +231,7 @@
             <nlf-resolve-avatars [persons]="row.recepients||[]" modal_title="Mottakere" max="2"></nlf-resolve-avatars>
 
             <!--
-            <div class="avatar-group avatar-group-sm avatar-group-overlapped mt-10 text-right">
+            <div class="avatar-group avatar-group-sm avatar-group-overlapped mt-10 text-end">
               <div *ngFor="let user of row.recepients; let idx=index" class="avatar">
                 <img src="https://www.bootdey.com/img/Content/avatar/avatar{{ idx + 1 }}.png" alt="user" class="avatar-img rounded-circle">
               </div>

@@ -28,7 +28,7 @@
     <div class="row" *ngFor="let person_id of acl_persons; let idx = index; odd as isOdd"  [class.bg-light]="isEven">
 
       <div class="col-sm-6">
-        <nlf-resolve-lungo-person [person_id]="person_id" [link]="true" [avatar]="true"></nlf-resolve-lungo-person><fa-icon *ngIf="acl_list['execute'].indexOf(person_id)>-1" class="ml-2 text-danger" name="lock"></fa-icon>
+        <nlf-resolve-lungo-person [person_id]="person_id" [link]="true" [avatar]="true"></nlf-resolve-lungo-person><fa-icon *ngIf="acl_list['execute'].indexOf(person_id)>-1" class="ms-2 text-danger" name="lock"></fa-icon>
       </div>
       <div class="col-sm-3">
         <div class="form-check">
@@ -61,7 +61,7 @@
         </button>
       </div>
       <!--
-        <div class="input-group m-3 mr-auto col-sm-12">
+        <div class="input-group m-3 me-auto col-sm-12">
           <nlf-ors-editor-tag-person [(person)]="new_person" [activity]="model" [fc]="true" [allowAdd]="false"></nlf-ors-editor-tag-person>
           <div (click)="persons.push(new_person.id);new_person=null" class="input-group-append">
             <span class="input-group-text" id="basic-addon2"><fa-icon [icon]="faPlus"></fa-icon> Legg til</span>
@@ -71,7 +71,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <!--<button class="btn btn-outline-dark mr-auto" (click)="modalRef.dismiss()">Avbryt</button>-->
+    <!--<button class="btn btn-outline-dark me-auto" (click)="modalRef.dismiss()">Avbryt</button>-->
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
       <fa-icon [icon]="faSave"></fa-icon> Ferdig
     </button>

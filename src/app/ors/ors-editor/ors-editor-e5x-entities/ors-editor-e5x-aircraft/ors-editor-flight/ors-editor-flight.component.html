@@ -58,7 +58,7 @@
     </button>
   </div>
   <!-- MAP -->
-  <div class="col-md-2 text-right">
+  <div class="col-md-2 text-end">
     <button class="btn btn-link" (click)="showRouteMap=!showRouteMap">Kart <fa-icon *ngIf="showRouteMap" [icon]="faEyeSlash"></fa-icon>
       <fa-icon *ngIf="!showRouteMap" [icon]="faEye"></fa-icon>
     </button>
@@ -102,7 +102,7 @@
             </button>
           </div>
 
-          <div class="col-md-1 text-right">
+          <div class="col-md-1 text-end">
             <fa-icon *ngIf="last && observation.acl_user.w" [icon]="faTimes" (click)="removeSegment()" class="pointer"></fa-icon>
           </div>
         </div>
@@ -427,8 +427,8 @@
   <tr *ngFor="let airport of selectedAirports; let idx = index">
     <td class="pointer">
 
-      <fa-icon *ngIf="!!airport._id" [icon]="faCheck" fw="true" class="text-success mr-2" title="Hentet fra flyplassregisteret"></fa-icon>
-      <fa-icon *ngIf="!airport.hasOwnProperty('_id')" [icon]="faCheck" fw="exclamation" class="text-danger mr-2" title="Ukjent sted"></fa-icon>
+      <fa-icon *ngIf="!!airport._id" [icon]="faCheck" fw="true" class="text-success me-2" title="Hentet fra flyplassregisteret"></fa-icon>
+      <fa-icon *ngIf="!airport.hasOwnProperty('_id')" [icon]="faCheck" fw="exclamation" class="text-danger me-2" title="Ukjent sted"></fa-icon>
 
       <fa-icon *ngIf="airport.type !== 'HELICOPTER'" [icon]="faAirplane" fw="true"></fa-icon>
       <fa-icon *ngIf="airport.type === 'HELICOPTER'" [icon]="faHelicopter" fw="true"></fa-icon>

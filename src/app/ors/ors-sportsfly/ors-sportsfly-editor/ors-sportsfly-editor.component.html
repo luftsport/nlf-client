@@ -541,7 +541,7 @@
               </span>
             </p>
             <div class="btn-toolbar pull-right">
-              <button (click)="openWorkflow()" class="btn btn-danger mr-2">Gjenåpne</button>
+              <button (click)="openWorkflow()" class="btn btn-danger me-2">Gjenåpne</button>
             </div>
           </ng-container>
 
@@ -565,8 +565,8 @@
               den skulle du ombestemme deg.</p>
             <!-- Knapper for innsending -->
             <div class="btn-toolbar pull-right">
-              <button (click)="openWorkflow()" class="btn btn-success mr-2">Send OBSREG koordinator</button>
-              <button (click)="openWorkflow()" class="btn btn-danger mr-2">Trekk tilbake</button>
+              <button (click)="openWorkflow()" class="btn btn-success me-2">Send OBSREG koordinator</button>
+              <button (click)="openWorkflow()" class="btn btn-danger me-2">Trekk tilbake</button>
             </div>
 
           </ng-container>
@@ -588,7 +588,7 @@
             </p>
 
             <div class="btn-toolbar pull-right">
-              <button (click)="openWorkflow()" class="btn btn-primary mr-2">
+              <button (click)="openWorkflow()" class="btn btn-primary me-2">
                 <fa-icon [icon]="faExchange"></fa-icon> Behandle #{{observation.id}}
               </button>
             </div>
@@ -614,19 +614,19 @@
 
         <span class="float-right" text="Når du er ferdig med observasjonen så skal du sende den inn.">
 
-          <span class="mr-4 lead">
+          <span class="me-4 lead">
             <nlf-help key="ors-editor-workflow"></nlf-help>
           </span>
 
           <ng-container *ngIf="observation.workflow.state==='draft'">
 
-            <button class="btn btn-success mr-2" (click)="openWorkflow()" title="Send"
+            <button class="btn btn-success me-2" (click)="openWorkflow()" title="Send"
               text="Når du er ferdig med observasjonen så sender du den til neste i arbeidsflyten som vil behandle observasjonen videre">
               <fa-icon [icon]="faPaperPlane"></fa-icon> Send til OBSREG koordinator
             </button>
 
 
-            <button class="btn btn-danger mr-2" (click)="openWorkflow()" title="Trekk tilbake"
+            <button class="btn btn-danger me-2" (click)="openWorkflow()" title="Trekk tilbake"
               text="Om du ikke ønsker sende inn rapporten så velger du trekk tilbake. Da blir rapporten kun tilgjegenlig for deg og du kan når som helst gjenåpne den igjen. Dette er OBSREGs måte å slette på.">
               <fa-icon [icon]="faReply"></fa-icon> Trekk tilbake
             </button>
@@ -634,13 +634,13 @@
           </ng-container>
 
           <ng-container *ngIf="observation.workflow.state==='withdrawn'">
-            <button class="btn btn-success mr-2" (click)="openWorkflow()" title="Gjenåpne" text="Gjenåpne ">
+            <button class="btn btn-success me-2" (click)="openWorkflow()" title="Gjenåpne" text="Gjenåpne ">
               <fa-icon [icon]="faRepeat"></fa-icon> Gjenåpne
             </button>
           </ng-container>
 
           <ng-container *ngIf="['withdrawn','draft'].indexOf(observation.workflow.state)<0">
-            <button class="btn btn-primary mr-2" (click)="openWorkflow()" title="Behandle" text="Behandle ">
+            <button class="btn btn-primary me-2" (click)="openWorkflow()" title="Behandle" text="Behandle ">
               <fa-icon [icon]="faRandom"></fa-icon> Arbeidsflyt
             </button>
           </ng-container>
@@ -695,17 +695,17 @@
 
         </div>
 
-        <div class="flex-grow-0 navbar-nav ml-auto" joyrideStep="step003" stepPosition="top" title="Innsending"
+        <div class="flex-grow-0 navbar-nav ms-auto" joyrideStep="step003" stepPosition="top" title="Innsending"
           text="Når du er ferdig med observasjonen så skal du sende den inn.">
           <div class="nav-item ">
 
-            <button class="btn btn-danger mr-2" (click)="openWorkflow()" joyrideStep="step004" stepPosition="top"
+            <button class="btn btn-danger me-2" (click)="openWorkflow()" joyrideStep="step004" stepPosition="top"
               title="Trekk tilbake"
               text="Om du ikke ønsker sende inn rapporten så velger du trekk tilbake. Da blir rapporten kun tilgjegenlig for deg og du kan når som helst gjenåpne den igjen. Dette er OBSREGs måte å slette på.">
               <fa-icon [icon]="faTimes"></fa-icon> Trekk tilbake
             </button>
 
-            <button class="btn btn-success mr-2" (click)="openWorkflow()" joyrideStep="step005" stepPosition="top"
+            <button class="btn btn-success me-2" (click)="openWorkflow()" joyrideStep="step005" stepPosition="top"
               title="Send"
               text="Når du er ferdig med observasjonen så sender du den til neste i arbeidsflyten som vil behandle observasjonen videre">
               <fa-icon [icon]="faCheck"></fa-icon> Send til OBSREG

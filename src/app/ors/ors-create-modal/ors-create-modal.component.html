@@ -3,7 +3,7 @@
     <h4 class="modal-title" *ngIf="dataReady">
       Opprett ny OBSREG
     </h4>
-    <span *ngIf="ENV._name!='prod'" class="badge bg-danger ml-3">{{ ENV._name }}</span>
+    <span *ngIf="ENV._name!='prod'" class="badge bg-danger ms-3">{{ ENV._name }}</span>
     <button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -89,7 +89,7 @@
 
   <div class="modal-footer">
     <ng-container *ngIf="[109, 111, 237, 238].indexOf(settings.default_activity)">
-      <a class="btn btn-link mr-auto" [routerLink]="['/ors', getActivityName()]">
+      <a class="btn btn-link me-auto" [routerLink]="['/ors', getActivityName()]">
         <fa-icon [icon]="faLink"></fa-icon> OBSREG {{ getActivityName() }}
       </a>
       <button class="btn btn-outline-dark" (click)="activeModal.close()">Avbryt</button>

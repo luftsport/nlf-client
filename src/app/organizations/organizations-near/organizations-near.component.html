@@ -1,6 +1,6 @@
 <div *ngIf="dataReady">
   <div *ngFor="let org of organizations">
     <nlf-resolve-lungo-organization [organization_id]="org.id" show_activity="false" link="true" long="false"></nlf-resolve-lungo-organization>
-    <span class="ml-1" *ngIf="show_distance && !!org.contact.location.distance">({{ org.contact.location.distance }}km)</span>
+    <span class="ms-1" *ngIf="show_distance && !!org.contact.location.distance">({{ org.contact.location.distance }}km)</span>
   </div>
 </div>

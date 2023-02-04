@@ -146,7 +146,7 @@
 										<span *ngIf="audit.sent" class="badge bg-success">OK</span>
 										<span *ngIf="!audit.sent" class="badge bg-danger">Ikke sendt</span>
 									</td>
-									<td class="text-right">
+									<td class="text-end">
 										<a *ngIf="!!token" target="_blank" href="/api/v1/e5x/download/{{observation._model.type}}/{{observation.id}}/{{audit.version}}?token={{token}}">
 											<fa-icon [icon]="faDownload"></fa-icon>
 										</a>

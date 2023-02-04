@@ -35,11 +35,11 @@
 
   </div>
   <div class="modal-footer">
-    <span *ngIf="thumbnails.length>1" class="mr-auto">
-      <span (click)="getModalImage(viewImageData['idx']-1)" class="pointer ml-1 mr-2">
+    <span *ngIf="thumbnails.length>1" class="me-auto">
+      <span (click)="getModalImage(viewImageData['idx']-1)" class="pointer ms-1 me-2">
         <fa-icon [icon]="faChevronLeft" class="mx-2"></fa-icon> Forrige
       </span>
-      <span (click)="getModalImage(viewImageData['idx']+1)" class="pointer mr-1 ml-2">Neste <fa-icon [icon]="faChevronRight" class="mx-2"></fa-icon></span>
+      <span (click)="getModalImage(viewImageData['idx']+1)" class="pointer me-1 ms-2">Neste <fa-icon [icon]="faChevronRight" class="mx-2"></fa-icon></span>
     </span>
 
     <a class="btn btn-secondary" (click)="modalRef.close()">Close</a>

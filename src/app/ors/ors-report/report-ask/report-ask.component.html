@@ -5,7 +5,7 @@
     <!--!isNeutral(l.key) && -->
 
     <span *ngFor="let l of askValues">
-      <span class="ml-1" [ngClass]="{'badge':true,
+      <span class="ms-1" [ngClass]="{'badge':true,
       'bg-danger': isNegative(l.key),
       'bg-secondary': isNeutral(l.key),
       'bg-success': isPositive(l.key)}">{{ l.nick }}</span>
@@ -18,7 +18,7 @@
     <h4>
       <span *ngFor="let l of askValues">
 
-        <span class="ml-1" [ngClass]="{'badge':true,
+        <span class="ms-1" [ngClass]="{'badge':true,
       'bg-danger': isNegative(l.key),
       'bg-secondary': isNeutral(l.key),
       'bg-success': isPositive(l.key)}">{{ l.label }}

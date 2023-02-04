@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-end">
-  <a class="navbar-brand pointer" [routerLink]="['/']">
+  <a class="navbar-brand pointer ms-4" [routerLink]="['/']">
     <!--<i class="nlf nlf-fw nlf-logo-plain nlf-2x"></i>-->NLF
   </a>
 
@@ -9,20 +9,20 @@
   <span *ngIf="(loggedInObservable | async) && !!current_ors">
     <span *ngIf="router.url != '/ors/'+current_ors.type+'/'+current_ors.id">
       <span [routerLink]="['/ors', current_ors.type, 'edit', current_ors.id]"
-        class="badge bg-info lead ml-1 pointer">
+        class="badge bg-info lead ms-1 pointer">
         <fa-icon [icon]="edit"></fa-icon>#{{ current_ors.id }}
       </span>
     </span>
   </span>
   -->
 
-  <span class="ml-auto"></span>
+  <span class="ms-auto"></span>
 
   <!-- CREATE OBSREG BTN XS-->
-  <button class="btn btn-success mr-3 d-block d-sm-none"
+  <button class="btn btn-success me-3 d-block d-sm-none"
     *ngIf="(loggedInObservable | async) && !!user_data && !!user_data.settings.default_discipline"
     (click)="navbarOpen=false;openCreateOrsModal()">
-    <fa-icon [icon]="faPlus" [fixedWidth]="true" class="mr-1"></fa-icon>OBSREG
+    <fa-icon [icon]="faPlus" [fixedWidth]="true" class="me-1"></fa-icon>OBSREG
   </button>
 
   <!--MENU TOGGLE-->
@@ -33,13 +33,13 @@
 
   <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent2" [ngClass]="{ 'show': navbarOpen }">
 
-    <ul *ngIf="!!user_data && loggedInObservable | async as authenticated" class="navbar-nav text-right">
+    <ul *ngIf="!!user_data && loggedInObservable | async as authenticated" class="navbar-nav text-end">
 
       <!-- CREATE OBSREG BTN HIDDEN XS-->
-      <button class="btn btn-success mr-2 d-none d-sm-block"
+      <button class="btn btn-success me-2 d-none d-sm-block"
         *ngIf="!!config && !!user_data && !!user_data.settings.default_discipline"
         (click)="navbarOpen=false;openCreateOrsModal()">
-        <fa-icon [icon]="faPlus" [fixedWidth]="true" class="mr-1"></fa-icon>Ny OBSREG
+        <fa-icon [icon]="faPlus" [fixedWidth]="true" class="me-1"></fa-icon>Ny OBSREG
         <!--{{ config[config.inv_mapping[user_data.settings.default_activity]]['observation']['app_name'] || 'ORSX' }}-->
 
       </button>
@@ -142,17 +142,17 @@
 
 
       <!-- USER/LOGOUT -->
-      <li ngbDropdown display="dynamic" placement="bottom-right" *ngIf="authenticated" class="nav-item dropdown pointer"
+      <li ngbDropdown display="dynamic" placement="bottom-right" *ngIf="authenticated" class="nav-item dropdown pointer me-4"
         routerLinkActive="active">
 
         <a ngbDropdownToggle placement="bottom-right"
           class="btn btn-sm btn-secondary nav-link dropdown-toggle text-white" id="navbarDropdown" role="button"
           aria-haspopup="true" aria-expanded="false">
-          <!--<span *ngIf="!!avatar" class="avatar avatar-xs mr-1">
+          <!--<span *ngIf="!!avatar" class="avatar avatar-xs me-1">
             <img [src]="domSanitizer.bypassSecurityTrustUrl(avatar)" alt="" class="avatar-img rounded-circle">
           </span>
         -->
-          <span class="avatar avatar-xs mr-1">
+          <span class="avatar avatar-xs me-1">
             <img [src]="avatar||avatar_missing" alt="user" class="avatar-img rounded-circle">
           </span>
           <nlf-resolve-lungo-person [person_id]="user_data.person_id" [only_first_name]="true" [avatar]="false"
