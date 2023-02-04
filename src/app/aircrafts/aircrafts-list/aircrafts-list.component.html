@@ -42,7 +42,7 @@
           {{ row.msn }}
         </td>
         <td class="ngx-easy-table-small text-center">
-          <span class="badge" [ngClass]="{'badge-success': row.status=='ACTIVE','badge-secondary': row.status=='DELETED'}">{{ row.status }}</span>
+          <span class="badge" [ngClass]="{'bg-success': row.status=='ACTIVE','bg-secondary': row.status=='DELETED'}">{{ row.status }}</span>
         </td>
         <td class="ngx-easy-table-small text-center">
           <span *ngIf="!!row.e5x">

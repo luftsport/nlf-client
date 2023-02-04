@@ -101,7 +101,7 @@
         <div *ngFor="let row of aircraft_listing">
           <a [routerLink]="['/aircraft', 'edit', row._id]">
             <fa-icon [icon]="faEdit"></fa-icon>{{ row.callsign }}
-          </a> {{ row.manufacturer }} {{ row.model }} <span class="badge" [ngClass]="{'badge-success': row.status=='ACTIVE', 'badge-danger': row.status=='DELETED'}">{{ row.status }}</span>
+          </a> {{ row.manufacturer }} {{ row.model }} <span class="badge" [ngClass]="{'bg-success': row.status=='ACTIVE', 'bg-danger': row.status=='DELETED'}">{{ row.status }}</span>
         </div>
       </div>
 

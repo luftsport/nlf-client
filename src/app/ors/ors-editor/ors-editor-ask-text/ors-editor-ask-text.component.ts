@@ -108,13 +108,13 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
       trigger: '!',
       iframe: null,
       selectClass: 'highlight',
-      // function called on select that returns the content to insert<macro contenteditable="false" class="badge badge-info"
+      // function called on select that returns the content to insert<macro contenteditable="false" class="badge bg-info"
       selectTemplate: function (item) {
         const id = rs(12);
         return '<macro href="#" data-url="/user/' + item.original.id + '" contenteditable="false"\
                 data-type="user" data-id="' + item.original.id + '"\
                 onclick="this.remove()"\
-                class="badge badge-info macrolink pointer" id="' + id + '">\
+                class="badge bg-info macrolink pointer" id="' + id + '">\
                 !' + item.original.full_name + '</macro>';
       },
       // template for displaying item in menu
@@ -153,7 +153,7 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
         return '<macro href="#" data-url="/user/' + item.original.id + '" contenteditable="false" \
                 data-type="user" data-id="' + item.original.id + '"\
                 onclick="this.remove()"\
-                class="badge badge-danger macrolink pointer" id="' + id + '">\
+                class="badge bg-danger macrolink pointer" id="' + id + '">\
                 @' + item.original.full_name + '</macro>';
       },
       menuItemTemplate: function (item) {
@@ -180,7 +180,7 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
         return '<macro href="#" data-url="/ors/' + item.original.activity + '/report/' + item.original.id + '" contenteditable="false"\
                 data-type="f_ors" data-id="' + item.original.id + '"\
                 onclick="this.remove()"\
-                class="badge badge-danger macrolink pointer" id="' + id + '"> \
+                class="badge bg-danger macrolink pointer" id="' + id + '"> \
                 #' + item.original.id + ' ' + item.original.title + '</macro>';
       },
       menuItemTemplate: function (item) {
@@ -283,7 +283,7 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
   }
 
   format(event) {
-    return '<macro contenteditable="false" class="badge badge-info" id="' + event.id + '">' + event.fullname + '</macro>';
+    return '<macro contenteditable="false" class="badge bg-info" id="' + event.id + '">' + event.fullname + '</macro>';
   }
 
   intergalactic(event) {

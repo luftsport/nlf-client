@@ -6,9 +6,9 @@
 
     <span *ngFor="let l of askValues">
       <span class="ml-1" [ngClass]="{'badge':true,
-      'badge-danger': isNegative(l.key),
-      'badge-secondary': isNeutral(l.key),
-      'badge-success': isPositive(l.key)}">{{ l.nick }}</span>
+      'bg-danger': isNegative(l.key),
+      'bg-secondary': isNeutral(l.key),
+      'bg-success': isPositive(l.key)}">{{ l.nick }}</span>
     </span>
 
   </span>
@@ -19,9 +19,9 @@
       <span *ngFor="let l of askValues">
 
         <span class="ml-1" [ngClass]="{'badge':true,
-      'badge-danger': isNegative(l.key),
-      'badge-secondary': isNeutral(l.key),
-      'badge-success': isPositive(l.key)}">{{ l.label }}
+      'bg-danger': isNegative(l.key),
+      'bg-secondary': isNeutral(l.key),
+      'bg-success': isPositive(l.key)}">{{ l.label }}
         </span>
 
       </span>

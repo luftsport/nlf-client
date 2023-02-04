@@ -60,7 +60,7 @@ export class NlfOrsEditorActionsComponent implements OnInit {
   /** Mentions
   format(event) {
     console.log(event);
-    return '<macro contenteditable="false" class="badge badge-info" id="' + event.id + '">' + event.fullname + '</macro>';
+    return '<macro contenteditable="false" class="badge bg-info" id="' + event.id + '">' + event.fullname + '</macro>';
   }
   **/
 

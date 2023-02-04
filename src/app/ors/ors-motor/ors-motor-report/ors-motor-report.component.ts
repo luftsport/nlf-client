@@ -7,7 +7,8 @@ import { NlfAlertService } from 'app/services/alert/alert.service';
 import { NlfComponent } from 'app/nlf.component';
 import { NgStringPipesModule } from 'angular-pipes';
 import { ApiEveBaseList } from 'app/api/api-eve.interface';
-
+import { faEdit, faMapMarker, faRandom, faBolt, faPlane, faFile, faStreetView, faCloud, faUsers, faRoad, faExternalLink, faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faFileAlt, faCommenting, faComments } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'nlf-ors-motor-report',
@@ -33,6 +34,22 @@ export class NlfOrsMotorReportComponent implements OnInit {
   right: string;
 
   isWorkflowTimelineCollapsed = true;
+
+  faEdit = faEdit;
+  faMapMarker = faMapMarker;
+  faRandom = faRandom;
+  faBolt = faBolt;
+  faPlane = faPlane;
+  faFile = faFile;
+  faStreetView = faStreetView;
+  faCloud = faCloud;
+  faUsers = faUsers;
+  faRoad = faRoad;
+  faExternalLink = faExternalLink;
+  faDownload = faDownload;
+  faFileAlt = faFileAlt;
+  faCommenting = faCommenting;
+  faComments = faComments;
 
   constructor(private route: ActivatedRoute,
               private orsService: ApiObservationsService,

@@ -11,6 +11,7 @@ import {
   E5XAirspaceClass,
   E5XAerodromeGeneralClass
 } from 'app/interfaces/e5x.interface';
+import { faWarning, faCheck, faPlane, faHelicopter } from '@fortawesome/free-solid-svg-icons';
 
 export interface AutoCompleteModel {
   value: any;
@@ -46,6 +47,11 @@ export class NlfOrsEditorE5XAircraftComponent implements OnInit {
   tagsLoading = false;
   selectedAircrafts = [];
   observation: ApiObservationsItem;
+
+  faWarning = faWarning;
+  faCheck = faCheck;
+  faPlane = faPlane;
+  faHelicopter = faHelicopter;
 
   constructor(
     private acService: ApiAircraftsService,

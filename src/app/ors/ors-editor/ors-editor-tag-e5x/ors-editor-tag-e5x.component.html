@@ -1,5 +1,5 @@
 <div class="form-group">
-  
+
   <label [for]="path">{{ customLabel || label }}
     <span *ngIf="!!unit">[{{ unit }}]</span>
     <fa-icon (click)="openModal(modalHelp)" *ngIf="show_help" class="ml-1 pointer" name="question"></fa-icon>
@@ -94,7 +94,7 @@
       <div class="col-md-12">
         <dl>
           <div *ngFor="let choice of choices; let idx = index">
-            <dt>{{ choice.label }} <span class="badge badge-secondary" *ngIf="!!choice.icao">{{ choice.icao }}</span>
+            <dt>{{ choice.label }} <span class="badge bg-secondary" *ngIf="!!choice.icao">{{ choice.icao }}</span>
             </dt>
             <dd>{{ choice.descr }}</dd>
             <dd>{{ choice.expl }}</dd>

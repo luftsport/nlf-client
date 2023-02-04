@@ -4,7 +4,7 @@
 
       <span class="breadcrumb">
         <li class="breadcrumb-item">
-          <fa-icon icon="users"></fa-icon> NLF Medlemssjekk
+          <fa-icon [icon]="faUsers"></fa-icon> NLF Medlemssjekk
         </li>
         <!--
       <li class="breadcrumb-item active">
@@ -15,14 +15,14 @@
 
       <!--
     <button *ngIf="!!query" class="btn btn-primary btn-sm pull-right mx-1" (click)="openModal(saveTemplate)" title="Funksjonen kommer snart" disabled>
-      <fa-icon icon="save"></fa-icon> Lagre søk
+      <fa-icon [icon]="faSave"></fa-icon> Lagre søk
     </button>
     -->
       <span *ngIf="ENV.production===false && [1505923257, 1476506542, -1957053861, 1536523365].indexOf(userHash(user_data.person_id))>-1"
         class="float-right d-inline">
         <nlf-help class="mx-1" key="nlf-member"></nlf-help>
         <a [routerLink]="['/medlem', 'kompetanse']">
-          <fa-icon icon="table"></fa-icon> Medlemsliste
+          <fa-icon [icon]="faTable"></fa-icon> Medlemsliste
         </a>
       </span>
     </div>
@@ -56,7 +56,7 @@
           <ng-container
             *ngFor="let _activity of ['fallskjerm', 'sportsfly', 'motorfly', 'seilfly', 'modellfly', 'ballong', 'hps']">
             <span class="badge pointer ml-2"
-              [ngClass]="{'badge-secondary': activity!=_activity, 'badge-success': activity==_activity}"
+              [ngClass]="{'bg-secondary': activity!=_activity, 'bg-success': activity==_activity}"
               (click)="setActivity(_activity)">{{_activity | titlecase }}</span>
           </ng-container>
         </div>

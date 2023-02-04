@@ -21,6 +21,7 @@ import { forkJoin } from 'rxjs';
 import { ComponentCanDeactivate } from 'app/pending-changes.guard';
 import { HostListener } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { faSave, faQuestion, faFlag, faInfoCircle, faHistory, faFile, faExchange, faUpload } from '@fortawesome/free-solid-svg-icons';
 import 'rxjs/add/operator/takeWhile';
 
 @Component({
@@ -53,6 +54,14 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
   public userData: ApiUserDataSubjectItem;
   private subject_is_alive: boolean = true;
 
+  faSave = faSave;
+  faQuestion = faQuestion;
+  faFlag = faFlag;
+  faInfoCircle = faInfoCircle;
+  faHistory = faHistory;
+  faFile = faFile;
+  faExchange = faExchange;
+  faUpload = faUpload;
 
   constructor(
     private route: ActivatedRoute,

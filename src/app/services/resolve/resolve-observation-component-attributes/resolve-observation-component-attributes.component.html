@@ -1,13 +1,13 @@
 <ng-container *ngIf="!!config">
   <span *ngFor="let attr of attributes | keyvalue; let last=last">
-    
+
     <ng-container *ngIf="!!attr.value">
       <span *ngIf="!!badge && !!config[activity].observation.components.attributes[attr.key]"
-        class="badge badge-{{ config[activity].observation.components.attributes[attr.key]['badge'] }}"
+        class="badge bg-{{ config[activity].observation.components.attributes[attr.key]['badge'] }}"
         [ngClass]="{'mr-1': !last}">
         {{ config[activity].observation.components.attributes[attr.key]['label'] }}
       </span>
-      
+
        <span [ngClass]="{'mr-1': !last}"
         *ngIf="!badge && !!config[activity].observation.components.attributes[attr.key]">
         {{ config[activity].observation.components.attributes[attr.key]['label'] }}

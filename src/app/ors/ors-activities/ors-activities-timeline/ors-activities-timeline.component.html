@@ -284,7 +284,7 @@
           sendte en purring
           <span class="pull-right">
 
-            <span class="badge badge-light mx-1">{{ row.transport }}</span>
+            <span class="badge bg-light mx-1">{{ row.transport }}</span>
           </span>
         </h2>
 
@@ -320,7 +320,7 @@
           sendte <strong>første purring</strong> om tidsfrist
           <span class="pull-right">
 
-            <span class="badge badge-light mx-1">{{ row.transport }}</span>
+            <span class="badge bg-light mx-1">{{ row.transport }}</span>
           </span>
         </h2>
 
@@ -348,7 +348,7 @@
           sendte <strong>andre purring</strong> om tidsfrist
           <span class="pull-right">
 
-            <span class="badge badge-light mx-1">{{ row.transport }}</span>
+            <span class="badge bg-light mx-1">{{ row.transport }}</span>
           </span>
         </h2>
 
@@ -376,7 +376,7 @@
           <nlf-resolve-lungo-person [person_id]="row.sender" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
           sendte en melding
           <span class="pull-right">
-            <span class="badge badge-light mx-1">{{ row.transport }}</span>
+            <span class="badge bg-light mx-1">{{ row.transport }}</span>
           </span>
         </h2>
 
@@ -409,12 +409,12 @@
           <nlf-resolve-lungo-person [person_id]="row.sender" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
           sendte observasjonen til LT
           <span class="pull-right">
-            <span class="badge badge-light mx-1">{{ row.transport }}</span>
+            <span class="badge bg-light mx-1">{{ row.transport }}</span>
           </span>
         </h2>
 
         <p>
-          Rapport status: <nlf-ors-editor-tag-e5x-render classes="badge badge-secondary" [showLabel]="false"
+          Rapport status: <nlf-ors-editor-tag-e5x-render classes="badge bg-secondary" [showLabel]="false"
             [items]="row.data.status" path="E5X.Occurrence.ReportingHistory.ReportStatus">
           </nlf-ors-editor-tag-e5x-render>
         </p>
@@ -455,7 +455,7 @@
           &nbsp;<span *ngIf="!!row.data?.message">{{ row.data.message }}</span><span *ngIf="!row.data?.message">{{
             row.data.verb }} <strong>{{ row.data.right }}</strong></span> for
           <span class="pull-right">
-            <span class="badge badge-light mx-1">{{ row.transport }}</span>
+            <span class="badge bg-light mx-1">{{ row.transport }}</span>
           </span>
         </h2>
 

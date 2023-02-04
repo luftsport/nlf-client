@@ -51,12 +51,12 @@
                   </span>
                 </span>
 
-                <span *ngIf="!!c.flags.barrier" class="badge badge-secondary ml-1">Barriære</span>
-                <span *ngIf="!!c.flags.incident" class="badge badge-info ml-1">Hendelse</span>
-                <span *ngIf="!!c.flags.cause" class="badge badge-warning ml-1">Årsak</span>
-                <span *ngIf="!!c.flags.root_cause" class="badge badge-warning ml-1">Rot Årsak</span>
-                <span *ngIf="!!c.flags.consequence" class="badge badge-danger ml-1">Konsekvens</span>
-                <span *ngIf="!!c.flags.final_consequence" class="badge badge-danger ml-1">Sluttkonsekvens</span>
+                <span *ngIf="!!c.flags.barrier" class="badge bg-secondary ml-1">Barriære</span>
+                <span *ngIf="!!c.flags.incident" class="badge bg-info ml-1">Hendelse</span>
+                <span *ngIf="!!c.flags.cause" class="badge bg-warning ml-1">Årsak</span>
+                <span *ngIf="!!c.flags.root_cause" class="badge bg-warning ml-1">Rot Årsak</span>
+                <span *ngIf="!!c.flags.consequence" class="badge bg-danger ml-1">Konsekvens</span>
+                <span *ngIf="!!c.flags.final_consequence" class="badge bg-danger ml-1">Sluttkonsekvens</span>
                 <!--<nlf-resolve-observation-ask  [activity]="activity" [ask]="c.ask"></nlf-resolve-observation-ask> NOT ANYMORE! -->
               </small>
             </h4>

@@ -46,11 +46,11 @@
   <tr *ngFor="let aircraft of observation.aircrafts; let idx = index">
     <td>
 
-      <fa-icon *ngIf="!!aircraft.aircraft._id" name="check" fw="true" class="text-success mr-2" title="Hentet fra flyregisteret"></fa-icon>
-      <fa-icon *ngIf="!aircraft.aircraft.hasOwnProperty('_id')" name="check" fw="exclamation" class="text-danger mr-2" title="Ukjent fly"></fa-icon>
+      <fa-icon *ngIf="!!aircraft.aircraft._id" [icon]="faCheck" fw="true" class="text-success mr-2" title="Hentet fra flyregisteret"></fa-icon>
+      <fa-icon *ngIf="!aircraft.aircraft.hasOwnProperty('_id')" [icon]="faCheck" fw="exclamation" class="text-danger mr-2" title="Ukjent fly"></fa-icon>
 
-      <fa-icon *ngIf="aircraft.aircraft.type !== 'HELICOPTER'" name="airplane" fw="true"></fa-icon>
-      <fa-icon *ngIf="aircraft.aircraft.type === 'HELICOPTER'" name="helicopter" fw="true"></fa-icon>
+      <fa-icon *ngIf="aircraft.aircraft.type !== 'HELICOPTER'" [icon]="faPlane" fw="true"></fa-icon>
+      <fa-icon *ngIf="aircraft.aircraft.type === 'HELICOPTER'" [icon]="faHelicopter" fw="true"></fa-icon>
       <strong>
         {{ aircraft.aircraft.callsign }}
       </strong>
@@ -61,12 +61,12 @@
     <td>
       <div *ngIf="!aircraft.aircraft.e5x">
         <button class="btn btn-secondary" (click)="openAircraftModal(aircraftModal, idx)">
-          <fa-icon icon="warning"></fa-icon>Aircraft Data
+          <fa-icon [icon]="faWarning"></fa-icon> Aircraft Data
         </button>
       </div>
       <div *ngIf="!!aircraft.aircraft.e5x">
         <button class="btn btn-success mb-3" (click)="openAircraftModal(aircraftModal, idx)">
-          <fa-icon icon="check"></fa-icon>Aircraft Data
+          <fa-icon [icon]="faCheck"></fa-icon> Aircraft Data
         </button>
       </div>
 

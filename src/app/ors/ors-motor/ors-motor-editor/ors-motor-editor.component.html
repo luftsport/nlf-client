@@ -11,7 +11,7 @@
       <span class="overflow-hidden">
         <a [routerLink]="['/ors', 'motorfly']">OBSREG</a>#{{ observation.id }}
         <nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type" link="true" seperator="/"></nlf-resolve-observation-tags>&nbsp;
-        <span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body" *ngIf="!!observation.rating" class="badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{
+        <span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body" *ngIf="!!observation.rating" class="badge bg-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{
           observation.rating | nlfOrsRatingCalc }}</span>
       </span>
       <!-- WORKFLOW STATE -->
@@ -19,30 +19,30 @@
 
         <!-- SAVE -->
         <span *ngIf="!!observation">
-          <span (click)="saveIfChanges()" *ngIf="!!changes && observation.acl_user.w" class="pointer badge badge-warning mx-1">
-            <fa-icon icon="save"></fa-icon>
+          <span (click)="saveIfChanges()" *ngIf="!!changes && observation.acl_user.w" class="pointer badge bg-warning mx-1">
+            <fa-icon [icon]="faSave"></fa-icon>
           </span>
         </span>
 
         <!-- HELP -->
-        <a class="badge badge-light pointer text-info mx-1" (click)="openHelp()">
-          <fa-icon icon="question"></fa-icon>
+        <a class="badge bg-light pointer text-info mx-1" (click)="openHelp()">
+          <fa-icon [icon]="faQuestion"></fa-icon>
         </a>
 
         <!-- FLAGS -->
         <span *ngIf="hasFlag()" class="text-danger mx-1">
-          <fa-icon icon="flag"></fa-icon>
+          <fa-icon [icon]="faFlag"></fa-icon>
         </span>
 
         <!-- ABOUT -->
-        <a (click)="openAbout()" class="badge badge-secondary text-white pointer mx-1">
-          <fa-icon icon="info-circle"></fa-icon>
+        <a (click)="openAbout()" class="badge bg-secondary text-white pointer mx-1">
+          <fa-icon [icon]="faInfoCircle"></fa-icon>
           <fa-icon *ngIf="!observation.acl_user.w" name="lock" class="text-danger" title="Ingen skrivetilgang"></fa-icon>
           {{ observation._updated | amTimeAgo }}
         </a>
 
         <!-- VERSION -->
-        <a class="badge badge-success mx-1 text-white pointer" (click)="openVersions(modalVersions)">v{{ observation._version }}</a>
+        <a class="badge bg-success mx-1 text-white pointer" (click)="openVersions(modalVersions)">v{{ observation._version }}</a>
 
         <!-- WORKFLOW -->
         <a class="pointer mx-1" *ngIf="observation.acl_user.x" (click)="openWorkflow()">
@@ -56,15 +56,15 @@
         <nlf-ors-e5x (click)="saveIfChanges()" (change)="getData()"></nlf-ors-e5x>
 
         <!-- ACTIVITY -->
-        <a *ngIf="observation.workflow.state!='closed'" class="badge badge-info mx-1" [routerLink]="['/ors', observation._model.type , 'activities', observation.id]">
-          <fa-icon icon="history"></fa-icon> Aktivitet
+        <a *ngIf="observation.workflow.state!='closed'" class="badge bg-info mx-1" [routerLink]="['/ors', observation._model.type , 'activities', observation.id]">
+          <fa-icon [icon]="faHistory"></fa-icon> Aktivitet
         </a>
 
         <!-- ACCESS -->
         <nlf-ors-editor-users *ngIf="observation.acl_user.x" [model]="observation._model.type" [_id]="observation._id" [observation]="observation"></nlf-ors-editor-users>
 
-        <a [routerLink]="['/ors', observation._model.type , 'report', observation.id]" *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge badge-primary text-white mx-1">
-          <fa-icon icon="file"></fa-icon> Report
+        <a [routerLink]="['/ors', observation._model.type , 'report', observation.id]" *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge bg-primary text-white mx-1">
+          <fa-icon [icon]="faFile"></fa-icon> Report
         </a>
 
       </span>
@@ -316,10 +316,10 @@
 
       <!-- REPORTING HISTORY -->
       <nlf-ors-editor-e5x-reportinghistory [disabled]="!observation.acl_user.w" (change)="update()" [(reportingHistory)]="observation.occurrence.entities.reportingHistory"></nlf-ors-editor-e5x-reportinghistory>
-      
+
       <!-- RISK ASSESSMENT -->
       <nlf-ors-editor-e5x-risk [disabled]="!observation.acl_user.w" (change)="update()" [(riskAssessment)]="observation.occurrence.entities.riskAssessment"></nlf-ors-editor-e5x-risk>
-      
+
       <!-- NARRATIVE Moved top
     <div class="row my-3">
       <div class="col-xs-12 col-md-12">
@@ -543,7 +543,7 @@
 
           <div class="btn-toolbar pull-right">
             <button (click)="openWorkflow()" class="btn btn-primary mr-2">
-              <fa-icon icon="exchange"></fa-icon> Behandle #{{observation.id}}
+              <fa-icon [icon]="faExchange"></fa-icon> Behandle #{{observation.id}}
             </button>
           </div>
         </ng-container>
@@ -556,7 +556,7 @@
     <div class="row my-3">
       <span class="pointer mx-1 pull-right" *ngIf="observation.acl_user.x && observation.workflow.state=='draft'" (click)="openWorkflow()">
         <button class="btn btn-success">
-          <fa-icon icon="upload"></fa-icon>Send OBSREG koordinator
+          <fa-icon [icon]="faUpload"></fa-icon>Send OBSREG koordinator
         </button>
       </span>
     </div>

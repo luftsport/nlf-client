@@ -14,6 +14,8 @@ import { ApiFilesService } from 'app/api/api-files.service';
 import { NlfAuthSubjectService } from 'app/services/auth/auth-subject.service';
 import { get, cleanE5XObject, deepCopy, pad } from 'app/interfaces/functions';
 import { environment } from 'environments/environment';
+import { faHistory, faDownload, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faFileAlt, faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 
 import {
   E5XClass,
@@ -45,6 +47,12 @@ export class NlfOrsE5xComponent implements OnInit {
 
 
   allowedReportStatus: number[] = [2, 3]; // 2=open, 3=closed
+
+  faHistory = faHistory;
+  faDownload = faDownload;
+  faCheck = faCheck;
+  faFileAlt = faFileAlt;
+  faPaperPlane = faPaperPlane;
 
   /**
   report_status = [
@@ -223,7 +231,7 @@ export class NlfOrsE5xComponent implements OnInit {
       this.observation.occurrence.entities.reportingHistory[0].attributes.reportingDate.value = [rdate.getFullYear(), pad(rdate.getMonth() + 1), pad(rdate.getDate())].join('-'); //+ ' ' + [rdate.getHours(), rdate.getMinutes(), rdate.getSeconds()].join(':');
       this.observation.occurrence.entities.reportingHistory[0].attributes.reportVersion.value = this.observation._version;
       this.observation.occurrence.entities.reportingHistory[0].attributes.reportIdentification.value = 'nlf_' + this.observation._model.type + '_' + + this.observation.id + '_v' + this.observation._version;
-      this.observation.occurrence.entities.reportingHistory[0].attributes.reportSource.value = 2; // 2 er reportable, 3 er voluntary reports, media 4 osv. 
+      this.observation.occurrence.entities.reportingHistory[0].attributes.reportSource.value = 2; // 2 er reportable, 3 er voluntary reports, media 4 osv.
       this.observation.occurrence.entities.reportingHistory[0].attributes.reportingFormType.value = 9823;
 
       if (!!this.observation.actions) {
@@ -247,7 +255,7 @@ export class NlfOrsE5xComponent implements OnInit {
     if (this.observation.files.length > 0) {
       try {
         this.observation.occurrence.entities.reportingHistory[0].attributes['report'] = { attributes: { resourceLocator: this.addFiles() } };
-  
+
       } catch (e) {
         console.log('Error adding files', e);
       }
@@ -384,10 +392,10 @@ export class NlfOrsE5xComponent implements OnInit {
        await this.apiFile.getFile(file.f, options).subscribe(
          data => {
            data['r'] = file.r;
-  
+
            //this.e5xobservation.entities.reportingHistory.attributes.report[0].
            resourceLocator.push({fileName: data['name'], description: ''});
-  
+
            if (data.content_type.match(/image/g) != null) {
            } else {
            }

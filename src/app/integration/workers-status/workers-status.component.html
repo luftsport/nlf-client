@@ -154,7 +154,7 @@
       <h5>processed</h5>
     </div>
   </div>
-  <!--<button class="btn btn-primary" *ngIf="!workersStarted && syncdaemonStatus" (click)="startWorkers()"><fa-icon icon="play"></fa-icon>Start workers</button>-->
+  <!--<button class="btn btn-primary" *ngIf="!workersStarted && syncdaemonStatus" (click)="startWorkers()"><fa-icon [icon]="faPlay"></fa-icon>Start workers</button>-->
 
   <div class="clearfix overflow-auto">
     <ngx-table [id]="'integration-workers-table'" *ngIf="!!workers" [configuration]="tableConfig" [data]="workers"

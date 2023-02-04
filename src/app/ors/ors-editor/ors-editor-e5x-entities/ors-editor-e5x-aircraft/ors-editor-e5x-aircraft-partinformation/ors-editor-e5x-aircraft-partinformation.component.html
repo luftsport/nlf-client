@@ -6,9 +6,9 @@
     </button>
 
     <div class="mx-1 my-1" *ngFor="let part of partinformation; let idx = index">
-      <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="part.attributes.partName.value" path="E5X.Occurrence.Aircraft.PartInformation.PartName"></nlf-ors-editor-tag-e5x-render>
+      <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="part.attributes.partName.value" path="E5X.Occurrence.Aircraft.PartInformation.PartName"></nlf-ors-editor-tag-e5x-render>
       &nbsp;
-      <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="part.attributes.manufacturer.value" path="E5X.Occurrence.Aircraft.PartInformation.Manufacturer"></nlf-ors-editor-tag-e5x-render>
+      <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="part.attributes.manufacturer.value" path="E5X.Occurrence.Aircraft.PartInformation.Manufacturer"></nlf-ors-editor-tag-e5x-render>
 
       <fa-icon class="mx-1" [icon]="faEdit" (click)="openModal(modal, idx)"></fa-icon>
       <fa-icon class="mx-1" [icon]="faClose" (click)="delete(idx)"></fa-icon>

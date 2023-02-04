@@ -3,19 +3,19 @@
     <!--<i class="nlf nlf-fw nlf-logo-plain nlf-2x"></i>-->NLF
   </a>
 
-  <span *ngIf="!ENV.production" class="badge badge-danger">{{ ENV._name }}</span>
+  <span *ngIf="!ENV.production" class="badge bg-danger">{{ ENV._name }}</span>
 
-  <!-- CURRENT OR LAST OBSREG 
+  <!-- CURRENT OR LAST OBSREG
   <span *ngIf="(loggedInObservable | async) && !!current_ors">
     <span *ngIf="router.url != '/ors/'+current_ors.type+'/'+current_ors.id">
       <span [routerLink]="['/ors', current_ors.type, 'edit', current_ors.id]"
-        class="badge badge-info lead ml-1 pointer">
+        class="badge bg-info lead ml-1 pointer">
         <fa-icon [icon]="edit"></fa-icon>#{{ current_ors.id }}
       </span>
     </span>
   </span>
   -->
-  
+
   <span class="ml-auto"></span>
 
   <!-- CREATE OBSREG BTN XS-->
@@ -41,7 +41,7 @@
         (click)="navbarOpen=false;openCreateOrsModal()">
         <fa-icon [icon]="faPlus" [fixedWidth]="true" class="mr-1"></fa-icon>Ny OBSREG
         <!--{{ config[config.inv_mapping[user_data.settings.default_activity]]['observation']['app_name'] || 'ORSX' }}-->
-        
+
       </button>
 
       <!--
@@ -120,7 +120,7 @@
       <!-- NOTIFICATIONS
       <li ngbDropdown placement="bottom-right" (click)="navbarOpen=false" *ngIf="authenticated" class="nav-item dropdown pointer" routerLinkActive="active">
         <span ngbDropdownToggle href="#" class="nav-link">
-          <fa-icon [icon]="bell" class="d-inline-block"></fa-icon><small><span class="small badge badge-danger align-top">4</span></small>
+          <fa-icon [icon]="bell" class="d-inline-block"></fa-icon><small><span class="small badge bg-danger align-top">4</span></small>
         </span>
 
         <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -133,7 +133,7 @@
           </button>
           <div class="dropdown-divider"></div>
           <button class="btn btn-secondary btn-block dropdown-item">
-            <fa-icon [icon]="list-ol"></fa-icon>More<span class="badge badge-danger pull-right">2</span>
+            <fa-icon [icon]="list-ol"></fa-icon>More<span class="badge bg-danger pull-right">2</span>
           </button>
         </div>
 
@@ -157,7 +157,7 @@
           </span>
           <nlf-resolve-lungo-person [person_id]="user_data.person_id" [only_first_name]="true" [avatar]="false"
             [link]="false"></nlf-resolve-lungo-person>
-          <!--<span class="mx-1 badge badge-danger">2</span>-->
+          <!--<span class="mx-1 badge bg-danger">2</span>-->
         </a>
 
         <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown">

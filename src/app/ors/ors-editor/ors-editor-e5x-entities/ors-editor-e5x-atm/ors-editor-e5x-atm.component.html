@@ -8,7 +8,7 @@
 
   <div class="col-md-9">
     <div *ngFor="let a of atm; let idx = index">
-      <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="a.attributes.anspName.value"
+      <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="a.attributes.anspName.value"
         path="E5X.Occurrence.AirNavigationService.ANSPName"></nlf-ors-editor-tag-e5x-render>
       &nbsp;
       <fa-icon class="mx-1" [icon]="faEdit" (click)="openModal(modal, idx)"></fa-icon>

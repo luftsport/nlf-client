@@ -6,9 +6,9 @@
   </div>
   <div class="col-md-9">
     <div *ngFor="let phenomena of wxPhenomena; let idx = index">
-      <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="phenomena.attributes.phenomenonType.value" path="E5X.Occurrence.PrecipitationAndOtherWeatherPhenomena.PhenomenonType"></nlf-ors-editor-tag-e5x-render>
+      <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="phenomena.attributes.phenomenonType.value" path="E5X.Occurrence.PrecipitationAndOtherWeatherPhenomena.PhenomenonType"></nlf-ors-editor-tag-e5x-render>
       &nbsp;
-      <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="phenomena.attributes.phenomenonIntensity.value" path="E5X.Occurrence.PrecipitationAndOtherWeatherPhenomena.PhenomenonIntensity"></nlf-ors-editor-tag-e5x-render>
+      <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="phenomena.attributes.phenomenonIntensity.value" path="E5X.Occurrence.PrecipitationAndOtherWeatherPhenomena.PhenomenonIntensity"></nlf-ors-editor-tag-e5x-render>
       <fa-icon class="mx-1" [icon]="faEdit" (click)="openModal(modal, idx)"></fa-icon>
       <fa-icon class="mx-1" *ngIf="!disabled" [icon]="faClose" (click)="delete(idx)"></fa-icon>
     </div>

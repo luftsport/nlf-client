@@ -12,12 +12,12 @@
 			<nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type" link="true" seperator="/"></nlf-resolve-observation-tags>&nbsp;
 			<!-- /TITLE -->
 			<!-- RATING -->
-			<span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body" *ngIf="!!observation.rating" class="badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating
+			<span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body" *ngIf="!!observation.rating" class="badge bg-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating
 				| nlfOrsRatingCalc }}</span>
 
 
 			<!-- DIFFERENT VERSION -->
-			<span *ngIf="observation._version !== observation._latest_version" class="badge badge-warning">
+			<span *ngIf="observation._version !== observation._latest_version" class="badge bg-warning">
 				<a [routerLink]="['/ors', observation._model.type, 'report', observation.id]">v{{ observation._version }} av {{ observation._latest_version }}</a>
 			</span>
 			<!-- /DIFFERENT VERSION -->
@@ -29,7 +29,7 @@
 
 			<!-- WORKFLOW STATE -->
 			<span class="pull-right">
-				<a [routerLink]="['/ors', observation._model.type, 'edit', observation.id]" *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge badge-primary text-white mx-1">
+				<a [routerLink]="['/ors', observation._model.type, 'edit', observation.id]" *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge bg-primary text-white mx-1">
 					<fa-icon [icon]="faEdit"></fa-icon> Editor
 				</a>
 				<nlf-resolve-observation-state [activity]="observation._model.type" [state]="observation.workflow.state" icon="true"></nlf-resolve-observation-state>
@@ -66,8 +66,8 @@
 -->
 					<div class="mt-2">
 						<fa-icon [icon]="faMapMarkerAlt"></fa-icon> {{ observation.occurrence.attributes.locationName.value || "Sted ikke angitt" }}
-						<span class="mx-2 badge badge-secondary pull-right">Lat: {{ observation.occurrence.attributes.latitudeOfOcc.value | round: 4 }}</span>
-						<span class="mx-2 badge badge-secondary pull-right">Lng: {{ observation.occurrence.attributes.longitudeOfOcc.value | round: 4}}</span>
+						<span class="mx-2 badge bg-secondary pull-right">Lat: {{ observation.occurrence.attributes.latitudeOfOcc.value | round: 4 }}</span>
+						<span class="mx-2 badge bg-secondary pull-right">Lng: {{ observation.occurrence.attributes.longitudeOfOcc.value | round: 4}}</span>
 					</div>
 					<div>
 						<nlf-ors-editor-tag-e5x-render [showLabel]="false" [items]="observation.occurrence.attributes.stateAreaOfOcc.value" path="E5X.Occurrence.StateAreaOfOcc"></nlf-ors-editor-tag-e5x-render>
@@ -120,7 +120,7 @@
 							<tbody>
 								<tr *ngFor="let audit of observation.e5x.audit" [ngClass]="{'bg-info':observation._version==audit.version}">
 									<td>
-										<nlf-ors-editor-tag-e5x-render classes="badge badge-secondary" [showLabel]="false" [items]="audit.status" path="E5X.Occurrence.ReportingHistory.ReportStatus"></nlf-ors-editor-tag-e5x-render>
+										<nlf-ors-editor-tag-e5x-render classes="badge bg-secondary" [showLabel]="false" [items]="audit.status" path="E5X.Occurrence.ReportingHistory.ReportStatus"></nlf-ors-editor-tag-e5x-render>
 									</td>
 									<td>
 										{{ audit.date | date:'yyyy-MM-dd HH:mm'}}
@@ -132,8 +132,8 @@
 										v{{ audit.version }}
 									</td>
 									<td>
-										<span *ngIf="audit.sent" class="badge badge-success">OK</span>
-										<span *ngIf="!audit.sent" class="badge badge-danger">Ikke sendt</span>
+										<span *ngIf="audit.sent" class="badge bg-success">OK</span>
+										<span *ngIf="!audit.sent" class="badge bg-danger">Ikke sendt</span>
 									</td>
 									<td class="text-right">
 										<a *ngIf="!!token" target="_blank" href="/api/v1/e5x/download/{{observation._model.type}}/{{observation.id}}/{{audit.version}}?token={{token}}">

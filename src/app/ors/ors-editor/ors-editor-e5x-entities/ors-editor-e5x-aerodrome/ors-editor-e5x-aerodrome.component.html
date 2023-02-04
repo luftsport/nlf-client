@@ -6,11 +6,11 @@
   </div>
   <div class="col-md-9">
     <div *ngFor="let drome of aerodrome; let idx = index">
-      <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="drome.attributes.locationIndicator.value" path="E5X.Occurrence.AerodromeGeneral.LocationIndicator"></nlf-ors-editor-tag-e5x-render>
+      <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="drome.attributes.locationIndicator.value" path="E5X.Occurrence.AerodromeGeneral.LocationIndicator"></nlf-ors-editor-tag-e5x-render>
       &nbsp;
-      <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="drome.attributes.surfaceType.value" path="E5X.Occurrence.AerodromeGeneral.SurfaceType"></nlf-ors-editor-tag-e5x-render>
+      <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="drome.attributes.surfaceType.value" path="E5X.Occurrence.AerodromeGeneral.SurfaceType"></nlf-ors-editor-tag-e5x-render>
       &nbsp;
-      <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="drome.attributes.aerodromeStatus.value" path="E5X.Occurrence.AerodromeGeneral.AerodromeStatus"></nlf-ors-editor-tag-e5x-render>
+      <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="drome.attributes.aerodromeStatus.value" path="E5X.Occurrence.AerodromeGeneral.AerodromeStatus"></nlf-ors-editor-tag-e5x-render>
 
       <fa-icon class="mx-1" name="edit" (click)="openModal(modal, idx)"></fa-icon>
       <fa-icon class="mx-1" *ngIf="!disabled" name="close" (click)="delete(idx)"></fa-icon>

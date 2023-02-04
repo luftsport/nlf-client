@@ -6,11 +6,11 @@
   </div>
   <div class="col-md-9">
     <div *ngFor="let space of airspace; let idx = index">
-      <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="space.attributes?.airspaceName?.value" path="E5X.Occurrence.AirSpace.AirspaceName"></nlf-ors-editor-tag-e5x-render>
+      <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="space.attributes?.airspaceName?.value" path="E5X.Occurrence.AirSpace.AirspaceName"></nlf-ors-editor-tag-e5x-render>
       &nbsp;
-      <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="space.attributes.airspaceClass.value" path="E5X.Occurrence.AirSpace.AirspaceClass"></nlf-ors-editor-tag-e5x-render>
+      <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="space.attributes.airspaceClass.value" path="E5X.Occurrence.AirSpace.AirspaceClass"></nlf-ors-editor-tag-e5x-render>
       &nbsp;
-      <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="space.attributes.airspaceType.value" path="E5X.Occurrence.AirSpace.AirspaceType"></nlf-ors-editor-tag-e5x-render>
+      <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="space.attributes.airspaceType.value" path="E5X.Occurrence.AirSpace.AirspaceType"></nlf-ors-editor-tag-e5x-render>
       &nbsp;
       <fa-icon class="mx-1" [icon]="faEdit" (click)="openModal(modal, idx)"></fa-icon>
       <fa-icon class="mx-1" *ngIf="!disabled" [icon]="faClose" (click)="delete(idx)"></fa-icon>

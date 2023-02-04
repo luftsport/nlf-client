@@ -1,6 +1,6 @@
 <span *ngIf="e5x_enabled && !!observation">
-  <span (click)="openModal(modalTemplate)" class="pointer badge mx-1" [ngClass]="{'badge-success':observation.e5x.status=='sent', 'badge-secondary': !observation.e5x.status}">
-    <fa-icon icon="file-text-o"></fa-icon>LT
+  <span (click)="openModal(modalTemplate)" class="pointer badge mx-1" [ngClass]="{'bg-success':observation.e5x.status=='sent', 'bg-secondary': !observation.e5x.status}">
+    <fa-icon [icon]="faFileAlt"></fa-icon> LT
   </span>
 
   <!-- MODAL PREVIEW -->
@@ -20,7 +20,7 @@
       <div class="row">
         <div class="col-md-12">
           <p class="lead">
-            <fa-icon icon="history"></fa-icon>Historikk
+            <fa-icon [icon]="faHistory"></fa-icon>Historikk
           </p>
 
           <div *ngIf="observation.e5x.audit.length==0" class="alert alert-info">
@@ -31,7 +31,7 @@
             <tbody>
               <tr *ngFor="let audit of observation.e5x.audit" [ngClass]="{'bg-info':observation._version==audit.version}">
                 <td>
-                  <nlf-ors-editor-tag-e5x-render classes="badge badge-secondary" [showLabel]="false" [items]="audit.status" path="E5X.Occurrence.ReportingHistory.ReportStatus"></nlf-ors-editor-tag-e5x-render>
+                  <nlf-ors-editor-tag-e5x-render classes="badge bg-secondary" [showLabel]="false" [items]="audit.status" path="E5X.Occurrence.ReportingHistory.ReportStatus"></nlf-ors-editor-tag-e5x-render>
                 </td>
                 <td>
                   {{ audit.date | date:'yyyy-MM-dd HH:mm'}}
@@ -43,12 +43,12 @@
                   v{{ audit.version }}
                 </td>
                 <td>
-                  <span *ngIf="audit.sent" class="badge badge-success">OK</span>
-                  <span *ngIf="!audit.sent" class="badge badge-info">Ikke sendt</span>
+                  <span *ngIf="audit.sent" class="badge bg-success">OK</span>
+                  <span *ngIf="!audit.sent" class="badge bg-info">Ikke sendt</span>
                 </td>
                 <td class="text-right">
                   <a *ngIf="!!token" target="_blank" href="/api/v1/e5x/download/{{observation._model.type}}/{{observation.id}}/{{audit.version}}?token={{token}}">
-                    <fa-icon icon="download"></fa-icon>
+                    <fa-icon [icon]="faDownload"></fa-icon>
                   </a>
                 </td>
               </tr>
@@ -81,17 +81,17 @@
 
             <!-- WARNING SEND YOURSELF? -->
             <div *ngIf="ENV._name!='prod' && !ENV._e5x_submission" class="alert alert-warning m-3" role="alert">
-              <strong>Viktig!</strong> Dette er <span class="badge badge-danger">{{ ENV._name | uppercase }}</span> som er en
+              <strong>Viktig!</strong> Dette er <span class="badge bg-danger">{{ ENV._name | uppercase }}</span> som er en
               test instans og innsendelse til LT er derfor ikke aktivert. Kun skarpe rapporter altså registrert i produksjonssystemet https://app.nlf.no kan sendes LT.
               Her kan du generere E5X filen som er en zipped fil med rapporten i xml format samt eventuelle vedlegg. Denne kan du laste ned om du ønsker.
             </div>
 
             <div *ngIf="ENV._name=='prod' && !ENV._e5x_submission" class="alert alert-warning m-3" role="alert">
-              <strong>Viktig!</strong> Innsendelse til LT er ikke aktivert for <span class="badge badge-danger">{{ ENV._name | uppercase }}</span>
+              <strong>Viktig!</strong> Innsendelse til LT er ikke aktivert for <span class="badge bg-danger">{{ ENV._name | uppercase }}</span>
             </div>
 
             <div *ngIf="ENV._name=='dev' && ENV._e5x_submission" class="alert alert-info m-3" role="alert">
-              <strong>Viktig!</strong> Dette er <span class="badge badge-danger">{{ ENV._name | uppercase }}</span> som er en
+              <strong>Viktig!</strong> Dette er <span class="badge bg-danger">{{ ENV._name | uppercase }}</span> som er en
               test instans <strong>med innsendelse til LT sitt testmiljø</strong>. Innsendelse her blir gjennomført på samme måte som i produksjonssystemet men havner
               altså som testfiler hos LT hvor de behandler filene i sitt testmiljø.
             </div>
@@ -129,7 +129,7 @@
 
               <div class="col-md-12">
                 <button [disabled]="!observation.occurrence.entities.reportingHistory[0].attributes.reportStatus.value" class="btn btn-primary btn-lg btn-block" (click)="send();e5xFile=!e5xFile">
-                  <fa-icon icon="paper-plane-o"></fa-icon> Send rapport
+                  <fa-icon [icon]="faPaperPlane"></fa-icon> Send rapport
                 </button>
               </div>
 
@@ -142,7 +142,7 @@
           <div *ngIf="!generating && !!e5xResult">
             <div class="alert alert-success">
               <p class="lead">
-                <fa-icon icon="check"></fa-icon>E5X rapport fil ble generert
+                <fa-icon [icon]="faCheck"></fa-icon>E5X rapport fil ble generert
               </p>
               <p>Filen kan om ønskelig lastes ned ovenfor</p>
             </div>

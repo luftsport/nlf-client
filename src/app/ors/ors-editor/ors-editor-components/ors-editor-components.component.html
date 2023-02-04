@@ -288,9 +288,9 @@
   <ng-template #componentModal>
     <div class="modal-header">
       <h4 class="modal-title pull-left">
-        <span *ngIf="modalComponent.data.flags.cause" class="badge badge-warning">Årsak</span>
-        <span *ngIf="modalComponent.data.flags.incident" class="badge badge-info">Hendelse</span>
-        <span *ngIf="modalComponent.data.flags.consequence" class="badge badge-danger">Konsekvens</span>
+        <span *ngIf="modalComponent.data.flags.cause" class="badge bg-warning">Årsak</span>
+        <span *ngIf="modalComponent.data.flags.incident" class="badge bg-info">Hendelse</span>
+        <span *ngIf="modalComponent.data.flags.consequence" class="badge bg-danger">Konsekvens</span>
         &nbsp;
         <span *ngIf="!!modalComponent.data.what">{{ modalComponent.data.what }}</span>
         <span *ngIf="!modalComponent.data.what" class="text-muted">Mangler hva</span>

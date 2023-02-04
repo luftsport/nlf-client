@@ -1,7 +1,7 @@
 <span *ngIf="config">
   <span
   *ngIf="badge"
-  class="badge badge-{{ config[activity].observation.state[state]['badge'] }}"
+  class="badge bg-{{ config[activity].observation.state[state]['badge'] }}"
   placement="bottom"
   container="body"
   [ngbTooltip]="config[activity].observation.state[state]['descr']">

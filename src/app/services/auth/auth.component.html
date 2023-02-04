@@ -51,7 +51,7 @@
 
         <a (click)="loading=!loading" href="{{ ENV._auth_service }}?client_id={{ ENV._client_id }}&response_type={{ ENV._response_type }}&scope={{ ENV._scope }}&shebang={{ ENV._shebang }}&redirect_uri={{ _return_uri }}" class="btn btn-lg btn-primary btn-block" type="submit">
           <span *ngIf="!loading">
-            <fa-icon icon="lock"></fa-icon> Logg inn med NLF Auth
+            <fa-icon [icon]="faLock"></fa-icon> Logg inn med NLF Auth
           </span>
           <span *ngIf="loading">
             <nlf-ui-component-spinner size="3"></nlf-ui-component-spinner><p>Authenticating, please wait....</p>
@@ -67,7 +67,7 @@
 
         <li class="list-group-item">
 
-          <!-- MESSAGES 
+          <!-- MESSAGES
           <div *ngIf="ENV.production" class="alert alert-warning" role="alert">
             <strong>Fallskjerm</strong> OBSREG er tilgjengelig via <a href="https://ors.nlf.no">ors.nlf.no</a>
           </div>
@@ -77,12 +77,12 @@
           <div *ngIf="!!status">
             <div *ngIf=" status._status && status.message.mongo > 0" class="alert alert-success" role="alert">
               <strong>
-                <fa-icon icon="check"></fa-icon>Status
+                <fa-icon [icon]="faCheck"></fa-icon> Status
               </strong> alle systemer fungerer som normalt
             </div>
             <div *ngIf="!status._status || status.message.mongo < 1" class="alert alert-danger" role="alert">
               <strong>
-                <fa-icon icon="exclamation-triangle"></fa-icon>Status
+                <fa-icon [icon]="faExclamationTriangle"></fa-icon>Status
               </strong> det er problemer med noen systemer og det jobbes for å løse det. Du kan forsøke å <a href="{{_return_uri}}">refreshe</a> om litt.
             </div>
           </div>

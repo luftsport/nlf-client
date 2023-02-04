@@ -21,6 +21,8 @@ import { forkJoin } from 'rxjs';
 import { ComponentCanDeactivate } from 'app/pending-changes.guard';
 import { HostListener } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { faSave, faQuestion, faFlag, faInfoCircle, faHistory, faFile, faExchange, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faFileAlt } from '@fortawesome/free-regular-svg-icons';
 import 'rxjs/add/operator/takeWhile';
 
 @Component({
@@ -53,6 +55,15 @@ export class NlfOrsSeilflyEditorComponent implements OnInit, OnDestroy, Componen
   public userData: ApiUserDataSubjectItem;
   private subject_is_alive: boolean = true;
 
+  faSave = faSave;
+  faQuestion = faQuestion;
+  faFlag = faFlag;
+  faInfoCircle = faInfoCircle;
+  faHistory = faHistory;
+  faFile = faFile;
+  faExchange = faExchange;
+  faUpload = faUpload;
+  faFileAlt = faFileAlt;
 
   constructor(
     private route: ActivatedRoute,

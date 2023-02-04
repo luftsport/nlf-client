@@ -4,19 +4,19 @@
 
     <!--
     <button [routerLink]="['/ors', 'fallskjerm', 'dashboard']" type="button" class="btn btn-sm btn-link pull-right mx-1">
-      <fa-icon icon="dashboard"></fa-icon> Dash
+      <fa-icon [icon]="faDashboard"></fa-icon> Dash
     </button>
     <button [routerLink]="['/ors', 'fallskjerm', 'stats']" type="button" class="btn btn-sm btn-link pull-right mx-1">
-      <fa-icon icon="pie-chart"></fa-icon> Stats
+      <fa-icon [icon]="faPieChart"></fa-icon> Stats
     </button>
   -->
 
     <button [routerLink]="['/ors', 'fallskjerm', 'search']" type="button" class="btn btn-sm btn-primary pull-right mx-1">
-      <fa-icon icon="search"></fa-icon> Søk
+      <fa-icon [icon]="faSearch"></fa-icon> Søk
     </button>
 
     <button *ngIf="!!user_settings && user_settings?.settings?.default_activity==109" [routerLink]="['/ors', 'fallskjerm', 'dashboard', user_settings?.settings?.default_discipline]" type="button" class="btn btn-sm btn-primary pull-right mx-1">
-      <fa-icon icon="dashboard"></fa-icon> Dashboard
+      <fa-icon [icon]="faDashboard"></fa-icon> Dashboard
     </button>
 
     <nlf-ors-go activity="fallskjerm" class="pull-right mx-1" title="Hurtigvalg, skriv inn OBSREG nummer etterfulgt av enter for å gå til OBSREG"></nlf-ors-go>
@@ -24,7 +24,7 @@
     <span class="input-group input-group-sm pull-right mx-1" style="max-width: 100px !important">
       <div class="input-group-prepend bg-transparent">
         <span class="input-group-text bg-transparent">
-          <fa-icon icon="hashtag" class="text-secondary"></fa-icon>
+          <fa-icon [icon]="faHashtag" class="text-secondary"></fa-icon>
         </span>
       </div>
       <input id="orsGO" #orsGO type="search" (keyup.enter)="orsGOTO(orsGO.value)" class="form-control form-control-sm border-left-0">
@@ -44,13 +44,13 @@
 
     <div class="col-md-6 col-xs-12 overflow-auto">
       <div class="nlf-ors-toolbar">
-        <fa-icon icon="user" class="text-secondary"></fa-icon> Mine observasjoner
+        <fa-icon [icon]="faUser" class="text-secondary"></fa-icon> Mine observasjoner
       </div>
       <nlf-ors-self-table activity="fallskjerm"></nlf-ors-self-table>
     </div>
     <div class="col-md-6 col-xs-12 overflow-auto">
       <div class="nlf-ors-toolbar">
-        <fa-icon icon="exchange" class="text-secondary"></fa-icon> Til min behandling
+        <fa-icon [icon]="faExchange" class="text-secondary"></fa-icon> Til min behandling
       </div>
       <nlf-ors-todo-table activity="fallskjerm"></nlf-ors-todo-table>
     </div>
@@ -60,7 +60,7 @@
 
         <div class="card mb-3 mr-1">
           <h5 class="card-header">
-            <fa-icon icon="user"></fa-icon>Mine observasjoner</h5>
+            <fa-icon [icon]="faUser"></fa-icon>Mine observasjoner</h5>
           <div class="card-body table-responsive" style="padding: 0;">
 
           </div>
@@ -68,7 +68,7 @@
 
         <div class="card mb-3 ml-1">
           <h5 class="card-header">
-            <fa-icon icon="random"></fa-icon>Til min behandling</h5>
+            <fa-icon [icon]="faRandom"></fa-icon>Til min behandling</h5>
           <div class="card-body" style="padding: 0;">
             <nlf-ors-todo-table  activity="fallskjerm"></nlf-ors-todo-table>
           </div>
@@ -91,7 +91,7 @@
   <div class="row">
     <div class="col-md-12 col-xs-12 overflow-auto">
       <div class="nlf-ors-toolbar">
-        <fa-icon icon="list" class="text-secondary"></fa-icon> Alle observasjoner
+        <fa-icon [icon]="faList" class="text-secondary"></fa-icon> Alle observasjoner
       </div>
       <nlf-ors-all-table activity="fallskjerm"></nlf-ors-all-table>
     </div>

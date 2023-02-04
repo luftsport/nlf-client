@@ -1,5 +1,5 @@
 <div fxFlex="100" >
-  
+
   <!--
   <agm-map *ngIf="dataReady" (mapReady)="mapReady($event)" (zoomChange)="zoomChanged($event)" (boundsChange)="debouncedBoundsChange($event)" [latitude]="geo.coords.latitude" [longitude]="geo.coords.longitude" [zoom]="zoom">
 
@@ -22,7 +22,7 @@
         </agm-info-window>
       </agm-marker>
 
-      
+
     </span>
   </agm-map>
   -->
@@ -44,7 +44,7 @@
 
   <div class="modal-header">
     <h4 class="modal-title">
-      <span [ngClass]="polyInfo.category=='DANGER' ? 'badge-danger':'badge-secondary'" class="badge">
+      <span [ngClass]="polyInfo.category=='DANGER' ? 'bg-danger':'bg-secondary'" class="badge">
         {{ polyInfo.category }}
       </span>
       {{ polyInfo.name }}

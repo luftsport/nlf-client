@@ -175,7 +175,7 @@
 
         <div class="form-row">
           <h5>
-            <span class="badge badge-info lead">Engine #{{ idx+1 }}</span>
+            <span class="badge bg-info lead">Engine #{{ idx+1 }}</span>
             <span *ngIf="last && !disabled" (click)="delEngine(idx)" class="pointer mx-3">
               <fa name="close"></fa>
             </span>
@@ -261,7 +261,7 @@
 
         <div class="form-row">
           <h5>
-            <span class="badge badge-info lead">Propeller #{{ idx+1 }} </span>
+            <span class="badge bg-info lead">Propeller #{{ idx+1 }} </span>
             <span *ngIf="last && !disabled" (click)="delPropeller(idx)" class="pointer mx-3">
               <fa name="close"></fa>
             </span>
@@ -365,7 +365,7 @@
         Historikk
       </p>
       <p>
-        <span class="badge badge-secondary">v{{ aircraft._version }}</span> {{ aircraft._updated | date:'yyyy-MM-dd HH:mm:ss' }}
+        <span class="badge bg-secondary">v{{ aircraft._version }}</span> {{ aircraft._updated | date:'yyyy-MM-dd HH:mm:ss' }}
         <nlf-resolve-lungo-person *ngIf="!!aircraft.updated_by" [person_id]="aircraft.updated_by" link="true"></nlf-resolve-lungo-person>
         <span *ngIf="!aircraft.updated_by">Automatisk</span>
 

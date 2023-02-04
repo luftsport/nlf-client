@@ -35,10 +35,10 @@
           </span>
         </div>
         <div>
-          <span *ngIf="!!p?.data?.years_of_experience" class="mx-1 badge badge-secondary">{{p.data.years_of_experience}} år</span>
-          <span *ngIf="!!p?.data?.total_jumps" class="mx-1 badge badge-secondary">{{p.data.total_jumps}} hopp</span>
-          <span *ngIf="!!p?.data?.jump_type" class="mx-1 badge badge-secondary">{{p.data.jump_type}} hopp</span>
-          <span *ngIf="!!p?.data?.activity && p.data.activity.length>0" class="mx-1 badge badge-secondary">{{p.data.activity | join: '/'}}</span>
+          <span *ngIf="!!p?.data?.years_of_experience" class="mx-1 badge bg-secondary">{{p.data.years_of_experience}} år</span>
+          <span *ngIf="!!p?.data?.total_jumps" class="mx-1 badge bg-secondary">{{p.data.total_jumps}} hopp</span>
+          <span *ngIf="!!p?.data?.jump_type" class="mx-1 badge bg-secondary">{{p.data.jump_type}} hopp</span>
+          <span *ngIf="!!p?.data?.activity && p.data.activity.length>0" class="mx-1 badge bg-secondary">{{p.data.activity | join: '/'}}</span>
         </div>
       </td>
       <td>

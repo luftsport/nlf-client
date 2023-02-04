@@ -156,7 +156,7 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
       iframe: null,
       selectClass: 'highlight',
       selectTemplate: function (item) {
-        return '<macro href="#" data-url="/user/' + item.original.id + '" contenteditable="false" class="badge badge-danger macrolink pointer" id="' + item.original.id + '">@' + item.original.full_name + '</macro>';
+        return '<macro href="#" data-url="/user/' + item.original.id + '" contenteditable="false" class="badge bg-danger macrolink pointer" id="' + item.original.id + '">@' + item.original.full_name + '</macro>';
       },
       menuItemTemplate: function (item) {
         return item.string;
@@ -206,7 +206,7 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
       iframe: null,
       selectClass: 'highlight',
       selectTemplate: function (item) {
-        return '<macro href="#" data-url="/ors/fallskjerm/report/' + item.original.id + '" contenteditable="false" class="badge badge-danger macrolink pointer" id="' + item.original.id + '"> \
+        return '<macro href="#" data-url="/ors/fallskjerm/report/' + item.original.id + '" contenteditable="false" class="badge bg-danger macrolink pointer" id="' + item.original.id + '"> \
         #' + item.original.id + ' ' + item.original.title + ' (fallskjerm)</macro>';
       },
       menuItemTemplate: function (item) {

@@ -1,7 +1,7 @@
 <div class="modal-header">
   <h4 class="modal-title">
     {{ observation._model.type | capitalize }} {{config[observation._model.type]['observation']['app_name']}} #{{ observation.id }}
-    <span *ngIf="ENV._name!='prod'" class="badge badge-danger">{{ ENV._name }}</span>
+    <span *ngIf="ENV._name!='prod'" class="badge bg-danger">{{ ENV._name }}</span>
   </h4>
 
   <button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.dismiss()">
@@ -31,10 +31,10 @@
 
       <dt class="col-sm-3">Annet</dt>
       <dd class="col-sm-9">
-        <div *ngIf="observation.workflow.settings.do_not_process_in_club"><fa-icon icon="ban" class="text-danger"></fa-icon> Behandles ikke i klubb</div>
-        <div *ngIf="!observation.workflow.settings.do_not_process_in_club"><fa-icon icon="check" class="text-success"></fa-icon> Kan behandles i klubb</div>
-        <div *ngIf="observation.workflow.settings.do_not_publish"><fa-icon icon="ban" class="text-danger"></fa-icon> Ikke offentlig når lukket</div>
-        <div *ngIf="!observation.workflow.settings.do_not_publish"><fa-icon icon="check" class="text-success"></fa-icon> Offentlig når lukket</div>
+        <div *ngIf="observation.workflow.settings.do_not_process_in_club"><fa-icon [icon]="faBan" class="text-danger"></fa-icon> Behandles ikke i klubb</div>
+        <div *ngIf="!observation.workflow.settings.do_not_process_in_club"><fa-icon [icon]="faCheck" class="text-success"></fa-icon> Kan behandles i klubb</div>
+        <div *ngIf="observation.workflow.settings.do_not_publish"><fa-icon [icon]="faBan" class="text-danger"></fa-icon> Ikke offentlig når lukket</div>
+        <div *ngIf="!observation.workflow.settings.do_not_publish"><fa-icon [icon]="faCheck" class="text-success"></fa-icon> Offentlig når lukket</div>
       </dd>
       <!--
       <span *ngIf="observation.workflow.settings.do_not_process_in_club">Behandles ikke i klubb</span>
@@ -45,12 +45,12 @@
 
     <dt class="col-sm-3">Opprettet</dt>
     <dd class="col-sm-9">
-      <fa-icon icon="clock-o"></fa-icon>{{ observation._created | amTimeAgo }}, {{ observation._created | date:'yyyy-MM-dd HH:mm' }}
+      <fa-icon [icon]="faClock" [fixedWidth]="true"></fa-icon> {{ observation._created | amTimeAgo }}, {{ observation._created | date:'yyyy-MM-dd HH:mm' }}
     </dd>
 
     <dt class="col-sm-3">Sist endret</dt>
     <dd class="col-sm-9">
-      <fa-icon icon="clock-o"></fa-icon>{{ observation._updated | amTimeAgo }}, {{ observation._updated | date:'yyyy-MM-dd HH:mm' }}
+      <fa-icon [icon]="faClock" [fixedWidth]="true"></fa-icon> {{ observation._updated | amTimeAgo }}, {{ observation._updated | date:'yyyy-MM-dd HH:mm' }}
     </dd>
 
 
@@ -109,7 +109,7 @@
       <dl *ngIf="!!observation.acl_user" class="row">
 
         <dt class="col-sm-4">
-          <fa-icon icon="{{observation.acl_user.r ? 'check' : 'ban'}}" [ngClass]="observation.acl_user.r ? 'text-success' : 'text-danger'"></fa-icon> Read
+          <fa-icon icon="observation.acl_user.r ? faCheck : faBan" [ngClass]="observation.acl_user.r ? 'text-success' : 'text-danger'"></fa-icon> Read
         </dt>
         <dd class="col-sm-8">
           <span *ngIf="!!acl_list">
@@ -118,7 +118,7 @@
         </dd>
 
         <dt class="col-sm-4">
-          <fa-icon icon="{{observation.acl_user.w ? 'check' : 'ban'}}" [ngClass]="observation.acl_user.w ? 'text-success' : 'text-danger'"></fa-icon> Write
+          <fa-icon icon="observation.acl_user.w ? faCheck : faBan" [ngClass]="observation.acl_user.w ? 'text-success' : 'text-danger'"></fa-icon> Write
         </dt>
         <dd class="col-sm-8">
           <span *ngIf="!!acl_list">
@@ -127,7 +127,7 @@
         </dd>
 
         <dt class="col-sm-4">
-          <fa-icon icon="{{observation.acl_user.x ? 'check' : 'ban'}}" [ngClass]="observation.acl_user.x ? 'text-success' : 'text-danger'"></fa-icon> Execute
+          <fa-icon icon="observation.acl_user.x ? faCheck : faBan" [ngClass]="observation.acl_user.x ? 'text-success' : 'text-danger'"></fa-icon> Execute
         </dt>
         <dd class="col-sm-8">
           <span *ngIf="!!acl_list">
@@ -136,7 +136,7 @@
         </dd>
 
         <dt class="col-sm-4">
-          <fa-icon icon="{{observation.acl_user.d ? 'check' : 'ban'}}" [ngClass]="observation.acl_user.d ? 'text-success' : 'text-danger'"></fa-icon> Delete
+          <fa-icon icon="observation.acl_user.d ? faCheck : faBan" [ngClass]="observation.acl_user.d ? 'text-success' : 'text-danger'"></fa-icon> Delete
         </dt>
         <dd class="col-sm-8">
           <span *ngIf="!!acl_list">
@@ -165,7 +165,7 @@
 
   <!--
   <div (click)="isWorkflowTimelineCollapsed = !isWorkflowTimelineCollapsed" class="card-header pointer">
-    <fa-icon icon="random"></fa-icon>
+    <fa-icon [icon]="faRandom"></fa-icon>
     Arbeidsflyt
     <i class="fa fa-fw" [ngClass]="{'fa-angle-down': isWorkflowTimelineCollapsed, 'fa-angle-up': !isWorkflowTimelineCollapsed}"></i>
   </div>

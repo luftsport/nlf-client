@@ -11,6 +11,8 @@ import { ApiHeartbeatService } from 'app/api/api-heartbeat.service';
 import { ApiHeartbeat } from 'app/api/api.interface';
 import { NlfAuthService } from './auth.service';
 import { switchMap } from 'rxjs/operators';
+import { faLock, faCheck, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'nlf-auth',
   templateUrl: './auth.component.html',
@@ -36,6 +38,10 @@ export class NlfAuthComponent implements OnInit {
   // random: number = 0;
 
   modalRef;
+
+  faLock = faLock;
+  faCheck = faCheck;
+  faExclamationTriangle = faExclamationTriangle;
 
   constructor(private route: ActivatedRoute,
     private location: Location,

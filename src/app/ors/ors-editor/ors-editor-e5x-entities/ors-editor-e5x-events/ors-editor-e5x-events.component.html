@@ -6,9 +6,9 @@
   </div>
   <div class="col-md-9">
     <div *ngFor="let event of events; let idx = index">
-      <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="event.attributes.eventType.value" path="E5X.Occurrence.Events.EventType"></nlf-ors-editor-tag-e5x-render>
+      <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="event.attributes.eventType.value" path="E5X.Occurrence.Events.EventType"></nlf-ors-editor-tag-e5x-render>
       &nbsp;
-      <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="event.attributes.phase.value" path="E5X.Occurrence.Events.Phase"></nlf-ors-editor-tag-e5x-render>
+      <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="event.attributes.phase.value" path="E5X.Occurrence.Events.Phase"></nlf-ors-editor-tag-e5x-render>
 
       <fa-icon class="mx-1" [icon]="faEdit" (click)="openModal(modal, idx)"></fa-icon>
       <fa-icon class="mx-1" *ngIf="!disabled" [icon]="faClose" (click)="delete(idx)"></fa-icon>

@@ -78,8 +78,8 @@
   <!-- RATING -->
   <tr *ngIf="!!observation.rating">
     <td>Alvorlighetsgrad</td>
-    <!--<td>{{ observation.rating.actual }} av {{ observation.rating.potential }} <span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body" class="pull-right badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating | nlfOrsRatingCalc }}</span></td>-->
-    <td><span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body" class="badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating | nlfOrsRatingCalc }}</span></td>
+    <!--<td>{{ observation.rating.actual }} av {{ observation.rating.potential }} <span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body" class="pull-right badge bg-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating | nlfOrsRatingCalc }}</span></td>-->
+    <td><span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body" class="badge bg-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating | nlfOrsRatingCalc }}</span></td>
   </tr>
 
   <!-- FLAGG -->
@@ -161,9 +161,9 @@
       <div *ngIf="numberOfInvolved > 0">
         <div *ngFor="let v of observation.involved">
           <div *ngIf="!!v.verdict">
-            <div *ngIf="!!v.verdict.fu" class="badge badge-warning mr-1">Farlig Ukontrollert </div>
-            <div *ngIf="!!v.verdict.ph" class="badge badge-danger mr-1">Permanent Hoppforbud </div>
-            <div *ngIf="!!v.verdict.mh" class="badge badge-danger">Midlertidig Hoppforbud</div>
+            <div *ngIf="!!v.verdict.fu" class="badge bg-warning mr-1">Farlig Ukontrollert </div>
+            <div *ngIf="!!v.verdict.ph" class="badge bg-danger mr-1">Permanent Hoppforbud </div>
+            <div *ngIf="!!v.verdict.mh" class="badge bg-danger">Midlertidig Hoppforbud</div>
           </div>
         </div>
       </div>
