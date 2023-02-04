@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { isObjEmpty } from 'app/interfaces/functions';
 
@@ -17,6 +18,9 @@ export class NlfOrsEditorE5XAcWeatherComponent implements OnInit {
 
   modalRef;
   _isObjectEmpty = isObjEmpty;
+
+  faTimes = faTimes;
+  faCheck = faCheck;
 
   constructor(private modalService: NgbModal) { }
 
