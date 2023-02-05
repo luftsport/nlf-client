@@ -14,6 +14,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 // import { FontAwesomeModule as r, WeatherIconsModule } from 'ngx-icons';
 // Font awesome modle - NOT installed
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FaConfig } from '@fortawesome/angular-fontawesome';
 
 // MAPS
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
@@ -237,4 +238,10 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
   // Dynamic components
   // remove @9 entryComponents: [NlfUserFirstLoginComponent],
 })
-export class NlfSharedModule { }
+export class NlfSharedModule {
+
+  constructor(faConfig: FaConfig) {
+    faConfig.fixedWidth = true;
+  }
+
+}
