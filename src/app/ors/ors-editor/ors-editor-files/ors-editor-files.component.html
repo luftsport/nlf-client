@@ -96,7 +96,6 @@
 
         <!-- UPLOAD PROGRESS -->
         <div class="upload-items">
-          <div *ngIf="uploading">
             <div class="upload-item" *ngFor="let f of ngxfiles; let i = index;">
               <span class="filename">
                 <span>{{ f.name }} ({{ f.id }}) - {{ f.progress?.data?.percentage }}%</span>
@@ -107,7 +106,6 @@
                 <span class="bar" [style.width]="f?.progress?.data?.percentage + '%'"></span>
               </div>
             </div>
-          </div>
         </div>
         <!-- /UPLOAD PROGRESS -->
       </div>

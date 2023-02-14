@@ -334,8 +334,11 @@ export class NlfOrsEditorFilesComponent implements OnInit {
   }
 
   startUpload(): void {
+    
+    
 
     this.ngxfiles.forEach((file, index) => {
+      this.uploading = true;
       let event: UploadInput = {
         type: 'uploadFile',
         url: '/api/v1/files/',
@@ -357,6 +360,8 @@ export class NlfOrsEditorFilesComponent implements OnInit {
 
       this.uploadInput.emit(event);
     });
+
+    this.uploading = false;
 
   }
 
