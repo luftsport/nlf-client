@@ -10,7 +10,7 @@
       <fa-icon [icon]="faLock"></fa-icon> Tilgangskontroll
     </h4>
 
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -63,9 +63,7 @@
       <!--
         <div class="input-group m-3 me-auto col-sm-12">
           <nlf-ors-editor-tag-person [(person)]="new_person" [activity]="model" [fc]="true" [allowAdd]="false"></nlf-ors-editor-tag-person>
-          <div (click)="persons.push(new_person.id);new_person=null" class="input-group-append">
-            <span class="input-group-text" id="basic-addon2"><fa-icon [icon]="faPlus"></fa-icon> Legg til</span>
-          </div>
+          <span class="input-group-text" id="basic-addon2"><fa-icon [icon]="faPlus"></fa-icon> Legg til</span>
         </div>
       -->
     </div>

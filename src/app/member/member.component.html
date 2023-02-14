@@ -14,12 +14,12 @@
       </span>
 
       <!--
-    <button *ngIf="!!query" class="btn btn-primary btn-sm pull-right mx-1" (click)="openModal(saveTemplate)" title="Funksjonen kommer snart" disabled>
+    <button *ngIf="!!query" class="btn btn-primary btn-sm float-end mx-1" (click)="openModal(saveTemplate)" title="Funksjonen kommer snart" disabled>
       <fa-icon [icon]="faSave"></fa-icon> Lagre søk
     </button>
     -->
       <span *ngIf="ENV.production===false && [1505923257, 1476506542, -1957053861, 1536523365].indexOf(userHash(user_data.person_id))>-1"
-        class="float-right d-inline">
+        class="float-end d-inline">
         <nlf-help class="mx-1" key="nlf-member"></nlf-help>
         <a [routerLink]="['/medlem', 'kompetanse']">
           <fa-icon [icon]="faTable"></fa-icon> Medlemsliste
@@ -111,7 +111,7 @@
         <i *ngIf="fed.activity===110" title="Hps" class="nlf nlf-hgpg"></i>
       </span>
     </h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal($event)">
+    <button type="button" class="close float-end" aria-label="Close" (click)="closeModal($event)">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>

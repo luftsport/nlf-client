@@ -3,7 +3,7 @@
   <!-- BASIC INFO -->
   <div class="bg-light p-1 mt-3">
     <h4>Luftfartøydata</h4>
-    <div class="form-row mt-3">
+    <div class="row mt-3">
 
       <div class="col-md-2 col-sm-6">
         <div class="form-group">
@@ -31,7 +31,7 @@
         </div>
       </div>
     </div>
-    <div class="form-row">
+    <div class="row">
       <div class="col-md-4 col-sm-6">
         <div class="form-group">
           <label for="callsign">Model</label>
@@ -58,7 +58,7 @@
   <div class="bg-light p-1 mt-3">
     <h4>Ytterligere data</h4>
   </div>
-  <div class="form-row">
+  <div class="row">
 
     <div class="col-md-4 col-sm-6">
       <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.attributes.stateOfRegistry.value" path="E5X.Occurrence.Aircraft.StateOfRegistry" id="StateOfRegistry"></nlf-ors-editor-tag-e5x>
@@ -72,7 +72,7 @@
     </div>
   </div>
 
-  <div class="form-row">
+  <div class="row">
     <div class="col-md-6 col-sm-12">
       <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.attributes.manufacturerModel.value" path="E5X.Occurrence.Aircraft.ManufacturerModel" id="ManufacturerModel"></nlf-ors-editor-tag-e5x>
     </div>
@@ -81,7 +81,7 @@
     </div>
   </div>
 
-  <div class="form-row">
+  <div class="row">
     <div class="col-md-6 col-sm-12">
       <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.attributes.aircraftCategory.value" path="E5X.Occurrence.Aircraft.AircraftCategory" id="AircraftCategory"></nlf-ors-editor-tag-e5x>
     </div>
@@ -91,7 +91,7 @@
   </div>
 
 
-  <div class="form-row">
+  <div class="row">
     <div class="col-md-3 col-sm-12">
       <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.attributes.massGroup.value" path="E5X.Occurrence.Aircraft.MassGroup" id="MassGroup"></nlf-ors-editor-tag-e5x>
     </div>
@@ -106,14 +106,14 @@
     </div>
   </div>
 
-  <div class="form-row">
+  <div class="row">
     <div class="col-md-12 col-sm-12">
       <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.attributes.operator.value" path="E5X.Occurrence.Aircraft.Operator" id="Operator"></nlf-ors-editor-tag-e5x>
     </div>
   </div>
 
 
-  <div class="form-row bg-info p-2">
+  <div class="row bg-info p-2 mt-3">
     <div class="col-md-6 col-sm-12">
       <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.attributes.aircraftTotalTime.value" path="E5X.Occurrence.Aircraft.AircraftTotalTime" id="AircraftTotalTime"></nlf-ors-editor-tag-e5x>
     </div>
@@ -166,14 +166,14 @@
             timeSinceNew: { unit: 'Hour(s)', value: undefined },
             timeSinceOverhaul: { unit: 'Hour(s)', value: undefined },
   -->
-  <div class="form-row">
+  <div class="row">
 
     <div class="col-md-6 col-sm-12">
 
 
       <div class="bg-light p-2 mb-3" *ngFor="let engine of e5x.entities.engine; let idx = index; let last = last">
 
-        <div class="form-row">
+        <div class="row">
           <h5>
             <span class="badge bg-info lead">Engine #{{ idx+1 }}</span>
             <span *ngIf="last && !disabled" (click)="delEngine(idx)" class="pointer mx-3">
@@ -182,7 +182,7 @@
           </h5>
         </div>
 
-        <div class="form-row col-md-12">
+        <div class="row col-md-12">
           <!-- ENGINE INFO -->
           <div class="col-md-12">
             <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.entities.engine[idx].attributes.engineSerialNumber.value" path="E5X.Occurrence.Aircraft.Engine.EngineSerialNumber" id="EngineSerialNumber">
@@ -200,7 +200,7 @@
           </div>
         </div>
         <!-- INSPECTION date, time, cycles-->
-        <div class="form-row">
+        <div class="row">
           <div class="col-md-4">
             <div class="form-group">
               <label for="DateOfManufacturing">Date Of Manufacturing</label>
@@ -220,7 +220,7 @@
             </div>
           </div>
         </div>
-        <div class="form-row bg-info">
+        <div class="row bg-info">
 
           <div class="col-md-6">
             <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.entities.engine[idx].attributes.cyclesSinceNew.value" path="E5X.Occurrence.Aircraft.Engine.CyclesSinceNew" id="CyclesSinceNew">
@@ -249,9 +249,11 @@
         </div>
 
       </div>
-      <button [disabled]="disabled" (click)="addEngine()" class="btn btn-primary btn-block my-3">
-        <fa-icon [icon]="faPlus"></fa-icon> Legg til motor
-      </button>
+      <div class="d-grid">
+        <button [disabled]="disabled" (click)="addEngine()" class="btn btn-primary my-3">
+          <fa-icon [icon]="faPlus"></fa-icon> Legg til motor
+        </button>
+      </div>
       <code>{{ engine | json }}</code>
     </div>
     <!--//END ENGINE-->
@@ -259,7 +261,7 @@
 
       <div class="bg-light p-2 mb-3" *ngFor="let propeller of e5x.entities.propeller; let idx = index; let last = last">
 
-        <div class="form-row">
+        <div class="row">
           <h5>
             <span class="badge bg-info lead">Propeller #{{ idx+1 }} </span>
             <span *ngIf="last && !disabled" (click)="delPropeller(idx)" class="pointer mx-3">
@@ -267,7 +269,7 @@
             </span>
           </h5>
         </div>
-        <div class="form-row">
+        <div class="row">
           <!-- PROP INFO -->
           <div class="col-md-12">
             <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.entities.propeller[idx].attributes.propSerial.value" path="E5X.Occurrence.Aircraft.Propeller.PropSerial" id="PropSerial">
@@ -302,7 +304,7 @@
             </div>
           </div>
 
-          <div class="form-row bg-info">
+          <div class="row bg-info">
             <div class="col-md-6">
               <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="onChange($event)" [(items)]="e5x.entities.propeller[idx].attributes.cyclesSinceNew.value" path="E5X.Occurrence.Aircraft.Propeller.CyclesSinceNew" id="CyclesSinceNew">
               </nlf-ors-editor-tag-e5x>
@@ -339,9 +341,11 @@
 
         </div>
       </div>
-      <button [disabled]="disabled" (click)="addPropeller()" class="btn btn-primary btn-block my-3">
-        <fa-icon [icon]="faPlus"></fa-icon> Legg til propell
-      </button>
+      <div class="d-grid">
+        <button [disabled]="disabled" (click)="addPropeller()" class="btn btn-primary my-3">
+          <fa-icon [icon]="faPlus"></fa-icon> Legg til propell
+        </button>
+      </div>
 
       <code>{{ propeller | json }}</code>
     </div>

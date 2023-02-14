@@ -83,7 +83,7 @@
       <fa-icon [icon]="faMapMarker"></fa-icon> {{ modalValue?.nickname }} <span class="ms-2 small"
         *ngIf="modalIndex==0">default</span>
     </h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -110,7 +110,7 @@
     </div>
 
     <div class="col-xs-12">
-      <div class="form-row w-100">
+      <div class="row w-100">
         <div class="form-group w-100">
           <label for="locations-id">Søk etter stedsnavn</label>
           <location-select [(locationItem)]="modalValue" [clearable]="false" (change)="onLocationSelected($event)"
@@ -118,7 +118,7 @@
         </div>
       </div>
 
-      <div class="form-row">
+      <div class="row">
         <div class="form-group col-md-6">
           <label for="nickname">Navn</label>
           <input class="form-control" type="string" id="nickname" [(ngModel)]="modalValue.nickname">
@@ -136,7 +136,7 @@
 
       </div>
 
-      <div class="form-row w-100">
+      <div class="row w-100">
         <div class="form-group w-100">
           <label for="icao">Søk etter flyplass</label>
           <nlf-ors-editor-tag-airport [(airport)]="modalValue.icao" id="icao"></nlf-ors-editor-tag-airport>
@@ -154,7 +154,7 @@
     -->
 
       <!--
-      <div class="form-row">
+      <div class="row">
         <div class="form-group col-md-4">
           <label for="municipality">Kommune</label>
           <input class="form-control" type="string" id="municipality" [(ngModel)]="modalValue.municipality">

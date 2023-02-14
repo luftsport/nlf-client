@@ -16,11 +16,11 @@
       </li>
     </span>
 
-    <button *ngIf="!!query" class="btn btn-primary btn-sm pull-right mx-1" (click)="openModal(saveTemplate)" title="Funksjonen kommer snart" disabled>
+    <button *ngIf="!!query" class="btn btn-primary btn-sm float-end mx-1" (click)="openModal(saveTemplate)" title="Funksjonen kommer snart" disabled>
       <fa-icon [icon]="faSave"></fa-icon> Lagre søk
     </button>
 
-    <nlf-help class="pull-right mx-1" key="ors-search-fallskjerm"></nlf-help>
+    <nlf-help class="float-end mx-1" key="ors-search-fallskjerm"></nlf-help>
 
   </div>
 </header>
@@ -32,18 +32,18 @@
       <label class="lead">
         <fa-icon [icon]="faFilter"></fa-icon> Filter
       </label>
-      <div class="form-row">
+      <div class="row">
         <label>Fritekst:</label>
         <input placeholder="Fritekst" class="form-control" type="text" (ngModelChange)="debouncedUpdate()" [(ngModel)]="text">
       </div>
 
-      <div class="form-row">
+      <div class="row">
         <label>Id:</label>
         <input placeholder="Id" class="form-control" type="text" (ngModelChange)="debouncedUpdate()" [(ngModel)]="filter['id']">
       </div>
 
 
-      <div class="form-row mt-3">
+      <div class="row mt-3">
         <button (click)="reset()" class="btn btn-secondary btn-block">Reset filter</button>
       </div>
 
@@ -72,7 +72,7 @@
 
         <a [routerLink]="['/ors', activity,'report', r.id]">#{{ r.id }} - <span *ngIf="!!r.rating" class="mx-1 badge bg-{{r.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ r.rating | nlfOrsRatingCalc }}</span> {{ r.tags | join: '/'}}</a>
 
-        <span class="pull-right mx-1">
+        <span class="float-end mx-1">
           <nlf-resolve-observation-state [activity]="r._model.type" [state]="r.workflow.state" icon="true"></nlf-resolve-observation-state>
 
         </span>
@@ -101,7 +101,7 @@
     <h4 class="modal-title pull-left">
       Lagre søket
     </h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>

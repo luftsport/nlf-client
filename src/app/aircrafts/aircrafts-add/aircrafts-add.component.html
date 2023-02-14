@@ -8,7 +8,7 @@
     <h4 class="modal-title pull-left">
       Add Aircraft
     </h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -21,9 +21,7 @@
         <div class="input-group mb-3">
           <input (keyup.enter)="checkAircraft()" [(ngModel)]="callsign" type="text" class="form-control" placeholder="Regnummer"
             aria-label="Regnummer" aria-describedby="Regnummer">
-          <div class="input-group-append">
-            <button (click)="checkAircraft()" class="btn btn-primary" id="Regnummer">Check</button>
-          </div>
+          <button (click)="checkAircraft()" class="btn btn-primary" id="Regnummer">Check</button>
         </div>
       </div>
     </div>
@@ -36,7 +34,7 @@
       <!-- ADD A AIRCRAFT -->
       <div class="col-md-12 col-sm-12" *ngIf="aircraft_listing.length === 0">
 
-        <div class="form-row">
+        <div class="row">
           <div class="col-md-6 col-sm-12">
             <div class="form-group">
               <label for="type">Aircraft Type</label>
@@ -57,7 +55,7 @@
           </div>
         </div>
 
-        <div class="form-row">
+        <div class="row">
 
           <div class="col-md-12 col-sm-12">
             <div class="form-group">
@@ -66,7 +64,7 @@
             </div>
           </div>
         </div>
-        <div class="form-row">
+        <div class="row">
           <div class="col-md-12 col-sm-12">
             <div class="form-group">
               <label for="model">Model</label>
@@ -75,7 +73,7 @@
           </div>
         </div>
 
-        <div class="form-row">
+        <div class="row">
           <div class="col-md-12 col-sm-12">
             <div class="form-group">
               <label for="msn">Serial</label>
@@ -84,7 +82,7 @@
           </div>
         </div>
 
-        <div class="form-row">
+        <div class="row">
           <button (click)="addAircraft()" class="btn btn-primary btn-block">
             <fa-icon [icon]="faPlus"></fa-icon>Add
           </button>

@@ -15,7 +15,7 @@
           observation.rating | nlfOrsRatingCalc }}</span>
       </span>
       <!-- WORKFLOW STATE -->
-      <span class="pull-right">
+      <span class="float-end">
 
         <!-- SAVE -->
         <span *ngIf="!!observation">
@@ -84,7 +84,7 @@
 
         <!-- TITLE -->
         <div class="nlf-ors-toolbar">
-          Tittel <nlf-help class="pull-right" key="ors-editor-motorfly-title"></nlf-help>
+          Tittel <nlf-help class="float-end" key="ors-editor-motorfly-title"></nlf-help>
         </div>
       </div>
 
@@ -104,7 +104,7 @@
     <div class="row my-3 d-block d-sm-none">
       <div class="col-xs-12 col-md-12">
         <div class="nlf-ors-toolbar">
-          Vedlegg ({{ observation.files.length }}) <nlf-help class="pull-right" key="ors-editor-files"></nlf-help>
+          Vedlegg ({{ observation.files.length }}) <nlf-help class="float-end" key="ors-editor-files"></nlf-help>
         </div>
       </div>
       <div class="col-xs-12 col-md-12 py-3 bg-light table-responsive overflow-auto">
@@ -149,9 +149,9 @@
     <div class="row my-3">
       <!-- WHEN -->
       <div class="col-sm-12 col-md-4">
-        <div class="card">
+        <div class="card h-100">
           <div class="card-header">
-            <h5>Tidspunkt [UTC] <nlf-help class="pull-right" key="ors-editor-when"></nlf-help>
+            <h5>Tidspunkt [UTC] <nlf-help class="float-end" key="ors-editor-when"></nlf-help>
             </h5>
           </div>
           <div class="card-body">
@@ -163,9 +163,9 @@
 
       <!-- TYPE -->
       <div class="col-sm-12 col-md-4">
-        <div class="card">
+        <div class="card h-100">
           <div class="card-header">
-            <h5>Type <nlf-help class="pull-right" key="ors-editor-motorfly-type"></nlf-help>
+            <h5>Type <nlf-help class="float-end" key="ors-editor-motorfly-type"></nlf-help>
             </h5>
           </div>
           <div class="card-body">
@@ -177,9 +177,9 @@
 
       <!-- FLAGS-->
       <div class="col-sm-12 col-md-4">
-        <div class="card">
+        <div class="card h-100">
           <div class="card-header">
-            <h5>Flagg <nlf-help class="pull-right" key="ors-editor-motorfly-flags"></nlf-help>
+            <h5>Flagg <nlf-help class="float-end" key="ors-editor-motorfly-flags"></nlf-help>
             </h5>
           </div>
           <div class="card-body">
@@ -197,7 +197,7 @@
     <!-- NARRATIVE -->
     <div class="row mt-3">
       <div class="nlf-ors-toolbar">
-        Hva skjedde? <nlf-help class="pull-right" key="ors-e5x-narrative"></nlf-help>
+        Hva skjedde? <nlf-help class="float-end" key="ors-e5x-narrative"></nlf-help>
       </div>
     </div>
     <div class="row">
@@ -219,7 +219,7 @@
     <div class="row my-3 d-none d-sm-block">
       <div class="col-xs-12 col-md-12">
         <div class="nlf-ors-toolbar">
-          Vedlegg ({{ observation.files.length }}) <nlf-help class="pull-right" key="ors-editor-files"></nlf-help>
+          Vedlegg ({{ observation.files.length }}) <nlf-help class="float-end" key="ors-editor-files"></nlf-help>
         </div>
       </div>
       <div class="col-xs-12 col-md-12 py-3 bg-light table-responsive overflow-auto">
@@ -234,7 +234,7 @@
         <div class="card">
           <div class="card-header">
             <h5>Vedlegg ({{ observation.files.length }})
-              <nlf-help class="pull-right" key="ors-editor-files"></nlf-help>
+              <nlf-help class="float-end" key="ors-editor-files"></nlf-help>
             </h5>
           </div>
           <div class="card-body table-responsive">
@@ -253,8 +253,8 @@
       <div class="row">
         <div class="nlf-ors-toolbar">
           Fartøy
-          <nlf-help class="pull-right" key="ors-e5x-aircrafts"></nlf-help>
-          <!-- @TODO show modal w/ac information/summary <button class="pull-right btn btn-link">preview</button> -->
+          <nlf-help class="float-end" key="ors-e5x-aircrafts"></nlf-help>
+          <!-- @TODO show modal w/ac information/summary <button class="float-end btn btn-link">preview</button> -->
         </div>
       </div>
       <div class="row">
@@ -266,7 +266,7 @@
       <!--
     <div class="nlf-ors-toolbar">
       Occurrence
-      <nlf-help class="pull-right" key="ors-editor-e5x-occurrence"></nlf-help>
+      <nlf-help class="float-end" key="ors-editor-e5x-occurrence"></nlf-help>
     </div>
     <div class="col-md-12 col-sm-12">
       <nlf-ors-editor-e5x-occurrence [disabled]="!observation.acl_user.w" [modal]="false"></nlf-ors-editor-e5x-occurrence>
@@ -277,7 +277,7 @@
       <!--
     <div class="nlf-ors-toolbar">
       Klassifisering
-      <nlf-help class="pull-right" key="ors-editor-e5x-classification"></nlf-help>
+      <nlf-help class="float-end" key="ors-editor-e5x-classification"></nlf-help>
     </div>
     <div class="col-md-12 col-sm-12 bg-danger">
       <nlf-ors-editor-e5x-classification [disabled]="!observation.acl_user.w" (change)="update()" [(attr)]="observation.occurrence.attributes" [modal]="false"></nlf-ors-editor-e5x-classification>
@@ -324,7 +324,7 @@
     <div class="row my-3">
       <div class="col-xs-12 col-md-12">
         <div class="nlf-ors-toolbar">
-          Narrative <nlf-help class="pull-right" key="ors-e5x-narrative"></nlf-help>
+          Narrative <nlf-help class="float-end" key="ors-e5x-narrative"></nlf-help>
         </div>
       </div>
       <div class="col-xs-12 col-md-12 bg-light">
@@ -339,7 +339,7 @@
     <div class="row my-3">
       <div class="col-xs-12 col-md-12">
         <div class="nlf-ors-toolbar">
-          Andre Involverte <nlf-help class="pull-right" key="ors-editor-involved"></nlf-help>
+          Andre Involverte <nlf-help class="float-end" key="ors-editor-involved"></nlf-help>
         </div>
       </div>
       <div class="col-xs-12 col-md-12">
@@ -354,8 +354,8 @@
       <div class="col-xs-12 col-md-12">
         <div class="nlf-ors-toolbar nlf-ors-block-bottom">
           Forløpet
-          <nlf-help class="pull-right" key="ors-editor-components"></nlf-help>
-          <button (click)="openPreview(modalPreview, 'components', 'Forløpet')" class="pull-right btn btn-link">
+          <nlf-help class="float-end" key="ors-editor-components"></nlf-help>
+          <button (click)="openPreview(modalPreview, 'components', 'Forløpet')" class="float-end btn btn-link">
             preview
           </button>
         </div>
@@ -371,7 +371,7 @@
     <div class="row my-3">
       <div class="nlf-ors-toolbar nlf-ors-block-bottom">
         Været
-        <nlf-help class="pull-right" key="ors-editor-weather"></nlf-help>
+        <nlf-help class="float-end" key="ors-editor-weather"></nlf-help>
       </div>
       <div class="col-xs-12 col-md-6">
         <nlf-ors-editor-met></nlf-ors-editor-met>
@@ -394,7 +394,7 @@
     <!-- RATING -->
     <div class="row mt-3">
       <div class="nlf-ors-toolbar">
-        Alvorlighetsgrad <nlf-help class="pull-right" key="ors-editor-motorfly-rating"></nlf-help>
+        Alvorlighetsgrad <nlf-help class="float-end" key="ors-editor-motorfly-rating"></nlf-help>
       </div>
     </div>
     <div class="row">
@@ -408,7 +408,7 @@
     <div class="row">
       <div class="nlf-ors-toolbar">
         Vurdering
-        <nlf-help class="pull-right" key="ors-editor-ask"></nlf-help>
+        <nlf-help class="float-end" key="ors-editor-ask"></nlf-help>
       </div>
     </div>
 
@@ -436,7 +436,7 @@
       <div class="row">
         <div class="nlf-ors-toolbar nlf-ors-block-bottom">
           Tiltak
-          <nlf-help class="pull-right" key="ors-editor-motorfly-actions"></nlf-help>
+          <nlf-help class="float-end" key="ors-editor-motorfly-actions"></nlf-help>
         </div>
       </div>
       <div class="row">
@@ -453,7 +453,7 @@
     <div class="row">
       <div class="nlf-ors-toolbar">
         Visning av felter
-        <nlf-help class="pull-right" key="ors-editor-ask"></nlf-help>
+        <nlf-help class="float-end" key="ors-editor-ask"></nlf-help>
       </div>
     </div>
     <div class="col-xs-12 col-md-12 py-2">
@@ -462,12 +462,12 @@
         forenklet og redusert antall felter. Endringene er persistente for din bruker også om du har en annen rolle i arbeidsflyten eller logger inn fra en annen enhet.
       </p>
       <ng-container *ngIf="!showSimpleView()">
-        <div class="btn-toolbar pull-right">
+        <div class="btn-toolbar float-end">
           <button (click)="toggleSimpleView()" class="btn btn-primary">Vis forenklet skjema</button>
         </div>
       </ng-container>
       <ng-container *ngIf="showSimpleView()">
-        <div class="btn-toolbar pull-right">
+        <div class="btn-toolbar float-end">
           <button (click)="toggleSimpleView()" class="btn btn-primary">Vis alle felter</button>
         </div>
       </ng-container>
@@ -480,7 +480,7 @@
         <ng-container *ngIf="observation.workflow.state=='draft'">Innsending</ng-container>
         <ng-container *ngIf="['draft', 'withdrawn'].indexOf(observation.workflow.state)==-1">Behandling</ng-container>
 
-        <nlf-help class="pull-right" key="ors-editor-workflow"></nlf-help>
+        <nlf-help class="float-end" key="ors-editor-workflow"></nlf-help>
       </div>
       <!-- bg-secondary text-white-->
       <div class="col-xs-12 col-md-12 py-2">
@@ -493,7 +493,7 @@
               <nlf-help key="ors-editor-workflow"></nlf-help>
             </span>
           </p>
-          <div class="btn-toolbar pull-right">
+          <div class="btn-toolbar float-end">
             <button (click)="openWorkflow()" class="btn btn-danger me-2">Gjenåpne</button>
           </div>
         </ng-container>
@@ -511,7 +511,7 @@
           <p>Ønsker du slette/fjerne observasjonen velger du å &quot;trekke tilbake&quot;. Da forsvinner den ute av syne for alle enn deg. Ingen kan forresten slette observasjoner fra systemet, og du kan når som helst komme tilbake og gjenåpne
             den skulle du ombestemme deg.</p>
           <!-- Knapper for innsending -->
-          <div class="btn-toolbar pull-right">
+          <div class="btn-toolbar float-end">
             <button (click)="openWorkflow()" class="btn btn-success me-2">Send OBSREG koordinator</button>
             <button (click)="openWorkflow()" class="btn btn-danger me-2">Trekk tilbake</button>
           </div>
@@ -541,7 +541,7 @@
             </span>
           </p>
 
-          <div class="btn-toolbar pull-right">
+          <div class="btn-toolbar float-end">
             <button (click)="openWorkflow()" class="btn btn-primary me-2">
               <fa-icon [icon]="faExchange"></fa-icon> Behandle #{{observation.id}}
             </button>
@@ -554,7 +554,7 @@
 
     <!-- SEND BTN
     <div class="row my-3">
-      <span class="pointer mx-1 pull-right" *ngIf="observation.acl_user.x && observation.workflow.state=='draft'" (click)="openWorkflow()">
+      <span class="pointer mx-1 float-end" *ngIf="observation.acl_user.x && observation.workflow.state=='draft'" (click)="openWorkflow()">
         <button class="btn btn-success">
           <fa-icon [icon]="faUpload"></fa-icon>Send OBSREG koordinator
         </button>
@@ -588,7 +588,7 @@
   <div class="modal-header">
     <h4 class="modal-title pull-left">
       OBSREG#{{ observation.id }} version {{ observation._version }}</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -606,7 +606,7 @@
   <div class="modal-header">
     <h4 class="modal-title pull-left">
       {{ preview.title }}</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>

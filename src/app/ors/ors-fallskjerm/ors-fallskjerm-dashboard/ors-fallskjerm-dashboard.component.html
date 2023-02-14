@@ -17,12 +17,12 @@
     </span>
 
     <!--
-    <button *ngIf="!!query" class="btn btn-primary btn-sm pull-right mx-1" (click)="openModal(saveTemplate)" title="Funksjonen kommer snart" disabled>
+    <button *ngIf="!!query" class="btn btn-primary btn-sm float-end mx-1" (click)="openModal(saveTemplate)" title="Funksjonen kommer snart" disabled>
       <fa-icon [icon]="faSave"></fa-icon> Lagre søk
     </button>
     -->
-    <nlf-help class="pull-right mx-1" key="ors-dashboard-fallskjerm"></nlf-help>
-    <span class="pull-right mx-1 col-2">
+    <nlf-help class="float-end mx-1" key="ors-dashboard-fallskjerm"></nlf-help>
+    <span class="float-end mx-1 col-2">
       <nlf-org-selector activity="fallskjerm" [(selected)]="discipline_id" (change)="onOrgChange($event)"
         size="sm"></nlf-org-selector>
     </span>
@@ -156,22 +156,18 @@
           <div class="input-group">
             <input #dpFromDate class="form-control" placeholder="yyyy-mm-dd" name="dpFromDate"
               [value]="formatter.format(fromDate)" (input)="fromDate">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button">
-                <fa-icon [icon]="faCalendar"></fa-icon>
-              </button>
-            </div>
+            <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button">
+              <fa-icon [icon]="faCalendar"></fa-icon>
+            </button>
           </div>
         </div>
         <div class="form-group ms-1">
           <div class="input-group">
             <input #dpToDate class="form-control" placeholder="yyyy-mm-dd" name="dpToDate"
               [value]="formatter.format(toDate)" (input)="toDate">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" (click)="datepicker.toggle()" type="button">
-                <fa-icon [icon]="faCalendar"></fa-icon>
-              </button>
-            </div>
+            <button class="btn btn-outline-secondary" (click)="datepicker.toggle()" type="button">
+              <fa-icon [icon]="faCalendar"></fa-icon>
+            </button>
           </div>
         </div>
 

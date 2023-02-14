@@ -3,7 +3,7 @@
     #{{ observation.id }} Arbeidsflyt
 
     <!--<nlf-resolve-observation-tags [tags]="observation.tags" link="true" seperator="/"></nlf-resolve-observation-tags>-->
-    <span class="pull-right">
+    <span class="float-end">
 
       <!--<span class="badge bg-secondary">{{ observation._updated | amTimeAgo }}</span>
             <span class="badge bg-success">{{ observation._version }}</span>-->
@@ -11,7 +11,7 @@
     </span>
 
   </h4>
-  <button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.dismiss()">
+  <button type="button" class="close float-end" aria-label="Close" (click)="activeModal.dismiss()">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>

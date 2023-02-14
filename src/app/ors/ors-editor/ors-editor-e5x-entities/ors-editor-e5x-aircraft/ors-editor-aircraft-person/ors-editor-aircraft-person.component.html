@@ -23,7 +23,7 @@
       {{ callsign }}
       <span *ngIf="!modalValue.person.id && !modalValue.person.tmp_name"> Legg til person</span>
     </h4>
-    <button [disabled]="disabled" type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button [disabled]="disabled" type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -56,7 +56,7 @@
       </div>
 
       <!-- Flytid -->
-      <div class="form-row">
+      <div class="row">
         <div class="form-group col-md-6">
           <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.flightCrewMember.attributes.experienceAllAC.value" path="E5X.Occurrence.Aircraft.FlightCrewMember.ExperienceAllAC" id="ExperienceAllAC"></nlf-ors-editor-tag-e5x>
         </div>
@@ -66,7 +66,7 @@
       </div>
 
       <!-- CURRENCY -->
-      <div class="form-row mb-1">
+      <div class="row mb-1">
         <div class="col-md-6">
           <label>Flight last 90 days [h]</label>
           <input type="number" step="0.5" [disabled]="disabled" [(ngModel)]="modalValue.currency.h90d" class="form-control">
@@ -76,7 +76,7 @@
           <input type="number" step="0.5" [disabled]="disabled" [(ngModel)]="modalValue.currency.h365d" class="form-control">
         </div>
       </div>
-      <div class="form-row mb-1">
+      <div class="row mb-1">
         <div class="col-md-6">
           <label>Landings last 30 days [no]</label>
           <input type="number" step="1" [disabled]="disabled" [(ngModel)]="modalValue.currency.l30d" class="form-control">
@@ -88,7 +88,7 @@
       </div>
 
       <!--CrewMember-->
-      <div class="form-row">
+      <div class="row">
         <div class="form-group col-md-6">
           <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.flightCrewMember.attributes.dutyLast24Hours.value" path="E5X.Occurrence.Aircraft.FlightCrewMember.DutyLast24Hours" id="DutyLast24Hours"></nlf-ors-editor-tag-e5x>
         </div>
@@ -187,7 +187,7 @@
             <fa-icon *ngIf="!disabled" (click)="deleteLicense(idx)" class="ms-2 pointer" [icon]="faTimes"></fa-icon>
           </div>
         </div>
-        <div class="form-row">
+        <div class="row">
           <div class="form-group col-md-8">
             <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.flightCrewMember.entities.flightCrewLicenses[idx].attributes.licenseIssuedBy.value" path="E5X.Occurrence.Aircraft.FlightCrewMember.FlightCrewLicenses.LicenseIssuedBy"
               id="LicenseIssuedBy">
@@ -199,7 +199,7 @@
           </div>
         </div>
 
-        <div class="form-row">
+        <div class="row">
           <div class="form-group col-md-6">
             <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.flightCrewMember.entities.flightCrewLicenses[idx].attributes.licenseType.value" path="E5X.Occurrence.Aircraft.FlightCrewMember.FlightCrewLicenses.LicenseType"
               id="LicenseType">
@@ -212,7 +212,7 @@
         </div>
 
         <!-- RATINGS -->
-        <div class="form-row">
+        <div class="row">
           <div class="form-group col-md-12">
             <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.flightCrewMember.entities.flightCrewLicenses[idx].attributes.ratings.value" path="E5X.Occurrence.Aircraft.FlightCrewMember.FlightCrewLicenses.Ratings" id="Ratings">
             </nlf-ors-editor-tag-e5x>
@@ -228,14 +228,14 @@
             <fa-icon *ngIf="!disabled" (click)="deleteIncapacitation(idx)" class="ms-2 pointer" [icon]="faTimes"></fa-icon>
           </div>
         </div>
-        <div class="form-row">
+        <div class="row">
           <div class="form-group col-md-12">
             <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.incapacitation[idx].attributes.personIncapacitated.value" path="E5X.Occurrence.Aircraft.Incapacitation.PersonIncapacitated" id="PersonIncapacitated">
             </nlf-ors-editor-tag-e5x>
           </div>
         </div>
 
-        <div class="form-row">
+        <div class="row">
           <div class="form-group col-md-12">
             <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.incapacitation[idx].attributes.reasonForIncapacity.value" path="E5X.Occurrence.Aircraft.Incapacitation.ReasonForIncapacity" id="ReasonForIncapacity">
             </nlf-ors-editor-tag-e5x>
