@@ -5,7 +5,7 @@
   placement="bottom"
   container="body"
   [ngbTooltip]="config[activity].observation.state[state]['descr']">
-    <fa-icon *ngIf="!!icon" [icon]="config[activity].observation.state[state]['icon']"></fa-icon>
+    <fa-icon *ngIf="!!icon" [icon]="icons[config[activity].observation.state[state]['icon']]"></fa-icon>
     {{ state | nlfOrsState: activity }}
   </span>
   <span *ngIf="!badge">
