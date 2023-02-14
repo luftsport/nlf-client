@@ -34,7 +34,7 @@
       <!-- ADD A AIRCRAFT -->
       <div class="col-md-12 col-sm-12" *ngIf="aircraft_listing.length === 0">
 
-        <div class="form-row">
+        <div class="row">
           <div class="col-md-6 col-sm-12">
             <div class="form-group">
               <label for="type">Aircraft Type</label>
@@ -55,7 +55,7 @@
           </div>
         </div>
 
-        <div class="form-row">
+        <div class="row">
 
           <div class="col-md-12 col-sm-12">
             <div class="form-group">
@@ -64,7 +64,7 @@
             </div>
           </div>
         </div>
-        <div class="form-row">
+        <div class="row">
           <div class="col-md-12 col-sm-12">
             <div class="form-group">
               <label for="model">Model</label>
@@ -73,7 +73,7 @@
           </div>
         </div>
 
-        <div class="form-row">
+        <div class="row">
           <div class="col-md-12 col-sm-12">
             <div class="form-group">
               <label for="msn">Serial</label>
@@ -82,7 +82,7 @@
           </div>
         </div>
 
-        <div class="form-row">
+        <div class="row">
           <button (click)="addAircraft()" class="btn btn-primary btn-block">
             <fa-icon [icon]="faPlus"></fa-icon>Add
           </button>
