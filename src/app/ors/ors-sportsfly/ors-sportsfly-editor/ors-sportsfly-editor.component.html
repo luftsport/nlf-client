@@ -603,7 +603,7 @@
     <div *ngIf="observation.acl_user.x" class="nlf-toolbar fixed-bottom bg-dark d-none d-md-block">
       <div class="container">
 
-        <span class="float-left" text="Her velger du visning om du vil ha forenklet eller alle felter" class="nav-item">
+        <span class="float-start" text="Her velger du visning om du vil ha forenklet eller alle felter" class="nav-item">
           <ng-container *ngIf="!showSimpleView()">
             <button (click)="toggleSimpleView()" class="btn btn-primary">Vis forenklet skjema</button>
           </ng-container>
@@ -612,7 +612,7 @@
           </ng-container>
         </span>
 
-        <span class="float-right" text="Når du er ferdig med observasjonen så skal du sende den inn.">
+        <span class="float-end" text="Når du er ferdig med observasjonen så skal du sende den inn.">
 
           <span class="me-4 lead">
             <nlf-help key="ors-editor-workflow"></nlf-help>

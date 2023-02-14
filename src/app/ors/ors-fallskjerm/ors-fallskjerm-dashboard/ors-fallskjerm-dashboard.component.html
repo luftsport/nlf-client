@@ -156,22 +156,18 @@
           <div class="input-group">
             <input #dpFromDate class="form-control" placeholder="yyyy-mm-dd" name="dpFromDate"
               [value]="formatter.format(fromDate)" (input)="fromDate">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button">
-                <fa-icon [icon]="faCalendar"></fa-icon>
-              </button>
-            </div>
+            <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button">
+              <fa-icon [icon]="faCalendar"></fa-icon>
+            </button>
           </div>
         </div>
         <div class="form-group ms-1">
           <div class="input-group">
             <input #dpToDate class="form-control" placeholder="yyyy-mm-dd" name="dpToDate"
               [value]="formatter.format(toDate)" (input)="toDate">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" (click)="datepicker.toggle()" type="button">
-                <fa-icon [icon]="faCalendar"></fa-icon>
-              </button>
-            </div>
+            <button class="btn btn-outline-secondary" (click)="datepicker.toggle()" type="button">
+              <fa-icon [icon]="faCalendar"></fa-icon>
+            </button>
           </div>
         </div>
 

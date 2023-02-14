@@ -21,9 +21,7 @@
         <div class="input-group mb-3">
           <input (keyup.enter)="checkAircraft()" [(ngModel)]="callsign" type="text" class="form-control" placeholder="Regnummer"
             aria-label="Regnummer" aria-describedby="Regnummer">
-          <div class="input-group-append">
-            <button (click)="checkAircraft()" class="btn btn-primary" id="Regnummer">Check</button>
-          </div>
+          <button (click)="checkAircraft()" class="btn btn-primary" id="Regnummer">Check</button>
         </div>
       </div>
     </div>

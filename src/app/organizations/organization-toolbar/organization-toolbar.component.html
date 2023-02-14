@@ -47,7 +47,7 @@
 
 
     <!--Note difference between federation, sections/activity and clubs! Section->show all club aircrafts?-->
-    <span *ngIf="lungo.type_id == 14 || lungo.type_id == 19 || lungo.type_id == 2" class="float-right d-inline">
+    <span *ngIf="lungo.type_id == 14 || lungo.type_id == 19 || lungo.type_id == 2" class="float-end d-inline">
 
       <a *ngIf="lungo.id==376" class="me-1" [routerLink]="['/organizations']">
         <fa-icon [icon]="faMap" [fixedWidth]="true"></fa-icon> Kart

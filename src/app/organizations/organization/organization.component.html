@@ -45,7 +45,7 @@
 
 
     <!--Note difference between federation, sections/activity and clubs! Section->show all club aircrafts?-->
-    <span *ngIf="lungo.type_id == 14 || lungo.type_id == 19 || lungo.type_id == 2" class="float-right d-inline">
+    <span *ngIf="lungo.type_id == 14 || lungo.type_id == 19 || lungo.type_id == 2" class="float-end d-inline">
       <a class="me-1" [routerLink]="['/organizations', lungo.id]" routerLinkActive="text-muted text-reset">
         <fa-icon [icon]="faHome"></fa-icon>Hjem
       </a>

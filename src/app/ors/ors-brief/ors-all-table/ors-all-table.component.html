@@ -49,12 +49,10 @@
 
     <th>
       <div class="input-group input-group-sm">
-        <input id="filterIdInput" #filterIdInput type="search" (keyup)="debouncedFilterId($event.target.value)" class="form-control form-control-sm border-right-0">
-        <div class="input-group-append">
-          <span class="input-group-text bg-transparent">
-            <fa-icon [icon]="faTimes" class="text-secondary" (click)="filterId(null);filterIdInput.value=''"></fa-icon>
-          </span>
-        </div>
+        <input id="filterIdInput" #filterIdInput type="search" (keyup)="debouncedFilterId($event.target.value)" class="form-control form-control-sm border-end-0">
+        <span class="input-group-text bg-transparent">
+          <fa-icon [icon]="faTimes" class="text-secondary" (click)="filterId(null);filterIdInput.value=''"></fa-icon>
+        </span>
       </div>
     </th>
 
@@ -62,12 +60,10 @@
 
     <th>
       <div class="input-group input-group-sm">
-        <input id="filterTitleInput" #filterTitleInput type="search" (keyup)="debouncedFilterTitle($event.target.value)" class="form-control form-control-sm border-right-0">
-        <div class="input-group-append">
-          <span class="input-group-text bg-transparent">
-            <fa-icon [icon]="faTimes" class="text-secondary" (click)="filterTitle(null);filterTitleInput.value=''"></fa-icon>
-          </span>
-        </div>
+        <input id="filterTitleInput" #filterTitleInput type="search" (keyup)="debouncedFilterTitle($event.target.value)" class="form-control form-control-sm border-end-0">
+        <span class="input-group-text bg-transparent">
+          <fa-icon [icon]="faTimes" class="text-secondary" (click)="filterTitle(null);filterTitleInput.value=''"></fa-icon>
+        </span>
       </div>
     </th>
 
