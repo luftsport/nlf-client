@@ -80,7 +80,7 @@
       </button>
     -->
 
-        <span class="pull-right">
+        <span class="float-end">
           <!--<fa-icon class="pointer" (click)="openReceipentsModal(recepientModalTemplate, current_acl_users||[])" [icon]="envelope-open-o" [fw]="true"></fa-icon> -->
           <!--<nlf-resolve-avatars [persons]="row.recepients||[]" max="2"></nlf-resolve-avatars>-->
           <span>
@@ -120,7 +120,7 @@
       </div>
       <!--
       <div>
-        <span class="pointer link me-1 pull-right" (click)="openReceipentsModal(recepientModalTemplate, current_acl_users||[])" title="Vis liste over mottakere">vis mottakere</span>
+        <span class="pointer link me-1 float-end" (click)="openReceipentsModal(recepientModalTemplate, current_acl_users||[])" title="Vis liste over mottakere">vis mottakere</span>
       </div>
     -->
 
@@ -155,7 +155,7 @@
             <nlf-resolve-lungo-person [person_id]="row.sender" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
             <span> opprettet observasjonen </span> <a
               [routerLink]="['/ors', observation._model.type, 'report', observation._id, 'version', 1]"></a>
-            <nlf-resolve-observation-state class="pull-right" [activity]="observation._model.type"
+            <nlf-resolve-observation-state class="float-end" [activity]="observation._model.type"
               [state]="row.data.destination" icon="true"></nlf-resolve-observation-state>
           </h2>
 
@@ -214,7 +214,7 @@
             <span *ngIf="row.data.action.indexOf('approve')>-1"> godkjente observasjonen </span>
             <span *ngIf="row.data.action=='reopen'"> gjenåpnet observasjonen </span>
             <span *ngIf="row.data.action=='withdraw'"> trakk tilbake observasjonen </span>
-            <span class="pull-right">
+            <span class="float-end">
               <nlf-resolve-observation-state [activity]="observation._model.type" [state]="row.data.source" icon="true">
               </nlf-resolve-observation-state>
               <fa-icon class="text-secondary mx-1" [icon]="faLongArrowRight"></fa-icon>
@@ -259,7 +259,7 @@
         <h2>
           <nlf-resolve-lungo-person [person_id]="row.sender" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
           lagret observasjonen
-          <span class="pull-right">
+          <span class="float-end">
             <a
               [routerLink]="['/ors', observation._model.type, 'report', observation._id, 'version', row.data.source]">v{{row.data.source}}</a>
             <fa-icon [icon]="faLongArrowRight" class="text-secondary mx-1"></fa-icon>
@@ -282,7 +282,7 @@
         <h2>
           <nlf-resolve-lungo-person [person_id]="row.sender" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
           sendte en purring
-          <span class="pull-right">
+          <span class="float-end">
 
             <span class="badge bg-light mx-1">{{ row.transport }}</span>
           </span>
@@ -318,7 +318,7 @@
         <h2>
           <nlf-resolve-lungo-person [person_id]="row.sender" [link]="false" [avatar]="false"></nlf-resolve-lungo-person>
           sendte <strong>første purring</strong> om tidsfrist
-          <span class="pull-right">
+          <span class="float-end">
 
             <span class="badge bg-light mx-1">{{ row.transport }}</span>
           </span>
@@ -346,7 +346,7 @@
         <h2>
           <nlf-resolve-lungo-person [person_id]="row.sender" [link]="false" [avatar]="false"></nlf-resolve-lungo-person>
           sendte <strong>andre purring</strong> om tidsfrist
-          <span class="pull-right">
+          <span class="float-end">
 
             <span class="badge bg-light mx-1">{{ row.transport }}</span>
           </span>
@@ -375,7 +375,7 @@
         <h2>
           <nlf-resolve-lungo-person [person_id]="row.sender" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
           sendte en melding
-          <span class="pull-right">
+          <span class="float-end">
             <span class="badge bg-light mx-1">{{ row.transport }}</span>
           </span>
         </h2>
@@ -408,7 +408,7 @@
         <h2>
           <nlf-resolve-lungo-person [person_id]="row.sender" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
           sendte observasjonen til LT
-          <span class="pull-right">
+          <span class="float-end">
             <span class="badge bg-light mx-1">{{ row.transport }}</span>
           </span>
         </h2>
@@ -454,7 +454,7 @@
           <nlf-resolve-lungo-person [person_id]="row.sender" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
           &nbsp;<span *ngIf="!!row.data?.message">{{ row.data.message }}</span><span *ngIf="!row.data?.message">{{
             row.data.verb }} <strong>{{ row.data.right }}</strong></span> for
-          <span class="pull-right">
+          <span class="float-end">
             <span class="badge bg-light mx-1">{{ row.transport }}</span>
           </span>
         </h2>
@@ -475,7 +475,7 @@
     <h4 class="modal-title pull-left">
       Mottakere
     </h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>

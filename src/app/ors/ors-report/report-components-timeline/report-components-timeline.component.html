@@ -1,7 +1,7 @@
 <div class="card-header">
   <fa-icon [icon]="faRandom"></fa-icon>Forløpet
 
-  <span *ngIf="components?.length > 0" class="pull-right px-1 pointer"
+  <span *ngIf="components?.length > 0" class="float-end px-1 pointer"
     (click)="componentCollapsed = !componentCollapsed">
     <fa-icon *ngIf="componentCollapsed" [icon]="faPlusSquare" size="2"></fa-icon>
     <fa-icon *ngIf="!componentCollapsed" [icon]="faMinusSquare" size="2"></fa-icon>
@@ -41,7 +41,7 @@
         <div class="timeline-panel">
           <div class="timeline-heading">
             <h4 class="timeline-title">
-              <small class="pull-right">
+              <small class="float-end">
                 <span *ngIf="!!c.attributes">
                   <span *ngIf="!!c.attributes.injury || !!c.attributes.death">
                     <fa-icon [icon]="faAmbulance"></fa-icon>

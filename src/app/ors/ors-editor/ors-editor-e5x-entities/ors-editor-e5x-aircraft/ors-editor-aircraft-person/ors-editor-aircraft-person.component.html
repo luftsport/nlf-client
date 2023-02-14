@@ -23,7 +23,7 @@
       {{ callsign }}
       <span *ngIf="!modalValue.person.id && !modalValue.person.tmp_name"> Legg til person</span>
     </h4>
-    <button [disabled]="disabled" type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button [disabled]="disabled" type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>

@@ -98,7 +98,7 @@
 <div *ngIf="!!observation.aircrafts && observation.aircrafts.length > 0">
   <div class="nlf-ors-toolbar">
     Planlagt<span *ngIf="observation.aircrafts.length>1">e</span> Rute<span *ngIf="observation.aircrafts.length>1">r</span>
-    <nlf-help class="pull-right" key="ors-editor-motorfly-routes"></nlf-help>
+    <nlf-help class="float-end" key="ors-editor-motorfly-routes"></nlf-help>
   </div>
 
   <ul ngbNav #nav="ngbNav" class="nav-tabs mt-2">
@@ -125,7 +125,7 @@
     <h4 class="modal-title pull-left">
       {{ modalAircraft.callsign }}
     </h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>

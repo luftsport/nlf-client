@@ -28,7 +28,7 @@
 
 
 			<!-- WORKFLOW STATE -->
-			<span class="pull-right">
+			<span class="float-end">
 				<a [routerLink]="['/ors', observation._model.type, 'edit', observation.id]" *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge bg-primary text-white mx-1">
 					<fa-icon [icon]="faEdit"></fa-icon> Editor
 				</a>
@@ -66,8 +66,8 @@
 -->
 					<div class="mt-2">
 						<fa-icon [icon]="faMapMarkerAlt"></fa-icon> {{ observation.occurrence.attributes.locationName.value || "Sted ikke angitt" }}
-						<span class="mx-2 badge bg-secondary pull-right">Lat: {{ observation.occurrence.attributes.latitudeOfOcc.value | round: 4 }}</span>
-						<span class="mx-2 badge bg-secondary pull-right">Lng: {{ observation.occurrence.attributes.longitudeOfOcc.value | round: 4}}</span>
+						<span class="mx-2 badge bg-secondary float-end">Lat: {{ observation.occurrence.attributes.latitudeOfOcc.value | round: 4 }}</span>
+						<span class="mx-2 badge bg-secondary float-end">Lng: {{ observation.occurrence.attributes.longitudeOfOcc.value | round: 4}}</span>
 					</div>
 					<div>
 						<nlf-ors-editor-tag-e5x-render [showLabel]="false" [items]="observation.occurrence.attributes.stateAreaOfOcc.value" path="E5X.Occurrence.StateAreaOfOcc"></nlf-ors-editor-tag-e5x-render>

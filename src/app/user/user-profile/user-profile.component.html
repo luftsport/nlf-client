@@ -18,16 +18,16 @@
 		</span>
 
 		<!--
-		<button *ngIf="dataReady" class="btn btn-primary btn-sm pull-right mx-1" (click)="openModal(saveTemplate)" title="">
+		<button *ngIf="dataReady" class="btn btn-primary btn-sm float-end mx-1" (click)="openModal(saveTemplate)" title="">
 			<fa-icon [icon]="faCog"></fa-icon> Settings
 		</button>
 		-->
 
-		<a [routerLink]="['/user', person_id]" class="btn btn-sm btn-primary mx-1 pull-right">
+		<a [routerLink]="['/user', person_id]" class="btn btn-sm btn-primary mx-1 float-end">
 			<fa-icon [icon]="faUser"></fa-icon> View
 		</a>
 
-		<nlf-help class="pull-right mx-1" key="user-profile"></nlf-help>
+		<nlf-help class="float-end mx-1" key="user-profile"></nlf-help>
 
 	</div>
 </header>
@@ -147,7 +147,7 @@
 		<h4 class="modal-title pull-left">
 			<img class="me-3 avatar avatar-sm img-fluid img-rounded" [src]="modal_avatar||avatar">Profilbilde
 		</h4>
-		<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+		<button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>

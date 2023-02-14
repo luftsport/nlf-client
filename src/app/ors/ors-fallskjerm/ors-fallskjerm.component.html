@@ -3,25 +3,25 @@
     OBSREG Fallskjerm
 
     <!--
-    <button [routerLink]="['/ors', 'fallskjerm', 'dashboard']" type="button" class="btn btn-sm btn-link pull-right mx-1">
+    <button [routerLink]="['/ors', 'fallskjerm', 'dashboard']" type="button" class="btn btn-sm btn-link float-end mx-1">
       <fa-icon [icon]="faDashboard"></fa-icon> Dash
     </button>
-    <button [routerLink]="['/ors', 'fallskjerm', 'stats']" type="button" class="btn btn-sm btn-link pull-right mx-1">
+    <button [routerLink]="['/ors', 'fallskjerm', 'stats']" type="button" class="btn btn-sm btn-link float-end mx-1">
       <fa-icon [icon]="faPieChart"></fa-icon> Stats
     </button>
   -->
 
-    <button [routerLink]="['/ors', 'fallskjerm', 'search']" type="button" class="btn btn-sm btn-primary pull-right mx-1">
+    <button [routerLink]="['/ors', 'fallskjerm', 'search']" type="button" class="btn btn-sm btn-primary float-end mx-1">
       <fa-icon [icon]="faSearch"></fa-icon> Søk
     </button>
 
-    <button *ngIf="!!user_settings && user_settings?.settings?.default_activity==109" [routerLink]="['/ors', 'fallskjerm', 'dashboard', user_settings?.settings?.default_discipline]" type="button" class="btn btn-sm btn-primary pull-right mx-1">
+    <button *ngIf="!!user_settings && user_settings?.settings?.default_activity==109" [routerLink]="['/ors', 'fallskjerm', 'dashboard', user_settings?.settings?.default_discipline]" type="button" class="btn btn-sm btn-primary float-end mx-1">
       <fa-icon [icon]="faDashboard"></fa-icon> Dashboard
     </button>
 
-    <nlf-ors-go activity="fallskjerm" class="pull-right mx-1" title="Hurtigvalg, skriv inn OBSREG nummer etterfulgt av enter for å gå til OBSREG"></nlf-ors-go>
+    <nlf-ors-go activity="fallskjerm" class="float-end mx-1" title="Hurtigvalg, skriv inn OBSREG nummer etterfulgt av enter for å gå til OBSREG"></nlf-ors-go>
     <!--
-    <span class="input-group input-group-sm pull-right mx-1" style="max-width: 100px !important">
+    <span class="input-group input-group-sm float-end mx-1" style="max-width: 100px !important">
       <span class="input-group-text bg-transparent">
         <fa-icon [icon]="faHashtag" class="text-secondary"></fa-icon>
       </span>
@@ -29,7 +29,7 @@
     </span>
   -->
 
-    <nlf-help class="pull-right mx-1" key="ors-fallskjerm"></nlf-help>
+    <nlf-help class="float-end mx-1" key="ors-fallskjerm"></nlf-help>
 
   </div>
 

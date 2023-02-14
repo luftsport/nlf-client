@@ -32,7 +32,7 @@
       <td>Type</td>
       <td>
         <nlf-resolve-observation-types [activity]="observation._model.type" [type]="observation.type" badge="true"></nlf-resolve-observation-types>
-        <span class="pull-right">
+        <span class="float-end">
           <nlf-ors-report-ask [ask]="observation.ask" [verbose]="false"></nlf-ors-report-ask>
         </span>
 
@@ -59,7 +59,7 @@
 
     <tr *ngIf="!!observation.rating">
       <td>Alvorlighetsgrad</td>
-      <td>{{ observation.rating.actual }} av {{ observation.rating.potential }} <span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body" class="pull-right badge bg-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating | nlfOrsRatingCalc }}</span></td>
+      <td>{{ observation.rating.actual }} av {{ observation.rating.potential }} <span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body" class="float-end badge bg-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating | nlfOrsRatingCalc }}</span></td>
     </tr>
 
 
