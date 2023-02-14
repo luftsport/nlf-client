@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiHelpService } from 'app/api/api-help.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faPlus, faQuestion, faSave, faClose } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faQuestion, faSave, faClose } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-admin-help-edit',
