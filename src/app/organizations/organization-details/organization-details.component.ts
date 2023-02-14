@@ -86,10 +86,10 @@ export class NlfOrganizationDetailsComponent implements OnInit, OnDestroy {
     this.mapOptions = {
       layers: [
         tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
-        marker([this.lungo.contact.location.geo.coordinates[1],this.lungo.contact.location.geo.coordinates[0] ])
+        marker([this.lungo.contact.location?.geo.coordinates[1],this.lungo.contact.location?.geo.coordinates[0] ])
       ],
-      zoom: 5,
-	    center: latLng(this.lungo.contact.location.geo.coordinates[1],this.lungo.contact.location.geo.coordinates[0])
+      zoom: 7,
+	    center: latLng(this.lungo.contact.location?.geo.coordinates[1],this.lungo.contact.location?.geo.coordinates[0])
     }
 
   }

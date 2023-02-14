@@ -13,14 +13,16 @@
             <span class="pointer" cdkDragHandle>
               <fa-icon [icon]="faArrowsAlt"></fa-icon>
             </span>
-            <span class="pointer ms-1 me-3" (click)="goTo(location)">{{ location.nickname }} <span *ngIf="idx==0"> (default)</span></span>
+            <span class="pointer ms-1 me-3" [ngClass]="{'bg-secondary': idx===org?.locations?.indexOf(currentLocation)}" (click)="goTo(location)">{{ location.nickname }} <span *ngIf="idx==0">
+                (default)</span></span>
             <fa-icon class="pointer me-1" [icon]="faTimes" (click)="deleteLocation(idx)"></fa-icon>
             <fa-icon class="pointer" [icon]="faEdit" (click)="openModal(modal, idx)"></fa-icon>
           </div>
 
 
         </div>
-        <button *ngIf="currentLocation!=userGeo" class="btn btn-link" (click)="mapReset()"><fa-icon [icon]="faCrosshairs"></fa-icon> reset kart</button>
+        <button class="btn btn-link" (click)="mapReset()"><fa-icon
+            [icon]="faCrosshairs"></fa-icon> reset kart</button>
         <button class="btn btn-block btn-primary mt-auto my-3" (click)="openModal(modal, org.locations.length)">
           <fa-icon [icon]="faPlus"></fa-icon> Nytt sted
         </button>
@@ -32,7 +34,13 @@
         </div>
       </div>
 
-      <div class="col-md-8 map-full-content">
+      <div class="col-md-8 position-relative">
+
+
+        <div id="main-map" leaflet *ngIf="!!mapOptions" class="map" [leafletOptions]="mapOptions"
+          (leafletMapReady)="onMapReady($event)" [(leafletCenter)]="mapCenter">
+        </div>
+
         <!--
         <agm-map *ngIf="!!currentLocation" [fitBounds]="fitBounds" [latitude]="toFloat(currentLocation.geo.coordinates[0])" [longitude]="toFloat(currentLocation.geo.coordinates[1])" (mapClick)="updateLocation($event)" [mapTypeControl]="true" [zoom]="zoom">
 
@@ -72,31 +80,41 @@
 <ng-template #modal>
   <div class="modal-header">
     <h4 class="modal-title pull-left">
-      <fa-icon [icon]="faMapMarker"></fa-icon> {{ modalValue.nickname }} <span class="ms-2 small" *ngIf="modalIndex==0">default</span>
+      <fa-icon [icon]="faMapMarker"></fa-icon> {{ modalValue?.nickname }} <span class="ms-2 small"
+        *ngIf="modalIndex==0">default</span>
     </h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
 
-  <div class="modal-body">
+  <div class="modal-body" *ngIf="!!modalValue">
 
 
-    <div class="col-xs-12" *ngIf="!!modalValue">
+    <div class="col-xs-12 position-relative">
+      <div class="row" style="height: 300px">
+        <div id="modal-map" leaflet class="map" [leafletOptions]="modalMapOptions"
+          (leafletMapReady)="onModalMapReady($event)" [(leafletCenter)]="modalMapCenter">
+        </div>
+        <!--
+      <agm-map [latitude]="toFloat(modalValue.geo.coordinates[0])" [longitude]="toFloat(modalValue.geo.coordinates[1])"
+        (mapClick)="updateLocation($event)" [mapTypeControl]="true" [zoom]="14">
 
-      <agm-map [latitude]="toFloat(modalValue.geo.coordinates[0])" [longitude]="toFloat(modalValue.geo.coordinates[1])" (mapClick)="updateLocation($event)" [mapTypeControl]="true" [zoom]="14">
-
-        <!-- Colors: pink, yellow, purple, green, blue -->
-        <agm-marker [markerDraggable]="true" (dragEnd)="updateLocation($event)" [latitude]="toFloat(modalValue.geo.coordinates[0])" [longitude]="toFloat(modalValue.geo.coordinates[1])">
+         Colors: pink, yellow, purple, green, blue 
+        <agm-marker [markerDraggable]="true" (dragEnd)="updateLocation($event)"
+          [latitude]="toFloat(modalValue.geo.coordinates[0])" [longitude]="toFloat(modalValue.geo.coordinates[1])">
         </agm-marker>
       </agm-map>
+      -->
+      </div>
     </div>
 
     <div class="col-xs-12">
       <div class="form-row w-100">
         <div class="form-group w-100">
           <label for="locations-id">Søk etter stedsnavn</label>
-          <location-select [(locationItem)]="modalValue" [clearable]="false" (change)="onLocationSelected($event)" id="locations-id" [details]="true" [fc]="false"></location-select>
+          <location-select [(locationItem)]="modalValue" [clearable]="false" (change)="onLocationSelected($event)"
+            id="locations-id" [details]="true" [fc]="false"></location-select>
         </div>
       </div>
 
@@ -177,7 +195,8 @@
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
       <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>Avbryt
     </button>
-    <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate(modalIndex)">
+    <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success"
+      (click)="modalUpdate(modalIndex)">
       <fa-icon [icon]="faCheck" [fixedWidth]="true"></fa-icon>Oppdater
     </button>
   </div>
