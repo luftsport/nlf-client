@@ -3,19 +3,15 @@
 </div>
 
 <!-- QUICKSELECT DEFAULT DISCIPLINE -->
-<span *ngIf="dataReady && canCreate() && defaultBtn && settings.default_activity==109">
-
+<div *ngIf="dataReady && canCreate() && defaultBtn && settings.default_activity==109" class="d-grid gap-2">
   <button *ngIf="!!settings && canCreate() && !loading && !error"
     (click)="createObservation(settings.default_discipline, settings.default_club, settings.default_activity)"
-    class="btn btn-block btn-success btn-lg my-1">
+    class="btn btn-success btn-lg my-1">
     <fa-icon [icon]="faPlus"></fa-icon>
     <nlf-resolve-lungo-organization [organization_id]="settings.default_discipline" show_activity="false">
     </nlf-resolve-lungo-organization>
   </button>
-
-
-
-</span>
+</div>
 
 <!-- NORMAL SELECT DROPDOWN -->
 <span *ngIf="dataReady && !defaultBtn && canCreate()">
@@ -24,16 +20,18 @@
 
     <div class="row">
       <div class="col">
-        <select class="form-control" id="fallskjermklubb" [(ngModel)]="selected">
+        <select class="form-control form-control-lg" id="fallskjermklubb" [(ngModel)]="selected">
           <option *ngFor="let club of clubs" [ngValue]="club.id">
             {{ club.name }}
           </option>
         </select>
       </div>
       <div class="col">
-        <button [disabled]="!selected" (click)="createObservation()" class="btn btn-block btn-success btn-lg">
-          <fa-icon [icon]="faPlus"></fa-icon> Opprett ny OBSREG
-        </button>
+        <div class="d-grid gap-2">
+          <button [disabled]="!selected" (click)="createObservation()" class="btn btn-success btn-lg">
+            <fa-icon [icon]="faPlus"></fa-icon> Opprett ny OBSREG
+          </button>
+        </div>
       </div>
     </div>
   </span>

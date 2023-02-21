@@ -1,8 +1,10 @@
 <div class="row">
   <div class="col-md-3">
-    <button [disabled]="disabled" class="btn btn-primary btn-block" (click)="add();openModal(modal, modalIdx)">
-      <fa-icon [icon]="faPlus"></fa-icon>Add Airprox/separation
-    </button>
+    <div class="d-grid gap-2">
+      <button [disabled]="disabled" class="btn btn-primary" (click)="add();openModal(modal, modalIdx)">
+        <fa-icon [icon]="faPlus"></fa-icon>Add Airprox/separation
+      </button>
+    </div>
   </div>
   <div class="col-md-9">
     <div *ngFor="let sep of separation; let idx = index">

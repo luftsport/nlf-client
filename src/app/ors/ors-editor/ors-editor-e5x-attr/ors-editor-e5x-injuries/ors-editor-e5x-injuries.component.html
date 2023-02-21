@@ -1,8 +1,10 @@
 <div *ngIf="!showOnlyBtn" class="row">
   <div class="col-md-3">
-    <button class="btn btn-primary btn-block" (click)="openModal(modal)">
-      <fa-icon [icon]="faMedkit"></fa-icon>Injuries
-    </button>
+    <div class="d-grid gap-2">
+      <button class="btn btn-primary" (click)="openModal(modal)">
+        <fa-icon [icon]="faMedkit"></fa-icon>Injuries
+      </button>
+    </div>
   </div>
   <div class="col-md-9">
     <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="attr.injuryLevel.value" path="E5X.Occurrence.InjuryLevel"></nlf-ors-editor-tag-e5x-render>
@@ -10,8 +12,8 @@
   </div>
 </div>
 
-<div *ngIf="showOnlyBtn">
-  <button class="btn btn-secondary btn-block" (click)="openModal(modal)">
+<div *ngIf="showOnlyBtn" class="d-grid gap-2">
+  <button class="btn btn-secondary" (click)="openModal(modal)">
     <fa-icon [icon]="faMedkit"></fa-icon>Injuries
   </button>
 </div>

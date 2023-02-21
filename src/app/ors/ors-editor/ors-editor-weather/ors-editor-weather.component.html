@@ -29,9 +29,11 @@
     <div>{{ wx.description }}</div>
   </div>
 
-  <button (click)="openModal(weatherModal)" class="btn btn-block btn-primary my-2">
-    <fa-icon [icon]="faCloud"></fa-icon>Beskriv været
-  </button>
+  <div class="d-grid gap-2">
+    <button (click)="openModal(weatherModal)" class="btn btn-primary my-2">
+      <fa-icon [icon]="faCloud"></fa-icon>Beskriv været
+    </button>
+  </div>
   {{ wx | json }}
 </div>
 -->
@@ -56,14 +58,16 @@
       </div>
 
 
-      <button [disabled]="!observation.acl_user.w" (click)="wx.wind.turbulence=!wx.wind.turbulence;debouncedUpdate()"
-        class="btn btn-block" [ngClass]="!!wx.wind.turbulence ? 'btn-secondary' : 'btn-outline-dark'" id="turbulence">
-        <i class="wi wi-tornado"></i> Turbulens
-      </button>
-      <button [disabled]="!observation.acl_user.w" (click)="wx.wind.gusting=!wx.wind.gusting;debouncedUpdate()"
-        class="btn btn-block" [ngClass]="!!wx.wind.gusting ? 'btn-secondary' : 'btn-outline-dark'" id="gusting">
-        <i class="wi wi-strong-wind"></i> Gusting
-      </button>
+      <div class="d-grid gap-2">
+        <button [disabled]="!observation.acl_user.w" (click)="wx.wind.turbulence=!wx.wind.turbulence;debouncedUpdate()"
+          class="btn" [ngClass]="!!wx.wind.turbulence ? 'btn-secondary' : 'btn-outline-dark'" id="turbulence">
+          <i class="wi wi-tornado"></i> Turbulens
+        </button>
+        <button [disabled]="!observation.acl_user.w" (click)="wx.wind.gusting=!wx.wind.gusting;debouncedUpdate()"
+          class="btn" [ngClass]="!!wx.wind.gusting ? 'btn-secondary' : 'btn-outline-dark'" id="gusting">
+          <i class="wi wi-strong-wind"></i> Gusting
+        </button>
+      </div>
 
     </div>
     <!-- Clouds -->
@@ -75,26 +79,28 @@
           (ngModelChange)="debouncedUpdate()" [(ngModel)]="wx.clouds.base">
       </div>
 
-      <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.rain=!wx.clouds.rain;debouncedUpdate()"
-        class="btn btn-block" [ngClass]="!!wx.clouds.rain ? 'btn-secondary' : 'btn-outline-dark'">
-        <i class="wi wi-rain"></i> Regn
-      </button>
-      <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.fog=!wx.clouds.fog;debouncedUpdate()"
-        class="btn btn-block" [ngClass]="!!wx.clouds.fog ? 'btn-secondary' : 'btn-outline-dark'">
-        <i class="wi wi-fog"></i> Tåke
-      </button>
-      <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.hail=!wx.clouds.hail;debouncedUpdate()"
-        class="btn btn-block" [ngClass]="!!wx.clouds.hail ? 'btn-secondary' : 'btn-outline-dark'">
-        <i class="wi wi-hail"></i> Hagl
-      </button>
-      <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.snow=!wx.clouds.snow;debouncedUpdate()"
-        class="btn btn-block" [ngClass]="!!wx.clouds.snow ? 'btn-secondary' : 'btn-outline-dark'">
-        <i class="wi wi-snow"></i> Snø
-      </button>
-      <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.thunder=!wx.clouds.thunder;debouncedUpdate()"
-        class="btn btn-block" [ngClass]="!!wx.clouds.thunder ? 'btn-secondary' : 'btn-outline-dark'">
-        <i class="wi wi-lightning"></i> Torden
-      </button>
+      <div class="d-grid gap-2">
+        <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.rain=!wx.clouds.rain;debouncedUpdate()"
+          class="btn" [ngClass]="!!wx.clouds.rain ? 'btn-secondary' : 'btn-outline-dark'">
+          <i class="wi wi-rain"></i> Regn
+        </button>
+        <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.fog=!wx.clouds.fog;debouncedUpdate()"
+          class="btn" [ngClass]="!!wx.clouds.fog ? 'btn-secondary' : 'btn-outline-dark'">
+          <i class="wi wi-fog"></i> Tåke
+        </button>
+        <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.hail=!wx.clouds.hail;debouncedUpdate()"
+          class="btn" [ngClass]="!!wx.clouds.hail ? 'btn-secondary' : 'btn-outline-dark'">
+          <i class="wi wi-hail"></i> Hagl
+        </button>
+        <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.snow=!wx.clouds.snow;debouncedUpdate()"
+          class="btn" [ngClass]="!!wx.clouds.snow ? 'btn-secondary' : 'btn-outline-dark'">
+          <i class="wi wi-snow"></i> Snø
+        </button>
+        <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.thunder=!wx.clouds.thunder;debouncedUpdate()"
+          class="btn" [ngClass]="!!wx.clouds.thunder ? 'btn-secondary' : 'btn-outline-dark'">
+          <i class="wi wi-lightning"></i> Torden
+        </button>
+      </div>
     </div>
 
     <!-- Temp -->
@@ -159,14 +165,16 @@
         </div>
 
 
-        <button [disabled]="!observation.acl_user.w" (click)="wx.wind.turbulence=!wx.wind.turbulence"
-          class="btn btn-block" [ngClass]="!!wx.wind.turbulence ? 'btn-secondary' : 'btn-outline-dark'" id="turbulence">
-          <i class="wi wi-tornado"></i> Turbulens
-        </button>
-        <button [disabled]="!observation.acl_user.w" (click)="wx.wind.gusting=!wx.wind.gusting" class="btn btn-block"
-          [ngClass]="!!wx.wind.gusting ? 'btn-secondary' : 'btn-outline-dark'" id="gusting">
-          <i class="wi wi-strong-wind"></i> Gusting
-        </button>
+        <div class="d-grid gap-2">
+          <button [disabled]="!observation.acl_user.w" (click)="wx.wind.turbulence=!wx.wind.turbulence"
+            class="btn" [ngClass]="!!wx.wind.turbulence ? 'btn-secondary' : 'btn-outline-dark'" id="turbulence">
+            <i class="wi wi-tornado"></i> Turbulens
+          </button>
+          <button [disabled]="!observation.acl_user.w" (click)="wx.wind.gusting=!wx.wind.gusting" class="btn"
+            [ngClass]="!!wx.wind.gusting ? 'btn-secondary' : 'btn-outline-dark'" id="gusting">
+            <i class="wi wi-strong-wind"></i> Gusting
+          </button>
+        </div>
       </div>
       <!-- Clouds -->
       <div class="col-xs-12 col-md-4">
@@ -177,26 +185,28 @@
             [(ngModel)]="wx.clouds.base">
         </div>
 
-        <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.rain=!wx.clouds.rain" class="btn btn-block"
-          [ngClass]="!!wx.clouds.rain ? 'btn-secondary' : 'btn-outline-dark'">
-          <i class="wi wi-rain"></i> Regn
-        </button>
-        <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.fog=!wx.clouds.fog" class="btn btn-block"
-          [ngClass]="!!wx.clouds.fog ? 'btn-secondary' : 'btn-outline-dark'">
-          <i class="wi wi-fog"></i> Tåke
-        </button>
-        <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.hail=!wx.clouds.hail" class="btn btn-block"
-          [ngClass]="!!wx.clouds.hail ? 'btn-secondary' : 'btn-outline-dark'">
-          <i class="wi wi-hail"></i> Hagl
-        </button>
-        <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.snow=!wx.clouds.snow" class="btn btn-block"
-          [ngClass]="!!wx.clouds.snow ? 'btn-secondary' : 'btn-outline-dark'">
-          <i class="wi wi-snow"></i> Snø
-        </button>
-        <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.thunder=!wx.clouds.thunder"
-          class="btn btn-block" [ngClass]="!!wx.clouds.thunder ? 'btn-secondary' : 'btn-outline-dark'">
-          <i name="wi wi-lightning"></i> Torden
-        </button>
+        <div class="d-grid gap-2">
+          <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.rain=!wx.clouds.rain" class="btn"
+            [ngClass]="!!wx.clouds.rain ? 'btn-secondary' : 'btn-outline-dark'">
+            <i class="wi wi-rain"></i> Regn
+          </button>
+          <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.fog=!wx.clouds.fog" class="btn"
+            [ngClass]="!!wx.clouds.fog ? 'btn-secondary' : 'btn-outline-dark'">
+            <i class="wi wi-fog"></i> Tåke
+          </button>
+          <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.hail=!wx.clouds.hail" class="btn"
+            [ngClass]="!!wx.clouds.hail ? 'btn-secondary' : 'btn-outline-dark'">
+            <i class="wi wi-hail"></i> Hagl
+          </button>
+          <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.snow=!wx.clouds.snow" class="btn"
+            [ngClass]="!!wx.clouds.snow ? 'btn-secondary' : 'btn-outline-dark'">
+            <i class="wi wi-snow"></i> Snø
+          </button>
+          <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.thunder=!wx.clouds.thunder"
+            class="btn" [ngClass]="!!wx.clouds.thunder ? 'btn-secondary' : 'btn-outline-dark'">
+            <i name="wi wi-lightning"></i> Torden
+          </button>
+        </div>
       </div>
 
       <!-- Temp -->

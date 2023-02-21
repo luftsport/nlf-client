@@ -1,4 +1,4 @@
-<div class="streamline b-l m-b">
+<div class="streamline b-l m-b mt-3">
 
   <div *ngFor="let w of workflow.audit">
 
@@ -14,7 +14,7 @@
             <nlf-resolve-lungo-person link="true" [person_id]="w.u"></nlf-resolve-lungo-person>
           </span>
           <span *ngIf="w.c!=null && w.c!='Initialized workflow'">:
-            <i>{{w.c}}</i>
+            <i class="workflow-comment">{{w.c}}</i>
           </span>
         </p>
       </div>

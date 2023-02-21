@@ -1,8 +1,10 @@
 <div class="row">
   <div class="col-md-12">
-    <button [disabled]="disabled" [ngClass]="[!!crew ? 'btn-success' : 'btn-secondary']" class="btn btn-block mb-3" (click)="add();openModal(personModal, modalIdx)">
-      <fa-icon [icon]="faPlus"></fa-icon> Crew/Pax
-    </button>
+    <div class="d-grid gap-2">
+      <button [disabled]="disabled" [ngClass]="[!!crew ? 'btn-success' : 'btn-secondary']" class="btn mb-3" (click)="add();openModal(personModal, modalIdx)">
+        <fa-icon [icon]="faPlus"></fa-icon> Crew/Pax
+      </button>
+    </div>
 
     <div class="my-1" *ngFor="let c of crew; let idx = index">
       <nlf-resolve-lungo-person (click)="openModal(personModal, idx)" [person_id]="c.person.id" [tmp_name]="c.person.tmp_name" [link]="false" avatar="true"></nlf-resolve-lungo-person>
@@ -245,19 +247,25 @@
 
       <div class="row">
         <div class="col-md-4">
-          <button (click)="addLicense()" [disabled]="disabled" class="btn btn-primary btn-block">
-            <fa-icon [icon]="faPlus"></fa-icon> License
-          </button>
+          <div class="d-grid gap-2">
+            <button (click)="addLicense()" [disabled]="disabled" class="btn btn-primary">
+              <fa-icon [icon]="faPlus"></fa-icon> License
+            </button>
+          </div>
         </div>
         <div class="col-md-4">
-          <button (click)="addHumanFactors()" [disabled]="disabled || !!modalValue.humanFactors" class="btn btn-primary btn-block">
-            <fa-icon [icon]="faPlus"></fa-icon> Human factors
-          </button>
+          <div class="d-grid gap-2">
+            <button (click)="addHumanFactors()" [disabled]="disabled || !!modalValue.humanFactors" class="btn btn-primary">
+              <fa-icon [icon]="faPlus"></fa-icon> Human factors
+            </button>
+          </div>
         </div>
         <div class="col-md-4">
-          <button (click)="addIncapacitation()" [disabled]="disabled" class="btn btn-primary btn-block">
-            <fa-icon [icon]="faPlus"></fa-icon> Incapacitation
-          </button>
+          <div class="d-grid gap-2">
+            <button (click)="addIncapacitation()" [disabled]="disabled" class="btn btn-primary">
+              <fa-icon [icon]="faPlus"></fa-icon> Incapacitation
+            </button>
+          </div>
         </div>
       </div>
     </div>

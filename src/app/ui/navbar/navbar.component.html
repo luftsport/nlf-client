@@ -128,13 +128,17 @@
           <a class="dropdown-item" href="#">Placeholder</a>
 
           <div class="dropdown-divider"></div>
-          <button class="btn btn-secondary btn-block dropdown-item">
-            <fa-icon [icon]="bell-slash"></fa-icon>Dismiss All
-          </button>
+          <div class="d-grid gap-2">
+            <button class="btn btn-secondary dropdown-item">
+              <fa-icon [icon]="bell-slash"></fa-icon>Dismiss All
+            </button>
+          </div>
           <div class="dropdown-divider"></div>
-          <button class="btn btn-secondary btn-block dropdown-item">
-            <fa-icon [icon]="list-ol"></fa-icon>More<span class="badge bg-danger float-end">2</span>
-          </button>
+          <div class="d-grid gap-2">
+            <button class="btn btn-secondary dropdown-item">
+              <fa-icon [icon]="list-ol"></fa-icon>More<span class="badge bg-danger float-end">2</span>
+            </button>
+          </div>
         </div>
 
       </li>
@@ -171,7 +175,7 @@
 
           <div class="dropdown-divider"></div>
           <button ngbDropdownItem (click)="$event.preventDefault();navbarOpen=false;authService.logout()"
-            class="dropdown-item btn btn-secondary btn-block">
+            class="dropdown-item btn btn-secondary">
             <fa-icon [icon]="faPowerOff"></fa-icon>Logg ut
           </button>
         </div>
@@ -209,8 +213,8 @@
     <a href="#" class="list-group-item list-group-item-action list-group-item-light">This is a light list group item</a>
     <a href="#" class="list-group-item list-group-item-action list-group-item-dark">This is a dark list group item</a>
   </div>
-  <button class="btn btn-block btn-success">Approve</button>
-  <button class="btn btn-block btn-danger">Reject</button>
+  <button class="btn btn-success">Approve</button>
+  <button class="btn btn-danger">Reject</button>
 </ng-template>
 
 < !ww-- Navbar itself -w- >

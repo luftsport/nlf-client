@@ -128,9 +128,11 @@
               </div>
 
               <div class="col-md-12">
-                <button [disabled]="!observation.occurrence.entities.reportingHistory[0].attributes.reportStatus.value" class="btn btn-primary btn-lg btn-block" (click)="send();e5xFile=!e5xFile">
-                  <fa-icon [icon]="faPaperPlane"></fa-icon> Send rapport
-                </button>
+                <div class="d-grid gap-2">
+                  <button [disabled]="!observation.occurrence.entities.reportingHistory[0].attributes.reportStatus.value" class="btn btn-primary btn-lg" (click)="send();e5xFile=!e5xFile">
+                    <fa-icon [icon]="faPaperPlane"></fa-icon> Send rapport
+                  </button>
+                </div>
               </div>
 
             </div>

@@ -2,8 +2,8 @@
   Flight Data
 </button>
 
-<div *ngIf="showOnlyBtn">
-  <button class="btn btn-secondary btn-block" (click)="openModal(attrModal)">
+<div *ngIf="showOnlyBtn" class="d-grid gap-2">
+  <button class="btn btn-secondary" (click)="openModal(attrModal)">
     <fa-icon [icon]="faTachometer"></fa-icon> Flight Data
   </button>
 </div>

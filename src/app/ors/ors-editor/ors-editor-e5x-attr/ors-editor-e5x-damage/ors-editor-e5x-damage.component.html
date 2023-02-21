@@ -1,16 +1,18 @@
 <div *ngIf="!showOnlyBtn" class="row">
   <div class="col-md-3">
-    <button class="btn btn-secondary btn-block" (click)="openModal(modal)">
-      <fa-icon [icon]="faFire"></fa-icon> Damage(s)
-    </button>
+    <div class="d-grid gap-2">
+      <button class="btn btn-secondary" (click)="openModal(modal)">
+        <fa-icon [icon]="faFire"></fa-icon> Damage(s)
+      </button>
+    </div>
   </div>
   <div class="col-md-9">
     <nlf-ors-editor-tag-e5x-render *ngIf="!!attr.highestDamage.value" classes="badge bg-danger" [items]="attr.highestDamage.value" path="E5X.Occurrence.HighestDamage"></nlf-ors-editor-tag-e5x-render>
   </div>
 </div>
 
-<div *ngIf="showOnlyBtn">
-  <button class="btn btn-secondary btn-block" (click)="openModal(modal)">
+<div *ngIf="showOnlyBtn" class="d-grid gap-2">
+  <button class="btn btn-secondary" (click)="openModal(modal)">
     <fa-icon [icon]="faFire"></fa-icon> Damage(s)
   </button>
 </div>

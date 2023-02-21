@@ -115,11 +115,13 @@
 
     <div *ngIf="!dropzone || (onlyFilepicker && !dropzone)">
       <!-- UPLOAD BUTTON -->
-      <label class="btn btn-block btn-primary btn-file">
-        <fa-icon [icon]="faPlus"></fa-icon>Legg til filer
-        <input type="file" style="display: none;" ngFileSelect [options]="options"
-          (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple>
-      </label>
+      <div class="d-grid gap-2">
+        <label class="btn btn-primary btn-file">
+          <fa-icon [icon]="faPlus"></fa-icon>Legg til filer
+          <input type="file" style="display: none;" ngFileSelect [options]="options"
+            (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple>
+        </label>
+      </div>
       <!-- /UPLOAD BUTTON -->
       <!-- UPLOAD PROGRESS -->
       <div class="upload-items">

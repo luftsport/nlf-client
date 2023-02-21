@@ -16,11 +16,13 @@
       </ngb-alert>
 
       <!-- Always show button -->
-      <a class="btn btn-secondary btn-block mt-auto"
-        [routerLink]="['/organizations', observation.discipline, 'locations']"
-        [queryParams]="{returl: '/ors/'+observation._model.type+'/edit/'+observation.id}">
-        <fa-icon [icon]="faEdit"></fa-icon> Rediger
-      </a>
+      <div class="d-grid gap-2">
+        <a class="btn btn-secondary mt-auto"
+          [routerLink]="['/organizations', observation.discipline, 'locations']"
+          [queryParams]="{returl: '/ors/'+observation._model.type+'/edit/'+observation.id}">
+          <fa-icon [icon]="faEdit"></fa-icon> Rediger
+        </a>
+      </div>
 
     </div>
 

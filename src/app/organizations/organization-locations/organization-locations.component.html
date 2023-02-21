@@ -23,12 +23,14 @@
         </div>
         <button class="btn btn-link" (click)="mapReset()"><fa-icon
             [icon]="faCrosshairs"></fa-icon> reset kart</button>
-        <button class="btn btn-block btn-primary mt-auto my-3" (click)="openModal(modal, org.locations.length)">
-          <fa-icon [icon]="faPlus"></fa-icon> Nytt sted
-        </button>
+        <div class="d-grid gap-2">
+          <button class="btn btn-primary mt-auto my-3" (click)="openModal(modal, org.locations.length)">
+            <fa-icon [icon]="faPlus"></fa-icon> Nytt sted
+          </button>
+        </div>
 
-        <div class="mt-auto my-3" *ngIf="!!returl">
-          <a class="btn btn-block btn-secondary" [routerLink]="returl">
+        <div class="mt-auto my-3 d-grid gap-2" *ngIf="!!returl">
+          <a class="btn btn-secondary" [routerLink]="returl">
             <fa-icon [icon]="faRefresh"></fa-icon> Tilbake
           </a>
         </div>
@@ -100,7 +102,7 @@
       <agm-map [latitude]="toFloat(modalValue.geo.coordinates[0])" [longitude]="toFloat(modalValue.geo.coordinates[1])"
         (mapClick)="updateLocation($event)" [mapTypeControl]="true" [zoom]="14">
 
-         Colors: pink, yellow, purple, green, blue 
+         Colors: pink, yellow, purple, green, blue
         <agm-marker [markerDraggable]="true" (dragEnd)="updateLocation($event)"
           [latitude]="toFloat(modalValue.geo.coordinates[0])" [longitude]="toFloat(modalValue.geo.coordinates[1])">
         </agm-marker>
