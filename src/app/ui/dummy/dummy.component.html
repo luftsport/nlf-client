@@ -232,7 +232,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <div class="card-deck">
+      <div class="row">
         <!--<nlf-user-profile></nlf-user-profile>-->
         <!--
         <div class="card">
@@ -244,51 +244,69 @@
             </span>
           </div>
           <div class="card-footer">
-            <a class="btn btn-primary btn-block" [routerLink]="['/user/profile']" role="button">Oppdater profil &raquo;</a>
+            <div class="d-grid gap-2">
+              <a class="btn btn-primary" [routerLink]="['/user/profile']" role="button">Oppdater profil &raquo;</a>
+            </div>
           </div>
         </div>-->
         <!-- END USER OR OBSREG -->
-        <div class="card mb-3">
-          <div class="card-header"><i class="nlf nlf-motorfly nlf-fw"></i> Motorfly OBSREG</div>
+        <div class="col-md-3">
+          <div class="card mb-3">
+            <div class="card-header"><i class="nlf nlf-motorfly nlf-fw"></i> Motorfly OBSREG</div>
 
-          <nlf-ors-last activity="motorfly" number="8">Ingen registrerte</nlf-ors-last>
+            <nlf-ors-last activity="motorfly" number="8">Ingen registrerte</nlf-ors-last>
 
-          <div class="card-footer">
-            <a class="btn btn-secondary btn-block" [routerLink]="['/ors', 'motorfly']" role="button">Motorfly OBSREG
-              &raquo;</a>
+            <div class="card-footer">
+              <div class="d-grid gap-2">
+                <a class="btn btn-secondary" [routerLink]="['/ors', 'motorfly']" role="button">Motorfly OBSREG
+                  &raquo;</a>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="nlf nlf-fallskjerm nlf-fw"></i> Fallskjerm OBSREG
-          </div>
-          <nlf-ors-last activity="fallskjerm" number="8">Ingen registrerte</nlf-ors-last>
-          <div class="card-footer">
-            <a class="btn btn-secondary btn-block" [routerLink]="['/ors', 'fallskjerm']" role="button">Fallskjerm OBSREG
-              &raquo;</a>
-          </div>
-        </div>
-
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="nlf nlf-mikrofly nlf-fw"></i> Sportsfly OBSREG
-          </div>
-          <nlf-ors-last activity="sportsfly" number="8">Ingen registrerte</nlf-ors-last>
-          <div class="card-footer">
-            <a class="btn btn-secondary btn-block" [routerLink]="['/ors', 'sportsfly']" role="button">Sportsfly OBSREG
-              &raquo;</a>
+        <div class="col-md-3">
+          <div class="card mb-3">
+            <div class="card-header">
+              <i class="nlf nlf-fallskjerm nlf-fw"></i> Fallskjerm OBSREG
+            </div>
+            <nlf-ors-last activity="fallskjerm" number="8">Ingen registrerte</nlf-ors-last>
+            <div class="card-footer">
+              <div class="d-grid gap-2">
+                <a class="btn btn-secondary" [routerLink]="['/ors', 'fallskjerm']" role="button">Fallskjerm OBSREG
+                  &raquo;</a>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="nlf nlf-seilfly nlf-fw"></i> Seilfly OBSREG
+        <div class="col-md-3">
+          <div class="card mb-3">
+            <div class="card-header">
+              <i class="nlf nlf-mikrofly nlf-fw"></i> Sportsfly OBSREG
+            </div>
+            <nlf-ors-last activity="sportsfly" number="8">Ingen registrerte</nlf-ors-last>
+            <div class="card-footer">
+              <div class="d-grid gap-2">
+                <a class="btn btn-secondary" [routerLink]="['/ors', 'sportsfly']" role="button">Sportsfly OBSREG
+                  &raquo;</a>
+              </div>
+            </div>
           </div>
-          <nlf-ors-last activity="seilfly" number="8">Ingen registrerte</nlf-ors-last>
-          <div class="card-footer">
-            <a class="btn btn-secondary btn-block" [routerLink]="['/ors', 'seilfly']" role="button">Seilfly OBSREG
-              &raquo;</a>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card mb-3">
+            <div class="card-header">
+              <i class="nlf nlf-seilfly nlf-fw"></i> Seilfly OBSREG
+            </div>
+            <nlf-ors-last activity="seilfly" number="8">Ingen registrerte</nlf-ors-last>
+            <div class="card-footer">
+              <div class="d-grid gap-2">
+                <a class="btn btn-secondary" [routerLink]="['/ors', 'seilfly']" role="button">Seilfly OBSREG
+                  &raquo;</a>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -315,8 +333,10 @@
           <div class="card-header lead"><i class="nlf nlf-fallskjerm nlf-fw"></i>Siste i Fallskjerm</div>
           <nlf-content-last space_key="fallskjerm" number="8"></nlf-content-last>
           <div class="card-footer">
-            <a class="btn btn-secondary btn-block" [routerLink]="['/content/space/fallskjerm']" role="button">Se mer
-              &raquo;</a>
+            <div class="d-grid gap-2">
+              <a class="btn btn-secondary" [routerLink]="['/content/space/fallskjerm']" role="button">Se mer
+                &raquo;</a>
+            </div>
           </div>
         </div>
 
@@ -324,7 +344,9 @@
           <div class="card-header lead"><i class="nlf nlf-motorfly nlf-fw"></i>Siste i Motor</div>
           <nlf-content-last space_key="motor" number="8"></nlf-content-last>
           <div class="card-footer">
-            <a class="btn btn-secondary btn-block" [routerLink]="['/content/space/motor']" role="button">Se mer &raquo;</a>
+            <div class="d-grid gap-2">
+              <a class="btn btn-secondary" [routerLink]="['/content/space/motor']" role="button">Se mer &raquo;</a>
+            </div>
           </div>
         </div>
 
@@ -332,7 +354,9 @@
           <div class="card-header lead">Siste i OBSREG</div>
           <nlf-content-last space_key="ors" number="8"></nlf-content-last>
           <div class="card-footer">
-            <a class="btn btn-secondary btn-block" [routerLink]="['/content/space/ors']" role="button">Se mer &raquo;</a>
+            <div class="d-grid gap-2">
+              <a class="btn btn-secondary" [routerLink]="['/content/space/ors']" role="button">Se mer &raquo;</a>
+            </div>
           </div>
         </div>
 

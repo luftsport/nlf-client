@@ -23,10 +23,12 @@
 </div>
 
 <div *ngIf="modal">
-  <button class="btn btn-info btn-block" (click)="openModal(modal)">
-    <fa-icon [icon]="faCheck" class="text-secondary" *ngIf="!!attr  && !!attr.occurrenceClass.value"></fa-icon>
-    Classification
-  </button>
+  <div class="d-grid gap-2">
+    <button class="btn btn-info" (click)="openModal(modal)">
+      <fa-icon [icon]="faCheck" class="text-secondary" *ngIf="!!attr  && !!attr.occurrenceClass.value"></fa-icon>
+      Classification
+    </button>
+  </div>
 
   <!-- ROUTE MODAL -->
   <ng-template #modal>

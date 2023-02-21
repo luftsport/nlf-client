@@ -1,6 +1,8 @@
-<button class="btn btn-secondary btn-block" (click)="openModal(modal)">
-  <fa-icon [icon]="faPlane"></fa-icon> Aerodrome
-</button>
+<div class="d-grid gap-2">
+  <button class="btn btn-secondary" (click)="openModal(modal)">
+    <fa-icon [icon]="faPlane"></fa-icon> Aerodrome
+  </button>
+</div>
 
 <!-- ROUTE MODAL -->
 <ng-template #modal>
@@ -111,19 +113,25 @@
 
     <div class="row">
       <div class="col-md-4">
-        <button [disabled]="disabled" class="btn btn-primary btn-block" (click)="addRunway()">
-          <fa-icon [icon]="faPlus"></fa-icon> Runway
-        </button>
+        <div class="d-grid gap-2">
+          <button [disabled]="disabled" class="btn btn-primary" (click)="addRunway()">
+            <fa-icon [icon]="faPlus"></fa-icon> Runway
+          </button>
+        </div>
       </div>
       <div class="col-md-4">
-        <button [disabled]="disabled" class="btn btn-primary btn-block" (click)="addVehicle()">
-          <fa-icon [icon]="faPlus"></fa-icon> Vehicle
-        </button>
+        <div class="d-grid gap-2">
+          <button [disabled]="disabled" class="btn btn-primary" (click)="addVehicle()">
+            <fa-icon [icon]="faPlus"></fa-icon> Vehicle
+          </button>
+        </div>
       </div>
       <div class="col-md-4">
-        <button [disabled]="aerodrome.entities.narrative.length>0 || disabled" class="btn btn-primary btn-block" (click)="addNarrative()">
-          <fa-icon [icon]="faPlus"></fa-icon> Narrative
-        </button>
+        <div class="d-grid gap-2">
+          <button [disabled]="aerodrome.entities.narrative.length>0 || disabled" class="btn btn-primary" (click)="addNarrative()">
+            <fa-icon [icon]="faPlus"></fa-icon> Narrative
+          </button>
+        </div>
       </div>
     </div>
 

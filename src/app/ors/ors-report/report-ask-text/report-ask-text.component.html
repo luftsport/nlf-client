@@ -2,15 +2,15 @@
   <div *ngFor="let key of comments | keys">
 
     <div *ngIf="!excludes || excludes.indexOf(key)<0" class="bg-light my-1">
-      <div class="media p-3">
+      <div class="d-flex p-3">
 
-        <span class="align-self-start me-3 avatar avatar-lg">
+        <span class="flex-shrink-0 align-self-start me-3 avatar avatar-lg">
           <nlf-resolve-avatar [person_id]="person_mappings[key]"></nlf-resolve-avatar>
         </span>
 
         <!--<img class="me-3 rounded-circle" src="https://dummyimage.com/64x64/595659/e3e4e8">-->
 
-        <div class="media-body">
+        <div class="flex-grow-1">
 
           <h5 class="mt-0">
             {{ roles[key] }}

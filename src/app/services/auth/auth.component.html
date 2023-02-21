@@ -47,9 +47,8 @@
       </div>
 
       <!-- LOGIN BTN -->
-      <div *ngIf="!!status && status._status && status.message.mongo>0">
-
-        <a (click)="loading=!loading" href="{{ ENV._auth_service }}?client_id={{ ENV._client_id }}&response_type={{ ENV._response_type }}&scope={{ ENV._scope }}&shebang={{ ENV._shebang }}&redirect_uri={{ _return_uri }}" class="btn btn-lg btn-primary btn-block" type="submit">
+      <div *ngIf="!!status && status._status && status.message.mongo>0" class="d-grid gap-2">
+        <a (click)="loading=!loading" href="{{ ENV._auth_service }}?client_id={{ ENV._client_id }}&response_type={{ ENV._response_type }}&scope={{ ENV._scope }}&shebang={{ ENV._shebang }}&redirect_uri={{ _return_uri }}" class="btn btn-lg btn-primary" type="submit">
           <span *ngIf="!loading">
             <fa-icon [icon]="faLock"></fa-icon> Logg inn med NLF Auth
           </span>

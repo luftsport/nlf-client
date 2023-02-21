@@ -349,14 +349,16 @@
         <div
           *ngFor="let key of config[observation._model.type].observation.components.attributes | keys; let idx = index"
           class="col-sm-12 col-md-4 mb-1">
-          <button [disabled]="!observation.acl_user.w" *ngIf="modalComponent.data.attributes[key]"
-            (click)="modalToggleAttributes(key, false)"
-            class="btn btn-block btn-{{ config[observation._model.type].observation.components.attributes[key]['badge'] }}">
-            {{ config[observation._model.type].observation.components.attributes[key]['label'] }}</button>
+          <div class="d-grid gap-2">
+            <button [disabled]="!observation.acl_user.w" *ngIf="modalComponent.data.attributes[key]"
+              (click)="modalToggleAttributes(key, false)"
+              class="btn btn-{{ config[observation._model.type].observation.components.attributes[key]['badge'] }}">
+              {{ config[observation._model.type].observation.components.attributes[key]['label'] }}</button>
 
-          <button [disabled]="!observation.acl_user.w" *ngIf="!modalComponent.data.attributes[key]"
-            (click)="modalToggleAttributes(key, true)" class="btn btn-block btn-outline-secondary">
-            {{ config[observation._model.type].observation.components.attributes[key]['label'] }}</button>
+            <button [disabled]="!observation.acl_user.w" *ngIf="!modalComponent.data.attributes[key]"
+              (click)="modalToggleAttributes(key, true)" class="btn btn-outline-secondary">
+              {{ config[observation._model.type].observation.components.attributes[key]['label'] }}</button>
+          </div>
         </div>
       </div>
 

@@ -28,24 +28,26 @@
   <div *ngIf="!!dataReady">
 
     <div *ngIf="observation._model.type==='motorfly' && observation._model.version>=3 && observation.workflow.state==='draft'" class="form-group">
-      <nlf-help key="ors-editor-do_not_process_in_club"></nlf-help>
-
-      <input [disabled]="!observation.acl_user.w" class="form-check-input" type="checkbox" [(ngModel)]="payload.do_not_process_in_club" [id]="do_not_process_in_club">
-      <label class="form-check-label" for="do_not_process_in_club">
-        <strong>Ikke</strong> behandle rapporten i klubb
-      </label>
+      <div class="form-check">
+        <input [disabled]="!observation.acl_user.w" class="form-check-input" type="checkbox" [(ngModel)]="payload.do_not_process_in_club" [id]="do_not_process_in_club">
+        <label class="form-check-label" for="do_not_process_in_club">
+          <strong>Ikke</strong> behandle rapporten i klubb
+        </label>
+        <nlf-help key="ors-editor-do_not_process_in_club"></nlf-help>
+      </div>
       <ngb-alert *ngIf="payload.do_not_process_in_club" type="info" (close)="close()">
         <fa-icon [icon]="faInfo"></fa-icon> Denne observasjonen vil ikke kunne bli behandlet i klubb, kun av OBSREG-koordinator. Klubbnavnet vil også bli anonymisert når denne observasjonen er ferdig behandlet.
       </ngb-alert>
     </div>
 
     <div *ngIf="observation._model.type==='motorfly' && observation._model.version>=3 && observation.workflow.state==='pending_review_ors'" class="form-group">
-      <nlf-help key="ors-editor-do_not_publish"></nlf-help>
-
-      <input [disabled]="!observation.acl_user.w" class="form-check-input" type="checkbox" [(ngModel)]="payload.do_not_publish" [id]="do_not_publish">
-      <label class="form-check-label" for="do_not_publish">
-        <strong>Ikke</strong> publiser rapport når lukket
-      </label>
+      <div class="form-check">
+        <input [disabled]="!observation.acl_user.w" class="form-check-input" type="checkbox" [(ngModel)]="payload.do_not_publish" [id]="do_not_publish">
+        <label class="form-check-label" for="do_not_publish">
+          <strong>Ikke</strong> publiser rapport når lukket
+        </label>
+        <nlf-help key="ors-editor-do_not_publish"></nlf-help>
+      </div>
       <ngb-alert *ngIf="payload.do_not_publish" type="warning" (close)="close()">
         <fa-icon [icon]="faInfoCircle"></fa-icon> Denne observasjonen vil ikke bli allment tilgjengelig når denne observasjonen er ferdig behandlet og lukket.
       </ngb-alert>
@@ -57,8 +59,8 @@
     </div>
 
 
-    <div class="form-group" [hidden]="!showCommentInput">
-      <label for="comment">Kommentarer til arbeidsflyten (benyttes for kommentarer til behandlingen, ikke for vurdering av hendelsen)</label>
+    <div class="form-group mt-4" [hidden]="!showCommentInput">
+      <label for="comment" class="form-label">Kommentarer til arbeidsflyten <small>(benyttes for kommentarer til behandlingen, ikke for vurdering av hendelsen)</small></label>
       <nlf-help key="ors-editor-workflow"></nlf-help>
       <textarea [disabled]="!observation.acl_user.x" [ngClass]="{'disabled': processing}" placeholder="Kommentarer (blir ikke synlig i den endelige rapporten - benytt feltet for vurderinger for vurderinger som skal være offentlig)" [(ngModel)]="payload.comment" name="payload_comment" class="form-control" rows="5" id="comment"></textarea>
     </div>

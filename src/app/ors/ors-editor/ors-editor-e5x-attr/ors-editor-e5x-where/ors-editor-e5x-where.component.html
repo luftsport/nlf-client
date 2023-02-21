@@ -4,9 +4,11 @@
 
 <div *ngIf="modal && !showOnlyBtn" class="row">
   <div class="col-md-3">
-    <button class="btn btn-primary btn-block" (click)="openModal(attrModal)">
-      <fa-icon [icon]="faMapMarker"></fa-icon> Where
-    </button>
+    <div class="d-grid gap-2">
+      <button class="btn btn-primary" (click)="openModal(attrModal)">
+        <fa-icon [icon]="faMapMarker"></fa-icon> Where
+      </button>
+    </div>
   </div>
   <div class="col-md-9">
     <div *ngFor="let a of atm; let idx = index">
@@ -18,8 +20,8 @@
   </div>
 </div>
 
-<div *ngIf="modal && showOnlyBtn" class="row">
-  <button class="btn btn-secondary btn-block" (click)="openModal(attrModal)">
+<div *ngIf="modal && showOnlyBtn" class="row d-grid gap-2">
+  <button class="btn btn-secondary" (click)="openModal(attrModal)">
     <fa-icon [icon]="faMapMarker"></fa-icon> Where
   </button>
 </div>

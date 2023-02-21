@@ -14,12 +14,13 @@
 
     <div *ngIf="!!success">
       <p class="lead">Supert! Du har også muligheten til å endre innstillingene senere under kontoinnstillinger.</p>
-      <button class="btn btn-block btn-lg btn-success">
-        <fa-icon [icon]="faCheck" [fixedWidth]="true"></fa-icon>
-        <nlf-resolve-lungo-activity [activity_id]="userData.settings.default_activity"></nlf-resolve-lungo-activity>&nbsp;/&nbsp;
-        <nlf-resolve-lungo-organization [organization_id]="userData.settings.default_discipline" [show_activity]="false"></nlf-resolve-lungo-organization>
-      </button>
-
+      <div class="d-grid gap-2">
+        <button class="btn btn-lg btn-success">
+          <fa-icon [icon]="faCheck" [fixedWidth]="true"></fa-icon>
+          <nlf-resolve-lungo-activity [activity_id]="userData.settings.default_activity"></nlf-resolve-lungo-activity>&nbsp;/&nbsp;
+          <nlf-resolve-lungo-organization [organization_id]="userData.settings.default_discipline" [show_activity]="false"></nlf-resolve-lungo-organization>
+        </button>
+      </div>
     </div>
     <div *ngIf="!success && !error">
       <p class="lead" *ngIf="!userData?.settings?.default_club">
@@ -32,11 +33,13 @@
       <span *ngIf="!!org">
 
         <p *ngFor="let role of org">
-          <button (click)="setDefaultClub(role)" class="btn btn-block btn-lg btn-primary">
-            <fa-icon [icon]="faPlus" [fixedWidth]="true"></fa-icon>
-            <nlf-resolve-lungo-activity [activity_id]="role.activity"></nlf-resolve-lungo-activity>&nbsp;/&nbsp;
-            <nlf-resolve-lungo-organization [organization_id]="role.org" [show_activity]="false"></nlf-resolve-lungo-organization>
-          </button>
+          <span class="d-grid gap-2">
+            <button (click)="setDefaultClub(role)" class="btn btn-lg btn-primary">
+              <fa-icon [icon]="faPlus" [fixedWidth]="true"></fa-icon>
+              <nlf-resolve-lungo-activity [activity_id]="role.activity"></nlf-resolve-lungo-activity>&nbsp;/&nbsp;
+              <nlf-resolve-lungo-organization [organization_id]="role.org" [show_activity]="false"></nlf-resolve-lungo-organization>
+            </button>
+          </span>
         </p>
         <div *ngIf="org.length==0" class="alert alert-danger">
           Fant ingen klubber som du kan tilknyttes, vennligst varsle NLF om dette.

@@ -53,9 +53,11 @@
   </div>
   <!-- ADD -->
   <div class="col-md-2">
-    <button [disabled]="!observation.acl_user.w" class="btn btn-primary btn-block" id="add_airport" (click)="addSegment()">
-      <fa-icon [icon]="faPlus"></fa-icon>Legg Til
-    </button>
+    <div class="d-grid gap-2">
+      <button [disabled]="!observation.acl_user.w" class="btn btn-primary" id="add_airport" (click)="addSegment()">
+        <fa-icon [icon]="faPlus"></fa-icon>Legg Til
+      </button>
+    </div>
   </div>
   <!-- MAP -->
   <div class="col-md-2 text-end">
@@ -94,12 +96,14 @@
 
           <div class="col-md-2">
             <!-- TOGGLE INCIDENT ON OFF -->
-            <button [disabled]="!observation.acl_user.w" *ngIf="!hasIncident()" class="btn btn-warning btn-block" (click)="addSegmentIncident(idx)">
-              <fa-icon [icon]="faPlus"></fa-icon> Hendelse
-            </button>
-            <button [disabled]="!observation.acl_user.w" *ngIf="hasSegmentIncident(idx)" class="btn btn-outline-dark btn-block" (click)="removeSegmentIncident(idx)">
-              <fa-icon [icon]="faMinus"></fa-icon> Fjern Hendelse
-            </button>
+            <div class="d-grid gap-2">
+              <button [disabled]="!observation.acl_user.w" *ngIf="!hasIncident()" class="btn btn-warning" (click)="addSegmentIncident(idx)">
+                <fa-icon [icon]="faPlus"></fa-icon> Hendelse
+              </button>
+              <button [disabled]="!observation.acl_user.w" *ngIf="hasSegmentIncident(idx)" class="btn btn-outline-dark" (click)="removeSegmentIncident(idx)">
+                <fa-icon [icon]="faMinus"></fa-icon> Fjern Hendelse
+              </button>
+            </div>
           </div>
 
           <div class="col-md-1 text-end">
@@ -107,7 +111,7 @@
           </div>
         </div>
 
-        <div *ngIf="hasSegmentIncident(idx)" class="row bg-light pt-3" style="border-left:2px solid #ffc107;border-right:2px solid #ffc107; border-bottom: 1px solid #ffc107;">
+        <div *ngIf="hasSegmentIncident(idx)" class="row bg-light pt-3 pb-3" style="border-left:2px solid #ffc107;border-right:2px solid #ffc107; border-bottom: 1px solid #ffc107;">
 
           <!-- FLIGHT DATA -->
           <div class="col-md-2">

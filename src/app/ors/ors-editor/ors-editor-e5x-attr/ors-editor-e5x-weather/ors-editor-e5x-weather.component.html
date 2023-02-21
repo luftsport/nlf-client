@@ -1,8 +1,10 @@
 <div *ngIf="!showOnlyBtn" class="row">
   <div class="col-md-3">
-    <button class="btn btn-primary btn-block" (click)="openModal(modal)">
-      <fa-icon [icon]="faCloud"></fa-icon>Weather
-    </button>
+    <div class="d-grid gap-2">
+      <button class="btn btn-primary" (click)="openModal(modal)">
+        <fa-icon [icon]="faCloud"></fa-icon>Weather
+      </button>
+    </div>
   </div>
   <div class="col-md-9">
 
@@ -12,8 +14,8 @@
   </div>
 </div>
 
-<div *ngIf="showOnlyBtn">
-  <button class="btn btn-secondary btn-block" (click)="openModal(attrModal)">
+<div *ngIf="showOnlyBtn" class="d-grid gap-2">
+  <button class="btn btn-secondary" (click)="openModal(attrModal)">
     <fa-icon [icon]="faCloud"></fa-icon>Weather
   </button>
 </div>

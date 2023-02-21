@@ -100,15 +100,15 @@
   </div>
 
   <div class="col-md-4 col-xs-12 p-3 align-text-bottom">
-    <div>
-      <button (click)="openModal(autoModal, 'metar')" [ngClass]="!!weather.auto?.metar ? 'btn-success': 'btn-secondary'" class="btn btn-block my-2">METAR</button>
+    <div class="d-grid gap-2">
+      <button (click)="openModal(autoModal, 'metar')" [ngClass]="!!weather.auto?.metar ? 'btn-success': 'btn-secondary'" class="btn my-2">METAR</button>
     </div>
-    <div>
-      <button (click)="openModal(autoModal, 'taf')" [ngClass]="!!weather.auto?.taf ? 'btn-success': 'btn-secondary'" class="btn btn-block my-2">TAF</button>
+    <div class="d-grid gap-2">
+      <button (click)="openModal(autoModal, 'taf')" [ngClass]="!!weather.auto?.taf ? 'btn-success': 'btn-secondary'" class="btn my-2">TAF</button>
     </div>
     <!--
-      <div>
-        <button (click)="openModal(autoModal, 'yr')" [ngClass]="!!weather.auto.yr ? 'btn-success': 'btn-secondary'" class="btn btn-block my-1">YR</button>
+      <div class="d-grid gap-2">
+        <button (click)="openModal(autoModal, 'yr')" [ngClass]="!!weather.auto.yr ? 'btn-success': 'btn-secondary'" class="btn my-1">YR</button>
       </div>
     -->
   </div>

@@ -21,11 +21,13 @@
     <div class="my-3" *ngIf="showDefault">
 
       <!-- QUICKSELECT DEFAULT DISCIPLINE
-    <button *ngIf="!!settings && canCreateDefault()" (click)="createObservation(settings.default_discipline, settings.default_club, settings.default_activity)"
-      class="btn btn-block btn-success btn-lg my-1">
-      <fa-icon [icon]="faPlus"></fa-icon>
-      <nlf-resolve-lungo-organization [organization_id]="settings.default_discipline" show_activity="false"></nlf-resolve-lungo-organization>
-    </button>
+        <div class="d-grid gap-2">
+      <button *ngIf="!!settings && canCreateDefault()" (click)="createObservation(settings.default_discipline, settings.default_club, settings.default_activity)"
+        class="btn btn-success btn-lg my-1">
+        <fa-icon [icon]="faPlus"></fa-icon>
+        <nlf-resolve-lungo-organization [organization_id]="settings.default_discipline" show_activity="false"></nlf-resolve-lungo-organization>
+      </button>
+    </div>
     <div *ngIf="!!settings && !canCreateDefault()" class="alert alert-primary" role="alert">
       OBSREG <nlf-resolve-lungo-activity [activity_id]="settings.default_activity"></nlf-resolve-lungo-activity> er nede for vedlikehold
     </div>
