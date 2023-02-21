@@ -1105,3 +1105,12 @@ del {
     bottom: 0;
     width: 100%;
   }
+
+/** Bootstrap hacks **/
+.card-header {
+    padding: 0.75rem 1.25rem !important;;
+    margin-bottom: 0!important;;
+    color: inherit;
+    background-color: rgba(0,0,0,.03) !important;
+    border-bottom: 1px solid rgba(0,0,0,.125) !important;
+}
