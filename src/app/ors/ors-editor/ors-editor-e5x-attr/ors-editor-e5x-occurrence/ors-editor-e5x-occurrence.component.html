@@ -35,7 +35,7 @@
   Klassifiser hendelsen
   <nlf-help class="float-end" key="ors-editor-e5x-classification"></nlf-help>
 </div>
-<div class="p-2 bg-warning col-md-12">
+<div class="p-3 bg-warning col-md-12">
   <div class="row">
     <div class="col-md-4">
       <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="observation.occurrence.attributes.injuryLevel.value" path="E5X.Occurrence.InjuryLevel" id="injuryLevel"></nlf-ors-editor-tag-e5x>
@@ -54,7 +54,7 @@
 
   </div>
 
-  <div class="row">
+  <div class="row mt-3">
     <div class="col-md-6">
       <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" (change)="debouncedUpdate()" [(items)]="observation.occurrence.attributes.occurrenceClass.value" path="E5X.Occurrence.OccurrenceClass"
         id="OccurrenceClass"></nlf-ors-editor-tag-e5x>
@@ -65,7 +65,7 @@
       </nlf-ors-editor-tag-e5x>
     </div>
 
-    <div class="col-md-12">
+    <div class="col-md-12 mt-3">
       <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" (change)="debouncedUpdate()" [(items)]="observation.occurrence.attributes.occurrenceCategory.value" path="E5X.Occurrence.OccurrenceCategory"
         id="OccurrenceCategory">
       </nlf-ors-editor-tag-e5x>
