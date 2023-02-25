@@ -19,3 +19,51 @@
 
 </agm-map>
 -->
+
+<div *ngIf="dataReady" style="height: 800px;" leaflet (leafletMapReady)="onMapReady($event)"
+  [(leafletCenter)]="mapCenter" [leafletOptions]="options" [leafletMarkerCluster]="markers">
+</div>
+
+<ng-template #modalTemplate>
+
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      {{ modalOrg.name }} 
+    </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+    <dl class="row">
+      <dt class="col-sm-3">Org Type</dt>
+      <dd class="col-sm-9"><nlf-resolve-lungo-organization-type [type_id]="modalOrg.type_id"></nlf-resolve-lungo-organization-type></dd>
+      <dt class="col-sm-3">Aktiv</dt>
+      <dd class="col-sm-9"><span class="text-success" *ngIf="modalOrg.is_active">JA</span><span class="text-danger" *ngIf="!modalOrg.is_active">NEI</span></dd>
+      <dt class="col-sm-3">Epost</dt>
+      <dd class="col-sm-9">{{ modalOrg.contact.email || '' }}</dd>
+      <dt class="col-sm-3">Tlf</dt>
+      <dd class="col-sm-9">{{ modalOrg.contact.phone_home || '' }}</dd>
+      <dt class="col-sm-3">Gateadresse</dt>
+      <dd class="col-sm-9">{{ modalOrg.contact.street_address || '' }}</dd>
+      <dt class="col-sm-3">City</dt>
+      <dd class="col-sm-9">{{ modalOrg.contact.zip_code || '' }} {{ modalOrg.contact.city || '' }}</dd>
+      <dt class="col-sm-3">Aktiviteter</dt>
+      <dd class="col-sm-9">
+        <div *ngFor="let activity of modalOrg.activities">
+          <nlf-resolve-lungo-activity [activity_id]="activity.id" link="true"></nlf-resolve-lungo-activity>
+        </div>
+      </dd>
+
+    </dl>
+
+    <p>Sist oppdatert: {{ modalOrg._updated | date:'full' }}</p>
+
+  </div>
+
+  <div class="modal-footer">
+    <a class="btn btn-link" [routerLink]="['/organizations', modalOrg.id]">Gå til organisasjonen</a>
+  </div>
+</ng-template>
