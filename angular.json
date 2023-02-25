@@ -29,7 +29,9 @@
               "node_modules/ngx-easy-table/style.css",
               "node_modules/jodit/build/jodit.min.css",
               "node_modules/@ng-select/ng-select/themes/default.theme.css",
-              "node_modules/leaflet/dist/leaflet.css"
+              "node_modules/leaflet/dist/leaflet.css",
+              "node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css",
+              "node_modules/leaflet.markercluster/dist/MarkerCluster.css"
             ],
             "scripts": [
               "node_modules/blueimp-canvas-to-blob/js/canvas-to-blob.min.js"
