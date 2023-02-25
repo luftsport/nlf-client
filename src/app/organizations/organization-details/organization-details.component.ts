@@ -7,7 +7,7 @@ import { ApiClubItem, ApiOptionsInterface, NlfConfigItem } from 'app/api/api.int
 import { NlfAlertService } from 'app/services/alert/alert.service';
 import { GeoLocationService } from 'app/services/geo/geo-location.service';
 import { NlfConfigService } from 'app/nlf-config.service';
-import { LeafletOptions, LeafletLayers, latLng, marker, tileLayer } from 'leaflet';
+import { MapOptions, Layer, latLng, marker, tileLayer } from 'leaflet';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 // import { forkJoin } from 'rxjs';
 
@@ -37,8 +37,8 @@ export class NlfOrganizationDetailsComponent implements OnInit, OnDestroy {
 
   sub;
 
-  mapOptions: LeafletOptions = undefined;
-  mapLayers: LeafletLayers = undefined;
+  mapOptions: MapOptions = undefined;
+  mapLayers: Layer = undefined;
 
   constructor(
     private route: ActivatedRoute,

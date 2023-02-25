@@ -12,7 +12,9 @@ import { NlfConfigService } from 'app/nlf-config.service';
 import { ConfirmService } from 'app/services/confirm/confirm.service';
 import { forkJoin } from 'rxjs';
 import { faArrowsAlt, faCrosshairs, faPlus, faRefresh, faMapMarker, faTimes, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons';
-import { Map, Marker, LeafletOptions, LeafletLayers, latLng, marker, tileLayer } from 'leaflet';
+import { Map, Marker, MapOptions, LayerOptions, latLng, LatLng, marker, tileLayer } from 'leaflet';
+
+
 import { BarVerticalStackedComponent, HeatMapModule } from '@swimlane/ngx-charts';
 
 @Component({
@@ -43,20 +45,20 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
   currentLocation: ApiLocationItem;
 
   map: Map;
-  mapOptions: LeafletOptions = {
+  mapOptions: MapOptions = {
     layers: [
       tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
     ],
     zoom: 12
   };
 
-  mapCenter: latLng;
+  mapCenter: LatLng;
   currentMarkerLayer: Marker;
   currentMarkerOptions: Object;
 
   // Modal map
   modalMap: Map;
-  modalMapOptions: LeafletOptions = {
+  modalMapOptions: MapOptions = {
     layers: [
       tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
     ],
@@ -286,7 +288,7 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
     }
     this.modalMap.panTo(latLng(this.modalValue.geo.coordinates[0], this.modalValue.geo.coordinates[1]));
     this.currentModalMarkerLayer.remove();
-    const options = { title: this.org.name, riseOnHover: true, draggable: 'true' };
+    const options = { title: this.org.name, riseOnHover: true, draggable: true };
     this.currentModalMarkerLayer = new Marker(latLng(this.modalValue.geo.coordinates[0], this.modalValue.geo.coordinates[1]), options);
     this.currentModalMarkerLayer.addTo(this.modalMap);
   }
@@ -356,7 +358,7 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
   onModalMapReady(map: Map) {
     this.modalMap = map;
     console.log(map);
-    const options = { title: this.org.name, riseOnHover: true, draggable: 'true' };
+    const options = { title: this.org.name, riseOnHover: true, draggable: true };
     try {
     this.currentModalMarkerLayer = new Marker(latLng(this.modalValue.geo.coordinates[0], this.modalValue.geo.coordinates[1]), options);
     } catch (e) {
