@@ -140,6 +140,10 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
       },
       err => console.log(err),
       () => {
+        // Need to convert badge-info to text-bg-info botstrap 4=>5
+        try {
+          this.content.body = this.content.body.replaceAll('badge badge-', 'badge text-bg-');
+        } catch (e) { }
         this.dataReady = true;
         // this.messenger$.next(true);
         console.log('Mode:', this.mode);
