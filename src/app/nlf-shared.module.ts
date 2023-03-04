@@ -19,6 +19,7 @@ import { FaConfig } from '@fortawesome/angular-fontawesome';
 // MAPS
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
+import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
 // Charts
 import { NgxEchartsModule } from 'ngx-echarts';
 
@@ -104,6 +105,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     FontAwesomeModule, // ngx-icons
     LeafletModule, // Maps
     LeafletMarkerClusterModule, // cluster maps
+    LeafletDrawModule, // draw on map
     NgProgressModule,
     NgProgressHttpModule,
     // NgProgressRouterModule,
@@ -178,6 +180,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     // Custom
     LeafletModule,
     LeafletMarkerClusterModule,
+    LeafletDrawModule,
     NgxEchartsModule,
     NgSelectModule,
     NlfHelpComponent,

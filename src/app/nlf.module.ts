@@ -264,6 +264,7 @@ import { NlfOrsEditorE5XAcWildlifeComponent } from 'app/ors/ors-editor/ors-edito
 import { NlfOrsEditorE5XAcInjuriesComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-ac-injuries/ors-editor-e5x-ac-injuries.component';
 import { NlfOrsEditorE5XAcWeatherComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-ac-weather/ors-editor-e5x-ac-weather.component';
 import { NlfOrsEditorE5XAcFlightComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-ac-flight/ors-editor-e5x-ac-flight.component';
+import { NlfOrsEditorFlightMapComponent } from 'app/ors/ors-editor/ors-editor-flight-map/ors-editor-flight-map.component';
 
 // OCCURRENCE ATTRIBUTES
 import { NlfOrsEditorE5XOccurrenceComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-occurrence/ors-editor-e5x-occurrence.component'
@@ -516,6 +517,7 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfOrsEditorE5XAcInjuriesComponent,
     NlfOrsEditorE5XAcWeatherComponent,
     NlfOrsEditorE5XAcFlightComponent,
+    NlfOrsEditorFlightMapComponent,
     // OCCURRENCE ATTRIBUTES
     NlfOrsEditorE5XOccurrenceComponent,
     NlfOrsEditorE5XWeatherComponent,
@@ -552,9 +554,9 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfErrorComponent,
     ContenteditableDirective,
     ConfirmModalComponent,
-    
+
     // METAR
-    NlfMetMetarComponent, 
+    NlfMetMetarComponent,
 
     // MEMBERSHIPS
     NlfMemberComponent,
