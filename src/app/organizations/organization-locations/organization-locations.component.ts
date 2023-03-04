@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Inject, ViewChild, ElementRef, TemplateRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, ViewChild, ElementRef, TemplateRef, AfterViewInit, NgZone } from '@angular/core';
 import { ApiNlfClubsService } from 'app/api/api-nlf-clubs.service';
 import { ApiLocationsService } from 'app/api/api-locations.service';
 import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
@@ -95,7 +95,8 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
     private geoLocationService: GeoLocationService,
     private alertService: NlfAlertService,
     private confirmService: ConfirmService,
-    private configService: NlfConfigService
+    private configService: NlfConfigService,
+    private zone: NgZone
   ) {
 
     forkJoin([
@@ -165,10 +166,10 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
   public goTo(location) {
     console.log('LOCATION', location);
     const options = { title: location.name, riseOnHover: true };
-    
+
     try {
-    this.currentLocation = location;
-    this.mapCenter = latLng(location.geo.coordinates[0], location.geo.coordinates[1]);
+      this.currentLocation = location;
+      this.mapCenter = latLng(location.geo.coordinates[0], location.geo.coordinates[1]);
     } catch (e) {
       this.currentLocation = this.userGeo;
       this.mapCenter = latLng(this.userGeo.geo.coordinates[0], this.userGeo.geo.coordinates[1]);
@@ -321,7 +322,7 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
 
     // Modal map)" [longitude]="toFloat()
     try {
-    this.modalMapOptions.center = latLng(this.modalValue.geo.coordinates[0], this.modalValue.geo.coordinates[1]);
+      this.modalMapOptions.center = latLng(this.modalValue.geo.coordinates[0], this.modalValue.geo.coordinates[1]);
     } catch (e) {
       this.modalMapOptions.center = latLng(this.userGeo.geo.coordinates[0], this.userGeo.geo.coordinates[1]);
     }
@@ -338,7 +339,7 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
       this.modalValue.geo = { type: 'Point', coordinates: [event.coords.lat, event.coords.lng] };
     }
 
-    
+
   }
 
 
@@ -360,25 +361,35 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
     console.log(map);
     const options = { title: this.org.name, riseOnHover: true, draggable: true };
     try {
-    this.currentModalMarkerLayer = new Marker(latLng(this.modalValue.geo.coordinates[0], this.modalValue.geo.coordinates[1]), options);
-    } catch (e) {
+      this.currentModalMarkerLayer = new Marker(latLng(this.modalValue.geo.coordinates[0], this.modalValue.geo.coordinates[1]), options);
+    } catch (e) {
       this.currentModalMarkerLayer = new Marker(latLng(this.userGeo.geo.coordinates[0], this.userGeo.geo.coordinates[1]), options);
     }
 
     this.currentModalMarkerLayer.on('dragend', (event) => {
-      if (!!this.modalValue) {
-        console.log('DRAGEND', event);
-        this.modalValue.geo = { type: 'Point', coordinates: [event.target._latlng.lat, event.target._latlng.lng] };
-        this.modalMap.panTo(latLng(event.target._latlng.lat, event.target._latlng.lng));
-        this.currentModalMarkerLayer.remove();
-        this.currentModalMarkerLayer = new Marker(latLng(event.target._latlng.lat, event.target._latlng.lng), options);
-        this.currentModalMarkerLayer.addTo(this.modalMap);
-      }
+      this.onDragEnd(event, options);
     });
-
     this.currentModalMarkerLayer.addTo(this.modalMap);
-
     //this.map.options.layers[1](marker(this.org.locations[0].geo.coordinates[0], this.org.locations[0].geo.coordinates[1]));
+  }
+
+  onDragEnd(event, options) {
+    //this.zone.run(() => {
+    console.log("TEST");
+    if (!!this.modalValue) {
+      const { lat, lng } = event.target.getLatLng();
+      console.log('DRAGEND', event);
+      this.modalValue.geo = { type: 'Point', coordinates: [lat, lng] };
+      this.modalMap.panTo(latLng(lat, lng));
+      this.currentModalMarkerLayer.remove();
+      this.currentModalMarkerLayer = new Marker(latLng(lat, lng), options);
+      this.currentModalMarkerLayer.addTo(this.modalMap);
+
+      //We removed the layer the event fired, need to add event to new layer:
+      this.currentModalMarkerLayer.on('dragend', (event) => {
+        this.onDragEnd(event, options);
+      });
+    }
   }
 
 }
