@@ -12,7 +12,8 @@
   </div>
   <div class="col-md-9">
     <div *ngFor="let a of atm; let idx = index">
-      <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="a.attributes.anspName.value" path="E5X.Occurrence.AirNavigationService.ANSPName"></nlf-ors-editor-tag-e5x-render>
+      <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="a.attributes.anspName.value"
+        path="E5X.Occurrence.AirNavigationService.ANSPName"></nlf-ors-editor-tag-e5x-render>
       &nbsp;
       <fa-icon [icon]="faEdit" (click)="openModal(modal, idx)"></fa-icon>
       <fa-icon [icon]="faClose" (click)="delete(idx)"></fa-icon>
@@ -39,41 +40,36 @@
   <div class="modal-body">
     <!--<ng-container *ngTemplateOutlet="attrTemplate"></ng-container>-->
     <!-- Modal content -->
-    <div class="row">
-      <!--
-      <agm-map *ngIf="geoReady" [latitude]="toFloat(attr.latitudeOfOcc.value)" [longitude]="toFloat(attr.longitudeOfOcc.value)" (mapClick)="updateLocation($event)" [mapTypeControl]="true" [zoom]="7">
-
-        <agm-marker [markerDraggable]="isDraggable()" (dragEnd)="updateLocation($event)" [latitude]="toFloat(attr.latitudeOfOcc.value)" [longitude]="toFloat(attr.longitudeOfOcc.value)">
-        </agm-marker>
-
-
-        <agm-polyline *ngFor="let path of paths">
-          <agm-polyline-point *ngFor="let coordinates of path" [latitude]="coordinates[1]" [longitude]="coordinates[0]">
-          </agm-polyline-point>
-        </agm-polyline>
-
-      </agm-map>
-      -->
+    <div class="col-xs-12 position-relative">
+      <div *ngIf="!!paths" class="row" style="height: 400px">
+        <nlf-ors-editor-flight-map [(flight)]="paths"></nlf-ors-editor-flight-map>
+      </div>
     </div>
 
     <div class="row">
       <div class="col-md-6">
-        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.latitudeOfOcc.value" path="E5X.Occurrence.LatitudeOfOcc" id="latitudeOfOcc"></nlf-ors-editor-tag-e5x>
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.latitudeOfOcc.value"
+          path="E5X.Occurrence.LatitudeOfOcc" id="latitudeOfOcc"></nlf-ors-editor-tag-e5x>
       </div>
       <div class="col-md-6">
-        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.longitudeOfOcc.value" path="E5X.Occurrence.LongitudeOfOcc" id="longitudeOfOcc"></nlf-ors-editor-tag-e5x>
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.longitudeOfOcc.value"
+          path="E5X.Occurrence.LongitudeOfOcc" id="longitudeOfOcc"></nlf-ors-editor-tag-e5x>
       </div>
 
     </div>
 
     <div class="row">
       <div class="col-md-12">
-        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.locationName.value" path="E5X.Occurrence.LocationName" id="locationName"></nlf-ors-editor-tag-e5x>
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.locationName.value"
+          path="E5X.Occurrence.LocationName" id="locationName"></nlf-ors-editor-tag-e5x>
       </div>
 
       <div class="col-md-12">
-        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.stateAreaOfOcc.value" path="E5X.Occurrence.StateAreaOfOcc" id="stateAreaOfOcc"></nlf-ors-editor-tag-e5x>
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.stateAreaOfOcc.value"
+          path="E5X.Occurrence.StateAreaOfOcc" id="stateAreaOfOcc"></nlf-ors-editor-tag-e5x>
       </div>
+    </div>
+    <div class="row clearfix">
     </div>
 
     <div class="row">
@@ -86,10 +82,12 @@
   </div>
 
   <div class="modal-footer">
+
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
       <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>Avbryt
     </button>
-    <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate(modalIndex)">
+    <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success"
+      (click)="modalUpdate(modalIndex)">
       <fa-icon [icon]="faCheck" [fixedWidth]="true"></fa-icon>Oppdater
     </button>
   </div>
