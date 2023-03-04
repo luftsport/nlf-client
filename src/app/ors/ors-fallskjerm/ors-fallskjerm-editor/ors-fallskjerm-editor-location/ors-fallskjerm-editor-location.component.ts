@@ -4,6 +4,9 @@ import { ApiObservationsItem, ApiOptionsInterface } from 'app/api/api.interface'
 import { ApiClubsService } from 'app/api/api-clubs.service';
 import { FormControl } from '@angular/forms';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { Map, Marker, MapOptions, LayerOptions, latLng, LatLng, marker, tileLayer } from 'leaflet';
+import { GeoLocationService } from 'app/services/geo/geo-location.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'nlf-ors-fallskjerm-editor-location',
@@ -13,31 +16,39 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 export class NlfOrsFallskjermEditorLocationComponent implements OnInit, AfterViewInit {
 
   observation: ApiObservationsItem;
+  isLocationICAOString: boolean = false;
   locations = [];
   locationChooser: FormControl;
-  selected: string;
+  selected: string = '';
   dataReady = false; // render when true
 
   lines = [];
 
   faEdit = faEdit;
 
-  constructor(private subject: NlfOrsEditorService,
-    private clubService: ApiClubsService) {
+  // User geo default møllergata
+  userGeo = { geo: { type: 'Point', coordinates: [59.9, 10.9] } };
 
-    this.subject.observableObservation.subscribe(
-      observation => {
-        // always assign
-        this.observation = observation;
 
-        try {
-          this.selected = this.observation.location.nickname;
-        } catch (e) {
-          this.selected = undefined;
-        }
+  // Map
+  map: Map;
+  mapCenter: LatLng;
+  mapOptions: MapOptions = {
+    layers: [
+      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
+    ],
+    zoom: 12
+  };
+  marker: Marker;
+  markerOptions: Object;
+  mapReady: boolean = false;
 
-      }
-    );
+  constructor(
+    private subject: NlfOrsEditorService,
+    private clubService: ApiClubsService,
+    private geoLocationService: GeoLocationService,) {
+
+
 
 
     // this.subject.update(this.observation);
@@ -45,64 +56,117 @@ export class NlfOrsFallskjermEditorLocationComponent implements OnInit, AfterVie
 
   ngOnInit() {
     this.locationChooser = new FormControl();
+    const getClubOptions: ApiOptionsInterface = {
+      query: { projection: { locations: 1 } }
+    };
+
+    forkJoin([
+      this.subject.observableObservation.subscribe(
+        observation => {
+          // always assign
+          this.observation = observation;
+
+          if (typeof (this.observation?.location?.icao) === 'string') {
+            this.isLocationICAOString = true;
+          }
+
+          this.clubService.getClub(this.observation.discipline, getClubOptions).subscribe(
+            data => {
+              console.log('Club locations:');
+              console.log(data);
+              this.locations = data.locations;
+
+              // assign default if not in
+              if (!this.observation.location || !this.observation.location.nickname) {
+                if (this.locations.length > 0) {
+                  this.observation.location = this.locations[0];
+                  this.subject.update(this.observation);
+                  this.selected = this.observation.location.nickname;
+
+                }
+
+              }
+
+            },
+            err => {
+              console.log('ERROR doing clubservice', err);
+
+            },
+            () => {
+              this.mapOptions.center = latLng(this.observation.location.geo.coordinates[0], this.observation.location.geo.coordinates[1]);
+
+            }
+          )
+
+          try {
+            this.selected = this.observation.location.nickname;
+          } catch (e) {
+            this.selected = undefined;
+          }
+          try {
+            this.mapOptions.center = latLng(this.observation.location.geo.coordinates[0], this.observation.location.geo.coordinates[1]);
+          } catch (e) { }
+
+        }
+      ),
+
+      this.dataReady = true
+
+    ]);
     this.getClubLocations();
   }
 
   ngAfterViewInit() {
     // Subscribe to changes!
     this.locationChooser.valueChanges
-      .subscribe(location => {
-        this.selected = location;
-        console.log('Location selected');
-        console.log(location);
+      .subscribe((location) => {
 
-        this.locations.forEach((element, index) => {
-          if (element.nickname === location) {
-            this.observation.location = this.locations[index];
-            this.subject.update(this.observation);
+        this.selected = location;
+
+        for (let i = 0; i < this.locations.length; i++) {
+          if (this.locations[i]?.nickname === location) {
+            if (location != this.observation.location.nickname) {
+              if (this.isLocationICAOString) {
+                try {
+                  if (typeof (this.locations[i]['icao']) != 'string') {
+                    this.locations[i]['icao'] = this.locations[i]['icao']['icao'];
+                  }
+                }
+                catch (e) { }
+              }
+              this.observation.location = Object.assign({}, this.locations[i]);
+              //this.observation.location.geo.coordinates = [this.toFloat(this.observation.location.geo.coordinates[0]), this.toFloat(this.observation.location.geo.coordinates[1])];
+
+
+              this.subject.update(this.observation);
+              this.goTo(this.observation.location);
+            }
           }
-        });
+        }
         // this.observation.location = location;
       });
   }
 
-  markerMoved(event) {
-    this.observation.location.geo.coordinates[0] = event.coords.lat;
-    this.observation.location.geo.coordinates[1] = event.coords.lng;
-    console.log('marker moved');
-    console.log(event);
-    this.subject.update(this.observation);
-  }
+
 
   getClubLocations() {
-    const options: ApiOptionsInterface = {
-      query: { projection: { locations: 1 } }
-    };
 
-    this.clubService.getClub(this.observation.discipline, options).subscribe(
-      data => {
-        console.log('Club locations:');
-        console.log(data);
-        this.locations = data.locations;
+  }
 
-        // assign default if not in
-        if (!this.observation.location || !this.observation.location.nickname) {
-          if (this.locations.length > 0) {
-            this.observation.location = this.locations[0];
-            this.subject.update(this.observation);
-            this.selected = this.observation.location.nickname;
-          }
+  public goTo(location) {
+    console.log('LOCATION', location);
+    const options = { title: location.name, riseOnHover: true };
 
-        }
-      },
-      err => {
-        console.log(err);
-      },
-      () => {
-        this.dataReady = true;
-      }
+    try {
+      this.marker.setLatLng(latLng(location.geo.coordinates[0], location.geo.coordinates[1]));
+      this.mapCenter = latLng(location.geo.coordinates[0], location.geo.coordinates[1]);
+      this.marker.options = options;
+    } catch (e) {
+      this.marker.setLatLng(latLng(this.userGeo.geo.coordinates[0], this.userGeo.geo.coordinates[1]));
+      this.marker.options.title = 'Din plassering fra GPS';
+      this.mapCenter = latLng(this.userGeo.geo.coordinates[0], this.userGeo.geo.coordinates[1]);
+    }
 
-    );
   }
 
   private setDefault() {
@@ -113,4 +177,42 @@ export class NlfOrsFallskjermEditorLocationComponent implements OnInit, AfterVie
 
     return parseFloat(val);
   }
+
+  onMapReady(map: Map) {
+    console.log('MAP READY');
+    this.map = map;
+
+    const options = { title: this.observation.location.name, riseOnHover: true, draggable: true };
+    try {
+      this.marker = new Marker(latLng(this.observation.location.geo.coordinates[0], this.observation.location.geo.coordinates[1]), options);
+    } catch (e) {
+      console.log('No location set');
+    }
+
+    this.marker.on('dragend', (event) => {
+      this.onDragEnd(event, options);
+    });
+    this.marker.addTo(this.map);
+    //this.map.options.layers[1](marker(this.org.locations[0].geo.coordinates[0], this.org.locations[0].geo.coordinates[1]));
+  }
+
+  onDragEnd(event, options) {
+
+    const { lat, lng } = event.target.getLatLng();
+    console.log('DRAGEND', event);
+
+    this.observation.location.geo = { type: 'Point', coordinates: [this.toFloat(lat), this.toFloat(lng)] };
+    this.subject.update(this.observation);
+
+    this.map.panTo(latLng(lat, lng));
+    this.marker.remove();
+    this.marker = new Marker(latLng(lat, lng), options);
+    this.marker.addTo(this.map);
+    //We removed the layer the event fired, need to add event to new layer:
+    this.map.on('dragend', (event) => {
+      this.onDragEnd(event, options);
+    });
+  }
+
+
 }
