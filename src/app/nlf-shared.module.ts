@@ -19,7 +19,7 @@ import { FaConfig } from '@fortawesome/angular-fontawesome';
 // MAPS
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
-import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
+import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
 // Charts
 import { NgxEchartsModule } from 'ngx-echarts';
 
