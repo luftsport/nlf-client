@@ -15,6 +15,7 @@ export class NlfOrsReportFlightMapComponent implements OnInit {
    * 
    */
   @Input() aircraft: ApiObservationAircraftsItem[];
+  @Input() where: [number, number];
 
   map: Map;
   mapOptions: MapOptions = {
@@ -83,6 +84,8 @@ export class NlfOrsReportFlightMapComponent implements OnInit {
       this.layer.addLayer(new Marker(latLng(ac.flight[(ac.flight.length - 1)]['path'][1][1], ac.flight[(ac.flight.length - 1)]['path'][1][0])).bindPopup('Landing'));
 
     });
+
+    this.layer.addLayer(new Marker(latLng(this.where[0], this.where[1])).bindPopup('Incident'));
 
     this.layer.addTo(this.map);
     this.map.fitBounds(this.layer.getBounds().pad(0.5));

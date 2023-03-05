@@ -59,7 +59,7 @@
 
 					<div class="row" style="height: 400px">
 						<div class="col-xs-12 position-relative">
-							<nlf-ors-report-flight-map [aircraft]="observation.aircrafts"></nlf-ors-report-flight-map>
+							<nlf-ors-report-flight-map [aircraft]="observation.aircrafts" [where]="[observation.occurrence.attributes.latitudeOfOcc.value, observation.occurrence.attributes.longitudeOfOcc.value]"></nlf-ors-report-flight-map>
 						</div>
 					</div>
 
