@@ -54,40 +54,14 @@
 
 			<!-- MAP -->
 			<div class="col-md-6">
-				<div fxFlex="100"
-					*ngIf="!!observation.occurrence.attributes.latitudeOfOcc.value || !!observation.occurrence.attributes.longitudeOfOcc.value">
-					<!-- STAR STOP ROUTE
-					    <agm-marker *ngIf="route.length>0" [markerDraggable]="observation.acl_user.w" (dragEnd)="markerMoved($event)"
-					      [latitude]="route[0].from.location.coordinates[1]" [longitude]="route[0].from.location.coordinates[0]" [label]="'S'">
-					    </agm-marker>
-					    <agm-marker *ngIf="route.length>0" [markerDraggable]="observation.acl_user.w" (dragEnd)="markerMoved($event)"
-					      [latitude]="route[route.length-1].to.location.coordinates[1]" [longitude]="route[route.length-1].to.location.coordinates[0]"
-					      [label]="'E'">
-					    </agm-marker>
-					    -->
-					<!--
-					<agm-map style=" max-height: 25rem !important;" [latitude]="observation.occurrence.attributes.latitudeOfOcc.value" [longitude]="observation.occurrence.attributes.longitudeOfOcc.value" [mapTypeControl]="true" [zoom]="7">
+				<div
+					*ngIf="!!observation.occurrence.attributes.latitudeOfOcc.value||!!observation.occurrence.attributes.longitudeOfOcc.value">
 
-
-						<agm-marker [markerDraggable]="false" [latitude]="observation.occurrence.attributes.latitudeOfOcc.value" [longitude]="observation.occurrence.attributes.longitudeOfOcc.value" [label]="'X'">
-						</agm-marker>
-						<div *ngFor="let aircraft of observation.aircrafts">
-
-
-							<agm-polyline *ngFor="let route of aircraft.flight; let ix = index;" [editable]="false">
-								<agm-polyline-point *ngFor="let coordinates of route.path" [latitude]="coordinates[1]" [longitude]="coordinates[0]">
-								</agm-polyline-point>
-							</agm-polyline>
-						</div>
-					</agm-map>
--->
-					<!-- @TODO need to support array of routes for respective aircraft 
-					<div class="col-xs-12 position-relative">
-						<div *ngIf="showRouteMap && location" class="row" style="height: 400px">
-							<nlf-ors-editor-flight-map [(flight)]="route"></nlf-ors-editor-flight-map>
+					<div class="row" style="height: 400px">
+						<div class="col-xs-12 position-relative">
+							<nlf-ors-report-flight-map [aircraft]="observation.aircrafts"></nlf-ors-report-flight-map>
 						</div>
 					</div>
-					-->
 
 					<div class="mt-2">
 						<fa-icon [icon]="faMapMarker"></fa-icon> {{ observation.occurrence.attributes.locationName.value
