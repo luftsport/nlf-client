@@ -207,6 +207,7 @@ import { NlfOrsReportWeatherComponent } from 'app/ors/ors-report/report-weather/
 import { NlfOrsReportFilesComponent } from 'app/ors/ors-report/report-files/report-files.component';
 import { NlfOrsReportComponentsTimelineComponent } from 'app/ors/ors-report/report-components-timeline/report-components-timeline.component';
 import { NlfOrsReportFilesThumbnailsComponent } from 'app/ors/ors-report/report-files-thumbnails/report-files-thumbnails.component';
+import { NlfOrsReportFlightMapComponent } from 'app/ors/ors-report/report-flight-map/report-flight-map.component';
 
 // OBSREG FALLSKJERM
 import { NlfOrsFallskjermEditorComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-editor/ors-fallskjerm-editor.component';
@@ -292,7 +293,7 @@ import { NlfOrsEditorE5xAssessmentComponent } from 'app/ors/ors-editor/ors-edito
 import { NlfOrsEditorE5xRiskComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-risk/ors-editor-e5x-risk.component';
 import { NlfOrsEditorE5xSeparationComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-separation/ors-editor-e5x-separation.component';
 
-// OBSREG EDITOR MOTORFLY ONLY
+// OBSREG EDITOR *FLY ONLY
 import { NlfOrsEditorFlightComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-aircraft/ors-editor-flight/ors-editor-flight.component';
 import { NlfOrsEditorPeopleMotorflyComponent } from 'app/ors/ors-editor/ors-editor-people-motorfly/ors-editor-people-motorfly.component';
 import { NlfOrsEditorAircraftPersonComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-aircraft/ors-editor-aircraft-person/ors-editor-aircraft-person.component';
@@ -518,6 +519,7 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfOrsEditorE5XAcWeatherComponent,
     NlfOrsEditorE5XAcFlightComponent,
     NlfOrsEditorFlightMapComponent,
+    NlfOrsReportFlightMapComponent,
     // OCCURRENCE ATTRIBUTES
     NlfOrsEditorE5XOccurrenceComponent,
     NlfOrsEditorE5XWeatherComponent,
