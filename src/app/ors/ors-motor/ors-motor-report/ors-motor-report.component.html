@@ -66,10 +66,10 @@
 					<div class="mt-2">
 						<fa-icon [icon]="faMapMarker"></fa-icon> {{ observation.occurrence.attributes.locationName.value
 						|| "Sted ikke angitt" }}
-						<span class="mx-2 badge bg-secondary float-end">Lat: {{
-							observation.occurrence.attributes.latitudeOfOcc.value | round: 4 }}</span>
 						<span class="mx-2 badge bg-secondary float-end">Lng: {{
 							observation.occurrence.attributes.longitudeOfOcc.value | round: 4}}</span>
+            <span class="mx-2 badge bg-secondary float-end">Lat: {{
+              observation.occurrence.attributes.latitudeOfOcc.value | round: 4 }}</span>
 					</div>
 					<div>
 						<nlf-ors-editor-tag-e5x-render [showLabel]="false"
