@@ -34,7 +34,7 @@ export class NlfOrsReportFlightMapComponent implements OnInit {
   mapCenter = latLng(59.9, 10.9);
   layer: FeatureGroup;
 
-  colors = ['orange', 'pink', 'purple', 'red','darkblue', 'darkgreen', 'black', 'blue', 'cadetblue', , 'gray', 'darkpurple', 'darkred', 'green', 'lightblue', 'lightgray', 'lightgreen', 'lightred',  'beige'];
+  colors = ['orange', 'pink', 'purple', 'red', 'darkblue', 'darkgreen', 'black', 'blue', 'cadetblue', , 'gray', 'darkpurple', 'darkred', 'green', 'lightblue', 'lightgray', 'lightgreen', 'lightred', 'beige'];
 
 
   constructor() { }
@@ -43,10 +43,6 @@ export class NlfOrsReportFlightMapComponent implements OnInit {
   }
 
   _getColorFromAcIndex(index) {
-
-    // return "rgb(" + Math.floor(index / 256 / 256 % 256) + "," + Math.floor(index / 256 % 256) + "," + Math.floor(index % 256) + ")";
-    // return this.colors[Math.floor(Math.random() * this.colors.length)];
-
     return this.colors[index] || this.colors[0];
   }
 

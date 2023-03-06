@@ -52,7 +52,8 @@ export class NlfOrsEditorFlightComponent implements OnInit {
   dataReady = true;
   location: number[];
   zoom = 5;
-  showRouteMap = false;
+  showRouteMap = true;
+  routeReady = false;
 
   incident: boolean[] = [];
 
@@ -140,6 +141,9 @@ export class NlfOrsEditorFlightComponent implements OnInit {
       this.route = [];
     } else {
       this.route = this.aircraft.flight;
+      setTimeout(() => {                           
+        this.routeReady = true;
+      }, 700);
     }
 
     if (this.route.length > 0) {
@@ -243,6 +247,12 @@ export class NlfOrsEditorFlightComponent implements OnInit {
           () => {
             this.route.push({ from: this.from_airport, to: this.to_airport, path: path, occurrence: false, weather: { from: {}, to: {} } });
             this.route = [...this.route];
+
+
+            setTimeout(() => {                           // <<<---using ()=> syntax
+              this.routeReady = true;
+            }, 700);
+
             // Housekeeping
             this.from_airport = { ...this.to_airport };
             this.to_airport = void 0;
@@ -275,8 +285,8 @@ export class NlfOrsEditorFlightComponent implements OnInit {
         // alltid siste index length-1
         if (this.route.length > 0) {
 
-          if(this.hasSegmentIncident(this.route.length-1)) {
-            this.removeIncident(this.route.length-1);
+          if (this.hasSegmentIncident(this.route.length - 1)) {
+            this.removeIncident(this.route.length - 1);
           }
 
           this.route.pop(); //slice(this.route.length-1,1);

@@ -26,7 +26,7 @@
     <fa-icon [icon]="faMapMarker"></fa-icon> Where
   </button>
 </div>
-<!-- INJURIES MODAL -->
+
 <ng-template #attrModal>
   <div class="modal-header">
     <h4 class="modal-title pull-left">
@@ -41,18 +41,24 @@
     <!--<ng-container *ngTemplateOutlet="attrTemplate"></ng-container>-->
     <!-- Modal content -->
     <div class="col-xs-12 position-relative">
-      <div *ngIf="!!paths" class="row" style="height: 400px">
-        <nlf-ors-editor-flight-map [(flight)]="paths"></nlf-ors-editor-flight-map>
+      <div class="row" style="height: 400px">
+        
+        <nlf-ors-editor-e5x-where-map [aircraft]="observation.aircrafts"
+          [(lat)]="observation.occurrence.attributes.latitudeOfOcc.value"
+          [(lng)]="observation.occurrence.attributes.longitudeOfOcc.value"
+          [disabled]="!observation.acl_user.w"
+          (change)="update()"></nlf-ors-editor-e5x-where-map>
       </div>
+
     </div>
 
     <div class="row">
       <div class="col-md-6">
-        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.latitudeOfOcc.value"
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="observation.occurrence.attributes.latitudeOfOcc.value"
           path="E5X.Occurrence.LatitudeOfOcc" id="latitudeOfOcc"></nlf-ors-editor-tag-e5x>
       </div>
       <div class="col-md-6">
-        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.longitudeOfOcc.value"
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="observation.occurrence.attributes.longitudeOfOcc.value"
           path="E5X.Occurrence.LongitudeOfOcc" id="longitudeOfOcc"></nlf-ors-editor-tag-e5x>
       </div>
 
@@ -60,12 +66,12 @@
 
     <div class="row">
       <div class="col-md-12">
-        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.locationName.value"
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="observation.occurrence.attributes.locationName.value"
           path="E5X.Occurrence.LocationName" id="locationName"></nlf-ors-editor-tag-e5x>
       </div>
 
       <div class="col-md-12">
-        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.stateAreaOfOcc.value"
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="observation.occurrence.attributes.stateAreaOfOcc.value"
           path="E5X.Occurrence.StateAreaOfOcc" id="stateAreaOfOcc"></nlf-ors-editor-tag-e5x>
       </div>
     </div>

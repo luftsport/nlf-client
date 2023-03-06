@@ -266,6 +266,7 @@ import { NlfOrsEditorE5XAcInjuriesComponent } from 'app/ors/ors-editor/ors-edito
 import { NlfOrsEditorE5XAcWeatherComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-ac-weather/ors-editor-e5x-ac-weather.component';
 import { NlfOrsEditorE5XAcFlightComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-ac-flight/ors-editor-e5x-ac-flight.component';
 import { NlfOrsEditorFlightMapComponent } from 'app/ors/ors-editor/ors-editor-flight-map/ors-editor-flight-map.component';
+import { NlfOrsEditorE5XWhereMapComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-where/ors-editor-e5x-where-map/ors-editor-e5x-where-map.component';
 
 // OCCURRENCE ATTRIBUTES
 import { NlfOrsEditorE5XOccurrenceComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-occurrence/ors-editor-e5x-occurrence.component'
@@ -531,6 +532,7 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfOrsEditorE5XInjuriesComponent,
     NlfOrsEditorE5XDamageComponent,
     NlfOrsEditorE5XWhereComponent,
+    NlfOrsEditorE5XWhereMapComponent,
     NlfOrsEditorE5XAtmComponent,
     NlfOrsEditorE5XAerodromeComponent,
     NlfOrsEditorE5XAerodromeSingleComponent,

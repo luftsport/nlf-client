@@ -79,8 +79,6 @@ export class NlfOrsEditorFlightMapComponent implements OnInit {
         }
       )
     ]);
-
-
   }
 
   ngOnInit(): void {
@@ -106,9 +104,10 @@ export class NlfOrsEditorFlightMapComponent implements OnInit {
     } catch (e) { }
 
     for (let i = 0; i < this.flight.length; i++) {
-
-      this.route.push([this.flight[i]['path'][0][1], this.flight[i]['path'][0][0]]);
-      this.route.push([this.flight[i]['path'][1][1], this.flight[i]['path'][1][0]]);
+      try {
+        this.route.push([this.flight[i]['path'][0][1], this.flight[i]['path'][0][0]]);
+        this.route.push([this.flight[i]['path'][1][1], this.flight[i]['path'][1][0]]);
+      } catch (e) { }
     }
 
     if (this.flight.length > 0) {
@@ -156,7 +155,7 @@ export class NlfOrsEditorFlightMapComponent implements OnInit {
     // @TODO
     //preventMarkerRemoval: true - on layer!
 
-    
+
 
     this.polylineRoute.on('pm:update', (event) => {
 
@@ -173,9 +172,11 @@ export class NlfOrsEditorFlightMapComponent implements OnInit {
     // Editable stuff
     if (this.editable) {
 
+      /**
       this.map.on('click', (event) => {
         this.addMarker(event);
       });
+       */
 
       const opts = {
         //position: 'topleft', // toolbar position, options are 'topleft', 'topright', 'bottomleft', 'bottomright'

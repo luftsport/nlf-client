@@ -35,7 +35,7 @@
 
 
   <div class="col-xs-12 position-relative">
-    <div *ngIf="showRouteMap && location" class="row" style="height: 400px">
+    <div *ngIf="showRouteMap && routeReady" class="row" style="height: 400px;" >
       <nlf-ors-editor-flight-map [(flight)]="route" [editable]="observation.acl_user.w"></nlf-ors-editor-flight-map>
     </div>
   </div>
