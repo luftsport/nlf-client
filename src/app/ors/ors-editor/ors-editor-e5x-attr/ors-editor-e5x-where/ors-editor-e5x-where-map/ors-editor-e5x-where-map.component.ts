@@ -1,0 +1,134 @@
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ApiObservationAircraftsItem } from 'app/api/api.interface';
+import { Map, Marker, MapOptions, LayerOptions, latLng, LatLng, marker, tileLayer, Polyline, polyline, PolylineOptions, FeatureGroup, featureGroup, Control, DrawToolbar } from 'leaflet';
+
+@Component({
+  selector: 'nlf-ors-editor-e5x-where-map',
+  templateUrl: './ors-editor-e5x-where-map.component.html',
+  styleUrls: ['./ors-editor-e5x-where-map.component.css']
+})
+export class NlfOrsEditorE5XWhereMapComponent implements OnInit {
+
+  /**
+   * Input is aircraft top level list of aircraft from observation
+   * aircraft.flight holds a list of from-to's including path 
+   * 
+   */
+  @Input() aircraft: ApiObservationAircraftsItem[];
+  @Input() lat: number;
+  @Input() lng: number;
+  @Input() disabled = true;
+  @Output() latChange: EventEmitter<any> = new EventEmitter();
+  @Output() lngChange: EventEmitter<any> = new EventEmitter();
+  @Output() change: EventEmitter<boolean> = new EventEmitter();
+
+  map: Map;
+  mapOptions: MapOptions = {
+    drawControl: false,
+    layers: [
+      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
+    ],
+    zoom: 12,
+    center: latLng(59.9, 10.9),
+  };
+
+  marker: Marker;
+  polylineRoutes: FeatureGroup[];
+  drawOptions;
+  drawControl;
+  mapCenter = latLng(59.9, 10.9);
+  layer: FeatureGroup;
+
+  colors = ['orange', 'pink', 'purple', 'red', 'darkblue', 'darkgreen', 'black', 'blue', 'cadetblue', , 'gray', 'darkpurple', 'darkred', 'green', 'lightblue', 'lightgray', 'lightgreen', 'lightred', 'beige'];
+
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+  _getColorFromAcIndex(index) {
+    return this.colors[index] || this.colors[0];
+  }
+
+  _path2LatLng(path) {
+    let coordinates = [];
+    path.forEach(element => {
+      coordinates.push(latLng(element[1], element[0]));
+    });
+    return coordinates;
+  }
+
+  onMapReady(map) {
+    // Iterate every aircraft - add to map!
+    this.map = map;
+    this.layer = featureGroup();
+
+    this.aircraft.forEach((ac, index) => {
+
+      let acColor = this._getColorFromAcIndex(Math.floor(Math.random() * 1000));
+      // iterate every flight path add polyline
+      ac.flight.forEach((el) => {
+        console.log('Adding layers');
+        this.layer.addLayer(
+          polyline(this._path2LatLng(el.path), {
+            color: this._getColorFromAcIndex(index),
+            weight: 2,
+            opacity: 1,
+            smoothFactor: 1,
+          })
+        );
+      });
+
+      // Add markers take-off and landing for each aircraft:
+      this.layer.addLayer(new Marker(latLng(ac.flight.find(x => x !== undefined)['path'][0][1], ac.flight.find(x => x !== undefined)['path'][0][0])).bindPopup('Take-off'));
+      this.layer.addLayer(new Marker(latLng(ac.flight[(ac.flight.length - 1)]['path'][1][1], ac.flight[(ac.flight.length - 1)]['path'][1][0])).bindPopup('Landing'));
+
+    });
+
+    if (!!this.lat && !!this.lng) {
+      this.marker = new Marker(latLng(this.lat, this.lng), { snapIgnore: false, draggable: true, autoPan: true }).bindPopup('Incident');
+      this.layer.addLayer(this.marker);
+    } else {
+      this.map.on('click', (event) => {
+        this.addMarker(event);
+      });
+    }
+
+    this.marker.on('dragend', (event) => {
+      this.markerDragEnd(event.target.getLatLng());
+    });
+
+    this.layer.addTo(this.map);
+    this.map.fitBounds(this.layer.getBounds().pad(0.5));
+    this.map.invalidateSize();
+
+
+  }
+
+  markerDragEnd(coordinates) {
+    this.lat = coordinates.lat;
+    this.latChange.emit(this.lat);
+    
+    this.lng = coordinates.lng;
+    this.lngChange.emit(this.lng);
+    
+    this.change.emit(true);
+
+    this.marker.on('dragend', (event) => {
+      this.markerDragEnd(event.target.getLatLng());
+    });
+  }
+  addMarker(event) {
+
+    //Clear existing marker,
+    console.log(event);
+    if (this.marker != undefined) {
+      this.map.removeLayer(this.marker);
+    };
+
+    //Add a marker to show where you clicked.
+    this.marker = marker([event.latlng.lat, event.latlng.lng], { snapIgnore: false, draggable: true, autoPan: true }).addTo(this.map);
+  }
+
+}
