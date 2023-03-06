@@ -2,7 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GeoLocationService } from 'app/services/geo/geo-location.service';
 import { ApiGeoAdminService } from 'app/api/api-geo-admin.service';
-import { ApiOptionsInterface } from 'app/api/api.interface';
+import { ApiOptionsInterface, ApiObservationsItem } from 'app/api/api.interface';
+import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import { faCheck, faClose, faEdit, faMapMarker, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -12,13 +13,18 @@ import { faCheck, faClose, faEdit, faMapMarker, faTimes } from '@fortawesome/fre
   styleUrls: ['./ors-editor-e5x-where.component.css']
 })
 export class NlfOrsEditorE5XWhereComponent implements OnInit {
+
+  /** 
   @Input() attr: any;
   @Input() modal: boolean = false;
-  @Input() showOnlyBtn: boolean = true;
-  @Input() disabled: boolean = false;
+ 
   @Output() attrChange: EventEmitter<any> = new EventEmitter();
   @Output() change: EventEmitter<boolean> = new EventEmitter();
   @Input() paths = [];
+*/
+  @Input() showOnlyBtn: boolean = true;
+  @Input() disabled: boolean = false;
+  @Input() modal: boolean = false;
 
   modalRef;
   geoReady = false;
@@ -29,31 +35,44 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
   faTimes = faTimes;
   faCheck = faCheck;
 
+  observation: ApiObservationsItem;
+
+
   constructor(
     private modalService: NgbModal,
     private geoLocationService: GeoLocationService,
-    private geoAdminService: ApiGeoAdminService
+    private geoAdminService: ApiGeoAdminService,
+    private subject: NlfOrsEditorService
   ) {
+
+    this.subject.observableObservation.subscribe(
+      observation => {
+        this.observation = observation;
+      }
+    );
 
     this.geoLocationService.getLocation({ enableHighAccuracy: true }).subscribe(
       position => {
         console.log(position);
-        if (!this.attr.latitudeOfOcc.value && !this.attr.longitudeOfOcc.value) {
-          this.attr.latitudeOfOcc.value = position.coords.latitude;
-          this.attr.longitudeOfOcc.value = position.coords.longitude;
+
+        // Ingen lokalisasjon satt:
+        if (!this.observation.occurrence.attributes.latitudeOfOcc.value && !this.observation.occurrence.attributes.longitudeOfOcc.value) {
+          this.observation.occurrence.attributes.latitudeOfOcc.value = position.coords.latitude;
+          this.observation.occurrence.attributes.longitudeOfOcc.value = position.coords.longitude;
         }
         this.geoReady = true;
       },
       err => {
-        if (!this.attr.latitudeOfOcc.value && !this.attr.longitudeOfOcc.value) {
-          this.attr.latitudeOfOcc.value = 59.91655557650091;
-          this.attr.longitudeOfOcc.value = 10.748440347823207;
+        // Ingen lokalisasjon satt:
+        if (!this.observation.occurrence.attributes.latitudeOfOcc.value && !this.observation.occurrence.attributes.longitudeOfOcc.value) {
+          this.observation.occurrence.attributes.latitudeOfOcc.value = 59.91655557650091;
+          this.observation.occurrence.attributes.longitudeOfOcc.value = 10.748440347823207;
         }
         this.geoReady = true;
       },
       () => {
-
-        if(!this.attr.stateAreaOfOcc.value) {
+        // Alltid oppdatere area
+        if (!this.observation.occurrence.attributes.stateAreaOfOcc.value) {
           this.updateArea();
         }
       }
@@ -67,14 +86,13 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
 
   public isDraggable() {
 
-    return !this.disabled;
+    return !this.observation.acl_user.w;
   }
 
   private updateLocation(event) {
     if (!this.disabled) {
-
-      this.attr.latitudeOfOcc.value = event.coords.lat;
-      this.attr.longitudeOfOcc.value = event.coords.lng;
+      this.observation.occurrence.attributes.latitudeOfOcc.value = event.coords.lat;
+      this.observation.occurrence.attributes.longitudeOfOcc.value = event.coords.lng;
       this.updateArea();
     }
 
@@ -90,8 +108,8 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
               $geometry: {
                 type: "Point",
                 coordinates: [
-                  this.attr.longitudeOfOcc.value,
-                  this.attr.latitudeOfOcc.value
+                  this.observation.occurrence.attributes.longitudeOfOcc.value,
+                  this.observation.occurrence.attributes.latitudeOfOcc.value
                 ]
               }
             }
@@ -103,12 +121,13 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
     this.geoAdminService.get(options).subscribe(
       data => {
         if (data._items.length == 1) {
-          this.attr.stateAreaOfOcc.value = data._items[0].e5x;
-          //this.attr.stateAreaOfOcc = {...this.attr.stateAreaOfOcc};
+          console.log('UPDATE AREA', data._items[0].e5x);
+          this.observation.occurrence.attributes.stateAreaOfOcc.value = data._items[0].e5x;
+          this.observation.occurrence.attributes.stateAreaOfOcc = {...this.observation.occurrence.attributes.stateAreaOfOcc};
         }
       },
       err => { },
-      () => this.update()
+      () => this.subject.update(this.observation)
     );
   }
 
@@ -122,8 +141,10 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
   }
 
   update() {
-    this.attrChange.emit(this.attr);
-    this.change.emit(true);
+    //this.observation.occurrence.attributesChange.emit(this.observation.occurrence.attributes);
+    //this.change.emit(true);
+    this.updateArea();
+
   }
   modalUpdate() {
 
