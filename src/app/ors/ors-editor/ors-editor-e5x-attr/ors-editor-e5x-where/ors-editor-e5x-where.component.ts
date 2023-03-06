@@ -123,10 +123,14 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
         if (data._items.length == 1) {
           console.log('UPDATE AREA', data._items[0].e5x);
           this.observation.occurrence.attributes.stateAreaOfOcc.value = data._items[0].e5x;
-          this.observation.occurrence.attributes.stateAreaOfOcc = {...this.observation.occurrence.attributes.stateAreaOfOcc};
+          this.observation.occurrence.attributes.stateAreaOfOcc = { ...this.observation.occurrence.attributes.stateAreaOfOcc };
+        } else {
+          this.observation.occurrence.attributes.stateAreaOfOcc.value = undefined;
         }
       },
-      err => { },
+      err => {
+        this.observation.occurrence.attributes.stateAreaOfOcc.value = undefined;
+      },
       () => this.subject.update(this.observation)
     );
   }

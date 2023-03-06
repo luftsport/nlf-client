@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ApiObservationAircraftsItem } from 'app/api/api.interface';
-import { Map, Marker, MapOptions, LayerOptions, latLng, LatLng, marker, tileLayer, Polyline, polyline, PolylineOptions, FeatureGroup, featureGroup, Control, DrawToolbar } from 'leaflet';
-
+import { Map, Marker, divIcon, icon, MapOptions, LayerOptions, latLng, LatLng, marker, tileLayer, Polyline, polyline, PolylineOptions, FeatureGroup, featureGroup, Control, DrawToolbar } from 'leaflet';
 @Component({
   selector: 'nlf-ors-editor-e5x-where-map',
   templateUrl: './ors-editor-e5x-where-map.component.html',
@@ -22,6 +21,7 @@ export class NlfOrsEditorE5XWhereMapComponent implements OnInit {
   @Output() lngChange: EventEmitter<any> = new EventEmitter();
   @Output() change: EventEmitter<boolean> = new EventEmitter();
 
+
   map: Map;
   mapOptions: MapOptions = {
     drawControl: false,
@@ -39,7 +39,8 @@ export class NlfOrsEditorE5XWhereMapComponent implements OnInit {
   mapCenter = latLng(59.9, 10.9);
   layer: FeatureGroup;
 
-  colors = ['orange', 'pink', 'purple', 'red', 'darkblue', 'darkgreen', 'black', 'blue', 'cadetblue', , 'gray', 'darkpurple', 'darkred', 'green', 'lightblue', 'lightgray', 'lightgreen', 'lightred', 'beige'];
+  //colors = ['orange', 'pink', 'purple', 'red', 'darkblue', 'darkgreen', 'black', 'blue', 'cadetblue', , 'gray', 'darkpurple', 'darkred', 'green', 'lightblue', 'lightgray', 'lightgreen', 'lightred', 'beige'];
+  colors = ['blue', 'orange', 'green', 'yellow', 'grey', 'black', 'red'];
 
 
   constructor() { }
@@ -57,6 +58,19 @@ export class NlfOrsEditorE5XWhereMapComponent implements OnInit {
       coordinates.push(latLng(element[1], element[0]));
     });
     return coordinates;
+  }
+
+  private _mkIcon(index) {
+    return icon({
+      iconUrl: 'assets/leaflet/' + this._getColorFromAcIndex(index) + '.png',
+      shadowUrl: 'leaf-shadow.png',
+      iconSize: [25, 39],
+      shadowSize: [25, 39],
+      iconAnchor: [12.5, 39],
+      shadowAnchor: [4, 39],
+      popupAnchor: [0, -40]
+    });
+
   }
 
   onMapReady(map) {
@@ -81,13 +95,14 @@ export class NlfOrsEditorE5XWhereMapComponent implements OnInit {
       });
 
       // Add markers take-off and landing for each aircraft:
-      this.layer.addLayer(new Marker(latLng(ac.flight.find(x => x !== undefined)['path'][0][1], ac.flight.find(x => x !== undefined)['path'][0][0])).bindPopup('Take-off'));
-      this.layer.addLayer(new Marker(latLng(ac.flight[(ac.flight.length - 1)]['path'][1][1], ac.flight[(ac.flight.length - 1)]['path'][1][0])).bindPopup('Landing'));
+      this.layer.addLayer(new Marker(latLng(ac.flight.find(x => x !== undefined)['path'][0][1], ac.flight.find(x => x !== undefined)['path'][0][0]), { icon: this._mkIcon(index) }).bindPopup('Take-off ' + ac.aircraft.callsign));
+      this.layer.addLayer(new Marker(latLng(ac.flight[(ac.flight.length - 1)]['path'][1][1], ac.flight[(ac.flight.length - 1)]['path'][1][0]), { icon: this._mkIcon(index) }).bindPopup('Landing ' + ac.aircraft.callsign));
 
     });
 
     if (!!this.lat && !!this.lng) {
-      this.marker = new Marker(latLng(this.lat, this.lng), { snapIgnore: false, draggable: true, autoPan: true }).bindPopup('Incident');
+
+      this.marker = new Marker(latLng(this.lat, this.lng), { snapIgnore: false, draggable: true, autoPan: true, icon: this._mkIcon(6) }).bindPopup('Incident');
       this.layer.addLayer(this.marker);
     } else {
       this.map.on('click', (event) => {
@@ -99,20 +114,22 @@ export class NlfOrsEditorE5XWhereMapComponent implements OnInit {
       this.markerDragEnd(event.target.getLatLng());
     });
 
+    this.marker.pm.enable({ pinning: true, snappable: true });
+
     this.layer.addTo(this.map);
     this.map.fitBounds(this.layer.getBounds().pad(0.5));
     this.map.invalidateSize();
 
-
+    
   }
 
   markerDragEnd(coordinates) {
     this.lat = coordinates.lat;
     this.latChange.emit(this.lat);
-    
+
     this.lng = coordinates.lng;
     this.lngChange.emit(this.lng);
-    
+
     this.change.emit(true);
 
     this.marker.on('dragend', (event) => {
@@ -128,7 +145,12 @@ export class NlfOrsEditorE5XWhereMapComponent implements OnInit {
     };
 
     //Add a marker to show where you clicked.
-    this.marker = marker([event.latlng.lat, event.latlng.lng], { snapIgnore: false, draggable: true, autoPan: true }).addTo(this.map);
+    //this.marker = marker([event.latlng.lat, event.latlng.lng], { snapIgnore: false, draggable: true, autoPan: true, icon: this._mkIcon(6)}).addTo(this.map);
+    this.marker = marker([event.latlng.lat, event.latlng.lng], { snapIgnore: false, draggable: true, autoPan: true, icon: this._mkIcon(6)});
+    //this.layer.addLayer(this.marker);
+    this.marker.addTo(this.map);
+    this.marker.pm.enable({ pinning: true, snappable: true });
+      
   }
 
 }

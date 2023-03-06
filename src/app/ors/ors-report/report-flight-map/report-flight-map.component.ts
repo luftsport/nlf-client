@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ApiObservationAircraftsItem } from 'app/api/api.interface';
-import { Map, Marker, MapOptions, LayerOptions, latLng, LatLng, marker, tileLayer, Polyline, polyline, PolylineOptions, FeatureGroup, featureGroup, Control, DrawToolbar } from 'leaflet';
+import { Map, Marker, MapOptions, LayerOptions,icon, latLng, LatLng, marker, tileLayer, Polyline, polyline, PolylineOptions, FeatureGroup, featureGroup, Control, DrawToolbar } from 'leaflet';
 
 @Component({
   selector: 'nlf-ors-report-flight-map',
@@ -34,12 +34,26 @@ export class NlfOrsReportFlightMapComponent implements OnInit {
   mapCenter = latLng(59.9, 10.9);
   layer: FeatureGroup;
 
-  colors = ['orange', 'pink', 'purple', 'red', 'darkblue', 'darkgreen', 'black', 'blue', 'cadetblue', , 'gray', 'darkpurple', 'darkred', 'green', 'lightblue', 'lightgray', 'lightgreen', 'lightred', 'beige'];
+  //colors = ['orange', 'pink', 'purple', 'red', 'darkblue', 'darkgreen', 'black', 'blue', 'cadetblue', , 'gray', 'darkpurple', 'darkred', 'green', 'lightblue', 'lightgray', 'lightgreen', 'lightred', 'beige'];
+  colors = ['blue', 'orange', 'green', 'yellow', 'grey', 'black', 'red'];
 
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  private _mkIcon(index) {
+    return icon({
+      iconUrl: 'assets/leaflet/' + this._getColorFromAcIndex(index) + '.png',
+      shadowUrl: 'leaf-shadow.png',
+      iconSize: [25, 39],
+      shadowSize: [25, 39],
+      iconAnchor: [12.5, 39],
+      shadowAnchor: [4, 39],
+      popupAnchor: [0, -40]
+    });
+
   }
 
   _getColorFromAcIndex(index) {
@@ -76,12 +90,12 @@ export class NlfOrsReportFlightMapComponent implements OnInit {
       });
 
       // Add markers take-off and landing for each aircraft:
-      this.layer.addLayer(new Marker(latLng(ac.flight.find(x => x !== undefined)['path'][0][1], ac.flight.find(x => x !== undefined)['path'][0][0])).bindPopup('Take-off'));
-      this.layer.addLayer(new Marker(latLng(ac.flight[(ac.flight.length - 1)]['path'][1][1], ac.flight[(ac.flight.length - 1)]['path'][1][0])).bindPopup('Landing'));
+      this.layer.addLayer(new Marker(latLng(ac.flight.find(x => x !== undefined)['path'][0][1], ac.flight.find(x => x !== undefined)['path'][0][0]), {icon: this._mkIcon(index)}).bindPopup('Take-off ' + ac.aircraft.callsign));
+      this.layer.addLayer(new Marker(latLng(ac.flight[(ac.flight.length - 1)]['path'][1][1], ac.flight[(ac.flight.length - 1)]['path'][1][0]), {icon: this._mkIcon(index)}).bindPopup('Landing ' + ac.aircraft.callsign));
 
     });
 
-    this.layer.addLayer(new Marker(latLng(this.where[0], this.where[1])).bindPopup('Incident'));
+    this.layer.addLayer(new Marker(latLng(this.where[0], this.where[1]), {icon: this._mkIcon(6)}).bindPopup('Incident'));
 
     this.layer.addTo(this.map);
     this.map.fitBounds(this.layer.getBounds().pad(0.5));
