@@ -137,7 +137,7 @@
 
       <!-- Map -->
       <div class="col-md-6 position-relative">
-        <div class="map" *ngIf="!!mapOptions" leaflet [leafletOptions]="mapOptions"></div>
+        <div class="map" *ngIf="!!mapOptions" leaflet (leafletMapReady)="onMapReady($event)" [leafletOptions]="mapOptions"></div>
 
         <!--
         <div *ngIf="!!lungo.contact?.location">

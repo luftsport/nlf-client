@@ -7,7 +7,7 @@ import { ApiClubItem, ApiOptionsInterface, NlfConfigItem } from 'app/api/api.int
 import { NlfAlertService } from 'app/services/alert/alert.service';
 import { GeoLocationService } from 'app/services/geo/geo-location.service';
 import { NlfConfigService } from 'app/nlf-config.service';
-import { MapOptions, Layer, latLng, marker, tileLayer } from 'leaflet';
+import { MapOptions, Layer, latLng, marker, tileLayer, Map } from 'leaflet';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 // import { forkJoin } from 'rxjs';
 
@@ -22,6 +22,7 @@ export class NlfOrganizationDetailsComponent implements OnInit, OnDestroy {
 
   geo: { timestamp: number, coords: number[] };
   zoom = 12;
+  map: Map;
 
   organization_id: number = 376;
   federation_id: number = 0;
@@ -57,15 +58,25 @@ export class NlfOrganizationDetailsComponent implements OnInit, OnDestroy {
       });**/
     //this.route.params.subscribe(params =>
     //this.sub = this.router.routerState.parent(this.route).params.subscribe(
-    this.sub = this.route.parent.params.subscribe(
-      params => {
-        this.organization_id = params['id'] ? +params['id'] : 376;
-        //this.version = params['version'] ? params['version'] : 0;
-        this.dataReady = false;
-        this.federation_id = 0;
-        this.lungo = null;
-        this.disciplines = [];
-      });
+
+    this.configService.observableConfig.subscribe(
+      data => {
+        this.config = data;
+        this.sub = this.route.parent.params.subscribe(
+          params => {
+            this.organization_id = params['id'] ? +params['id'] : 376;
+            //this.version = params['version'] ? params['version'] : 0;
+            this.dataReady = false;
+            this.federation_id = 0;
+            this.lungo = null;
+            this.disciplines = [];
+            this.getLungoOrganization();
+          });
+        
+      }
+    );
+
+    
   }
 
   ngOnInit() {
@@ -75,13 +86,7 @@ export class NlfOrganizationDetailsComponent implements OnInit, OnDestroy {
         this.geo = position; // {{ geo.coords.latitude }} {{ geo.coords.longitude }}
       });
 
-      this.configService.observableConfig.subscribe(
-        data => {
-          this.config = data;
-          console.log('CONF',this.config);
-          this.getLungoOrganization();
-        }
-      );
+    
   }
 
   ngOnDestroy() {
@@ -90,15 +95,24 @@ export class NlfOrganizationDetailsComponent implements OnInit, OnDestroy {
 
   private configureMap() {
 
-    this.mapOptions = {
-      layers: [
-        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
-        marker([this.lungo.contact.location?.geo.coordinates[1],this.lungo.contact.location?.geo.coordinates[0] ])
-      ],
-      zoom: 7,
-	    center: latLng(this.lungo.contact.location?.geo.coordinates[1],this.lungo.contact.location?.geo.coordinates[0])
-    }
+    try {
+      this.mapOptions = {
+        layers: [
+          tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
+          marker([this.lungo.contact.location.geo.coordinates[1], this.lungo.contact.location.geo.coordinates[0]])
+        ],
+        zoom: 7,
+        center: latLng(this.lungo.contact.location.geo.coordinates[1], this.lungo.contact.location.geo.coordinates[0])
+      }
 
+    } catch (e) {}
+
+
+  }
+
+  onMapReady(map: Map) {
+    this.map = map
+    this.map.setView([this.lungo.contact.location?.geo.coordinates[1], this.lungo.contact.location?.geo.coordinates[0]], 7);
   }
 
 
