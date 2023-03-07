@@ -1,7 +1,8 @@
 <div *ngIf="dataReady && !error">
 
-  <div class="row nlf-sticky">
-    <div class="container">
+
+  <div class="container">
+    <div class="row nlf-sticky">
       <!--
       <span class="float-end">
         <a [routerLink]="['/content/edit/', content._id]">
@@ -29,21 +30,22 @@
   </div>
 
   <div class="container">
-    <!-- Post Content Column -->
+    <div class="row">
+      <!-- Post Content Column -->
 
-    <!-- Date/Time -->
-    <p class="small">Opprettet {{ content._created | amCalendar }} sist endret {{ content._updated | amCalendar }} av
-      <nlf-resolve-lungo-person [person_id]="content.owner" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
-      <sup class="text-danger mx-1" title="Applikasjonen er ikke ferdig utviklet">beta</sup>
-    </p>
+      <!-- Date/Time -->
+      <p class="small">Opprettet {{ content._created | amCalendar }} sist endret {{ content._updated | amCalendar }} av
+        <nlf-resolve-lungo-person [person_id]="content.owner" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
+        <sup class="text-danger mx-1" title="Applikasjonen er ikke ferdig utviklet">beta</sup>
+      </p>
 
-    <hr>
+      <hr>
 
-    <!-- Post Content -->
-    <div [innerHTML]="content.body | safe: 'html'"></div>
-    <hr>
+      <!-- Post Content -->
+      <div [innerHTML]="content.body | safe: 'html'"></div>
+      <hr>
 
-    <!--
+      <!--
       <div class="col-lg-12">
         <div class="col-lg-3">
 
@@ -68,14 +70,16 @@
       </div>
 
     -->
+    </div>
   </div>
-</div>
-<div *ngIf="!dataReady && !error">
-  <nlf-ui-page-spinner></nlf-ui-page-spinner>
-</div>
+  <div *ngIf="!dataReady && !error">
+    <nlf-ui-page-spinner></nlf-ui-page-spinner>
+  </div>
 
-<div *ngIf="error">
-  <p class="align-middle text-center text-secondary my-5">
-    ERROR, please go back to <a [routerLink]="['/content']">content home</a>
-  </p>
+  <div *ngIf="error">
+    <p class="align-middle text-center text-secondary my-5">
+      ERROR, please go back to <a [routerLink]="['/content']">content home</a>
+    </p>
+  </div>
+
 </div>
