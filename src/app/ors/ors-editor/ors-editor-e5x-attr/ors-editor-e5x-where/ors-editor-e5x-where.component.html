@@ -42,11 +42,10 @@
     <!-- Modal content -->
     <div class="col-xs-12 position-relative">
       <div class="row" style="height: 400px">
-        
+
         <nlf-ors-editor-e5x-where-map [aircraft]="observation.aircrafts"
           [(lat)]="observation.occurrence.attributes.latitudeOfOcc.value"
-          [(lng)]="observation.occurrence.attributes.longitudeOfOcc.value"
-          [disabled]="!observation.acl_user.w"
+          [(lng)]="observation.occurrence.attributes.longitudeOfOcc.value" [disabled]="!observation.acl_user.w"
           (change)="update()"></nlf-ors-editor-e5x-where-map>
       </div>
 
@@ -61,6 +60,11 @@
         <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="observation.occurrence.attributes.longitudeOfOcc.value"
           path="E5X.Occurrence.LongitudeOfOcc" id="longitudeOfOcc"></nlf-ors-editor-tag-e5x>
       </div>
+      <!--
+      <div class="col-md-4">
+        <button *ngIf="!!userGeo" class="btn btn-primary" (click)="useMyLocation()"><fa-icon [icon]="faLocation" [fixedWidth]="true"></fa-icon> Bruk min posisjon</button>
+      </div>
+      -->
 
     </div>
 
@@ -88,6 +92,7 @@
   </div>
 
   <div class="modal-footer">
+
 
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
       <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>Avbryt

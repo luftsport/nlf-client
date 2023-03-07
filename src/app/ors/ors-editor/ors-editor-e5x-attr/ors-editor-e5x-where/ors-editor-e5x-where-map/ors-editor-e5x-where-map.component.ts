@@ -102,7 +102,7 @@ export class NlfOrsEditorE5XWhereMapComponent implements OnInit {
 
     if (!!this.lat && !!this.lng) {
       console.log('We got lat lng');
-      this.marker = marker(latLng(this.lat, this.lng), { snapIgnore: false, draggable: true, autoPan: true, icon: this._mkIcon(6) }).bindPopup('Incident ROOT');
+      this.marker = marker(latLng(this.lat, this.lng), { snapIgnore: false, draggable: true, autoPan: true, icon: this._mkIcon(6) }).bindPopup('Incident');
 
       //this.layer.addLayer(this.marker);
 

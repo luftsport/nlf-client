@@ -4,7 +4,7 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
 import { ApiGeoAdminService } from 'app/api/api-geo-admin.service';
 import { ApiOptionsInterface, ApiObservationsItem } from 'app/api/api.interface';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
-import { faCheck, faClose, faEdit, faMapMarker, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faClose, faEdit, faMapMarker, faTimes, faLocation } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -28,12 +28,14 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
 
   modalRef;
   geoReady = false;
+  userGeo;
 
   faMapMarker = faMapMarker;
   faEdit = faEdit;
   faClose = faClose;
   faTimes = faTimes;
   faCheck = faCheck;
+  faLocation = faLocation;
 
   observation: ApiObservationsItem;
 
@@ -54,6 +56,7 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
     this.geoLocationService.getLocation({ enableHighAccuracy: true }).subscribe(
       position => {
         console.log(position);
+        this.userGeo = position;
 
         // Ingen lokalisasjon satt:
         if (!this.observation.occurrence.attributes.latitudeOfOcc.value && !this.observation.occurrence.attributes.longitudeOfOcc.value) {
@@ -84,6 +87,13 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
 
   }
 
+  public useMyLocation() {
+    this.observation.occurrence.attributes.latitudeOfOcc.value = this.userGeo.coords.latitude;
+    this.observation.occurrence.attributes.longitudeOfOcc.value = this.userGeo.coords.longitude;
+    this.observation.occurrence.attributes = {...this.observation.occurrence.attributes};
+    this.updateArea();
+  }
+
   public isDraggable() {
 
     return !this.observation.acl_user.w;
@@ -93,6 +103,7 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
     if (!this.disabled) {
       this.observation.occurrence.attributes.latitudeOfOcc.value = event.coords.lat;
       this.observation.occurrence.attributes.longitudeOfOcc.value = event.coords.lng;
+      
       this.updateArea();
     }
 
