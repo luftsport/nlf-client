@@ -81,11 +81,16 @@
         <nlf-ors-e5x (click)="saveIfChanges()" (change)="getData()" joyrideStep="step005" stepPosition="bottom"
           title="E5X" text="Her vises status på innsending til Luftfartstilsynet på formatet E5X."></nlf-ors-e5x>
 
-        <!-- ACTIVITY -->
+        <!-- ACTIVITY 
         <a *ngIf="observation.workflow.state!='closed'" class="badge bg-info mx-1"
           [routerLink]="['/ors', observation._model.type , 'activities', observation.id]" joyrideStep="step006"
           stepPosition="bottom" title="Aktivitet"
           text="Denne knappen aktiverer aktivitetsvinduet som viser all aktiviteten vedrørende denne observasjonen. Her kan det også sendes meldinger">
+          <fa-icon [icon]="faHistory"></fa-icon> Aktivitet
+        </a>-->
+        <a *ngIf="observation.workflow.state!='closed'" class="badge bg-info mx-1 pointer"
+        title="Denne knappen aktiverer aktivitetsvinduet som viser all aktiviteten vedrørende denne observasjonen. Her kan det også sendes meldinger"
+          (click)="openActivities(activityModal)">
           <fa-icon [icon]="faHistory"></fa-icon> Aktivitet
         </a>
 
@@ -776,6 +781,33 @@
   </div>
 </ng-template>
 <!-- /MODAL PREVIEW -->
+
+<!-- ACTIVITY MODAL --->
+<ng-template #activityModal>
+
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      #{{ observation.id }}
+      <nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type"
+        seperator="/"></nlf-resolve-observation-tags>
+    </h4>
+    <button type="button" class="close float-end" aria-label="Close" (click)="closeActivities()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <nlf-ors-activities-timeline [observation]="observation"></nlf-ors-activities-timeline>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="closeActivities()">
+      <fa-icon [icon]="faTimes"></fa-icon> Lukk
+    </button>
+
+  </div>
+</ng-template>
+<!-- //ACTIVITY -->
 
 <div *ngIf="!!devDebug">
   <pre>{{observation | json}}</pre>

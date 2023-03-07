@@ -21,7 +21,7 @@ import { forkJoin } from 'rxjs';
 import { ComponentCanDeactivate } from 'app/pending-changes.guard';
 import { HostListener } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { faSave, faQuestion, faFlag, faInfoCircle, faHistory, faFile, faExchange, faUpload, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faQuestion, faFlag, faInfoCircle, faHistory, faFile, faExchange, faPaperPlane, faReply, faRepeat, faRandom, faUpload, faInfo, faLock, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faFileAlt } from '@fortawesome/free-regular-svg-icons';
 import 'rxjs/add/operator/takeWhile';
 
@@ -38,6 +38,7 @@ export class NlfOrsSeilflyEditorComponent implements OnInit, OnDestroy, Componen
   id: number | string;
   dataReady = false;
   observation: ApiObservationsItem;
+  modalObservation: ApiObservationsItem;
   differ: any;
   changes = false;
   hotkeys = []; //: Hotkey[];
@@ -62,9 +63,15 @@ export class NlfOrsSeilflyEditorComponent implements OnInit, OnDestroy, Componen
   faHistory = faHistory;
   faFile = faFile;
   faExchange = faExchange;
+  faPaperPlane = faPaperPlane;
+  faReply = faReply;
+  faRepeat = faRepeat;
+  faRandom = faRandom;
   faUpload = faUpload;
-  faFileAlt = faFileAlt;
+  faInfo = faInfo;
   faLock = faLock;
+  faTimes = faTimes;
+  faCheck = faCheck;
 
   constructor(
     private route: ActivatedRoute,
@@ -383,6 +390,16 @@ export class NlfOrsSeilflyEditorComponent implements OnInit, OnDestroy, Componen
   openDebugModal(template: TemplateRef<any>) {
     this.openModal(template);
 
+  }
+
+  openActivities(template) {
+    this.modalObservation = this.observation;
+    this.modalRef = this.modalService.open(template, { size: 'lg' });
+  }
+
+  closeActivities() {
+    this.modalObservation = undefined;
+    this.modalRef.close();
   }
 
   openWorkflow() {

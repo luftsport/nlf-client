@@ -13,8 +13,7 @@
         <nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type" link="true"
           seperator="/"></nlf-resolve-observation-tags>&nbsp;
         <span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body"
-          *ngIf="!!observation.rating"
-          class="badge bg-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{
+          *ngIf="!!observation.rating" class="badge bg-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{
           observation.rating | nlfOrsRatingCalc }}</span>
       </span>
       <!-- WORKFLOW STATE -->
@@ -56,6 +55,7 @@
         <!-- ACTIVITIES
         <a *ngIf="observation.workflow.state!='closed'" class="badge bg-info mx-1" [routerLink]="['/ors', observation._model.type , 'activities', observation.id]">-->
         <a *ngIf="observation.workflow.state!='closed'" class="badge bg-info mx-1 pointer"
+          title="Denne knappen aktiverer aktivitetsvinduet som viser all aktiviteten vedrørende denne observasjonen. Her kan det også sendes meldinger"
           (click)="openActivities(activityModal)">
           <fa-icon [icon]="faHistory"></fa-icon> Aktivitet
         </a>

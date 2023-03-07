@@ -62,9 +62,15 @@
         <!-- E5X on change get data again!-->
         <nlf-ors-e5x (click)="saveIfChanges()" (change)="getData()"></nlf-ors-e5x>
 
-        <!-- ACTIVITY -->
+        <!-- ACTIVITY
         <a *ngIf="observation.workflow.state!='closed'" class="badge bg-info mx-1"
           [routerLink]="['/ors', observation._model.type , 'activities', observation.id]">
+          <fa-icon [icon]="faHistory"></fa-icon> Aktivitet
+        </a>
+        -->
+        <a *ngIf="observation.workflow.state!='closed'" class="badge bg-info mx-1 pointer"
+          title="Denne knappen aktiverer aktivitetsvinduet som viser all aktiviteten vedrørende denne observasjonen. Her kan det også sendes meldinger"
+          (click)="openActivities(activityModal)">
           <fa-icon [icon]="faHistory"></fa-icon> Aktivitet
         </a>
 
@@ -467,109 +473,112 @@
 
     <!-- /// END FORM -->
 
-    <!-- SIMPLE VIEW 
-    <div class="row">
-      <div class="nlf-ors-toolbar">
-        Visning av felter
-        <nlf-help class="float-end" key="ors-editor-ask"></nlf-help>
-      </div>
-    </div>
-    <div class="col-xs-12 col-md-12 py-2">
-      <p>
-        Du kan selv velge visning av felter i observasjonen. Normalt vil en nyopprettet observasjon vises med forenklet
-        skjema. Du kan velge &quot;Vis alle felter&quot; for å vise alle felter eller &quot;Vis forenklet skjema&quot;
-        for å vise
-        forenklet og redusert antall felter. Endringene er persistente for din bruker også om du har en annen rolle i
-        arbeidsflyten eller logger inn fra en annen enhet.
-      </p>
-      <ng-container *ngIf="!showSimpleView()">
-        <div class="btn-toolbar float-end">
-          <button (click)="toggleSimpleView()" class="btn btn-primary">Vis forenklet skjema</button>
+    <span class="d-md-none">
+      <!-- SIMPLE VIEW -->
+      <div class="row">
+        <div class="nlf-ors-toolbar">
+          Visning av felter
+          <nlf-help class="float-end" key="ors-editor-ask"></nlf-help>
         </div>
-      </ng-container>
-      <ng-container *ngIf="showSimpleView()">
-        <div class="btn-toolbar float-end">
-          <button (click)="toggleSimpleView()" class="btn btn-primary">Vis alle felter</button>
-        </div>
-      </ng-container>
-    </div>
--->
-    <!-- WORKFLOW ACTIONS 
-    <ng-container *ngIf="observation.acl_user.x">
-
-      <div class="nlf-ors-toolbar">
-        <ng-container *ngIf="observation.workflow.state=='withdrawn'">Gjenåpning</ng-container>
-        <ng-container *ngIf="observation.workflow.state=='draft'">Innsending</ng-container>
-        <ng-container *ngIf="['draft', 'withdrawn'].indexOf(observation.workflow.state)==-1">Behandling</ng-container>
-
-        <nlf-help class="float-end" key="ors-editor-workflow"></nlf-help>
       </div>
-      <
       <div class="col-xs-12 col-md-12 py-2">
-        <ng-container *ngIf="['withdrawn', 'closed'].indexOf(observation.workflow.state)>-1">
-          <p>
-            Observasjonen er lukket. Du kan velge å gjenåpne observasjonen om du ønsker fortsette å behandle den.
-          </p>
-          <p>
-            Les mer om arbeidsflyten ved å trykke på <span>
-              <nlf-help key="ors-editor-workflow"></nlf-help>
-            </span>
-          </p>
+        <p>
+          Du kan selv velge visning av felter i observasjonen. Normalt vil en nyopprettet observasjon vises med
+          forenklet
+          skjema. Du kan velge &quot;Vis alle felter&quot; for å vise alle felter eller &quot;Vis forenklet skjema&quot;
+          for å vise
+          forenklet og redusert antall felter. Endringene er persistente for din bruker også om du har en annen rolle i
+          arbeidsflyten eller logger inn fra en annen enhet.
+        </p>
+        <ng-container *ngIf="!showSimpleView()">
           <div class="btn-toolbar float-end">
-            <button (click)="openWorkflow()" class="btn btn-danger me-2">Gjenåpne</button>
+            <button (click)="toggleSimpleView()" class="btn btn-primary">Vis forenklet skjema</button>
           </div>
         </ng-container>
-
-        <ng-container *ngIf="observation.workflow.state=='draft'">
-          <p>Når du er ferdig med å redigere observasjonen er det på tide å sende den videre til behandling hos OBSREG
-            koordinator.</p>
-          <p>Du kan alltid aktivere arbeidsflyten ved å trykke på statusknappen for arbeidsflyten <span><a
-                class="pointer mx-1" (click)="openWorkflow()">
-                <nlf-resolve-observation-state [activity]="observation._model.type" [state]="observation.workflow.state"
-                  icon="true"></nlf-resolve-observation-state>
-              </a></span> som du finner øverst på siden i &quot;sidemenyen&quot;
-          </p>
-          <p>Behandlingen skjer i en forhåndsdefinert arbeidsflyt som du kan lese mer om ved å trykke på <span>
-              <nlf-help key="ors-editor-workflow"></nlf-help>
-            </span>
-          </p>
-          <p>Ønsker du slette/fjerne observasjonen velger du å &quot;trekke tilbake&quot;. Da forsvinner den ute av syne
-            for alle enn deg. Ingen kan forresten slette observasjoner fra systemet, og du kan når som helst komme
-            tilbake og gjenåpne
-            den skulle du ombestemme deg.</p>
-          // Knapper for innsending 
+        <ng-container *ngIf="showSimpleView()">
           <div class="btn-toolbar float-end">
-            <button (click)="openWorkflow()" class="btn btn-success me-2">Send OBSREG koordinator</button>
-            <button (click)="openWorkflow()" class="btn btn-danger me-2">Trekk tilbake</button>
-          </div>
-
-        </ng-container>
-
-        <ng-container *ngIf="['draft', 'withdrawn', 'closed'].indexOf(observation.workflow.state)==-1">
-          <p>Observasjonen har status
-            <span><a class="pointer mx-1" (click)="openWorkflow()">
-                <nlf-resolve-observation-state [activity]="observation._model.type" [state]="observation.workflow.state"
-                  icon="true"></nlf-resolve-observation-state>
-              </a></span>.
-          </p>
-          <p>
-            Når du har gjennomgått observasjonen skal du aktivere arbeidsflyten for å behandle observasjonen.
-          </p>
-          <p>
-            Les mer om arbeidsflyten ved å trykke på <span>
-              <nlf-help key="ors-editor-workflow"></nlf-help>
-            </span>
-          </p>
-
-          <div class="btn-toolbar float-end">
-            <button (click)="openWorkflow()" class="btn btn-primary me-2">
-              <fa-icon [icon]="faExchange"></fa-icon> Behandle #{{observation.id}}
-            </button>
+            <button (click)="toggleSimpleView()" class="btn btn-primary">Vis alle felter</button>
           </div>
         </ng-container>
       </div>
-    </ng-container>
-     //WORKFLOW ACTIONS -->
+      <!-- WORKFLOW ACTIONS -->
+      <ng-container *ngIf="observation.acl_user.x">
+
+        <div class="nlf-ors-toolbar">
+          <ng-container *ngIf="observation.workflow.state=='withdrawn'">Gjenåpning</ng-container>
+          <ng-container *ngIf="observation.workflow.state=='draft'">Innsending</ng-container>
+          <ng-container *ngIf="['draft', 'withdrawn'].indexOf(observation.workflow.state)==-1">Behandling</ng-container>
+
+          <nlf-help class="float-end" key="ors-editor-workflow"></nlf-help>
+        </div>
+        <!-- bg-secondary text-white-->
+        <div class="col-xs-12 col-md-12 py-2">
+          <ng-container *ngIf="['withdrawn', 'closed'].indexOf(observation.workflow.state)>-1">
+            <p>
+              Observasjonen er lukket. Du kan velge å gjenåpne observasjonen om du ønsker fortsette å behandle den.
+            </p>
+            <p>
+              Les mer om arbeidsflyten ved å trykke på <span>
+                <nlf-help key="ors-editor-workflow"></nlf-help>
+              </span>
+            </p>
+            <div class="btn-toolbar float-end">
+              <button (click)="openWorkflow()" class="btn btn-danger me-2">Gjenåpne</button>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="observation.workflow.state=='draft'">
+            <p>Når du er ferdig med å redigere observasjonen er det på tide å sende den videre til behandling hos OBSREG
+              koordinator.</p>
+            <p>Du kan alltid aktivere arbeidsflyten ved å trykke på statusknappen for arbeidsflyten <span><a
+                  class="pointer mx-1" (click)="openWorkflow()">
+                  <nlf-resolve-observation-state [activity]="observation._model.type"
+                    [state]="observation.workflow.state" icon="true"></nlf-resolve-observation-state>
+                </a></span> som du finner øverst på siden i &quot;sidemenyen&quot;
+            </p>
+            <p>Behandlingen skjer i en forhåndsdefinert arbeidsflyt som du kan lese mer om ved å trykke på <span>
+                <nlf-help key="ors-editor-workflow"></nlf-help>
+              </span>
+            </p>
+            <p>Ønsker du slette/fjerne observasjonen velger du å &quot;trekke tilbake&quot;. Da forsvinner den ute av
+              syne
+              for alle enn deg. Ingen kan forresten slette observasjoner fra systemet, og du kan når som helst komme
+              tilbake og gjenåpne
+              den skulle du ombestemme deg.</p>
+            <!-- Knapper for innsending -->
+            <div class="btn-toolbar float-end">
+              <button (click)="openWorkflow()" class="btn btn-success me-2">Send OBSREG koordinator</button>
+              <button (click)="openWorkflow()" class="btn btn-danger me-2">Trekk tilbake</button>
+            </div>
+
+          </ng-container>
+
+          <ng-container *ngIf="['draft', 'withdrawn', 'closed'].indexOf(observation.workflow.state)==-1">
+            <p>Observasjonen har status
+              <span><a class="pointer mx-1" (click)="openWorkflow()">
+                  <nlf-resolve-observation-state [activity]="observation._model.type"
+                    [state]="observation.workflow.state" icon="true"></nlf-resolve-observation-state>
+                </a></span>.
+            </p>
+            <p>
+              Når du har gjennomgått observasjonen skal du aktivere arbeidsflyten for å behandle observasjonen.
+            </p>
+            <p>
+              Les mer om arbeidsflyten ved å trykke på <span>
+                <nlf-help key="ors-editor-workflow"></nlf-help>
+              </span>
+            </p>
+
+            <div class="btn-toolbar float-end">
+              <button (click)="openWorkflow()" class="btn btn-primary me-2">
+                <fa-icon [icon]="faExchange"></fa-icon> Behandle #{{observation.id}}
+              </button>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+      <!-- //WORKFLOW ACTIONS -->
+    </span>
 
     <div *ngIf="observation.acl_user.x" class="nlf-toolbar fixed-bottom bg-dark d-none d-md-block">
       <div class="container">
@@ -690,6 +699,33 @@
   </div>
 </ng-template>
 <!-- /MODAL PREVIEW -->
+
+<!-- ACTIVITY MODAL --->
+<ng-template #activityModal>
+
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      #{{ observation.id }}
+      <nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type"
+        seperator="/"></nlf-resolve-observation-tags>
+    </h4>
+    <button type="button" class="close float-end" aria-label="Close" (click)="closeActivities()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <nlf-ors-activities-timeline [observation]="observation"></nlf-ors-activities-timeline>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="closeActivities()">
+      <fa-icon [icon]="faTimes"></fa-icon> Lukk
+    </button>
+
+  </div>
+</ng-template>
+<!-- //ACTIVITY -->
 
 <div *ngIf="!!devDebug">
   <pre>{{observation | json}}</pre>
