@@ -57,16 +57,16 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
 
         // Ingen lokalisasjon satt:
         if (!this.observation.occurrence.attributes.latitudeOfOcc.value && !this.observation.occurrence.attributes.longitudeOfOcc.value) {
-          this.observation.occurrence.attributes.latitudeOfOcc.value = position.coords.latitude;
-          this.observation.occurrence.attributes.longitudeOfOcc.value = position.coords.longitude;
+          //this.observation.occurrence.attributes.latitudeOfOcc.value = position.coords.latitude;
+          //this.observation.occurrence.attributes.longitudeOfOcc.value = position.coords.longitude;
         }
         this.geoReady = true;
       },
       err => {
         // Ingen lokalisasjon satt:
         if (!this.observation.occurrence.attributes.latitudeOfOcc.value && !this.observation.occurrence.attributes.longitudeOfOcc.value) {
-          this.observation.occurrence.attributes.latitudeOfOcc.value = 59.91655557650091;
-          this.observation.occurrence.attributes.longitudeOfOcc.value = 10.748440347823207;
+          //this.observation.occurrence.attributes.latitudeOfOcc.value = 59.91655557650091;
+          //this.observation.occurrence.attributes.longitudeOfOcc.value = 10.748440347823207;
         }
         this.geoReady = true;
       },

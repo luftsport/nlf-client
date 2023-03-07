@@ -38,6 +38,7 @@ export class NlfOrsEditorE5XWhereMapComponent implements OnInit {
   drawControl;
   mapCenter = latLng(59.9, 10.9);
   layer: FeatureGroup;
+  markerLayer: any;
 
   //colors = ['orange', 'pink', 'purple', 'red', 'darkblue', 'darkgreen', 'black', 'blue', 'cadetblue', , 'gray', 'darkpurple', 'darkred', 'green', 'lightblue', 'lightgray', 'lightgreen', 'lightred', 'beige'];
   colors = ['blue', 'orange', 'green', 'yellow', 'grey', 'black', 'red'];
@@ -83,7 +84,6 @@ export class NlfOrsEditorE5XWhereMapComponent implements OnInit {
       let acColor = this._getColorFromAcIndex(Math.floor(Math.random() * 1000));
       // iterate every flight path add polyline
       ac.flight.forEach((el) => {
-        console.log('Adding layers');
         this.layer.addLayer(
           polyline(this._path2LatLng(el.path), {
             color: this._getColorFromAcIndex(index),
@@ -101,30 +101,45 @@ export class NlfOrsEditorE5XWhereMapComponent implements OnInit {
     });
 
     if (!!this.lat && !!this.lng) {
+      console.log('We got lat lng');
+      this.marker = marker(latLng(this.lat, this.lng), { snapIgnore: false, draggable: true, autoPan: true, icon: this._mkIcon(6) }).bindPopup('Incident ROOT');
 
-      this.marker = new Marker(latLng(this.lat, this.lng), { snapIgnore: false, draggable: true, autoPan: true, icon: this._mkIcon(6) }).bindPopup('Incident');
       //this.layer.addLayer(this.marker);
+
+
       this.marker.addTo(this.map);
+      this.marker.pm.enable({ pinning: true, snappable: true });
+      this.marker.on('pm:dragend', (event) => {
+        this.markerDragEnd(event['target'].getLatLng())
+      });
+
+      if(this.aircraft.length===0) {
+        this.map.setView(this.marker.getLatLng(),12);
+      }
+
+
     } else {
       this.map.on('click', (event) => {
         this.addMarker(event);
       });
     }
 
-    this.marker.on('dragend', (event) => {
-      this.markerDragEnd(event.target.getLatLng());
-    });
-
-    this.marker.pm.enable({ pinning: true, snappable: true });
-
     this.layer.addTo(this.map);
-    this.map.fitBounds(this.layer.getBounds().pad(0.5));
+
+    try {
+      this.map.fitBounds(this.layer.getBounds().pad(0.5));
+    } catch (e) {
+      //this.map.setView(this.marker.getLatLng(),5);
+    }
     this.map.invalidateSize();
 
-    
+
+
+
   }
 
   markerDragEnd(coordinates) {
+    console.log('Marker ended', coordinates);
     this.lat = coordinates.lat;
     this.latChange.emit(this.lat);
 
@@ -133,9 +148,7 @@ export class NlfOrsEditorE5XWhereMapComponent implements OnInit {
 
     this.change.emit(true);
 
-    this.marker.on('dragend', (event) => {
-      this.markerDragEnd(event.target.getLatLng());
-    });
+
   }
   addMarker(event) {
 
@@ -147,11 +160,20 @@ export class NlfOrsEditorE5XWhereMapComponent implements OnInit {
 
     //Add a marker to show where you clicked.
     //this.marker = marker([event.latlng.lat, event.latlng.lng], { snapIgnore: false, draggable: true, autoPan: true, icon: this._mkIcon(6)}).addTo(this.map);
-    this.marker = marker([event.latlng.lat, event.latlng.lng], { snapIgnore: false, draggable: true, autoPan: true, icon: this._mkIcon(6)});
-    //this.layer.addLayer(this.marker);
+    this.marker = marker([event.latlng.lat, event.latlng.lng], { snapIgnore: false, draggable: true, autoPan: true, icon: this._mkIcon(6) }).bindPopup('Incident');
+    this.markerDragEnd({ lat: event.latlng.lat, lng: event.latlng.lng });
+    if(this.aircraft.length===0) {
+      this.map.setView(this.marker.getLatLng(),12);
+    }
+
     this.marker.addTo(this.map);
     this.marker.pm.enable({ pinning: true, snappable: true });
-      
+    this.marker.on('pm:dragend', (event) => {
+      this.markerDragEnd(event['target'].getLatLng())
+    });
+
+
+
   }
 
 }
