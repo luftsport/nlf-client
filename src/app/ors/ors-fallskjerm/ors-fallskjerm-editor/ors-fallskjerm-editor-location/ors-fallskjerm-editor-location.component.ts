@@ -207,11 +207,10 @@ export class NlfOrsFallskjermEditorLocationComponent implements OnInit, AfterVie
     this.map.panTo(latLng(lat, lng));
     this.marker.remove();
     this.marker = new Marker(latLng(lat, lng), options);
-    this.marker.addTo(this.map);
-    //We removed the layer the event fired, need to add event to new layer:
-    this.map.on('dragend', (event) => {
+    this.marker.on('dragend', (event) => {
       this.onDragEnd(event, options);
     });
+    this.marker.addTo(this.map);
   }
 
 
