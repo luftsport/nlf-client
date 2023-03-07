@@ -65,7 +65,6 @@ export class NlfOrganizationDetailsComponent implements OnInit, OnDestroy {
         this.federation_id = 0;
         this.lungo = null;
         this.disciplines = [];
-        this.run();
       });
   }
 
@@ -75,6 +74,14 @@ export class NlfOrganizationDetailsComponent implements OnInit, OnDestroy {
         console.log(position);
         this.geo = position; // {{ geo.coords.latitude }} {{ geo.coords.longitude }}
       });
+
+      this.configService.observableConfig.subscribe(
+        data => {
+          this.config = data;
+          console.log('CONF',this.config);
+          this.getLungoOrganization();
+        }
+      );
   }
 
   ngOnDestroy() {
@@ -94,18 +101,6 @@ export class NlfOrganizationDetailsComponent implements OnInit, OnDestroy {
 
   }
 
-  private run() {
-    if (!this.config) {
-      this.configService.observableConfig.subscribe(
-        data => {
-          this.config = data;
-          this.getLungoOrganization();
-        }
-      );
-    } else {
-      this.getLungoOrganization();
-    }
-  }
 
   private getLungoOrganization() {
     this.mapOptions = undefined;
@@ -113,8 +108,9 @@ export class NlfOrganizationDetailsComponent implements OnInit, OnDestroy {
       data => {
         this.lungo = data;
         this.configureMap();
-        if (data.type_id === 6 || data.type_id === 14 || data.type_id === 5) {
-          this.federation_id = this.config[this.config.inv_mapping[data.main_activity.id]].org_id;
+
+        if (!!data.main_activity?.id && (data.type_id === 6 || data.type_id === 14 || data.type_id === 5)) {
+          this.federation_id = this.config[this.config.inv_mapping[data.main_activity.id]]['org_id'];
         } else {
           this.federation_id = 0;
 

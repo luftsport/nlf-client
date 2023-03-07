@@ -126,8 +126,8 @@ export class NlfOrganizationsComponent implements OnInit {
     this.dataReady = false;
     const options: ApiOptionsInterface = {
       query: {
-        where: { 'type_id': 6 },
-        max_results: 1000,
+        where: { 'type_id': 6, is_active: {$ne: false}},
+        max_results: 10000,
         projection: { id: 1, main_activity: 1, activities: 1, name: 1, contact: 1, type_id: 1, is_active: 1 },
       },
     };
