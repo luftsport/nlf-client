@@ -5,6 +5,8 @@ import { ApiObservationsAggService } from 'app/api/api-observations-agg.service'
 import { ApiOptionsInterface, NlfConfigItem } from 'app/api/api.interface';
 import { NlfConfigService } from 'app/nlf-config.service';
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
+import { EChartsOption } from 'echarts';
+import { forkJoin } from 'rxjs';
 
 //import { Moment } from 'moment';
 @Component({
@@ -29,6 +31,48 @@ export class NlfUiDummyComponent implements OnInit {
   colorScheme = { // BS light '#f9f9f9',
     domain: ['#5cb85c', '#5bc0de', '#428bca', '#d9534f', '#0c0c0c']
   };
+
+  //Pie
+  // Echarts
+  typesChartOption: EChartsOption = {
+    tooltip: {
+      trigger: 'item'
+    },
+    series: [
+      {
+        name: 'behandlede',
+        type: 'pie',
+        radius: ['50%', '70%'],
+        tooltip: {
+          show: false
+        },
+        avoidLabelOverlap: false,
+        label: {
+          show: false,
+          position: 'center'
+        },
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: 20,
+            fontWeight: 'bold'
+          }
+        },
+        labelLine: {
+          show: false
+        },
+        data: undefined
+      }
+    ]
+  };
+  typesChartOptionColors = {
+    unwanted_act: '#0dcaf0',
+    sharing: '#198754',
+    near_miss: '#fd7e14',
+    incident: '#dc3545',
+    accident: '#000'
+  };
+  pieTypes = [];
 
   modalRef;
 
@@ -80,18 +124,24 @@ export class NlfUiDummyComponent implements OnInit {
               };
 
               this.agg.getTypes(options).subscribe(
-                data => {
-                  data._items.forEach(el => {
+                pie_data => {
+                  this.pieTypes = [];
+
+                  pie_data._items.forEach(el => {
                     try {
-                      this.pie.push({ 'name': this.config[this.config.inv_mapping[this.default_activity]].observation.types[el._id]['label'], 'value': el.count });
+                      this.pieTypes.push({ 'name': this.config[this.config.inv_mapping[this.default_activity]].observation.types[el._id]['label'], 'value': el.count, itemStyle: { color: this.typesChartOptionColors[el._id] } });
                     } catch (e) {
-                      console.log("Error assigning types", e);
+                      //console.log("Error assigning types", e);
                       //this.pie.push({ 'name': this.config.fallskjerm.observation.types[el._id]['label'], 'value': el.count });
                     }
 
                   });
+
+                  this.typesChartOption.series[0].data = this.pieTypes;
+
+
                   this.dataReady = true;
-                  console.log(data);
+                  console.log('CHART', this.typesChartOption);
 
                 },
                 err => console.log(err),
@@ -108,6 +158,20 @@ export class NlfUiDummyComponent implements OnInit {
     );
 
   }
+
+  getTypeLabel(key) {
+
+    return this.config[this.config.inv_mapping[this.default_activity]].observation.types[key]['label'] || key;
+  }
+  getTypesTotalValue() {
+    return this.pieTypes.reduce((accumulated, obj) => { return accumulated + obj.value }, 0);
+  }
+
+  getDefaultActivity() {
+    return this.config.inv_mapping[this.default_activity] || '';
+  }
+
+
 
   /**
    * Ngx-chart
