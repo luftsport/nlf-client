@@ -43,7 +43,7 @@
           <fa-icon *ngIf="searching" [icon]="faSpinner" animation="pulse"
             class="form-control-lg position-absolute ps-3 text-muted"></fa-icon>
 
-          <input [(ngModel)]="searchTerm" [disabled]="searching" class="form-control form-control-lg py-4 ps-5 "
+          <input [(ngModel)]="searchTerm" [disabled]="searching" class="form-control form-control-lg py-1 ps-5 "
             type="text" placeholder="Søk etter medlem" (keyup)="deboucedSearch($event)" (keyup.enter)="search($event)"
             (keydown.arrowup)="moveUp()" (keydown.arrowdown)="moveDown()" (keydown.shift.tab)="moveUp()"
             (keydown.tab)="moveDown()">
