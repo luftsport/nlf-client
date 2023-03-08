@@ -9,6 +9,7 @@ import { NgStringPipesModule } from 'angular-pipes';
 import { ApiEveBaseList } from 'app/api/api-eve.interface';
 import { faEdit, faMapMarker, faRandom, faUsers, faFile, faCloud, faBolt, faExternalLink } from '@fortawesome/free-solid-svg-icons';
 import { faFileAlt, faComments } from '@fortawesome/free-regular-svg-icons';
+import { MapOptions, Layer, latLng, marker, Marker, tileLayer, Map } from 'leaflet';
 
 @Component({
   selector: 'nlf-ors-fallskjerm-report',
@@ -46,6 +47,10 @@ export class NlfOrsFallskjermReportComponent implements OnInit {
   faFileAlt = faFileAlt;
   faComments = faComments;
 
+  map: Map;
+  mapOptions: MapOptions;
+  marker: Marker;
+
   constructor(private route: ActivatedRoute,
               private orsService: ApiObservationsService,
               private alertService: NlfAlertService,
@@ -79,6 +84,29 @@ export class NlfOrsFallskjermReportComponent implements OnInit {
     return parseFloat(val);
   }
 
+  onMapReady(map: Map) {
+    this.map = map
+    this.marker.addTo(this.map);
+    this.map.setView(this.marker.getLatLng(), 7);
+  }
+
+  private configureMap() {
+
+    try {
+      this.mapOptions = {
+        layers: [
+          tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
+          
+        ],
+        zoom: 7,
+        center: latLng(59,10)
+      }
+
+    } catch (e) {}
+
+    
+
+  }
 
 
   /**
@@ -128,6 +156,9 @@ export class NlfOrsFallskjermReportComponent implements OnInit {
     this.orsService.getObservation(this.id, options).subscribe(
       data => {
         this.observation = data;
+
+        this.marker = marker([this.observation.location.geo.coordinates[0], this.observation.location.geo.coordinates[1]]);
+        this.configureMap();
 
         if (this.version > 0 && this.version !== this.observation._latest_version) {
           this.alertService.warning('Utdatert versjon du ser på versjon ' + this.version + ' av dokumentet. Siste versjon er ' + this.observation._latest_version);

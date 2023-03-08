@@ -155,8 +155,6 @@ export class NlfOrsEditorFlightMapComponent implements OnInit {
     // @TODO
     //preventMarkerRemoval: true - on layer!
 
-
-
     this.polylineRoute.on('pm:update', (event) => {
 
       console.log('UPDATE', event, (event.layer as Polyline).getLatLngs());
@@ -164,8 +162,6 @@ export class NlfOrsEditorFlightMapComponent implements OnInit {
     });
 
     this.map.on('pm:create', (e) => {
-      //e.layer.options.pmIgnore = false;
-      console.log("E", e.layer);
       L.PM.reInitLayer(e.layer);
     });
 

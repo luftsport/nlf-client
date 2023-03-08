@@ -9,16 +9,20 @@
 			<!-- <fa-icon [icon]="fileAlt"></fa-icon>&nbsp;-->
 			<!-- {{ observation.tags | nlfOrsTags: ' / '}} -->
 			<a [routerLink]="['/ors', observation._model.type]">OBSREG</a>#{{ observation.id }}
-			<nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type" link="true" seperator="/"></nlf-resolve-observation-tags>&nbsp;
+			<nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type" link="true"
+				seperator="/"></nlf-resolve-observation-tags>&nbsp;
 			<!-- /TITLE -->
 			<!-- RATING -->
-			<span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body" *ngIf="!!observation.rating" class="badge bg-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating
+			<span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body"
+				*ngIf="!!observation.rating"
+				class="badge bg-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating
 				| nlfOrsRatingCalc }}</span>
 
 
 			<!-- DIFFERENT VERSION -->
 			<span *ngIf="observation._version !== observation._latest_version" class="badge bg-warning">
-				<a [routerLink]="['/ors', observation._model.type, 'report', observation.id]">v{{ observation._version }} av {{ observation._latest_version }}</a>
+				<a [routerLink]="['/ors', observation._model.type, 'report', observation.id]">v{{ observation._version
+					}} av {{ observation._latest_version }}</a>
 			</span>
 			<!-- /DIFFERENT VERSION -->
 
@@ -29,10 +33,12 @@
 
 			<!-- WORKFLOW STATE -->
 			<span class="float-end">
-				<a [routerLink]="['/ors', observation._model.type, 'edit', observation.id]" *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge bg-primary text-white mx-1">
+				<a [routerLink]="['/ors', observation._model.type, 'edit', observation.id]"
+					*ngIf="observation.acl_user.x || observation.acl_user.w" class="badge bg-primary text-white mx-1">
 					<fa-icon [icon]="faEdit"></fa-icon> Editor
 				</a>
-				<nlf-resolve-observation-state [activity]="observation._model.type" [state]="observation.workflow.state" icon="true"></nlf-resolve-observation-state>
+				<nlf-resolve-observation-state [activity]="observation._model.type" [state]="observation.workflow.state"
+					icon="true"></nlf-resolve-observation-state>
 			</span>
 			<!-- /WORKFLOW STATE -->
 		</div>
@@ -48,33 +54,33 @@
 
 			<!-- MAP -->
 			<div class="col-md-6">
-				<div fxFlex="100" *ngIf="!!observation.occurrence.attributes.latitudeOfOcc.value || !!observation.occurrence.attributes.longitudeOfOcc.value">
-<!--
-					<agm-map style=" max-height: 25rem !important;" [latitude]="observation.occurrence.attributes.latitudeOfOcc.value" [longitude]="observation.occurrence.attributes.longitudeOfOcc.value" [mapTypeControl]="true" [zoom]="7">
+				<div fxFlex="100"
+					*ngIf="!!observation.occurrence.attributes.latitudeOfOcc.value || !!observation.occurrence.attributes.longitudeOfOcc.value">
 
-						<agm-marker [markerDraggable]="false" [latitude]="observation.occurrence.attributes.latitudeOfOcc.value" [longitude]="observation.occurrence.attributes.longitudeOfOcc.value" [label]="'X'">
-						</agm-marker>
-
-						<div *ngFor="let aircraft of observation.aircrafts">
-
-							<agm-polyline *ngFor="let route of aircraft.flight; let ix = index;" [editable]="false">
-								<agm-polyline-point *ngFor="let coordinates of route.path" [latitude]="coordinates[1]" [longitude]="coordinates[0]">
-								</agm-polyline-point>
-							</agm-polyline>
+					<div class="row" style="height: 400px">
+						<div class="col-xs-12 position-relative">
+							<nlf-ors-report-flight-map [aircraft]="observation.aircrafts"
+								[where]="[observation.occurrence.attributes.latitudeOfOcc.value, observation.occurrence.attributes.longitudeOfOcc.value]"></nlf-ors-report-flight-map>
 						</div>
-					</agm-map>
--->
+					</div>
+
 					<div class="mt-2">
-						<fa-icon [icon]="faMapMarkerAlt"></fa-icon> {{ observation.occurrence.attributes.locationName.value || "Sted ikke angitt" }}
-						<span class="mx-2 badge bg-secondary float-end">Lng: {{ observation.occurrence.attributes.longitudeOfOcc.value | round: 4}}</span>
-            <span class="mx-2 badge bg-secondary float-end">Lat: {{ observation.occurrence.attributes.latitudeOfOcc.value | round: 4 }}</span>
+						<fa-icon [icon]="faMapMarkerAlt"></fa-icon> {{
+						observation.occurrence.attributes.locationName.value || "Sted ikke angitt" }}
+						<span class="mx-2 badge bg-secondary float-end">Lng: {{
+							observation.occurrence.attributes.longitudeOfOcc.value | round: 4}}</span>
+						<span class="mx-2 badge bg-secondary float-end">Lat: {{
+							observation.occurrence.attributes.latitudeOfOcc.value | round: 4 }}</span>
 					</div>
 					<div>
-						<nlf-ors-editor-tag-e5x-render [showLabel]="false" [items]="observation.occurrence.attributes.stateAreaOfOcc.value" path="E5X.Occurrence.StateAreaOfOcc"></nlf-ors-editor-tag-e5x-render>
+						<nlf-ors-editor-tag-e5x-render [showLabel]="false"
+							[items]="observation.occurrence.attributes.stateAreaOfOcc.value"
+							path="E5X.Occurrence.StateAreaOfOcc"></nlf-ors-editor-tag-e5x-render>
 					</div>
 				</div>
 
-				<div *ngIf="!observation.occurrence.attributes.latitudeOfOcc.value || !observation.occurrence.attributes.longitudeOfOcc.value">
+				<div
+					*ngIf="!observation.occurrence.attributes.latitudeOfOcc.value || !observation.occurrence.attributes.longitudeOfOcc.value">
 					<ngb-alert type="danger" [dismissible]="false">
 						<fa-icon [icon]="faMapMarkerAlt"></fa-icon>
 						Ingen lokalisasjon satt.
@@ -112,21 +118,26 @@
 
 				<ng-container *ngIf="observation.hasOwnProperty('e5x')">
 					<div *ngIf="observation.e5x.audit.length==0" class="alert alert-info mt-2">
-						<strong>Ingen historikk</strong> hvilket betyr at denne observasjonen ikke har blitt sendt LT tidligere.
+						<strong>Ingen historikk</strong> hvilket betyr at denne observasjonen ikke har blitt sendt LT
+						tidligere.
 					</div>
 
 					<div class="overflow-auto">
 						<table *ngIf="observation.e5x.audit.length>0" class="my-3 table table-striped table-sm">
 							<tbody>
-								<tr *ngFor="let audit of observation.e5x.audit" [ngClass]="{'bg-info':observation._version==audit.version}">
+								<tr *ngFor="let audit of observation.e5x.audit"
+									[ngClass]="{'bg-info':observation._version==audit.version}">
 									<td>
-										<nlf-ors-editor-tag-e5x-render classes="badge bg-secondary" [showLabel]="false" [items]="audit.status" path="E5X.Occurrence.ReportingHistory.ReportStatus"></nlf-ors-editor-tag-e5x-render>
+										<nlf-ors-editor-tag-e5x-render classes="badge bg-secondary" [showLabel]="false"
+											[items]="audit.status"
+											path="E5X.Occurrence.ReportingHistory.ReportStatus"></nlf-ors-editor-tag-e5x-render>
 									</td>
 									<td>
 										{{ audit.date | date:'yyyy-MM-dd HH:mm'}}
 									</td>
 									<td>
-										<nlf-resolve-lungo-person [person_id]="audit.person_id"></nlf-resolve-lungo-person>
+										<nlf-resolve-lungo-person
+											[person_id]="audit.person_id"></nlf-resolve-lungo-person>
 									</td>
 									<td>
 										v{{ audit.version }}
@@ -136,7 +147,8 @@
 										<span *ngIf="!audit.sent" class="badge bg-danger">Ikke sendt</span>
 									</td>
 									<td class="text-end">
-										<a *ngIf="!!token" target="_blank" href="/api/v1/e5x/download/{{observation._model.type}}/{{observation.id}}/{{audit.version}}?token={{token}}">
+										<a *ngIf="!!token" target="_blank"
+											href="/api/v1/e5x/download/{{observation._model.type}}/{{observation.id}}/{{audit.version}}?token={{token}}">
 											<fa-icon [icon]="faDownload"></fa-icon>
 										</a>
 									</td>
@@ -155,14 +167,17 @@
 				<div class="card-header">
 					<fa-icon [icon]="faCommenting"></fa-icon> Narrative
 				</div>
-				<ng-container *ngIf="observation.occurrence.entities.hasOwnProperty('narrative') && observation.occurrence.entities.narrative.length>0">
+				<ng-container
+					*ngIf="observation.occurrence.entities.hasOwnProperty('narrative') && observation.occurrence.entities.narrative.length>0">
 					<div class="p-3 narrative">
 						{{ observation.occurrence.entities.narrative[0].attributes.narrativeText.plainText }}
 					</div>
 				</ng-container>
-				<ng-container *ngIf="observation.occurrence.entities.reportingHistory[0].attributes.hasOwnProperty('reporterSDescription')">
+				<ng-container
+					*ngIf="observation.occurrence.entities.reportingHistory[0].attributes.hasOwnProperty('reporterSDescription')">
 					<div class="p-3 narrative">
-						{{ observation.occurrence.entities.reportingHistory[0].attributes.reporterSDescription.plainText }}
+						{{ observation.occurrence.entities.reportingHistory[0].attributes.reporterSDescription.plainText
+						}}
 					</div>
 				</ng-container>
 			</div>
@@ -176,7 +191,9 @@
 					<fa-icon [icon]="faPlane"></fa-icon> Fly
 				</div>
 				<div *ngFor="let aircraft of observation.aircrafts" class="my-2">
-					<nlf-aircraft-summary [callsign]="aircraft.aircraft.callsign" [model]="aircraft.aircraft.model || undefined" [manufacturer]="aircraft.aircraft.manufacturer || undefined"></nlf-aircraft-summary>
+					<nlf-aircraft-summary [callsign]="aircraft.aircraft.callsign"
+						[model]="aircraft.aircraft.model || undefined"
+						[manufacturer]="aircraft.aircraft.manufacturer || undefined"></nlf-aircraft-summary>
 				</div>
 			</div>
 		</div>
@@ -188,7 +205,8 @@
 				<div class="card-header">
 					<fa-icon [icon]="faFile"></fa-icon> Vedlegg
 				</div>
-				<nlf-ors-report-files [files]="observation.files" [state]="observation.workflow.state"></nlf-ors-report-files>
+				<nlf-ors-report-files [files]="observation.files"
+					[state]="observation.workflow.state"></nlf-ors-report-files>
 				<div class="p-2" *ngIf="observation.files.length==0">
 					Ingen Vedlegg
 				</div>
@@ -278,7 +296,8 @@
 			<div class="col-md-7">
 
 				<div *ngIf="!!observation.ask && !!observation.ask.text">
-					<nlf-ors-report-ask-text [comments]="observation.ask.text" [audit]="observation.workflow.audit" [activity]="observation._model.type"></nlf-ors-report-ask-text>
+					<nlf-ors-report-ask-text [comments]="observation.ask.text" [audit]="observation.workflow.audit"
+						[activity]="observation._model.type"></nlf-ors-report-ask-text>
 				</div>
 			</div>
 

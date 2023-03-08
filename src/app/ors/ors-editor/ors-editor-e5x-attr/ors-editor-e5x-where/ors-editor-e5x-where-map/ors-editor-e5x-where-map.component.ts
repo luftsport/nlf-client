@@ -101,11 +101,9 @@ export class NlfOrsEditorE5XWhereMapComponent implements OnInit {
     });
 
     if (!!this.lat && !!this.lng) {
-      console.log('We got lat lng');
+    
       this.marker = marker(latLng(this.lat, this.lng), { snapIgnore: false, draggable: true, autoPan: true, icon: this._mkIcon(6) }).bindPopup('Incident');
-
       //this.layer.addLayer(this.marker);
-
 
       this.marker.addTo(this.map);
       this.marker.pm.enable({ pinning: true, snappable: true });
@@ -168,6 +166,14 @@ export class NlfOrsEditorE5XWhereMapComponent implements OnInit {
 
     this.marker.addTo(this.map);
     this.marker.pm.enable({ pinning: true, snappable: true });
+    
+    this.marker.on('remove', (event) => {
+      this.map.on('click', (event) => {
+        this.addMarker(event);
+      });
+    });
+
+
     this.marker.on('pm:dragend', (event) => {
       this.markerDragEnd(event['target'].getLatLng())
     });
