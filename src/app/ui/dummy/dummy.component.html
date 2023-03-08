@@ -53,9 +53,9 @@
               <div class="p-0 m-0">
                 <div style="border-left: 3px solid {{ item.itemStyle.color }} !important">
                   <h4 class="my-1 mx-1 p-0 mt-o text-dark">{{ item.value | number }}</h4>
-                  <p class="mb-0 mx-1 p-0 text-secondary">{{ item.name }}</p>
+                  <p class="mb-0 mx-1 p-0 text-secondary small">{{ item.name }}</p>
                 </div>
-                <p class="h4 mb-0 mx-2 p-0 font-20 mb-0 text-secondary">{{ item.value/getTypesTotalValue() | percent }}
+                <p class="h4 mb-0 mx-2 p-0 fs-5 mb-0 text-secondary">{{ item.value/getTypesTotalValue() | percent }}
                 </p>
               </div>
             </div>
@@ -268,7 +268,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <div class="row">
+      <div class="row mb-3">
         <!--<nlf-user-profile></nlf-user-profile>-->
         <!--
         <div class="card">
@@ -287,7 +287,7 @@
         </div>-->
         <!-- END USER OR OBSREG -->
         <div class="col-md-3">
-          <div class="card mb-3">
+          <div class="card mb-3 obsreg-card">
             <div class="card-header"><i class="nlf nlf-motorfly nlf-fw"></i> Motorfly OBSREG</div>
 
             <nlf-ors-last activity="motorfly" number="8">Ingen registrerte</nlf-ors-last>
@@ -302,7 +302,7 @@
         </div>
 
         <div class="col-md-3">
-          <div class="card mb-3">
+          <div class="card mb-3 obsreg-card">
             <div class="card-header">
               <i class="nlf nlf-fallskjerm nlf-fw"></i> Fallskjerm OBSREG
             </div>
@@ -317,7 +317,7 @@
         </div>
 
         <div class="col-md-3">
-          <div class="card mb-3">
+          <div class="card mb-3 obsreg-card">
             <div class="card-header">
               <i class="nlf nlf-mikrofly nlf-fw"></i> Sportsfly OBSREG
             </div>
@@ -332,7 +332,7 @@
         </div>
 
         <div class="col-md-3">
-          <div class="card mb-3">
+          <div class="card mb-3 obsreg-card">
             <div class="card-header">
               <i class="nlf nlf-seilfly nlf-fw"></i> Seilfly OBSREG
             </div>
