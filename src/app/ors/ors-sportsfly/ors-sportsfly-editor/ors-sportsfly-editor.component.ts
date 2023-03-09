@@ -55,7 +55,6 @@ export class NlfOrsSportsflyEditorComponent implements OnInit, OnDestroy, Compon
   id: number | string;
   dataReady = false;
   observation: ApiObservationsItem;
-  modalObservation: ApiObservationsItem;
   differ: any;
   changes = false;
   hotkeys = []; //: Hotkey[];
@@ -392,12 +391,10 @@ export class NlfOrsSportsflyEditorComponent implements OnInit, OnDestroy, Compon
   }
 
   openActivities(template) {
-    this.modalObservation = this.observation;
     this.modalRef = this.modalService.open(template, { size: 'lg' });
   }
 
   closeActivities() {
-    this.modalObservation = undefined;
     this.modalRef.close();
   }
 

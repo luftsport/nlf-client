@@ -38,7 +38,6 @@ export class NlfOrsSeilflyEditorComponent implements OnInit, OnDestroy, Componen
   id: number | string;
   dataReady = false;
   observation: ApiObservationsItem;
-  modalObservation: ApiObservationsItem;
   differ: any;
   changes = false;
   hotkeys = []; //: Hotkey[];
@@ -393,12 +392,10 @@ export class NlfOrsSeilflyEditorComponent implements OnInit, OnDestroy, Componen
   }
 
   openActivities(template) {
-    this.modalObservation = this.observation;
     this.modalRef = this.modalService.open(template, { size: 'lg' });
   }
 
   closeActivities() {
-    this.modalObservation = undefined;
     this.modalRef.close();
   }
 
