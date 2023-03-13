@@ -91,7 +91,7 @@ export class NlfWorkersStatusComponent implements OnInit {
 
   // Echart
   statusChartOption: EChartsOption;
-  statusChartOptionColors = { finished: '#198754', error: '#dc3545', ready: '#428bca', pending: '#ffc107' };
+  statusChartOptionColors = { finished: '#198754', error: '#dc3545', ready: '#428bca', pending: '#ffc107', wont_fix: '#FF0000' };
   entitiesChartOption: EChartsOption;
   entitiesChartOptionColors = { Person: '#198754', Function: '#dc3545', Competence: '#428bca', License: '#ffc107', Payment: '#343a40', Organization: '#007bff', Qualification: '#6c757d' };
 
