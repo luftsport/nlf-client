@@ -12,7 +12,6 @@ import { MomentModule } from 'ngx-moment'; // optional, provides moment-style pi
 
 import { TableModule } from 'ngx-easy-table';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { FontAwesomeModule } from 'ngx-icons';
 import { NlfChangesHourComponent } from './changes-hour/changes-hour.component';
 import { WorkerLogComponent } from './worker-log/worker-log.component';
 
@@ -30,7 +29,6 @@ import { WorkerLogComponent } from './worker-log/worker-log.component';
     NlfIntegrationRoutingModule,
     TableModule,
     NgxChartsModule,
-    FontAwesomeModule,
     MomentModule
     
   ],

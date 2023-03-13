@@ -316,6 +316,7 @@ import { LungoOrganizationsService } from 'app/api/lungo-organizations.service';
 import { LungoLicensesService } from 'app/api/lungo-licenses.service';
 import { LungoFunctionsService } from 'app/api/lungo-functions.service';
 import { LungoActivitiesService } from 'app/api/lungo-activities.service';
+import { LungoPaymentsService } from 'app/api/lungo-payments.service';
 
 // USER
 import { NlfUserProfileComponent } from 'app/user/user-profile/user-profile.component';
@@ -653,6 +654,7 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     LungoLicensesService,
     LungoFunctionsService,
     LungoActivitiesService,
+     LungoPaymentsService,
     // E5X
     ApiE5XAttributesService,
     ApiE5XChoicesService,
