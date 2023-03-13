@@ -18,7 +18,8 @@
       <fa-icon [icon]="faSave"></fa-icon> Lagre søk
     </button>
     -->
-      <span *ngIf="ENV.production===false && [1505923257, 1476506542, -1957053861, 1536523365].indexOf(userHash(user_data.person_id))>-1"
+      <span
+        *ngIf="ENV.production===false && [1505923257, 1476506542, -1957053861, 1536523365].indexOf(userHash(user_data.person_id))>-1"
         class="float-end d-inline">
         <nlf-help class="mx-1" key="nlf-member"></nlf-help>
         <a [routerLink]="['/medlem', 'kompetanse']">
@@ -155,13 +156,24 @@
 
     <h4 class="mt-1">Lisenser</h4>
     <div *ngFor="let license of modalPerson.licenses" class="overflow-hidden">
-      <fa-icon *ngIf="checkExpiry(license.expiry) && license.status_id===3" [icon]="faCheck" class="text-success me-1"></fa-icon>
-      <fa-icon *ngIf="!checkExpiry(license.expiry) || license.status_id!=3" [icon]="faRemove" class="text-danger me-1"></fa-icon>
+      <fa-icon *ngIf="checkExpiry(license.expiry) && license.status_id===3" [icon]="faCheck"
+        class="text-success me-1"></fa-icon>
+      <fa-icon *ngIf="!checkExpiry(license.expiry) || license.status_id!=3" [icon]="faRemove"
+        class="text-danger me-1"></fa-icon>
       <nlf-resolve-lungo-license [license_id]="license.id" [link]="false" [long]="true"></nlf-resolve-lungo-license>
     </div>
-    <div *ngIf="!modalPerson.licenses||modalPerson.licenses.length==0">
+
+    <div *ngFor="let payment of fallskjermLicenses" class="overflow-hidden">
+      <fa-icon [icon]="faCheck"
+        class="text-success me-1"></fa-icon>
+        {{ payment.product_name }} (betalt {{ payment.paid_date | date }})
+    </div>
+
+    <div *ngIf="(!modalPerson.licenses||modalPerson.licenses.length==0) && fallskjermLicenses.length==0">
       Ingen lisenser registrert
     </div>
+
+
 
     <h4 class="mt-1">Kompetanser</h4>
     <div *ngFor="let competence of modalPerson.competences" class="overflow-hidden">
