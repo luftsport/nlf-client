@@ -1,6 +1,6 @@
 {
   "name": "nlf-client",
-  "version": "0.10.16",
+  "version": "0.10.17",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -75,7 +75,6 @@
     "leaflet": "^1.9.3",
     "leaflet-draw": "^1.0.4",
     "leaflet-geometryutil": "^0.10.1",
-    "leaflet-webgl-heatmap": "^0.2.7",
     "leaflet.heat": "^0.2.0",
     "leaflet.markercluster": "^1.5.3",
     "lodash": "^4.17.11",
