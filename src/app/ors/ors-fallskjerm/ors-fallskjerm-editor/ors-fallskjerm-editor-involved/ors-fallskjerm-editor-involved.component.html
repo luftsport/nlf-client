@@ -48,8 +48,8 @@
         </span>
       </td>
       <td class="text-end">
-        <a (click)="openPersonModal(involvedModal, idx)" class="pointer btn btn-sm btn-secondary">Edit</a>
-        <fa-icon *ngIf="!disabled" class="pointer ms-3" title="Slett person" (click)="onRemove(idx)" [icon]="faTimes" [fixedWidth]="true"></fa-icon>
+        <button (click)="openPersonModal(involvedModal, idx)" type="button" class="btn btn-sm btn-warning"><fa-icon [icon]="faEdit"></fa-icon>Edit</button>
+        <fa-icon *ngIf="!disabled" class="pointer ms-3" title="Slett person" (click)="onRemove(idx)" [icon]="faTimes"></fa-icon>
       </td>
     </tr>
 

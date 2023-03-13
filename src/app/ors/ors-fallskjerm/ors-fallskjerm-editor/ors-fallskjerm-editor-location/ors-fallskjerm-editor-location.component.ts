@@ -147,7 +147,15 @@ export class NlfOrsFallskjermEditorLocationComponent implements OnInit, AfterVie
       });
   }
 
+  public hasMapCoordinates() {
+    try {
+      if(!!this.observation.location.geo.coordinates) {
+        return true;
+      }
+    } catch(e) {}
 
+    return false;
+  }
 
   getClubLocations() {
 

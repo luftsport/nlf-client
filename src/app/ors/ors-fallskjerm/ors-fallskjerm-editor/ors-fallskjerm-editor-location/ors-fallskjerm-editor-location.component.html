@@ -29,7 +29,7 @@
 
     <!-- Map column -->
     <div class="col-xs-12 col-md-8 d-flex flex-column">
-      <div style="height: 300px" *ngIf="dataReady" id="location-map" leaflet [leafletOptions]="mapOptions"
+      <div style="height: 300px" *ngIf="dataReady && hasMapCoordinates()" id="location-map" leaflet [leafletOptions]="mapOptions"
         (leafletMapReady)="onMapReady($event)" [(leafletCenter)]="mapCenter">
       </div>
       <!--

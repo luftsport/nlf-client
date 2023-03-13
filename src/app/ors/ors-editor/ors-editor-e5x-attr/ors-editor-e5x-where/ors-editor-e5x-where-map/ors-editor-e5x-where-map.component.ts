@@ -101,8 +101,8 @@ export class NlfOrsEditorE5XWhereMapComponent implements OnInit {
     });
 
     if (!!this.lat && !!this.lng) {
-    
-      this.marker = marker(latLng(this.lat, this.lng), { snapIgnore: false, draggable: true, autoPan: true, icon: this._mkIcon(6) }).bindPopup('Incident');
+
+      this.marker = marker(latLng(this.lat, this.lng), { snapIgnore: false, draggable: !this.disabled, autoPan: true, icon: this._mkIcon(6) }).bindPopup('Incident');
       //this.layer.addLayer(this.marker);
 
       this.marker.addTo(this.map);
@@ -111,14 +111,16 @@ export class NlfOrsEditorE5XWhereMapComponent implements OnInit {
         this.markerDragEnd(event['target'].getLatLng())
       });
 
-      if(this.aircraft.length===0) {
-        this.map.setView(this.marker.getLatLng(),12);
+      if (this.aircraft.length === 0) {
+        this.map.setView(this.marker.getLatLng(), 12);
       }
 
 
     } else {
       this.map.on('click', (event) => {
-        this.addMarker(event);
+        if (!this.disabled) {
+          this.addMarker(event);
+        }
       });
     }
 
@@ -158,19 +160,21 @@ export class NlfOrsEditorE5XWhereMapComponent implements OnInit {
 
     //Add a marker to show where you clicked.
     //this.marker = marker([event.latlng.lat, event.latlng.lng], { snapIgnore: false, draggable: true, autoPan: true, icon: this._mkIcon(6)}).addTo(this.map);
-    this.marker = marker([event.latlng.lat, event.latlng.lng], { snapIgnore: false, draggable: true, autoPan: true, icon: this._mkIcon(6) }).bindPopup('Incident');
+    this.marker = marker([event.latlng.lat, event.latlng.lng], { snapIgnore: false, draggable: !this.disabled, autoPan: true, icon: this._mkIcon(6) }).bindPopup('Incident');
     this.markerDragEnd({ lat: event.latlng.lat, lng: event.latlng.lng });
-    if(this.aircraft.length===0) {
-      this.map.setView(this.marker.getLatLng(),12);
+    if (this.aircraft.length === 0) {
+      this.map.setView(this.marker.getLatLng(), 12);
     }
 
     this.marker.addTo(this.map);
     this.marker.pm.enable({ pinning: true, snappable: true });
-    
+
     this.marker.on('remove', (event) => {
-      this.map.on('click', (event) => {
-        this.addMarker(event);
-      });
+      if (!this.disabled) {
+        this.map.on('click', (event) => {
+          this.addMarker(event);
+        });
+      }
     });
 
 

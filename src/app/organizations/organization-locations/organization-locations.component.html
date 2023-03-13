@@ -39,7 +39,7 @@
       <div class="col-md-8 position-relative">
 
 
-        <div id="main-map" leaflet *ngIf="!!mapOptions" class="map" [leafletOptions]="mapOptions"
+        <div id="main-map" style="height: 400px;" leaflet *ngIf="!!mapOptions" class="map" [leafletOptions]="mapOptions"
           (leafletMapReady)="onMapReady($event)" [(leafletCenter)]="mapCenter">
         </div>
 

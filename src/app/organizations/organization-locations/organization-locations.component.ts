@@ -36,7 +36,7 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
   faEdit = faEdit;
 
   org_id: number;
-  org
+  org;
   sub;
   modalRef;
   modalIndex: number = 0;

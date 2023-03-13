@@ -107,7 +107,6 @@ export class NlfOrganizationDetailsComponent implements OnInit, OnDestroy {
 
     } catch (e) {}
 
-
   }
 
   onMapReady(map: Map) {
