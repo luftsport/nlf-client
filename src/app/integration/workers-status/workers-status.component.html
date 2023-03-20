@@ -44,7 +44,7 @@
             <div class="p-0 m-0">
               <div style="border-left: 3px solid {{ statusChartOptionColors[item.name] }} !important">
                 <h4 class="my-1 mx-1 p-0 mt-o text-dark">{{ item.value | number }}</h4>
-                <p class="mb-0 mx-1 p-0 text-secondary">{{ item.name }}</p>
+                <p class="mb-0 mx-1 p-0 text-secondary">{{ item.name | replace:'_':' '}}</p>
               </div>
               <p class="h4 mb-0 mx-2 p-0 font-20 mb-0 text-secondary">{{ item.value/getPieTotalValue() | percent }}</p>
             </div>
@@ -98,7 +98,7 @@
             <div class="p-0 m-0">
               <div style="border-left: 3px solid {{ entitiesChartOptionColors[item.name] }} !important">
                 <h4 class="my-1 mx-1 p-0 mt-o text-dark">{{ item.value | number }}</h4>
-                <p class="mb-0 mx-1 p-0 text-secondary">{{ item.name }}</p>
+                <p class="mb-0 mx-1 p-0 text-secondary">{{ item.name | replace:'_':' '}}</p>
               </div>
               <p class="h4 mb-0 mx-2 p-0 font-20 mb-0 text-secondary">{{ item.value/getPieTotalValue() | percent }}</p>
             </div>
