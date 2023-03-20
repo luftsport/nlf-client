@@ -43,10 +43,9 @@ import { NlfConfigModule } from 'app/nlf-config.module';
 // import { NgProgressRouterModule } from '@ngx-progressbar/router';
 import { TableModule } from 'ngx-easy-table';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
-import { AgmCoreModule } from '@agm/core';
 import { HotkeyModule } from 'angular2-hotkeys';
 // File uploader
-import { NgxUploaderModule } from 'ngx-uploader';
+import { NgxUploaderModule } from '@angular-ex/uploader';
 // Charting
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 // Jodit editor
@@ -56,8 +55,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 // DIFF
 import { DiffMatchPatchModule } from 'ng-diff-match-patch';
 // TIME
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
-import { MomentModule } from 'angular2-moment'; // optional, provides moment-style pipes for date formatting
+import { MomentModule } from 'ngx-moment'; // optional, provides moment-style pipes for date formatting
 
 
 // API
@@ -209,6 +207,7 @@ import { NlfOrsReportWeatherComponent } from 'app/ors/ors-report/report-weather/
 import { NlfOrsReportFilesComponent } from 'app/ors/ors-report/report-files/report-files.component';
 import { NlfOrsReportComponentsTimelineComponent } from 'app/ors/ors-report/report-components-timeline/report-components-timeline.component';
 import { NlfOrsReportFilesThumbnailsComponent } from 'app/ors/ors-report/report-files-thumbnails/report-files-thumbnails.component';
+import { NlfOrsReportFlightMapComponent } from 'app/ors/ors-report/report-flight-map/report-flight-map.component';
 
 // OBSREG FALLSKJERM
 import { NlfOrsFallskjermEditorComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-editor/ors-fallskjerm-editor.component';
@@ -266,6 +265,8 @@ import { NlfOrsEditorE5XAcWildlifeComponent } from 'app/ors/ors-editor/ors-edito
 import { NlfOrsEditorE5XAcInjuriesComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-ac-injuries/ors-editor-e5x-ac-injuries.component';
 import { NlfOrsEditorE5XAcWeatherComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-ac-weather/ors-editor-e5x-ac-weather.component';
 import { NlfOrsEditorE5XAcFlightComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-ac-flight/ors-editor-e5x-ac-flight.component';
+import { NlfOrsEditorFlightMapComponent } from 'app/ors/ors-editor/ors-editor-flight-map/ors-editor-flight-map.component';
+import { NlfOrsEditorE5XWhereMapComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-where/ors-editor-e5x-where-map/ors-editor-e5x-where-map.component';
 
 // OCCURRENCE ATTRIBUTES
 import { NlfOrsEditorE5XOccurrenceComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-occurrence/ors-editor-e5x-occurrence.component'
@@ -293,7 +294,7 @@ import { NlfOrsEditorE5xAssessmentComponent } from 'app/ors/ors-editor/ors-edito
 import { NlfOrsEditorE5xRiskComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-risk/ors-editor-e5x-risk.component';
 import { NlfOrsEditorE5xSeparationComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-separation/ors-editor-e5x-separation.component';
 
-// OBSREG EDITOR MOTORFLY ONLY
+// OBSREG EDITOR *FLY ONLY
 import { NlfOrsEditorFlightComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-aircraft/ors-editor-flight/ors-editor-flight.component';
 import { NlfOrsEditorPeopleMotorflyComponent } from 'app/ors/ors-editor/ors-editor-people-motorfly/ors-editor-people-motorfly.component';
 import { NlfOrsEditorAircraftPersonComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-aircraft/ors-editor-aircraft-person/ors-editor-aircraft-person.component';
@@ -315,6 +316,7 @@ import { LungoOrganizationsService } from 'app/api/lungo-organizations.service';
 import { LungoLicensesService } from 'app/api/lungo-licenses.service';
 import { LungoFunctionsService } from 'app/api/lungo-functions.service';
 import { LungoActivitiesService } from 'app/api/lungo-activities.service';
+import { LungoPaymentsService } from 'app/api/lungo-payments.service';
 
 // USER
 import { NlfUserProfileComponent } from 'app/user/user-profile/user-profile.component';
@@ -518,6 +520,8 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfOrsEditorE5XAcInjuriesComponent,
     NlfOrsEditorE5XAcWeatherComponent,
     NlfOrsEditorE5XAcFlightComponent,
+    NlfOrsEditorFlightMapComponent,
+    NlfOrsReportFlightMapComponent,
     // OCCURRENCE ATTRIBUTES
     NlfOrsEditorE5XOccurrenceComponent,
     NlfOrsEditorE5XWeatherComponent,
@@ -529,6 +533,7 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfOrsEditorE5XInjuriesComponent,
     NlfOrsEditorE5XDamageComponent,
     NlfOrsEditorE5XWhereComponent,
+    NlfOrsEditorE5XWhereMapComponent,
     NlfOrsEditorE5XAtmComponent,
     NlfOrsEditorE5XAerodromeComponent,
     NlfOrsEditorE5XAerodromeSingleComponent,
@@ -554,9 +559,9 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfErrorComponent,
     ContenteditableDirective,
     ConfirmModalComponent,
-    
+
     // METAR
-    NlfMetMetarComponent, 
+    NlfMetMetarComponent,
 
     // MEMBERSHIPS
     NlfMemberComponent,
@@ -564,12 +569,13 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
   ],
   entryComponents: [
     // WidgetOrsPieComponent,
-    ConfirmModalComponent,
+    /**
     NlfOrsEditorHelpComponent,
     NlfOrsEditorAboutComponent,
     NlfOrsEditorDebugComponent,
     NlfOrsEditorWorkflowComponent,
     NlfOrsCreateModalComponent,
+    **/
 
   ],
   imports: [
@@ -586,23 +592,20 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     TableModule, // ngx-easy-table
     // REMOVE RTModule, // right-angled declarative tables
     ImageCropperModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
     NgxChartsModule, // Charting
     // NgxDatatableModule,
 
     NgIdleKeepaliveModule.forRoot(),
     MomentModule,
     TagInputModule, // ngx-chips
-    // MentionModule, // angular-mentions REMOVE
     BrowserAnimationsModule,
     NgxUploaderModule,
     HotkeyModule.forRoot(),
     JoyrideModule.forRoot(),
-    AgmCoreModule.forRoot({ // Google maps
-      apiKey: 'AIzaSyCt7ni1T6AtGNlx-45DVirffvav8l7hlMw',
-      libraries: ['visualization']
-    }),
+    //AgmCoreModule.forRoot({ // Google maps
+    //  apiKey: 'AIzaSyCt7ni1T6AtGNlx-45DVirffvav8l7hlMw',
+    //  libraries: ['visualization']
+    //}),
     DiffMatchPatchModule, // DIFF
     // NgbModule.forRoot() // ngx-bootstrap (not good rather shaitolainen!)
     //  VgCoreModule,
@@ -651,6 +654,7 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     LungoLicensesService,
     LungoFunctionsService,
     LungoActivitiesService,
+     LungoPaymentsService,
     // E5X
     ApiE5XAttributesService,
     ApiE5XChoicesService,

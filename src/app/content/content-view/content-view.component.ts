@@ -2,6 +2,7 @@ import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import { ApiContentService } from 'app/api/api-content.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiOptionsInterface, ApiContentItem } from 'app/api/api.interface';
+import { faEdit, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-content-view',
@@ -9,6 +10,9 @@ import { ApiOptionsInterface, ApiContentItem } from 'app/api/api.interface';
   styleUrls: ['./content-view.component.css']
 })
 export class NlfContentViewComponent implements OnInit, AfterContentChecked {
+
+  faEdit = faEdit;
+  faPlus = faPlus;
 
   content: ApiContentItem;
   dataReady = false;
@@ -41,6 +45,11 @@ export class NlfContentViewComponent implements OnInit, AfterContentChecked {
         this.apiContent.getContent(params['slug'], options).subscribe(
           data => {
             this.content = data;
+            // Need to convert badge-info to text-bg-info botstrap 4=>5
+            try {
+              this.content.body = this.content.body.replaceAll('badge badge-', 'badge text-bg-');
+            } catch (e) {}
+
             this.getParents(data._id);
             this.getChildren(data._id);
             this.getSiblings(data.parent, data._id);
@@ -60,7 +69,7 @@ export class NlfContentViewComponent implements OnInit, AfterContentChecked {
     const options: ApiOptionsInterface = {
       query: {
         // where: { space_key: space_key },
-        projection: {_id: 1, title: 1, slug: 1, space_key:1, parent: 1}
+        projection: { _id: 1, title: 1, slug: 1, space_key: 1, parent: 1 }
       },
     };
     this.apiContent.getContentList(options).subscribe(

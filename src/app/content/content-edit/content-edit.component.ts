@@ -10,9 +10,11 @@ import { NlfAlertService } from 'app/services/alert/alert.service';
 import { LungoPersonsService } from 'app/api/lungo-persons.service';
 import { LungoPersonsSearchItem, LungoPersonsSearchList } from 'app/api/lungo.interface';
 
-import Tribute from 'tributejs/src';
+import Tribute from "tributejs";
+import TributeOptions from "tributejs";
 import { debounce } from 'ts-debounce';
-import { VIEWPORT_RULER_PROVIDER_FACTORY } from '@angular/cdk/scrolling';
+
+import { faEdit, faClose, faSave, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-admin-content-edit',
@@ -20,6 +22,11 @@ import { VIEWPORT_RULER_PROVIDER_FACTORY } from '@angular/cdk/scrolling';
   styleUrls: ['./content-edit.component.css']
 })
 export class NlfContentEditComponent implements OnInit, AfterViewInit {
+
+  faEdit = faEdit;
+  faClose = faClose;
+  faSave = faSave;
+  faPlus = faPlus;
 
   joditConfig: Object;
   jodit;
@@ -52,7 +59,9 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
   content: ApiContentItem = { title: '', slug: '', body: undefined, space_key: '' };
 
   // Tributejs
-  tribute: Tribute;
+  tribute: any;
+  tributeOptions: any;
+
   debouncedGetOrs = debounce(this.getOrs, 500);
   debouncedGetUsers = debounce(this.getUsers, 500);
   debouncedGetContent = debounce(this.getContent, 500);
@@ -131,13 +140,17 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
       },
       err => console.log(err),
       () => {
+        // Need to convert badge-info to text-bg-info botstrap 4=>5
+        try {
+          this.content.body = this.content.body.replaceAll('badge badge-', 'badge text-bg-');
+        } catch (e) { }
         this.dataReady = true;
         // this.messenger$.next(true);
         console.log('Mode:', this.mode);
       }
 
     );
-    
+
     /**
      * Tributejs for mentions
      * See https://github.com/zurb/tribute for more
@@ -147,7 +160,7 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
       iframe: null,
       selectClass: 'highlight',
       selectTemplate: function (item) {
-        return '<macro href="#" data-url="/user/' + item.original.id + '" contenteditable="false" class="badge badge-danger macrolink pointer" id="' + item.original.id + '">@' + item.original.full_name + '</macro>';
+        return '<macro href="#" data-url="/user/' + item.original.id + '" contenteditable="false" class="badge bg-danger macrolink pointer" id="' + item.original.id + '">@' + item.original.full_name + '</macro>';
       },
       menuItemTemplate: function (item) {
         return item.string;
@@ -193,11 +206,11 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
     // Only fallskjerm for now
     // @TODO see how to limit to one activity or get searches from all activities (eg forkJoin?) or '#F' '#M' etc?
     const ors = {
-      trigger: '#', 
+      trigger: '#',
       iframe: null,
       selectClass: 'highlight',
       selectTemplate: function (item) {
-        return '<macro href="#" data-url="/ors/fallskjerm/report/' + item.original.id + '" contenteditable="false" class="badge badge-danger macrolink pointer" id="' + item.original.id + '"> \
+        return '<macro href="#" data-url="/ors/fallskjerm/report/' + item.original.id + '" contenteditable="false" class="badge bg-danger macrolink pointer" id="' + item.original.id + '"> \
         #' + item.original.id + ' ' + item.original.title + ' (fallskjerm)</macro>';
       },
       menuItemTemplate: function (item) {
@@ -209,7 +222,8 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
       values: (text, callback) => this.debouncedGetOrs(text, u => callback(u)),
       requireLeadingSpace: true,
     };
-    this.tribute = new Tribute({ collection: [users, ors, content], allowSpaces: true });
+    this.tributeOptions = { collection: [users, ors, content], allowSpaces: true };
+    this.tribute = new Tribute(this.tributeOptions);
 
     this.joditConfig = {
       buttons: 'paragraph, bold,strikethrough,underline,italic,|, \
@@ -267,7 +281,7 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
   public getOrs(text, callback) {
 
     this.orsService.setActivity('fallskjerm');
-    
+
     console.log('searcing for OBSREG, text', text);
 
     let ids = text.replace(/\D+/g, '') // Non digits

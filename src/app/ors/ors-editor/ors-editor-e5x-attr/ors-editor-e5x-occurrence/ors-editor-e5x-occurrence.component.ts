@@ -4,6 +4,7 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import { debounce } from 'ts-debounce';
 import { ApiObservationsItem } from 'app/api/api.interface';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-editor-e5x-occurrence',
@@ -11,6 +12,9 @@ import { ApiObservationsItem } from 'app/api/api.interface';
   styleUrls: ['./ors-editor-e5x-occurrence.component.css']
 })
 export class NlfOrsEditorE5XOccurrenceComponent implements OnInit {
+  faTimes = faTimes;
+  faCheck = faCheck;
+
   //@Input() attr: any;
   @Input() modal: boolean = false;
   @Input() disabled: boolean = false;

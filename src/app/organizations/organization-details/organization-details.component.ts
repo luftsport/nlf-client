@@ -7,6 +7,8 @@ import { ApiClubItem, ApiOptionsInterface, NlfConfigItem } from 'app/api/api.int
 import { NlfAlertService } from 'app/services/alert/alert.service';
 import { GeoLocationService } from 'app/services/geo/geo-location.service';
 import { NlfConfigService } from 'app/nlf-config.service';
+import { MapOptions, Layer, latLng, marker, tileLayer, Map } from 'leaflet';
+import { faUpload } from '@fortawesome/free-solid-svg-icons';
 // import { forkJoin } from 'rxjs';
 
 @Component({
@@ -16,9 +18,11 @@ import { NlfConfigService } from 'app/nlf-config.service';
 })
 export class NlfOrganizationDetailsComponent implements OnInit, OnDestroy {
 
+  faUpload = faUpload;
 
-  geo: { timestamp: number, coords: Coordinates };
+  geo: { timestamp: number, coords: number[] };
   zoom = 12;
+  map: Map;
 
   organization_id: number = 376;
   federation_id: number = 0;
@@ -33,6 +37,9 @@ export class NlfOrganizationDetailsComponent implements OnInit, OnDestroy {
 
 
   sub;
+
+  mapOptions: MapOptions = undefined;
+  mapLayers: Layer = undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -51,16 +58,25 @@ export class NlfOrganizationDetailsComponent implements OnInit, OnDestroy {
       });**/
     //this.route.params.subscribe(params =>
     //this.sub = this.router.routerState.parent(this.route).params.subscribe(
-    this.sub = this.route.parent.params.subscribe(
-      params => {
-        this.organization_id = params['id'] ? +params['id'] : 376;
-        //this.version = params['version'] ? params['version'] : 0;
-        this.dataReady = false;
-        this.federation_id = 0;
-        this.lungo = null;
-        this.disciplines = [];
-        this.run();
-      });
+
+    this.configService.observableConfig.subscribe(
+      data => {
+        this.config = data;
+        this.sub = this.route.parent.params.subscribe(
+          params => {
+            this.organization_id = params['id'] ? +params['id'] : 376;
+            //this.version = params['version'] ? params['version'] : 0;
+            this.dataReady = false;
+            this.federation_id = 0;
+            this.lungo = null;
+            this.disciplines = [];
+            this.getLungoOrganization();
+          });
+        
+      }
+    );
+
+    
   }
 
   ngOnInit() {
@@ -69,32 +85,45 @@ export class NlfOrganizationDetailsComponent implements OnInit, OnDestroy {
         console.log(position);
         this.geo = position; // {{ geo.coords.latitude }} {{ geo.coords.longitude }}
       });
+
+    
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
 
-  private run() {
-    if (!this.config) {
-      this.configService.observableConfig.subscribe(
-        data => {
-          this.config = data;
-          this.getLungoOrganization();
-        }
-      );
-    } else {
-      this.getLungoOrganization();
-    }
+  private configureMap() {
+
+    try {
+      this.mapOptions = {
+        layers: [
+          tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
+          marker([this.lungo.contact.location.geo.coordinates[1], this.lungo.contact.location.geo.coordinates[0]])
+        ],
+        zoom: 7,
+        center: latLng(this.lungo.contact.location.geo.coordinates[1], this.lungo.contact.location.geo.coordinates[0])
+      }
+
+    } catch (e) {}
+
   }
 
-  private getLungoOrganization() {
+  onMapReady(map: Map) {
+    this.map = map
+    this.map.setView([this.lungo.contact.location?.geo.coordinates[1], this.lungo.contact.location?.geo.coordinates[0]], 7);
+  }
 
+
+  private getLungoOrganization() {
+    this.mapOptions = undefined;
     this.lungoOrgService.getOrganization(this.organization_id).subscribe(
       data => {
         this.lungo = data;
-        if (data.type_id === 6 || data.type_id === 14 || data.type_id === 5) {
-          this.federation_id = this.config[this.config.inv_mapping[data.main_activity.id]].org_id;
+        this.configureMap();
+
+        if (!!data.main_activity?.id && (data.type_id === 6 || data.type_id === 14 || data.type_id === 5)) {
+          this.federation_id = this.config[this.config.inv_mapping[data.main_activity.id]]['org_id'];
         } else {
           this.federation_id = 0;
 

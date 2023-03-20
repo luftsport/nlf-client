@@ -11,6 +11,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'environments/environment';
 import { NlfConfigService } from 'app/nlf-config.service';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
+import { faPlus, faLink } from '@fortawesome/free-solid-svg-icons';
 // import { ApiObservationsItem} from 'app/api/api.interface';
 
 
@@ -20,6 +21,9 @@ import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
   styleUrls: ['./ors-create-modal.component.css']
 })
 export class NlfOrsCreateModalComponent implements OnInit {
+
+  faPlus = faPlus;
+  faLink = faLink;
 
   ENV = environment;
   public config: NlfConfigItem;

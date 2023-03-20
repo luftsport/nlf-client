@@ -36,7 +36,7 @@ export class NlfOrsComponentAttributesPipe implements PipeTransform {
   private one(value: string, activity: string, badge: boolean = true): string {
 
     if (badge) {
-      return '<span class="badge badge-${config[activity].observation.components.attributes[value][\'color\']}">${config[activity].observation.components.attributes[value][\'label\']}</span>';
+      return '<span class="badge bg-${config[activity].observation.components.attributes[value][\'color\']}">${config[activity].observation.components.attributes[value][\'label\']}</span>';
     } else {
       return this.config[activity].observation.components.attributes[value]['label'];
     }

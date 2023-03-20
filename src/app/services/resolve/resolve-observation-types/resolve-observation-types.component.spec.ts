@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NlfResolveObservationTypesComponent } from './resolve-observation-types.component';
 
@@ -6,7 +6,7 @@ describe('NlfResolveObservationTypesComponent', () => {
   let component: NlfResolveObservationTypesComponent;
   let fixture: ComponentFixture<NlfResolveObservationTypesComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NlfResolveObservationTypesComponent ]
     })

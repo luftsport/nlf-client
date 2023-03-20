@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GeoLocationService } from 'app/services/geo/geo-location.service';
+import { GeoLocationService, GeoLocationCoordinates } from 'app/services/geo/geo-location.service';
 import { ApiAirportsService } from 'app/api/api-airports.service';
 import { ApiNlfMetService } from 'app/api/api-nlf-met.service';
 import { ApiMetarDict } from 'app/api/api.interface';
@@ -13,7 +13,7 @@ export class NlfMetMetarComponent implements OnInit {
 
   dataReady = false;
   error: string;
-  geo: { timestamp: number, coords: Coordinates };
+  geo: { timestamp: number, coords: GeoLocationCoordinates };
   metar: ApiMetarDict;
   _get = get;
 

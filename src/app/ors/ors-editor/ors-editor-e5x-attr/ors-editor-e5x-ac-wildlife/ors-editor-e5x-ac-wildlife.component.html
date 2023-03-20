@@ -1,6 +1,8 @@
-<button (click)="openModal(modal)" class="btn btn-secondary btn-block">
-  <fa name="bandcamp" [fixed]="true"></fa>Wildlife
-</button>
+<div class="d-grid gap-2">
+  <button (click)="openModal(modal)" class="btn btn-secondary">
+    <fa-icon [icon]="faBandcamp"></fa-icon>Wildlife
+  </button>
+</div>
 
 <!-- MODAL -->
 <ng-template #modal>
@@ -8,7 +10,7 @@
     <h4 class="modal-title pull-left">
       Wildlife {{ callsign }}
     </h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -66,10 +68,10 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa name="times" [fixed]="true"></fa>Avbryt
+      <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>Avbryt
     </button>
     <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate(modalIndex)">
-      <fa name="check" [fixed]="true"></fa>Oppdater
+      <fa-icon [icon]="faCheck" [fixedWidth]="true"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>

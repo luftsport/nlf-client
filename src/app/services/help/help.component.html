@@ -1,5 +1,5 @@
 <span class="pointer text-info" (click)="open(helpmodal)">
-  <fa name="question" [fixed]="true"></fa>
+  <fa-icon [icon]="faQuestion"></fa-icon>
 </span>
 
 <ng-template #helpmodal>
@@ -7,7 +7,7 @@
   <div class="modal-header">
     <h4 class="modal-title pull-left">
       {{ help.title }}</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>

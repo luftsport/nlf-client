@@ -3,7 +3,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiPersonInterface } from 'app/api/api.interface';
 import { E5XAircraftClass } from 'app/interfaces/e5x.interface';
 import { NlfOrsEditorInvolvedService, NlfOrsEditorInvolvedInterface } from 'app/ors/ors-editor/ors-editor-involved.service';
-
+import { faPlus, faUserSecret, faCheck, faTimes, faClose, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'nlf-ors-editor-aircraft-person',
@@ -26,6 +27,14 @@ export class NlfOrsEditorAircraftPersonComponent implements OnInit {
   anon;
   involved: NlfOrsEditorInvolvedInterface[];
   selectedPerson: NlfOrsEditorInvolvedInterface;
+
+  faPlus = faPlus;
+  faUserSecret = faUserSecret;
+  faCheck = faCheck;
+  faTimes = faTimes;
+  faUser = faUser;
+  faClose = faClose;
+  faEdit = faEdit;
 
   constructor(
     private involvedSubject: NlfOrsEditorInvolvedService,

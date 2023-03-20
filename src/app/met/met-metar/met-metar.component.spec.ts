@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NlfMetMetarComponent } from './met-metar.component';
 
@@ -6,7 +6,7 @@ describe('NlfMetMetarComponent', () => {
   let component: NlfMetMetarComponent;
   let fixture: ComponentFixture<NlfMetMetarComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NlfMetMetarComponent ]
     })

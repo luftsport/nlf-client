@@ -5,6 +5,7 @@ import { ApiContentItem, ApiContentList, ApiOptionsInterface } from 'app/api/api
 import { TableConfig, TableEventObject } from 'app/interfaces/ngx-easy-table.interface';
 import { ConfirmService } from 'app/services/confirm/confirm.service';
 import { NlfAlertService } from 'app/services/alert/alert.service';
+import { faSitemap, faFile, faClose, faEdit, faPlus, faBan, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-content-space',
@@ -12,6 +13,14 @@ import { NlfAlertService } from 'app/services/alert/alert.service';
   styleUrls: ['./content-space.component.css']
 })
 export class NlfContentSpaceComponent implements OnInit {
+
+  faSitemap = faSitemap;
+  faFile = faFile;
+  faClose = faClose;
+  faEdit = faEdit;
+  faPlus = faPlus;
+  faBan = faBan;
+  faCheck = faCheck;
 
   dataReady = false;
   error = false;

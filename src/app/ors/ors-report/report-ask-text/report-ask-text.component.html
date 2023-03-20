@@ -2,15 +2,15 @@
   <div *ngFor="let key of comments | keys">
 
     <div *ngIf="!excludes || excludes.indexOf(key)<0" class="bg-light my-1">
-      <div class="media p-3">
+      <div class="d-flex p-3">
 
-        <span class="align-self-start mr-3 avatar avatar-lg">
+        <span class="flex-shrink-0 align-self-start me-3 avatar avatar-lg">
           <nlf-resolve-avatar [person_id]="person_mappings[key]"></nlf-resolve-avatar>
         </span>
 
-        <!--<img class="mr-3 rounded-circle" src="https://dummyimage.com/64x64/595659/e3e4e8">-->
+        <!--<img class="me-3 rounded-circle" src="https://dummyimage.com/64x64/595659/e3e4e8">-->
 
-        <div class="media-body">
+        <div class="flex-grow-1">
 
           <h5 class="mt-0">
             {{ roles[key] }}
@@ -31,7 +31,7 @@
 <div *ngIf="!!comments.draft">
   <div class="bg-light">
     <div class="media" style="padding: 5px;">
-      <img class="mr-3 rounded-circle" src="https://dummyimage.com/64x64/595659/e3e4e8">
+      <img class="me-3 rounded-circle" src="https://dummyimage.com/64x64/595659/e3e4e8">
       <div class="media-body">
         <h5 class="mt-0">Observatør</h5>
         <p [innerHTML]="comments.draft | newlines | safe: 'html'"></p>
@@ -43,7 +43,7 @@
 <div *ngIf="!!comments.pending_review_hi">
   <div class="bg-light">
     <div class="media" style="padding: 5px;">
-      <img class="mr-3 rounded-circle" src="https://dummyimage.com/64x64/595659/e3e4e8">
+      <img class="me-3 rounded-circle" src="https://dummyimage.com/64x64/595659/e3e4e8">
       <div class="media-body">
         <h5 class="mt-0">Hovedinstruktør</h5>
         <p [innerHTML]="comments.pending_review_hi | newlines | safe: 'html'"></p>
@@ -57,7 +57,7 @@
   <div class="bg-light">
     <div class="media" style="padding: 5px;">
 
-      <img class="mr-3 rounded-circle" src="https://dummyimage.com/64x64/595659/e3e4e8">
+      <img class="me-3 rounded-circle" src="https://dummyimage.com/64x64/595659/e3e4e8">
       <div class="media-body">
         <h5 class="mt-0">Fagsjef</h5>
         <p [innerHTML]="comments.pending_review_fs | newlines | safe: 'html'"></p>
@@ -69,7 +69,7 @@
 <div *ngIf="!!comments.pending_review_su">
   <div class="bg-light">
     <div class="media" style="padding: 5px;">
-      <img class="mr-3 rounded-circle" src="https://dummyimage.com/64x64/595659/e3e4e8">
+      <img class="me-3 rounded-circle" src="https://dummyimage.com/64x64/595659/e3e4e8">
       <div class="media-body">
         <h5 class="mt-0">SU</h5>
         <p [innerHTML]="comments.pending_review_su | newlines | safe: 'html'"></p>

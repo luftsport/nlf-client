@@ -7,7 +7,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiOptionsInterface, ApiObservationsItem, ApiNlfUserItem, ApiNlfUserList, ApiObservationAskTextInterface } from 'app/api/api.interface';
 import { NlfOrsEditorInvolvedService } from 'app/ors/ors-editor/ors-editor-involved.service';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
-import Tribute from 'tributejs/src';
+import Tribute from "tributejs";
+import TributeOptions from "tributejs";
 import { debounce } from 'ts-debounce';
 
 /**
@@ -26,7 +27,8 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
   list; // mentions list
   observation: ApiObservationsItem;
   rs: any;
-  tribute: Tribute;
+  tribute: any; //Tribute;
+  tributeOptions: any; //TributeOptions;
   tributeInitited = false;
   modalRef;
 
@@ -54,6 +56,16 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
         this.orsService.setActivity(this.observation._model.type);
         if (typeof this.observation.ask.text[this.observation.workflow.state] === 'undefined') {
           this.observation.ask.text[this.observation.workflow.state] = '';
+        } else {
+        }
+
+        for (const [key, value] of Object.entries(this.observation.ask.text)) {
+          // Need to convert badge-info to text-bg-info botstrap 4=>5
+          try {
+            this.observation.ask.text[key] = value.replaceAll('badge badge-', 'badge text-bg-');
+          } catch (e) { 
+            console.log('Wee', e);
+          }
         }
       }
     });
@@ -106,13 +118,13 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
       trigger: '!',
       iframe: null,
       selectClass: 'highlight',
-      // function called on select that returns the content to insert<macro contenteditable="false" class="badge badge-info"
+      // function called on select that returns the content to insert<macro contenteditable="false" class="badge text-bg-info"
       selectTemplate: function (item) {
         const id = rs(12);
         return '<macro href="#" data-url="/user/' + item.original.id + '" contenteditable="false"\
                 data-type="user" data-id="' + item.original.id + '"\
                 onclick="this.remove()"\
-                class="badge badge-info macrolink pointer" id="' + id + '">\
+                class="badge text-bg-info macrolink pointer" id="' + id + '">\
                 !' + item.original.full_name + '</macro>';
       },
       // template for displaying item in menu
@@ -151,7 +163,7 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
         return '<macro href="#" data-url="/user/' + item.original.id + '" contenteditable="false" \
                 data-type="user" data-id="' + item.original.id + '"\
                 onclick="this.remove()"\
-                class="badge badge-danger macrolink pointer" id="' + id + '">\
+                class="badge text-bg-danger macrolink pointer" id="' + id + '">\
                 @' + item.original.full_name + '</macro>';
       },
       menuItemTemplate: function (item) {
@@ -178,7 +190,7 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
         return '<macro href="#" data-url="/ors/' + item.original.activity + '/report/' + item.original.id + '" contenteditable="false"\
                 data-type="f_ors" data-id="' + item.original.id + '"\
                 onclick="this.remove()"\
-                class="badge badge-danger macrolink pointer" id="' + id + '"> \
+                class="badge text-bg-danger macrolink pointer" id="' + id + '"> \
                 #' + item.original.id + ' ' + item.original.title + '</macro>';
       },
       menuItemTemplate: function (item) {
@@ -202,7 +214,8 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
         this.replaceTextSuffix = replaceTextSuffix = '\n'
         this.positionMenu = positionMenu | true
      */
-    this.tribute = new Tribute({ collection: [users, remote, ors], allowSpaces: true });
+    this.tributeOptions = { collection: [users, remote, ors], allowSpaces: true };
+    this.tribute = new Tribute(this.tributeOptions);
 
     this.elementAsk = document.getElementById('ask'); //getElementsByName('myAskDiv');
     this.tribute.attach(this.elementAsk);
@@ -280,7 +293,7 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
   }
 
   format(event) {
-    return '<macro contenteditable="false" class="badge badge-info" id="' + event.id + '">' + event.fullname + '</macro>';
+    return '<macro contenteditable="false" class="badge text-bg-info" id="' + event.id + '">' + event.fullname + '</macro>';
   }
 
   intergalactic(event) {

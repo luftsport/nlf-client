@@ -219,9 +219,9 @@ export function reloadCurrentRoute(router) {
 
 export function hashString<int>(str: any) {
   let hash = 0, i = 0, chr = 0;
-  
+
   if (str.length === 0) return hash;
-  
+
   for (i = 0; i < str.length; i++) {
     chr = str.charCodeAt(i);
     hash = ((hash << 5) - hash) + chr;
@@ -239,7 +239,15 @@ export function timeSince(_updated: string) {
 
   const updated = Date.parse(_updated);
   const now = new Date();
-  
-  return (+now-(+updated))/1000;
 
+  return (+now - (+updated)) / 1000;
+
+}
+
+export function isLatitude(lat) {
+  return isFinite(lat) && Math.abs(lat) <= 90;
+}
+
+export function isLongitude(lng) {
+  return isFinite(lng) && Math.abs(lng) <= 180;
 }

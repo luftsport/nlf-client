@@ -1,24 +1,25 @@
 <ng-progress [thick]="true" #progressBar></ng-progress>
 
-<nlf-ui-navbar></nlf-ui-navbar>
+<ng-container *ngIf="loggedInObservable | async as authenticated; else loading">
+  <nlf-ui-navbar></nlf-ui-navbar>
 
-<main role="main">
+  <main role="main">
 
+    <nlf-alert-service></nlf-alert-service>
+
+    <span>
+      <!-- HEARTBEAT -->
+      <router-outlet></router-outlet>
+      <nlf-ui-footer></nlf-ui-footer>
+      <p></p>
+      <p></p>
+    </span>
+  </main>
+</ng-container>
+
+<ng-template #loading>
   <nlf-alert-service></nlf-alert-service>
-
-  <span *ngIf="loggedInObservable | async as authenticated; else loading">
-    <!-- HEARTBEAT -->
-    <router-outlet></router-outlet>
-    <nlf-ui-footer></nlf-ui-footer>
-    <p></p>
-    <p></p>
-  </span>
- 
-
-  <ng-template #loading>
-    <div class="clearfix">
-      <nlf-auth></nlf-auth>
-    </div>
-  </ng-template>
-
-</main>
+  <div class="clearfix">
+    <nlf-auth></nlf-auth>
+  </div>
+</ng-template>

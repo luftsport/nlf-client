@@ -6,6 +6,8 @@ import { ApiObservationsWorkflowService } from 'app/api/api-observations-workflo
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NlfAlertService } from 'app/services/alert/alert.service';
+import { faInfo, faInfoCircle, faComment, faRandom, faReply, faPaperPlane, faRepeat  } from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane as faPaperPlaneRegular } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'nlf-ors-editor-workflow',
@@ -21,6 +23,15 @@ export class NlfOrsEditorWorkflowComponent implements OnInit {
   dataReady = false;
   graph;
   showCommentInput = false;
+
+  faInfo = faInfo;
+  faInfoCircle = faInfoCircle;
+  faComment = faComment;
+  faRandom = faRandom;
+  faReply = faReply;
+  faPaperPlane = faPaperPlane;
+  faRepeat = faRepeat;
+  faPaperPlaneRegular = faPaperPlaneRegular;
 
   constructor(
     private subject: NlfOrsEditorService,

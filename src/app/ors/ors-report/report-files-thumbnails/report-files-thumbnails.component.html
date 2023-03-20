@@ -12,7 +12,7 @@
 <!-- /THUMBNAILS -->
 
 <div *ngIf="!dataReady">
-  <fa name="spinner" animation="pulse" [size]="1" [fixed]="true"></fa>Loading thumbnails...
+  <nlf-ui-component-spinner></nlf-ui-component-spinner>Loading thumbnails...
 </div>
 
 <!-- Modal -->
@@ -20,7 +20,7 @@
   <div class="modal-header">
     <h4 class="modal-title pull-left">{{ viewImageName }}</h4>
 
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -30,16 +30,16 @@
 
     <span *ngIf="!!viewImageLoading" class="text-center">
       <!--<nlf-ui-page-spinner></nlf-ui-page-spinner>-->
-      <fa class="text-center" name="spinner" animation="pulse" size="5x"></fa>
+      <fa-icon class="text-center" [icon]="faSpinner" animation="pulse" size="5x"></fa-icon>
     </span>
 
   </div>
   <div class="modal-footer">
-    <span *ngIf="thumbnails.length>1" class="mr-auto">
-      <span (click)="getModalImage(viewImageData['idx']-1)" class="pointer ml-1 mr-2">
-        <fa name="chevron-left" class="mx-2"></fa>Forrige
+    <span *ngIf="thumbnails.length>1" class="me-auto">
+      <span (click)="getModalImage(viewImageData['idx']-1)" class="pointer ms-1 me-2">
+        <fa-icon [icon]="faChevronLeft" class="mx-2"></fa-icon> Forrige
       </span>
-      <span (click)="getModalImage(viewImageData['idx']+1)" class="pointer mr-1 ml-2">Neste<fa name="chevron-right" class="mx-2"></fa></span>
+      <span (click)="getModalImage(viewImageData['idx']+1)" class="pointer me-1 ms-2">Neste <fa-icon [icon]="faChevronRight" class="mx-2"></fa-icon></span>
     </span>
 
     <a class="btn btn-secondary" (click)="modalRef.close()">Close</a>

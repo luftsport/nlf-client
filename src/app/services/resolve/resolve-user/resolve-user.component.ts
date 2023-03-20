@@ -5,6 +5,7 @@ import { ApiOptionsInterface } from 'app/api/api.interface';
 import { ApiUserService } from 'app/api/api-user.service';
 import { Observable, of, forkJoin } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { faQuestion, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-resolve-user',
@@ -12,6 +13,9 @@ import { catchError } from 'rxjs/operators';
   styleUrls: ['./resolve-user.component.css']
 })
 export class NlfResolveUserComponent implements OnInit {
+
+  faQuestion = faQuestion;
+  faSpinner = faSpinner;
 
   @Input() userid: number;
   @Input() tmp_name?: string;

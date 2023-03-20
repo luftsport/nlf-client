@@ -36,7 +36,7 @@
   <div class="col-sm-2">
     <h1>
       <!--<nlf-resolve-observation-rating [rating]="observation.rating"></nlf-resolve-observation-rating>-->
-      <span class="badge badge-{{ observation.rating | nlfOrsRatingCalc | nlfDynamicColor }}">{{ observation.rating | nlfOrsRatingCalc }}</span>
+      <span class="badge bg-{{ observation.rating | nlfOrsRatingCalc | nlfDynamicColor }}">{{ observation.rating | nlfOrsRatingCalc }}</span>
     </h1>
   </div>
 
@@ -46,7 +46,7 @@
 <div *ngIf="observation.rating.potential < observation.rating.actual" class="row">
   <div class="col-md-12">
     <ngb-alert [dismissible]="true" type="warning">
-      <fa name="exclamation-triangle" [fixed]="true"></fa>Faktisk er høyere enn potensiell.
+      <fa-icon [icon]="faExclamationTriangle"></fa-icon> Faktisk er høyere enn potensiell.
     </ngb-alert>
   </div>
 </div>

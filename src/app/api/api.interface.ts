@@ -13,7 +13,7 @@
 
 import { ApiEveLinks, ApiEveBaseItem, ApiEveBaseList, ApiEveQueryInterface } from './api-eve.interface';
 import { HttpHeaders } from '@angular/common/http';
-import { HttpParams } from '@angular/common/http/src/params';
+import { HttpParams } from '@angular/common/http';
 
 
 export interface ApiOptionsInterface {
@@ -601,11 +601,14 @@ export interface ApiObservationCommentInterface {
 /**
  * Generic interfaces
  */
+export interface ApiGeoCoordinates {
+  coordinates: number[];
+}
 
 export interface ApiGeoInterface {
 
   type: string;
-  coordinates: number[];
+  coordinates: ApiGeoCoordinates["coordinates"];
 }
 
 export interface ApiLocationItem {

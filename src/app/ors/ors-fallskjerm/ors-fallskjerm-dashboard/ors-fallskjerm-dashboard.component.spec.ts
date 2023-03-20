@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NlfOrsFallskjermDashboardComponent } from './ors-fallskjerm-dashboard.component';
 
@@ -6,7 +6,7 @@ describe('NlfOrsFallskjermDashboardComponent', () => {
   let component: NlfOrsFallskjermDashboardComponent;
   let fixture: ComponentFixture<NlfOrsFallskjermDashboardComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NlfOrsFallskjermDashboardComponent ]
     })

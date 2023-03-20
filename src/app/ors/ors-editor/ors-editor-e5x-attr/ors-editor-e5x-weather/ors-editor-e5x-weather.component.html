@@ -1,20 +1,22 @@
 <div *ngIf="!showOnlyBtn" class="row">
   <div class="col-md-3">
-    <button class="btn btn-primary btn-block" (click)="openModal(modal)">
-      <fa name="cloud" [fixed]="true"></fa>Weather
-    </button>
+    <div class="d-grid gap-2">
+      <button class="btn btn-primary" (click)="openModal(modal)">
+        <fa-icon [icon]="faCloud"></fa-icon>Weather
+      </button>
+    </div>
   </div>
   <div class="col-md-9">
 
     <!-- ATTR SHOW -->
-    <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="attr.wxConditions.value" path="E5X.Occurrence.WxConditions"></nlf-ors-editor-tag-e5x-render>
+    <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="attr.wxConditions.value" path="E5X.Occurrence.WxConditions"></nlf-ors-editor-tag-e5x-render>
 
   </div>
 </div>
 
-<div *ngIf="showOnlyBtn">
-  <button class="btn btn-secondary btn-block" (click)="openModal(attrModal)">
-    <fa name="cloud" [fixed]="true"></fa>Weather
+<div *ngIf="showOnlyBtn" class="d-grid gap-2">
+  <button class="btn btn-secondary" (click)="openModal(attrModal)">
+    <fa-icon [icon]="faCloud"></fa-icon>Weather
   </button>
 </div>
 
@@ -24,7 +26,7 @@
     <h4 class="modal-title pull-left">
       Weather conditions at occurrence
     </h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -83,10 +85,10 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa name="times" [fixed]="true"></fa>Avbryt
+      <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>Avbryt
     </button>
     <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate(modalIndex)">
-      <fa name="check" [fixed]="true"></fa>Oppdater
+      <fa-icon [icon]="faCheck" [fixedWidth]="true"></fa-icon>Oppdater
     </button>
   </div>
 

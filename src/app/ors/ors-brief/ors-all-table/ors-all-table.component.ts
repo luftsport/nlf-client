@@ -9,6 +9,7 @@ import { cleanObject } from 'app/interfaces/functions';
 //import { clone } from 'lodash';
 import { ExportToCsv } from 'export-to-csv';
 import { debounce } from 'ts-debounce';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-all-table',
@@ -16,6 +17,8 @@ import { debounce } from 'ts-debounce';
   styleUrls: ['./ors-all-table.component.css']
 })
 export class NlfOrsAllTableComponent implements OnInit {
+
+  faTimes = faTimes;
 
   @Input() activity: string;
 

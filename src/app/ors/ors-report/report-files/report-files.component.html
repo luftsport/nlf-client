@@ -8,8 +8,8 @@
 
           <td>
             <span *ngIf="state!='closed'">
-              <fa *ngIf="!!f.r" class="text-danger" name="lock" [fixed]="true"></fa>
-              <fa *ngIf="!f.r" class="text-success" name="unlock" [fixed]="true"></fa>
+              <fa-icon *ngIf="!!f.r" class="text-danger" [icon]="faLock"></fa-icon>
+              <fa-icon *ngIf="!f.r" class="text-success" [icon]="faUnlock"></fa-icon>
             </span>
             <!-- <a [routerLink]="['/file/download/', f._id]">{{f.name}}</a> -->
             {{f.name}}
@@ -17,10 +17,10 @@
           <td>{{ f.size | bytes : 2 }}</td>
           <td>{{f.content_type}}&nbsp;</td>
           <td>
-            <fa class="pointer" name="download" (click)="download(f._id)" [fixed]="true" title="Last ned"></fa>
+            <fa-icon class="pointer" [icon]="faDownload" (click)="download(f._id)" title="Last ned"></fa-icon>
             <!--
-            <fa *ngIf="f.size<=10000000" class="pointer" name="download" (click)="download(f._id)" [fixed]="true" title="Last ned"></fa>
-            <a *ngIf="f.size>10000000" target="_blank" [routerLink]="['/api', 'v1', 'files', f._id]"><fa name="download" [fixed]="true" title="Last ned"></fa></a>
+            <fa-icon *ngIf="f.size<=10000000" class="pointer" [icon]="faDownload" (click)="download(f._id)" title="Last ned"></fa-icon>
+            <a *ngIf="f.size>10000000" target="_blank" [routerLink]="['/api', 'v1', 'files', f._id]"><fa-icon [icon]="faDownload" title="Last ned"></fa-icon></a>
             -->
           </td>
           <td>&nbsp;</td>
@@ -32,5 +32,5 @@
   </div>
 </div>
 <div *ngIf="!dataReady">
-  <fa name="spinner" animation="pulse" [size]="1"></fa>
+  <nlf-ui-component-spinner></nlf-ui-component-spinner>
 </div>

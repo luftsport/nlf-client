@@ -2,11 +2,11 @@
   <div class="container lead">
     OBSREG Motorfly
 
-    <button [routerLink]="['/ors', 'motorfly', 'search']" type="button" class="btn btn-sm btn-primary pull-right">
-      <fa name="search" [fixed]="true"></fa> Søk
+    <button [routerLink]="['/ors', 'motorfly', 'search']" type="button" class="btn btn-sm btn-primary float-end">
+      <fa-icon [icon]="faSearch"></fa-icon> Søk
     </button>
 
-    <nlf-help class="pull-right mx-1" key="ors-motorfly"></nlf-help>
+    <nlf-help class="float-end mx-1" key="ors-motorfly"></nlf-help>
   </div>
 
 
@@ -18,14 +18,14 @@
     <!-- MY -->
     <div class="col-md-6 col-xs-12 overflow-auto">
       <div class="nlf-ors-toolbar">
-        <fa name="user" [fixed]="true" class="text-secondary"></fa> Mine observasjoner
+        <fa-icon [icon]="faUser" class="text-secondary"></fa-icon> Mine observasjoner
       </div>
       <nlf-ors-self-table activity="motorfly"></nlf-ors-self-table>
     </div>
     <!-- MY TODO -->
     <div class="col-md-6 col-xs-12 overflow-auto">
       <div class="nlf-ors-toolbar">
-        <fa name="exchange" [fixed]="true" class="text-secondary"></fa> Til min behandling
+        <fa-icon [icon]="faExchange" class="text-secondary"></fa-icon> Til min behandling
       </div>
       <nlf-ors-todo-table activity="motorfly"></nlf-ors-todo-table>
     </div>
@@ -33,17 +33,17 @@
     <!-- Group = tight, with padding deck = spacing, no padding card-body style="padding: 0;"
       <div class="card-deck">
 
-        <div class="card mb-3 mr-1">
+        <div class="card mb-3 me-1">
           <h5 class="card-header">
-            <fa name="user" [fixed]="true"></fa>Mine observasjoner</h5>
+            <fa-icon [icon]="faUser"></fa-icon>Mine observasjoner</h5>
           <div class="card-body table-responsive" style="padding: 0;">
 
           </div>
         </div>
 
-        <div class="card mb-3 ml-1">
+        <div class="card mb-3 ms-1">
           <h5 class="card-header">
-            <fa name="random" [fixed]="true"></fa>Til min behandling</h5>
+            <fa-icon [icon]="faRandom"></fa-icon>Til min behandling</h5>
           <div class="card-body" style="padding: 0;">
             <nlf-ors-todo-table  activity="motor"></nlf-ors-todo-table>
           </div>
@@ -67,7 +67,7 @@
   <div class="row">
     <div class="col-md-12 col-xs-12 overflow-auto">
       <div class="nlf-ors-toolbar">
-        <fa name="list" [fixed]="true" class="text-secondary"></fa> Alle observasjoner
+        <fa-icon [icon]="faList" class="text-secondary"></fa-icon> Alle observasjoner
       </div>
       <nlf-ors-all-table activity="motorfly"></nlf-ors-all-table>
     </div>

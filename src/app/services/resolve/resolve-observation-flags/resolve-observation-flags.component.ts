@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Inject } from '@angular/core';
 import { NlfConfigService } from 'app/nlf-config.service';
 import { NlfConfigItem } from 'app/api/api.interface';
+import { faPlane, faWheelchair } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-resolve-observation-flags',

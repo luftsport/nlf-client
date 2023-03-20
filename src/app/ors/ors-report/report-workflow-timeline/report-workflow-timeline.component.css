@@ -101,3 +101,7 @@
 .sl-item.b-dashed {
 	border-style: dashed !important
 }
+
+.workflow-comment {
+  white-space: pre-wrap;
+}

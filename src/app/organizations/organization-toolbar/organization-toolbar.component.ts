@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { NlfConfigService } from 'app/nlf-config.service';
 import { NlfConfigItem } from 'app/api/api.interface';
+import { faSitemap, faMapMarker, faEye, faPieChart, faPlane } from '@fortawesome/free-solid-svg-icons';
+import { faMap } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'nlf-organization-toolbar',
@@ -18,6 +20,12 @@ export class NlfOrganizationToolbarComponent implements OnInit {
   **/
   public config: NlfConfigItem;
 
+  faSitemap = faSitemap;
+  faMapMarker = faMapMarker;
+  faEye = faEye;
+  faPieChart = faPieChart;
+  faPlane = faPlane;
+  faMap = faMap;
 
   dataReady: boolean = false;
   constructor(private configService: NlfConfigService) {

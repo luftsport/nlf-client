@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NlfResolveLungoMembershipComponent } from './resolve-lungo-function.component';
 
@@ -6,7 +6,7 @@ describe('NlfResolveLungoMembershipComponent', () => {
   let component: NlfResolveLungoMembershipComponent;
   let fixture: ComponentFixture<NlfResolveLungoMembershipComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NlfResolveLungoMembershipComponent ]
     })

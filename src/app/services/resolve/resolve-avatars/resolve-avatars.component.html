@@ -16,16 +16,16 @@
     <!-- persons modal -->
     <div *ngIf="show_modal && persons.length>0 && persons.length<=max" class="avatar pointer" (click)="openPersonsModal(peopleModalTemplate)">
       <span ngbTooltip="vis liste" class="avatar-text avatar-text-green rounded-circle">
-        <span class="initial-wrap"><span><fa name="list"></fa></span></span>
+        <span class="initial-wrap"><span><fa-icon [icon]="faList"></fa-icon></span></span>
       </span>
     </div>
-    <!--<fa class="pointer" name="envelope-open-o" [fixed]="true"></fa>-->
+    <!--<fa-icon class="pointer" [icon]="envelope-open-o"></fa-icon>-->
 
     <!-- ADD RECEPIENT
     <div *ngIf="1==4" class="avatar">
       <a href="#">
         <span class="add-new-plus">
-          <fa name="plus"></fa>
+          <fa-icon [icon]="faPlus"></fa-icon>
         </span>
       </a>
     </div>
@@ -39,7 +39,7 @@
         <h4 class="modal-title pull-left">
           {{ modal_title }}
         </h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+        <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>

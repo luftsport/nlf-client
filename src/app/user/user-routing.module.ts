@@ -11,7 +11,7 @@ const nlfUserRoutes: Routes = [
 
 
 @NgModule({
-  imports: [RouterModule.forRoot(nlfUserRoutes)],
+  imports: [RouterModule.forRoot(nlfUserRoutes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule],
   declarations: []
 })

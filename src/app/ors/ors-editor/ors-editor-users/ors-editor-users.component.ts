@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { faLock, faPlus, faSave } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiAclService } from 'app/api/api-acl.service';
 import { ApiObservationsService } from 'app/api/api-observations.service';
@@ -23,6 +24,10 @@ export class NlfOrsEditorUsersComponent implements OnInit {
 
   acl_persons;
   message: { type: string; msg: string; };
+
+  faLock = faLock;
+  faPlus = faPlus;
+  faSave = faSave;
 
   constructor(
     private modalService: NgbModal,

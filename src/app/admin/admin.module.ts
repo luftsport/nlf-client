@@ -19,7 +19,6 @@ import { NlfAlertService } from 'app/services/alert/alert.service';
 
 import { TableModule } from 'ngx-easy-table';
 // import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { FontAwesomeModule } from 'ngx-icons';
 // Jodit editor
 import { JoditAngularModule } from 'jodit-angular';
 import { NlfSharedModule } from 'app/nlf-shared.module';
@@ -38,8 +37,6 @@ import { NlfSharedModule } from 'app/nlf-shared.module';
     NlfSharedModule,
     NlfAdminRoutingModule,
     TableModule,
-    //NgxChartsModule,
-    FontAwesomeModule,
     JoditAngularModule
   ],
   providers: [

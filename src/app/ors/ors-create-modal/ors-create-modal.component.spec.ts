@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { OrsCreateModalComponent } from './ors-create-modal.component';
 
@@ -6,7 +6,7 @@ describe('OrsCreateModalComponent', () => {
   let component: OrsCreateModalComponent;
   let fixture: ComponentFixture<OrsCreateModalComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ OrsCreateModalComponent ]
     })

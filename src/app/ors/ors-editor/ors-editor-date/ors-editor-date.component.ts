@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { NgbCalendar, NgbDateStruct, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { debounce } from 'ts-debounce';
 
@@ -16,6 +17,8 @@ export class NlfOrsEditorDateComponent implements OnInit {
   debouncedEmit = debounce(this.onDateSelection, 900);
   model: NgbDateStruct;
   today = this.calendar.getToday();
+
+  faCalendar = faCalendar;
 
   constructor(private calendar: NgbCalendar) { }
 

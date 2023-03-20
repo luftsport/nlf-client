@@ -10,6 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NlfConfigService } from 'app/nlf-config.service';
 import { debounce } from 'ts-debounce';
 import { NlfAlertService } from 'app/services/alert/alert.service';
+import { faQuestion, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 export interface TagInterface {
   value: number;
@@ -18,9 +19,9 @@ export interface TagInterface {
   expl?: string;
 }
 
-/**  
+/**
  * Attributes with choices_key: null and restrictions: null
- * 
+ *
  * datatype:
  * 15: time
  * 14: date
@@ -28,7 +29,7 @@ export interface TagInterface {
  * 9: longitude decimal
  * 8: latitude decimal
  * 6: wxreports array of
- * 5: choices array 
+ * 5: choices array
  * 4: descimal
  * 3: integer
  * 1: string
@@ -40,6 +41,9 @@ export interface TagInterface {
   styleUrls: ['./ors-editor-tag-e5x.component.css']
 })
 export class NlfOrsEditorTagE5XComponent implements OnInit {
+
+  faTimes = faTimes;
+  faQuestion = faQuestion;
 
   @Input() items: any; //numbernumber[] = []; both array and non-array
   @Output() itemsChange: EventEmitter<any> = new EventEmitter();
@@ -215,7 +219,7 @@ export class NlfOrsEditorTagE5XComponent implements OnInit {
 
     /**
      * Attributes with choices_key: null and restrictions: null
-     * 
+     *
      * datatype:
      * 15: time
      * 14: date
@@ -223,7 +227,7 @@ export class NlfOrsEditorTagE5XComponent implements OnInit {
      * 9: longitude decimal
      * 8: latitude decimal
      * 6: wxreports array of
-     * 5: choices array 
+     * 5: choices array
      * 4: descimal
      * 3: integer
      * 1: string
@@ -249,8 +253,8 @@ export class NlfOrsEditorTagE5XComponent implements OnInit {
       if (this.attribute.restrictions.type === 'decimal') {
         this.items = String(parseFloat(this.items).toFixed(2));
       }
-    } catch { }
 
+    } catch { }
 
     try {
       if (this.attribute.restrictions.type === 'string' && +this.attribute.restrictions.max > 0) {

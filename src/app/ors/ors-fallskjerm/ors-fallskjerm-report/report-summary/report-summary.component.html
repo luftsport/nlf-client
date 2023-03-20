@@ -1,113 +1,113 @@
 <table class="table table-sm table-hover">
+  <tbody>
+    <tr style="border-top: none !important">
+      <td style="border-top: none !important">Klubb</td>
+      <td style="border-top: none !important">
+        <nlf-resolve-lungo-organization [organization_id]="observation.club" link="true"></nlf-resolve-lungo-organization>
+      </td>
+    </tr>
+    <tr>
+      <td>Gren</td>
+      <td>
+        <nlf-resolve-lungo-organization [organization_id]="observation.discipline" link="true" show_activity="true"></nlf-resolve-lungo-organization>
+      </td>
+    </tr>
+    <tr>
+      <td>Observatør</td>
+      <td>
+        <nlf-resolve-lungo-person [avatar]="true" [link]="true" [person_id]="observation.reporter"></nlf-resolve-lungo-person>
+      </td>
+    </tr>
 
-  <tr style="border-top: none !important">
-    <td style="border-top: none !important">Klubb</td>
-    <td style="border-top: none !important">
-      <nlf-resolve-lungo-organization [organization_id]="observation.club" link="true"></nlf-resolve-lungo-organization>
-    </td>
-  </tr>
-  <tr>
-    <td>Gren</td>
-    <td>
-      <nlf-resolve-lungo-organization [organization_id]="observation.discipline" link="true" show_activity="true"></nlf-resolve-lungo-organization>
-    </td>
-  </tr>
-  <tr>
-    <td>Observatør</td>
-    <td>
-      <nlf-resolve-lungo-person [avatar]="true" [link]="true" [person_id]="observation.reporter"></nlf-resolve-lungo-person>
-    </td>
-  </tr>
+    <tr>
+      <td>Hovedinstruktør</td>
+      <td>
+        <div *ngFor="let person of observation.organization.hi">
+          <nlf-resolve-lungo-person [avatar]="true" [link]="true" [person_id]="person"></nlf-resolve-lungo-person>
+        </div>
+      </td>
+    </tr>
 
-  <tr>
-    <td>Hovedinstruktør</td>
-    <td>
-      <div *ngFor="let person of observation.organization.hi">
-        <nlf-resolve-lungo-person [avatar]="true" [link]="true" [person_id]="person"></nlf-resolve-lungo-person>
-      </div>
-    </td>
-  </tr>
-
-  <tr>
-    <td>Type</td>
-    <td>
-      <nlf-resolve-observation-types [activity]="observation._model.type" [type]="observation.type" badge="true"></nlf-resolve-observation-types>
-      <span class="pull-right">
-        <nlf-ors-report-ask [ask]="observation.ask" [verbose]="false"></nlf-ors-report-ask>
-      </span>
-
-    </td>
-  </tr>
-
-  <tr>
-    <td>Flagg</td>
-    <td>
-      <div *ngIf="!!observation.flags">
-        <span *ngIf="!!observation.flags.insurance">
-          <nlf-resolve-observation-flags [activity]="observation._model.type" flag="insurance"></nlf-resolve-observation-flags>
-        </span>
-        <span *ngIf="!!observation.flags.aviation">
-          <nlf-resolve-observation-flags [activity]="observation._model.type" flag="aviation"></nlf-resolve-observation-flags>
+    <tr>
+      <td>Type</td>
+      <td>
+        <nlf-resolve-observation-types [activity]="observation._model.type" [type]="observation.type" badge="true"></nlf-resolve-observation-types>
+        <span class="float-end">
+          <nlf-ors-report-ask [ask]="observation.ask" [verbose]="false"></nlf-ors-report-ask>
         </span>
 
-      </div>
-      <span *ngIf="!observation.flags || (!observation.flags.aviation && !observation.flags.insurance)">Ingen</span>
-    </td>
+      </td>
+    </tr>
 
-  </tr>
+    <tr>
+      <td>Flagg</td>
+      <td>
+        <div *ngIf="!!observation.flags">
+          <span *ngIf="!!observation.flags.insurance">
+            <nlf-resolve-observation-flags [activity]="observation._model.type" flag="insurance"></nlf-resolve-observation-flags>
+          </span>
+          <span *ngIf="!!observation.flags.aviation">
+            <nlf-resolve-observation-flags [activity]="observation._model.type" flag="aviation"></nlf-resolve-observation-flags>
+          </span>
+
+        </div>
+        <span *ngIf="!observation.flags || (!observation.flags.aviation && !observation.flags.insurance)">Ingen</span>
+      </td>
+
+    </tr>
 
 
-  <tr *ngIf="!!observation.rating">
-    <td>Alvorlighetsgrad</td>
-    <td>{{ observation.rating.actual }} av {{ observation.rating.potential }} <span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body" class="pull-right badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating | nlfOrsRatingCalc }}</span></td>
-  </tr>
+    <tr *ngIf="!!observation.rating">
+      <td>Alvorlighetsgrad</td>
+      <td>{{ observation.rating.actual }} av {{ observation.rating.potential }} <span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body" class="float-end badge bg-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating | nlfOrsRatingCalc }}</span></td>
+    </tr>
 
 
-  <tr>
-    <td>Tidspunkt</td>
-    <td>{{ observation.when | date:'yyyy-MM-dd HH:mm'}}</td>
-  </tr>
-  <tr>
-    <td>Opprettet</td>
-    <td>{{ observation._created | date:'yyyy-MM-dd HH:mm'}}</td>
-  </tr>
-  <tr>
-    <td>Lukket</td>
-    <td *ngIf="observation.workflow.state==('closed' || 'withdrawn')">{{ observation.workflow.last_transition | date:'yyyy-MM-dd HH:mm' }}</td>
-    <td *ngIf="observation.workflow.state!=('closed' || 'withdrawn')">
-      <span class="text-danger">Under behandling</span>
-    </td>
+    <tr>
+      <td>Tidspunkt</td>
+      <td>{{ observation.when | date:'yyyy-MM-dd HH:mm'}}</td>
+    </tr>
+    <tr>
+      <td>Opprettet</td>
+      <td>{{ observation._created | date:'yyyy-MM-dd HH:mm'}}</td>
+    </tr>
+    <tr>
+      <td>Lukket</td>
+      <td *ngIf="observation.workflow.state==('closed' || 'withdrawn')">{{ observation.workflow.last_transition | date:'yyyy-MM-dd HH:mm' }}</td>
+      <td *ngIf="observation.workflow.state!=('closed' || 'withdrawn')">
+        <span class="text-danger">Under behandling</span>
+      </td>
 
-  </tr>
-  <tr>
-    <td>Versjon</td> <!-- @TODO: Generate list of versions and link to them /report/:id?v=1 or /report/:id/:version -->
-    <td>
-      {{ observation._version }} <span *ngIf="observation._version !== observation._latest_version">
-        av <a [routerLink]="['/ors', observation._model.type, 'report', observation.id]">{{ observation._latest_version }}</a></span>
-    </td>
-  </tr>
-  <tr>
-    <td>Behandlingstid</td>
-    <td>{{ turnaround }}</td>
-  </tr>
-  <tr>
-    <td>Involverte</td>
-    <td>{{ observation.involved | count }}</td>
-  </tr>
-  <tr>
-    <td>Kjennelser</td>
-    <td>
-      <div *ngIf="numberOfInvolved > 0">
-        <div *ngFor="let v of observation.involved">
-          <div *ngIf="!!v.verdict">
-            <div *ngIf="!!v.verdict.fu" class="badge badge-warning mr-1">Farlig Ukontrollert </div>
-            <div *ngIf="!!v.verdict.ph" class="badge badge-danger mr-1">Permanent Hoppforbud </div>
-            <div *ngIf="!!v.verdict.mh" class="badge badge-danger">Midlertidig Hoppforbud</div>
+    </tr>
+    <tr>
+      <td>Versjon</td> <!-- @TODO: Generate list of versions and link to them /report/:id?v=1 or /report/:id/:version -->
+      <td>
+        {{ observation._version }} <span *ngIf="observation._version !== observation._latest_version">
+          av <a [routerLink]="['/ors', observation._model.type, 'report', observation.id]">{{ observation._latest_version }}</a></span>
+      </td>
+    </tr>
+    <tr>
+      <td>Behandlingstid</td>
+      <td>{{ turnaround }}</td>
+    </tr>
+    <tr>
+      <td>Involverte</td>
+      <td>{{ observation.involved | count }}</td>
+    </tr>
+    <tr>
+      <td>Kjennelser</td>
+      <td>
+        <div *ngIf="numberOfInvolved > 0">
+          <div *ngFor="let v of observation.involved">
+            <div *ngIf="!!v.verdict">
+              <div *ngIf="!!v.verdict.fu" class="badge bg-warning me-1">Farlig Ukontrollert </div>
+              <div *ngIf="!!v.verdict.ph" class="badge bg-danger me-1">Permanent Hoppforbud </div>
+              <div *ngIf="!!v.verdict.mh" class="badge bg-danger">Midlertidig Hoppforbud</div>
+            </div>
           </div>
         </div>
-      </div>
-      <div *ngIf="numberOfInvolved === 0">Ingen</div>
-    </td>
-  </tr>
-
+        <div *ngIf="numberOfInvolved === 0">Ingen</div>
+      </td>
+    </tr>
+  </tbody>
 </table>

@@ -21,6 +21,7 @@ import { forkJoin } from 'rxjs';
 import { ComponentCanDeactivate } from 'app/pending-changes.guard';
 import { HostListener } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { faSave, faQuestion, faFlag, faInfoCircle, faHistory, faFile, faExchange, faPaperPlane, faReply, faRepeat, faRandom, faUpload, faInfo, faLock, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import 'rxjs/add/operator/takeWhile';
 
 @Component({
@@ -53,6 +54,22 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
   public userData: ApiUserDataSubjectItem;
   private subject_is_alive: boolean = true;
 
+  faSave = faSave;
+  faQuestion = faQuestion;
+  faFlag = faFlag;
+  faInfoCircle = faInfoCircle;
+  faHistory = faHistory;
+  faFile = faFile;
+  faExchange = faExchange;
+  faPaperPlane = faPaperPlane;
+  faReply = faReply;
+  faRepeat = faRepeat;
+  faRandom = faRandom;
+  faUpload = faUpload;
+  faInfo = faInfo;
+  faLock = faLock;
+  faTimes = faTimes;
+  faCheck = faCheck;
 
   constructor(
     private route: ActivatedRoute,
@@ -361,6 +378,14 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
   openPreview(template: TemplateRef<any>, what: string, title: string) {
     this.preview = { what: what, title: title };
     this.modalRef = this.modalService.open(template, { size: 'lg' });
+  }
+
+  openActivities(template) {
+    this.modalRef = this.modalService.open(template, { size: 'lg' });
+  }
+
+  closeActivities() {
+    this.modalRef.close();
   }
 
 

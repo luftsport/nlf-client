@@ -5,20 +5,18 @@
       <div class="input-group mb-3">
         <input [disabled]="!observation.acl_user.w" type="text" [(ngModel)]="actionLocal" name="actionLocal"
           class="form-control" [ngModelOptions]="{standalone: true}">
-        <span class="input-group-append">
           <!-- *ngIf="addActionLocal.length > 0"-->
-          <button [disabled]="!observation.acl_user.w" (click)="addActionLocal(actionLocal)" class="btn btn-primary"
-            type="submit">
-            <i class="fa fa-plus fa-fw"></i> Legg til</button>
-        </span>
+        <button [disabled]="!observation.acl_user.w" (click)="addActionLocal(actionLocal)" class="btn btn-primary"
+          type="submit">
+          <fa-icon [icon]="faPlus" [fixedWidth]="true"></fa-icon> Legg til</button>
       </div>
     </form>
     <div class="clearfix"></div>
     <table class="table table-striped table-sm table-hover">
       <tr *ngFor="let a of observation.actions.local; let idx = index">
         <td><strong>{{idx+1}}.</strong>&nbsp;{{a}}</td>
-        <td class="text-right">
-          <i *ngIf="observation.acl_user.w" class="fa fa-times fa-fw pointer" (click)="removeActionLocal(idx)"></i>
+        <td class="text-end">
+          <fa-icon [icon]="faTimes" [fixedWidth]="true" *ngIf="observation.acl_user.w" class="pointer" (click)="removeActionLocal(idx)"></fa-icon>
         </td>
       </tr>
     </table>
@@ -31,20 +29,18 @@
       <div class="input-group mb-3">
         <input [disabled]="!observation.acl_user.w" type="text" [(ngModel)]="actionCentral" name="actionCentral"
           class="form-control" [ngModelOptions]="{standalone: true}">
-        <span class="input-group-append">
           <!-- *ngIf="actionCentral.length > 0"-->
-          <button [disabled]="!observation.acl_user.w" (click)="addActionCentral(actionCentral)" class="btn btn-primary"
-            type="submit">
-            <i class="fa fa-plus fa-fw"></i> Legg til</button>
-        </span>
+        <button [disabled]="!observation.acl_user.w" (click)="addActionCentral(actionCentral)" class="btn btn-primary"
+          type="submit">
+          <fa-icon [icon]="faPlus" [fixedWidth]="true"></fa-icon> Legg til</button>
       </div>
     </form>
     <div class="clearfix"></div>
     <table class="table table-striped table-sm table-hover">
       <tr *ngFor="let a of observation.actions.central; let idx = index">
         <td><strong>{{idx+1}}.</strong>&nbsp;{{a}}</td>
-        <td class="text-right">
-          <i *ngIf="observation.acl_user.w" class="fa fa-times fa-fw pointer" (click)="removeActionCentral(idx)"></i>
+        <td class="text-end">
+          <fa-icon [icon]="faTimes" [fixedWidth]="true" *ngIf="observation.acl_user.w" class="pointer" (click)="removeActionCentral(idx)"></fa-icon>
         </td>
       </tr>
     </table>

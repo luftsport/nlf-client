@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ui-component-spinner',
@@ -9,7 +10,8 @@ export class NlfUiComponentSpinnerComponent implements OnInit {
 
   @Input() size?: number = 3;
   fasize: string;
-
+  faSpinner = faSpinner;
+  
   constructor() {}
 
   ngOnInit() {

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiAircraftsService } from 'app/api/api-aircrafts.service';
 import { ApiOptionsInterface, ApiAircraftsItem } from 'app/api/api.interface';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
+import { faPlus, faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-aircrafts-add',
@@ -10,6 +11,10 @@ import {Router} from '@angular/router';
   styleUrls: ['./aircrafts-add.component.css']
 })
 export class NlfAircraftsAddComponent implements OnInit {
+
+  faPlus = faPlus;
+  faEdit = faEdit;
+  faTimes = faTimes;
 
   modalRef;
   dataReady = false;
@@ -19,7 +24,6 @@ export class NlfAircraftsAddComponent implements OnInit {
   aircraft_listing: ApiAircraftsItem[] = [];
   error: string;
   aircraft_types: string[];
-
 
   new_aircraft: ApiAircraftsItem = { callsign: undefined };
 

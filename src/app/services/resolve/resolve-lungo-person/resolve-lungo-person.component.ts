@@ -6,6 +6,7 @@ import { ApiUserService } from 'app/api/api-user.service';
 import { Observable, of, forkJoin } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { avatar_tmp_image } from 'app/interfaces/functions';
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-resolve-lungo-person',
@@ -13,6 +14,8 @@ import { avatar_tmp_image } from 'app/interfaces/functions';
   styleUrls: ['./resolve-lungo-person.component.css']
 })
 export class NlfResolveLungoPersonComponent implements OnInit {
+
+  faQuestion = faQuestion;
 
   @Input() person_id: number;
   @Input() tmp_name?: string;

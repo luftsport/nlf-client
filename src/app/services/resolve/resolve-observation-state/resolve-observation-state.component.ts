@@ -1,7 +1,14 @@
 import { Component, Input, OnInit, Inject } from '@angular/core';
 import { environment } from 'environments/environment';
-import {  NlfConfigService } from 'app/nlf-config.service';
+import { NlfConfigService } from 'app/nlf-config.service';
 import { NlfConfigItem } from 'app/api/api.interface';
+import {
+  faExclamation,
+  faBan,
+  faPencil,
+  faCheck,
+} from '@fortawesome/free-solid-svg-icons';
+import { faClock } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'nlf-resolve-observation-state',
@@ -15,6 +22,14 @@ export class NlfResolveObservationStateComponent implements OnInit {
   @Input() badge: boolean = true;
   @Input() icon: boolean;
   public config: NlfConfigItem;
+
+  public icons = {
+    faExclamation: faExclamation,
+    faBan: faBan,
+    faPencil: faPencil,
+    faCheck: faCheck,
+    faClock: faClock
+  };
 
   constructor(private configService: NlfConfigService) { }
 

@@ -9,6 +9,7 @@ import { NlfOrsEditorInvolvedService, NlfOrsEditorInvolvedInterface } from 'app/
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import { ApiCacheService } from 'app/api/api-cache.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { faCheck, faExclamation, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 interface ObservationPeople {
   id: number;
@@ -39,8 +40,12 @@ export class NlfOrsEditorPeopleComponent implements OnInit {
    * id: number
    * tmp_name?: string
    * data?: {licenses?:, membership?:, gear?:}
-   * 
+   *
    */
+
+  faCheck = faCheck;
+  faExclamation = faExclamation;
+  faTimes = faTimes;
 
   @Input() who: ObservationPeople[]; // = 'involved' || 'organization.hl' || 'organization.hm' || 'organization.hfl' || 'organization.pilot';
   @Input() path: string;

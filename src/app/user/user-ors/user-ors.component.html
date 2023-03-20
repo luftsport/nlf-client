@@ -3,7 +3,7 @@
   <table class="table table-sm table-hover">
     <tr *ngFor="let ors of observations">
 
-      <td class="text-left">
+      <td class="text-start">
         <nlf-resolve-observation-types [type]="ors.type" [activity]="activity" [badge]="true"></nlf-resolve-observation-types>
       </td>
 
@@ -22,14 +22,14 @@
       </td>
 
       <td class="text-center">
-        <span class="badge badge-{{ors.rating | nlfOrsRatingCalc | nlfDynamicColor}} badge-pill">{{ ors.rating | nlfOrsRatingCalc }}</span>
+        <span class="badge bg-{{ors.rating | nlfOrsRatingCalc | nlfDynamicColor}} rounded-pill">{{ ors.rating | nlfOrsRatingCalc }}</span>
       </td>
 
     </tr>
 
-    <!-- Ingen for seksjon - mute it! 
+    <!-- Ingen for seksjon - mute it!
     <tr *ngIf="observations.length===0">
-      <td class="text-left">Ingen funnet for {{ activity }}</td>
+      <td class="text-start">Ingen funnet for {{ activity }}</td>
     </tr>
     -->
 

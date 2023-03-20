@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ApiObservationActionsInterface, ApiObservationsItem } from 'app/api/api.interface';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
-
+import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';import {  } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -10,6 +10,9 @@ import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
   styleUrls: ['./ors-editor-actions.component.css']
 })
 export class NlfOrsEditorActionsComponent implements OnInit {
+
+  faPlus = faPlus;
+  faTimes = faTimes;
 
   //@Input() actions: ApiObservationActionsInterface;
   //@Output() actionsChange: EventEmitter<ApiObservationActionsInterface> = new EventEmitter<ApiObservationActionsInterface>();
@@ -57,7 +60,7 @@ export class NlfOrsEditorActionsComponent implements OnInit {
   /** Mentions
   format(event) {
     console.log(event);
-    return '<macro contenteditable="false" class="badge badge-info" id="' + event.id + '">' + event.fullname + '</macro>';
+    return '<macro contenteditable="false" class="badge bg-info" id="' + event.id + '">' + event.fullname + '</macro>';
   }
   **/
 

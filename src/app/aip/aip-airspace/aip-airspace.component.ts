@@ -1,9 +1,7 @@
 import { ApiAirspacesService } from 'app/api/api-airspaces.service';
 import { ApiAirportsService } from 'app/api/api-airports.service';
-
-import { ApiOptionsInterface } from 'app/api/api.interface';
+import { ApiOptionsInterface, ApiGeoCoordinates } from 'app/api/api.interface';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MapsAPILoader } from '@agm/core';
 import { GeoLocationService } from 'app/services/geo/geo-location.service';
 import { Router, NavigationStart } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -26,7 +24,7 @@ export class NlfAipAirspaceComponent implements OnInit, OnDestroy {
   polyInfo = {};
   dataReady = false;
   zoom = 8;
-  geo: Coordinates;
+  geo: ApiGeoCoordinates["coordinates"];
   modalGeo;
 
   airports;

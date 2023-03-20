@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NlfAipAirspaceComponent } from './aip-airspace.component';
 
@@ -6,7 +6,7 @@ describe('NlfAipAirspaceComponent', () => {
   let component: NlfAipAirspaceComponent;
   let fixture: ComponentFixture<NlfAipAirspaceComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NlfAipAirspaceComponent ]
     })

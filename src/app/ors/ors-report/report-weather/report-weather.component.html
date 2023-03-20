@@ -86,7 +86,7 @@
   <div class="col-xs-12  col-md-12">
     <div *ngIf="!!weather.manual?.description">
       <strong>
-        <fa name="commenting-o" [fixed]="true" class="mr-2"></fa>{{ weather.manual.description }}
+        <fa-icon [icon]="faCommenting" class="me-2"></fa-icon>{{ weather.manual.description }}
       </strong>
     </div>
     <div class="clearfix"></div>
@@ -100,15 +100,15 @@
   </div>
 
   <div class="col-md-4 col-xs-12 p-3 align-text-bottom">
-    <div>
-      <button (click)="openModal(autoModal, 'metar')" [ngClass]="!!weather.auto?.metar ? 'btn-success': 'btn-secondary'" class="btn btn-block my-2">METAR</button>
+    <div class="d-grid gap-2">
+      <button (click)="openModal(autoModal, 'metar')" [ngClass]="!!weather.auto?.metar ? 'btn-success': 'btn-secondary'" class="btn my-2">METAR</button>
     </div>
-    <div>
-      <button (click)="openModal(autoModal, 'taf')" [ngClass]="!!weather.auto?.taf ? 'btn-success': 'btn-secondary'" class="btn btn-block my-2">TAF</button>
+    <div class="d-grid gap-2">
+      <button (click)="openModal(autoModal, 'taf')" [ngClass]="!!weather.auto?.taf ? 'btn-success': 'btn-secondary'" class="btn my-2">TAF</button>
     </div>
     <!--
-      <div>
-        <button (click)="openModal(autoModal, 'yr')" [ngClass]="!!weather.auto.yr ? 'btn-success': 'btn-secondary'" class="btn btn-block my-1">YR</button>
+      <div class="d-grid gap-2">
+        <button (click)="openModal(autoModal, 'yr')" [ngClass]="!!weather.auto.yr ? 'btn-success': 'btn-secondary'" class="btn my-1">YR</button>
       </div>
     -->
   </div>
@@ -121,7 +121,7 @@
     <h4 class="modal-title pull-left">
       {{ modal.title | upperfirst }}
     </h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>

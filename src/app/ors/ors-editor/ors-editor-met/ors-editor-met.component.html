@@ -8,14 +8,20 @@
 </div>
 <div *ngIf="!!tafmetar" class="row mt-3">
   <div class="col-xs-12 col-md-6">
-    <button (click)="openModal(autoModal, 'metar')" [ngClass]="!!tafmetar.metar ? 'btn-success': 'btn-secondary'" class="btn btn-block my-1">METAR</button>
+    <div class="d-grid gap-2">
+      <button (click)="openModal(autoModal, 'metar')" [ngClass]="!!tafmetar.metar ? 'btn-success': 'btn-secondary'" class="btn my-1">METAR</button>
+    </div>
   </div>
   <div class="col-xs-12 col-md-6">
-    <button (click)="openModal(autoModal, 'taf')" [ngClass]="!!tafmetar.taf ? 'btn-success': 'btn-secondary'" class="btn btn-block my-1">TAF</button>
+    <div class="d-grid gap-2">
+      <button (click)="openModal(autoModal, 'taf')" [ngClass]="!!tafmetar.taf ? 'btn-success': 'btn-secondary'" class="btn my-1">TAF</button>
+    </div>
   </div>
   <!--
   <div class="col-xs-12 col-md-4">
-    <button (click)="openModal(autoModal, 'yr')" [ngClass]="!!tafmetar.yr ? 'btn-success': 'btn-secondary'" class="btn btn-block my-1">YR</button>
+    <div class="d-grid gap-2">
+      <button (click)="openModal(autoModal, 'yr')" [ngClass]="!!tafmetar.yr ? 'btn-success': 'btn-secondary'" class="btn my-1">YR</button>
+    </div>
   </div>
 -->
 </div>
@@ -27,7 +33,7 @@
     <h4 class="modal-title pull-left">
       {{ modal.title | upperfirst }} {{ observation.when | date:'yyyy-MM-dd'}}
     </h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>

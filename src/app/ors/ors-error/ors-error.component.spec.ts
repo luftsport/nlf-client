@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NlfOrsErrorComponent } from './ors-error.component';
 
@@ -6,7 +6,7 @@ describe('NlfOrsErrorComponent', () => {
   let component: NlfOrsErrorComponent;
   let fixture: ComponentFixture<NlfOrsErrorComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NlfOrsErrorComponent ]
     })

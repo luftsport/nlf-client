@@ -1,6 +1,6 @@
 <div class="nlf-ors-toolbar mb-2">
   Hvor skjedde det?
-  <nlf-help class="pull-right" key="ors-editor-e5x-where"></nlf-help>
+  <nlf-help class="float-end" key="ors-editor-e5x-where"></nlf-help>
 </div>
 <div class="row">
   <div class="col-md-6">
@@ -14,7 +14,7 @@
   </div>
   <div class="col-md-2">
     <label>Vis kart</label>
-    <nlf-ors-editor-e5x-where (change)="debouncedUpdate()" [paths]="flightPaths" [disabled]="!observation.acl_user.w" [modal]="true" [showOnlyBtn]="true" [(attr)]="observation.occurrence.attributes"></nlf-ors-editor-e5x-where>
+    <nlf-ors-editor-e5x-where  [disabled]="!observation.acl_user.w" [modal]="true" [showOnlyBtn]="true"></nlf-ors-editor-e5x-where>
   </div>
 </div>
 
@@ -33,9 +33,9 @@
 
 <div class="nlf-ors-toolbar">
   Klassifiser hendelsen
-  <nlf-help class="pull-right" key="ors-editor-e5x-classification"></nlf-help>
+  <nlf-help class="float-end" key="ors-editor-e5x-classification"></nlf-help>
 </div>
-<div class="py-2 bg-warning col-md-12">
+<div class="p-3 bg-warning col-md-12">
   <div class="row">
     <div class="col-md-4">
       <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="observation.occurrence.attributes.injuryLevel.value" path="E5X.Occurrence.InjuryLevel" id="injuryLevel"></nlf-ors-editor-tag-e5x>
@@ -54,7 +54,7 @@
 
   </div>
 
-  <div class="row">
+  <div class="row mt-3">
     <div class="col-md-6">
       <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" (change)="debouncedUpdate()" [(items)]="observation.occurrence.attributes.occurrenceClass.value" path="E5X.Occurrence.OccurrenceClass"
         id="OccurrenceClass"></nlf-ors-editor-tag-e5x>
@@ -65,7 +65,7 @@
       </nlf-ors-editor-tag-e5x>
     </div>
 
-    <div class="col-md-12">
+    <div class="col-md-12 mt-3">
       <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" (change)="debouncedUpdate()" [(items)]="observation.occurrence.attributes.occurrenceCategory.value" path="E5X.Occurrence.OccurrenceCategory"
         id="OccurrenceCategory">
       </nlf-ors-editor-tag-e5x>
@@ -81,7 +81,7 @@
 <!-- OTHER ENTITIES -->
 <div class="nlf-ors-toolbar">
   Legg til annet relevant
-  <nlf-help class="pull-right" key="ors-editor-e5x-entities"></nlf-help>
+  <nlf-help class="float-end" key="ors-editor-e5x-entities"></nlf-help>
 </div>
 <!--
 <div class="my-3">
@@ -122,7 +122,7 @@
     <h4 class="modal-title pull-left">
       Occurred Where
     </h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -133,21 +133,23 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa name="times" [fixed]="true"></fa>Avbryt
+      <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>Avbryt
     </button>
     <button [disabled]="!observation.acl_user.w" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate(modalIndex)">
-      <fa name="check" [fixed]="true"></fa>Oppdater
+      <fa-icon [icon]="faCheck" [fixedWidth]="true"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>
 
 <ng-template #attrTemplate>
   <div class="row">
+    <!--
     <agm-map *ngIf="geoReady" [latitude]="toFloat(observation.occurrence.attributes.latitudeOfOcc.value)" [longitude]="toFloat(observation.occurrence.attributes.longitudeOfOcc.value)" (mapClick)="mapClicked($event)" [mapTypeControl]="true"
       [zoom]="7">
       <agm-marker [markerDraggable]="isDraggable()" (dragEnd)="markerMoved($event)" [latitude]="toFloat(observation.occurrence.attributes.latitudeOfOcc.value)" [longitude]="toFloat(observation.occurrence.attributes.longitudeOfOcc.value)">
       </agm-marker>
     </agm-map>
+    -->
   </div>
 
   <div class="row">

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NlfOrsEditorE5XAcInjuriesComponent } from './ors-editor-e5x-ac-injuries.component';
 
@@ -6,7 +6,7 @@ describe('NlfOrsEditorE5XAcInjuriesComponent', () => {
   let component: NlfOrsEditorE5XAcInjuriesComponent;
   let fixture: ComponentFixture<NlfOrsEditorE5XAcInjuriesComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NlfOrsEditorE5XAcInjuriesComponent ]
     })

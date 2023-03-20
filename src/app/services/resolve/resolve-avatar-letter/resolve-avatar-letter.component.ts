@@ -32,7 +32,7 @@ export class NlfResolveAvatarLetterComponent implements OnInit {
     if (!!this.person_id && this.person_id > 0 && !this.person_name) {
       console.log('Person first if');
       const options: ApiOptionsInterface = {
-        query: { projection: { full_name: 1, first_name: 1 } }
+        query: { projection: { full_name: 1, first_name: 1, last_name: 1 } }
       };
 
       const lungoPerson = this.apiCache.get(['get-lungo-person', this.person_id, options.query],
@@ -40,7 +40,7 @@ export class NlfResolveAvatarLetterComponent implements OnInit {
 
       lungoPerson.subscribe(
         data => {
-          this.full_name = data.full_name;
+          this.full_name = data.full_name || data.first_name + ' ' + data.last_name || 'Ukjent';
           this.svg_avatar = this.getLetterAvatar();
           this.dataReady = true
         },

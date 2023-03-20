@@ -1,12 +1,12 @@
 <div class="form-group">
-  
+
   <label [for]="path">{{ customLabel || label }}
     <span *ngIf="!!unit">[{{ unit }}]</span>
-    <fa (click)="openModal(modalHelp)" *ngIf="show_help" class="ml-1 pointer" name="question" [fixed]="true"></fa>
+    <fa-icon (click)="openModal(modalHelp)" *ngIf="show_help" class="ms-1 pointer" [icon]="faQuestion"></fa-icon>
   </label>
 
   <span *ngIf="!attribute">
-    <fa name="spinner" animation="pulse" [size]="1"></fa>
+    <nlf-ui-component-spinner></nlf-ui-component-spinner>
   </span>
 
   <!-- -->
@@ -82,7 +82,7 @@
     <h4 class="modal-customLabel pull-left">
       {{ customLabel || label }}
     </h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -94,7 +94,7 @@
       <div class="col-md-12">
         <dl>
           <div *ngFor="let choice of choices; let idx = index">
-            <dt>{{ choice.label }} <span class="badge badge-secondary" *ngIf="!!choice.icao">{{ choice.icao }}</span>
+            <dt>{{ choice.label }} <span class="badge bg-secondary" *ngIf="!!choice.icao">{{ choice.icao }}</span>
             </dt>
             <dd>{{ choice.descr }}</dd>
             <dd>{{ choice.expl }}</dd>
@@ -126,7 +126,7 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa name="times" [fixed]="true"></fa>Ferdig
+      <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>Ferdig
     </button>
   </div>
 </ng-template>

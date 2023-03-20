@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiAircraftsItem } from 'app/api/api.interface';
+import { faPlane, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-aircrafts-view',
@@ -8,6 +9,9 @@ import { ApiAircraftsItem } from 'app/api/api.interface';
   styleUrls: ['./aircrafts-view.component.css']
 })
 export class NlfAircraftsViewComponent implements OnInit {
+  faPlane = faPlane;
+  faEdit = faEdit;
+
   public callsign: string;
   constructor(private route: ActivatedRoute) {
 

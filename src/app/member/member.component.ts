@@ -3,16 +3,15 @@ import { Router, NavigationStart } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { debounce } from 'ts-debounce';
 import { LungoPersonsService } from 'app/api/lungo-persons.service';
-import { LungoPersonsSearchItem, LungoPersonsSearchList, LungoPersonsItem } from 'app/api/lungo.interface';
+import { LungoPaymentsService } from 'app/api/lungo-payments.service';
+import { LungoPersonsSearchItem, LungoPersonsSearchList, LungoPersonsItem, LungoPaymentsItem, LungoPaymentsItemList } from 'app/api/lungo.interface';
 import { environment } from 'environments/environment';
 import { hashString } from 'app/interfaces/functions';
 import { NlfConfigService } from 'app/nlf-config.service';
 import { forkJoin } from 'rxjs';
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
-import { ApiUserDataSubjectItem, NlfConfigItem } from 'app/api/api.interface';
-
-
-
+import { ApiUserDataSubjectItem, NlfConfigItem, ApiOptionsInterface } from 'app/api/api.interface';
+import { faUsers, faSave, faTable, faSearch, faSpinner, faCheck, faRemove } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-member',
@@ -21,7 +20,7 @@ import { ApiUserDataSubjectItem, NlfConfigItem } from 'app/api/api.interface';
 })
 export class NlfMemberComponent implements OnInit {
 
-  @ViewChild('personModalTemplate') personModalTemplate: any;
+  @ViewChild('personModalTemplate', { static: false }) personModalTemplate: any;
   disabled: boolean = false;
   searching: boolean = false;
   modalRef;
@@ -39,16 +38,27 @@ export class NlfMemberComponent implements OnInit {
   public config: NlfConfigItem;
   public dataReady = false;
 
+  fallskjermLicenses = [];
+
   public ENV = environment;
 
   deboucedSearch = debounce(this._search, 700);
+
+  faUsers = faUsers;
+  faSave = faSave;
+  faTable = faTable;
+  faSearch = faSearch;
+  faSpinner = faSpinner;
+  faCheck = faCheck;
+  faRemove = faRemove;
 
   constructor(
     private modalService: NgbModal,
     private router: Router,
     private personsService: LungoPersonsService,
     private userSubject: NlfUserSubjectService,
-    private configSubject: NlfConfigService
+    private configSubject: NlfConfigService,
+    private paymentsService: LungoPaymentsService
   ) {
 
     router.events
@@ -102,6 +112,7 @@ export class NlfMemberComponent implements OnInit {
       this.personsService.search(this.searchTerm, this.activity).subscribe(
         data => {
           this.results = data._items;
+          this.setFocus("memberSearchInput");
         },
         err => console.log(err),
         () => {
@@ -198,12 +209,43 @@ export class NlfMemberComponent implements OnInit {
 }
 **/
 
+  getLicenseFromPayment(person_id) {
+
+    const options: ApiOptionsInterface = {
+      query: {
+        where: {
+          person_id: person_id,
+          product_type_id: 23,
+          paid_date: { $gte: (new Date().getFullYear() - 1) + '-11-01T00:00:00.000000Z' }
+        },
+        //projection: { id: 1, _id: 1, name: 1 },
+        max_results: 250,
+        sort: [{ name: 1 }]
+      }
+    };
+
+    this.paymentsService.getPayments(options).subscribe(
+      (data) => {
+        this.fallskjermLicenses = data._items;
+
+      },
+      err => { console.log(err) },
+      () => { }
+    )
+
+  }
+
   openModal(person_id) {
+
+    this.fallskjermLicenses = [];
     this.person_id = person_id;
     this.modalPerson = undefined;
     this.personsService.getUser(person_id).subscribe(
       data => {
         this.modalPerson = data;
+        if (this.modalPerson.activities.includes(109)) {
+          this.getLicenseFromPayment(person_id);
+        }
         this.modalRef = this.modalService.open(this.personModalTemplate, { size: 'lg' });
       },
       err => console.log(err),
@@ -217,7 +259,7 @@ export class NlfMemberComponent implements OnInit {
     this.justClosedModal = true;
     try {
       event.stopPropagation();
-    } catch {}
+    } catch { }
     this.setFocus("memberSearchInput");
   }
 
