@@ -112,6 +112,7 @@ export class NlfMemberComponent implements OnInit {
       this.personsService.search(this.searchTerm, this.activity).subscribe(
         data => {
           this.results = data._items;
+          this.setFocus("memberSearchInput");
         },
         err => console.log(err),
         () => {
