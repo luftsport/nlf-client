@@ -39,6 +39,7 @@ export class NlfOrsE5xComponent implements OnInit {
   token: string;
   e5xFile = false;
   e5xResult;
+  person_id: number;
 
   e5x_enabled = false;
 
@@ -78,6 +79,7 @@ export class NlfOrsE5xComponent implements OnInit {
 
     this.authSubject.observableAuthData.subscribe(
       data => {
+        this.person_id = data.person_id;
         console.log('Auth subject', data);
         try {
           this.token = data.token;
