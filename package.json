@@ -71,7 +71,7 @@
     "jodit-angular": "^1.13.6",
     "js-marker-clusterer": "^1.0.0",
     "json-js": "^1.1.2",
-    "jspdf": "^1.5.3",
+    "jspdf": "^2.5.1",
     "leaflet": "^1.9.3",
     "leaflet-draw": "^1.0.4",
     "leaflet-geometryutil": "^0.10.1",
