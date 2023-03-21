@@ -7,7 +7,7 @@ const nlfConfluenceRoutes: Routes = [{ path: 'confluence', component: NlfConflue
 
 
 @NgModule({
-  imports: [ RouterModule.forRoot(nlfConfluenceRoutes)],
+  imports: [ RouterModule.forRoot(nlfConfluenceRoutes, { relativeLinkResolution: 'legacy' })],
   exports: [ RouterModule],
   declarations: []
 })

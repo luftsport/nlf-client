@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LungoIntegrationService } from 'app/api/lungo-integration.service';
 import { Router, NavigationStart } from '@angular/router';
+import { faAlignJustify } from '@fortawesome/free-solid-svg-icons';
 import 'rxjs/add/operator/filter';
 
 @Component({
@@ -16,6 +17,8 @@ export class WorkerLogComponent implements OnInit {
   log: any;
   dataReady = false;
   modalRef;
+
+  faAlignJustify = faAlignJustify;
 
    constructor(private modalService: NgbModal,
               private integration: LungoIntegrationService,

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NlfAlertComponent } from './alert.component';
 
@@ -6,7 +6,7 @@ describe('NlfAlertComponent', () => {
   let component: NlfAlertComponent;
   let fixture: ComponentFixture<NlfAlertComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NlfAlertComponent ]
     })

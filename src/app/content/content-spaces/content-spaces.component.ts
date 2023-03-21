@@ -3,6 +3,7 @@ import { ApiContentService } from 'app/api/api-content.service';
 import { ApiContentItem, ApiContentList, ApiOptionsInterface } from 'app/api/api.interface';
 import { TableConfig, TableEventObject } from 'app/interfaces/ngx-easy-table.interface';
 import { ConfirmService } from 'app/services/confirm/confirm.service';
+import { faSitemap, faPlus, faClose, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-content-spaces',
@@ -10,6 +11,11 @@ import { ConfirmService } from 'app/services/confirm/confirm.service';
   styleUrls: ['./content-spaces.component.css']
 })
 export class NlfContentSpacesComponent implements OnInit {
+
+  faSitemap = faSitemap;
+  faPlus = faPlus;
+  faClose = faClose;
+  faEdit = faEdit;
 
   spaces: Array<ApiContentItem>;
   dataReady = false;

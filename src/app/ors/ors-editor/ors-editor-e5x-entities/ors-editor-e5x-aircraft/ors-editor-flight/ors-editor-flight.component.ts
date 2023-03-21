@@ -6,7 +6,6 @@ import { ApiOptionsInterface, ApiObservationsItem, ApiAirport, ApiAirports, ApiO
 import { distinctUntilChanged, debounceTime, switchMap, tap, catchError, map } from 'rxjs/operators';
 import { Subject, Observable, of, concat } from 'rxjs';
 import { GeoLocationService } from 'app/services/geo/geo-location.service';
-import { routerNgProbeToken } from '@angular/router/src/router_module';
 import { ApiCacheService } from 'app/api/api-cache.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmService } from 'app/services/confirm/confirm.service';
@@ -29,6 +28,8 @@ import {
   E5XReportingHistoryClass,
   E5XRiskAssessmentClass
 } from 'app/interfaces/e5x.interface';
+import { faTimes, faLongArrowRight, faPlane, faPlus, faMinus, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { Map, Marker, MapOptions, LayerOptions, latLng, LatLng, marker, tileLayer, Polyline, polyline } from 'leaflet';
 
 @Component({
   selector: 'nlf-ors-editor-flight',
@@ -49,9 +50,10 @@ export class NlfOrsEditorFlightComponent implements OnInit {
   airportsLoading = false;
   selectedAirports = [];
   dataReady = true;
-  location: Coordinates;
+  location: number[];
   zoom = 5;
-  showRouteMap = false;
+  showRouteMap = true;
+  routeReady = false;
 
   incident: boolean[] = [];
 
@@ -67,6 +69,28 @@ export class NlfOrsEditorFlightComponent implements OnInit {
   modalRoute;
   modalIndex;
   private _init: boolean = false;
+
+  faTimes = faTimes;
+  faLongArrowRight = faLongArrowRight;
+  faPlane = faPlane;
+  faPlus = faPlus;
+  faMinus = faMinus;
+  faEye = faEye;
+  faEyeSlash = faEyeSlash;
+
+  // Map
+  polyline: Polyline;
+  map: Map;
+  mapCenter: LatLng;
+  mapOptions: MapOptions = {
+    layers: [
+      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
+    ],
+    zoom: 12
+  };
+  marker: Marker;
+  markerOptions: Object;
+  mapReady: boolean = false;
 
   public debouncedUpdate = debounce(this.update, 600);
 
@@ -117,6 +141,9 @@ export class NlfOrsEditorFlightComponent implements OnInit {
       this.route = [];
     } else {
       this.route = this.aircraft.flight;
+      setTimeout(() => {                           
+        this.routeReady = true;
+      }, 700);
     }
 
     if (this.route.length > 0) {
@@ -140,8 +167,14 @@ export class NlfOrsEditorFlightComponent implements OnInit {
     this.aircraft.flight = this.route;
     this.aircraftChange.emit(this.aircraft);
     this.change.emit(true);
+
+    //Update map:
+
   }
 
+  private mapRoute() {
+
+  }
 
   private updateWx(force = false) {
     if (!!this.aircraft) {
@@ -213,6 +246,13 @@ export class NlfOrsEditorFlightComponent implements OnInit {
           err => { },
           () => {
             this.route.push({ from: this.from_airport, to: this.to_airport, path: path, occurrence: false, weather: { from: {}, to: {} } });
+            this.route = [...this.route];
+
+
+            setTimeout(() => {                           // <<<---using ()=> syntax
+              this.routeReady = true;
+            }, 700);
+
             // Housekeeping
             this.from_airport = { ...this.to_airport };
             this.to_airport = void 0;
@@ -245,8 +285,8 @@ export class NlfOrsEditorFlightComponent implements OnInit {
         // alltid siste index length-1
         if (this.route.length > 0) {
 
-          if(this.hasSegmentIncident(this.route.length-1)) {
-            this.removeIncident(this.route.length-1);
+          if (this.hasSegmentIncident(this.route.length - 1)) {
+            this.removeIncident(this.route.length - 1);
           }
 
           this.route.pop(); //slice(this.route.length-1,1);
@@ -263,7 +303,9 @@ export class NlfOrsEditorFlightComponent implements OnInit {
             this.setFocus('to_airport');
 
           }
+          this.route = [...this.route];
           this.update();
+
         }
       },
       () => { // No
@@ -366,7 +408,7 @@ export class NlfOrsEditorFlightComponent implements OnInit {
    * Map
    * @param event
    */
-  public mapReady(event) {
+  public onMapReady(event) {
     console.log('Flight map: ', event);
   }
   public zoomChanged(event) {

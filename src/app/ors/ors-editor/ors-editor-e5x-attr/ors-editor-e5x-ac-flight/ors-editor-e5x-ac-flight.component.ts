@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { isObjEmpty } from 'app/interfaces/functions';
-import { E5XAircraftClass } from 'app/interfaces/e5x.interface';
+import { E5XAircraftClass } from 'app/interfaces/e5x.interface';
+import { faCheck, faTachometer, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-editor-e5x-ac-flight',
@@ -18,6 +19,10 @@ export class NlfOrsEditorE5XAcFlightComponent implements OnInit {
   @Input() disabled: boolean = false;
   modalRef;
   _isObjectEmpty = isObjEmpty;
+
+  faTachometer = faTachometer;
+  faTimes = faTimes;
+  faCheck = faCheck;
 
   constructor(private modalService: NgbModal) { }
 

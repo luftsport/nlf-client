@@ -38,7 +38,7 @@ interface EventObject {
 })
 export class NlfUserTableComponent implements OnInit {
 
-  @ViewChild('detailsTemplate') detailsTemplateRef: TemplateRef<any>;
+  @ViewChild('detailsTemplate', {static: false}) detailsTemplateRef: TemplateRef<any>;
 
   data: any;
   items: any;

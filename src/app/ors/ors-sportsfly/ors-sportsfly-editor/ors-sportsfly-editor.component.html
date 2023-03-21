@@ -6,7 +6,7 @@
     <div class="container lead">
       <!-- TITLE -->
 
-      <!-- <fa name="file-text-o" [fixed]="true"></fa>&nbsp;-->
+      <!-- <fa-icon [icon]="fileAlt"></fa-icon>&nbsp;-->
       <!-- {{ data.tags | nlfOrsTags: ' / '}} -->
       <span class="overflow-hidden">
         <a [routerLink]="['/ors', 'sportsfly']">OBSREG</a>#{{ observation.id }}
@@ -14,43 +14,43 @@
           seperator="/"></nlf-resolve-observation-tags>&nbsp;
         <span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body"
           *ngIf="!!observation.rating"
-          class="badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{
+          class="badge bg-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{
           observation.rating | nlfOrsRatingCalc }}</span>
       </span>
       <!-- WORKFLOW STATE -->
-      <span class="pull-right">
+      <span class="float-end">
 
         <!-- SAVE -->
         <span *ngIf="!!observation">
           <span (click)="saveIfChanges()" *ngIf="!!changes && observation.acl_user.w"
-            class="pointer badge badge-warning mx-1">
-            <fa name="save" [fixed]="true"></fa>
+            class="pointer badge bg-warning mx-1">
+            <fa-icon [icon]="faSave"></fa-icon>
           </span>
         </span>
 
         <!-- HELP -->
-        <a class="badge badge-light pointer text-info mx-1" (click)="openHelp()" joyrideStep="step001"
+        <a class="badge bg-light text-dark pointer text-info mx-1" (click)="openHelp()" joyrideStep="step001"
           stepPosition="bottom" title="Hjelp"
           text='Et "?" indikerer at det er hjelpetekst tilgjengelig. Dette er for siden, og du finner også "?"" i nærheten av komponenter i rapporten'>
-          <fa name="question" [fixed]="true"></fa>
+          <fa-icon [icon]="faQuestion"></fa-icon>
         </a>
 
         <!-- FLAGS -->
         <span *ngIf="hasFlag()" class="text-danger mx-1" joyrideStep="step002" stepPosition="bottom" title="Flagg"
           text="Her vil flagg vises. Et flagg er...">
-          <fa name="flag" [fixed]="true"></fa>
+          <fa-icon [icon]="faFlag"></fa-icon>
         </span>
 
         <!-- ABOUT -->
-        <a (click)="openAbout()" class="badge badge-secondary text-white pointer mx-1" joyrideStep="step002"
+        <a (click)="openAbout()" class="badge bg-secondary text-white pointer mx-1" joyrideStep="step002"
           stepPosition="bottom" title="Om" text="Denne viser informasjon om obervasjonen...">
-          <fa name="info-circle" [fixed]="true"></fa>
-          <fa *ngIf="!observation.acl_user.w" name="lock" [fixed]="true" class="text-danger"
-            title="Ingen skrivetilgang"></fa>
+          <fa-icon [icon]="faInfoCircle"></fa-icon>
+          <fa-icon *ngIf="!observation.acl_user.w" [icon]="faLock" class="text-danger"
+            title="Ingen skrivetilgang"></fa-icon>
           {{ observation._updated | amTimeAgo }}
         </a>
-        <!-- TOUR 
-        <a class="badge badge-success mx-1 text-white pointer"
+        <!-- TOUR
+        <a class="badge bg-success mx-1 text-white pointer"
           (click)="joyrideService.startTour({ steps: ['step001', 'step002', 'step003', 'step004', 'step005', 'step006', 'step007', 'step008', 'step009'] })">
           Intro
         </a>
@@ -58,7 +58,7 @@
 
 
         <!-- VERSION -->
-        <a class="badge badge-success mx-1 text-white pointer" (click)="openVersions(modalVersions)"
+        <a class="badge bg-success mx-1 text-white pointer" (click)="openVersions(modalVersions)"
           joyrideStep="step003" stepPosition="bottom" title="Versjon"
           text="Indikerer versjonen av observasjonen. Alle endringer lagres. Du kan se forskjeller og du kan gå tilbake/revertere om du angrer deg.">
           v{{ observation._version }}</a>
@@ -81,12 +81,17 @@
         <nlf-ors-e5x (click)="saveIfChanges()" (change)="getData()" joyrideStep="step005" stepPosition="bottom"
           title="E5X" text="Her vises status på innsending til Luftfartstilsynet på formatet E5X."></nlf-ors-e5x>
 
-        <!-- ACTIVITY -->
-        <a *ngIf="observation.workflow.state!='closed'" class="badge badge-info mx-1"
+        <!-- ACTIVITY 
+        <a *ngIf="observation.workflow.state!='closed'" class="badge bg-info mx-1"
           [routerLink]="['/ors', observation._model.type , 'activities', observation.id]" joyrideStep="step006"
           stepPosition="bottom" title="Aktivitet"
           text="Denne knappen aktiverer aktivitetsvinduet som viser all aktiviteten vedrørende denne observasjonen. Her kan det også sendes meldinger">
-          <fa name="history"></fa> Aktivitet
+          <fa-icon [icon]="faHistory"></fa-icon> Aktivitet
+        </a>-->
+        <a *ngIf="observation.workflow.state!='closed'" class="badge bg-info mx-1 pointer"
+        title="Denne knappen aktiverer aktivitetsvinduet som viser all aktiviteten vedrørende denne observasjonen. Her kan det også sendes meldinger"
+          (click)="openActivities(activityModal)">
+          <fa-icon [icon]="faHistory"></fa-icon> Aktivitet
         </a>
 
         <!-- ACCESS -->
@@ -97,10 +102,10 @@
 
         <!-- REPORT -->
         <a [routerLink]="['/ors', observation._model.type , 'report', observation.id]"
-          *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge badge-primary text-white mx-1"
+          *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge bg-primary text-white mx-1"
           joyrideStep="step009" stepPosition="bottom" title="Rapport"
           text="Denne knappen tar deg videre til visning av observasjonen slik den vil se ut etter at den er ferdig og offentlig.">
-          <fa name="file" [fixed]="true"></fa> Report
+          <fa-icon [icon]="faFile"></fa-icon> Report
         </a>
 
       </span>
@@ -120,7 +125,7 @@
 
         <!-- TITLE -->
         <div class="nlf-ors-toolbar">
-          Tittel <nlf-help class="pull-right" key="ors-editor-sportsfly-title"></nlf-help>
+          Tittel <nlf-help class="float-end" key="ors-editor-sportsfly-title"></nlf-help>
         </div>
       </div>
 
@@ -142,7 +147,7 @@
     <div class="row my-3 d-block d-sm-none">
       <div class="col-xs-12 col-md-12">
         <div class="nlf-ors-toolbar">
-          Vedlegg ({{ observation.files.length }}) <nlf-help class="pull-right" key="ors-editor-files"></nlf-help>
+          Vedlegg ({{ observation.files.length }}) <nlf-help class="float-end" key="ors-editor-files"></nlf-help>
         </div>
       </div>
       <div class="col-xs-12 col-md-12 py-3 bg-light table-responsive overflow-auto">
@@ -187,9 +192,9 @@
     <div class="row my-3">
       <!-- WHEN -->
       <div class="col-sm-12 col-md-4">
-        <div class="card">
+        <div class="card h-100">
           <div class="card-header">
-            <h5>Tidspunkt [UTC]<nlf-help class="pull-right" key="ors-editor-when"></nlf-help>
+            <h5>Tidspunkt [UTC] <nlf-help class="float-end" key="ors-editor-when"></nlf-help>
             </h5>
           </div>
           <div class="card-body">
@@ -201,9 +206,9 @@
 
       <!-- TYPE -->
       <div class="col-sm-12 col-md-4">
-        <div class="card">
+        <div class="card h-100">
           <div class="card-header">
-            <h5>Type <nlf-help class="pull-right" key="ors-editor-motorfly-type"></nlf-help>
+            <h5>Type <nlf-help class="float-end" key="ors-editor-motorfly-type"></nlf-help>
             </h5>
           </div>
           <div class="card-body">
@@ -215,9 +220,9 @@
 
       <!-- FLAGS-->
       <div class="col-sm-12 col-md-4">
-        <div class="card">
+        <div class="card h-100">
           <div class="card-header">
-            <h5>Flagg <nlf-help class="pull-right" key="ors-editor-motorfly-flags"></nlf-help>
+            <h5>Flagg <nlf-help class="float-end" key="ors-editor-motorfly-flags"></nlf-help>
             </h5>
           </div>
           <div class="card-body">
@@ -235,11 +240,11 @@
     <!-- NARRATIVE -->
     <div class="row mt-3">
       <div class="nlf-ors-toolbar">
-        Hva skjedde? <nlf-help class="pull-right" key="ors-e5x-narrative"></nlf-help>
+        Hva skjedde? <nlf-help class="float-end" key="ors-e5x-narrative"></nlf-help>
       </div>
     </div>
     <div class="row">
-      <div class="col-xs-12 col-md-12 bg-light">
+      <div class="col-xs-12 col-md-12 bg-light py-3">
         <ng-container *ngIf="observation._model.version>2">
           <nlf-ors-editor-e5x-reportinghistory-reporters-description
             *ngIf="!!observation.occurrence.entities.reportingHistory[0].attributes"
@@ -260,10 +265,8 @@
 
     <!-- FILES MD only -->
     <div class="row my-3 d-none d-sm-block">
-      <div class="col-xs-12 col-md-12">
-        <div class="nlf-ors-toolbar">
-          Vedlegg ({{ observation.files.length }}) <nlf-help class="pull-right" key="ors-editor-files"></nlf-help>
-        </div>
+      <div class="nlf-ors-toolbar">
+        Vedlegg ({{ observation.files.length }}) <nlf-help class="float-end" key="ors-editor-files"></nlf-help>
       </div>
       <div class="col-xs-12 col-md-12 py-3 bg-light table-responsive overflow-auto">
         <nlf-ors-editor-files [dropzone]="true" (fileChange)="save($event)"></nlf-ors-editor-files>
@@ -277,7 +280,7 @@
         <div class="card">
           <div class="card-header">
             <h5>Vedlegg ({{ observation.files.length }})
-              <nlf-help class="pull-right" key="ors-editor-files"></nlf-help>
+              <nlf-help class="float-end" key="ors-editor-files"></nlf-help>
             </h5>
           </div>
           <div class="card-body table-responsive">
@@ -296,8 +299,8 @@
       <div class="row">
         <div class="nlf-ors-toolbar">
           Fartøy
-          <nlf-help class="pull-right" key="ors-e5x-aircrafts"></nlf-help>
-          <!-- @TODO show modal w/ac information/summary <button class="pull-right btn btn-link">preview</button> -->
+          <nlf-help class="float-end" key="ors-e5x-aircrafts"></nlf-help>
+          <!-- @TODO show modal w/ac information/summary <button class="float-end btn btn-link">preview</button> -->
         </div>
       </div>
       <div class="row">
@@ -309,7 +312,7 @@
       <!--
     <div class="nlf-ors-toolbar">
       Occurrence
-      <nlf-help class="pull-right" key="ors-editor-e5x-occurrence"></nlf-help>
+      <nlf-help class="float-end" key="ors-editor-e5x-occurrence"></nlf-help>
     </div>
     <div class="col-md-12 col-sm-12">
       <nlf-ors-editor-e5x-occurrence [disabled]="!observation.acl_user.w" [modal]="false"></nlf-ors-editor-e5x-occurrence>
@@ -321,7 +324,7 @@
       <!--
     <div class="nlf-ors-toolbar">
       Klassifisering
-      <nlf-help class="pull-right" key="ors-editor-e5x-classification"></nlf-help>
+      <nlf-help class="float-end" key="ors-editor-e5x-classification"></nlf-help>
     </div>
     <div class="col-md-12 col-sm-12 bg-danger">
       <nlf-ors-editor-e5x-classification [disabled]="!observation.acl_user.w" (change)="update()" [(attr)]="observation.occurrence.attributes" [modal]="false"></nlf-ors-editor-e5x-classification>
@@ -368,7 +371,7 @@
     <div class="row my-3">
       <div class="col-xs-12 col-md-12">
         <div class="nlf-ors-toolbar">
-          Narrative <nlf-help class="pull-right" key="ors-e5x-narrative"></nlf-help>
+          Narrative <nlf-help class="float-end" key="ors-e5x-narrative"></nlf-help>
         </div>
       </div>
       <div class="col-xs-12 col-md-12 bg-light">
@@ -383,7 +386,7 @@
     <div class="row my-3">
       <div class="col-xs-12 col-md-12">
         <div class="nlf-ors-toolbar">
-          Andre Involverte <nlf-help class="pull-right" key="ors-editor-involved"></nlf-help>
+          Andre Involverte <nlf-help class="float-end" key="ors-editor-involved"></nlf-help>
         </div>
       </div>
       <div class="col-xs-12 col-md-12">
@@ -398,8 +401,8 @@
       <div class="col-xs-12 col-md-12">
         <div class="nlf-ors-toolbar nlf-ors-block-bottom">
           Forløpet
-          <nlf-help class="pull-right" key="ors-editor-components"></nlf-help>
-          <button (click)="openPreview(modalPreview, 'components', 'Forløpet')" class="pull-right btn btn-link">
+          <nlf-help class="float-end" key="ors-editor-components"></nlf-help>
+          <button (click)="openPreview(modalPreview, 'components', 'Forløpet')" class="float-end btn btn-link">
             preview
           </button>
         </div>
@@ -415,7 +418,7 @@
     <div class="row my-3">
       <div class="nlf-ors-toolbar nlf-ors-block-bottom">
         Været
-        <nlf-help class="pull-right" key="ors-editor-weather"></nlf-help>
+        <nlf-help class="float-end" key="ors-editor-weather"></nlf-help>
       </div>
       <div class="col-xs-12 col-md-6">
         <nlf-ors-editor-met></nlf-ors-editor-met>
@@ -438,7 +441,7 @@
     <!-- RATING -->
     <div class="row mt-3">
       <div class="nlf-ors-toolbar">
-        Alvorlighetsgrad <nlf-help class="pull-right" key="ors-editor-motorfly-rating"></nlf-help>
+        Alvorlighetsgrad <nlf-help class="float-end" key="ors-editor-motorfly-rating"></nlf-help>
       </div>
     </div>
     <div class="row">
@@ -452,7 +455,7 @@
     <div class="row">
       <div class="nlf-ors-toolbar">
         Vurdering
-        <nlf-help class="pull-right" key="ors-editor-ask"></nlf-help>
+        <nlf-help class="float-end" key="ors-editor-ask"></nlf-help>
       </div>
     </div>
 
@@ -479,7 +482,7 @@
       <div class="row">
         <div class="nlf-ors-toolbar nlf-ors-block-bottom">
           Tiltak
-          <nlf-help class="pull-right" key="ors-editor-motorfly-actions"></nlf-help>
+          <nlf-help class="float-end" key="ors-editor-motorfly-actions"></nlf-help>
         </div>
       </div>
       <div class="row">
@@ -496,7 +499,7 @@
       <div class="row">
         <div class="nlf-ors-toolbar">
           Visning av felter
-          <nlf-help class="pull-right" key="ors-editor-ask"></nlf-help>
+          <nlf-help class="float-end" key="ors-editor-ask"></nlf-help>
         </div>
       </div>
       <div class="col-xs-12 col-md-12 py-2">
@@ -509,12 +512,12 @@
           arbeidsflyten eller logger inn fra en annen enhet.
         </p>
         <ng-container *ngIf="!showSimpleView()">
-          <div class="btn-toolbar pull-right">
+          <div class="btn-toolbar float-end">
             <button (click)="toggleSimpleView()" class="btn btn-primary">Vis forenklet skjema</button>
           </div>
         </ng-container>
         <ng-container *ngIf="showSimpleView()">
-          <div class="btn-toolbar pull-right">
+          <div class="btn-toolbar float-end">
             <button (click)="toggleSimpleView()" class="btn btn-primary">Vis alle felter</button>
           </div>
         </ng-container>
@@ -527,7 +530,7 @@
           <ng-container *ngIf="observation.workflow.state=='draft'">Innsending</ng-container>
           <ng-container *ngIf="['draft', 'withdrawn'].indexOf(observation.workflow.state)==-1">Behandling</ng-container>
 
-          <nlf-help class="pull-right" key="ors-editor-workflow"></nlf-help>
+          <nlf-help class="float-end" key="ors-editor-workflow"></nlf-help>
         </div>
         <!-- bg-secondary text-white-->
         <div class="col-xs-12 col-md-12 py-2">
@@ -540,8 +543,8 @@
                 <nlf-help key="ors-editor-workflow"></nlf-help>
               </span>
             </p>
-            <div class="btn-toolbar pull-right">
-              <button (click)="openWorkflow()" class="btn btn-danger mr-2">Gjenåpne</button>
+            <div class="btn-toolbar float-end">
+              <button (click)="openWorkflow()" class="btn btn-danger me-2">Gjenåpne</button>
             </div>
           </ng-container>
 
@@ -564,9 +567,9 @@
               tilbake og gjenåpne
               den skulle du ombestemme deg.</p>
             <!-- Knapper for innsending -->
-            <div class="btn-toolbar pull-right">
-              <button (click)="openWorkflow()" class="btn btn-success mr-2">Send OBSREG koordinator</button>
-              <button (click)="openWorkflow()" class="btn btn-danger mr-2">Trekk tilbake</button>
+            <div class="btn-toolbar float-end">
+              <button (click)="openWorkflow()" class="btn btn-success me-2">Send OBSREG koordinator</button>
+              <button (click)="openWorkflow()" class="btn btn-danger me-2">Trekk tilbake</button>
             </div>
 
           </ng-container>
@@ -587,9 +590,9 @@
               </span>
             </p>
 
-            <div class="btn-toolbar pull-right">
-              <button (click)="openWorkflow()" class="btn btn-primary mr-2">
-                <fa name="exchange" [fixed]="true"></fa> Behandle #{{observation.id}}
+            <div class="btn-toolbar float-end">
+              <button (click)="openWorkflow()" class="btn btn-primary me-2">
+                <fa-icon [icon]="faExchange"></fa-icon> Behandle #{{observation.id}}
               </button>
             </div>
           </ng-container>
@@ -603,7 +606,7 @@
     <div *ngIf="observation.acl_user.x" class="nlf-toolbar fixed-bottom bg-dark d-none d-md-block">
       <div class="container">
 
-        <span class="float-left" text="Her velger du visning om du vil ha forenklet eller alle felter" class="nav-item">
+        <span class="float-start" text="Her velger du visning om du vil ha forenklet eller alle felter" class="nav-item">
           <ng-container *ngIf="!showSimpleView()">
             <button (click)="toggleSimpleView()" class="btn btn-primary">Vis forenklet skjema</button>
           </ng-container>
@@ -612,36 +615,36 @@
           </ng-container>
         </span>
 
-        <span class="float-right" text="Når du er ferdig med observasjonen så skal du sende den inn.">
+        <span class="float-end" text="Når du er ferdig med observasjonen så skal du sende den inn.">
 
-          <span class="mr-4 lead">
+          <span class="me-4 lead">
             <nlf-help key="ors-editor-workflow"></nlf-help>
           </span>
 
           <ng-container *ngIf="observation.workflow.state==='draft'">
 
-            <button class="btn btn-success mr-2" (click)="openWorkflow()" title="Send"
+            <button class="btn btn-success me-2" (click)="openWorkflow()" title="Send"
               text="Når du er ferdig med observasjonen så sender du den til neste i arbeidsflyten som vil behandle observasjonen videre">
-              <fa name="send"></fa> Send til OBSREG koordinator
+              <fa-icon [icon]="faPaperPlane"></fa-icon> Send til OBSREG koordinator
             </button>
 
 
-            <button class="btn btn-danger mr-2" (click)="openWorkflow()" title="Trekk tilbake"
+            <button class="btn btn-danger me-2" (click)="openWorkflow()" title="Trekk tilbake"
               text="Om du ikke ønsker sende inn rapporten så velger du trekk tilbake. Da blir rapporten kun tilgjegenlig for deg og du kan når som helst gjenåpne den igjen. Dette er OBSREGs måte å slette på.">
-              <fa name="reply"></fa> Trekk tilbake
+              <fa-icon [icon]="faReply"></fa-icon> Trekk tilbake
             </button>
 
           </ng-container>
 
           <ng-container *ngIf="observation.workflow.state==='withdrawn'">
-            <button class="btn btn-success mr-2" (click)="openWorkflow()" title="Gjenåpne" text="Gjenåpne ">
-              <fa name="repeat"></fa> Gjenåpne
+            <button class="btn btn-success me-2" (click)="openWorkflow()" title="Gjenåpne" text="Gjenåpne ">
+              <fa-icon [icon]="faRepeat"></fa-icon> Gjenåpne
             </button>
           </ng-container>
 
           <ng-container *ngIf="['withdrawn','draft'].indexOf(observation.workflow.state)<0">
-            <button class="btn btn-primary mr-2" (click)="openWorkflow()" title="Behandle" text="Behandle ">
-              <fa name="random"></fa> Arbeidsflyt
+            <button class="btn btn-primary me-2" (click)="openWorkflow()" title="Behandle" text="Behandle ">
+              <fa-icon [icon]="faRandom"></fa-icon> Arbeidsflyt
             </button>
           </ng-container>
         </span>
@@ -652,9 +655,9 @@
 
     <!-- SEND BTN
     <div class="row my-3">
-      <span class="pointer mx-1 pull-right" *ngIf="observation.acl_user.x && observation.workflow.state=='draft'" (click)="openWorkflow()">
+      <span class="pointer mx-1 float-end" *ngIf="observation.acl_user.x && observation.workflow.state=='draft'" (click)="openWorkflow()">
         <button class="btn btn-success">
-          <fa name="upload" [fixed]="true"></fa>Send OBSREG koordinator
+          <fa-icon [icon]="faUpload"></fa-icon>Send OBSREG koordinator
         </button>
       </span>
     </div>
@@ -684,31 +687,31 @@
 
 
           <div class="nav-item">
-            <fa name="info"></fa>
-            <fa name="chat-o"></fa>
-            <fa name="lock"></fa>
-            <fa name="document"></fa>
+            <fa-icon [icon]="faInfo"></fa-icon>
+            <fa-icon [icon]="chat-o"></fa-icon>
+            <fa-icon [icon]="faLock"></fa-icon>
+            <fa-icon [icon]="document"></fa-icon>
 
           </div>
-          
-        
-        
+
+
+
         </div>
 
-        <div class="flex-grow-0 navbar-nav ml-auto" joyrideStep="step003" stepPosition="top" title="Innsending"
+        <div class="flex-grow-0 navbar-nav ms-auto" joyrideStep="step003" stepPosition="top" title="Innsending"
           text="Når du er ferdig med observasjonen så skal du sende den inn.">
           <div class="nav-item ">
 
-            <button class="btn btn-danger mr-2" (click)="openWorkflow()" joyrideStep="step004" stepPosition="top"
+            <button class="btn btn-danger me-2" (click)="openWorkflow()" joyrideStep="step004" stepPosition="top"
               title="Trekk tilbake"
               text="Om du ikke ønsker sende inn rapporten så velger du trekk tilbake. Da blir rapporten kun tilgjegenlig for deg og du kan når som helst gjenåpne den igjen. Dette er OBSREGs måte å slette på.">
-              <fa name="times"></fa> Trekk tilbake
+              <fa-icon [icon]="faTimes"></fa-icon> Trekk tilbake
             </button>
 
-            <button class="btn btn-success mr-2" (click)="openWorkflow()" joyrideStep="step005" stepPosition="top"
+            <button class="btn btn-success me-2" (click)="openWorkflow()" joyrideStep="step005" stepPosition="top"
               title="Send"
               text="Når du er ferdig med observasjonen så sender du den til neste i arbeidsflyten som vil behandle observasjonen videre">
-              <fa name="check"></fa> Send til OBSREG
+              <fa-icon [icon]="faCheck"></fa-icon> Send til OBSREG
               koordinator
             </button>
           </div>
@@ -745,7 +748,7 @@
   <div class="modal-header">
     <h4 class="modal-title pull-left">
       OBSREG#{{ observation.id }} version {{ observation._version }}</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -763,7 +766,7 @@
   <div class="modal-header">
     <h4 class="modal-title pull-left">
       {{ preview.title }}</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -778,6 +781,33 @@
   </div>
 </ng-template>
 <!-- /MODAL PREVIEW -->
+
+<!-- ACTIVITY MODAL --->
+<ng-template #activityModal>
+
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      #{{ observation.id }}
+      <nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type"
+        seperator="/"></nlf-resolve-observation-tags>
+    </h4>
+    <button type="button" class="close float-end" aria-label="Close" (click)="closeActivities()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <nlf-ors-activities-timeline [observation]="observation"></nlf-ors-activities-timeline>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="closeActivities()">
+      <fa-icon [icon]="faTimes"></fa-icon> Lukk
+    </button>
+
+  </div>
+</ng-template>
+<!-- //ACTIVITY -->
 
 <div *ngIf="!!devDebug">
   <pre>{{observation | json}}</pre>

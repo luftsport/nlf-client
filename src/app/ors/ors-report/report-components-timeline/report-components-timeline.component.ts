@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { faAmbulance, faGavel, faMinusSquare, faPlusSquare, faRandom } from '@fortawesome/free-solid-svg-icons';
 import { ApiObservationComponentInterface } from 'app/api/api.interface';
 import { isEmpty } from 'lodash';
 
@@ -14,6 +15,12 @@ export class NlfOrsReportComponentsTimelineComponent implements OnInit {
   @Input() activity: string;
 
   public componentCollapsed = false;
+
+  faRandom = faRandom;
+  faAmbulance = faAmbulance;
+  faGavel = faGavel;
+  faPlusSquare = faPlusSquare;
+  faMinusSquare = faMinusSquare;
 
   constructor() { }
 

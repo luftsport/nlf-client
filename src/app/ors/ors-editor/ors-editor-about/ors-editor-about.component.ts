@@ -6,7 +6,8 @@ import { environment } from 'environments/environment';
 import { ApiAclService } from 'app/api/api-acl.service';
 import { NlfConfigService } from 'app/nlf-config.service';
 import { NlfConfigItem } from 'app/api/api.interface';
-
+import { faBan, faCheck, faRandom } from '@fortawesome/free-solid-svg-icons';
+import { faClock } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'nlf-ors-editor-about',
@@ -22,6 +23,11 @@ export class NlfOrsEditorAboutComponent {
   public config: NlfConfigItem;
 
   acl_list;
+
+  faBan = faBan;
+  faCheck = faCheck;
+  faRandom = faRandom;
+  faClock = faClock;
 
   constructor(
     private subject: NlfOrsEditorService,

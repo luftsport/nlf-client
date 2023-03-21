@@ -36,7 +36,7 @@
         </span>
       </td>
       <!--<td [innerHTML]="row.type | nlfOrsType: row._model.type" class="ngx-easy-table-small">-->
-      <td class="ngx-easy-table-small text-right">
+      <td class="ngx-easy-table-small text-end">
         <nlf-resolve-observation-types [type]="row.type" [activity]="row._model.type" [badge]="true"></nlf-resolve-observation-types>
       </td>
 
@@ -49,12 +49,10 @@
 
     <th>
       <div class="input-group input-group-sm">
-        <input id="filterIdInput" #filterIdInput type="search" (keyup)="debouncedFilterId($event.target.value)" class="form-control form-control-sm border-right-0">
-        <div class="input-group-append">
-          <span class="input-group-text bg-transparent">
-            <fa name="times" [fixed]="true" class="text-secondary" (click)="filterId(null);filterIdInput.value=''"></fa>
-          </span>
-        </div>
+        <input id="filterIdInput" #filterIdInput type="search" (keyup)="debouncedFilterId($event.target.value)" class="form-control form-control-sm border-end-0">
+        <span class="input-group-text bg-transparent">
+          <fa-icon [icon]="faTimes" class="text-secondary" (click)="filterId(null);filterIdInput.value=''"></fa-icon>
+        </span>
       </div>
     </th>
 
@@ -62,12 +60,10 @@
 
     <th>
       <div class="input-group input-group-sm">
-        <input id="filterTitleInput" #filterTitleInput type="search" (keyup)="debouncedFilterTitle($event.target.value)" class="form-control form-control-sm border-right-0">
-        <div class="input-group-append">
-          <span class="input-group-text bg-transparent">
-            <fa name="times" [fixed]="true" class="text-secondary" (click)="filterTitle(null);filterTitleInput.value=''"></fa>
-          </span>
-        </div>
+        <input id="filterTitleInput" #filterTitleInput type="search" (keyup)="debouncedFilterTitle($event.target.value)" class="form-control form-control-sm border-end-0">
+        <span class="input-group-text bg-transparent">
+          <fa-icon [icon]="faTimes" class="text-secondary" (click)="filterTitle(null);filterTitleInput.value=''"></fa-icon>
+        </span>
       </div>
     </th>
 
@@ -104,6 +100,6 @@
 </span>
 <span *ngIf="!dataReady">
   <p class="align-middle text-center  text-secondary">
-    <fa name="spinner" animation="pulse" size="3x"></fa>
+    <nlf-ui-component-spinner size="3"></nlf-ui-component-spinner>
   </p>
 </span>

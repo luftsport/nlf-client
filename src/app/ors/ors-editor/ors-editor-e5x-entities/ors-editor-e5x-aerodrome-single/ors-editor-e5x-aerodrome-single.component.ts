@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { E5XAerodromeGeneralClass } from 'app/interfaces/e5x.interface';
-
+import { faPlane, faPlus, faTimes, faCheck, faClose } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-editor-e5x-aerodrome-single',
@@ -9,6 +9,12 @@ import { E5XAerodromeGeneralClass } from 'app/interfaces/e5x.interface';
   styleUrls: ['./ors-editor-e5x-aerodrome-single.component.css']
 })
 export class NlfOrsEditorE5XAerodromeSingleComponent implements OnInit {
+
+  faPlane = faPlane;
+  faPlus = faPlus;
+  faTimes = faTimes;
+  faCheck = faCheck;
+  faClose = faClose;
 
   @Input() aerodrome: any;
   @Output() aerodromeChange: EventEmitter<any> = new EventEmitter();

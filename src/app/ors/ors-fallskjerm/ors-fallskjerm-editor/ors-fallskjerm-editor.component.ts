@@ -20,6 +20,7 @@ import { ComponentCanDeactivate } from 'app/pending-changes.guard';
 import { HostListener } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { forkJoin } from 'rxjs';
+import { faSave, faQuestion, faInfoCircle, faHistory, faFile, faEye, faExchange, faPaperPlane, faReply, faRepeat, faRandom, faTimes, faCheck, faLock } from '@fortawesome/free-solid-svg-icons';
 import 'rxjs/add/operator/takeWhile';
 
 
@@ -30,11 +31,25 @@ import 'rxjs/add/operator/takeWhile';
 })
 export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
 
+  faSave = faSave;
+  faQuestion = faQuestion;
+  faInfoCircle = faInfoCircle;
+  faHistory = faHistory;
+  faFile = faFile;
+  faEye = faEye;
+  faExchange = faExchange;
+  faPaperPlane = faPaperPlane;
+  faReply = faReply;
+  faRepeat = faRepeat;
+  faRandom = faRandom;
+  faTimes = faTimes;
+  faCheck = faCheck;
+  faLock = faLock;
+
   error;
   id: number | string;
   dataReady = false;
   observation: ApiObservationsItem;
-  modalObservation: ApiObservationsItem;
   differ: any;
   changes = false;
   hotkeys = []; //: Hotkey[];
@@ -289,7 +304,7 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy, Compo
   public getData() {
     console.log('Getting data');
     this.dataReady = false;
-    
+
     this.orsService.get(this.id).subscribe(
       data => {
 
@@ -322,12 +337,10 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy, Compo
   }
 
   openActivities(template) {
-    this.modalObservation = this.observation;
     this.modalRef = this.modalService.open(template, { size: 'lg' });
   }
 
   closeActivities() {
-    this.modalObservation = undefined;
     this.modalRef.close();
   }
 

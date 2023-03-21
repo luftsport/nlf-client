@@ -8,6 +8,7 @@ import { cleanObject } from 'app/interfaces/functions';
 import { isEmpty } from 'lodash';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { saveAs } from "file-saver";
+import { faFilter, faLongArrowRight, faPlane, faSave, faDownload } from '@fortawesome/free-solid-svg-icons';
 
 /**
 Save search is simple - save who and search query!
@@ -20,6 +21,12 @@ On completed run check if any new ones not in list - voila!
   styleUrls: ['./ors-motor-search.component.css']
 })
 export class NlfOrsMotorSearchComponent implements OnInit {
+
+  faSave = faSave;
+  faFilter = faFilter;
+  faPlane = faPlane;
+  faLongArrowRight = faLongArrowRight;
+  faDownload = faDownload;
 
   dataReady = false;
   searching = false;

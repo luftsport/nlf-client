@@ -11,6 +11,7 @@ import { environment } from 'environments/environment';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 // import { ApiObservationsItem} from 'app/api/api.interface';
 import { ConfirmService } from 'app/services/confirm/confirm.service';
+import { faExclamationTriangle, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-fallskjerm-create',
@@ -18,6 +19,9 @@ import { ConfirmService } from 'app/services/confirm/confirm.service';
   styleUrls: ['./ors-fallskjerm-create.component.css']
 })
 export class NlfOrsFallskjermCreateComponent implements OnInit {
+
+  faPlus = faPlus;
+  faExclamationTriangle = faExclamationTriangle;
 
   @Input() layout: string; // inline, short, datetimepicker, calendar etc
   @Input() defaultBtn: boolean = false;

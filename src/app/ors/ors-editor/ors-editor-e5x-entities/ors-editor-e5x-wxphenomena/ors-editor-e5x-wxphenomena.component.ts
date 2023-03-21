@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { isObjEmpty } from 'app/interfaces/functions';
 import { E5XPrecipitationAndOtherWeatherPhenomenaClass } from 'app/interfaces/e5x.interface';
+import { faPlus, faTimes, faCheck, faEdit, faClose } from '@fortawesome/free-solid-svg-icons';import {  } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-editor-e5x-wxphenomena',
@@ -17,6 +18,12 @@ export class NlfOrsEditorE5xWxphenomenaComponent implements OnInit {
   modalIdx: number;
   modalValue;
   _isObjEmpty = isObjEmpty;
+
+  faPlus = faPlus;
+  faTimes = faTimes;
+  faCheck = faCheck;
+  faEdit = faEdit;
+  faClose = faClose;
 
 
   constructor(private modalService: NgbModal) { }

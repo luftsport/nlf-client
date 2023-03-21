@@ -32,22 +32,58 @@
 <div class="container">
 
   <div class="row mt-2 py-3">
+    <div class="col-md-8 chart-wrapper">
+      <!-- PIE CHART OBSREG -->
+      <ng-container *ngIf="dataReady">
 
-    <!-- PIE CHART OBSREG -->
-    <div class="col-md-8 col-xs-12 overflow-hidden">
-      <ng-container *ngIf="default_activity_obsreg">
-        <ngx-charts-advanced-pie-chart *ngIf="dataReady" [scheme]="colorScheme" [label]="label" [results]="pie"
-          (select)="onSelect($event)"></ngx-charts-advanced-pie-chart>
-        <span *ngIf="!dataReady">
-          <p class="align-middle text-center text-secondary">
-            <fa name="spinner" animation="pulse" size="3x"></fa>
-          </p>
-        </span>
+        <div class="col-md-3">
+          <div echarts class="w-140 h-100 align-top" [loading]="true" [options]="typesChartOption">
+          </div>
+        </div>
+        <div class="col-md-9">
+
+          <div class="row">
+            <h2 class="mt-4">{{ getTypesTotalValue() | number }}</h2>
+            <h4 class="text-secondary">behandlede {{ getDefaultActivity() }}</h4>
+          </div>
+
+          <div class="row">
+
+            <div class="col" *ngFor="let item of pieTypes">
+              <div class="p-0 m-0">
+                <div style="border-left: 3px solid {{ item.itemStyle.color }} !important">
+                  <h4 class="my-1 mx-1 p-0 mt-o text-dark">{{ item.value | number }}</h4>
+                  <p class="mb-0 mx-1 p-0 text-secondary small">{{ item.name }}</p>
+                </div>
+                <p class="h4 mb-0 mx-2 p-0 fs-5 mb-0 text-secondary">{{ item.value/getTypesTotalValue() | percent }}
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
       </ng-container>
       <ng-container *ngIf="!default_activity_obsreg && !!config && default_activity">
-        <div class="text-center">Ingen OBSREG registrert for {{ config.inv_mapping[default_activity] }}</div>
+        <div class="text-center">Ingen OBSREG registrert for {{ config.inv_mapping[default_activity] }}</div>
       </ng-container>
+
     </div>
+    <!-- OLD
+    <ng-container *ngIf="default_activity_obsreg">
+      <ngx-charts-advanced-pie-chart *ngIf="dataReady" [scheme]="colorScheme" [label]="label" [results]="pie"
+        (select)="onSelect($event)"></ngx-charts-advanced-pie-chart>
+      <span *ngIf="!dataReady">
+        <p class="align-middle text-center text-secondary">
+          <nlf-ui-component-spinner></nlf-ui-component-spinner>
+        </p>
+      </span>
+    </ng-container>
+    <ng-container *ngIf="!default_activity_obsreg && !!config && default_activity">
+      <div class="text-center">Ingen OBSREG registrert for {{ config.inv_mapping[default_activity] }}</div>
+    </ng-container>
+    -->
+
     <!-- //PIE CHART OBSREG -->
 
     <!-- TOP STORY -->
@@ -56,11 +92,11 @@
       </nlf-content-summary>
     </div>
     <!-- //TOP STORY -->
-
   </div>
+  <!-- /.row -->
 </div>
+<!-- /.container -->
 
-<!-- /.row -->
 <span *ngIf="!!activities">
   <div *ngIf="default_activity==109" class="py-5 nlf-bg-blue">
     <div class="container">
@@ -202,7 +238,7 @@
     <h4 class="modal-title pull-left">
       NLF Platform</h4>
 
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -232,7 +268,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <div class="card-deck">
+      <div class="row mb-3">
         <!--<nlf-user-profile></nlf-user-profile>-->
         <!--
         <div class="card">
@@ -244,51 +280,69 @@
             </span>
           </div>
           <div class="card-footer">
-            <a class="btn btn-primary btn-block" [routerLink]="['/user/profile']" role="button">Oppdater profil &raquo;</a>
+            <div class="d-grid gap-2">
+              <a class="btn btn-primary" [routerLink]="['/user/profile']" role="button">Oppdater profil &raquo;</a>
+            </div>
           </div>
         </div>-->
         <!-- END USER OR OBSREG -->
-        <div class="card mb-3">
-          <div class="card-header"><i class="nlf nlf-motorfly nlf-fw"></i> Motorfly OBSREG</div>
+        <div class="col-md-3">
+          <div class="card mb-3 obsreg-card">
+            <div class="card-header"><i class="nlf nlf-motorfly nlf-fw"></i> Motorfly OBSREG</div>
 
-          <nlf-ors-last activity="motorfly" number="8">Ingen registrerte</nlf-ors-last>
+            <nlf-ors-last activity="motorfly" number="8">Ingen registrerte</nlf-ors-last>
 
-          <div class="card-footer">
-            <a class="btn btn-secondary btn-block" [routerLink]="['/ors', 'motorfly']" role="button">Motorfly OBSREG
-              &raquo;</a>
+            <div class="card-footer">
+              <div class="d-grid gap-2">
+                <a class="btn btn-secondary" [routerLink]="['/ors', 'motorfly']" role="button">Motorfly OBSREG
+                  &raquo;</a>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="nlf nlf-fallskjerm nlf-fw"></i> Fallskjerm OBSREG
-          </div>
-          <nlf-ors-last activity="fallskjerm" number="8">Ingen registrerte</nlf-ors-last>
-          <div class="card-footer">
-            <a class="btn btn-secondary btn-block" [routerLink]="['/ors', 'fallskjerm']" role="button">Fallskjerm OBSREG
-              &raquo;</a>
-          </div>
-        </div>
-
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="nlf nlf-mikrofly nlf-fw"></i> Sportsfly OBSREG
-          </div>
-          <nlf-ors-last activity="sportsfly" number="8">Ingen registrerte</nlf-ors-last>
-          <div class="card-footer">
-            <a class="btn btn-secondary btn-block" [routerLink]="['/ors', 'sportsfly']" role="button">Sportsfly OBSREG
-              &raquo;</a>
+        <div class="col-md-3">
+          <div class="card mb-3 obsreg-card">
+            <div class="card-header">
+              <i class="nlf nlf-fallskjerm nlf-fw"></i> Fallskjerm OBSREG
+            </div>
+            <nlf-ors-last activity="fallskjerm" number="8">Ingen registrerte</nlf-ors-last>
+            <div class="card-footer">
+              <div class="d-grid gap-2">
+                <a class="btn btn-secondary" [routerLink]="['/ors', 'fallskjerm']" role="button">Fallskjerm OBSREG
+                  &raquo;</a>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="card mb-3">
-          <div class="card-header">
-            <i class="nlf nlf-seilfly nlf-fw"></i> Seilfly OBSREG
+        <div class="col-md-3">
+          <div class="card mb-3 obsreg-card">
+            <div class="card-header">
+              <i class="nlf nlf-mikrofly nlf-fw"></i> Sportsfly OBSREG
+            </div>
+            <nlf-ors-last activity="sportsfly" number="8">Ingen registrerte</nlf-ors-last>
+            <div class="card-footer">
+              <div class="d-grid gap-2">
+                <a class="btn btn-secondary" [routerLink]="['/ors', 'sportsfly']" role="button">Sportsfly OBSREG
+                  &raquo;</a>
+              </div>
+            </div>
           </div>
-          <nlf-ors-last activity="seilfly" number="8">Ingen registrerte</nlf-ors-last>
-          <div class="card-footer">
-            <a class="btn btn-secondary btn-block" [routerLink]="['/ors', 'seilfly']" role="button">Seilfly OBSREG
-              &raquo;</a>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card mb-3 obsreg-card">
+            <div class="card-header">
+              <i class="nlf nlf-seilfly nlf-fw"></i> Seilfly OBSREG
+            </div>
+            <nlf-ors-last activity="seilfly" number="8">Ingen registrerte</nlf-ors-last>
+            <div class="card-footer">
+              <div class="d-grid gap-2">
+                <a class="btn btn-secondary" [routerLink]="['/ors', 'seilfly']" role="button">Seilfly OBSREG
+                  &raquo;</a>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -315,8 +369,10 @@
           <div class="card-header lead"><i class="nlf nlf-fallskjerm nlf-fw"></i>Siste i Fallskjerm</div>
           <nlf-content-last space_key="fallskjerm" number="8"></nlf-content-last>
           <div class="card-footer">
-            <a class="btn btn-secondary btn-block" [routerLink]="['/content/space/fallskjerm']" role="button">Se mer
-              &raquo;</a>
+            <div class="d-grid gap-2">
+              <a class="btn btn-secondary" [routerLink]="['/content/space/fallskjerm']" role="button">Se mer
+                &raquo;</a>
+            </div>
           </div>
         </div>
 
@@ -324,7 +380,9 @@
           <div class="card-header lead"><i class="nlf nlf-motorfly nlf-fw"></i>Siste i Motor</div>
           <nlf-content-last space_key="motor" number="8"></nlf-content-last>
           <div class="card-footer">
-            <a class="btn btn-secondary btn-block" [routerLink]="['/content/space/motor']" role="button">Se mer &raquo;</a>
+            <div class="d-grid gap-2">
+              <a class="btn btn-secondary" [routerLink]="['/content/space/motor']" role="button">Se mer &raquo;</a>
+            </div>
           </div>
         </div>
 
@@ -332,7 +390,9 @@
           <div class="card-header lead">Siste i OBSREG</div>
           <nlf-content-last space_key="ors" number="8"></nlf-content-last>
           <div class="card-footer">
-            <a class="btn btn-secondary btn-block" [routerLink]="['/content/space/ors']" role="button">Se mer &raquo;</a>
+            <div class="d-grid gap-2">
+              <a class="btn btn-secondary" [routerLink]="['/content/space/ors']" role="button">Se mer &raquo;</a>
+            </div>
           </div>
         </div>
 
@@ -366,5 +426,6 @@
     </p>
 
   </div>
-  <!-- /.container -->
 </div>
+
+<!-- /.container -->

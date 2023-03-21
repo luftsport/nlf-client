@@ -3,17 +3,6 @@ import { ApiContentService } from 'app/api/api-content.service';
 import { Router } from '@angular/router';
 import { ApiOptionsInterface, ApiContentItem } from 'app/api/api.interface';
 
-
-/**
-  export interface RowData extends GtRow {
-  id: string;
-  title: string;
-  slug: string;
-  space_key: string;
-  parent: string;
-}
-*/
-
 @Component({
   selector: 'nlf-content-last',
   templateUrl: './content-last.component.html',
@@ -26,11 +15,6 @@ export class NlfContentLastComponent implements OnInit {
 
   public data: Array<any> = [];
 
-
-  //@Output() data = new EventEmitter();
-
-  // @ViewChild(GenericTableComponent)
-  // private myTable: GenericTableComponent<>; //<RowData, CustomRowComponent>;
   public showColumnControls = false;
   public selectedRows = 0;
 
@@ -41,23 +25,7 @@ export class NlfContentLastComponent implements OnInit {
   constructor(private apiContent: ApiContentService,
     private router: Router) {
 
-    /** 
-    this.configObject = {
-      settings: [
-        {objectKey: 'title', visible: true, sort: 'enable',columnOrder: 0,enabled: true},
-        {objectKey: 'slug', visible: true, sort: 'enable',columnOrder: 1,enabled: true},
-        {objectKey: 'space_key', visible: true, sort: 'desc',columnOrder: 2,enabled: true},
-        {objectKey: 'parent', visible: true, sort: 'enable',columnOrder: 3,enabled: true},
-      ],
-      fields: [
-        {name: 'Id', objectKey: 'title', columnClass: 'sort-string'},
-        {name: 'Slug', objectKey: 'slug', columnClass: 'sort-string'},
-        {name: 'Space', objectKey: 'space_key', columnClass: 'sort-string'},
-        {name: 'Parent', objectKey: 'parent', columnClass: 'sort-string'},
-      ],
-      data: []
-              }
-              **/
+
   }
 
 

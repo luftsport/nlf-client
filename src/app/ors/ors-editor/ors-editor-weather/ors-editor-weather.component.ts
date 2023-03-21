@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import { ApiObservationsItem, ApiObservationWeatherInterface } from 'app/api/api.interface';
 import { debounce } from 'ts-debounce';
+import { faCheck, faClose, faCloud } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-editor-weather',
@@ -18,6 +19,9 @@ export class NlfOrsEditorWeatherComponent implements OnInit {
 
   debouncedUpdate = debounce(this.update, 1000);
 
+  faCloud = faCloud;
+  faClose = faClose;
+  faCheck = faCheck;
 
   constructor(
     private subject: NlfOrsEditorService,

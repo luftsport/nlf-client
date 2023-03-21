@@ -3,7 +3,7 @@
 
 		<span class="breadcrumb">
 			<li class="breadcrumb-item">
-				<span class="avatar avatar-xs mr-1">
+				<span class="avatar avatar-xs me-1">
 					<img [src]="avatar||avatar_missing" alt="user" class="avatar-img rounded-circle">
 				</span>
 				<span class="hidden-sm-down">
@@ -18,16 +18,16 @@
 		</span>
 
 		<!--
-		<button *ngIf="dataReady" class="btn btn-primary btn-sm pull-right mx-1" (click)="openModal(saveTemplate)" title="">
-			<fa name="cog" [fixed]="true"></fa> Settings
+		<button *ngIf="dataReady" class="btn btn-primary btn-sm float-end mx-1" (click)="openModal(saveTemplate)" title="">
+			<fa-icon [icon]="faCog"></fa-icon> Settings
 		</button>
 		-->
 
-		<a [routerLink]="['/user', person_id]" class="btn btn-sm btn-primary mx-1 pull-right">
-			<fa name="user-o" [fixed]="true"></fa> View
+		<a [routerLink]="['/user', person_id]" class="btn btn-sm btn-primary mx-1 float-end">
+			<fa-icon [icon]="faUser"></fa-icon> View
 		</a>
 
-		<nlf-help class="pull-right mx-1" key="user-profile"></nlf-help>
+		<nlf-help class="float-end mx-1" key="user-profile"></nlf-help>
 
 	</div>
 </header>
@@ -42,13 +42,17 @@
 
 
 				<!-- UPLOAD BUTTON -->
-				<label class="btn btn-primary btn-file btn-block my-1">
-					<fa name="user-circle-o" [fixed]="true"></fa>Browse
-					<input type="file" (change)="fileChangeEvent($event);openModal(cropTemplate);" hidden>
-					<!--<input type="file"  ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple>-->
-				</label>
+        <div class="d-grid gap-2">
+          <label class="btn btn-primary btn-file my-1">
+            <fa-icon [icon]="faUserCircle"></fa-icon>Browse
+            <input type="file" (change)="fileChangeEvent($event);openModal(cropTemplate);" hidden>
+            <!--<input type="file"  ngFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple>-->
+          </label>
+        </div>
 				<!-- Remove avatar: not yet since !!avatar in subject save loop! Needs nullable in backend too...
-				<a class="btn btn-danger btn-block my-3" (click)="removeImage()" *ngIf="!!avatar">Remove</a>
+        <div class="d-grid gap-2">
+				  <a class="btn btn-danger my-3" (click)="removeImage()" *ngIf="!!avatar">Remove</a>
+        </div>
 				-->
 
 			</div>
@@ -59,7 +63,7 @@
 					<h4>Hovedklubb</h4>
 					<strong>
 						<nlf-resolve-lungo-organization [organization_id]="user.settings.default_discipline" [show_activity]="true" [long]="true" [link]="true"></nlf-resolve-lungo-organization>
-						<fa (click)="openDefaultClub()" class="ml-3 pointer" name="pencil"></fa>
+						<fa-icon (click)="openDefaultClub()" class="ms-3 pointer" [icon]="faPencil"></fa-icon>
 					</strong>
 				</div>
 				<div class="my-3">
@@ -118,7 +122,7 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-12 col-md-12 mt-6">
-				<div class="my-3"> 
+				<div class="my-3">
 					<h4>Mine observasjoner som involvert</h4>
 					<!-- Første er default activity -->
 					<nlf-user-ors *ngIf="user.settings.default_activity==109" activity="fallskjerm"></nlf-user-ors>
@@ -138,16 +142,16 @@
 	</div>
 </div>
 <div *ngIf="!dataReady" class="text-center">
-	<fa name="spinner" animation="pulse" size="3x"></fa>
+	<nlf-ui-component-spinner size="3"></nlf-ui-component-spinner>
 </div>
 
 <ng-template #cropTemplate>
 
 	<div class="modal-header">
 		<h4 class="modal-title pull-left">
-			<img class="mr-3 avatar avatar-sm img-fluid img-rounded" [src]="modal_avatar||avatar">Profilbilde
+			<img class="me-3 avatar avatar-sm img-fluid img-rounded" [src]="modal_avatar||avatar">Profilbilde
 		</h4>
-		<button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+		<button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
@@ -163,10 +167,10 @@
 
 	<div class="modal-footer">
 		<button class="btn btn-outline-dark" (click)="cancelModal()">
-			<fa name="times" [fixed]="true"></fa>Avbryt
+			<fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>Avbryt
 		</button>
 		<button class="btn btn-success" (click)="closeModal()">
-			<fa name="check" [fixed]="true"></fa>Bruk
+			<fa-icon [icon]="faCheck" [fixedWidth]="true"></fa-icon>Bruk
 		</button>
 	</div>
 </ng-template>

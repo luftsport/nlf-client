@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NlfUserFirstLoginComponent } from './user-first-login.component';
 
@@ -6,7 +6,7 @@ describe('NlfUserFirstLoginComponent', () => {
   let component: NlfUserFirstLoginComponent;
   let fixture: ComponentFixture<NlfUserFirstLoginComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NlfUserFirstLoginComponent ]
     })

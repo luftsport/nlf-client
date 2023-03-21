@@ -3,15 +3,15 @@
     #{{ observation.id }} Arbeidsflyt
 
     <!--<nlf-resolve-observation-tags [tags]="observation.tags" link="true" seperator="/"></nlf-resolve-observation-tags>-->
-    <span class="pull-right">
+    <span class="float-end">
 
-      <!--<span class="badge badge-secondary">{{ observation._updated | amTimeAgo }}</span>
-            <span class="badge badge-success">{{ observation._version }}</span>-->
+      <!--<span class="badge bg-secondary">{{ observation._updated | amTimeAgo }}</span>
+            <span class="badge bg-success">{{ observation._version }}</span>-->
 
     </span>
 
   </h4>
-  <button type="button" class="close pull-right" aria-label="Close" (click)="activeModal.dismiss()">
+  <button type="button" class="close float-end" aria-label="Close" (click)="activeModal.dismiss()">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
@@ -28,43 +28,45 @@
   <div *ngIf="!!dataReady">
 
     <div *ngIf="observation._model.type==='motorfly' && observation._model.version>=3 && observation.workflow.state==='draft'" class="form-group">
-      <nlf-help key="ors-editor-do_not_process_in_club"></nlf-help>
-
-      <input [disabled]="!observation.acl_user.w" class="form-check-input" type="checkbox" [(ngModel)]="payload.do_not_process_in_club" [id]="do_not_process_in_club">
-      <label class="form-check-label" for="do_not_process_in_club">
-        <strong>Ikke</strong> behandle rapporten i klubb
-      </label>
+      <div class="form-check">
+        <input [disabled]="!observation.acl_user.w" class="form-check-input" type="checkbox" [(ngModel)]="payload.do_not_process_in_club" [id]="do_not_process_in_club">
+        <label class="form-check-label" for="do_not_process_in_club">
+          <strong>Ikke</strong> behandle rapporten i klubb
+        </label>
+        <nlf-help key="ors-editor-do_not_process_in_club"></nlf-help>
+      </div>
       <ngb-alert *ngIf="payload.do_not_process_in_club" type="info" (close)="close()">
-        <fa name="info" [fixed]="true"></fa> Denne observasjonen vil ikke kunne bli behandlet i klubb, kun av OBSREG-koordinator. Klubbnavnet vil også bli anonymisert når denne observasjonen er ferdig behandlet.
+        <fa-icon [icon]="faInfo"></fa-icon> Denne observasjonen vil ikke kunne bli behandlet i klubb, kun av OBSREG-koordinator. Klubbnavnet vil også bli anonymisert når denne observasjonen er ferdig behandlet.
       </ngb-alert>
     </div>
 
     <div *ngIf="observation._model.type==='motorfly' && observation._model.version>=3 && observation.workflow.state==='pending_review_ors'" class="form-group">
-      <nlf-help key="ors-editor-do_not_publish"></nlf-help>
-
-      <input [disabled]="!observation.acl_user.w" class="form-check-input" type="checkbox" [(ngModel)]="payload.do_not_publish" [id]="do_not_publish">
-      <label class="form-check-label" for="do_not_publish">
-        <strong>Ikke</strong> publiser rapport når lukket
-      </label>
+      <div class="form-check">
+        <input [disabled]="!observation.acl_user.w" class="form-check-input" type="checkbox" [(ngModel)]="payload.do_not_publish" [id]="do_not_publish">
+        <label class="form-check-label" for="do_not_publish">
+          <strong>Ikke</strong> publiser rapport når lukket
+        </label>
+        <nlf-help key="ors-editor-do_not_publish"></nlf-help>
+      </div>
       <ngb-alert *ngIf="payload.do_not_publish" type="warning" (close)="close()">
-        <fa name="info-circle" [fixed]="true"></fa> Denne observasjonen vil ikke bli allment tilgjengelig når denne observasjonen er ferdig behandlet og lukket.
+        <fa-icon [icon]="faInfoCircle"></fa-icon> Denne observasjonen vil ikke bli allment tilgjengelig når denne observasjonen er ferdig behandlet og lukket.
       </ngb-alert>
 
       <ngb-alert *ngIf="observation.workflow.settings.do_not_process_in_club" type="info" (close)="close()">
-        <fa name="info-circle" [fixed]="true"></fa> Denne observasjonen skal <strong>ikke</strong> behandles i klubb
+        <fa-icon [icon]="faInfoCircle"></fa-icon> Denne observasjonen skal <strong>ikke</strong> behandles i klubb
       </ngb-alert>
 
     </div>
 
 
-    <div class="form-group" [hidden]="!showCommentInput">
-      <label for="comment">Kommentarer til arbeidsflyten (benyttes for kommentarer til behandlingen, ikke for vurdering av hendelsen)</label>
+    <div class="form-group mt-4" [hidden]="!showCommentInput">
+      <label for="comment" class="form-label">Melding til arbeidsflyten <small>(benyttes for kommentarer til behandlingen, ikke for vurdering av hendelsen)</small></label>
       <nlf-help key="ors-editor-workflow"></nlf-help>
-      <textarea [disabled]="!observation.acl_user.x" [ngClass]="{'disabled': processing}" placeholder="Kommentarer (blir ikke synlig i den endelige rapporten - benytt feltet for vurderinger for vurderinger som skal være offentlig)" [(ngModel)]="payload.comment" name="payload_comment" class="form-control" rows="5" id="comment"></textarea>
+      <textarea [disabled]="!observation.acl_user.x" [ngClass]="{'disabled': processing}" placeholder="Melding som er relevant for saksgangen som at du trenger mer informasjon el. Vurderinger av observasjonen gjøres under vurderinger." [(ngModel)]="payload.comment" name="payload_comment" class="form-control" rows="5" id="comment"></textarea>
     </div>
 
-    <button type="button" class="btn btn-outline-dark mr-auto mb-2 d-none d-sm-block" *ngIf="!showCommentInput" (click)="showCommentInput=true">
-      <fa name="comment" [fixed]="true"></fa>Kommentar til arbeidsflyten
+    <button type="button" class="btn btn-outline-dark me-auto mb-2 d-none d-sm-block" *ngIf="!showCommentInput" (click)="showCommentInput=true">
+      <fa-icon [icon]="faComment"></fa-icon> Melding til arbeidsflyten
     </button>
 
     <nlf-ors-report-workflow-timeline [activity]="observation._model.type" [_id]="observation._id" [workflow]="observation.workflow"></nlf-ors-report-workflow-timeline>
@@ -72,15 +74,15 @@
     <div *ngIf="graph">
       <img class="img img-fluid" [src]="domSanitizer.bypassSecurityTrustUrl(graph)">
     </div>
-    <button type="button" class="btn btn-outline-dark mr-auto d-none d-sm-block" *ngIf="!graph" (click)="getGraph()">
-      <fa name="random" [fixed]="true"></fa>Vis skjema
+    <button type="button" class="btn btn-outline-dark me-auto d-none d-sm-block" *ngIf="!graph" (click)="getGraph()">
+      <fa-icon [icon]="faRandom"></fa-icon> Vis skjema
     </button>
-    <button type="button" class="btn btn-outline-dark mr-auto d-none d-sm-block" *ngIf="!!graph" (click)="graph=undefined">
-      <fa name="random" [fixed]="true"></fa>Skjul skjema
+    <button type="button" class="btn btn-outline-dark me-auto d-none d-sm-block" *ngIf="!!graph" (click)="graph=undefined">
+      <fa-icon [icon]="faRandom"></fa-icon> Skjul skjema
     </button>
 
     <span *ngIf="!!processing" class="text-center">
-      <fa name="spinner" [size]="5" [fixed]="true"></fa>
+      <nlf-ui-component-spinner size="5"></nlf-ui-component-spinner>
     </span>
   </div>
   <div *ngIf="!dataReady">
@@ -104,11 +106,11 @@
       'disabled':processing
     }"
       (click)="workflowChange(a.resource, a.action)">
-      <fa *ngIf="a.resource=='reject'" name="reply"></fa>
-      <fa *ngIf="a.resource=='approve'" name="send"></fa>
-      <fa *ngIf="a.resource=='withdraw'" name="reply"></fa>
-      <fa *ngIf="a.resource=='reopen'" name="repeat"></fa>
-      <fa *ngIf="['reject', 'approve', 'withdraw', 'reopen'].indexOf(a.resource)==-1" name="send-o"></fa>
+      <fa-icon *ngIf="a.resource=='reject'" [icon]="faReply"></fa-icon>
+      <fa-icon *ngIf="a.resource=='approve'" [icon]="faPaperPlane"></fa-icon>
+      <fa-icon *ngIf="a.resource=='withdraw'" [icon]="faReply"></fa-icon>
+      <fa-icon *ngIf="a.resource=='reopen'" [icon]="faRepeat"></fa-icon>
+      <fa-icon *ngIf="['reject', 'approve', 'withdraw', 'reopen'].indexOf(a.resource)==-1" [icon]="faPaperPlaneRegular"></fa-icon>
       &nbsp;{{ a.action }}
     </button>
   </span>

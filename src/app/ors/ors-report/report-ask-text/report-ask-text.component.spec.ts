@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NlfOrsReportAskTextComponent } from './report-ask-text.component';
 
@@ -6,7 +6,7 @@ describe('NlfOrsFallskjermReportAskTextComponent', () => {
   let component: NlfOrsReportAskTextComponent;
   let fixture: ComponentFixture<NlfOrsReportAskTextComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NlfOrsReportAskTextComponent ]
     })

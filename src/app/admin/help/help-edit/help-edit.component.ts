@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiHelpService } from 'app/api/api-help.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { faPlus, faQuestion, faSave, faClose } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-admin-help-edit',
@@ -8,8 +9,14 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./help-edit.component.css']
 })
 export class NlfAdminHelpEditComponent implements OnInit {
+
+  // Icons
+  faPlus = faPlus;
+  faQuestion = faQuestion;
+  faSave = faSave;
+  faClose = faClose;
+
   joditConfig: Object;
-  
 
   title = '';
   key = '';

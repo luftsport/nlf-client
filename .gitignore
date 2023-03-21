@@ -1,5 +1,6 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 cmds.txt
+patches
 src/app/.dashboard/
 src/app/.test/
 src/app/track-js.handler.ts
@@ -32,6 +33,7 @@ src/environments/version.ts
 !.vscode/extensions.json
 
 # misc
+/.angular/cache
 /.sass-cache
 /connect.lock
 /coverage

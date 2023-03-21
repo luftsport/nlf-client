@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { E5XAirspaceClass} from 'app/interfaces/e5x.interface';
 import { isEmpty } from 'lodash';
+import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';import {  } from '@fortawesome/free-solid-svg-icons';
+import { faCircle } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'nlf-ors-editor-e5x-airspace-single',
@@ -16,6 +18,10 @@ export class NlfOrsEditorE5xAirspaceSingleComponent implements OnInit {
   @Input() disabled: boolean = false;
 
   modalRef;
+
+  faCircle = faCircle;
+  faTimes = faTimes;
+  faCheck = faCheck;
 
   constructor(private modalService: NgbModal) { }
 

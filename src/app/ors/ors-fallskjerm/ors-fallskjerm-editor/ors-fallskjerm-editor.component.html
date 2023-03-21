@@ -6,42 +6,41 @@
     <div class="container lead">
       <!-- TITLE -->
 
-      <!-- <fa name="file-text-o" [fixed]="true"></fa>&nbsp;-->
+      <!-- <fa-icon [icon]="faFileAlt"></fa-icon>&nbsp;-->
       <!-- {{ data.tags | nlfOrsTags: ' / '}} -->
       <span class="overflow-hidden">
         <a [routerLink]="['/ors', 'fallskjerm']">OBSREG</a>#{{ observation.id }}
         <nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type" link="true"
           seperator="/"></nlf-resolve-observation-tags>&nbsp;
         <span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body"
-          *ngIf="!!observation.rating"
-          class="badge badge-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{
+          *ngIf="!!observation.rating" class="badge bg-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{
           observation.rating | nlfOrsRatingCalc }}</span>
       </span>
       <!-- WORKFLOW STATE -->
-      <span class="pull-right">
+      <span class="float-end">
 
 
         <!-- SAVE -->
         <a (click)="saveIfChanges()" *ngIf="!!observation && !!changes && observation.acl_user.w"
-          class="pointer badge badge-warning mx-1">
-          <fa name="save" [fixed]="true"></fa>
+          class="pointer badge bg-warning mx-1">
+          <fa-icon [icon]="faSave"></fa-icon>
         </a>
 
         <!-- HELP -->
-        <a class="badge badge-light pointer text-info mx-1" (click)="openHelp()">
-          <fa name="question" [fixed]="true"></fa>
+        <a class="badge bg-light text-dark pointer text-info mx-1" (click)="openHelp()">
+          <fa-icon [icon]="faQuestion"></fa-icon>
         </a>
 
         <!-- ABOUT -->
-        <a (click)="openAbout()" class="pointer badge badge-secondary text-white mx-1">
-          <fa name="info-circle" [fixed]="true"></fa>
-          <fa *ngIf="!observation.acl_user.w" name="lock" [fixed]="true" class="text-danger"
-            title="Ingen skrivetilgang"></fa>
+        <a (click)="openAbout()" class="pointer badge bg-secondary text-white mx-1">
+          <fa-icon [icon]="faInfoCircle"></fa-icon>
+          <fa-icon *ngIf="!observation.acl_user.w" [icon]="faLock" class="text-danger"
+            title="Ingen skrivetilgang"></fa-icon>
           {{ observation._updated | amTimeAgo }}
         </a>
 
         <!-- VERSION -->
-        <span class="badge badge-success mx-1">v{{ observation._version }}</span>
+        <span class="badge bg-success mx-1">v{{ observation._version }}</span>
 
         <!-- WORKFLOW -->
         <a class="pointer mx-1" *ngIf="observation.acl_user.x" (click)="openWorkflow()">
@@ -53,11 +52,12 @@
             icon="true"></nlf-resolve-observation-state>
         </a>
 
-        <!-- ACTIVITIES 
-        <a *ngIf="observation.workflow.state!='closed'" class="badge badge-info mx-1" [routerLink]="['/ors', observation._model.type , 'activities', observation.id]">-->
-        <a *ngIf="observation.workflow.state!='closed'" class="badge badge-info mx-1 pointer"
+        <!-- ACTIVITIES
+        <a *ngIf="observation.workflow.state!='closed'" class="badge bg-info mx-1" [routerLink]="['/ors', observation._model.type , 'activities', observation.id]">-->
+        <a *ngIf="observation.workflow.state!='closed'" class="badge bg-info mx-1 pointer"
+          title="Denne knappen aktiverer aktivitetsvinduet som viser all aktiviteten vedrørende denne observasjonen. Her kan det også sendes meldinger"
           (click)="openActivities(activityModal)">
-          <fa name="history"></fa> Aktivitet
+          <fa-icon [icon]="faHistory"></fa-icon> Aktivitet
         </a>
 
         <!-- ACCESS!!! -->
@@ -67,8 +67,8 @@
 
         <!-- REPORT LINK -->
         <a [routerLink]="['/ors', observation._model.type , 'report', observation.id]"
-          *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge badge-primary text-white mx-1">
-          <fa name="file" [fixed]="true"></fa> Report
+          *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge bg-primary text-white mx-1">
+          <fa-icon [icon]="faFile"></fa-icon> Report
         </a>
 
       </span>
@@ -87,7 +87,7 @@
         <nlf-ors-editor-first *ngIf="observation.acl_user.w"></nlf-ors-editor-first>
 
         <div class="nlf-ors-toolbar">
-          Tittel <nlf-help class="pull-right" key="ors-editor-fallskjerm-title"></nlf-help>
+          Tittel <nlf-help class="float-end" key="ors-editor-fallskjerm-title"></nlf-help>
         </div>
       </div>
       <div class="col-sm-12 col-md-12 my-3 lead">
@@ -107,7 +107,7 @@
     <div class="row my-3 d-block d-sm-none">
       <div class="col-xs-12 col-md-12">
         <div class="nlf-ors-toolbar">
-          Vedlegg ({{ observation.files.length }}) <nlf-help class="pull-right" key="ors-editor-files"></nlf-help>
+          Vedlegg ({{ observation.files.length }}) <nlf-help class="float-end" key="ors-editor-files"></nlf-help>
         </div>
       </div>
       <div class="col-xs-12 col-md-12 py-3 bg-light table-responsive overflow-auto">
@@ -120,9 +120,9 @@
     <div class="row my-3">
       <!-- TYPE -->
       <div class="col-sm-12 col-md-4">
-        <div class="card">
+        <div class="card h-100">
           <div class="card-header">
-            <h5>Type <nlf-help class="pull-right" key="ors-editor-fallskjerm-type"></nlf-help>
+            <h5>Type <nlf-help class="float-end" key="ors-editor-fallskjerm-type"></nlf-help>
             </h5>
           </div>
           <div class="card-body">
@@ -133,9 +133,9 @@
       </div>
       <!-- WHEN -->
       <div class="col-sm-12 col-md-4">
-        <div class="card">
+        <div class="card h-100">
           <div class="card-header">
-            <h5>Tidspunkt<nlf-help class="pull-right" key="ors-editor-when"></nlf-help>
+            <h5>Tidspunkt<nlf-help class="float-end" key="ors-editor-when"></nlf-help>
             </h5>
           </div>
           <div class="card-body">
@@ -146,9 +146,9 @@
       </div>
       <!-- FLAGS-->
       <div class="col-sm-12 col-md-4">
-        <div class="card">
+        <div class="card h-100">
           <div class="card-header">
-            <h5>Flagg <nlf-help class="pull-right" key="ors-editor-fallskjerm-flags"></nlf-help>
+            <h5>Flagg <nlf-help class="float-end" key="ors-editor-fallskjerm-flags"></nlf-help>
             </h5>
           </div>
           <div class="card-body">
@@ -165,7 +165,7 @@
 
       <div class="col-xs-12 col-md-6">
         <div class="nlf-ors-toolbar">
-          Kategori <nlf-help class="pull-right" key="ors-editor-category"></nlf-help>
+          Kategori <nlf-help class="float-end" key="ors-editor-category"></nlf-help>
         </div>
         <nlf-ors-editor-categories></nlf-ors-editor-categories>
         <div *ngIf="!!devDebug">Categories for observation {{ observation.category | json }}</div>
@@ -173,7 +173,7 @@
 
       <div class="col-xs-12 col-md-6">
         <div class="nlf-ors-toolbar">
-          Operasjonelt <nlf-help class="pull-right" key="ors-editor-operational"></nlf-help>
+          Operasjonelt <nlf-help class="float-end" key="ors-editor-operational"></nlf-help>
         </div>
         <nlf-ors-editor-operational></nlf-ors-editor-operational>
         <div *ngIf="!!devDebug">Operationals for observation {{ observation.operational | json }}</div>
@@ -185,7 +185,7 @@
     <div class="row my-3">
       <div class="col-xs-12 col-md-12">
         <div class="nlf-ors-toolbar">
-          Alvorlighetsgrad <nlf-help class="pull-right" key="ors-editor-fallskjerm-rating"></nlf-help>
+          Alvorlighetsgrad <nlf-help class="float-end" key="ors-editor-fallskjerm-rating"></nlf-help>
         </div>
       </div>
       <div class="col-xs-12 col-md-12 py-3 bg-light">
@@ -196,7 +196,7 @@
 
     <!-- LOCATION  -->
     <div class="nlf-ors-toolbar">
-      Lokalisasjon <nlf-help class="pull-right" key="ors-editor-fallskjerm-location"></nlf-help>
+      Hvor skjedde det? <nlf-help class="float-end" key="ors-editor-fallskjerm-location"></nlf-help>
     </div>
     <nlf-ors-fallskjerm-editor-location></nlf-ors-fallskjerm-editor-location>
     <div *ngIf="!!devDebug">{{ observation.location | json }}</div>
@@ -205,7 +205,7 @@
     <div class="row my-3 d-none d-sm-block">
       <div class="col-xs-12 col-md-12">
         <div class="nlf-ors-toolbar">
-          Vedlegg ({{ observation.files.length }}) <nlf-help class="pull-right" key="ors-editor-files"></nlf-help>
+          Vedlegg ({{ observation.files.length }}) <nlf-help class="float-end" key="ors-editor-files"></nlf-help>
         </div>
       </div>
       <div class="col-xs-12 col-md-12 py-3 bg-light table-responsive overflow-auto">
@@ -216,7 +216,7 @@
 
     <!-- ORGANIZATION -->
     <div class="nlf-ors-toolbar">
-      Organisasjon <nlf-help class="pull-right" key="ors-editor-fallskjerm-organization"></nlf-help>
+      Organisasjon <nlf-help class="float-end" key="ors-editor-fallskjerm-organization"></nlf-help>
     </div>
 
     <nlf-ors-fallskjerm-editor-organization></nlf-ors-fallskjerm-editor-organization>
@@ -225,7 +225,7 @@
     <div class="row my-3">
       <div class="col-xs-12 col-md-12">
         <div class="nlf-ors-toolbar">
-          Involverte <nlf-help class="pull-right" key="ors-editor-fallskjerm-involved"></nlf-help>
+          Involverte <nlf-help class="float-end" key="ors-editor-fallskjerm-involved"></nlf-help>
         </div>
       </div>
       <div class="col-xs-12 col-md-12">
@@ -242,9 +242,9 @@
       <div class="col-xs-12 col-md-12">
         <div class="nlf-ors-toolbar nlf-ors-block-bottom">
           Forløpet
-          <nlf-help class="pull-right" key="ors-editor-fallskjerm-components"></nlf-help>
-          <button (click)="openPreview(modalPreview, 'components', 'Forløpet')" class="pull-right btn btn-link">
-            <!--<fa name="eye" [fixed]="true"></fa>-->Preview
+          <nlf-help class="float-end" key="ors-editor-fallskjerm-components"></nlf-help>
+          <button (click)="openPreview(modalPreview, 'components', 'Forløpet')" class="float-end btn btn-link">
+            <!--<fa-icon [icon]="faEye"></fa-icon>-->Preview
           </button>
         </div>
         <nlf-ors-editor-components></nlf-ors-editor-components>
@@ -259,7 +259,7 @@
       <div class="col-xs-12 col-md-12">
         <div class="nlf-ors-toolbar nlf-ors-block-bottom">
           Været
-          <nlf-help class="pull-right" key="ors-editor-fallskjerm-weather"></nlf-help>
+          <nlf-help class="float-end" key="ors-editor-fallskjerm-weather"></nlf-help>
         </div>
       </div>
 
@@ -283,7 +283,7 @@
     <!-- ACTIONS -->
     <div class="nlf-ors-toolbar nlf-ors-block-bottom">
       Tiltak
-      <nlf-help class="pull-right" key="ors-editor-fallskjerm-actions"></nlf-help>
+      <nlf-help class="float-end" key="ors-editor-fallskjerm-actions"></nlf-help>
     </div>
     <nlf-ors-editor-actions></nlf-ors-editor-actions>
     <div *ngIf="!!devDebug">{{ observation.actions | json }}</div>
@@ -291,7 +291,7 @@
     <!-- VURDERINGER -->
     <div class="nlf-ors-toolbar">
       Vurderinger
-      <nlf-help class="pull-right" key="ors-editor-ask"></nlf-help>
+      <nlf-help class="float-end" key="ors-editor-ask"></nlf-help>
     </div>
     <div class="row bg-light" style="padding-top:1em;padding-bottom:1em;">
       <div class="col-md-4">
@@ -316,7 +316,7 @@
           <ng-container *ngIf="observation.workflow.state=='draft'">Innsending</ng-container>
           <ng-container *ngIf="['draft', 'withdrawn'].indexOf(observation.workflow.state)==-1">Behandling</ng-container>
 
-          <nlf-help class="pull-right" key="ors-editor-workflow"></nlf-help>
+          <nlf-help class="float-end" key="ors-editor-workflow"></nlf-help>
         </div>
         <!-- bg-secondary text-white-->
         <div class="col-xs-12 col-md-12 py-2">
@@ -329,8 +329,8 @@
                 <nlf-help key="ors-editor-workflow"></nlf-help>
               </span>
             </p>
-            <div class="btn-toolbar pull-right">
-              <button (click)="openWorkflow()" class="btn btn-danger mr-2">Gjenåpne</button>
+            <div class="btn-toolbar float-end">
+              <button (click)="openWorkflow()" class="btn btn-danger me-2">Gjenåpne</button>
             </div>
           </ng-container>
 
@@ -352,9 +352,9 @@
               for alle enn deg. Ingen kan forresten slette observasjoner fra systemet, og du kan når som helst komme
               tilbake og gjenåpne den skulle du ombestemme deg.</p>
             <!-- Knapper for innsending -->
-            <div class="btn-toolbar pull-right">
-              <button (click)="openWorkflow()" class="btn btn-success mr-2">Send til HI</button>
-              <button (click)="openWorkflow()" class="btn btn-danger mr-2">Trekk tilbake</button>
+            <div class="btn-toolbar float-end">
+              <button (click)="openWorkflow()" class="btn btn-success me-2">Send til HI</button>
+              <button (click)="openWorkflow()" class="btn btn-danger me-2">Trekk tilbake</button>
             </div>
             <!--
             <div class="form-group row">
@@ -384,9 +384,9 @@
               </span>
             </p>
 
-            <div class="btn-toolbar pull-right">
-              <button (click)="openWorkflow()" class="btn btn-primary mr-2">
-                <fa name="exchange" [fixed]="true"></fa> Behandle #{{observation.id}}
+            <div class="btn-toolbar float-end">
+              <button (click)="openWorkflow()" class="btn btn-primary me-2">
+                <fa-icon [icon]="faExchange"></fa-icon> Behandle #{{observation.id}}
               </button>
             </div>
           </ng-container>
@@ -400,7 +400,7 @@
       <div class="container">
 
         <!--
-        <span class="float-left" text="Her velger du visning om du vil ha forenklet eller alle felter" class="nav-item">
+        <span class="float-start" text="Her velger du visning om du vil ha forenklet eller alle felter" class="nav-item">
 
           <ng-container *ngIf="!showSimpleView()">
             <button (click)="toggleSimpleView()" class="btn btn-primary">Vis forenklet skjema</button>
@@ -411,35 +411,35 @@
         </span>
         -->
 
-        <span class="float-right" text="Når du er ferdig med observasjonen så skal du sende den inn.">
+        <span class="float-end" text="Når du er ferdig med observasjonen så skal du sende den inn.">
 
-          <span class="mr-4 lead">
+          <span class="me-4 lead">
             <nlf-help key="ors-editor-workflow"></nlf-help>
           </span>
 
           <ng-container *ngIf="observation.workflow.state==='draft'">
 
-            <button class="btn btn-success mr-2" (click)="openWorkflow()" title="Send"
+            <button class="btn btn-success me-2" (click)="openWorkflow()" title="Send"
               text="Når du er ferdig med observasjonen så sender du den til neste i arbeidsflyten som vil behandle observasjonen videre">
-              <fa name="send"></fa> Send til HI
+              <fa-icon [icon]="faPaperPlane"></fa-icon> Send til HI
             </button>
 
 
-            <button class="btn btn-danger mr-2" (click)="openWorkflow()" title="Trekk tilbake"
+            <button class="btn btn-danger me-2" (click)="openWorkflow()" title="Trekk tilbake"
               text="Om du ikke ønsker sende inn rapporten så velger du trekk tilbake. Da blir rapporten kun tilgjegenlig for deg og du kan når som helst gjenåpne den igjen. Dette er OBSREGs måte å slette på.">
-              <fa name="reply"></fa> Trekk tilbake
+              <fa-icon [icon]="faReply"></fa-icon> Trekk tilbake
             </button>
 
           </ng-container>
 
           <ng-container *ngIf="observation.workflow.state==='withdrawn'">
-            <button class="btn btn-success mr-2" (click)="openWorkflow()" title="Gjenåpne" text="Gjenåpne ">
-              <fa name="repeat"></fa> Gjenåpne
+            <button class="btn btn-success me-2" (click)="openWorkflow()" title="Gjenåpne" text="Gjenåpne ">
+              <fa-icon [icon]="faRepeat"></fa-icon> Gjenåpne
             </button>
           </ng-container>
           <ng-container *ngIf="['withdrawn','draft'].indexOf(observation.workflow.state)<0">
-            <button class="btn btn-primary mr-2" (click)="openWorkflow()" title="Behandle" text="Behandle ">
-              <fa name="random"></fa> Arbeidsflyt
+            <button class="btn btn-primary me-2" (click)="openWorkflow()" title="Behandle" text="Behandle ">
+              <fa-icon [icon]="faRandom"></fa-icon> Arbeidsflyt
             </button>
           </ng-container>
         </span>
@@ -472,7 +472,7 @@
   <div class="modal-header">
     <h4 class="modal-title pull-left">
       {{ preview.title }}</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -494,22 +494,22 @@
 
   <div class="modal-header">
     <h4 class="modal-title pull-left">
-      #{{ modalObservation.id }}
-      <nlf-resolve-observation-tags [tags]="modalObservation.tags" [activity]="modalObservation._model.type"
+      #{{ observation.id }}
+      <nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type"
         seperator="/"></nlf-resolve-observation-tags>
     </h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="closeActivities()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="closeActivities()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
 
   <div class="modal-body">
-    <nlf-ors-activities-timeline [observation]="modalObservation"></nlf-ors-activities-timeline>
+    <nlf-ors-activities-timeline [observation]="observation"></nlf-ors-activities-timeline>
   </div>
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="closeActivities()">
-      <fa name="times" [fixed]="true"></fa> Lukk
+      <fa-icon [icon]="faTimes"></fa-icon> Lukk
     </button>
 
   </div>

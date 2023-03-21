@@ -1,16 +1,16 @@
   <div class="nlf-page-center">
     <div class="col-md-12 col-sm-12">
-      <div class="jumbotron bg-light">
+      <div class="p-5 mb-4 bg-light rounded-3">
         <h1 class="display-4">ERROR {{ error?.status }}</h1>
         <p class="lead">{{ error?.statusText }}: OBSREG #{{ id }}</p>
         <hr class="my-4">
         <p>{{ error?.error?._error?.message }}</p>
         <div class="row">
-          <div class="col-md-6 col-sm-12">
-            <a class="btn btn-primary btn-lg btn-block" [routerLink]="['/ors', activity]" role="button">OBSREG</a>
+          <div class="col-md-6 col-sm-12 d-grid gap-2">
+            <a class="btn btn-primary btn-lg" [routerLink]="['/ors', activity]" role="button">OBSREG</a>
           </div>
-          <div class="col-md-6 col-sm-12">
-            <a class="btn btn-primary btn-lg btn-block" [routerLink]="['/home']" role="button">Home</a>
+          <div class="col-md-6 col-sm-12 d-grid gap-2">
+            <a class="btn btn-primary btn-lg" [routerLink]="['/home']" role="button">Home</a>
           </div>
         </div>
       </div>

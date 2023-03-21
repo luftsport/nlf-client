@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NlfOrsTodoTableComponent } from './ors-todo-table.component';
 
@@ -6,7 +6,7 @@ describe('NlfOrsTodoTableComponent', () => {
   let component: NlfOrsTodoTableComponent;
   let fixture: ComponentFixture<NlfOrsTodoTableComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NlfOrsTodoTableComponent ]
     })

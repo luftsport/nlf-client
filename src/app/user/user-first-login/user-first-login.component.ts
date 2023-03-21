@@ -4,6 +4,7 @@ import { NlfUserSubjectService } from 'app/user/user-subject.service';
 import { NlfConfigService } from 'app/nlf-config.service';
 import { LungoOrganizationsService } from 'app/api/lungo-organizations.service';
 import { NlfConfigItem } from 'app/api/api.interface';
+import { faCheck, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-user-first-login',
@@ -17,6 +18,9 @@ export class NlfUserFirstLoginComponent implements OnInit {
   error;
   userData;
   public config: NlfConfigItem;
+
+  faCheck = faCheck;
+  faPlus = faPlus;
 
   constructor(
     public activeModal: NgbActiveModal,

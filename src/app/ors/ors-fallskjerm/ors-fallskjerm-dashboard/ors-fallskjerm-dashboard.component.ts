@@ -8,6 +8,8 @@ import { NgbDate, NgbCalendar, NgbDateParserFormatter } from '@ng-bootstrap/ng-b
 import * as moment from 'moment';
 import { forkJoin, pipe, from } from 'rxjs';
 import { map, mergeMap, reduce, delay } from 'rxjs/operators';
+import { EChartsOption } from 'echarts';
+import { faCalendar, faSave } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-fallskjerm-dashboard',
@@ -16,17 +18,110 @@ import { map, mergeMap, reduce, delay } from 'rxjs/operators';
 })
 export class NlfOrsFallskjermDashboardComponent implements OnInit {
 
+  faSave = faSave;
+  faCalendar = faCalendar;
+
   activity = 'fallskjerm';
 
   dataReady = false;
   discipline_id: number;
 
+  //Legacy
   pieTypes = [];
   pieTypesReady = false;
   pieTypesLabel = 'behandlede';
   pieStates = [];
   pieStatesReady = false;
   pieStatesLabel = 'opprettede';
+
+  // Echarts
+  typesChartOption: EChartsOption = {
+    tooltip: {
+      trigger: 'item'
+    },
+    series: [
+      {
+        name: 'behandlede',
+        type: 'pie',
+        radius: ['50%', '70%'],
+        tooltip: {
+          show: false
+        },
+        avoidLabelOverlap: false,
+        label: {
+          show: false,
+          position: 'center'
+        },
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: 20,
+            fontWeight: 'bold'
+          }
+        },
+        labelLine: {
+          show: false
+        },
+        data: undefined
+      }
+    ]
+  };
+  typesChartOptionColors = {
+    unwanted_act: '#0dcaf0',
+    sharing: '#198754',
+    near_miss: '#fd7e14',
+    incident: '#dc3545',
+    accident: '#000'
+  };
+
+  // States (trukket, draft etc)
+  statesChartOption: EChartsOption = {
+    tooltip: {
+      trigger: 'item'
+    },
+    series: [
+      {
+        name: 'opprettede',
+        type: 'pie',
+        radius: ['50%', '70%'],
+        tooltip: {
+          show: false
+        },
+        avoidLabelOverlap: false,
+        label: {
+          show: false,
+          position: 'center'
+        },
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: 20,
+            fontWeight: 'bold'
+          }
+        },
+        labelLine: {
+          show: false
+        },
+        data: undefined
+      }
+    ]
+  };
+  statesChartOptionColors = {
+    closed: '#198754',
+    draft: '#0dcaf0',
+    withdrawn: '#ced4da',
+    unknown: '#dc3545',
+    pending_review_hi: '#495057',
+    pending_review_fs: '#20c997',
+    pending_review_su: '#fd7e14',
+    pending_review_su_aff: '#d63384',
+    pending_review_su_leder: '#6f42c1',
+    pending_review_su_materiell: '#6610f2',
+    pending_review_su_skjerm: '#0d6efd',
+    pending_review_su_tandem: '#ced4da'
+  };
+
+
 
   hoveredDate: NgbDate | null = null;
   fromDate: NgbDate;
@@ -74,6 +169,7 @@ export class NlfOrsFallskjermDashboardComponent implements OnInit {
           this.configService.observableConfig.subscribe(
             data => {
               this.config = data;
+              console.log('CONFIG', data);
               const d = new Date();
               this.current_year = d.getFullYear();
 
@@ -204,22 +300,22 @@ export class NlfOrsFallskjermDashboardComponent implements OnInit {
 
       data => {
         console.log('DATA', data);
-        this.pieTypes = [];
+        this.pieStates = [];
         //this.pieTypes = data[0]._items.map(el => ({ name: this.config.fallskjerm.observation.types[el._id]['label'], value: el.count, type: el._id }));
         //this.pieTypesReady = true;
 
-        this.pieStates = [];
+        this.pieTypes = [];
         //this.pieStates = data[1]._items.map(el => [{ name: this.config.fallskjerm.observation.state[el._id]['label'], value: el.count, state: el._id }));
         //this.pieStatesReady = true;
         try {
-          this.pieTypes = data[0]._items.map(el => ({ name: this.config.fallskjerm.observation.types[el._id]['label'], value: el.count, type: el._id }), err => { console.log('ERR', err) });
+          this.pieTypes = data[0]._items.map(el => ({ name: this.config.fallskjerm.observation.types[el._id]['label'], value: el.count, type: el._id, itemStyle: { color: this.typesChartOptionColors[el._id] } }), err => { console.log('ERR', err) });
         } catch (e) {
           console.log('ERR pie', e);
           console.log(data[0]._items);
         }
 
         try {
-          this.pieStates = data[1]._items.map(elm => ({ name: this.config.fallskjerm.observation.state[elm._id]['label'], value: elm.count, state: elm._id }), err => { console.log('ERR', err) });
+          this.pieStates = data[1]._items.map(elm => ({ name: this.config.fallskjerm.observation.state[elm._id]['label'], value: elm.count, itemStyle: { color: this.statesChartOptionColors[elm._id] } }), err => { console.log('ERR', err) });
         } catch (e) {
           console.log('ERR pie', e);
           console.log(data[1]._items);
@@ -255,6 +351,12 @@ export class NlfOrsFallskjermDashboardComponent implements OnInit {
           total_injury: b,
           total_processing: c,
         };
+
+        console.log('PIESTATES', this.pieStates);
+        this.typesChartOption.series[0].data = this.pieTypes;
+
+        console.log('PIESTYPES', this.pieTypes);
+        this.statesChartOption.series[0].data = this.pieStates;
 
         this.pieTypesReady = true;
         this.pieStatesReady = true;
@@ -323,6 +425,13 @@ export class NlfOrsFallskjermDashboardComponent implements OnInit {
       () => console.log('Done')
     );
 
+  }
+
+  getStatesTotalValue() {
+    return this.statesChartOption.series[0].data.reduce((accumulated, obj) => { return accumulated + obj.value }, 0);
+  }
+  getTypesTotalValue() {
+    return this.typesChartOption.series[0].data.reduce((accumulated, obj) => { return accumulated + obj.value }, 0);
   }
 
   updateDashboardLEGACYWORKS() {

@@ -1,18 +1,20 @@
 <div *ngIf="!showOnlyBtn" class="row">
   <div class="col-md-3">
-    <button class="btn btn-primary btn-block" (click)="openModal(modal)">
-      <fa name="medkit" [fixed]="true"></fa>Injuries
-    </button>
+    <div class="d-grid gap-2">
+      <button class="btn btn-primary" (click)="openModal(modal)">
+        <fa-icon [icon]="faMedkit"></fa-icon>Injuries
+      </button>
+    </div>
   </div>
   <div class="col-md-9">
-    <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="attr.injuryLevel.value" path="E5X.Occurrence.InjuryLevel"></nlf-ors-editor-tag-e5x-render>
+    <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="attr.injuryLevel.value" path="E5X.Occurrence.InjuryLevel"></nlf-ors-editor-tag-e5x-render>
 
   </div>
 </div>
 
-<div *ngIf="showOnlyBtn">
-  <button class="btn btn-secondary btn-block" (click)="openModal(modal)">
-    <fa name="medkit" [fixed]="true"></fa>Injuries
+<div *ngIf="showOnlyBtn" class="d-grid gap-2">
+  <button class="btn btn-secondary" (click)="openModal(modal)">
+    <fa-icon [icon]="faMedkit"></fa-icon>Injuries
   </button>
 </div>
 
@@ -24,7 +26,7 @@
     <h4 class="modal-title pull-left">
       Injuries/Fatalities for Occurrence
     </h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -37,7 +39,7 @@
         <div class="row">
 
 
-          <div class="col-md-12">
+          <div class="col-md-12 mb-3">
             <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.injuryLevel.value" path="E5X.Occurrence.InjuryLevel" id="InjuryLevel"></nlf-ors-editor-tag-e5x>
           </div>
 
@@ -71,10 +73,10 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa name="times" [fixed]="true"></fa>Avbryt
+      <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>Avbryt
     </button>
     <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate(modalIndex)">
-      <fa name="check" [fixed]="true"></fa>Oppdater
+      <fa-icon [icon]="faCheck" [fixedWidth]="true"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>

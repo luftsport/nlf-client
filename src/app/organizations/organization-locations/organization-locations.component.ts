@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, ViewChild, ElementRef, TemplateRef, AfterViewInit, NgZone } from '@angular/core';
 import { ApiNlfClubsService } from 'app/api/api-nlf-clubs.service';
 import { ApiLocationsService } from 'app/api/api-locations.service';
 import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
@@ -11,24 +11,60 @@ import { NlfAlertService } from 'app/services/alert/alert.service';
 import { NlfConfigService } from 'app/nlf-config.service';
 import { ConfirmService } from 'app/services/confirm/confirm.service';
 import { forkJoin } from 'rxjs';
-// Seee https://stackoverflow.com/questions/48865595/is-there-a-way-to-set-the-bounds-and-zoom-level-in-agm-map
-//import { AgmMap } from '@agm/core';
+import { faArrowsAlt, faCrosshairs, faPlus, faRefresh, faMapMarker, faTimes, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { Map, Marker, MapOptions, LayerOptions, latLng, LatLng, marker, tileLayer } from 'leaflet';
+
+
+import { BarVerticalStackedComponent, HeatMapModule } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'nlf-organization-locations',
   templateUrl: './organization-locations.component.html',
   styleUrls: ['./organization-locations.component.css']
 })
-export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy {
+export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, AfterViewInit {
+
+  //@ViewChild("modal", { static: true }) _template: TemplateRef<void>;
+  @ViewChild(TemplateRef, { static: true }) _template: TemplateRef<Object>;
+  faArrowsAlt = faArrowsAlt;
+  faCrosshairs = faCrosshairs;
+  faPlus = faPlus;
+  faRefresh = faRefresh;
+  faMapMarker = faMapMarker;
+  faCheck = faCheck;
+  faTimes = faTimes;
+  faEdit = faEdit;
 
   org_id: number;
-  org
+  org;
   sub;
   modalRef;
   modalIndex: number = 0;
   modalValue: ApiLocationItem;
 
   currentLocation: ApiLocationItem;
+
+  map: Map;
+  mapOptions: MapOptions = {
+    layers: [
+      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
+    ],
+    zoom: 12
+  };
+
+  mapCenter: LatLng;
+  currentMarkerLayer: Marker;
+  currentMarkerOptions: Object;
+
+  // Modal map
+  modalMap: Map;
+  modalMapOptions: MapOptions = {
+    layers: [
+      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
+    ],
+    zoom: 9
+  };
+  currentModalMarkerLayer: Marker;
 
   locationTypes: [];
   returl: string;
@@ -59,7 +95,8 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy {
     private geoLocationService: GeoLocationService,
     private alertService: NlfAlertService,
     private confirmService: ConfirmService,
-    private configService: NlfConfigService
+    private configService: NlfConfigService,
+    private zone: NgZone
   ) {
 
     forkJoin([
@@ -105,19 +142,67 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    if(!this.currentLocation) {
+    if (!this.currentLocation) {
       this.currentLocation = this.userGeo;
+
     }
   }
 
+  ngAfterViewInit() {
+    console.log('TEMPLATE', this._template);
+  }
+
+  onMapReady(map: Map) {
+    this.map = map;
+    console.log(map);
+    const options = { title: this.org.name, riseOnHover: true };
+    this.mapReset();
+    // this.currentMarkerLayer = new Marker(latLng(this.org.locations[0].geo.coordinates[0], this.org.locations[0].geo.coordinates[1]), options);
+    //this.currentMarkerLayer.addTo(this.map);
+
+    //this.map.options.layers[1](marker(this.org.locations[0].geo.coordinates[0], this.org.locations[0].geo.coordinates[1]));
+  }
+
   public goTo(location) {
-    this.currentLocation = location;
-    this.zoom = 12;
+    console.log('LOCATION', location);
+    const options = { title: location.name, riseOnHover: true };
+
+    try {
+      this.currentLocation = location;
+      this.mapCenter = latLng(location.geo.coordinates[0], location.geo.coordinates[1]);
+    } catch (e) {
+      this.currentLocation = this.userGeo;
+      this.mapCenter = latLng(this.userGeo.geo.coordinates[0], this.userGeo.geo.coordinates[1]);
+    }
+    try {
+      this.currentMarkerLayer.remove();
+    } catch (e) { }
+
+    this.currentMarkerLayer = new Marker(this.mapCenter, options);
+    console.log(this.currentMarkerLayer);
+
+    // Edit?
+    this.currentMarkerLayer.addTo(this.map);
+    /**
+    .on('click',
+    (event) => {
+      for (let i = 0; i < this.org.locations.length; i++) {
+        console.log(this.org.locations[i].name, location.name);
+        if (this.org.locations[i].name == location.name) {
+          console.log('VALUE', this._template);
+          this.openModal(this._template, i);
+          break;
+        }
+      }
+    });**/
+    //.on('click', function(e) {
+    // 
+    //});
   }
 
   public mapReset() {
-    this.currentLocation = this.userGeo;
-    this.fitBounds = true;
+
+    this.goTo(this.org.locations[0]);
   }
 
   ngOnDestroy() {
@@ -144,6 +229,14 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy {
     this.orgService.getClub(this.org_id).subscribe(
       data => {
         this.org = data;
+        console.log(this.org);
+
+        try {
+          this.mapOptions.center = latLng(this.org.locations[0].geo.coordinates[0], this.org.locations[0].geo.coordinates[1]);
+
+        } catch (e) {
+          console.error("Error setting coordinates", e);
+        }
       },
       err => console.log(err),
       () => { }
@@ -187,16 +280,23 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy {
   }
 
   public onLocationSelected(event) {
-
+    this.modalValue = event;
     if (!!this.modalValue) {
 
       if (!this.modalValue.nickname) {
         this.modalValue['nickname'] = this.modalValue.name;
       }
     }
+    this.modalMap.panTo(latLng(this.modalValue.geo.coordinates[0], this.modalValue.geo.coordinates[1]));
+    this.currentModalMarkerLayer.remove();
+    const options = { title: this.org.name, riseOnHover: true, draggable: true };
+    this.currentModalMarkerLayer = new Marker(latLng(this.modalValue.geo.coordinates[0], this.modalValue.geo.coordinates[1]), options);
+    this.currentModalMarkerLayer.addTo(this.modalMap);
   }
 
   public openModal(template, idx) {
+    console.log("MODAL", template, idx);
+    console.log(this.org.locations[idx]);
     this.modalIndex = idx;
     if (idx == this.org.locations.length) {
       /*
@@ -219,17 +319,28 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy {
     } else {
       this.modalValue = this.org.locations[idx];
     }
+
+    // Modal map)" [longitude]="toFloat()
+    try {
+      this.modalMapOptions.center = latLng(this.modalValue.geo.coordinates[0], this.modalValue.geo.coordinates[1]);
+    } catch (e) {
+      this.modalMapOptions.center = latLng(this.userGeo.geo.coordinates[0], this.userGeo.geo.coordinates[1]);
+    }
+
+
     this.modalRef = this.modalService.open(template, { size: 'lg', backdrop: 'static', keyboard: false });
+    console.log(this.modalRef);
   }
 
   public updateLocation(event) {
-    console.log('Updated event', event);
+    console.log("Update Location func", event);
+
     if (!!this.modalValue) {
       this.modalValue.geo = { type: 'Point', coordinates: [event.coords.lat, event.coords.lng] };
     }
+
+
   }
-
-
 
 
   public modalUpdate(idx) {
@@ -239,8 +350,46 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy {
       this.org.locations[idx] = this.modalValue;
     }
     this.saveLocations();
+
     this.modalValue = undefined;
     this.modalRef.close();
+    this.goTo(this.org.locations[idx]);
+  }
+
+  onModalMapReady(map: Map) {
+    this.modalMap = map;
+    console.log(map);
+    const options = { title: this.org.name, riseOnHover: true, draggable: true };
+    try {
+      this.currentModalMarkerLayer = new Marker(latLng(this.modalValue.geo.coordinates[0], this.modalValue.geo.coordinates[1]), options);
+    } catch (e) {
+      this.currentModalMarkerLayer = new Marker(latLng(this.userGeo.geo.coordinates[0], this.userGeo.geo.coordinates[1]), options);
+    }
+
+    this.currentModalMarkerLayer.on('dragend', (event) => {
+      this.onDragEnd(event, options);
+    });
+    this.currentModalMarkerLayer.addTo(this.modalMap);
+    //this.map.options.layers[1](marker(this.org.locations[0].geo.coordinates[0], this.org.locations[0].geo.coordinates[1]));
+  }
+
+  onDragEnd(event, options) {
+    //this.zone.run(() => {
+    console.log("TEST");
+    if (!!this.modalValue) {
+      const { lat, lng } = event.target.getLatLng();
+      console.log('DRAGEND', event);
+      this.modalValue.geo = { type: 'Point', coordinates: [lat, lng] };
+      this.modalMap.panTo(latLng(lat, lng));
+      this.currentModalMarkerLayer.remove();
+      this.currentModalMarkerLayer = new Marker(latLng(lat, lng), options);
+      this.currentModalMarkerLayer.addTo(this.modalMap);
+
+      //We removed the layer the event fired, need to add event to new layer:
+      this.currentModalMarkerLayer.on('dragend', (event) => {
+        this.onDragEnd(event, options);
+      });
+    }
   }
 
 }

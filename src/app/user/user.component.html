@@ -1,12 +1,12 @@
 <div class="container">
 	<div class="row mt-3">
 		<div *ngIf="dataReady">
-			<div class="media">
+			<div class="d-flex">
 				<!--align-self-start-->
-				<span class="align-self-start mr-3 avatar avatar-xl">
+				<span class="flex-shrink-0 align-self-start me-3 avatar avatar-xl">
 					<nlf-resolve-avatar [person_id]="person_id"></nlf-resolve-avatar>
 				</span>
-				<div class="media-body">
+				<div class="flex-grow-1">
 					<h2 class="mt-0">
 						<nlf-resolve-lungo-person [person_id]="person_id" [link]="false" [avatar]="false"></nlf-resolve-lungo-person>
 					</h2>
@@ -16,6 +16,6 @@
 		</div>
 	</div>
 	<div class="text-center row mt-6">
-		<p class="text-center mt-4"><a [routerLink]="" (click)="goBack()">tilbake</a></p>
+		<p class="text-center mt-4"><a [routerLink]="[]" (click)="goBack()">tilbake</a></p>
 	</div>
 </div>

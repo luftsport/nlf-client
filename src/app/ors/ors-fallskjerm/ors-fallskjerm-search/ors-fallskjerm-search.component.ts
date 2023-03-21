@@ -8,6 +8,7 @@ import { cleanObject } from 'app/interfaces/functions';
 import { isEmpty } from 'lodash';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { saveAs } from "file-saver";
+import { faDownload, faFilter, faLongArrowRight, faPlane, faSave } from '@fortawesome/free-solid-svg-icons';
 
 /**
 Save search is simple - save who and search query!
@@ -21,6 +22,12 @@ sort: [{id:-1}]
   styleUrls: ['./ors-fallskjerm-search.component.css']
 })
 export class NlfOrsFallskjermSearchComponent implements OnInit {
+
+  faSave = faSave;
+  faFilter = faFilter;
+  faDownload = faDownload;
+  faPlane = faPlane;
+  faLongArrowRight = faLongArrowRight;
 
   dataReady = false;
   err = false;

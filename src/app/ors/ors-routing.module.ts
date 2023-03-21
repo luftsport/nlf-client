@@ -84,7 +84,7 @@ const nlfOrsRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(nlfOrsRoutes, { onSameUrlNavigation: 'reload' })],
+  imports: [RouterModule.forRoot(nlfOrsRoutes, { onSameUrlNavigation: 'reload', relativeLinkResolution: 'legacy' })],
   exports: [RouterModule],
   declarations: []
 })

@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { isObjEmpty } from 'app/interfaces/functions';
+import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';import {  } from '@fortawesome/free-solid-svg-icons';
+import { faBandcamp } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'nlf-ors-editor-e5x-ac-wildlife',
@@ -15,6 +17,10 @@ export class NlfOrsEditorE5XAcWildlifeComponent implements OnInit {
   @Input() disabled: boolean = false;
   modalRef;
   _isObjectEmpty = isObjEmpty;
+
+  faTimes = faTimes;
+  faCheck = faCheck;
+  faBandcamp = faBandcamp;
 
   constructor(private modalService: NgbModal) { }
 

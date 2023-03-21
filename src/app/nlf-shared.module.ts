@@ -4,16 +4,24 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, NgModel } from '@angular/forms';
 
 // progressbar
-import { NgProgressModule } from '@ngx-progressbar/core';
-import { NgProgressHttpModule } from '@ngx-progressbar/http';
+import { NgProgressModule } from 'ngx-progressbar';
+import { NgProgressHttpModule } from 'ngx-progressbar/http';
 
 // Select
 import { NgSelectModule } from '@ng-select/ng-select';
 
 // Icons
-import { FontAwesomeModule, WeatherIconsModule } from 'ngx-icons';
+// import { FontAwesomeModule as r, WeatherIconsModule } from 'ngx-icons';
 // Font awesome modle - NOT installed
-// import { FontAwesomeModule } as NGFontAwesomeModule from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FaConfig } from '@fortawesome/angular-fontawesome';
+
+// MAPS
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
+import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
+// Charts
+import { NgxEchartsModule } from 'ngx-echarts';
 
 // PIPES
 import { NlfOrsStatePipe } from 'app/pipes/ors-state.pipe';
@@ -95,14 +103,19 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule, // ngx-icons
-    WeatherIconsModule, // ngx-icons],
+    LeafletModule, // Maps
+    LeafletMarkerClusterModule, // cluster maps
+    LeafletDrawModule, // draw on map
     NgProgressModule,
     NgProgressHttpModule,
     // NgProgressRouterModule,
     NgPipesModule,
     NgSelectModule,
-    NgbModule.forRoot(), // ng-bootstrap
+    NgbModule, // ng-bootstrap see https://ng-bootstrap.github.io/#/getting-started for alternative import strategies
     // Other shared
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    })
 
   ],
   declarations: [
@@ -165,10 +178,13 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     FormsModule,
     ReactiveFormsModule,
     // Custom
+    LeafletModule,
+    LeafletMarkerClusterModule,
+    LeafletDrawModule,
+    NgxEchartsModule,
     NgSelectModule,
     NlfHelpComponent,
     FontAwesomeModule, // ngx-icons
-    WeatherIconsModule,
     NgProgressModule,
     NgProgressHttpModule,
     NlfUiPageSpinnerComponent,
@@ -226,6 +242,12 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
   ],
 
   // Dynamic components
-  entryComponents: [NlfUserFirstLoginComponent],
+  // remove @9 entryComponents: [NlfUserFirstLoginComponent],
 })
-export class NlfSharedModule { }
+export class NlfSharedModule {
+
+  constructor(faConfig: FaConfig) {
+    faConfig.fixedWidth = true;
+  }
+
+}

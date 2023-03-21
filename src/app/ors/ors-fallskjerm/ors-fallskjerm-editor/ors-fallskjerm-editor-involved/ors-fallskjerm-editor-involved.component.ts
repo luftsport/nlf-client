@@ -3,6 +3,7 @@ import { ApiObservationsItem, ApiOptionsInterface, ApiObservationFallskjermOrgan
 import { NlfOrsEditorInvolvedService, NlfOrsEditorInvolvedInterface } from 'app/ors/ors-editor/ors-editor-involved.service';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { faBan, faCheck, faExclamation, faTimes, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -21,6 +22,12 @@ export class NlfOrsFallskjermEditorInvolvedComponent implements OnInit {
   deleteExternal = false;
 
   smokeMyAss = false;
+
+  faCheck = faCheck;
+  faExclamation = faExclamation;
+  faBan = faBan;
+  faTimes = faTimes;
+  faEdit = faEdit;
 
   constructor(
     private subject: NlfOrsEditorService,

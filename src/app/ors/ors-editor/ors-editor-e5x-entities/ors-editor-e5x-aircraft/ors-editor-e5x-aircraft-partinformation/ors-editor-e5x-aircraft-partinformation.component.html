@@ -1,17 +1,19 @@
 <div class="row">
   <div class="col-md-12">
 
-    <button [disabled]="disabled" class="btn btn-secondary btn-block mb-3" (click)="add();openModal(modal, modalIdx)">
-      <fa name="plus" [fixed]="true"></fa>Partinformation
-    </button>
+    <div class="d-grid gap-2">
+      <button [disabled]="disabled" class="btn btn-secondary mb-3" (click)="add();openModal(modal, modalIdx)">
+        <fa-icon [icon]="faPlus"></fa-icon>Partinformation
+      </button>
+    </div>
 
     <div class="mx-1 my-1" *ngFor="let part of partinformation; let idx = index">
-      <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="part.attributes.partName.value" path="E5X.Occurrence.Aircraft.PartInformation.PartName"></nlf-ors-editor-tag-e5x-render>
+      <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="part.attributes.partName.value" path="E5X.Occurrence.Aircraft.PartInformation.PartName"></nlf-ors-editor-tag-e5x-render>
       &nbsp;
-      <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="part.attributes.manufacturer.value" path="E5X.Occurrence.Aircraft.PartInformation.Manufacturer"></nlf-ors-editor-tag-e5x-render>
+      <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="part.attributes.manufacturer.value" path="E5X.Occurrence.Aircraft.PartInformation.Manufacturer"></nlf-ors-editor-tag-e5x-render>
 
-      <fa class="mx-1" name="edit" (click)="openModal(modal, idx)"></fa>
-      <fa class="mx-1" name="close" (click)="delete(idx)"></fa>
+      <fa-icon class="mx-1" [icon]="faEdit" (click)="openModal(modal, idx)"></fa-icon>
+      <fa-icon class="mx-1" [icon]="faClose" (click)="delete(idx)"></fa-icon>
     </div>
 
 
@@ -26,7 +28,7 @@
     <h4 class="modal-title pull-left">
       Add new part information {{ callsign }}
     </h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -119,10 +121,10 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa name="times" [fixed]="true"></fa>Avbryt
+      <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>Avbryt
     </button>
     <button [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate()">
-      <fa name="check" [fixed]="true"></fa>Oppdater
+      <fa-icon [icon]="faCheck" [fixedWidth]="true"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>

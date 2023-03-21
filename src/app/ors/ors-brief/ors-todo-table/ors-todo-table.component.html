@@ -17,16 +17,16 @@
       <td class="ngx-easy-table-small">
         <span *ngIf="!!row.workflow.state">
           <ng-container *ngIf="['closed', 'withdrawn'].indexOf(row.workflow.state)<0">
-            <fa *ngIf="timedelta(row._updated)>=5*24*3600&&timedelta(row._updated)<10*24*3600" name="clock-o" class="text-warning" [fixed]="true" ngbTooltip="Det er over 5 dager siden det har vært aktivitet"></fa>
-            <fa *ngIf="timedelta(row._updated)>=10*24*3600" name="clock-o" class="text-danger" [fixed]="true" ngbTooltip="Det er over 10 dager siden det har vært aktivitet"></fa>
+            <fa-icon *ngIf="timedelta(row._updated)>=5*24*3600&&timedelta(row._updated)<10*24*3600" [icon]="faClock" class="text-warning" ngbTooltip="Det er over 5 dager siden det har vært aktivitet"></fa-icon>
+            <fa-icon *ngIf="timedelta(row._updated)>=10*24*3600" [icon]="faClock" class="text-danger" ngbTooltip="Det er over 10 dager siden det har vært aktivitet"></fa-icon>
           </ng-container>
-        
+
           {{ row.workflow.state | nlfOrsState: row._model.type }}
         </span>
       </td>
 
       <!--<td [innerHTML]="row.type | nlfOrsType: row._model.type" class="ngx-easy-table-small">-->
-      <td class="ngx-easy-table-small text-right">
+      <td class="ngx-easy-table-small text-end">
         <nlf-resolve-observation-types [type]="row.type" [activity]="row._model.type" [badge]="true"></nlf-resolve-observation-types>
       </td>
 
@@ -35,6 +35,6 @@
 </span>
 <span *ngIf="!dataReady">
   <p class="align-middle text-center text-secondary">
-    <fa name="spinner" animation="pulse" size="3x"></fa>
+    <nlf-ui-component-spinner size="3"></nlf-ui-component-spinner>
   </p>
 </span>

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NlfOrsLastComponent } from './ors-last.component';
 
@@ -6,7 +6,7 @@ describe('NlfOrsLastComponent', () => {
   let component: NlfOrsLastComponent;
   let fixture: ComponentFixture<NlfOrsLastComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NlfOrsLastComponent ]
     })

@@ -1,19 +1,21 @@
 <div class="row">
   <div class="col-md-3">
-    <button [disabled]="disabled" class="btn btn-primary btn-block" (click)="add();openModal(modal, modalIdx)">
-      <fa name="plus" [fixed]="true"></fa>Aerodrome
-    </button>
+    <div class="d-grid gap-2">
+      <button [disabled]="disabled" class="btn btn-primary" (click)="add();openModal(modal, modalIdx)">
+        <fa-icon [icon]="faPlus"></fa-icon>Aerodrome
+      </button>
+    </div>
   </div>
   <div class="col-md-9">
     <div *ngFor="let drome of aerodrome; let idx = index">
-      <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="drome.attributes.locationIndicator.value" path="E5X.Occurrence.AerodromeGeneral.LocationIndicator"></nlf-ors-editor-tag-e5x-render>
+      <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="drome.attributes.locationIndicator.value" path="E5X.Occurrence.AerodromeGeneral.LocationIndicator"></nlf-ors-editor-tag-e5x-render>
       &nbsp;
-      <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="drome.attributes.surfaceType.value" path="E5X.Occurrence.AerodromeGeneral.SurfaceType"></nlf-ors-editor-tag-e5x-render>
+      <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="drome.attributes.surfaceType.value" path="E5X.Occurrence.AerodromeGeneral.SurfaceType"></nlf-ors-editor-tag-e5x-render>
       &nbsp;
-      <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="drome.attributes.aerodromeStatus.value" path="E5X.Occurrence.AerodromeGeneral.AerodromeStatus"></nlf-ors-editor-tag-e5x-render>
+      <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="drome.attributes.aerodromeStatus.value" path="E5X.Occurrence.AerodromeGeneral.AerodromeStatus"></nlf-ors-editor-tag-e5x-render>
 
-      <fa class="mx-1" name="edit" (click)="openModal(modal, idx)"></fa>
-      <fa class="mx-1" *ngIf="!disabled" name="close" (click)="delete(idx)"></fa>
+      <fa-icon class="mx-1" [icon]="faEdit" (click)="openModal(modal, idx)"></fa-icon>
+      <fa-icon class="mx-1" *ngIf="!disabled" [icon]="faClose" (click)="delete(idx)"></fa-icon>
     </div>
 
   </div>
@@ -25,7 +27,7 @@
     <h4 class="modal-title pull-left">
       Aerodrome
     </h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -94,7 +96,7 @@
         <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.entities.runway[idx].attributes.surfaceType.value" path="E5X.Occurrence.AerodromeGeneral.Runway.SurfaceType" id="SurfaceType"></nlf-ors-editor-tag-e5x>
       </div>
       <div class="col-md-2 pointer">
-        <fa *ngIf="!disabled" (click)="deleteRunway(idx)" name="close" [fixed]="true"></fa>
+        <fa-icon *ngIf="!disabled" (click)="deleteRunway(idx)" [icon]="faClose"></fa-icon>
       </div>
     </div>
 
@@ -108,7 +110,7 @@
         <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.entities.vehicle[idx].attributes.vehicleControlled.value" path="E5X.Occurrence.AerodromeGeneral.Vehicle.VehicleControlled" id="vehicleControlled"></nlf-ors-editor-tag-e5x>
       </div>
       <div class="col-md-2 pointer">
-        <fa *ngIf="!disabled" (click)="deleteVehicle(idx)" name="close" [fixed]="true"></fa>
+        <fa-icon *ngIf="!disabled" (click)="deleteVehicle(idx)" [icon]="faClose"></fa-icon>
       </div>
     </div>
 
@@ -119,7 +121,7 @@
           <nlf-ors-editor-e5x-narrative [disabled]="disabled" [(narrative)]="modalValue.entities.narrative"></nlf-ors-editor-e5x-narrative>
       </div>
       <div class="col-md-2 pointer">
-        <fa *ngIf="!disabled" (click)="deleteNarrative(0)" name="close" [fixed]="true"></fa>
+        <fa-icon *ngIf="!disabled" (click)="deleteNarrative(0)" [icon]="faClose"></fa-icon>
       </div>
     </div>
 
@@ -129,19 +131,25 @@
 
     <div class="row">
       <div class="col-md-4">
-        <button [disabled]="disabled" class="btn btn-primary btn-block" (click)="addRunway()">
-          <fa name="plus" [fixed]="true"></fa>Runway
-        </button>
+        <div class="d-grid gap-2">
+          <button [disabled]="disabled" class="btn btn-primary" (click)="addRunway()">
+            <fa-icon [icon]="faPlus" [fixedWidth]="true"></fa-icon>Runway
+          </button>
+        </div>
       </div>
       <div class="col-md-4">
-        <button [disabled]="disabled" class="btn btn-primary btn-block" (click)="addVehicle()">
-          <fa name="plus" [fixed]="true"></fa>Vehicle
-        </button>
+        <div class="d-grid gap-2">
+          <button [disabled]="disabled" class="btn btn-primary" (click)="addVehicle()">
+            <fa-icon [icon]="faPlus" [fixedWidth]="true"></fa-icon>Vehicle
+          </button>
+        </div>
       </div>
       <div class="col-md-4">
-        <button [disabled]="modalValue.entities.narrative.length>0 || disabled" class="btn btn-primary btn-block" (click)="addNarrative()">
-          <fa name="plus" [fixed]="true"></fa>Narrative
-        </button>
+        <div class="d-grid gap-2">
+          <button [disabled]="modalValue.entities.narrative.length>0 || disabled" class="btn btn-primary" (click)="addNarrative()">
+            <fa-icon [icon]="faPlus" [fixedWidth]="true"></fa-icon>Narrative
+          </button>
+        </div>
       </div>
     </div>
 
@@ -149,10 +157,10 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa name="times" [fixed]="true"></fa>Avbryt
+      <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>Avbryt
     </button>
     <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate()">
-      <fa name="check" [fixed]="true"></fa>Oppdater
+      <fa-icon [icon]="faCheck" [fixedWidth]="true"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>

@@ -1,8 +1,6 @@
 <!-- ROUTE MAP -->
 <div fxFlex="100">
-  <agm-map style="max-height: 25rem !important;" *ngIf="showRouteMap && location" [latitude]="location.latitude" [longitude]="location.longitude" [zoom]="zoom">
-
-    <!-- STAR STOP ROUTE
+  <!-- START STOP ROUTE
     <agm-marker *ngIf="route.length>0" [markerDraggable]="observation.acl_user.w" (dragEnd)="markerMoved($event)"
       [latitude]="route[0].from.location.coordinates[1]" [longitude]="route[0].from.location.coordinates[0]" [label]="'S'">
     </agm-marker>
@@ -12,8 +10,12 @@
     </agm-marker>
     -->
 
+  <!--
+  <agm-map style="max-height: 25rem !important;" *ngIf="showRouteMap && location" [latitude]="location.latitude" [longitude]="location.longitude" [zoom]="zoom">
 
-    <!-- ALL AIRPORTS -->
+
+    ALL AIRPORTS
+
     <agm-marker *ngFor="let current_route of route; let ix = index;" [markerDraggable]="observation.acl_user.w" (dragEnd)="markerMoved($event)" [latitude]="current_route.to.location.coordinates[1]"
       [longitude]="current_route.to.location.coordinates[0]" [label]="'L'">
     </agm-marker>
@@ -21,42 +23,57 @@
       [longitude]="current_route.from.location.coordinates[0]" [label]="'T'">
     </agm-marker>
 
-    <!--https://github.com/SebastianM/angular-google-maps/pull/1621-->
+
+
     <agm-polyline *ngFor="let current_route of route; let ix = index;" [editable]="observation.acl_user.w" (lineDragEnd)="lineDragEnd($event)" (polyPathChange)="onPathChanged($event, ix)">
       <agm-polyline-point *ngFor="let coordinates of current_route.path" [latitude]="coordinates[1]" [longitude]="coordinates[0]">
       </agm-polyline-point>
     </agm-polyline>
 
   </agm-map>
+  -->
+
+
+  <div class="col-xs-12 position-relative">
+    <div *ngIf="showRouteMap && routeReady" class="row" style="height: 400px;" >
+      <nlf-ors-editor-flight-map [(flight)]="route" [editable]="observation.acl_user.w"></nlf-ors-editor-flight-map>
+    </div>
+  </div>
+
 </div>
 
 <!-- ADD AIRPORTS ROW -->
 <div class="row my-2">
   <!-- FROM -->
   <div class="col-md-1 text-center">
-    <fa name="plane" [fixed]="true"></fa>
+    <fa-icon [icon]="faPlane"></fa-icon>
   </div>
   <div class="col-md-3">
-    <nlf-ors-editor-tag-airport [(airport)]="from_airport" (change)="onChange($event,'to_airport')" [disabled]="from_airport_disable" element_id="from_airport"></nlf-ors-editor-tag-airport>
+    <nlf-ors-editor-tag-airport [(airport)]="from_airport" (change)="onChange($event,'to_airport')"
+      [disabled]="from_airport_disable" element_id="from_airport"></nlf-ors-editor-tag-airport>
   </div>
   <div class="col-md-1 text-center">
-    <fa name="long-arrow-right" [fixed]="true"></fa>
+    <fa-icon [icon]="faLongArrowRight"></fa-icon>
   </div>
 
   <!-- TO -->
   <div class="col-md-3">
-    <nlf-ors-editor-tag-airport [(airport)]="to_airport" (change)="onChange($event,'add_airport')" [disabled]="to_airport_disable" element_id="to_airport"></nlf-ors-editor-tag-airport>
+    <nlf-ors-editor-tag-airport [(airport)]="to_airport" (change)="onChange($event,'add_airport')"
+      [disabled]="to_airport_disable" element_id="to_airport"></nlf-ors-editor-tag-airport>
   </div>
   <!-- ADD -->
   <div class="col-md-2">
-    <button [disabled]="!observation.acl_user.w" class="btn btn-primary btn-block" id="add_airport" (click)="addSegment()">
-      <fa name="plus" [fixed]="true"></fa>Legg Til
-    </button>
+    <div class="d-grid gap-2">
+      <button [disabled]="!observation.acl_user.w" class="btn btn-primary" id="add_airport" (click)="addSegment()">
+        <fa-icon [icon]="faPlus"></fa-icon>Legg Til
+      </button>
+    </div>
   </div>
   <!-- MAP -->
-  <div class="col-md-2 text-right">
-    <button class="btn btn-link" (click)="showRouteMap=!showRouteMap">Kart <fa *ngIf="showRouteMap" name="eye-slash" [fixed]="true"></fa>
-      <fa *ngIf="!showRouteMap" name="eye" [fixed]="true"></fa>
+  <div class="col-md-2 text-end">
+    <button class="btn btn-link" (click)="showRouteMap=!showRouteMap">Kart <fa-icon *ngIf="showRouteMap"
+        [icon]="faEyeSlash"></fa-icon>
+      <fa-icon *ngIf="!showRouteMap" [icon]="faEye"></fa-icon>
     </button>
   </div>
 </div>
@@ -69,7 +86,8 @@
 
       <div *ngFor="let segment of route; let idx = index; let last = last;">
 
-        <div [ngClass]="{'bg-warning': hasSegmentIncident(idx)}" class="row p-2" style="border-left:2px solid #ccc;border-right:2px solid #ccc; border-bottom: 1px solid #cccc;border-top: 1px solid #cccc;">
+        <div [ngClass]="{'bg-warning': hasSegmentIncident(idx)}" class="row p-2"
+          style="border-left:2px solid #ccc;border-right:2px solid #ccc; border-bottom: 1px solid #cccc;border-top: 1px solid #cccc;">
 
           <!--
         [ngClass]="{'bg-danger': [100,200].indexOf(observation.occurrence.attributes.occurrenceClass.value)>-1,
@@ -78,9 +96,10 @@
           'bg-success': observation.occurrence.attributes.occurrenceClass.value==501}">
         -->
 
-          <div class="col-md-3 pointer text-center" style="border-right: 1px solid #CCC" (click)="openRouteModal(routeModal, idx)">
+          <div class="col-md-3 pointer text-center" style="border-right: 1px solid #CCC"
+            (click)="openRouteModal(routeModal, idx)">
             {{ segment.from.icao }}
-            <fa name="long-arrow-right" [fixed]="true"></fa>{{ segment.to.icao }}
+            <fa-icon [icon]="faLongArrowRight"></fa-icon>{{ segment.to.icao }}
             <div class="small">Klikk for detaljer</div>
           </div>
 
@@ -90,56 +109,75 @@
 
           <div class="col-md-2">
             <!-- TOGGLE INCIDENT ON OFF -->
-            <button [disabled]="!observation.acl_user.w" *ngIf="!hasIncident()" class="btn btn-warning btn-block" (click)="addSegmentIncident(idx)">
-              <fa name="plus"></fa> Hendelse
-            </button>
-            <button [disabled]="!observation.acl_user.w" *ngIf="hasSegmentIncident(idx)" class="btn btn-outline-dark btn-block" (click)="removeSegmentIncident(idx)">
-              <fa name="minus"></fa> Fjern Hendelse
-            </button>
+            <div class="d-grid gap-2">
+              <button [disabled]="!observation.acl_user.w" *ngIf="!hasIncident()" class="btn btn-warning"
+                (click)="addSegmentIncident(idx)">
+                <fa-icon [icon]="faPlus"></fa-icon> Hendelse
+              </button>
+              <button [disabled]="!observation.acl_user.w" *ngIf="hasSegmentIncident(idx)" class="btn btn-outline-dark"
+                (click)="removeSegmentIncident(idx)">
+                <fa-icon [icon]="faMinus"></fa-icon> Fjern Hendelse
+              </button>
+            </div>
           </div>
 
-          <div class="col-md-1 text-right">
-            <fa *ngIf="last && observation.acl_user.w" name="times" (click)="removeSegment()" class="pointer" [fixed]="true"></fa>
+          <div class="col-md-1 text-end">
+            <fa-icon *ngIf="last && observation.acl_user.w" [icon]="faTimes" (click)="removeSegment()"
+              class="pointer"></fa-icon>
           </div>
         </div>
 
-        <div *ngIf="hasSegmentIncident(idx)" class="row bg-light pt-3" style="border-left:2px solid #ffc107;border-right:2px solid #ffc107; border-bottom: 1px solid #ffc107;">
+        <div *ngIf="hasSegmentIncident(idx)" class="row bg-light pt-3 pb-3"
+          style="border-left:2px solid #ffc107;border-right:2px solid #ffc107; border-bottom: 1px solid #ffc107;">
 
           <!-- FLIGHT DATA -->
           <div class="col-md-2">
-            <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="aircraft.occurrence.occOnGround.value" path="E5X.Occurrence.Aircraft.OccOnGround" id="occOnGround"></nlf-ors-editor-tag-e5x>
+            <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+              [(items)]="aircraft.occurrence.occOnGround.value" path="E5X.Occurrence.Aircraft.OccOnGround"
+              id="occOnGround"></nlf-ors-editor-tag-e5x>
           </div>
           <div class="col-md-3">
-            <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="aircraft.occurrence.currentFlightRules.value" path="E5X.Occurrence.Aircraft.CurrentFlightRules" id="currentFlightRules">
+            <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+              [(items)]="aircraft.occurrence.currentFlightRules.value" path="E5X.Occurrence.Aircraft.CurrentFlightRules"
+              id="currentFlightRules">
             </nlf-ors-editor-tag-e5x>
           </div>
           <div class="col-md-5">
-            <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="aircraft.occurrence.operationType.value" path="E5X.Occurrence.Aircraft.OperationType" id="operationType">
+            <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+              [(items)]="aircraft.occurrence.operationType.value" path="E5X.Occurrence.Aircraft.OperationType"
+              id="operationType">
             </nlf-ors-editor-tag-e5x>
           </div>
           <div class="col-md-2">
             <div class="form-group">
               <label>Ytterligere info</label>
-              <nlf-ors-editor-e5x-ac-flight (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(attr)]="aircraft.occurrence" [showOnlyBtn]="true" [modal]="true"></nlf-ors-editor-e5x-ac-flight>
+              <nlf-ors-editor-e5x-ac-flight (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+                [(attr)]="aircraft.occurrence" [showOnlyBtn]="true" [modal]="true"></nlf-ors-editor-e5x-ac-flight>
             </div>
           </div>
 
           <!-- WEATHER
             <div class="nlf-ors-toolbar mb-2">
               Været
-              <nlf-help class="pull-right" key="ors-editor-e5x-classification"></nlf-help>
+              <nlf-help class="float-end" key="ors-editor-e5x-classification"></nlf-help>
             </div>
             -->
           <div class="col-md-5">
-            <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="observation.occurrence.attributes.weatherRelevant.value" path="E5X.Occurrence.WeatherRelevant" id="weatherRelevant">
+            <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+              [(items)]="observation.occurrence.attributes.weatherRelevant.value" path="E5X.Occurrence.WeatherRelevant"
+              id="weatherRelevant">
             </nlf-ors-editor-tag-e5x>
           </div>
           <div class="col-md-5">
-            <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="observation.occurrence.attributes.wxConditions.value" path="E5X.Occurrence.WxConditions" id="wxConditions"></nlf-ors-editor-tag-e5x>
+            <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+              [(items)]="observation.occurrence.attributes.wxConditions.value" path="E5X.Occurrence.WxConditions"
+              id="wxConditions"></nlf-ors-editor-tag-e5x>
           </div>
           <div class="col-md-2">
             <label>Ytterligere info</label>
-            <nlf-ors-editor-e5x-weather (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(attr)]="observation.occurrence.attributes" [showOnlyBtn]="true" [modal]="true"></nlf-ors-editor-e5x-weather>
+            <nlf-ors-editor-e5x-weather (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+              [(attr)]="observation.occurrence.attributes" [showOnlyBtn]="true"
+              [modal]="true"></nlf-ors-editor-e5x-weather>
           </div>
           <!-- FLIGHT -->
           <!--
@@ -168,22 +206,30 @@
           <div class="col-md-12" *ngIf="[1,2,3].indexOf(observation.occurrence.attributes.injuryLevel.value) > -1">
             <div class="row">
               <div class="col-md-3">
-                <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="aircraft.occurrence.totalNumberOfPersons.value" path="E5X.Occurrence.Aircraft.TotalNumberOfPersons" id="totalNumberOfPersons">
+                <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+                  [(items)]="aircraft.occurrence.totalNumberOfPersons.value"
+                  path="E5X.Occurrence.Aircraft.TotalNumberOfPersons" id="totalNumberOfPersons">
                 </nlf-ors-editor-tag-e5x>
               </div>
 
               <div class="col-md-3">
-                <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="aircraft.occurrence.totalNumberMinorInjuries.value" path="E5X.Occurrence.Aircraft.TotalNumberMinorInjuries" id="totalNumberMinorInjuries">
+                <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+                  [(items)]="aircraft.occurrence.totalNumberMinorInjuries.value"
+                  path="E5X.Occurrence.Aircraft.TotalNumberMinorInjuries" id="totalNumberMinorInjuries">
                 </nlf-ors-editor-tag-e5x>
               </div>
 
               <div class="col-md-3">
-                <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="aircraft.occurrence.totalNumberSeriousInjuries.value" path="E5X.Occurrence.Aircraft.TotalNumberSeriousInjuries" id="totalNumberSeriousInjuries">
+                <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+                  [(items)]="aircraft.occurrence.totalNumberSeriousInjuries.value"
+                  path="E5X.Occurrence.Aircraft.TotalNumberSeriousInjuries" id="totalNumberSeriousInjuries">
                 </nlf-ors-editor-tag-e5x>
               </div>
 
               <div class="col-md-3">
-                <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="aircraft.occurrence.totalNumberFatalities.value" path="E5X.Occurrence.Aircraft.TotalNumberFatalities" id="totalNumberFatalities">
+                <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+                  [(items)]="aircraft.occurrence.totalNumberFatalities.value"
+                  path="E5X.Occurrence.Aircraft.TotalNumberFatalities" id="totalNumberFatalities">
                 </nlf-ors-editor-tag-e5x>
               </div>
             </div>
@@ -194,17 +240,22 @@
           <div class="col-md-12" *ngIf="aircraft.occurrence.occOnGround.value != 1">
             <div class="row">
               <div class="col-md-4">
-                <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="aircraft.airspace.attributes.airspaceClass.value" path="E5X.Occurrence.AirSpace.AirspaceClass" id="airspaceClass">
+                <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+                  [(items)]="aircraft.airspace.attributes.airspaceClass.value"
+                  path="E5X.Occurrence.AirSpace.AirspaceClass" id="airspaceClass">
                 </nlf-ors-editor-tag-e5x>
               </div>
               <div class="col-md-6">
-                <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="aircraft.airspace.attributes.specialActivities.value" path="E5X.Occurrence.AirSpace.SpecialActivities" id="specialActivities">
+                <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+                  [(items)]="aircraft.airspace.attributes.specialActivities.value"
+                  path="E5X.Occurrence.AirSpace.SpecialActivities" id="specialActivities">
                 </nlf-ors-editor-tag-e5x>
               </div>
               <div class="col-md-2">
                 <div class="form-group">
                   <label>Ytterligere info</label>
-                  <nlf-ors-editor-e5x-airspace-single (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(airspace)]="aircraft.airspace"></nlf-ors-editor-e5x-airspace-single>
+                  <nlf-ors-editor-e5x-airspace-single (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+                    [(airspace)]="aircraft.airspace"></nlf-ors-editor-e5x-airspace-single>
                 </div>
               </div>
             </div>
@@ -216,14 +267,20 @@
           <div class="col-md-12" *ngIf="observation.occurrence.attributes.weatherRelevant.value == 1">
             <div class="row">
               <div class="col-md-4">
-                <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="aircraft.occurrence.relWindDirection.value" path="E5X.Occurrence.Aircraft.RelWindDirection" id="relWindDirection"></nlf-ors-editor-tag-e5x>
+                <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+                  [(items)]="aircraft.occurrence.relWindDirection.value" path="E5X.Occurrence.Aircraft.RelWindDirection"
+                  id="relWindDirection"></nlf-ors-editor-tag-e5x>
               </div>
               <div class="col-md-4">
-                <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="aircraft.occurrence.turbulenceIntensity.value" path="E5X.Occurrence.Aircraft.TurbulenceIntensity" id="turbulenceIntensity">
+                <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+                  [(items)]="aircraft.occurrence.turbulenceIntensity.value"
+                  path="E5X.Occurrence.Aircraft.TurbulenceIntensity" id="turbulenceIntensity">
                 </nlf-ors-editor-tag-e5x>
               </div>
               <div class="col-md-4">
-                <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="aircraft.occurrence.visibRestrictions.value" path="E5X.Occurrence.Aircraft.VisibRestrictions" id="visibRestrictions">
+                <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+                  [(items)]="aircraft.occurrence.visibRestrictions.value"
+                  path="E5X.Occurrence.Aircraft.VisibRestrictions" id="visibRestrictions">
                 </nlf-ors-editor-tag-e5x>
               </div>
             </div>
@@ -233,16 +290,21 @@
           <div class="col-md-12" *ngIf="aircraft.occurrence.occOnGround.value != 1">
             <div class="row">
               <div class="col-md-5">
-                <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="aircraft.occurrence.birdsWildlifeSeen.value" path="E5X.Occurrence.Aircraft.BirdsWildlifeSeen" id="BirdsWildlifeSeen">
+                <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+                  [(items)]="aircraft.occurrence.birdsWildlifeSeen.value"
+                  path="E5X.Occurrence.Aircraft.BirdsWildlifeSeen" id="BirdsWildlifeSeen">
                 </nlf-ors-editor-tag-e5x>
               </div>
               <div class="col-md-5">
-                <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="aircraft.occurrence.birdsWildlifeStruck.value" path="E5X.Occurrence.Aircraft.BirdsWildlifeStruck" id="BirdsWildlifeStruck">
+                <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+                  [(items)]="aircraft.occurrence.birdsWildlifeStruck.value"
+                  path="E5X.Occurrence.Aircraft.BirdsWildlifeStruck" id="BirdsWildlifeStruck">
                 </nlf-ors-editor-tag-e5x>
               </div>
               <div class="col-md-2">
                 <label>Ytterligere info</label>
-                <nlf-ors-editor-e5x-ac-wildlife (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [callsign]="aircraft.aircraft.callsign" (change)="update()" [(attr)]="aircraft.occurrence">
+                <nlf-ors-editor-e5x-ac-wildlife (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+                  [callsign]="aircraft.aircraft.callsign" (change)="update()" [(attr)]="aircraft.occurrence">
                 </nlf-ors-editor-e5x-ac-wildlife>
               </div>
             </div>
@@ -250,33 +312,43 @@
 
           <!-- OCCURRED ON AERODROMEGENERAL (link) -->
           <div class="col-md-5">
-            <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="aircraft.aerodrome.attributes.locationOnNearAerodrome.value" path="E5X.Occurrence.AerodromeGeneral.LocationOnNearAerodrome"
+            <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+              [(items)]="aircraft.aerodrome.attributes.locationOnNearAerodrome.value"
+              path="E5X.Occurrence.AerodromeGeneral.LocationOnNearAerodrome"
               id="locationOnNearAerodrome"></nlf-ors-editor-tag-e5x>
           </div>
           <div class="col-md-5">
-            <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="aircraft.aerodrome.attributes.locationIndicator.value" path="E5X.Occurrence.AerodromeGeneral.LocationIndicator" id="locationIndicator">
+            <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+              [(items)]="aircraft.aerodrome.attributes.locationIndicator.value"
+              path="E5X.Occurrence.AerodromeGeneral.LocationIndicator" id="locationIndicator">
             </nlf-ors-editor-tag-e5x>
           </div>
           <div class="col-md-2">
             <div class="form-group">
               <label>Ytterligere info</label>
-              <nlf-ors-editor-e5x-aerodrome-single (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(aerodrome)]="aircraft.aerodrome"></nlf-ors-editor-e5x-aerodrome-single>
+              <nlf-ors-editor-e5x-aerodrome-single (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+                [(aerodrome)]="aircraft.aerodrome"></nlf-ors-editor-e5x-aerodrome-single>
             </div>
           </div>
 
           <!-- ATM CONTRIBUTION ATS LINK-->
           <div class="col-md-5">
-            <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="observation.occurrence.attributes.atmContribution.value" path="E5X.Occurrence.ATMContribution" id="atmContribution">
+            <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+              [(items)]="observation.occurrence.attributes.atmContribution.value" path="E5X.Occurrence.ATMContribution"
+              id="atmContribution">
             </nlf-ors-editor-tag-e5x>
           </div>
           <div class="col-md-5">
-            <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="observation.occurrence.attributes.effectOnATMService.value" path="E5X.Occurrence.EffectOnATMService" id="effectOnATMService">
+            <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+              [(items)]="observation.occurrence.attributes.effectOnATMService.value"
+              path="E5X.Occurrence.EffectOnATMService" id="effectOnATMService">
             </nlf-ors-editor-tag-e5x>
           </div>
           <div class="col-md-2">
             <div class="form-group">
               <label>Ytterligere info</label>
-              <nlf-ors-editor-e5x-atm (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(atm)]="observation.occurrence.entities.airNavigationService[0]"></nlf-ors-editor-e5x-atm>
+              <nlf-ors-editor-e5x-atm (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w"
+                [(atm)]="observation.occurrence.entities.airNavigationService[0]"></nlf-ors-editor-e5x-atm>
             </div>
           </div>
 
@@ -295,9 +367,9 @@
     <div class="modal-header">
       <h4 class="modal-title pull-left">
         {{ modalRoute.from.icao }}
-        <fa name="long-arrow-right" [fixed]="true"></fa>{{ modalRoute.to.icao }}
+        <fa-icon [icon]="faLongArrowRight"></fa-icon>{{ modalRoute.to.icao }}
       </h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+      <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -306,16 +378,21 @@
 
       <!-- SEGMENT MAP fxFlex="100" s -->
       <div style="max-height: 200px !important;">
-        <agm-map style="height: 200px !important" [latitude]="(toFloat(modalRoute.from.location.coordinates[1])+toFloat(modalRoute.to.location.coordinates[1]))/2"
-          [longitude]="(toFloat(modalRoute.from.location.coordinates[0])+toFloat(modalRoute.to.location.coordinates[0]))/2" [zoom]="zoom">
+        <agm-map style="height: 200px !important"
+          [latitude]="(toFloat(modalRoute.from.location.coordinates[1])+toFloat(modalRoute.to.location.coordinates[1]))/2"
+          [longitude]="(toFloat(modalRoute.from.location.coordinates[0])+toFloat(modalRoute.to.location.coordinates[0]))/2"
+          [zoom]="zoom">
           <!-- BOTH -->
-          <agm-marker [markerDraggable]="false" [latitude]="toFloat(modalRoute.to.location.coordinates[1])" [longitude]="toFloat(modalRoute.to.location.coordinates[0])" [label]="modalRoute.to.icao">
+          <agm-marker [markerDraggable]="false" [latitude]="toFloat(modalRoute.to.location.coordinates[1])"
+            [longitude]="toFloat(modalRoute.to.location.coordinates[0])" [label]="modalRoute.to.icao">
           </agm-marker>
-          <agm-marker [markerDraggable]="false" [latitude]="toFloat(modalRoute.from.location.coordinates[1])" [longitude]="toFloat(modalRoute.from.location.coordinates[0])" [label]="modalRoute.from.icao">
+          <agm-marker [markerDraggable]="false" [latitude]="toFloat(modalRoute.from.location.coordinates[1])"
+            [longitude]="toFloat(modalRoute.from.location.coordinates[0])" [label]="modalRoute.from.icao">
           </agm-marker>
           <!--https://github.com/SebastianM/angular-google-maps/pull/1621-->
           <agm-polyline [editable]="false">
-            <agm-polyline-point *ngFor="let coordinates of modalRoute.path" [latitude]="toFloat(coordinates[1])" [longitude]="toFloat(coordinates[0])">
+            <agm-polyline-point *ngFor="let coordinates of modalRoute.path" [latitude]="toFloat(coordinates[1])"
+              [longitude]="toFloat(coordinates[0])">
             </agm-polyline-point>
           </agm-polyline>
 
@@ -338,13 +415,13 @@
           <div class="my-1" *ngIf="exists(aircraft.wx, modalRoute.from.icao, 'metar')">
             <div><strong>METARs</strong></div>
             <div class="small" *ngFor="let metar of aircraft.wx[modalRoute.from.icao].metar">
-              {{ metar }}
+              {{ metar }}
             </div>
           </div>
           <div class="my-1" *ngIf="exists(aircraft.wx, modalRoute.from.icao, 'taf')">
             <div><strong>TAFs</strong></div>
             <div class="small" *ngFor="let taf of aircraft.wx[modalRoute.from.icao].metar">
-              {{taf }}
+              {{ taf }}
             </div>
           </div>
 
@@ -363,13 +440,13 @@
           <div class="my-1" *ngIf="exists(aircraft.wx, modalRoute.to.icao, 'metar')">
             <div><strong>METARs</strong></div>
             <div class="small" *ngFor="let metar of aircraft.wx[modalRoute.to.icao].metar">
-              {{ metar }}
+              {{ metar }}
             </div>
           </div>
           <div class="my-1" *ngIf="exists(aircraft.wx, modalRoute.to.icao, 'taf')">
             <div><strong>TAFs</strong></div>
             <div class="small" *ngFor="let taf of aircraft.wx[modalRoute.to.icao].metar">
-              {{taf }}
+              {{ taf }}
             </div>
           </div>
 
@@ -388,7 +465,7 @@
 
     <div class="modal-footer">
       <button class="btn btn-outline-dark" (click)="modalRef.close()">
-        <fa name="times" [fixed]="true"></fa>Ferdig
+        <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>Ferdig
       </button>
     </div>
   </ng-template>
@@ -423,11 +500,11 @@
   <tr *ngFor="let airport of selectedAirports; let idx = index">
     <td class="pointer">
 
-      <fa *ngIf="!!airport._id" name="check" fw="true" class="text-success mr-2" title="Hentet fra flyplassregisteret"></fa>
-      <fa *ngIf="!airport.hasOwnProperty('_id')" name="check" fw="exclamation" class="text-danger mr-2" title="Ukjent sted"></fa>
+      <fa-icon *ngIf="!!airport._id" [icon]="faCheck" [fixedWidth]="true" class="text-success me-2" title="Hentet fra flyplassregisteret"></fa-icon>
+      <fa-icon *ngIf="!airport.hasOwnProperty('_id')" [icon]="faExclamation" [fixedWidth]="true" class="text-danger me-2" title="Ukjent sted"></fa-icon>
 
-      <fa *ngIf="airport.type !== 'HELICOPTER'" name="airplane" fw="true"></fa>
-      <fa *ngIf="airport.type === 'HELICOPTER'" name="helicopter" fw="true"></fa>
+      <fa-icon *ngIf="airport.type !== 'HELICOPTER'" [icon]="faAirplane" [fixedWidth]="true"></fa-icon>
+      <fa-icon *ngIf="airport.type === 'HELICOPTER'" [icon]="faHelicopter" [fixedWidth]="true"></fa-icon>
       <strong>
         {{ airport.icao }}<span *ngIf="!!selectedAirports[idx+1]">-{{ selectedAirports[idx+1].icao }}</span>
       </strong>
@@ -439,7 +516,7 @@
       {{ airport.type }}
     </td>
     <td>
-      <fa *ngIf="!observation.acl_user.w" class="pointer" name="times" fw="true"></fa>
+      <fa-icon *ngIf="!observation.acl_user.w" class="pointer" [icon]="faTimes" [fixedWidth]="true"></fa-icon>
     </td>
   </tr>
 </table>

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NlfOrsSeilflyComponent } from './ors-seilfly.component';
 
@@ -6,7 +6,7 @@ describe('NlfOrsSeilflyComponent', () => {
   let component: NlfOrsSeilflyComponent;
   let fixture: ComponentFixture<NlfOrsSeilflyComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NlfOrsSeilflyComponent ]
     })

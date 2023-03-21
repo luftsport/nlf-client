@@ -2,14 +2,14 @@
   <div class="container">
     <span class="breadcrumb">
       <li class="breadcrumb-item">
-        <fa name="plane" [fixed]="true" class="mr-1 active"></fa><a [routerLink]="['/', 'aircraft']">Aircraft</a>
+        <fa-icon [icon]="faPlane" class="me-1 active"></fa-icon><a [routerLink]="['/', 'aircraft']">Aircraft</a>
       </li>
       <sup class="text-danger mx-1" title="Applikasjonen er ikke ferdig utviklet">beta</sup>
     </span>
 
     <!--Note difference between federation, sections/activity and clubs! Section->show all club aircrafts? -->
 
-    <span class="float-right d-inline">
+    <span class="float-end d-inline">
       <nlf-aircrafts-add></nlf-aircrafts-add>
     </span>
 
@@ -42,15 +42,15 @@
           {{ row.msn }}
         </td>
         <td class="ngx-easy-table-small text-center">
-          <span class="badge" [ngClass]="{'badge-success': row.status=='ACTIVE','badge-secondary': row.status=='DELETED'}">{{ row.status }}</span>
+          <span class="badge" [ngClass]="{'bg-success': row.status=='ACTIVE','bg-secondary': row.status=='DELETED'}">{{ row.status }}</span>
         </td>
         <td class="ngx-easy-table-small text-center">
           <span *ngIf="!!row.e5x">
-            <fa class="text-success" name="check"></fa>
+            <fa-icon class="text-success" [icon]="faCheck"></fa-icon>
           </span>
           <!--
           <span *ngIf="!row.e5x">
-            <fa class="text-danger" name="close"></fa>
+            <fa-icon class="text-danger" [icon]="faClose"></fa-icon>
           </span>
           -->
         </td>

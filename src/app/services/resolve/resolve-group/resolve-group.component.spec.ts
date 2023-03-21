@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ResolveGroupComponent } from './resolve-group.component';
 
@@ -6,7 +6,7 @@ describe('ResolveGroupComponent', () => {
   let component: ResolveGroupComponent;
   let fixture: ComponentFixture<ResolveGroupComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ResolveGroupComponent ]
     })

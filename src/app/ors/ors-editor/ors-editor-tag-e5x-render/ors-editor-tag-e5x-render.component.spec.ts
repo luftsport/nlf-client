@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NlfOrsEditorTagE5xRenderComponent } from './ors-editor-tag-e5x-render.component';
 
@@ -6,7 +6,7 @@ describe('NlfOrsEditorTagE5xRenderComponent', () => {
   let component: NlfOrsEditorTagE5xRenderComponent;
   let fixture: ComponentFixture<NlfOrsEditorTagE5xRenderComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NlfOrsEditorTagE5xRenderComponent ]
     })

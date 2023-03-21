@@ -15,9 +15,11 @@
     <p class="lead">
       <nlf-resolve-lungo-activity *ngIf="!!organization.main_activity.id" [activity_id]="organization.main_activity.id"></nlf-resolve-lungo-activity>
     </p>
-    <a class="btn btn-secondary btn-block" [routerLink]="['/organizations', organization.id]" [routerLinkActive]="'active'">
-      <fa name="link" [fixed]="true"></fa>{{ organization.name }}
-    </a>
+    <div class="d-grid gap-2">
+      <a class="btn btn-secondary" [routerLink]="['/organizations', organization.id]" [routerLinkActive]="'active'">
+        <fa-icon [icon]="faLink"></fa-icon>{{ organization.name }}
+      </a>
+    </div>
   </ng-template>
 
   <ng-template #popTitle>
@@ -28,5 +30,5 @@
 </span>
 
 <span *ngIf="!dataReady">
-  <fa name="spinner" animation="pulse" [size]="1"></fa>
+  <nlf-ui-component-spinner></nlf-ui-component-spinner>
 </span>

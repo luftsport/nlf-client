@@ -7,7 +7,7 @@ const nlfClubRoutes: Routes = [{ path: 'club', component: NlfClubComponent, canA
 
 
 @NgModule({
-  imports: [ RouterModule.forRoot(nlfClubRoutes)],
+  imports: [ RouterModule.forRoot(nlfClubRoutes, { relativeLinkResolution: 'legacy' })],
   exports: [ RouterModule],
   declarations: []
 })

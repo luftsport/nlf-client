@@ -3,6 +3,7 @@ import { ApiCacheService } from 'app/api/api-cache.service';
 import { LungoOrganizationsService } from 'app/api/lungo-organizations.service';
 import { ApiOptionsInterface } from 'app/api/api.interface';
 import { LungoOrganizationsItem } from 'app/api/lungo.interface';
+import { faLink } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-resolve-lungo-organization',
@@ -11,6 +12,7 @@ import { LungoOrganizationsItem } from 'app/api/lungo.interface';
 })
 export class NlfResolveLungoOrganizationComponent implements OnInit {
 
+  faLink = faLink;
 
   @Input() organization_id: number;
   @Input() show_activity: boolean = false;

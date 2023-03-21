@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ApiObservationWeatherInterface } from 'app/api/api.interface';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { faCommenting } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'nlf-ors-report-weather',
@@ -13,6 +14,8 @@ export class NlfOrsReportWeatherComponent implements OnInit {
 
   modalRef;
   modal;
+
+  faCommenting = faCommenting;
 
   constructor(private modalService: NgbModal) { }
 

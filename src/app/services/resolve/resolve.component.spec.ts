@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NlfResolveComponent } from './resolve.component';
 
@@ -6,7 +6,7 @@ describe('ResolveComponent', () => {
   let component: NlfResolveComponent;
   let fixture: ComponentFixture<NlfResolveComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NlfResolveComponent ]
     })

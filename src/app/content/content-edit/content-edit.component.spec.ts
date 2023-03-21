@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NlfAdminHelpEditComponent } from './help-edit.component';
 
@@ -6,7 +6,7 @@ describe('NlfAdminHelpEditComponent', () => {
   let component: NlfAdminHelpEditComponent;
   let fixture: ComponentFixture<NlfAdminHelpEditComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NlfAdminHelpEditComponent ]
     })

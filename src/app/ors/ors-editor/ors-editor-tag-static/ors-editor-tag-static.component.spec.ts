@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { OrsEditorTagStaticComponent } from './ors-editor-tag-static.component';
 
@@ -6,7 +6,7 @@ describe('OrsEditorTagStaticComponent', () => {
   let component: OrsEditorTagStaticComponent;
   let fixture: ComponentFixture<OrsEditorTagStaticComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ OrsEditorTagStaticComponent ]
     })

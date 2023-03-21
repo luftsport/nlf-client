@@ -17,6 +17,7 @@ import {
   E5XReportingHistoryClass,
   E5XRiskAssessmentClass
 } from 'app/interfaces/e5x.interface';
+import { faExclamationTriangle, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 // import { ApiObservationsItem} from 'app/api/api.interface';
 
@@ -26,6 +27,9 @@ import {
   styleUrls: ['./ors-seilfly-create.component.css']
 })
 export class NlfOrsSeilflyCreateComponent implements OnInit {
+
+  faPlus = faPlus;
+  faExclamationTriangle = faExclamationTriangle;
 
   @Input() layout: string; // inline, short, datetimepicker, calendar etc
   @Input() defaultBtn: boolean = false;

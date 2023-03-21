@@ -1,5 +1,5 @@
 <button title="Legg til nytt fly i flyregisteret" (click)="openModal(modalTemplate)" style="margin:1px;" class="btn btn-primary btn-sm">
-  <fa name="plus" [fixed]="true"></fa>Nytt fly
+  <fa-icon [icon]="faPlus" [fixedWidth]="true"></fa-icon>Nytt fly
 </button>
 
 <!-- ROUTE MODAL -->
@@ -8,7 +8,7 @@
     <h4 class="modal-title pull-left">
       Add Aircraft
     </h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -21,9 +21,7 @@
         <div class="input-group mb-3">
           <input (keyup.enter)="checkAircraft()" [(ngModel)]="callsign" type="text" class="form-control" placeholder="Regnummer"
             aria-label="Regnummer" aria-describedby="Regnummer">
-          <div class="input-group-append">
-            <button (click)="checkAircraft()" class="btn btn-primary" id="Regnummer">Check</button>
-          </div>
+          <button (click)="checkAircraft()" class="btn btn-primary" id="Regnummer">Check</button>
         </div>
       </div>
     </div>
@@ -36,7 +34,7 @@
       <!-- ADD A AIRCRAFT -->
       <div class="col-md-12 col-sm-12" *ngIf="aircraft_listing.length === 0">
 
-        <div class="form-row">
+        <div class="row">
           <div class="col-md-6 col-sm-12">
             <div class="form-group">
               <label for="type">Aircraft Type</label>
@@ -57,7 +55,7 @@
           </div>
         </div>
 
-        <div class="form-row">
+        <div class="row">
 
           <div class="col-md-12 col-sm-12">
             <div class="form-group">
@@ -66,7 +64,7 @@
             </div>
           </div>
         </div>
-        <div class="form-row">
+        <div class="row">
           <div class="col-md-12 col-sm-12">
             <div class="form-group">
               <label for="model">Model</label>
@@ -75,7 +73,7 @@
           </div>
         </div>
 
-        <div class="form-row">
+        <div class="row">
           <div class="col-md-12 col-sm-12">
             <div class="form-group">
               <label for="msn">Serial</label>
@@ -84,10 +82,12 @@
           </div>
         </div>
 
-        <div class="form-row">
-          <button (click)="addAircraft()" class="btn btn-primary btn-block">
-            <fa name="plus" [fixed]="true"></fa>Add
-          </button>
+        <div class="row">
+          <div class="d-grid gap-2 mt-3">
+            <button (click)="addAircraft()" class="btn btn-primary">
+              <fa-icon [icon]="faPlus"></fa-icon>Add
+            </button>
+          </div>
         </div>
       </div>
 
@@ -100,8 +100,8 @@
       <div class="col-sm-12">
         <div *ngFor="let row of aircraft_listing">
           <a [routerLink]="['/aircraft', 'edit', row._id]">
-            <fa name="edit" [fixed]="true"></fa>{{ row.callsign }}
-          </a> {{ row.manufacturer }} {{ row.model }} <span class="badge" [ngClass]="{'badge-success': row.status=='ACTIVE', 'badge-danger': row.status=='DELETED'}">{{ row.status }}</span>
+            <fa-icon [icon]="faEdit"></fa-icon>{{ row.callsign }}
+          </a> {{ row.manufacturer }} {{ row.model }} <span class="badge" [ngClass]="{'bg-success': row.status=='ACTIVE', 'bg-danger': row.status=='DELETED'}">{{ row.status }}</span>
         </div>
       </div>
 
@@ -111,7 +111,7 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa name="times" [fixed]="true"></fa>Avbryt
+      <fa-icon [icon]="faTimes"></fa-icon>Avbryt
     </button>
 
   </div>

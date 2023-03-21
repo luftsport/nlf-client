@@ -1,6 +1,6 @@
 <div *ngIf="dataReady">
   <div *ngFor="let airport of airports">
     {{ airport.icao }} - <a [routerLink]="['/aip', 'airport', airport.id]">{{ airport.name }}</a>
-    <span class="ml-1" *ngIf="show_distance && !!airport.location.distance">({{ airport.location.distance }}km)</span>
+    <span class="ms-1" *ngIf="show_distance && !!airport.location.distance">({{ airport.location.distance }}km)</span>
   </div>
 </div>

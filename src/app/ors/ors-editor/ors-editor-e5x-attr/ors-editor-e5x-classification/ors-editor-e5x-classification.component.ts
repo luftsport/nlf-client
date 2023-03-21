@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { debounce } from 'ts-debounce';
+import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';import {  } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-editor-e5x-classification',
@@ -16,6 +17,9 @@ export class NlfOrsEditorE5XClassificationComponent implements OnInit {
 
   modalRef;
   debouncedUpdate = debounce(this.update, 500);
+
+  faTimes = faTimes;
+  faCheck = faCheck;
 
   constructor(private modalService: NgbModal) { }
 

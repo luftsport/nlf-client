@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { faCheck, faMedkit, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { isObjEmpty } from 'app/interfaces/functions';
 
@@ -16,6 +17,10 @@ export class NlfOrsEditorE5XInjuriesComponent implements OnInit {
   @Input() disabled: boolean = false;
   modalRef;
   _isObjEmpty = isObjEmpty;
+
+  faMedkit = faMedkit;
+  faTimes = faTimes;
+  faCheck = faCheck;
 
   constructor(private modalService: NgbModal) { }
 

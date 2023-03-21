@@ -3,12 +3,15 @@ import { ApiObservationsWorkflowService } from 'app/api/api-observations-workflo
 import { ApiOptionsInterface } from 'app/api/api.interface';
 import { TableEventObject, DefaultTableConfig } from 'app/interfaces/ngx-easy-table.interface';
 import { timeSince } from 'app/interfaces/functions';
+import { faClock } from '@fortawesome/free-regular-svg-icons';
 @Component({
   selector: 'nlf-ors-todo-table',
   templateUrl: './ors-todo-table.component.html',
   styleUrls: ['./ors-todo-table.component.css']
 })
 export class NlfOrsTodoTableComponent implements OnInit {
+
+  faClock = faClock;
 
   @Input() activity: string;
 

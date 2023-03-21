@@ -1,11 +1,11 @@
 <span *ngIf="config">
   <span
   *ngIf="badge"
-  class="badge badge-{{ config[activity].observation.state[state]['badge'] }}"
+  class="badge bg-{{ config[activity].observation.state[state]['badge'] }}"
   placement="bottom"
   container="body"
   [ngbTooltip]="config[activity].observation.state[state]['descr']">
-    <fa *ngIf="!!icon" [name]="config[activity].observation.state[state]['icon']" [fixed]="true"></fa>
+    <fa-icon *ngIf="!!icon" [icon]="icons[config[activity].observation.state[state]['icon']]"></fa-icon>
     {{ state | nlfOrsState: activity }}
   </span>
   <span *ngIf="!badge">

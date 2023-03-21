@@ -3,7 +3,7 @@
 
     <span class="breadcrumb">
       <li class="breadcrumb-item">
-        <fa name="users" [fixed]="true"></fa> <a [routerLink]="['/medlem']">NLF Medlemssjekk</a>
+        <fa-icon [icon]="faUsers"></fa-icon> <a [routerLink]="['/medlem']">NLF Medlemssjekk</a>
       </li>
       <li class="breadcrumb-item active">
         Medlemsliste <sup class="text-danger mx-1" title="Applikasjonen er ikke ferdig utviklet">beta</sup>
@@ -11,11 +11,11 @@
     </span>
 
     <!--
-    <button *ngIf="!!query" class="btn btn-primary btn-sm pull-right mx-1" (click)="openModal(saveTemplate)" title="Funksjonen kommer snart" disabled>
-      <fa name="save" [fixed]="true"></fa> Lagre søk
+    <button *ngIf="!!query" class="btn btn-primary btn-sm float-end mx-1" (click)="openModal(saveTemplate)" title="Funksjonen kommer snart" disabled>
+      <fa-icon [icon]="faSave"></fa-icon> Lagre søk
     </button>
     -->
-    <nlf-help class="pull-right mx-1" key="nlf-member"></nlf-help>
+    <nlf-help class="float-end mx-1" key="nlf-member"></nlf-help>
 
   </div>
 </header>
@@ -48,10 +48,10 @@
       <td class="ngx-easy-table-small">
 
         <div *ngFor="let membership of row.memberships" class="overflow-hidden">
-          <fa *ngIf="!!membership.payment && checkExpiryYear(membership.payment.year)" name="check"
-            class="text-success mr-1"></fa>
-          <fa *ngIf="!membership.payment || !checkExpiryYear(membership.payment.year)" name="remove"
-            class="text-danger mr-1"></fa>
+          <fa-icon *ngIf="!!membership.payment && checkExpiryYear(membership.payment.year)" [icon]="faCheck"
+            class="text-success me-1"></fa-icon>
+          <fa-icon *ngIf="!membership.payment || !checkExpiryYear(membership.payment.year)" [icon]="faRemove"
+            class="text-danger me-1"></fa-icon>
           <nlf-resolve-lungo-organization [organization_id]="membership.discipline" [link]="false" [long]="true"
             [show_activity]="true"></nlf-resolve-lungo-organization>
           <span *ngIf="!!membership.payment">{{ membership.payment.exception || '' }} {{ membership.payment.type ||
@@ -67,8 +67,8 @@
       <td class="ngx-easy-table-small">
         <div *ngFor="let competence of row.competences" class="overflow-hidden">
 
-          <fa *ngIf="checkExpiry(competence.expiry)" name="check" class="text-success mr-1"></fa>
-          <fa *ngIf="!checkExpiry(competence.expiry)" name="remove" class="text-danger mr-1"></fa>
+          <fa-icon *ngIf="checkExpiry(competence.expiry)" [icon]="faCheck" class="text-success me-1"></fa-icon>
+          <fa-icon *ngIf="!checkExpiry(competence.expiry)" [icon]="faRemove" class="text-danger me-1"></fa-icon>
           {{ competence._code }} {{ competence.expiry | date:'yyyy-MM-dd':'+0000' }}
         </div>
         <div *ngIf="!row.competences||row.competences.length==0">
@@ -76,21 +76,21 @@
       </td>
 
       <!-- licenses -->
-      <td class="ngx-easy-table-small text-right">
+      <td class="ngx-easy-table-small text-end">
 
         <!-- HPS obligatorisk forsikring hack -->
         <ng-container *ngIf="row.hasOwnProperty('activities') && row.activities.indexOf(110)>-1">
           <div *ngFor="let m of row.magazines" class="overflow-hidden">
             <span *ngIf="m.name=='Unknown Name' && m.year==2022">
-              <fa name="check" class="text-success mr-1"></fa>HPS Personal accident insurance and third party liability
+              <fa-icon [icon]="faCheck" class="text-success me-1"></fa-icon>HPS Personal accident insurance and third party liability
               insurance valid through 31.12.2022
             </span>
           </div>
         </ng-container>
 
         <div *ngFor="let license of row.licenses" class="overflow-hidden">
-          <fa *ngIf="checkExpiry(license.expiry) && license.status_id===3" name="check" class="text-success mr-1"></fa>
-          <fa *ngIf="!checkExpiry(license.expiry) || license.status_id!=3" name="remove" class="text-danger mr-1"></fa>
+          <fa-icon *ngIf="checkExpiry(license.expiry) && license.status_id===3" [icon]="faCheck" class="text-success me-1"></fa-icon>
+          <fa-icon *ngIf="!checkExpiry(license.expiry) || license.status_id!=3" [icon]="faRemove" class="text-danger me-1"></fa-icon>
           <nlf-resolve-lungo-license [license_id]="license.id" [link]="false" [long]="true"></nlf-resolve-lungo-license>
         </div>
         <div *ngIf="!row.licenses||row.licenses.length==0">
@@ -99,10 +99,10 @@
 
       </td>
 
-      <td class="ngx-easy-table-small text-left">
+      <td class="ngx-easy-table-small text-start">
         <div *ngFor="let federation of row.federation" class="overflow-hidden">
-          <fa *ngIf="checkExpiryYear(federation.year)" name="check" class="text-success mr-1"></fa>
-          <fa *ngIf="!checkExpiryYear(federation.year)" name="remove" class="text-danger mr-1"></fa>
+          <fa-icon *ngIf="checkExpiryYear(federation.year)" [icon]="faCheck" class="text-success me-1"></fa-icon>
+          <fa-icon *ngIf="!checkExpiryYear(federation.year)" [icon]="faRemove" class="text-danger me-1"></fa-icon>
           {{ federation.name }} {{ federation.type }}
           <nlf-resolve-lungo-activity [activity_id]="federation.activity"></nlf-resolve-lungo-activity> {{
           federation.year }} <span *ngIf="!!federation.exception">{{federation.exception}}</span>
@@ -171,7 +171,7 @@
 </span>
 <span *ngIf="!dataReady">
   <p class="align-middle text-center  text-secondary">
-    <fa name="spinner" animation="pulse" size="3x"></fa>
+    <nlf-ui-component-spinner size="3"></nlf-ui-component-spinner>
   </p>
 </span>
 

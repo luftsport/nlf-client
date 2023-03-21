@@ -1,6 +1,6 @@
 <!-- Should have option to show avatar, with or without link to public profile and popover with info! -->
 <span *ngIf="dataReady">
-  <nlf-resolve-avatar class="avatar avatar-xs mr-1" *ngIf="avatar" [person_id]="person_id"></nlf-resolve-avatar>
+  <nlf-resolve-avatar class="avatar avatar-xs me-1" *ngIf="avatar" [person_id]="person_id"></nlf-resolve-avatar>
 
   <!-- Link to profile -->
   <span *ngIf="!!link && person_id > 0">
@@ -18,17 +18,17 @@
 
   <!-- Housekeeping -->
   <ng-container *ngIf="person_id == 1">
-    <span class="avatar avatar-xs mr-1"><img src=" data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgAgMAAACf9p+rAAAC7HpUWHRSYXcgcHJvZmlsZSB0eXBlIGV4aWYAAHja7ZddkuwmDIXfWUWWgCSExHIwP1XZQZafA6Z7euZOknsreUq1KRssZCGfT6Znwvjj9xl+w0Elc0hqnkvOEUcqqXDFwON9lH2lmPZ1H/lM4f6TPTwnGCZBL/et1eNfYdePBx5r0PXZHvzMsJ9AZ+IRUNbKjEF/TRJ2vu2UTqAyTsrF7TXVi+++HcedyjmvE3RnFO/78GpIBpW6YiFhHkIScWU5Gcg6WSrsdF/hd49VPKC734JuQT693qOP8VWgTyI/RuGr+s/RF/G5Hrt80fLQChh8O0H6vfhb4peF5ZkRf54w+SiVryLP2X3Ocb9dTRmK5lNRW2x6hIHjBcllP5bRDKdibLsVNI81NiDvscULrVEhBpUZKFGnSpPG7hs1pJh4sKFnbizb5mJcuMnilFajySZFujhINh5BBGZ+5kJ73bLXa+RYuRNcmRCMNv6/aOHvJn+lhTnbkoiiP7VCXrzqGmkscusKLwChebjpFvjRDv74Uj8oVRDULbPjBWu87hCX0kdtyeYs8FP09ydEwfoJAImwtiIZlH2imEmUMkVjNiLo6ABUkTlL4gsESJU7kuQkgv3I2HmtjWeMti8rZ15m7E0AoZLFwKZIBayUFPVjyVFDVUWTqmY19aBFa5acsuacLa9NrppYMrVsZm7FqosnV89u7l68Fi6CPVBLLla8lFIrh4qFKmJV+FdYLr7kSpde+bLLr3LVhvJpqWnLzZq30mrnLh3bRM/duvfS66AwsFOMNHTkYcNHGXWi1qbMNHXmadNnmfVJ7VD9of0CNTrUeJNafvakBmswe4SgtZ3oYgZinAjEbRFAQfNiFp1S4kVuMYuF8VEoI0ldbEKnRQwI0yDWSU92H+R+iltQ/ylu/E/kwkL3X5ALQPcjt2+o9fU71zax+ytcmkbB14f54TWw1/WjVv9t/w70DvQO9A70DvQO9A70Pwg08ccD/okNfwIufZ4phLypewAAAYRpQ0NQSUNDIHByb2ZpbGUAACiRfZE9SMNAGIbfpkqlVhzsIOKQoTpZECvSUatQhAqhVmjVweT6C00akhQXR8G14ODPYtXBxVlXB1dBEPwBcXRyUnSREr9LCi1ivOO4h/e+9+XuO0BoVplq9kwCqmYZ6WRCzOZWxcAr+mkGEUNcZqY+J0kpeI6ve/j4fhflWd51f46BfMFkgE8knmW6YRFvEM9sWjrnfeIwK8t54nPiCYMuSPzIdcXlN84lhwWeGTYy6XniMLFY6mKli1nZUImniSN5VaN8IetynvMWZ7VaZ+178heGCtrKMtdpjSKJRSxBgggFdVRQhYUo7RopJtJ0nvDwjzh+iVwKuSpg5FhADSpkxw/+B797axZjU25SKAH0vtj2xxgQ2AVaDdv+Prbt1gngfwautI6/1gTin6Q3OlrkCBjcBi6uO5qyB1zuAMNPumzIjuSnJRSLwPsZfVMOGLoFgmtu39rnOH0AMtSr1A1wcAiMlyh73ePdfd19+7em3b8fyjRyyhpHIOgAAAAJUExURQAAAAAAAP///4Pdz9IAAAABdFJOUwBA5thmAAAAAWJLR0QAiAUdSAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAAd0SU1FB+YLCwo6AIQmv4AAAADuSURBVEjH7ZTLDcMgDIZBKhuEfTwCB3v/VVowTfgTOw2XKqrqQ4TzYfwCh/BDEoVsJUkJpuKCLBxMZR6kEVxyHkeASY0WkDt7YDGXNUbTGO0L1pesOECNhC0pdlCDy7wDix3tsJF3/2UVxtswSLEN0ERAnJME7pXYTuZBRsDfBKUCShpQBY8eLOe2S5Ou66QB5wqKgpYTJz1MOlC7BmQD9AZxBa+rfgR0DsCHC9IOMIQ7ANH+9gS1u825foQrhjygiB3kI9CSxCOgG/T8HND2Ii6CMA0++Yj3Kcn8c3ZHhjtk/LGUvEEWnJP+cht5AhOB/UJzogUhAAAAAElFTkSuQmCC" alt="user" class="avatar-img rounded-circle" [ngbTooltip]="tippy">
+    <span class="avatar avatar-xs me-1"><img src=" data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgAgMAAACf9p+rAAAC7HpUWHRSYXcgcHJvZmlsZSB0eXBlIGV4aWYAAHja7ZddkuwmDIXfWUWWgCSExHIwP1XZQZafA6Z7euZOknsreUq1KRssZCGfT6Znwvjj9xl+w0Elc0hqnkvOEUcqqXDFwON9lH2lmPZ1H/lM4f6TPTwnGCZBL/et1eNfYdePBx5r0PXZHvzMsJ9AZ+IRUNbKjEF/TRJ2vu2UTqAyTsrF7TXVi+++HcedyjmvE3RnFO/78GpIBpW6YiFhHkIScWU5Gcg6WSrsdF/hd49VPKC734JuQT693qOP8VWgTyI/RuGr+s/RF/G5Hrt80fLQChh8O0H6vfhb4peF5ZkRf54w+SiVryLP2X3Ocb9dTRmK5lNRW2x6hIHjBcllP5bRDKdibLsVNI81NiDvscULrVEhBpUZKFGnSpPG7hs1pJh4sKFnbizb5mJcuMnilFajySZFujhINh5BBGZ+5kJ73bLXa+RYuRNcmRCMNv6/aOHvJn+lhTnbkoiiP7VCXrzqGmkscusKLwChebjpFvjRDv74Uj8oVRDULbPjBWu87hCX0kdtyeYs8FP09ydEwfoJAImwtiIZlH2imEmUMkVjNiLo6ABUkTlL4gsESJU7kuQkgv3I2HmtjWeMti8rZ15m7E0AoZLFwKZIBayUFPVjyVFDVUWTqmY19aBFa5acsuacLa9NrppYMrVsZm7FqosnV89u7l68Fi6CPVBLLla8lFIrh4qFKmJV+FdYLr7kSpde+bLLr3LVhvJpqWnLzZq30mrnLh3bRM/duvfS66AwsFOMNHTkYcNHGXWi1qbMNHXmadNnmfVJ7VD9of0CNTrUeJNafvakBmswe4SgtZ3oYgZinAjEbRFAQfNiFp1S4kVuMYuF8VEoI0ldbEKnRQwI0yDWSU92H+R+iltQ/ylu/E/kwkL3X5ALQPcjt2+o9fU71zax+ytcmkbB14f54TWw1/WjVv9t/w70DvQO9A70DvQO9A70Pwg08ccD/okNfwIufZ4phLypewAAAYRpQ0NQSUNDIHByb2ZpbGUAACiRfZE9SMNAGIbfpkqlVhzsIOKQoTpZECvSUatQhAqhVmjVweT6C00akhQXR8G14ODPYtXBxVlXB1dBEPwBcXRyUnSREr9LCi1ivOO4h/e+9+XuO0BoVplq9kwCqmYZ6WRCzOZWxcAr+mkGEUNcZqY+J0kpeI6ve/j4fhflWd51f46BfMFkgE8knmW6YRFvEM9sWjrnfeIwK8t54nPiCYMuSPzIdcXlN84lhwWeGTYy6XniMLFY6mKli1nZUImniSN5VaN8IetynvMWZ7VaZ+178heGCtrKMtdpjSKJRSxBgggFdVRQhYUo7RopJtJ0nvDwjzh+iVwKuSpg5FhADSpkxw/+B797axZjU25SKAH0vtj2xxgQ2AVaDdv+Prbt1gngfwautI6/1gTin6Q3OlrkCBjcBi6uO5qyB1zuAMNPumzIjuSnJRSLwPsZfVMOGLoFgmtu39rnOH0AMtSr1A1wcAiMlyh73ePdfd19+7em3b8fyjRyyhpHIOgAAAAJUExURQAAAAAAAP///4Pdz9IAAAABdFJOUwBA5thmAAAAAWJLR0QAiAUdSAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAAd0SU1FB+YLCwo6AIQmv4AAAADuSURBVEjH7ZTLDcMgDIZBKhuEfTwCB3v/VVowTfgTOw2XKqrqQ4TzYfwCh/BDEoVsJUkJpuKCLBxMZR6kEVxyHkeASY0WkDt7YDGXNUbTGO0L1pesOECNhC0pdlCDy7wDix3tsJF3/2UVxtswSLEN0ERAnJME7pXYTuZBRsDfBKUCShpQBY8eLOe2S5Ou66QB5wqKgpYTJz1MOlC7BmQD9AZxBa+rfgR0DsCHC9IOMIQ7ANH+9gS1u825foQrhjygiB3kI9CSxCOgG/T8HND2Ii6CMA0++Yj3Kcn8c3ZHhjtk/LGUvEEWnJP+cht5AhOB/UJzogUhAAAAAElFTkSuQmCC" alt="user" class="avatar-img rounded-circle" [ngbTooltip]="tippy">
     </span>
     <span title="{{ full_name }} er en automatisk tjeneste"><strong>{{ full_name }}</strong></span>
   </ng-container>
 
   <!-- Anonymous or tmp_name sup eller attr? -->
   <span *ngIf="person_id < 1">{{ full_name }}<sup class="text-info" title="Midlertidig navn eller anonymisert">
-      <fa name="question"></fa>
+      <fa-icon [icon]="faQuestion"></fa-icon>
     </sup>
   </span>
 </span>
 <span *ngIf="!dataReady">
-  <fa name="spinner" animation="pulse" [size]="1"></fa>
+  <nlf-ui-component-spinner></nlf-ui-component-spinner>
 </span>

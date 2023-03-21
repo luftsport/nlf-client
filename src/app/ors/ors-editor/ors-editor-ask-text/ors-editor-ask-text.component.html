@@ -9,9 +9,9 @@
     <span *ngIf="observation.workflow.state!='draft'" class="lead">Din vurdering: <nlf-help key="ors-editor-ask-text">
       </nlf-help></span>
     <ng-container *ngIf="observation.workflow.audit.length>1">
-      <button *ngIf="!showAllASK" type="button" class="btn btn-link pull-right" (click)="openModal(previewModal)">vis
+      <button *ngIf="!showAllASK" type="button" class="btn btn-link float-end" (click)="openModal(previewModal)">vis
         alle vurderinger</button>
-      <button *ngIf="showAllASK" type="button" class="btn btn-link pull-right" (click)="showAllASK=!showAllASK">lukk
+      <button *ngIf="showAllASK" type="button" class="btn btn-link float-end" (click)="showAllASK=!showAllASK">lukk
         forhåndsvisning</button>
     </ng-container>
   </div>
@@ -28,7 +28,7 @@
   </div>
   <!-- //ASK text input -->
 
-  <!--<button [disabled]="!observation.acl_user.w" class="btn btn-link pull-right" (click)="reset()">Reset</button>-->
+  <!--<button [disabled]="!observation.acl_user.w" class="btn btn-link float-end" (click)="reset()">Reset</button>-->
 
   <!--(searchTerm)="search($event)"
 <p>Arr: {{ involved.currentArr | async | json }}</p>
@@ -50,7 +50,7 @@
     <h4 class="modal-title pull-left">
       Vurderinger
     </h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -83,7 +83,7 @@
 
   <div class="modal-footer">
     <button class="btn btn-outline-dark" (click)="closeModal()">
-      <!--<fa name="times" [fixed]="true"></fa>-->Ferdig
+      <!--<fa-icon [icon]="faTimes"></fa-icon>-->Ferdig
     </button>
   </div>
 </ng-template>

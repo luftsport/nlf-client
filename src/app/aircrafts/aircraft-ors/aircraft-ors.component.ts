@@ -3,6 +3,7 @@ import { ApiAircraftsItem } from 'app/api/api.interface';
 import { ApiObservationsItem, ApiObservationsList, ApiOptionsInterface } from 'app/api/api.interface';
 import { ApiEveQueryInterface } from 'app/api/api-eve.interface';
 import { ApiObservationsService } from 'app/api/api-observations.service';
+import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-aircraft-ors',
@@ -10,6 +11,8 @@ import { ApiObservationsService } from 'app/api/api-observations.service';
   styleUrls: ['./aircraft-ors.component.css']
 })
 export class NlfAircraftOrsComponent implements OnInit {
+
+  faPaperclip = faPaperclip;
 
   public observations: ApiObservationsItem[];
 

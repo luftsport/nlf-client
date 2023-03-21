@@ -1,13 +1,14 @@
 import { Component, OnInit, Output, Input, TemplateRef, EventEmitter } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ApiObservationFileInterface, ApiObservationsItem, ApiOptionsInterface } from 'app/api/api.interface';
-import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions } from 'ngx-uploader';
+import { UploadOutput, UploadInput, UploadFile, humanizeBytes, UploaderOptions } from '@angular-ex/uploader';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import { ApiFilesService } from 'app/api/api-files.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmService } from 'app/services/confirm/confirm.service';
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
 import { NlfAuthSubjectService } from 'app/services/auth/auth-subject.service';
+import { faPlus, faCamera, faDownload, faTimes, faLock, faUnlock, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';import {  } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-editor-files',
@@ -15,6 +16,15 @@ import { NlfAuthSubjectService } from 'app/services/auth/auth-subject.service';
   styleUrls: ['./ors-editor-files.component.css']
 })
 export class NlfOrsEditorFilesComponent implements OnInit {
+
+  faPlus = faPlus;
+  faCamera = faCamera;
+  faDownload = faDownload;
+  faTimes = faTimes;
+  faLock = faLock;
+  faUnlock = faUnlock;
+  faChevronLeft = faChevronLeft;
+  faChevronRight = faChevronRight;
 
   @Input() onlyFilepicker: boolean;
   @Input() dropzone: boolean;
@@ -324,8 +334,11 @@ export class NlfOrsEditorFilesComponent implements OnInit {
   }
 
   startUpload(): void {
+    
+    
 
     this.ngxfiles.forEach((file, index) => {
+      this.uploading = true;
       let event: UploadInput = {
         type: 'uploadFile',
         url: '/api/v1/files/',
@@ -347,6 +360,8 @@ export class NlfOrsEditorFilesComponent implements OnInit {
 
       this.uploadInput.emit(event);
     });
+
+    this.uploading = false;
 
   }
 

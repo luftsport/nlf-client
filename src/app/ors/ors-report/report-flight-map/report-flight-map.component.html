@@ -1,0 +1,3 @@
+<div id="main-report-map" leaflet *ngIf="!!mapOptions" class="map" [leafletOptions]="mapOptions"
+    (leafletMapReady)="onMapReady($event)" [(leafletCenter)]="mapCenter">
+</div>

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ResolveLungoLicenseComponent } from './resolve-lungo-license.component';
 
@@ -6,7 +6,7 @@ describe('ResolveLungoLicenseComponent', () => {
   let component: ResolveLungoLicenseComponent;
   let fixture: ComponentFixture<ResolveLungoLicenseComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ResolveLungoLicenseComponent ]
     })

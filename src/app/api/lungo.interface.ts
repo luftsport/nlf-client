@@ -191,7 +191,7 @@ export interface LungoLicensesList extends ApiEveBaseList {
     _items: LungoLicensesItem[];
 }
 
-export interface LungoLicensesTypesItem extends ApiEveBaseList {
+export interface LungoLicensesTypesItem extends ApiEveBaseItem {
     id: number;
     org_id_owner: number;
     period_id: number;
@@ -210,6 +210,34 @@ export interface LungoLicensesTypesList extends ApiEveBaseList {
     _items: LungoLicensesTypesItem[];
 }
 
+export interface LungoPaymentsItem extends ApiEveBaseItem {
+    account_number: number;
+    amount: number;
+    amount_at_payment_time: number;
+    fee: number;
+    fee_org: number;
+    invoice_id: number;
+    invoicing_org: string;
+    invoicing_org_id: number;
+    kid: number;
+    net_amount: number;
+    paid_date: Date;
+    payment_id: number;
+    product_name: string;
+    product_type: string;
+    product_type_id: number;
+    unit_cost_net: number;
+    id: number;
+    method_id: number;
+    receiver: 'string';
+    receiver_org_id: number;
+    person_id: number;
+    person_type: number;
+    org_id: number;
+}
+export interface LungoPaymentsItemList extends ApiEveBaseList {
+    _items: LungoPaymentsItem[];
+}
 /**
 export interface LungoLicensesItem extends ApiEveBaseItem {
     id: number;
@@ -265,12 +293,12 @@ export interface LungoCountriesList extends ApiEveBaseList {
  * Persons
  */
 export interface LungoPersonsMembershipsPaymentItem {
-  id?: number;
-  year?: number;
-  exception?: string;
-  type?: string;
-  amount?: number;
-  paid?: Date;
+    id?: number;
+    year?: number;
+    exception?: string;
+    type?: string;
+    amount?: number;
+    paid?: Date;
 }
 
 export interface LungoPersonsMembershipsItem {
@@ -320,7 +348,7 @@ export interface LungoPersonsItem extends ApiEveBaseItem {
     full_name?: string;
     functions?: number[] | LungoFunctionsItem[];
     clubs?: number[] | LungoOrganizationsItem[];
-    activities?: number[] | LungoActivitiesItem[];
+    activities?: number[]; // | LungoActivitiesItem[];
     memberships?: LungoPersonsMembershipsItem[];
     competences?: LungoPersonsCompetenceItem[] | LungoCompetencesItem[];
     licenses?: LungoPersonsLicenseItem[] | LungoLicensesItem[];

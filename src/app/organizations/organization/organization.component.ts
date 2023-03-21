@@ -5,6 +5,7 @@ import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { LungoOrganizationsService } from 'app/api/lungo-organizations.service';
 import { LungoOrganizationsItem } from 'app/api/lungo.interface';
 import { NlfAlertService } from 'app/services/alert/alert.service';
+import { faSitemap, faHome, faMap, faMapMarker, faDashboard, faPieChart, faPlane } from '@fortawesome/free-solid-svg-icons';
 // import { forkJoin } from 'rxjs';
 
 @Component({
@@ -20,6 +21,14 @@ export class NlfOrganizationComponent implements OnInit, OnDestroy {
   lungo: LungoOrganizationsItem;
   sub;
   public config: NlfConfigItem;
+
+  faSitemap = faSitemap;
+  faHome = faHome;
+  faMap = faMap;
+  faMapMarker = faMapMarker;
+  faDashboard = faDashboard;
+  faPieChart = faPieChart;
+  faPlane = faPlane;
 
 
   constructor(

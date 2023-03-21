@@ -4,32 +4,35 @@
 
 <div *ngIf="modal && !showOnlyBtn" class="row">
   <div class="col-md-3">
-    <button class="btn btn-primary btn-block" (click)="openModal(attrModal)">
-      <fa name="map-marker" [fixed]="true"></fa>Where
-    </button>
+    <div class="d-grid gap-2">
+      <button class="btn btn-primary" (click)="openModal(attrModal)">
+        <fa-icon [icon]="faMapMarker"></fa-icon> Where
+      </button>
+    </div>
   </div>
   <div class="col-md-9">
     <div *ngFor="let a of atm; let idx = index">
-      <nlf-ors-editor-tag-e5x-render classes="badge badge-danger" [items]="a.attributes.anspName.value" path="E5X.Occurrence.AirNavigationService.ANSPName"></nlf-ors-editor-tag-e5x-render>
+      <nlf-ors-editor-tag-e5x-render classes="badge bg-danger" [items]="a.attributes.anspName.value"
+        path="E5X.Occurrence.AirNavigationService.ANSPName"></nlf-ors-editor-tag-e5x-render>
       &nbsp;
-      <fa name="edit" (click)="openModal(modal, idx)"></fa>
-      <fa name="close" (click)="delete(idx)"></fa>
+      <fa-icon [icon]="faEdit" (click)="openModal(modal, idx)"></fa-icon>
+      <fa-icon [icon]="faClose" (click)="delete(idx)"></fa-icon>
     </div>
   </div>
 </div>
 
-<div *ngIf="modal && showOnlyBtn" class="row">
-  <button class="btn btn-secondary btn-block" (click)="openModal(attrModal)">
-    <fa name="map-marker" [fixed]="true"></fa>Where
+<div *ngIf="modal && showOnlyBtn" class="row d-grid gap-2">
+  <button class="btn btn-secondary" (click)="openModal(attrModal)">
+    <fa-icon [icon]="faMapMarker"></fa-icon> Where
   </button>
 </div>
-<!-- INJURIES MODAL -->
+
 <ng-template #attrModal>
   <div class="modal-header">
     <h4 class="modal-title pull-left">
       Occurred Where
     </h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.dismiss()">
+    <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -37,39 +40,46 @@
   <div class="modal-body">
     <!--<ng-container *ngTemplateOutlet="attrTemplate"></ng-container>-->
     <!-- Modal content -->
-    <div class="row">
-      <agm-map *ngIf="geoReady" [latitude]="toFloat(attr.latitudeOfOcc.value)" [longitude]="toFloat(attr.longitudeOfOcc.value)" (mapClick)="updateLocation($event)" [mapTypeControl]="true" [zoom]="7">
+    <div class="col-xs-12 position-relative">
+      <div class="row" style="height: 400px">
 
-        <agm-marker [markerDraggable]="isDraggable()" (dragEnd)="updateLocation($event)" [latitude]="toFloat(attr.latitudeOfOcc.value)" [longitude]="toFloat(attr.longitudeOfOcc.value)">
-        </agm-marker>
-
-        <!-- PATHS -->
-        <agm-polyline *ngFor="let path of paths">
-          <agm-polyline-point *ngFor="let coordinates of path" [latitude]="coordinates[1]" [longitude]="coordinates[0]">
-          </agm-polyline-point>
-        </agm-polyline>
-
-      </agm-map>
-    </div>
-
-    <div class="row">
-      <div class="col-md-6">
-        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.latitudeOfOcc.value" path="E5X.Occurrence.LatitudeOfOcc" id="latitudeOfOcc"></nlf-ors-editor-tag-e5x>
-      </div>
-      <div class="col-md-6">
-        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.longitudeOfOcc.value" path="E5X.Occurrence.LongitudeOfOcc" id="longitudeOfOcc"></nlf-ors-editor-tag-e5x>
+        <nlf-ors-editor-e5x-where-map [aircraft]="observation.aircrafts"
+          [(lat)]="observation.occurrence.attributes.latitudeOfOcc.value"
+          [(lng)]="observation.occurrence.attributes.longitudeOfOcc.value" [disabled]="!observation.acl_user.w"
+          (change)="update()"></nlf-ors-editor-e5x-where-map>
       </div>
 
     </div>
 
     <div class="row">
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="observation.occurrence.attributes.latitudeOfOcc.value"
+          path="E5X.Occurrence.LatitudeOfOcc" id="latitudeOfOcc"></nlf-ors-editor-tag-e5x>
+      </div>
+      <div class="col-md-6">
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="observation.occurrence.attributes.longitudeOfOcc.value"
+          path="E5X.Occurrence.LongitudeOfOcc" id="longitudeOfOcc"></nlf-ors-editor-tag-e5x>
+      </div>
+      <!--
+      <div class="col-md-4">
+        <button *ngIf="!!userGeo" class="btn btn-primary" (click)="useMyLocation()"><fa-icon [icon]="faLocation" [fixedWidth]="true"></fa-icon> Bruk min posisjon</button>
+      </div>
+      -->
+
+    </div>
+
+    <div class="row">
       <div class="col-md-12">
-        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.locationName.value" path="E5X.Occurrence.LocationName" id="locationName"></nlf-ors-editor-tag-e5x>
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="observation.occurrence.attributes.locationName.value"
+          path="E5X.Occurrence.LocationName" id="locationName"></nlf-ors-editor-tag-e5x>
       </div>
 
       <div class="col-md-12">
-        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="attr.stateAreaOfOcc.value" path="E5X.Occurrence.StateAreaOfOcc" id="stateAreaOfOcc"></nlf-ors-editor-tag-e5x>
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="observation.occurrence.attributes.stateAreaOfOcc.value"
+          path="E5X.Occurrence.StateAreaOfOcc" id="stateAreaOfOcc"></nlf-ors-editor-tag-e5x>
       </div>
+    </div>
+    <div class="row clearfix">
     </div>
 
     <div class="row">
@@ -82,11 +92,14 @@
   </div>
 
   <div class="modal-footer">
+
+
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
-      <fa name="times" [fixed]="true"></fa>Avbryt
+      <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>Avbryt
     </button>
-    <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate(modalIndex)">
-      <fa name="check" [fixed]="true"></fa>Oppdater
+    <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success"
+      (click)="modalUpdate(modalIndex)">
+      <fa-icon [icon]="faCheck" [fixedWidth]="true"></fa-icon>Oppdater
     </button>
   </div>
 </ng-template>

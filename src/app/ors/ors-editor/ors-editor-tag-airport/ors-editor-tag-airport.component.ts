@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import { ApiAirportsService } from 'app/api/api-airports.service';
-import { ApiOptionsInterface, ApiObservationsItem, ApiAirport, ApiAirports } from 'app/api/api.interface';
+import { ApiOptionsInterface, ApiObservationsItem, ApiAirport, ApiAirports, ApiGeoCoordinates } from 'app/api/api.interface';
 import { distinctUntilChanged, debounceTime, switchMap, tap, catchError, map } from 'rxjs/operators';
 import { Subject, Observable, of, concat } from 'rxjs';
 import { GeoLocationService } from 'app/services/geo/geo-location.service';
@@ -46,7 +46,7 @@ export class NlfOrsEditorTagAirportComponent implements OnInit {
   airportsLoading = false;
   selectedAirports = {};
   dataReady = true;
-  location: Coordinates;
+  location: ApiGeoCoordinates["coordinates"];
 
   constructor(
     private airportService: ApiAirportsService,

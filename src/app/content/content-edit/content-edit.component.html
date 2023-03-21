@@ -8,7 +8,7 @@
 
   <div class="nlf-sticky-toolbar">
     <div class="container">
-      <fa name="edit" [fixed]="true"></fa>{{ content.title }}
+      <fa-icon [icon]="faEdit"></fa-icon>{{ content.title }}
       <sup class="text-danger mx-1" title="Applikasjonen er ikke ferdig utviklet">beta</sup>
     </div>
   </div>
@@ -52,30 +52,30 @@
 
 
     <div class="nlf-toolbar fixed-bottom">
-      <span class="float-right">
+      <span class="float-end">
 
 
         <a *ngIf="mode==='create_space'" class="btn" [routerLink]="['/content']">
-          <fa name="close" [fixed]="true"></fa>Cancel
+          <fa-icon [icon]="faClose"></fa-icon>Cancel
         </a>
 
         <a *ngIf="mode==='create_page'" class="btn" [routerLink]="['/content/space', content.space_key]">
-          <fa name="close" [fixed]="true"></fa>Cancel
+          <fa-icon [icon]="faClose"></fa-icon>Cancel
         </a>
 
         <a *ngIf="mode==='edit'" class="btn" [routerLink]="['/content/view', content.space_key, content.slug]">
-          <fa name="close" [fixed]="true"></fa>Cancel
+          <fa-icon [icon]="faClose"></fa-icon>Cancel
         </a>
 
         <button [disabled]="!changed" *ngIf="mode==='edit'" (click)="save()" class="btn btn-primary">
-          <fa name="save" [fixed]="true"></fa>Save
+          <fa-icon [icon]="faSave"></fa-icon>Save
         </button>
 
         <button *ngIf="mode==='create_space'" (click)="create()" class="btn btn-success">
-          <fa name="plus" [fixed]="true"></fa>Create space
+          <fa-icon [icon]="faPlus"></fa-icon>Create space
         </button>
         <button *ngIf="mode==='create_page'" (click)="create()" class="btn btn-success">
-          <fa name="plus" [fixed]="true"></fa>Create page
+          <fa-icon [icon]="faPlus"></fa-icon>Create page
         </button>
       </span>
     </div>

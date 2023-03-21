@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ApiObservationsService } from 'app/api/api-observations.service';
 import { ApiOptionsInterface, ApiObservationsList } from 'app/api/api.interface';
 import { ApiCacheService } from 'app/api/api-cache.service';
+import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-ors-last',
@@ -17,6 +18,8 @@ export class NlfOrsLastComponent implements OnInit {
   total: number = 0;
   data: any;
   error = false;
+
+  faPaperclip = faPaperclip;
 
   constructor(private orsService: ApiObservationsService,
               private apiCache: ApiCacheService) {

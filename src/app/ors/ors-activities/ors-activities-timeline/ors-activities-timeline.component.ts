@@ -8,6 +8,8 @@ import { ApiAclService } from 'app/api/api-acl.service';
 import { ApiObservationsService } from 'app/api/api-observations.service';
 import { NlfComponent } from 'app/nlf.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { faBell, faComment, faExchange, faFloppyDisk, faPaperPlane, faPlus, faRepeat, faBan, faLongArrowRight, faUserPlus, faUserTimes, faRefresh, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faBell as faBellRegular, faCommenting, faComments, faPaperPlane as faPaperPlaneRegular, faClock  } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'nlf-ors-activities-timeline',
@@ -17,6 +19,25 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class NlfOrsActivitiesTimelineComponent implements OnInit {
 
   @Input() observation: ApiObservationsItem;
+
+  faBell = faBell;
+  faBellRegular = faBellRegular;
+  faComments = faComments;
+  faComment = faComment;
+  faCommenting = faCommenting;
+  faExchange = faExchange;
+  faPaperPlane = faPaperPlane;
+  faPlus = faPlus;
+  faRepeat = faRepeat;
+  faRefresh = faRefresh;
+  faBan = faBan;
+  faLongArrowRight = faLongArrowRight;
+  faUserPlus = faUserPlus;
+  faUserTimes = faUserTimes;
+  faFloppyDisk = faFloppyDisk;
+  faPaperPlaneRegular = faPaperPlaneRegular;
+  faClock = faClock;
+  faCheck = faCheck;
 
   message_text: string = '';
   notifications: ApiNotificationsItem[];

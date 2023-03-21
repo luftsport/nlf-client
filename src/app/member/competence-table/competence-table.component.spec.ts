@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NlfCompetenceTableComponent } from './competence-table.component';
 
@@ -6,7 +6,7 @@ describe('NlfCompetenceTableComponent', () => {
   let component: NlfCompetenceTableComponent;
   let fixture: ComponentFixture<NlfCompetenceTableComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NlfCompetenceTableComponent ]
     })
