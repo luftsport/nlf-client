@@ -69,8 +69,8 @@
         <a [routerLink]="['/content']" class="nav-link">Innhold</a>
       </li>
 
-      <!-- Medlemssjekk  -->
-      <ng-container *ngIf="!ENV.production">
+      <!-- Medlemssjekk -->
+      <ng-container>
         <li (click)="navbarOpen=false" *ngIf="authenticated" class="nav-item" routerLinkActive="active">
           <a [routerLink]="['/medlem']" class="nav-link">Medlem</a>
         </li>

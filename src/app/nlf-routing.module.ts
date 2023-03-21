@@ -55,7 +55,7 @@ let _routes: Routes = [
   { path: 'app/obs/', loadChildren: () => import('app/permalinks/permalinks.module').then(m => m.NlfPermalinksModule), data: { preload: false, prod: true } },
 
   // Member check
-  { path: 'medlem', component: NlfMemberComponent, data: { bc: 'Medlemssjekk', title: 'Medlemssjekk', prod: false } },
+  { path: 'medlem', component: NlfMemberComponent, data: { bc: 'Medlemssjekk', title: 'Medlemssjekk', prod: true } },
   { path: 'medlem/kompetanse', component: NlfCompetenceTableComponent, data: { bc: 'Kompetanser', title: 'Kompetanser', prod: false } },
   
   // Catch all
