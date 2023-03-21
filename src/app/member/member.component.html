@@ -18,6 +18,8 @@
       <fa-icon [icon]="faSave"></fa-icon> Lagre søk
     </button>
     -->
+
+    <!-- Medlemslister kun i dev -->
       <span
         *ngIf="ENV.production===false && [1505923257, 1476506542, -1957053861, 1536523365].indexOf(userHash(user_data.person_id))>-1"
         class="float-end d-inline">
