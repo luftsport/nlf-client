@@ -37,7 +37,8 @@
 
     <div class="row">
 
-      <!-- TEST -->
+      <p class="lead">Valgene er ikke aktiverte</p>
+      <!-- TEST !DISABLED!
       NB Testing
       <div class="col-md-6">
         <nlf-ors-editor-tag-e5x [disabled]="disabled" path="E5X.Occurrence.ATMContribution"></nlf-ors-editor-tag-e5x>
@@ -52,6 +53,8 @@
         <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.attributes.anspName.value"
           path="E5X.Occurrence.AirNavigationService.ANSPName" id="ANSPName"></nlf-ors-editor-tag-e5x>
       </div>
+      -->
+
       <!--
                     <div class="col-md-6">
                         <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="modalValue.attributes.atmContribution.value" path="E5X.Occurrence.ATMContribution"
@@ -63,6 +66,8 @@
                             id="EffectOnATMService"></nlf-ors-editor-tag-e5x>
                     </div>
                   -->
+
+      <!-- !DISABLED!
     </div>
 
     <div class="row">
@@ -87,8 +92,9 @@
       <div *ngIf="devDebug" class="row">
         AC: {{ atm | json }}
       </div>
-
+-->
     </div>
+
   </div>
 
 
@@ -96,8 +102,10 @@
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
       <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>Avbryt
     </button>
+    <!-- !DISABLED!
     <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success" (click)="modalUpdate()">
       <fa-icon [icon]="faCheck" [fixedWidth]="true"></fa-icon>Oppdater
     </button>
+    -->
   </div>
 </ng-template>
