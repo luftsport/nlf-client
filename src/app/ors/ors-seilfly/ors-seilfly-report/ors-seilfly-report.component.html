@@ -145,16 +145,13 @@
 		<!-- /Involved -->
 
 		<!-- Files -->
-		<div class="row">
+		<div class="row" *ngIf="observation.files.length>0">
 			<div class="col-md-12">
 				<div class="card-header">
 					<fa-icon [icon]="faFile"></fa-icon> Vedlegg
 				</div>
 				<nlf-ors-report-files [files]="observation.files"
 					[state]="observation.workflow.state"></nlf-ors-report-files>
-				<div class="p-2" *ngIf="observation.files.length==0">
-					Ingen Vedlegg
-				</div>
 			</div>
 		</div>
 		<!-- /Files -->
