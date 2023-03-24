@@ -41,6 +41,8 @@
 					icon="true"></nlf-resolve-observation-state>
 			</span>
 			<!-- /WORKFLOW STATE -->
+
+      <nlf-ors-report-e5x [observation]="observation" class="float-end"></nlf-ors-report-e5x>
 		</div>
 	</header>
 	<!-- /END HEADER -->
@@ -56,14 +58,14 @@
 			<div class="col-md-6">
 				<div fxFlex="100"
 					*ngIf="!!observation.occurrence.attributes.latitudeOfOcc.value || !!observation.occurrence.attributes.longitudeOfOcc.value">
-					
+
 					<div class="row" style="height: 400px">
 						<div class="col-xs-12 position-relative">
 							<nlf-ors-report-flight-map [aircraft]="observation.aircrafts"
 								[where]="[observation.occurrence.attributes.latitudeOfOcc.value, observation.occurrence.attributes.longitudeOfOcc.value]"></nlf-ors-report-flight-map>
 						</div>
 					</div>
-					
+
 					<div class="mt-2">
 						<fa-icon [icon]="faMapMarker"></fa-icon> {{ observation.occurrence.attributes.locationName.value
 						|| "Sted ikke angitt" }}
@@ -81,9 +83,9 @@
 
 				<div
 					*ngIf="!observation.occurrence.attributes.latitudeOfOcc.value || !observation.occurrence.attributes.longitudeOfOcc.value">
-					<ngb-alert type="danger" [dismissible]="false">
+					<ngb-alert type="info" [dismissible]="false" class="mt-2">
 						<fa-icon [icon]="faMapMarker"></fa-icon>
-						Ingen lokalisasjon satt.
+						Informasjon om posisjon for hendelse er ikke angitt
 					</ngb-alert>
 				</div>
 
@@ -106,60 +108,6 @@
 					</div>
 				</div>
 				-->
-
-		<!-- E5X -->
-
-
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card-header">
-					<fa-icon [icon]="faBolt"></fa-icon> E5X
-				</div>
-
-				<ng-container *ngIf="observation.hasOwnProperty('e5x')">
-					<div *ngIf="observation.e5x.audit.length==0" class="alert alert-info mt-2">
-						<strong>Ingen historikk</strong> hvilket betyr at denne observasjonen ikke har blitt sendt LT
-						tidligere.
-					</div>
-
-					<div class="overflow-auto">
-						<table *ngIf="observation.e5x.audit.length>0" class="my-3 table table-striped table-sm">
-							<tbody>
-								<tr *ngFor="let audit of observation.e5x.audit"
-									[ngClass]="{'bg-info':observation._version==audit.version}">
-									<td>
-										<nlf-ors-editor-tag-e5x-render classes="badge bg-secondary" [showLabel]="false"
-											[items]="audit.status"
-											path="E5X.Occurrence.ReportingHistory.ReportStatus"></nlf-ors-editor-tag-e5x-render>
-									</td>
-									<td>
-										{{ audit.date | date:'yyyy-MM-dd HH:mm'}}
-									</td>
-									<td>
-										<nlf-resolve-lungo-person
-											[person_id]="audit.person_id"></nlf-resolve-lungo-person>
-									</td>
-									<td>
-										v{{ audit.version }}
-									</td>
-									<td>
-										<span *ngIf="audit.sent" class="badge bg-success">OK</span>
-										<span *ngIf="!audit.sent" class="badge bg-danger">Ikke sendt</span>
-									</td>
-									<td class="text-end">
-										<a *ngIf="!!token" target="_blank"
-											href="/api/v1/e5x/download/{{observation._model.type}}/{{observation.id}}/{{audit.version}}?token={{token}}">
-											<fa-icon [icon]="faDownload"></fa-icon>
-										</a>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</ng-container>
-
-			</div>
-		</div>
 
 		<!-- NARRATIVE -->
 		<div class="row">

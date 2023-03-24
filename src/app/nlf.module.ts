@@ -1,7 +1,7 @@
 /**
  * NLF MODULE
- * 
- *  
+ *
+ *
  */
 import { environment } from 'environments/environment';
 const ENV = environment; // Make Global
@@ -155,7 +155,7 @@ import { NlfDynamicColorPipe } from 'app/pipes/dynamic-color.pipe';
 import { NlfActivityPipe } from 'app/pipes/activity.pipe';
 
 
-// OBSREG CREATE 
+// OBSREG CREATE
 import { NlfOrsFallskjermCreateComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-create/ors-fallskjerm-create.component';
 import { NlfOrsMotorCreateComponent } from 'app/ors/ors-motor/ors-motor-create/ors-motor-create.component';
 import { NlfOrsSeilflyCreateComponent } from 'app/ors/ors-seilfly/ors-seilfly-create/ors-seilfly-create.component';
@@ -208,6 +208,7 @@ import { NlfOrsReportFilesComponent } from 'app/ors/ors-report/report-files/repo
 import { NlfOrsReportComponentsTimelineComponent } from 'app/ors/ors-report/report-components-timeline/report-components-timeline.component';
 import { NlfOrsReportFilesThumbnailsComponent } from 'app/ors/ors-report/report-files-thumbnails/report-files-thumbnails.component';
 import { NlfOrsReportFlightMapComponent } from 'app/ors/ors-report/report-flight-map/report-flight-map.component';
+import { NlfOrsReportE5xComponent } from './ors/ors-report/report-e5x/report-e5x.component';
 
 // OBSREG FALLSKJERM
 import { NlfOrsFallskjermEditorComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-editor/ors-fallskjerm-editor.component';
@@ -360,7 +361,7 @@ import { ConfirmService, ConfirmState, ConfirmModalComponent, ConfirmTemplateDir
 import { NlfAlertService } from 'app/services/alert/alert.service';
 import { NlfErrorComponent } from 'app/error/error.component';
 
-// @TODO 
+// @TODO
 // videogular
 // import { VgCoreModule } from 'videogular2/core';
 // import { VgControlsModule } from 'videogular2/controls';
@@ -462,6 +463,7 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfResolveObservationComponent,
     NlfUserProfileComponent,
     NlfOrsReportFilesComponent,
+    NlfOrsReportE5xComponent,
     NlfOrsTagsPipe,
     NlfOrsComponentAttributesPipe,
     NlfResolveObservationStateComponent,

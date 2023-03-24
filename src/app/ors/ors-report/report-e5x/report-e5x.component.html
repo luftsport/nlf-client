@@ -1,0 +1,57 @@
+<span *ngIf="!!observation">
+  <span (click)="openModal(modalTemplate)" class="pointer badge mx-1" [ngClass]="{'bg-success':observation.e5x.status=='sent', 'bg-secondary': !observation.e5x.status}">
+    <fa-icon [icon]="faFileAlt"></fa-icon> LT
+  </span>
+
+  <!-- MODAL PREVIEW -->
+  <ng-template #modalTemplate>
+
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">
+        <fa-icon [icon]="faHistory"></fa-icon> Historikk for innsending av #{{ observation.id }} ({{ observation._model.type }}) til Luftfartstilsynet</h4>
+      <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+
+    <div class="modal-body">
+
+      <div class="row">
+        <div class="col-md-12">
+          <div *ngIf="observation.e5x.audit.length==0" class="alert alert-info">
+            <strong>Ingen historikk</strong> hvilket betyr at denne observasjonen ikke har blitt sendt Luftfartstilsynet.
+          </div>
+
+          <table *ngIf="observation.e5x.audit.length>0" class="my-3 table table-striped table-sm">
+            <tbody>
+              <tr *ngFor="let audit of observation.e5x.audit" [ngClass]="{'bg-info':observation._version==audit.version}">
+                <td>
+                  <nlf-ors-editor-tag-e5x-render classes="badge bg-secondary" [showLabel]="false" [items]="audit.status" path="E5X.Occurrence.ReportingHistory.ReportStatus"></nlf-ors-editor-tag-e5x-render>
+                </td>
+                <td>
+                  {{ audit.date | date:'yyyy-MM-dd HH:mm'}}
+                </td>
+                <td>
+                  <nlf-resolve-lungo-person [person_id]="audit.person_id"></nlf-resolve-lungo-person>
+                </td>
+                <td>
+                  v{{ audit.version }}
+                </td>
+                <td>
+                  <span *ngIf="audit.sent" class="badge bg-success">OK</span>
+                  <span *ngIf="!audit.sent" class="badge bg-info">Ikke sendt</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-outline-dark" (click)="closeModal()">Lukk</button>
+    </div>
+  </ng-template>
+  <!-- /MODAL PREVIEW -->
+</span>
