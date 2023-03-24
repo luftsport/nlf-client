@@ -129,9 +129,9 @@
 		<!-- Involved -->
 		<div class="row">
 			<div class="col-md-12">
-				<div class="card-header">
-					<fa-icon [icon]="faPlane"></fa-icon> Fly
-				</div>
+        <h3 class="h5">
+          <fa-icon [icon]="faPlane"></fa-icon> Involverte fartøy
+        </h3>
 				<div *ngFor="let aircraft of observation.aircrafts" class="my-2">
 					<nlf-aircraft-summary [callsign]="aircraft.aircraft.callsign"
 						[model]="aircraft.aircraft.model || undefined"
