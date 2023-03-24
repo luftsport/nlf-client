@@ -110,22 +110,20 @@
 				-->
 
 		<!-- NARRATIVE -->
-		<div class="row">
+		<div class="row mb-4">
 			<div class="col-md-12">
-				<div class="card-header">
-					<fa-icon [icon]="faCommenting"></fa-icon> Hendelsesforløp
-				</div>
-				<ng-container
-					*ngIf="observation.occurrence.entities.hasOwnProperty('narrative') && observation.occurrence.entities.narrative.length>0">
-					<div class="p-3 narrative">
-						{{ observation.occurrence.entities.narrative[0].attributes.narrativeText.plainText }}
-					</div>
-				</ng-container>
-				<ng-container
-					*ngIf="observation.occurrence.entities.reportingHistory[0].attributes.hasOwnProperty('reporterSDescription')">
-					<div class="p-3 narrative">{{ observation.occurrence.entities.reportingHistory[0].attributes.reporterSDescription.plainText}}</div>
-				</ng-container>
-			</div>
+        <h3 class="h5">
+          <fa-icon [icon]="faCommenting"></fa-icon> Hendelsesforløp
+        </h3>
+        <ng-container
+          *ngIf="observation.occurrence.entities.hasOwnProperty('narrative') && observation.occurrence.entities.narrative.length>0">
+          <div class="narrative">{{ observation.occurrence.entities.narrative[0].attributes.narrativeText.plainText }}</div>
+        </ng-container>
+        <ng-container
+          *ngIf="observation.occurrence.entities.reportingHistory[0].attributes.hasOwnProperty('reporterSDescription')">
+          <div class="narrative">{{ observation.occurrence.entities.reportingHistory[0].attributes.reporterSDescription.plainText}}</div>
+        </ng-container>
+      </div>
 		</div>
 		<!-- /NARRATIVE -->
 
