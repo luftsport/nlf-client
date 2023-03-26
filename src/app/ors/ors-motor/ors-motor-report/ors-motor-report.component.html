@@ -108,11 +108,11 @@
 				</div>
 				-->
 
-		<!-- NARRATIVE -->
-		<div class="row mb-4">
-			<div class="col-md-12">
+    <div class="row mb-4 mt-2">
+      <!-- NARRATIVE -->
+      <div class="col-md-12 bg-light p-3">
         <h3 class="h5">
-          <fa-icon [icon]="faCommenting"></fa-icon> Hendelsesforløp
+            <fa-icon [icon]="faCommenting"></fa-icon> Hendelsesforløp
         </h3>
         <ng-container
           *ngIf="observation.occurrence.entities.hasOwnProperty('narrative') && observation.occurrence.entities.narrative.length>0">
@@ -123,11 +123,11 @@
           <div class="narrative">{{ observation.occurrence.entities.reportingHistory[0].attributes.reporterSDescription.plainText}}</div>
         </ng-container>
       </div>
-		</div>
-		<!-- /NARRATIVE -->
+      <!-- /NARRATIVE -->
+    </div>
 
 		<!-- Involved -->
-		<div class="row">
+		<div class="row" *ngIf="observation.aircrafts.length > 0">
 			<div class="col-md-12">
         <h3 class="h5">
           <fa-icon [icon]="faPlane"></fa-icon> Involverte fartøy
@@ -142,11 +142,11 @@
 		<!-- /Involved -->
 
 		<!-- Files -->
-		<div class="row" *ngIf="observation.files.length>0">
+		<div class="row" *ngIf="observation.files.length > 0">
 			<div class="col-md-12">
-				<div class="card-header">
+				<h3 class="h5">
 					<fa-icon [icon]="faFile"></fa-icon> Vedlegg
-				</div>
+        </h3>
 				<nlf-ors-report-files [files]="observation.files"
 					[state]="observation.workflow.state"></nlf-ors-report-files>
 			</div>
@@ -207,11 +207,11 @@
 
 
 		<!-- Actions -->
-		<div class="row">
+		<div class="row" *ngIf="observation.actions?.local || observation.actions?.central">
 			<div class="col-md-12">
-				<div class="card-header">
-					<fa-icon [icon]="faBolt"></fa-icon>Tiltak
-				</div>
+				<h3 class="h5">
+					<fa-icon [icon]="faBolt"></fa-icon> Tiltak
+        </h3>
 				<nlf-ors-report-actions [actions]="observation.actions"></nlf-ors-report-actions>
 			</div>
 		</div>
@@ -221,9 +221,9 @@
 		<div class="row">
 
 			<div class="col-md-12">
-				<div class="card-header">
-					<fa-icon [icon]="faComments"></fa-icon>Vurderinger
-				</div>
+				<h3 class="h5">
+					<fa-icon [icon]="faComments"></fa-icon> Vurderinger
+        </h3>
 			</div>
 
 			<!-- ASK matrix -->
@@ -233,7 +233,6 @@
 
 			<!-- ASK comments -->
 			<div class="col-md-7">
-
 				<div *ngIf="!!observation.ask && !!observation.ask.text">
 					<nlf-ors-report-ask-text [comments]="observation.ask.text" [audit]="observation.workflow.audit"
 						[activity]="observation._model.type"></nlf-ors-report-ask-text>
@@ -246,9 +245,9 @@
 		<!-- Related -->
 		<div *ngIf="!!observation.related && observation.related?.length > 0" class="row">
 			<div class="col-md-12">
-				<div class="card-header">
-					<fa-icon [icon]="faExternalLink"></fa-icon>Relaterte
-				</div>
+				<h3 class="h5">
+					<fa-icon [icon]="faExternalLink"></fa-icon> Relaterte
+        </h3>
 				<nlf-ors-report-related [related]="observation.related"></nlf-ors-report-related>
 			</div>
 		</div>

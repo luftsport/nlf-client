@@ -128,7 +128,7 @@
 		<!-- /NARRATIVE -->
 
 		<!-- Involved -->
-		<div class="row">
+		<div class="row" *ngIf="observation.aircrafts.length > 0">
 			<div class="col-md-12">
 				<div class="card-header">
 					<fa-icon [icon]="faPlane"></fa-icon> Involverte fartøy
@@ -143,7 +143,7 @@
 		<!-- /Involved -->
 
 		<!-- Files -->
-		<div class="row" *ngIf="observation.files.length>0">
+		<div class="row" *ngIf="observation.files.length > 0">
 			<div class="col-md-12">
 				<div class="card-header">
 					<fa-icon [icon]="faFile"></fa-icon> Vedlegg
@@ -208,7 +208,7 @@
 
 
 		<!-- Actions -->
-		<div class="row">
+		<div class="row" *ngIf="observation.actions?.local || observation.actions?.central">
 			<div class="col-md-12">
 				<div class="card-header">
 					<fa-icon [icon]="faBolt"></fa-icon>Tiltak
