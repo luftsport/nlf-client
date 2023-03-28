@@ -140,12 +140,7 @@
             </div>
           </div>
 
-          <div
-            *ngIf="
-              !observation.occurrence.attributes.latitudeOfOcc.value ||
-              !observation.occurrence.attributes.longitudeOfOcc.value
-            "
-          >
+          <div *ngIf="!observation.occurrence.attributes.latitudeOfOcc.value || !observation.occurrence.attributes.longitudeOfOcc.value">
             <ngb-alert type="info" [dismissible]="false" class="mt-2">
               <fa-icon [icon]="faMapMarker"></fa-icon>
               Informasjon om posisjon for hendelse er ikke angitt
@@ -298,15 +293,7 @@
 		 /AERODROME -->
 
     <!-- Actions -->
-    <div
-      class="row"
-      *ngIf="
-        (observation.actions?.local &&
-          observation.actions?.local?.length > 0) ||
-        (observation.actions?.central &&
-          observation.actions?.central?.length > 0)
-      "
-    >
+    <div class="row" *ngIf="(observation.actions?.local && observation.actions?.local?.length > 0) || (observation.actions?.central && observation.actions?.central?.length > 0)">
       <div class="col-md-12">
         <h3 class="h5"><fa-icon [icon]="faBolt"></fa-icon> Tiltak</h3>
         <nlf-ors-report-actions
@@ -317,10 +304,7 @@
     <!-- /Actions -->
 
     <!-- Related -->
-    <div
-      *ngIf="!!observation.related && observation.related?.length > 0"
-      class="row"
-    >
+    <div *ngIf="!!observation.related && observation.related?.length > 0" class="row">
       <div class="col-md-12">
         <h3 class="h5">
           <fa-icon [icon]="faExternalLink"></fa-icon> Relaterte

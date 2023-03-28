@@ -8,7 +8,7 @@ import { NlfComponent } from 'app/nlf.component';
 import { NgStringPipesModule } from 'angular-pipes';
 import { ApiEveBaseList } from 'app/api/api-eve.interface';
 import { faEdit, faMapMarkerAlt, faRandom, faBolt, faDownload, faPlane, faFile, faStreetView, faCloud, faUsers, faRoad, faExternalLink } from '@fortawesome/free-solid-svg-icons';
-import { faComments } from '@fortawesome/free-regular-svg-icons';
+import { faCommenting, faComments } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'nlf-ors-sportsfly-report',
@@ -48,6 +48,7 @@ export class NlfOrsSportsflyReportComponent implements OnInit {
   faRoad = faRoad;
   faExternalLink = faExternalLink;
   faComments = faComments;
+  faCommenting = faCommenting;
 
   constructor(private route: ActivatedRoute,
               private orsService: ApiObservationsService,
