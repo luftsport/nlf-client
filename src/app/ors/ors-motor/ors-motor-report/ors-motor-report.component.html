@@ -92,12 +92,7 @@
       <div class="col-md-6">
         <div class="col-md-12">
           <!-- MAP -->
-          <div
-            *ngIf="
-              !!observation.occurrence.attributes.latitudeOfOcc.value ||
-              !!observation.occurrence.attributes.longitudeOfOcc.value
-            "
-          >
+          <div *ngIf="!!observation.occurrence.attributes.latitudeOfOcc.value || !!observation.occurrence.attributes.longitudeOfOcc.value">
             <div class="row" style="height: 400px">
               <div class="col-xs-12 position-relative">
                 <nlf-ors-report-flight-map
