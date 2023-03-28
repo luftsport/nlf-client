@@ -46,7 +46,7 @@ export class NlfOrganizationStatsComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
   }
 
   ngOnDestroy() {
@@ -71,20 +71,29 @@ export class NlfOrganizationStatsComponent implements OnInit {
 
   onMapReady(map: Map) {
     this.map = map
-    const options: ApiOptionsInterface = {
+    let options: ApiOptionsInterface = {
       query: {
         where: {
           'address.location': { '$exists': true },
-          '_merged_to': { '$exists': false },
+          '_merged_to': { '$exists': false }
           //'memberships.activity': {$in: [238]} // fallskjerm
-          'memberships.discipline': this.org_id
+
         },
         // sort: [{ name: 1 }],
         max_results: 100000,
         projection: { id: 1 },
 
       },
+    };
+
+    if (Object.keys(this.config.activity_orgs).map(Number).indexOf(this.org_id) > -1) {
+      options.query.where['federation.activity'] = this.config.activity_orgs[this.org_id];
+    } else if (this.org_id === 376) {
+      options.query.where['federation.activity'] = 27;
+    } else {
+      options.query.where['memberships.discipline'] = this.org_id;
     }
+
     this.personService.getUsers(options).subscribe(
       (data) => {
         let users = data._items.map(
