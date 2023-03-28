@@ -1,7 +1,7 @@
 <div *ngIf="dataReady">
   <div *ngFor="let key of comments | keys">
 
-    <div *ngIf="!excludes || excludes.indexOf(key)<0" class="bg-light my-1">
+    <div *ngIf="(!excludes || excludes.indexOf(key)<0) && comments[key].length > 0" class="bg-light my-1">
       <div class="d-flex p-3">
 
         <span class="flex-shrink-0 align-self-start me-3 avatar avatar-lg">
