@@ -11,8 +11,8 @@ export class NlfOrsReportFlightMapComponent implements OnInit {
 
   /**
    * Input is aircraft top level list of aircraft from observation
-   * aircraft.flight holds a list of from-to's including path 
-   * 
+   * aircraft.flight holds a list of from-to's including path
+   *
    */
   @Input() aircraft: ApiObservationAircraftsItem[];
   @Input() where: [number, number];
@@ -90,9 +90,11 @@ export class NlfOrsReportFlightMapComponent implements OnInit {
       });
 
       // Add markers take-off and landing for each aircraft:
-      this.layer.addLayer(new Marker(latLng(ac.flight.find(x => x !== undefined)['path'][0][1], ac.flight.find(x => x !== undefined)['path'][0][0]), {icon: this._mkIcon(index)}).bindPopup('Take-off ' + ac.aircraft.callsign));
-      this.layer.addLayer(new Marker(latLng(ac.flight[(ac.flight.length - 1)]['path'][1][1], ac.flight[(ac.flight.length - 1)]['path'][1][0]), {icon: this._mkIcon(index)}).bindPopup('Landing ' + ac.aircraft.callsign));
-
+      const flight = ac.flight.find(x => x !== undefined);
+      if (flight && flight.path) {
+        this.layer.addLayer(new Marker(latLng(flight['path'][0][1], flight['path'][0][0]), {icon: this._mkIcon(index)}).bindPopup('Take-off ' + ac.aircraft.callsign));
+        this.layer.addLayer(new Marker(latLng(ac.flight[(ac.flight.length - 1)]['path'][1][1], ac.flight[(ac.flight.length - 1)]['path'][1][0]), {icon: this._mkIcon(index)}).bindPopup('Landing ' + ac.aircraft.callsign));
+      }
     });
 
     this.layer.addLayer(new Marker(latLng(this.where[0], this.where[1]), {icon: this._mkIcon(6)}).bindPopup('Incident'));
