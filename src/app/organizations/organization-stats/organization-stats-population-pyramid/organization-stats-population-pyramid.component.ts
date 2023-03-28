@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
-import {  NlfConfigService } from 'app/nlf-config.service';
+import { NlfConfigService } from 'app/nlf-config.service';
 import * as d3select from 'd3-selection';
 import * as d3scale from 'd3-scale';
 import * as d3format from 'd3-format';
@@ -158,7 +158,10 @@ export class NlfOrganizationStatsPopulationPyramidComponent implements OnInit {
     return data;
   }
 
-  private pyramidBuilder(data, target, options) {}
 
+  private pyramidBuilder(data, target, options) {
+
+
+  }
 
 }
