@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ApiAircraftsService } from 'app/api/api-aircrafts.service';
 import { ApiOptionsInterface, ApiAircraftsItem } from 'app/api/api.interface';
 import { DomSanitizer } from '@angular/platform-browser';
+import { faHelicopter, faPlane } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-aircraft-summary',
@@ -15,10 +16,12 @@ export class NlfAircraftSummaryComponent implements OnInit {
   @Input() model: string;
   @Input() manufacturer: string;
 
+  faPlane = faPlane;
+  faHelicopter = faHelicopter;
+
   dataReady = false;
   aircraft: ApiAircraftsItem;
   thumbnail: string;
-
 
   constructor(
     private aircraftsService: ApiAircraftsService,
