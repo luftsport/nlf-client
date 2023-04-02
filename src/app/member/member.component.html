@@ -19,7 +19,7 @@
     </button>
     -->
 
-    <!-- Medlemslister kun i dev -->
+      <!-- Medlemslister kun i dev -->
       <span
         *ngIf="ENV.production===false && [1505923257, 1476506542, -1957053861, 1536523365].indexOf(userHash(user_data.person_id))>-1"
         class="float-end d-inline">
@@ -129,50 +129,70 @@
 
     <h4>Seksjonsmedlemsskap</h4>
     <div *ngFor="let federation of modalPerson.federation" class="overflow-hidden">
-      <fa-icon *ngIf="checkExpiryYear(federation.year)" [icon]="faCheck" class="text-success me-1"></fa-icon>
-      <fa-icon *ngIf="!checkExpiryYear(federation.year)" [icon]="faRemove" class="text-danger me-1"></fa-icon>
-      {{ federation.name }} {{ federation.type }}
-      <nlf-resolve-lungo-activity [activity_id]="federation.activity"></nlf-resolve-lungo-activity> {{ federation.year
-      }} <span *ngIf="!!federation.exception">{{federation.exception}}</span>
+      
+      <ng-container *ngIf="checkExpiryYear(federation.year)">
+        <fa-icon [icon]="faCheck" class="text-success me-1"></fa-icon>
+        {{ federation.name }} {{ federation.type }}
+        <nlf-resolve-lungo-activity [activity_id]="federation.activity"></nlf-resolve-lungo-activity>
+        {{ federation.year }} <span *ngIf="!!federation.exception">{{federation.exception}}</span>
+      </ng-container>
+
+      <ng-container *ngIf="showExpired && !checkExpiryYear(federation.year)">
+        <fa-icon [icon]="faRemove" class="text-danger me-1"></fa-icon>
+        {{ federation.name }} {{ federation.type }}
+        <nlf-resolve-lungo-activity [activity_id]="federation.activity"></nlf-resolve-lungo-activity>
+        {{ federation.year }} <span *ngIf="!!federation.exception">{{federation.exception}}</span>
+      </ng-container>
+
     </div>
     <div *ngIf="!modalPerson.federation||modalPerson.federation.length==0">
-      Ingen seksjonsmedlemsskap registrert
+      <fa-icon [icon]="faRemove" class="text-danger me-1"></fa-icon>Ingen seksjonsmedlemsskap registrert
     </div>
 
 
     <h4>Klubbmedlemsskap</h4>
     <div *ngFor="let membership of modalPerson.memberships" class="overflow-hidden">
-      <fa-icon *ngIf="!!membership.payment && checkExpiryYear(membership.payment.year)" [icon]="faCheck"
-        class="text-success me-1"></fa-icon>
-      <fa-icon *ngIf="!membership.payment || !checkExpiryYear(membership.payment.year)" [icon]="faRemove"
-        class="text-danger me-1"></fa-icon>
-      <nlf-resolve-lungo-organization [organization_id]="membership.discipline" [link]="false" [long]="true"
-        [show_activity]="true"></nlf-resolve-lungo-organization>
-      <span *ngIf="!!membership.payment">{{ membership.payment.exception || '' }} {{ membership.payment.type ||
-        'Ukjent'
-        }}</span>
+
+      <ng-container *ngIf="!!membership.payment && checkExpiryYear(membership.payment.year)">
+        <fa-icon  [icon]="faCheck" class="text-success me-1"></fa-icon>
+        <nlf-resolve-lungo-organization [organization_id]="membership.discipline" [link]="false" [long]="true" [show_activity]="true">
+        </nlf-resolve-lungo-organization>
+        <span *ngIf="!!membership.payment">{{ membership.payment.exception || '' }} {{ membership.payment.type || 'Ukjent' }}</span>
+      </ng-container>
+      
+      <ng-container *ngIf="showExpired && (!membership.payment || !checkExpiryYear(membership.payment.year))">
+        <fa-icon [icon]="faRemove" class="text-danger me-1"></fa-icon>
+        <nlf-resolve-lungo-organization [organization_id]="membership.discipline" [link]="false" [long]="true" [show_activity]="true">
+        </nlf-resolve-lungo-organization>
+        <span *ngIf="!!membership.payment">{{ membership.payment.exception || '' }} {{ membership.payment.type || 'Ukjent' }}</span>
+      </ng-container>
+      
     </div>
     <div *ngIf="!modalPerson.memberships||modalPerson.memberships.length==0">
-      Ingen klubbmedlemsskap registrert
+      <fa-icon [icon]="faRemove" class="text-danger me-1"></fa-icon>Ingen klubbmedlemsskap registrert
     </div>
 
     <h4 class="mt-1">Lisenser</h4>
     <div *ngFor="let license of modalPerson.licenses" class="overflow-hidden">
-      <fa-icon *ngIf="checkExpiry(license.expiry) && license.status_id===3" [icon]="faCheck"
-        class="text-success me-1"></fa-icon>
-      <fa-icon *ngIf="!checkExpiry(license.expiry) || license.status_id!=3" [icon]="faRemove"
-        class="text-danger me-1"></fa-icon>
-      <nlf-resolve-lungo-license [license_id]="license.id" [link]="false" [long]="true"></nlf-resolve-lungo-license>
+      <ng-container *ngIf="checkExpiry(license.expiry) && license.status_id===3">
+        <fa-icon  [icon]="faCheck" class="text-success me-1"></fa-icon>
+        <nlf-resolve-lungo-license [license_id]="license.id" [link]="false" [long]="true"></nlf-resolve-lungo-license>
+      </ng-container>
+      
+      <ng-container *ngIf="showExpired && (!checkExpiry(license.expiry) || license.status_id!=3)">
+        <fa-icon *ngIf="" [icon]="faRemove" class="text-danger me-1"></fa-icon>
+        <nlf-resolve-lungo-license [license_id]="license.id" [link]="false" [long]="true"></nlf-resolve-lungo-license>
+      </ng-container>
+      
     </div>
 
     <div *ngFor="let payment of fallskjermLicenses" class="overflow-hidden">
-      <fa-icon [icon]="faCheck"
-        class="text-success me-1"></fa-icon>
-        {{ payment.product_name }} (betalt {{ payment.paid_date | date }})
+      <fa-icon [icon]="faCheck" class="text-success me-1"></fa-icon>
+      {{ payment.product_name }} (betalt {{ payment.paid_date | date }})
     </div>
 
     <div *ngIf="(!modalPerson.licenses||modalPerson.licenses.length==0) && fallskjermLicenses.length==0">
-      Ingen lisenser registrert
+      <fa-icon [icon]="faRemove" class="text-danger me-1"></fa-icon>Ingen lisenser registrert
     </div>
 
 
@@ -180,16 +200,23 @@
     <h4 class="mt-1">Kompetanser</h4>
     <div *ngFor="let competence of modalPerson.competences" class="overflow-hidden">
 
-      <fa-icon *ngIf="checkExpiry(competence.expiry)" [icon]="faCheck" class="text-success me-1"></fa-icon>
-      <fa-icon *ngIf="!checkExpiry(competence.expiry)" [icon]="faRemove" class="text-danger me-1"></fa-icon>
-      {{ competence._code }} {{ competence.expiry | date:'yyyy-MM-dd':'+0000' }}
+      <ng-container *ngIf="checkExpiry(competence.expiry)">
+        <fa-icon [icon]="faCheck" class="text-success me-1"></fa-icon>
+        {{ competence._code }} {{ competence.expiry | date:'yyyy-MM-dd':'+0000' }}
+      </ng-container>
+      
+      <ng-container *ngIf="showExpired && !checkExpiry(competence.expiry)">
+        <fa-icon [icon]="faRemove" class="text-danger me-1"></fa-icon>
+        {{ competence._code }} {{ competence.expiry | date:'yyyy-MM-dd':'+0000' }}
+      </ng-container>
+      
     </div>
     <div *ngIf="!modalPerson.competences||modalPerson.competences.length==0">
-      Ingen kompetanser registrert
+      <fa-icon [icon]="faRemove" class="text-danger me-1"></fa-icon>Ingen kompetanser registrert
     </div>
 
     <div class="alert alert-dark mt-3" role="alert">
-      Sist oppdatert {{ modalPerson._updated | amTimeAgo }} / {{ modalPerson._updated | date:'yyyy-MM-dd HH:mm'}} ({{
+      Sist oppdatert {{ modalPerson._updated | amTimeAgo }} / {{ modalPerson._updated | date:'yyyy-MM-dd HH:mm'}} ({{
       person_id }})
     </div>
   </div>
@@ -197,6 +224,8 @@
 
 
   <div class="modal-footer">
+    <button *ngIf="showExpired" class="btn btn-link float-start me-auto" (click)="showExpired=!showExpired">Skjul utløpte</button>
+    <button *ngIf="!showExpired" class="btn btn-link float-start me-auto" (click)="showExpired=!showExpired">Vis utløpte</button>
     <button class="btn btn-outline-dark" (click)="closeModal($event)">Ferdig</button>
   </div>
 </ng-template>

@@ -40,6 +40,8 @@ export class NlfMemberComponent implements OnInit {
 
   fallskjermLicenses = [];
 
+  public showExpired = false;
+
   public ENV = environment;
 
   deboucedSearch = debounce(this._search, 700);
@@ -236,7 +238,7 @@ export class NlfMemberComponent implements OnInit {
   }
 
   openModal(person_id) {
-
+    this.showExpired = false;
     this.fallskjermLicenses = [];
     this.person_id = person_id;
     this.modalPerson = undefined;
