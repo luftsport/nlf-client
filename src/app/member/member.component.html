@@ -180,7 +180,7 @@
       </ng-container>
       
       <ng-container *ngIf="showExpired && (!checkExpiry(license.expiry) || license.status_id!=3)">
-        <fa-icon *ngIf="" [icon]="faRemove" class="text-danger me-1"></fa-icon>
+        <fa-icon [icon]="faRemove" class="text-danger me-1"></fa-icon>
         <nlf-resolve-lungo-license [license_id]="license.id" [link]="false" [long]="true"></nlf-resolve-lungo-license>
       </ng-container>
       
