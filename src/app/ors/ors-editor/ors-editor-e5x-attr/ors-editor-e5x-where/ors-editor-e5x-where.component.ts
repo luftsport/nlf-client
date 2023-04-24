@@ -101,8 +101,8 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
 
   private updateLocation(event) {
     if (!this.disabled) {
-      this.observation.occurrence.attributes.latitudeOfOcc.value = event.coords.lat;
-      this.observation.occurrence.attributes.longitudeOfOcc.value = event.coords.lng;
+      this.observation.occurrence.attributes.latitudeOfOcc.value = parseFloat(event.coords.lat);
+      this.observation.occurrence.attributes.longitudeOfOcc.value = parseFloat(event.coords.lng);
       
       this.updateArea();
     }
@@ -119,8 +119,8 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
               $geometry: {
                 type: "Point",
                 coordinates: [
-                  this.observation.occurrence.attributes.longitudeOfOcc.value,
-                  this.observation.occurrence.attributes.latitudeOfOcc.value
+                  parseFloat(this.observation.occurrence.attributes.longitudeOfOcc.value),
+                  parseFloat(this.observation.occurrence.attributes.latitudeOfOcc.value)
                 ]
               }
             }
