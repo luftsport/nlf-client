@@ -49,11 +49,11 @@
 
     <div class="row">
       <div class="col-md-6">
-        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="observation.occurrence.attributes.latitudeOfOcc.value" (keyup)="debouncedUpdate()"
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="observation.occurrence.attributes.latitudeOfOcc.value" (change)="debouncedUpdate()"
           path="E5X.Occurrence.LatitudeOfOcc" id="latitudeOfOcc"></nlf-ors-editor-tag-e5x>
       </div>
       <div class="col-md-6">
-        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="observation.occurrence.attributes.longitudeOfOcc.value" (input)="debouncedUpdate()"
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="observation.occurrence.attributes.longitudeOfOcc.value" (change)="debouncedUpdate()"
           path="E5X.Occurrence.LongitudeOfOcc" id="longitudeOfOcc"></nlf-ors-editor-tag-e5x>
       </div>
       <!--
@@ -66,12 +66,12 @@
 
     <div class="row">
       <div class="col-md-12">
-        <nlf-ors-editor-tag-e5x [disabled]="disabled" (input)="debouncedUpdate()" [(items)]="observation.occurrence.attributes.locationName.value"
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="debouncedUpdate()" [(items)]="observation.occurrence.attributes.locationName.value"
           path="E5X.Occurrence.LocationName" id="locationName"></nlf-ors-editor-tag-e5x>
       </div>
 
       <div class="col-md-12">
-        <nlf-ors-editor-tag-e5x [disabled]="disabled" (input)="debouncedUpdate()" [(items)]="observation.occurrence.attributes.stateAreaOfOcc.value"
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="debouncedUpdate()" [(items)]="observation.occurrence.attributes.stateAreaOfOcc.value"
           path="E5X.Occurrence.StateAreaOfOcc" id="stateAreaOfOcc"></nlf-ors-editor-tag-e5x>
       </div>
     </div>
