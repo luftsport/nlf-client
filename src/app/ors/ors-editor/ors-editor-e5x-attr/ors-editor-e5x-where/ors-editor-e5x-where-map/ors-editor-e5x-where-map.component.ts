@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import { ApiObservationAircraftsItem } from 'app/api/api.interface';
 import { Map, Marker, divIcon, icon, MapOptions, LayerOptions, latLng, LatLng, marker, tileLayer, Polyline, polyline, PolylineOptions, FeatureGroup, featureGroup, Control, DrawToolbar } from 'leaflet';
 @Component({
@@ -6,7 +6,7 @@ import { Map, Marker, divIcon, icon, MapOptions, LayerOptions, latLng, LatLng, m
   templateUrl: './ors-editor-e5x-where-map.component.html',
   styleUrls: ['./ors-editor-e5x-where-map.component.css']
 })
-export class NlfOrsEditorE5XWhereMapComponent implements OnInit {
+export class NlfOrsEditorE5XWhereMapComponent implements OnInit, OnChanges {
 
   /**
    * Input is aircraft top level list of aircraft from observation
@@ -47,6 +47,21 @@ export class NlfOrsEditorE5XWhereMapComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (!!this.map) {
+      if (changes.hasOwnProperty('lng')) {
+        this.lng = changes['lng']['currentValue'];
+      }
+
+      if (changes.hasOwnProperty('lat')) {
+        this.lat = changes['lat']['currentValue'];
+      }
+
+      this.marker.setLatLng(latLng(this.lat, this.lng));
+      this.map.setView(this.marker.getLatLng());
+    }
   }
 
   _getColorFromAcIndex(index) {
