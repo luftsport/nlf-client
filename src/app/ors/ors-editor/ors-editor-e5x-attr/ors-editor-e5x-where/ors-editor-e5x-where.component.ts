@@ -161,7 +161,6 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
   }
 
   update() {
-    console.log('UPDAAAATE');
     //this.observation.occurrence.attributesChange.emit(this.observation.occurrence.attributes);
     //this.change.emit(true);
     this.updateArea();
