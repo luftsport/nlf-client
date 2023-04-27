@@ -46,8 +46,8 @@
   </div>
 </div>
 
-<div *ngIf="observation.occurrence.entities.riskAssessment[0].attributes.riskLevel.value" class="card risk-score text-white bg-{{observation.occurrence.entities.riskAssessment[0].attributes.riskLevel.value | nlfDynamicColorErc}}">
+<div *ngIf="observation.occurrence.entities.reportingHistory[0].attributes.riskClassification.value" class="card risk-score text-white bg-{{observation.occurrence.entities.reportingHistory[0].attributes.riskClassification.value | nlfDynamicColorErc}}">
   <div class="card-body">
-    {{ observation.occurrence.entities.riskAssessment[0].attributes.riskLevel.value }}
+    {{ observation.occurrence.entities.reportingHistory[0].attributes.riskClassification.value }}
   </div>
 </div>

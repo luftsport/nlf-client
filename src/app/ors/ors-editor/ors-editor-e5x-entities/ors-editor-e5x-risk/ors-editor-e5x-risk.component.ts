@@ -97,12 +97,8 @@ export class NlfOrsEditorE5xRiskComponent implements OnInit {
       this.effectivenessValue = 'effective';
     }
 
-    if (typeof this.observation.occurrence.entities.riskAssessment[0].attributes.riskLevel !== 'object') {
-      this.observation.occurrence.entities.riskAssessment[0].attributes.riskLevel = {value: undefined};
-    }
-
-    this.observation.occurrence.entities.riskAssessment[0].attributes.riskLevel.value = risk[this.effectivenessValue];
-    this.observation.occurrence.entities.riskAssessment[0].attributes.riskMethod = "Event Risk Classification";
+    this.observation.occurrence.entities.reportingHistory[0].attributes.riskClassification.value = risk[this.effectivenessValue];
+    this.observation.occurrence.entities.reportingHistory[0].attributes.riskMethodology.value = "Event Risk Classification";
     this.update();
   }
 
@@ -116,7 +112,7 @@ export class NlfOrsEditorE5xRiskComponent implements OnInit {
       return;
     }
 
-    const riskLevel = this.observation.occurrence.entities.riskAssessment[0].attributes.riskLevel.value;
+    const riskLevel = this.observation.occurrence.entities.reportingHistory[0].attributes.riskClassification.value;
 
     const matchingRisk = this.riskMatrix.filter((r) => r.effective === riskLevel || r.limited === riskLevel || r.minimal === riskLevel || r.notEffective === riskLevel);
     if (!matchingRisk || matchingRisk.length === 0) {
