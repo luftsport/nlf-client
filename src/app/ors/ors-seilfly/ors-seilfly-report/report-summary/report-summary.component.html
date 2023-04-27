@@ -82,6 +82,11 @@
       <td><span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body" class="badge bg-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating | nlfOrsRatingCalc }}</span></td>
     </tr>
 
+    <tr *ngIf="!!observation.occurrence.entities.riskAssessment[0].attributes.riskLevel">
+      <td>Event Risk Classification</td>
+      <td><span container="body" class="badge bg-{{observation.rating | nlfDynamicColorErc}}">{{ observation.occurrence.entities.riskAssessment[0].attributes.riskLevel }}</span></td>
+    </tr>
+
     <!-- FLAGG -->
     <tr>
       <td>Flagg</td>

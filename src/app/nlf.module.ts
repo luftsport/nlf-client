@@ -152,6 +152,7 @@ import { NlfOrsComponentAttributesPipe } from 'app/pipes/ors-component-attribute
 import { NlfOrsRatingPipe } from 'app/pipes/ors-rating.pipe';
 import { NlfOrsRatingCalcPipe } from 'app/pipes/ors-rating-calc.pipe';
 import { NlfDynamicColorPipe } from 'app/pipes/dynamic-color.pipe';
+import { NlfDynamicColorErcPipe } from 'app/pipes/dynamic-color-erc.pipe';
 import { NlfActivityPipe } from 'app/pipes/activity.pipe';
 
 
@@ -473,6 +474,7 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfOrsRatingPipe,
     NlfOrsRatingCalcPipe,
     NlfDynamicColorPipe,
+    NlfDynamicColorErcPipe,
     NlfActivityPipe,
     ConfirmTemplateDirective,
     NlfOrsReportFilesThumbnailsComponent,

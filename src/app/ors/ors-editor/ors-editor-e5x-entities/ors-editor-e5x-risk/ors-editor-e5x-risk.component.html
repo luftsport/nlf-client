@@ -1,2 +1,53 @@
-<p>
-</p>
+<div class="nlf-ors-toolbar">
+  Event Risk Classification
+  <nlf-help class="float-end" key="ors-editor-e5x-risk"></nlf-help>
+</div>
+
+<h5>
+  If this event had escalated into an accident, what would have been the most
+  probable outcome?
+</h5>
+
+<div class="row">
+  <div *ngFor="let value of riskMatrix" class="col-md-3 col-xs-12">
+    <div
+      class="risk-option card"
+      [ngClass]="{ 'text-white bg-secondary': riskValue === value.key }"
+      (click)="setRisk(value)"
+    >
+      <div class="card-body text-center">
+        <h6 class="card-title text-center">
+          {{ value.name }}
+        </h6>
+        <div class="card-text">
+          {{ value.description }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h5>
+  What was the effectiveness of the remaining barriers between this event and
+  the most probable accident scenario?
+</h5>
+
+<div class="row" *ngIf="riskValue !== 'none'">
+  <div *ngFor="let value of effectivenessMatrix" class="col-md-3 col-xs-12">
+    <div
+      class="second-risk-option card"
+      [ngClass]="{ 'text-white bg-secondary': effectivenessValue === value.key }"
+      (click)="setEffectiveness(value)"
+    >
+      <div class="card-body text-center">
+        {{ value.name }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="observation.occurrence.entities.riskAssessment[0].attributes.riskLevel" class="card risk-score text-white bg-{{observation.occurrence.entities.riskAssessment[0].attributes.riskLevel | nlfDynamicColorErc}}">
+  <div class="card-body">
+    {{ observation.occurrence.entities.riskAssessment[0].attributes.riskLevel }}
+  </div>
+</div>
