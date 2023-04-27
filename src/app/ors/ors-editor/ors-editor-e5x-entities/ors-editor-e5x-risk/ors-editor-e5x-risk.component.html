@@ -27,7 +27,7 @@
   </div>
 </div>
 
-<h5>
+<h5 *ngIf="riskValue !== 'none'">
   What was the effectiveness of the remaining barriers between this event and
   the most probable accident scenario?
 </h5>
@@ -46,8 +46,8 @@
   </div>
 </div>
 
-<div *ngIf="observation.occurrence.entities.riskAssessment[0].attributes.riskLevel" class="card risk-score text-white bg-{{observation.occurrence.entities.riskAssessment[0].attributes.riskLevel | nlfDynamicColorErc}}">
+<div *ngIf="observation.occurrence.entities.riskAssessment[0].attributes.riskLevel.value" class="card risk-score text-white bg-{{observation.occurrence.entities.riskAssessment[0].attributes.riskLevel.value | nlfDynamicColorErc}}">
   <div class="card-body">
-    {{ observation.occurrence.entities.riskAssessment[0].attributes.riskLevel }}
+    {{ observation.occurrence.entities.riskAssessment[0].attributes.riskLevel.value }}
   </div>
 </div>
