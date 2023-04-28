@@ -9,6 +9,10 @@
   margin: 5px;
 }
 
+.risk-option-disabled {
+  cursor: unset;
+}
+
 .risk-score {
   margin-top: 10px;
   font-weight: bold;
