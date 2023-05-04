@@ -77,16 +77,28 @@ export class NlfOrsEditorE5xRiskComponent implements OnInit {
   }
 
   setRisk(value) {
+    if (!this.observation.acl_user.w) {
+      return;
+    }
+
     this.riskValue = value.key;
     this.updateEventRiskClassification();
   }
 
   setEffectiveness(value) {
+    if (!this.observation.acl_user.w) {
+      return;
+    }
+
     this.effectivenessValue = value.key;
     this.updateEventRiskClassification();
   }
 
   updateEventRiskClassification() {
+    if (!this.observation.acl_user.w) {
+      return;
+    }
+
     if (!this.riskValue || (!this.effectivenessValue && this.riskValue !== 'none')) {
       return;
     }
