@@ -79,30 +79,18 @@ export class NlfOrsMotorCreateComponent implements OnInit {
             if (data.settings.default_activity === 238) {
               this.selected = data.settings.default_discipline;
             }
-
-            console.log('SELECTED IS??', this.selected)
           }
         }),
-
-      this.subject.observableObservation.subscribe(
-        observation => {
-          // this.observation = observation;
+      this.configService.observableConfig.subscribe(
+        data => {
+          this.config = data;
         }
-      )
+      ),
+      this.getClubs()
     ]);
   }
 
   ngOnInit() {
-
-
-    this.configService.observableConfig.subscribe(
-      data => {
-        this.config = data;
-        this.getClubs();
-      }
-    );
-
-
   }
 
   public canCreate() {
@@ -194,8 +182,8 @@ export class NlfOrsMotorCreateComponent implements OnInit {
                   }
 
                   this.userDataSubject.update(this.userData);
-
-                  this.router.navigateByUrl('/ors/motorfly/edit/' + data.id);
+                  console.log('[ROUTER] Routed away from create'),
+                    this.router.navigateByUrl('/ors/motorfly/edit/' + data.id);
                 }
               },
               err => {
@@ -218,15 +206,6 @@ export class NlfOrsMotorCreateComponent implements OnInit {
         this.loading = false;
         this.error = true;
       }
-      /*
-      occurrence.entities.narrative.push(new E5XNarrativeClass().narrative);
-      occurrence.entities.reportingHistory.push(new E5XReportingHistoryClass().reportingHistory);
-      occurrence.entities.riskAssessment.push(new E5XRiskAssessmentClass().riskAssessment);
-      */
-
-
-
-
     }
   }
 
