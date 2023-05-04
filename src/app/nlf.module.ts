@@ -92,6 +92,9 @@ import { ApiCacheService } from 'app/api/api-cache.service';
 // API AGGREGATION
 import { ApiObservationsAggService } from 'app/api/api-observations-agg.service';
 
+// Event queue broadcasting
+import { NlfEventQueueService } from 'app/nlf-event-queue.service';
+
 // Joyride give UI tours
 import { JoyrideModule } from 'ngx-joyride';
 
@@ -622,6 +625,7 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
   providers: [
     PendingChangesGuard,
     NlfConfigService,
+    NlfEventQueueService,
     ApiConfigService,
     ApiHeartbeatService,
     ApiUserService,
@@ -658,7 +662,7 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     LungoLicensesService,
     LungoFunctionsService,
     LungoActivitiesService,
-     LungoPaymentsService,
+    LungoPaymentsService,
     // E5X
     ApiE5XAttributesService,
     ApiE5XChoicesService,

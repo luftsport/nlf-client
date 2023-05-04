@@ -1,4 +1,4 @@
-import { ApiOptionsInterface, NlfConfigItem } from 'app/api/api.interface';
+import { ApiOptionsInterface, NlfConfigItem, ApiUserDataSubjectItem } from 'app/api/api.interface';
 import { Component, Input, OnInit, AfterViewInit, Inject } from '@angular/core';
 import { ApiObservationsService } from 'app/api/api-observations.service';
 import { Router } from '@angular/router';
@@ -12,6 +12,7 @@ import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 // import { ApiObservationsItem} from 'app/api/api.interface';
 import { ConfirmService } from 'app/services/confirm/confirm.service';
 import { faExclamationTriangle, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'nlf-ors-fallskjerm-create',
@@ -45,6 +46,8 @@ export class NlfOrsFallskjermCreateComponent implements OnInit {
   loading = false; // On create
   error = false; // Error creating
   public config: NlfConfigItem;
+  public userData: ApiUserDataSubjectItem;
+
 
   constructor(
     private configService: NlfConfigService,
@@ -52,42 +55,34 @@ export class NlfOrsFallskjermCreateComponent implements OnInit {
     private orgService: LungoOrganizationsService,
     private userService: ApiUserService,
     private alertService: NlfAlertService,
-    private userData: NlfUserSubjectService,
+    private userDataSubject: NlfUserSubjectService,
     private router: Router,
     private subject: NlfOrsEditorService,
     private confirmService: ConfirmService) {
 
+    this.orsService.setActivity(this.activity);
 
-this.orsService.setActivity('fallskjerm');
-    this.userData.observable.subscribe(
-      data => {
-        if (!!data && data.hasOwnProperty('settings')) {
-          this.settings = data.settings;
-          if (data.settings.default_activity === 109) {
-            this.selected = data.settings.default_discipline;
+    forkJoin([
+      this.userDataSubject.observable.subscribe(
+        data => {
+          this.userData = data;
+          if (!!data && data.hasOwnProperty('settings')) {
+
+            if (data.settings.default_activity === 109) {
+              this.selected = data.settings.default_discipline;
+            }
           }
+        }),
+      this.configService.observableConfig.subscribe(
+        data => {
+          this.config = data;
         }
-      });
-
-    this.subject.observableObservation.subscribe(
-      observation => {
-        // this.observation = observation;
-      }
-    );
+      ),
+      this.getClubs()
+    ]);
   }
 
-  ngOnInit() {
-
-
-    this.configService.observableConfig.subscribe(
-      data => {
-        this.config = data;
-        this.getClubs();
-      }
-    );
-
-
-  }
+  ngOnInit() {}
 
   public canCreate() {
     try {
@@ -96,8 +91,6 @@ this.orsService.setActivity('fallskjerm');
       return false;
     }
   }
-
-
 
   public getClubs() {
 
@@ -154,13 +147,13 @@ this.orsService.setActivity('fallskjerm');
       this.clubs.forEach(element => {
 
         if (element.id === this.selected) {
-          this.orsService.setActivity('fallskjerm');
+          this.orsService.setActivity(this.activity);
           this.orsService.create({ 'discipline': this.selected, 'club': element.parent_id }).subscribe(
             data => {
               this.subject.reset();
               console.log('OBSREG Created', data);
               if (!!data._id && !!data.id) {
-
+                this.userDataSubject.update(this.userData);
                 this.router.navigateByUrl('/ors/fallskjerm/edit/' + data.id);
               }
             },

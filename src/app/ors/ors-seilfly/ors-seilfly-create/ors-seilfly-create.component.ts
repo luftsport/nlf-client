@@ -76,33 +76,21 @@ export class NlfOrsSeilflyCreateComponent implements OnInit {
           if (!!data && data.hasOwnProperty('settings')) {
 
             //this.settings = data.settings;
-            if (data.settings.default_activity === 238) {
+            if (data.settings.default_activity === 111) {
               this.selected = data.settings.default_discipline;
             }
-
-            console.log('SELECTED IS??', this.selected)
           }
         }),
-
-      this.subject.observableObservation.subscribe(
-        observation => {
-          // this.observation = observation;
+      this.configService.observableConfig.subscribe(
+        data => {
+          this.config = data;
         }
-      )
+      ),
+      this.getClubs()
     ]);
   }
 
   ngOnInit() {
-
-
-    this.configService.observableConfig.subscribe(
-      data => {
-        this.config = data;
-        this.getClubs();
-      }
-    );
-
-
   }
 
   public canCreate() {

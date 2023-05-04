@@ -52,7 +52,6 @@ export class NlfOrsTodoTableComponent implements OnInit {
   }
 
   public timedelta(_updated) {
-    console.dir(_updated);
     return timeSince(_updated);
   }
 
