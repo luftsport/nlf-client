@@ -273,12 +273,12 @@ export interface ApiObservationsModel {
 export interface ApiObservationsItem extends ApiEveBaseItem {
   // Mandatory
   id: number;
-  club: number;
-  discipline: number;
-  location: ApiLocationItem;
-  owner: number;
-  reporter: number;
-  when: Date;
+  club?: number;
+  discipline?: number;
+  location?: ApiLocationItem;
+  owner?: number;
+  reporter?: number;
+  when?: Date;
 
   type?: string;
   flags?: ApiObservationFlagsInterface;

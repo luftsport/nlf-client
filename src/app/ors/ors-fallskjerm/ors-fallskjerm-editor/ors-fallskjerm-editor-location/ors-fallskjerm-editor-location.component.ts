@@ -64,7 +64,9 @@ export class NlfOrsFallskjermEditorLocationComponent implements OnInit, AfterVie
       this.subject.observableObservation.subscribe(
         observation => {
           // always assign
-          this.observation = observation;
+          if (!!observation) {
+            this.observation = observation;
+          }
 
           if (typeof (this.observation?.location?.icao) === 'string') {
             this.isLocationICAOString = true;
@@ -149,10 +151,10 @@ export class NlfOrsFallskjermEditorLocationComponent implements OnInit, AfterVie
 
   public hasMapCoordinates() {
     try {
-      if(!!this.observation.location.geo.coordinates) {
+      if (!!this.observation.location.geo.coordinates) {
         return true;
       }
-    } catch(e) {}
+    } catch (e) { }
 
     return false;
   }
