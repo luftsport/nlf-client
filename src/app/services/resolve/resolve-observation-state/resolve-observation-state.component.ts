@@ -24,11 +24,11 @@ export class NlfResolveObservationStateComponent implements OnInit {
   public config: NlfConfigItem;
 
   public icons = {
-    faExclamation: faExclamation,
-    faBan: faBan,
-    faPencil: faPencil,
-    faCheck: faCheck,
-    faClock: faClock
+    exclamation: faExclamation,
+    ban: faBan,
+    pencil: faPencil,
+    check: faCheck,
+    clock: faClock
   };
 
   constructor(private configService: NlfConfigService) { }
