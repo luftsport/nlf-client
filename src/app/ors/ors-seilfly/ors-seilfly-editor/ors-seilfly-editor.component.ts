@@ -158,6 +158,7 @@ export class NlfOrsSeilflyEditorComponent implements OnInit, OnDestroy, Componen
     this.route.params.subscribe(params => {
       this.id = params['id'] ? params['id'] : 0;
       this.app.setTitle('OBSREG Editor #' + this.id);
+      this.getData();
     }
     );
   }
