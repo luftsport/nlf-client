@@ -44,6 +44,10 @@ export class ApiFilesService extends ApiRestService {
     return this.baseUrl + this.downloadUrl + _id;
   }
 
+  public getDirectLink2SessionFile(key: string) {
+    return this.baseUrl + this.downloadUrl + 'session/' + key;
+  }
+
   /**
    *
    * @param _id Downloads from eve files

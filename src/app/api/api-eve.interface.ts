@@ -23,7 +23,6 @@ export interface ApiEveBaseList {
 
 export interface ApiEveList extends ApiEveBaseList {
   _items: ApiEveItem[];
-
 }
 
 export interface ApiEveBaseItem {

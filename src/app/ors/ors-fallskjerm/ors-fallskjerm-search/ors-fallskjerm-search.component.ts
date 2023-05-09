@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
-import { ApiObservationsItem, ApiObservationsList, ApiOptionsInterface } from 'app/api/api.interface';
+import { ApiObservationsItem, ApiObservationsSearchList, ApiOptionsInterface } from 'app/api/api.interface';
 import { ApiEveQueryInterface } from 'app/api/api-eve.interface';
 import { ApiObservationsService } from 'app/api/api-observations.service';
 import { debounce } from 'ts-debounce';
@@ -9,6 +9,8 @@ import { isEmpty } from 'lodash';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { saveAs } from "file-saver";
 import { faDownload, faFilter, faLongArrowRight, faPlane, faSave } from '@fortawesome/free-solid-svg-icons';
+import { ApiFilesService } from 'app/api/api-files.service';
+import { NlfAuthSubjectService } from 'app/services/auth/auth-subject.service';
 
 /**
 Save search is simple - save who and search query!
@@ -35,7 +37,9 @@ export class NlfOrsFallskjermSearchComponent implements OnInit {
   public query: ApiEveQueryInterface = { where: {} };
   public activity = 'fallskjerm';
   public text: string;
-  public result: ApiObservationsList; //ApiObservationsItem[];
+  public result: ApiObservationsSearchList; //ApiObservationsItem[];
+
+  public download_as_file: boolean = false; //string = undefined;
 
   modalRef;
   /*public filter = {
@@ -46,6 +50,9 @@ export class NlfOrsFallskjermSearchComponent implements OnInit {
   }
   public filterOperator = '$or';
 
+  public _link = '';
+
+  public token: string;
 
   debouncedUpdate = debounce(this.update, 1000);
 
@@ -53,7 +60,9 @@ export class NlfOrsFallskjermSearchComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private orsService: ApiObservationsService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private apiFile: ApiFilesService,
+    private authDataSubject: NlfAuthSubjectService
   ) {
     this.orsService.setActivity(this.activity);
 
@@ -87,6 +96,15 @@ export class NlfOrsFallskjermSearchComponent implements OnInit {
       });
   }
   ngOnInit() {
+    this.authDataSubject.observableAuthData.subscribe(
+      data => {
+        if (!!data) {
+          this.token = data.token;
+        }
+      },
+      err => console.log('Problem getting token: ', err)
+    );
+
     this.update();
   }
 
@@ -154,7 +172,12 @@ export class NlfOrsFallskjermSearchComponent implements OnInit {
     }
 
     this.query = cleanObject(options.query, true);
+
     console.log('Cleaned before', cleanObject(options.query, true));
+    
+    if(this.download_as_file===true) {
+      options.query['download'] = 'csv';
+    }
 
     this.orsService.getObservations(cleanObject(options)).subscribe(
       data => {
@@ -166,6 +189,10 @@ export class NlfOrsFallskjermSearchComponent implements OnInit {
       },
       () => {
         this.dataReady = true;
+        if(this.download_as_file) {
+          let blob = new Blob([this.result._file], {type: 'text/csv' })
+          saveAs(blob, "obsreg.csv");
+        }
         // Set url
         this.router.navigate(
           [],

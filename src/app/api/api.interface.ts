@@ -365,6 +365,10 @@ export interface ApiObservationsList extends ApiEveBaseList {
   _items: ApiObservationsItem[];
 }
 
+export interface ApiObservationsSearchList extends ApiObservationsList {
+  _file?: string;
+}
+
 export interface ApiObervationComponentsInterface {
   temp: string;
 }
