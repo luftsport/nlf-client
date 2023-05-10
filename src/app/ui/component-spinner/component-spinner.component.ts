@@ -9,8 +9,10 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 export class NlfUiComponentSpinnerComponent implements OnInit {
 
   @Input() size?: number = 3;
+  @Input() inline?: boolean = false;
   fasize: string;
   faSpinner = faSpinner;
+
   
   constructor() {}
 

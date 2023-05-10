@@ -1,3 +1,5 @@
-<p class="align-middle text-center text-secondary">
-  <fa-icon [icon]="faSpinner" animation="pulse" [size]="fasize"></fa-icon>
+<p *ngIf="!inline" class="align-middle text-center text-secondary">
+  <fa-icon [icon]="faSpinner" animation="spin" [size]="fasize"></fa-icon>
 </p>
+
+<fa-icon *ngIf="inline" [icon]="faSpinner" animation="spin" [size]="fasize"></fa-icon>
