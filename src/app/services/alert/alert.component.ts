@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-
 import { NlfAlertService } from './alert.service';
+import {
+    faExclamation,
+    faExclamationTriangle,
+    faInfoCircle,
+    faCheck,
+    faExclamationCircle
+  } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     moduleId: module.id,
@@ -18,5 +24,23 @@ export class NlfAlertComponent implements OnInit {
 
     close() {
         this.alertService.clear();
+    }
+
+    getIcon(messageType: string) {
+
+        switch(messageType) {
+
+            case 'success':
+                return faCheck;
+            case 'info':
+                return faInfoCircle;
+            case 'warning':
+                return faExclamationCircle;
+            case 'danger':
+                return faExclamationTriangle;
+            default:
+                return faExclamation;
+
+        }
     }
 }
