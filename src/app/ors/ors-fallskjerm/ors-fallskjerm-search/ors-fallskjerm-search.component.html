@@ -16,7 +16,8 @@
       </li>
     </span>
 
-    <button *ngIf="!!query" class="btn btn-primary btn-sm float-end mx-1" (click)="openModal(saveTemplate)" title="Funksjonen kommer snart" disabled>
+    <button *ngIf="!!query" class="btn btn-primary btn-sm float-end mx-1" (click)="openModal(saveTemplate)"
+      title="Funksjonen kommer snart" disabled>
       <fa-icon [icon]="faSave"></fa-icon> Lagre søk
     </button>
 
@@ -34,12 +35,14 @@
       </label>
       <div class="row">
         <label>Fritekst:</label>
-        <input placeholder="Fritekst" class="form-control" type="text" (ngModelChange)="debouncedUpdate()" [(ngModel)]="text">
+        <input placeholder="Fritekst" class="form-control" type="text" (ngModelChange)="debouncedUpdate()"
+          [(ngModel)]="text">
       </div>
 
       <div class="row">
         <label>Id:</label>
-        <input placeholder="Id" class="form-control" type="text" (ngModelChange)="debouncedUpdate()" [(ngModel)]="filter['id']">
+        <input placeholder="Id" class="form-control" type="text" (ngModelChange)="debouncedUpdate()"
+          [(ngModel)]="filter['id']">
       </div>
 
 
@@ -49,12 +52,21 @@
         </div>
       </div>
 
-      
+      <!--<div *ngIf="!download_as_file">-->
+      <div>
+        <div *ngIf="!!result?._items" class="mt-3">
+          <div class="d-grid gap-2">
+            <button (click)="exportTojson()" class="btn btn-secondary"><fa-icon [icon]="faDownload"></fa-icon> Last ned
+              json</button>
+          </div>
+        </div>
+      </div>
 
       <div *ngIf="!!result?._items" class="mt-3">
         <div class="d-grid gap-2">
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" (click)="download_as_file=!download_as_file;debouncedUpdate()">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+              (click)="download_as_file=!download_as_file;debouncedUpdate()">
             <label class="form-check-label" for="flexCheckDefault">
               Last ned som csv
             </label>
@@ -62,13 +74,6 @@
         </div>
       </div>
 
-      <div *ngIf="!download_as_file">
-        <div *ngIf="!!result?._items" class="mt-3">
-          <div class="d-grid gap-2">
-            <button (click)="exportTojson()" class="btn btn-secondary"><fa-icon [icon]="faDownload"></fa-icon> Last ned json</button>
-          </div>
-        </div>
-      </div>
 
     </div>
 
@@ -90,10 +95,13 @@
 
       <div class="my-2 p-1 div_hover" *ngFor="let r of result?._items; let isOdd=odd;" [class.bg-light]="isOdd">
 
-        <a [routerLink]="['/ors', activity,'report', r.id]">#{{ r.id }} - <span *ngIf="!!r.rating" class="mx-1 badge bg-{{r.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ r.rating | nlfOrsRatingCalc }}</span> {{ r.tags | join: '/'}}</a>
+        <a [routerLink]="['/ors', activity,'report', r.id]">#{{ r.id }} - <span *ngIf="!!r.rating"
+            class="mx-1 badge bg-{{r.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ r.rating | nlfOrsRatingCalc
+            }}</span> {{ r.tags | join: '/'}}</a>
 
         <span class="float-end mx-1">
-          <nlf-resolve-observation-state [activity]="r._model.type" [state]="r.workflow.state" icon="true"></nlf-resolve-observation-state>
+          <nlf-resolve-observation-state [activity]="r._model.type" [state]="r.workflow.state"
+            icon="true"></nlf-resolve-observation-state>
 
         </span>
 
