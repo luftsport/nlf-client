@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
-import { ApiObservationsItem, ApiObservationsList, ApiOptionsInterface } from 'app/api/api.interface';
+import { ApiObservationsItem, ApiObservationsSearchList, ApiOptionsInterface } from 'app/api/api.interface';
 import { ApiEveQueryInterface } from 'app/api/api-eve.interface';
 import { ApiObservationsService } from 'app/api/api-observations.service';
 import { debounce } from 'ts-debounce';
@@ -33,7 +33,9 @@ export class NlfOrsMotorSearchComponent implements OnInit {
   public query: ApiEveQueryInterface = { where: {} };
   public activity = 'motorfly';
   public text: string;
-  public result: ApiObservationsList; //ApiObservationsItem[];
+  public result: ApiObservationsSearchList; //ApiObservationsItem[];
+
+  public download_as_file: boolean = false; //string = undefined;
 
   modalRef;
   /*public filter = {
@@ -148,9 +150,17 @@ export class NlfOrsMotorSearchComponent implements OnInit {
     this.query = cleanObject(options.query, true);
     console.log('Cleaned before', cleanObject(options.query, true));
 
+    if(this.download_as_file===true) {
+      options.query['download'] = 'csv';
+    }
+
     this.orsService.getObservations(cleanObject(options)).subscribe(
       data => {
         this.result = data;
+        if(this.download_as_file) {
+          let blob = new Blob([this.result._file], {type: 'text/csv' })
+          saveAs(blob, "obsreg.csv");
+        }
       },
       err => { },
       () => {
