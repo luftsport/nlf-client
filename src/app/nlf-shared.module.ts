@@ -34,6 +34,7 @@ import { NgPipesModule } from 'angular-pipes'; // Angular pipes, love them!
 // Note: services in nlf.module
 import { NlfAlertComponent } from 'app/services/alert/alert.component';
 
+
 // Help system
 import { NlfHelpComponent } from 'app/services/help/help.component';
 

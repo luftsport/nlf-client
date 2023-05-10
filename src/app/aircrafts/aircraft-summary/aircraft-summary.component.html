@@ -1,8 +1,11 @@
 <div *ngIf="dataReady">
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3 col-lg-2">
       <img *ngIf="!!aircraft.image" [src]="domSanitizer.bypassSecurityTrustUrl(aircraft.image)" class="me-3 ml-0 p-0 img-fluid" alt="{{ callsign }}">
-      <img *ngIf="!aircraft.image" src="https://dummyimage.com/64x64/595659/e3e4e8" class="me-3 ml-0 p-0 img-fluid">
+      <div *ngIf="!aircraft.image" class="me-3 ml-0 p-0 empty-image">
+        <fa-icon *ngIf="aircraft.type !== 'HELICOPTER'" [icon]="faPlane" [fixedWidth]="true" size="3x"></fa-icon>
+        <fa-icon *ngIf="aircraft.type === 'HELICOPTER'" [icon]="faHelicopter" [fixedWidth]="true" size="3x"></fa-icon>
+      </div>
     </div>
     <div class="col-md-9">
       <h5 class="mt-0">{{ callsign }}</h5>

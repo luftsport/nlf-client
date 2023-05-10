@@ -1,4 +1,4 @@
-<div *ngIf="!!dataReady && !error">
+<div *ngIf="dataReady && !error">
 
   <!-- STICKY TOP BAR -->
   <header class="nlf-sticky-toolbar">
@@ -657,7 +657,7 @@
 </div>
 
 <!-- PAGE ERROR -->
-<div *ngIf="!!dataReady && !!error">
+<div *ngIf="dataReady && !!error">
   <nlf-ors-error [id]="id" activity="motorfly" [error]="error"></nlf-ors-error>
 </div>
 

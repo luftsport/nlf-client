@@ -104,7 +104,6 @@ export class NlfOrsSelfTableComponent implements OnInit {
   }
 
   public timedelta(_updated) {
-    console.dir(_updated);
     return timeSince(_updated);
   }
 

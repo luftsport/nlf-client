@@ -12,6 +12,7 @@ import { NlfConfigService } from 'app/nlf-config.service';
 import { forkJoin } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { avatar_tmp_image, hashString } from 'app/interfaces/functions';
+import { NlfEventQueueService, AppEventType, AppEvent } from 'app/nlf-event-queue.service';
 import { 
   faEdit,
   faPlus,
@@ -66,7 +67,8 @@ export class NlfUiNavbarComponent implements OnInit {
     private userSubject: NlfUserSubjectService,
     private userAvatarSubject: NlfUserAvatarSubjectService,
     private configSubject: NlfConfigService,
-    public domSanitizer: DomSanitizer
+    public domSanitizer: DomSanitizer,
+    private eventQueue: NlfEventQueueService
   ) {
 
     this.loggedInObservable = this.authSubject.observableAuth;
@@ -105,6 +107,7 @@ export class NlfUiNavbarComponent implements OnInit {
   }
 
   public openCreateOrsModal() {
+    this.eventQueue.dispatch(new AppEvent(AppEventType.ObsregEvent, {action: 'force_save'}));
     this.modalRef = this.modalService.open(NlfOrsCreateModalComponent, { size: 'lg' });
   }
 
