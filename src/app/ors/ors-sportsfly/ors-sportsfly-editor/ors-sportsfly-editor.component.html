@@ -81,7 +81,7 @@
         <nlf-ors-e5x (click)="saveIfChanges()" (change)="getData()" joyrideStep="step005" stepPosition="bottom"
           title="E5X" text="Her vises status på innsending til Luftfartstilsynet på formatet E5X."></nlf-ors-e5x>
 
-        <!-- ACTIVITY 
+        <!-- ACTIVITY
         <a *ngIf="observation.workflow.state!='closed'" class="badge bg-info mx-1"
           [routerLink]="['/ors', observation._model.type , 'activities', observation.id]" joyrideStep="step006"
           stepPosition="bottom" title="Aktivitet"
@@ -101,8 +101,7 @@
         </nlf-ors-editor-users>
 
         <!-- REPORT -->
-        <a [routerLink]="['/ors', observation._model.type , 'report', observation.id]"
-          *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge bg-primary text-white mx-1"
+        <a [routerLink]="['/ors', observation._model.type , 'report', observation.id]" class="badge bg-primary text-white mx-1"
           joyrideStep="step009" stepPosition="bottom" title="Rapport"
           text="Denne knappen tar deg videre til visning av observasjonen slik den vil se ut etter at den er ferdig og offentlig.">
           <fa-icon [icon]="faFile"></fa-icon> Report
