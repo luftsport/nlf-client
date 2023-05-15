@@ -22,7 +22,7 @@ import { Observable } from 'rxjs/Observable';
 import { forkJoin } from 'rxjs';
 import { faSave, faQuestion, faInfoCircle, faHistory, faFile, faEye, faExchange, faPaperPlane, faReply, faRepeat, faRandom, faTimes, faCheck, faLock } from '@fortawesome/free-solid-svg-icons';
 import 'rxjs/add/operator/takeWhile';
-
+import { NlfEventQueueService, AppEventType } from 'app/nlf-event-queue.service';
 
 @Component({
   selector: 'nlf-ors-fallskjerm-editor',
@@ -75,7 +75,8 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy, Compo
     private modalService: NgbModal,
     private confirmService: ConfirmService,
     private sanitizer: DomSanitizer,
-    private userDataSubject: NlfUserSubjectService
+    private userDataSubject: NlfUserSubjectService,
+    private eventQueue: NlfEventQueueService
     // private differs: KeyValueDiffers
   ) {
 
@@ -151,19 +152,28 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy, Compo
   }
 
   ngOnInit() {
-
-
-
     this.orsService.setActivity('fallskjerm');
+
+    // Receive everything on Obsreg
+    this.eventQueue.on(AppEventType.ObsregEvent).subscribe(event => this._handleEvent(event.payload));
 
     this.route.params.subscribe(params => {
       this.id = params['id'] ? params['id'] : 0;
       this.app.setTitle('OBSREG Editor #' + this.id);
       this.getData();
-    });
+
+    }
+    );
   }
 
+  private _handleEvent(payload) {
 
+    if (payload.hasOwnProperty('action')) {
+      if (payload['action'] === 'force_save') {
+        this.saveIfChanges();
+      }
+    }
+  }
 
   /**
    * Make sure we remove hotkeys and

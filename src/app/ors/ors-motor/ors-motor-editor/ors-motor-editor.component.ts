@@ -23,6 +23,7 @@ import { HostListener } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { faSave, faQuestion, faFlag, faInfoCircle, faHistory, faFile, faExchange, faPaperPlane, faReply, faRepeat, faRandom, faUpload, faInfo, faLock, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import 'rxjs/add/operator/takeWhile';
+import { NlfEventQueueService, AppEventType } from 'app/nlf-event-queue.service';
 
 @Component({
   selector: 'nlf-ors-motor-editor',
@@ -82,7 +83,8 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
     private modalService: NgbModal,
     private confirmService: ConfirmService,
     private sanitizer: DomSanitizer,
-    private userDataSubject: NlfUserSubjectService
+    private userDataSubject: NlfUserSubjectService,
+    private eventQueue: NlfEventQueueService
     // private differs: KeyValueDiffers
   ) {
 
@@ -93,7 +95,8 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
       // Instantiate our behavioursubject
       this.subject.observableObservation.takeWhile(() => this.subject_is_alive).subscribe(
         observation => {
-          if(!!observation) {
+          console.log('OBSREG rxjs', observation);
+          if (!!observation) {
             this.observation = observation;
 
             // Check if reset
@@ -111,7 +114,6 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
         () => { }
 
       ),
-
       this.userDataSubject.observable.subscribe(
         data => {
           if (!!data) {
@@ -146,17 +148,28 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
 
 
   ngOnInit() {
-
     this.orsService.setActivity('motorfly');
+    
+    // Receive everything on Obsreg
+    this.eventQueue.on(AppEventType.ObsregEvent).subscribe(event => this._handleEvent(event.payload));
 
-
-    this.route.params.subscribe(params => {
-      this.id = params['id'] ? params['id'] : 0;
-      this.app.setTitle('OBSREG Editor #' + this.id);
-      this.getData();
-    });
+    this.route.params.subscribe(
+      (params) => {
+        this.id = params['id'] ? params['id'] : 0;
+        this.app.setTitle('OBSREG Editor #' + this.id);
+        this.getData();
+      }
+    );
   }
 
+  private _handleEvent(payload) {
+
+    if (payload.hasOwnProperty('action')) {
+      if (payload['action'] === 'force_save') {
+        this.saveIfChanges();
+      }
+    }
+  }
 
   hasFlag() {
 
@@ -177,11 +190,11 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
     this.hotkeysService.remove(this.hotkeys);
     this.subject_is_alive = false;
 
-    //this.subject.unsubscribe();
+    this.subject.unsubscribe();
     //this.saveIfChanges();
 
-    //this.subject.update(undefined);
-    //this.subject.unsubscribe();
+    this.subject.update(undefined);
+    this.subject.unsubscribe();
   }
 
   // @HostListener allows us to also guard against browser refresh, close, etc.
@@ -325,10 +338,10 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
   public getData() {
     console.log('Getting data');
     this.dataReady = false;
-
+    this.subject.reset();
     this.orsService.get(this.id).subscribe(
       data => {
-
+        console.log('[EDITOR GOT', data);
         this.observation = data;
         this.subject.update(this.observation);
         // Make some defaults:
@@ -343,7 +356,8 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
         if (this.observation._created === this.observation._updated) {
           this.alertService.success('Suksess! Du opprettet akkurat en ny observasjon og den fikk løpenummer #' + this.observation.id, false, true, 60);
         }
-
+        console.log('[DATA READY] True now it is ready');
+        this.dataReady = true;
       },
       err => {
         this.error = err;
@@ -351,7 +365,7 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
         this.alertService.error(err.message);
       },
       () => {
-        this.dataReady = true;
+
       }
     );
   }

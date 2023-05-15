@@ -24,6 +24,7 @@ import { Observable } from 'rxjs/Observable';
 import { faSave, faQuestion, faFlag, faInfoCircle, faHistory, faFile, faExchange, faPaperPlane, faReply, faRepeat, faRandom, faUpload, faInfo, faLock, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faFileAlt } from '@fortawesome/free-regular-svg-icons';
 import 'rxjs/add/operator/takeWhile';
+import { NlfEventQueueService, AppEventType } from 'app/nlf-event-queue.service';
 
 @Component({
   selector: 'nlf-ors-seilfly-editor',
@@ -83,7 +84,8 @@ export class NlfOrsSeilflyEditorComponent implements OnInit, OnDestroy, Componen
     private modalService: NgbModal,
     private confirmService: ConfirmService,
     private sanitizer: DomSanitizer,
-    private userDataSubject: NlfUserSubjectService
+    private userDataSubject: NlfUserSubjectService,
+    private eventQueue: NlfEventQueueService
     // private differs: KeyValueDiffers
   ) {
 
@@ -94,7 +96,7 @@ export class NlfOrsSeilflyEditorComponent implements OnInit, OnDestroy, Componen
       // Instantiate our behavioursubject
       this.subject.observableObservation.takeWhile(() => this.subject_is_alive).subscribe(
         observation => {
-          if(!!observation) {
+          if (!!observation) {
             this.observation = observation;
 
             // Check if reset
@@ -150,13 +152,24 @@ export class NlfOrsSeilflyEditorComponent implements OnInit, OnDestroy, Componen
 
     this.orsService.setActivity('seilfly');
 
-
+    // Receive everything on Obsreg
+    this.eventQueue.on(AppEventType.ObsregEvent).subscribe(event => this._handleEvent(event.payload));
 
     this.route.params.subscribe(params => {
       this.id = params['id'] ? params['id'] : 0;
       this.app.setTitle('OBSREG Editor #' + this.id);
       this.getData();
-    });
+    }
+    );
+  }
+
+  private _handleEvent(payload) {
+
+    if (payload.hasOwnProperty('action')) {
+      if (payload['action'] === 'force_save') {
+        this.saveIfChanges();
+      }
+    }
   }
 
 

@@ -71,7 +71,7 @@
         </li>
 
         <!-- Medlemssjekk -->
-        <ng-container>
+        <ng-container *ngIf="!ENV.production">
           <li (click)="navbarOpen=false" *ngIf="authenticated" class="nav-item" routerLinkActive="active">
             <a [routerLink]="['/medlem']" class="nav-link">Medlem</a>
           </li>

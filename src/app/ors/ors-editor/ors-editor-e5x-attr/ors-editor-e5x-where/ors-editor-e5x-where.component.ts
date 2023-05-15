@@ -160,7 +160,6 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
     //this.observation.occurrence.attributesChange.emit(this.observation.occurrence.attributes);
     //this.change.emit(true);
     this.updateArea();
-    this.subject.update(this.observation);
 
   }
   modalUpdate() {
