@@ -1,7 +1,3 @@
-<div *ngIf="!modal && !showOnlyBtn">
-  <ng-container (blur)="update()" *ngTemplateOutlet="attrTemplate"></ng-container>
-</div>
-
 <div *ngIf="modal && !showOnlyBtn" class="row">
   <div class="col-md-3">
     <div class="d-grid gap-2">
@@ -46,18 +42,18 @@
         <nlf-ors-editor-e5x-where-map [aircraft]="observation.aircrafts"
           [(lat)]="observation.occurrence.attributes.latitudeOfOcc.value"
           [(lng)]="observation.occurrence.attributes.longitudeOfOcc.value" [disabled]="!observation.acl_user.w"
-          (change)="update()"></nlf-ors-editor-e5x-where-map>
+          (change)="debouncedUpdate()"></nlf-ors-editor-e5x-where-map>
       </div>
 
     </div>
 
     <div class="row">
       <div class="col-md-6">
-        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="observation.occurrence.attributes.latitudeOfOcc.value"
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="observation.occurrence.attributes.latitudeOfOcc.value" (change)="debouncedUpdate()"
           path="E5X.Occurrence.LatitudeOfOcc" id="latitudeOfOcc"></nlf-ors-editor-tag-e5x>
       </div>
       <div class="col-md-6">
-        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="observation.occurrence.attributes.longitudeOfOcc.value"
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="observation.occurrence.attributes.longitudeOfOcc.value" (change)="debouncedUpdate()"
           path="E5X.Occurrence.LongitudeOfOcc" id="longitudeOfOcc"></nlf-ors-editor-tag-e5x>
       </div>
       <!--
@@ -70,12 +66,12 @@
 
     <div class="row">
       <div class="col-md-12">
-        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="observation.occurrence.attributes.locationName.value"
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="debouncedUpdate()" [(items)]="observation.occurrence.attributes.locationName.value"
           path="E5X.Occurrence.LocationName" id="locationName"></nlf-ors-editor-tag-e5x>
       </div>
 
       <div class="col-md-12">
-        <nlf-ors-editor-tag-e5x [disabled]="disabled" [(items)]="observation.occurrence.attributes.stateAreaOfOcc.value"
+        <nlf-ors-editor-tag-e5x [disabled]="disabled" (change)="debouncedUpdate()" [(items)]="observation.occurrence.attributes.stateAreaOfOcc.value"
           path="E5X.Occurrence.StateAreaOfOcc" id="stateAreaOfOcc"></nlf-ors-editor-tag-e5x>
       </div>
     </div>
@@ -98,12 +94,8 @@
       <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>Avbryt
     </button>
     <button [disabled]="disabled" [ngClass]="{'disabled': disabled}" class="btn btn-success"
-      (click)="modalUpdate(modalIndex)">
+      (click)="modalUpdate()">
       <fa-icon [icon]="faCheck" [fixedWidth]="true"></fa-icon>Oppdater
     </button>
   </div>
-</ng-template>
-
-<ng-template #attrTemplate>
-
 </ng-template>
