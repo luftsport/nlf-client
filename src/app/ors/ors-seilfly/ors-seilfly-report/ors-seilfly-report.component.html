@@ -60,7 +60,7 @@
             'edit',
             observation.id
           ]"
-          *ngIf="observation.acl_user.x || observation.acl_user.w"
+          *ngIf="observation.acl_user.x || observation.acl_user.w || (observation.workflow.state != 'closed' && observation.acl_user.r)"
           class="badge bg-primary text-white mx-1"
         >
           <fa-icon [icon]="faEdit"></fa-icon> Editor

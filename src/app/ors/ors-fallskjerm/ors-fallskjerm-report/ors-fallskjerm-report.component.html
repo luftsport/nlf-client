@@ -33,7 +33,7 @@
 			<!-- WORKFLOW STATE -->
 			<span class="float-end">
 				<a [routerLink]="['/ors', observation._model.type, 'edit', observation.id]"
-					*ngIf="observation.acl_user.x || observation.acl_user.w" class="badge bg-primary text-white mx-1">
+					*ngIf="observation.acl_user.x || observation.acl_user.w || (observation.workflow.state != 'closed' && observation.acl_user.r)" class="badge bg-primary text-white mx-1">
 					<fa-icon [icon]="faEdit"></fa-icon> Editor
 				</a>
 				<nlf-resolve-observation-state [activity]="observation._model.type" [state]="observation.workflow.state"
