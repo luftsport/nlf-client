@@ -104,6 +104,7 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
     if (!this.disabled) {
       this.observation.occurrence.attributes.latitudeOfOcc.value = parseFloat(event.coords.lat);
       this.observation.occurrence.attributes.longitudeOfOcc.value = parseFloat(event.coords.lng);
+
       this.updateArea();
     }
 
