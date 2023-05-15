@@ -56,7 +56,7 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
         this.observation = { ...this.observation };
       }
     );
-    
+
     // keep to enable "use my location"
     this.geoLocationService.getLocation({ enableHighAccuracy: true }).subscribe(
       position => {
@@ -71,7 +71,7 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
         this.geoReady = true;
       },
       err => {
-     
+
         this.geoReady = true;
       },
       () => {
@@ -104,7 +104,6 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
     if (!this.disabled) {
       this.observation.occurrence.attributes.latitudeOfOcc.value = parseFloat(event.coords.lat);
       this.observation.occurrence.attributes.longitudeOfOcc.value = parseFloat(event.coords.lng);
-
       this.updateArea();
     }
 
