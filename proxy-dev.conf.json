@@ -4,5 +4,12 @@
     "changeOrigin": true,
     "logLevel": "debug",
     "secure": false
+  },
+  "/socket.io/*": {
+    "target": "http://localhost:7000",
+    "changeOrigin": false,
+    "logLevel": "debug",
+    "secure": false
   }
+
 }
