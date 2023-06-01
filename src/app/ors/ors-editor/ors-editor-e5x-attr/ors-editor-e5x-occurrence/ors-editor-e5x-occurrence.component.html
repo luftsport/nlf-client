@@ -6,13 +6,13 @@
   <div class="col-md-6">
     <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="observation.occurrence.attributes.locationName.value" path="E5X.Occurrence.LocationName" id="locationName"></nlf-ors-editor-tag-e5x>
   </div>
-  <div class="col-md-2">
+  <div class="col-md-2" *ngIf="!showSimpleView">
     <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="observation.occurrence.attributes.latitudeOfOcc.value" path="E5X.Occurrence.LatitudeOfOcc" id="latitudeOfOcc"></nlf-ors-editor-tag-e5x>
   </div>
-  <div class="col-md-2">
+  <div class="col-md-2" *ngIf="!showSimpleView">
     <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="observation.occurrence.attributes.longitudeOfOcc.value" path="E5X.Occurrence.LongitudeOfOcc" id="longitudeOfOcc"></nlf-ors-editor-tag-e5x>
   </div>
-  <div class="col-md-2">
+  <div class="col-md-2" *ngIf="!showSimpleView">
     <label>Vis kart</label>
     <nlf-ors-editor-e5x-where  [disabled]="!observation.acl_user.w" [modal]="true" [showOnlyBtn]="true"></nlf-ors-editor-e5x-where>
   </div>
@@ -31,11 +31,11 @@
 -->
 
 
-<div class="nlf-ors-toolbar">
+<div class="nlf-ors-toolbar" *ngIf="!showSimpleView">
   Klassifiser hendelsen
   <nlf-help class="float-end" key="ors-editor-e5x-classification"></nlf-help>
 </div>
-<div class="p-3 bg-warning col-md-12">
+<div class="p-3 bg-warning col-md-12" *ngIf="!showSimpleView">
   <div class="row">
     <div class="col-md-4">
       <nlf-ors-editor-tag-e5x (change)="debouncedUpdate()" [disabled]="!observation.acl_user.w" [(items)]="observation.occurrence.attributes.injuryLevel.value" path="E5X.Occurrence.InjuryLevel" id="injuryLevel"></nlf-ors-editor-tag-e5x>
@@ -79,7 +79,7 @@
 
 
 <!-- OTHER ENTITIES -->
-<div class="nlf-ors-toolbar">
+<div class="nlf-ors-toolbar" *ngIf="!showSimpleView">
   Legg til annet relevant
   <nlf-help class="float-end" key="ors-editor-e5x-entities"></nlf-help>
 </div>
@@ -96,7 +96,7 @@
 
 -->
 <!--aerodrome wx reports = metars!-->
-<div class="my-3">
+<div class="my-3" *ngIf="!showSimpleView">
   <nlf-ors-editor-e5x-wxphenomena [disabled]="!observation.acl_user.w" (change)="update()" [(wxPhenomena)]="observation.occurrence.entities.precipitationAndOtherWeatherPhenomena"></nlf-ors-editor-e5x-wxphenomena>
 </div>
 <!-- NOT READY
@@ -107,7 +107,7 @@
     <nlf-ors-editor-e5x-separation [disabled]="!observation.acl_user.w" (change)="update()" [(separation)]="observation.occurrence.entities.separation"></nlf-ors-editor-e5x-separation>
   </div>
   -->
-  <div class="my-3">
+  <div class="my-3" *ngIf="!showSimpleView">
     <nlf-ors-editor-e5x-events [disabled]="!observation.acl_user.w" (change)="update()" [(events)]="observation.occurrence.entities.events"></nlf-ors-editor-e5x-events>
   </div>
 

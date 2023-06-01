@@ -207,6 +207,9 @@
       </div>
     </div>
 
+    <div *ngIf="observation?.flags?.aviation" class="alert alert-info" role="alert">
+      For rapporteringspliktige hendelser trenger vi informasjon om flyets registrering, planlagt avreise- og ankomstflyplass, sted for hendelsen og annen informasjon som er relevant. Du kan angi alt i feltet nedenfor, eller fylle ut så mye som du klarer direkte i de andre feltene. Dersom du allerede har rapportert hendelsen direkte selv, gi oss beskjed om dette.
+    </div>
 
 
     <!-- LOCATION: Removed  -->
@@ -268,7 +271,7 @@
     </div>
   -->
 
-    <ng-container *ngIf="!showSimpleView()">
+    <ng-container>
       <!-- AIRCRAFTS / FLIGHT / INCIDENTS-->
       <div class="row">
         <div class="nlf-ors-toolbar">
@@ -279,7 +282,7 @@
       </div>
       <div class="row">
         <div class="col-xs-12 col-md-12 mt-3">
-          <nlf-ors-editor-e5x-aircraft></nlf-ors-editor-e5x-aircraft>
+          <nlf-ors-editor-e5x-aircraft [showSimpleView]="showSimpleView()"></nlf-ors-editor-e5x-aircraft>
         </div>
       </div>
       <!-- OCCURRENCE TEST -->
@@ -340,7 +343,7 @@
         [(reportingHistory)]="observation.occurrence.entities.reportingHistory"></nlf-ors-editor-e5x-reportinghistory>
 
       <!-- RISK ASSESSMENT -->
-      <nlf-ors-editor-e5x-risk [disabled]="!observation.acl_user.w" (change)="update()"
+      <nlf-ors-editor-e5x-risk  *ngIf="!showSimpleView()" [disabled]="!observation.acl_user.w" (change)="update()"
         [(riskAssessment)]="observation.occurrence.entities.riskAssessment"></nlf-ors-editor-e5x-risk>
 
       <!-- NARRATIVE Moved top
@@ -546,7 +549,7 @@
               den skulle du ombestemme deg.</p>
             <!-- Knapper for innsending -->
             <div class="btn-toolbar float-end">
-              <button (click)="openWorkflow()" class="btn btn-success me-2">Send OBSREG koordinator</button>
+              <button (click)="openWorkflow()" class="btn btn-success me-2">Send til OBSREG-koordinator</button>
               <button (click)="openWorkflow()" class="btn btn-danger me-2">Trekk tilbake</button>
             </div>
 
@@ -602,7 +605,7 @@
 
             <button class="btn btn-success me-2" (click)="openWorkflow()" title="Send"
               text="Når du er ferdig med observasjonen så sender du den til neste i arbeidsflyten som vil behandle observasjonen videre">
-              <fa-icon [icon]="faPaperPlane"></fa-icon> Send til OBSREG koordinator
+              <fa-icon [icon]="faPaperPlane"></fa-icon> Send til OBSREG-koordinator
             </button>
 
 
@@ -633,7 +636,7 @@
     <div class="row my-3">
       <span class="pointer mx-1 float-end" *ngIf="observation.acl_user.x && observation.workflow.state=='draft'" (click)="openWorkflow()">
         <button class="btn btn-success">
-          <fa-icon [icon]="faUpload"></fa-icon>Send OBSREG koordinator
+          <fa-icon [icon]="faUpload"></fa-icon>Send OBSREG-koordinator
         </button>
       </span>
     </div>

@@ -40,6 +40,7 @@ export class NlfOrsEditorFlightComponent implements OnInit {
 
 
   @Input() aircraft: any;
+  @Input() showSimpleView: boolean = false;
   @Output() aircraftChange: EventEmitter<ApiObservationAircraftsItem> = new EventEmitter();
   @Output() change: EventEmitter<boolean> = new EventEmitter();
 
@@ -141,7 +142,7 @@ export class NlfOrsEditorFlightComponent implements OnInit {
       this.route = [];
     } else {
       this.route = this.aircraft.flight;
-      setTimeout(() => {                           
+      setTimeout(() => {
         this.routeReady = true;
       }, 700);
     }

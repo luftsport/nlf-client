@@ -109,7 +109,7 @@
 
           <div class="col-md-2">
             <!-- TOGGLE INCIDENT ON OFF -->
-            <div class="d-grid gap-2">
+            <div class="d-grid gap-2" *ngIf="!showSimpleView">
               <button [disabled]="!observation.acl_user.w" *ngIf="!hasIncident()" class="btn btn-warning"
                 (click)="addSegmentIncident(idx)">
                 <fa-icon [icon]="faPlus"></fa-icon> Hendelse
@@ -127,7 +127,7 @@
           </div>
         </div>
 
-        <div *ngIf="hasSegmentIncident(idx)" class="row bg-light pt-3 pb-3"
+        <div *ngIf="!showSimpleView && hasSegmentIncident(idx)" class="row bg-light pt-3 pb-3"
           style="border-left:2px solid #ffc107;border-right:2px solid #ffc107; border-bottom: 1px solid #ffc107;">
 
           <!-- FLIGHT DATA -->
