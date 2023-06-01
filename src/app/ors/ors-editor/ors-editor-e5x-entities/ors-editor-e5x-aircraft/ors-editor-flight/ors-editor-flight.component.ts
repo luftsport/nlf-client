@@ -40,6 +40,7 @@ export class NlfOrsEditorFlightComponent implements OnInit {
 
 
   @Input() aircraft: any;
+  @Input() showSimpleView: boolean = false;
   @Output() aircraftChange: EventEmitter<ApiObservationAircraftsItem> = new EventEmitter();
   @Output() change: EventEmitter<boolean> = new EventEmitter();
 

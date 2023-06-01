@@ -83,7 +83,7 @@
       </dd>
     </ng-container>
     <ng-container *ngIf="observation.organization.hasOwnProperty('ors')">
-      <dt class="col-sm-3">OBSREG koordinator</dt>
+      <dt class="col-sm-3">OBSREG-koordinator</dt>
       <dd class="col-sm-9">
         <div *ngFor="let ors of observation.organization.ors">
           <nlf-resolve-lungo-person [person_id]="ors" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>

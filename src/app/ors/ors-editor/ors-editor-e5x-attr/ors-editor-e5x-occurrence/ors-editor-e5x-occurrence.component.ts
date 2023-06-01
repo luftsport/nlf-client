@@ -18,6 +18,7 @@ export class NlfOrsEditorE5XOccurrenceComponent implements OnInit {
   //@Input() attr: any;
   @Input() modal: boolean = false;
   @Input() disabled: boolean = false;
+  @Input() showSimpleView: boolean = false;
   //@Output() attrChange: EventEmitter<any> = new EventEmitter();
   //@Output() change: EventEmitter<boolean> = new EventEmitter();
   //@Input() paths: any;

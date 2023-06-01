@@ -14,7 +14,7 @@ import Tribute from "tributejs";
 import TributeOptions from "tributejs";
 import { debounce } from 'ts-debounce';
 
-import { faEdit, faClose, faSave, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faClose, faSave, faPlus, faSitemap, faFile } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-admin-content-edit',
@@ -27,6 +27,8 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
   faClose = faClose;
   faSave = faSave;
   faPlus = faPlus;
+  faSitemap = faSitemap;
+  faFile = faFile;
 
   joditConfig: Object;
   jodit;
@@ -186,9 +188,9 @@ export class NlfContentEditComponent implements OnInit, AfterViewInit {
       },
       menuItemTemplate: function (item) {
         if (!item.original.parent) {
-          return '<i class="fa fa-sitemap fa-fw"></i>&nbsp;' + item.string;
+          return '<fa-icon [fixedWidth]="true" [icon]="faSitemap"></fa-icon>&nbsp;' + item.string;
         } else {
-          return '<i class="fa fa-file fa-fw"></i>&nbsp;' + item.string;
+          return '<fa-icon [fixedWidth]="true" [icon]="faFile"></fa-icon>&nbsp;' + item.string;
         }
       },
       noMatchTemplate: 'Fant ingen',
