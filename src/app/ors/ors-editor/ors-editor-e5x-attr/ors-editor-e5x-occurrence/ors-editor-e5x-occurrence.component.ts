@@ -38,8 +38,10 @@ export class NlfOrsEditorE5XOccurrenceComponent implements OnInit {
 
     this.subject.observableObservation.subscribe(
       observation => {
-        this.observation = observation;
-        this.updateFlightPaths();
+        try {
+          this.observation = observation;
+          this.updateFlightPaths();
+        } catch { }
       }
     );
 

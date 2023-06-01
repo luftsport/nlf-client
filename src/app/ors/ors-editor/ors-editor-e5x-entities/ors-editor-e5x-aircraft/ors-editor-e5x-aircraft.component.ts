@@ -64,15 +64,19 @@ export class NlfOrsEditorE5XAircraftComponent implements OnInit {
 
     this.subject.observableObservation.subscribe(
       observation => {
-        this.observation = observation;
 
-        if (!this.observation.aircrafts) {
-          this.observation.aircrafts = [];
-        }
-        // Populate!
-        this.observation.aircrafts.forEach(ac => {
-          this.selectedAircrafts.push(ac.aircraft);
-        });
+        try {
+          this.observation = observation;
+
+          if (!this.observation.aircrafts) {
+            this.observation.aircrafts = [];
+          }
+          // Populate!
+          this.observation.aircrafts.forEach(ac => {
+            this.selectedAircrafts.push(ac.aircraft);
+          });
+        } catch { }
+
       }
     );
 
@@ -113,22 +117,24 @@ export class NlfOrsEditorE5XAircraftComponent implements OnInit {
   public onRemove(event) {
     console.log('Aircraft remove: ', event);
 
-    const confirmMsg = { title: 'Please confirm',
-                         message: 'Are you sure you want to delete ' + event.value.callsign + '? All data will be lost.',
-                         yes: 'Delete',
-                         no: 'Cancel'};
+    const confirmMsg = {
+      title: 'Please confirm',
+      message: 'Are you sure you want to delete ' + event.value.callsign + '? All data will be lost.',
+      yes: 'Delete',
+      no: 'Cancel'
+    };
     this.confirmService.confirm(confirmMsg).then(
-        () => { // Yes
-          this.observation.aircrafts.forEach((item, index) => {
-            if (item.aircraft.callsign === event.value.callsign) {
-              this.observation.aircrafts.splice(index, 1);
-            }
-          });
-          this.updateObservation();
-        },
-        () => { // No
-            // Do nothing?
-        }
+      () => { // Yes
+        this.observation.aircrafts.forEach((item, index) => {
+          if (item.aircraft.callsign === event.value.callsign) {
+            this.observation.aircrafts.splice(index, 1);
+          }
+        });
+        this.updateObservation();
+      },
+      () => { // No
+        // Do nothing?
+      }
     );
 
 

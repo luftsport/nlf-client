@@ -107,22 +107,25 @@ export class NlfOrsEditorFlightComponent implements OnInit {
 
     this.subject.observableObservation.subscribe(
       observation => {
-        this.observation = observation;
 
-        // Disabled
-        if (!this.observation.acl_user.w) {
-          this.from_airport_disable = true;
-          this.to_airport_disable = true;
-        }
+        try {
+          this.observation = observation;
 
-        if (!!this.currentWhen && this.observation.when != this.currentWhen) {
-          this.currentWhen = this.observation.when;
-          this.updateWx(true);
-        } else if (!this.currentWhen && !!this.observation.when) {
-          this.currentWhen = this.observation.when;
-          this.updateWx(true);
-        }
-        this._init = true;
+          // Disabled
+          if (!this.observation.acl_user.w) {
+            this.from_airport_disable = true;
+            this.to_airport_disable = true;
+          }
+
+          if (!!this.currentWhen && this.observation.when != this.currentWhen) {
+            this.currentWhen = this.observation.when;
+            this.updateWx(true);
+          } else if (!this.currentWhen && !!this.observation.when) {
+            this.currentWhen = this.observation.when;
+            this.updateWx(true);
+          }
+          this._init = true;
+        } catch { }
       }
 
     );
@@ -141,7 +144,7 @@ export class NlfOrsEditorFlightComponent implements OnInit {
       this.route = [];
     } else {
       this.route = this.aircraft.flight;
-      setTimeout(() => {                           
+      setTimeout(() => {
         this.routeReady = true;
       }, 700);
     }
