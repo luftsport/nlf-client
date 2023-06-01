@@ -363,7 +363,11 @@ import { ConfirmService, ConfirmState, ConfirmModalComponent, ConfirmTemplateDir
 
 // ALERT AND ERRORS
 import { NlfAlertService } from 'app/services/alert/alert.service';
+import { NlfToastService } from 'app/services/toast/toast.service';
 import { NlfErrorComponent } from 'app/error/error.component';
+
+// Socket.io
+import { NlfSocketService } from 'app/services/socket/socket.service';
 
 // @TODO
 // videogular
@@ -668,6 +672,8 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     ApiE5XChoicesService,
     // Common Services
     NlfAlertService,
+    NlfToastService,
+    NlfSocketService,
     NlfAuthService,
     NlfAuthSubjectService,
     NlfUserSubjectService,
