@@ -24,6 +24,8 @@ import { Observable } from 'rxjs/Observable';
 import { faSave, faQuestion, faFlag, faInfoCircle, faHistory, faFile, faExchange, faPaperPlane, faReply, faRepeat, faRandom, faUpload, faInfo, faLock, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import 'rxjs/add/operator/takeWhile';
 import { NlfEventQueueService, AppEventType } from 'app/nlf-event-queue.service';
+import { NlfAuthSubjectService } from 'app/services/auth/auth-subject.service';
+import { io } from "socket.io-client";
 
 @Component({
   selector: 'nlf-ors-motor-editor',
@@ -54,6 +56,7 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
   // For simple view or not
   public userData: ApiUserDataSubjectItem;
   private subject_is_alive: boolean = true;
+  private socket;
 
   faSave = faSave;
   faQuestion = faQuestion;
@@ -84,7 +87,8 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
     private confirmService: ConfirmService,
     private sanitizer: DomSanitizer,
     private userDataSubject: NlfUserSubjectService,
-    private eventQueue: NlfEventQueueService
+    private eventQueue: NlfEventQueueService,
+    private authDataSubject: NlfAuthSubjectService
     // private differs: KeyValueDiffers
   ) {
 
@@ -124,6 +128,31 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
       )
     ]);
 
+    this.authDataSubject.observableAuthData.subscribe(
+      data => {
+        if (!!data) {
+          if (!this.socket && !!data?.token) {
+            
+            //this.socket = io('/', { query: { token: data.token } });
+            this.socket = io('/', {auth: {token: data.token}});
+
+            this.socket.on('action', (message) => {
+              console.log('[SOCKET] message for action', message)
+              switch (message.action) {
+
+                case 'obsreg_e5x_finished_processing': {
+                  if (message.hasOwnProperty('link')) {
+                    if (message.link[0] === 'motorfly' && message.link[1] === this.observation.id) {
+                      this.getData();
+                    }
+                  }
+                }
+              }
+            });
+          }
+        }
+      });
+
     // Instantiate all hotkeys
     this.hotkeys.push(
       this.hotkeysService.add(new Hotkey(['command+s', 'ctrl+s'], (event: KeyboardEvent, combo: string): boolean => {
@@ -149,7 +178,7 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
 
   ngOnInit() {
     this.orsService.setActivity('motorfly');
-    
+
     // Receive everything on Obsreg
     this.eventQueue.on(AppEventType.ObsregEvent).subscribe(event => this._handleEvent(event.payload));
 
