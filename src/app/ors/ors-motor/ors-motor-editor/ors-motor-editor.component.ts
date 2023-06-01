@@ -149,7 +149,7 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
 
   ngOnInit() {
     this.orsService.setActivity('motorfly');
-    
+
     // Receive everything on Obsreg
     this.eventQueue.on(AppEventType.ObsregEvent).subscribe(event => this._handleEvent(event.payload));
 

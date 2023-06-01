@@ -265,7 +265,7 @@ export const NLF_DI_CONFIG: NlfConfig = {
       stateArr: ['withdrawn', 'draft', 'pending_review_ors','pending_review_ftl', 'pending_review_dto', 'pending_review_skole', 'pending_review_teknisk', 'pending_review_operativ', 'closed'],
       stateRoles: {
         draft: 'Observatør',
-        pending_review_ors: 'OBSREG koordinator',
+        pending_review_ors: 'OBSREG-koordinator',
         pending_review_ftl: 'FTL',
         pending_review_dto: 'DTO Ansvarlig',
         pending_review_skole: 'Skolesjef',
@@ -282,7 +282,7 @@ export const NLF_DI_CONFIG: NlfConfig = {
         pending_review_operativ: { badge: 'info', icon: 'clock-o', label: 'Operativ', descr: 'Avventer Operativ Leder' },
         pending_review_dto: { badge: 'info', icon: 'clock-o', label: 'DTO', descr: 'Avventer DTO representant' },
         pending_review_skole: { badge: 'info', icon: 'clock-o', label: 'Skolesjef', descr: 'Avventer Skolesjef' },
-        pending_review_ors: { badge: 'info', icon: 'clock-o', label: 'OBSREG', descr: 'Avventer OBSREG Koordinator' },
+        pending_review_ors: { badge: 'info', icon: 'clock-o', label: 'OBSREG', descr: 'Avventer OBSREG-Koordinator' },
         closed: { badge: 'success', icon: 'check', label: 'Lukket', descr: 'Ferdig behandlet og lukket' }
       },
       typesArr: ['sharing', 'unwanted_act', 'near_miss', 'incident', 'accident'],
@@ -358,7 +358,7 @@ export const NLF_DI_CONFIG: NlfConfig = {
       stateArr: ['withdrawn', 'draft', 'pending_review_ors','pending_review_ftl', 'pending_review_dto', 'pending_review_skole', 'pending_review_teknisk', 'pending_review_operativ', 'closed'],
       stateRoles: {
         draft: 'Observatør',
-        pending_review_ors: 'OBSREG koordinator',
+        pending_review_ors: 'OBSREG-koordinator',
         pending_review_ftl: 'FTL',
         pending_review_dto: 'DTO Ansvarlig',
         pending_review_skole: 'Skolesjef',
@@ -375,7 +375,7 @@ export const NLF_DI_CONFIG: NlfConfig = {
         pending_review_operativ: { badge: 'info', icon: 'clock-o', label: 'Operativ', descr: 'Avventer Operativ Leder' },
         pending_review_dto: { badge: 'info', icon: 'clock-o', label: 'DTO', descr: 'Avventer DTO representant' },
         pending_review_skole: { badge: 'info', icon: 'clock-o', label: 'Skolesjef', descr: 'Avventer Skolesjef' },
-        pending_review_ors: { badge: 'info', icon: 'clock-o', label: 'OBSREG', descr: 'Avventer OBSREG Koordinator' },
+        pending_review_ors: { badge: 'info', icon: 'clock-o', label: 'OBSREG', descr: 'Avventer OBSREG-Koordinator' },
         closed: { badge: 'success', icon: 'check', label: 'Lukket', descr: 'Ferdig behandlet og lukket' }
       },
       typesArr: ['sharing', 'unwanted_act', 'near_miss', 'incident', 'accident'],

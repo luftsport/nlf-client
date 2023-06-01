@@ -107,7 +107,7 @@
       <a ngbNavLink>{{ aircraft.aircraft.callsign }}</a>
       <ng-template ngbNavContent>
         <div class="py-3">
-          <nlf-ors-editor-flight (change)="updateObservation()" [(aircraft)]="observation.aircrafts[ix]"></nlf-ors-editor-flight>
+          <nlf-ors-editor-flight (change)="updateObservation()" [(aircraft)]="observation.aircrafts[ix]" [showSimpleView]="showSimpleView"></nlf-ors-editor-flight>
           <!--{{ observation.aircrafts[ix].flight | json }}-->
         </div>
       </ng-template>
