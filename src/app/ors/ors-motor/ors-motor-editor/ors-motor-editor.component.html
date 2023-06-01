@@ -207,10 +207,7 @@
       </div>
     </div>
 
-    <div *ngIf="observation?.flags?.aviation" class="alert alert-info" role="alert">
-      For rapporteringspliktige hendelser trenger vi informasjon om flyets registrering, planlagt avreise- og ankomstflyplass, sted for hendelsen og annen informasjon som er relevant. Du kan angi alt i feltet nedenfor, eller fylle ut så mye som du klarer direkte i de andre feltene. Dersom du allerede har rapportert hendelsen direkte selv, gi oss beskjed om dette.
-    </div>
-
+    <nlf-ors-editor-alert></nlf-ors-editor-alert>
 
     <!-- LOCATION: Removed  -->
 
@@ -295,7 +292,7 @@
       <nlf-ors-editor-e5x-occurrence [disabled]="!observation.acl_user.w" [modal]="false"></nlf-ors-editor-e5x-occurrence>
     </div>
     -->
-      <nlf-ors-editor-e5x-occurrence [disabled]="!observation.acl_user.w"
+      <nlf-ors-editor-e5x-occurrence [showSimpleView]="showSimpleView()" [disabled]="!observation.acl_user.w"
         [modal]="false"></nlf-ors-editor-e5x-occurrence>
       <!-- CLASSIFICATION -->
       <!--

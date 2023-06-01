@@ -232,7 +232,7 @@
       </div>
     </div>
 
-
+    <nlf-ors-editor-alert></nlf-ors-editor-alert>
 
     <!-- LOCATION: Removed  -->
 
@@ -317,7 +317,7 @@
       <nlf-ors-editor-e5x-occurrence [disabled]="!observation.acl_user.w" [modal]="false"></nlf-ors-editor-e5x-occurrence>
     </div>
     -->
-      <nlf-ors-editor-e5x-occurrence *ngIf="!showSimpleView()" [disabled]="!observation.acl_user.w" [modal]="false">
+      <nlf-ors-editor-e5x-occurrence [showSimpleView]="showSimpleView()" [disabled]="!observation.acl_user.w" [modal]="false">
       </nlf-ors-editor-e5x-occurrence>
       <!-- CLASSIFICATION -->
       <!--
