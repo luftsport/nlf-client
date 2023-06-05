@@ -54,16 +54,14 @@ export class NlfSocketService implements OnInit {
             //this.socket = io('/', { query: { token: data.token } });
             this.socket = io('/', {auth: {token: data.token}});
 
-            this.alertService.success('Connected to socket.io for two-way communication');
+            //this.alertService.success('Connected to socket.io for two-way communication');
 
             // Join rooms!
             // this.socket.emit("join_room", "obsreg");
             // this.socket.emit("join_room", "obsreg_motorfly_655"); // Everything for the current obsreg!
             // this.socket.emit("join_room", "motorfly"); // Seksjon
             // this.socket.emit("join_room", "notifications"); // Own notifications (allerede i egen kanal...)
-
-            this.socket.emit("get_rooms");
-
+            // this.socket.emit("get_rooms");
             // Handle incoming actions
 
             // Generic message
