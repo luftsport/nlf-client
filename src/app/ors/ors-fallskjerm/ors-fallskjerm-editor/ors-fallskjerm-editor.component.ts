@@ -15,7 +15,12 @@ import { NlfOrsEditorWorkflowComponent } from 'app/ors/ors-editor/ors-editor-wor
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { reloadCurrentRoute } from 'app/interfaces/functions';
-import { isEqual, cloneDeep } from 'lodash'
+
+import { isEqual, cloneDeep, mergeWith } from 'lodash'
+import { diff, addedDiff, deletedDiff, updatedDiff, detailedDiff } from 'deep-object-diff';
+import * as _ from 'lodash';
+
+
 import { ComponentCanDeactivate } from 'app/pending-changes.guard';
 import { HostListener } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -23,6 +28,7 @@ import { forkJoin } from 'rxjs';
 import { faSave, faQuestion, faInfoCircle, faHistory, faFile, faEye, faExchange, faPaperPlane, faReply, faRepeat, faRandom, faTimes, faCheck, faLock } from '@fortawesome/free-solid-svg-icons';
 import 'rxjs/add/operator/takeWhile';
 import { NlfEventQueueService, AppEventType } from 'app/nlf-event-queue.service';
+
 
 @Component({
   selector: 'nlf-ors-fallskjerm-editor',
@@ -208,12 +214,35 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy, Compo
   }
 
 
+  paths(obj, parentKey) {
+    let result;
+    if (_.isArray(obj)) {
+      var idx = 0;
+      result = _.flatMap(obj, function (obj) {
+        return this.paths(obj, (parentKey || '') + '[' + idx++ + ']');
+      });
+    }
+    else if (_.isPlainObject(obj)) {
+      result = _.flatMap(_.keys(obj), function (key) {
+        return _.map(this.paths(obj[key], key), function (subkey) {
+          return (parentKey ? parentKey + '.' : '') + subkey;
+        });
+      });
+    }
+    else {
+      result = [];
+    }
+    return _.concat(result, parentKey || []);
+  }
 
   public update(event) {
     console.log('EDITOR Update', this.changes, event);
     this.subject.update(this.observation);
   }
 
+  public getDiff() {
+    return detailedDiff(this.shadow, this.observation);
+  }
 
   /**
   Checks if new object is different!
@@ -223,6 +252,7 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy, Compo
     if (!!this.shadow) {
       if (!isEqual(this.observation, this.shadow)) {
         this.changes = true;
+
         //this.shadow = clone(this.observation);
       } else {
         this.changes = false;
@@ -351,6 +381,14 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy, Compo
   }
 
   closeActivities() {
+    this.modalRef.close();
+  }
+
+  openDiff(template) {
+    this.modalRef = this.modalService.open(template, { size: 'lg' });
+  }
+
+  closeDiff() {
     this.modalRef.close();
   }
 
