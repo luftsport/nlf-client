@@ -2,8 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ApiObservationsItem, ApiOptionsInterface, ApiObservationFallskjermOrganizationInterface } from 'app/api/api.interface';
 import { NlfOrsEditorInvolvedService, NlfOrsEditorInvolvedInterface } from 'app/ors/ors-editor/ors-editor-involved.service';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { faBan, faCheck, faExclamation, faTimes, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { NgbModal, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { faCalendar, faBan, faCheck, faExclamation, faTimes, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -18,21 +18,25 @@ export class NlfOrsFallskjermEditorInvolvedComponent implements OnInit {
   modalIndex: number;
   modalPerson;
   modalRef;
+  today;
 
   deleteExternal = false;
 
-  smokeMyAss = false;
 
   faCheck = faCheck;
   faExclamation = faExclamation;
   faBan = faBan;
   faTimes = faTimes;
   faEdit = faEdit;
+  faCalendar = faCalendar;
 
   constructor(
     private subject: NlfOrsEditorService,
     private involvedService: NlfOrsEditorInvolvedService,
-    private modalService: NgbModal) {
+    private modalService: NgbModal,
+    private calendar: NgbCalendar) {
+
+      this.today = this.calendar.getToday();
 
     this.subject.observableObservation.subscribe(
       (observation) => {
@@ -44,7 +48,6 @@ export class NlfOrsFallskjermEditorInvolvedComponent implements OnInit {
           });
         }
       });
-    this.smokeMyAss = true;
   }
 
 
@@ -64,7 +67,7 @@ export class NlfOrsFallskjermEditorInvolvedComponent implements OnInit {
     //.map(({ id }) => id)
 
     this.observation.involved = [...this.involved];
-    this.observation.involved = this.observation.involved.filter(function(props) {
+    this.observation.involved = this.observation.involved.filter(function (props) {
       delete props.full_name;
       return true;
     });
@@ -75,14 +78,12 @@ export class NlfOrsFallskjermEditorInvolvedComponent implements OnInit {
   External Remove
   **/
   onRemove(index) {
-    this.smokeMyAss = false;
     console.log('Removal index', index, this.observation.involved[index]);
     console.log(this.observation.involved.length);
     this.deleteExternal = true; // set external flag
     this.involvedService.remove(this.involved[index]['id']);
     this.involved.splice(index, 1); // delete
     this.involved = [...this.involved]; // trigger change detection
-    this.smokeMyAss = true;
     this.onChange(true);
   }
 

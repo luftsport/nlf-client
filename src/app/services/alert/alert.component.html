@@ -2,10 +2,9 @@
 [ngClass]="{'fixed-top': !message.inline}"
 *ngIf="message" [type]="message.type"
 [dismissible]="true" (close)="close()">
-  <i [ngClass]="{'fa fa-fw': message,
-  'fa-check': message.type === 'success',
-  'fa-info-circle': message.type === 'info',
-  'fa-exclamation-circle': message.type === 'warning',
-  'fa-exclamation-triangle': message.type === 'danger'}"></i>
+  <fa-icon *ngIf="message.type === 'success'" [fixedWidth]="true" [icon]="faCheck"></fa-icon>
+  <fa-icon *ngIf="message.type === 'info'" [fixedWidth]="true" [icon]="faInfoCircle"></fa-icon>
+  <fa-icon *ngIf="message.type === 'warning'" [fixedWidth]="true" [icon]="faExclamationCircle"></fa-icon>
+  <fa-icon *ngIf="message.type === 'danger'" [fixedWidth]="true" [icon]="faExclamationTriangle"></fa-icon>
    {{ message.text }}
 </ngb-alert>

@@ -96,7 +96,7 @@ export class NlfOrsFallskjermReportComponent implements OnInit {
       this.mapOptions = {
         layers: [
           tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
-          
+
         ],
         zoom: 7,
         center: latLng(59,10)
@@ -104,7 +104,7 @@ export class NlfOrsFallskjermReportComponent implements OnInit {
 
     } catch (e) {}
 
-    
+
 
   }
 
@@ -157,8 +157,10 @@ export class NlfOrsFallskjermReportComponent implements OnInit {
       data => {
         this.observation = data;
 
-        this.marker = marker([this.observation.location.geo.coordinates[0], this.observation.location.geo.coordinates[1]]);
-        this.configureMap();
+        if (!!this.observation.location?.geo?.coordinates) {
+          this.marker = marker([this.observation.location.geo.coordinates[0], this.observation.location.geo.coordinates[1]]);
+          this.configureMap();
+        }
 
         if (this.version > 0 && this.version !== this.observation._latest_version) {
           this.alertService.warning('Utdatert versjon du ser på versjon ' + this.version + ' av dokumentet. Siste versjon er ' + this.observation._latest_version);

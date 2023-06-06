@@ -24,6 +24,8 @@ export interface AutoCompleteModel {
 })
 export class NlfOrsEditorE5XAircraftComponent implements OnInit {
 
+  @Input() showSimpleView: boolean = false;
+
   apidata;
 
   pc: number;

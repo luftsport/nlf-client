@@ -5,6 +5,7 @@ import { ApiGeoAdminService } from 'app/api/api-geo-admin.service';
 import { ApiOptionsInterface, ApiObservationsItem } from 'app/api/api.interface';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import { faCheck, faClose, faEdit, faMapMarker, faTimes, faLocation } from '@fortawesome/free-solid-svg-icons';
+import { debounce } from 'ts-debounce';
 
 
 @Component({
@@ -25,6 +26,8 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
   @Input() showOnlyBtn: boolean = true;
   @Input() disabled: boolean = false;
   @Input() modal: boolean = false;
+
+  debouncedUpdate = debounce(this.update, 500);
 
   modalRef;
   geoReady = false;
@@ -50,9 +53,11 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
     this.subject.observableObservation.subscribe(
       observation => {
         this.observation = observation;
+        this.observation = { ...this.observation };
       }
     );
 
+    // keep to enable "use my location"
     this.geoLocationService.getLocation({ enableHighAccuracy: true }).subscribe(
       position => {
         console.log(position);
@@ -66,11 +71,7 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
         this.geoReady = true;
       },
       err => {
-        // Ingen lokalisasjon satt:
-        if (!this.observation.occurrence.attributes.latitudeOfOcc.value && !this.observation.occurrence.attributes.longitudeOfOcc.value) {
-          //this.observation.occurrence.attributes.latitudeOfOcc.value = 59.91655557650091;
-          //this.observation.occurrence.attributes.longitudeOfOcc.value = 10.748440347823207;
-        }
+
         this.geoReady = true;
       },
       () => {
@@ -90,7 +91,7 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
   public useMyLocation() {
     this.observation.occurrence.attributes.latitudeOfOcc.value = this.userGeo.coords.latitude;
     this.observation.occurrence.attributes.longitudeOfOcc.value = this.userGeo.coords.longitude;
-    this.observation.occurrence.attributes = {...this.observation.occurrence.attributes};
+    this.observation.occurrence.attributes = { ...this.observation.occurrence.attributes };
     this.updateArea();
   }
 
@@ -103,7 +104,7 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
     if (!this.disabled) {
       this.observation.occurrence.attributes.latitudeOfOcc.value = parseFloat(event.coords.lat);
       this.observation.occurrence.attributes.longitudeOfOcc.value = parseFloat(event.coords.lng);
-      
+
       this.updateArea();
     }
 
@@ -119,8 +120,8 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
               $geometry: {
                 type: "Point",
                 coordinates: [
-                  parseFloat(this.observation.occurrence.attributes.longitudeOfOcc.value),
-                  parseFloat(this.observation.occurrence.attributes.latitudeOfOcc.value)
+                  this.observation.occurrence.attributes.longitudeOfOcc.value,
+                  this.observation.occurrence.attributes.latitudeOfOcc.value
                 ]
               }
             }

@@ -66,8 +66,7 @@
           [model]="observation._model.type" [_id]="observation._id" [observation]="observation"></nlf-ors-editor-users>
 
         <!-- REPORT LINK -->
-        <a [routerLink]="['/ors', observation._model.type , 'report', observation.id]"
-          *ngIf="observation.acl_user.x || observation.acl_user.w" class="badge bg-primary text-white mx-1">
+        <a [routerLink]="['/ors', observation._model.type , 'report', observation.id]" class="badge bg-primary text-white mx-1">
           <fa-icon [icon]="faFile"></fa-icon> Report
         </a>
 
