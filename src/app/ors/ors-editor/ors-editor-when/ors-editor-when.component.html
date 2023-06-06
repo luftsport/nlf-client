@@ -3,8 +3,8 @@
     <div class="form-group">
       <div class="input-group has-validation">
         <input [ngClass]="{'is-invalid': dateError, 'is-valid': !dateError }" type="text" [disabled]="!observation.acl_user.w"
-          class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="date" [maxDate]="maxDate"
-          (ngModelChange)="debouncedUpdate($event.next)" ngbDatepicker #d="ngbDatepicker">
+          class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="date" [maxDate]="getMaxDate()"
+          (ngModelChange)="debouncedUpdate()" ngbDatepicker #d="ngbDatepicker">
 
         <button [disabled]="!observation.acl_user.w" class="btn btn-outline-secondary" (click)="d.toggle()"
           type="button">
