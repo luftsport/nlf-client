@@ -21,7 +21,8 @@ export class NlfOrsEditorWhenComponent implements OnInit {
 
   date: { year: number, month: number, day: number };
   time: { hour: number, minute: number, second?: number };
-  maxDate;
+  maxDate: { year: number, month: number, day: number };
+  maxDateTime: Date;
   dateError = false;
   dateErrorFeedback: string;
 
@@ -35,7 +36,7 @@ export class NlfOrsEditorWhenComponent implements OnInit {
     private calendar: NgbCalendar
   ) {
 
-    this.maxDate = this.calendar.getToday();
+    this.maxDateTime = new Date(); //this.calendar.getToday();
 
     this.observationSubject.observableObservation.subscribe(
       observation => {
@@ -46,8 +47,8 @@ export class NlfOrsEditorWhenComponent implements OnInit {
           if (!(this.observation.when instanceof Date)) {
             this.observation.when = new Date(this.observation.when);
           }
-          const now: Date = new Date(this.observation._created);
-          this.maxDate = NgbDate.from({ year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() });
+          // const now: Date = new Date(this.observation._created);
+          this.maxDateTime = new Date(this.observation._created); //now; //new Date(now.getFullYear(), now.getMonth() + 1,now.getDate(),now.getHours(),now.getMinutes());
 
           //LOCAL TZ
           if (this.tz === 'local') {
@@ -74,15 +75,10 @@ export class NlfOrsEditorWhenComponent implements OnInit {
 
 
   private getMaxDate() {
-    //return NgbDate.from(this.maxDate);
-    if (this.tz === 'local') {
-      return new Date(this.maxDate.year, this.maxDate.month - 1, this.maxDate.day);
-    }
-
-    return new Date(Date.UTC(this.maxDate.year, this.maxDate.month - 1, this.maxDate.day));
+    return { year: this.maxDateTime.getFullYear(), month: this.maxDateTime.getMonth() - 1, day: this.maxDateTime.getDay() };
   }
 
-  public update(event) {
+  public update() {
     try {
       // this.observation.whenChange.emit(this.type);
       let newTime = undefined;
@@ -92,14 +88,14 @@ export class NlfOrsEditorWhenComponent implements OnInit {
         newTime = new Date(Date.UTC(this.date.year, this.date.month - 1, this.date.day, this.time.hour, this.time.minute, 0, 0));
       }
 
-      if (this.isValidDate(newTime) && newTime <= this.getMaxDate()) {
+      if (this.isValidDate(newTime) && newTime <= this.maxDateTime) {
         this.dateError = false;
         this.observation.when = newTime;
         this.observationSubject.update(this.observation);
 
       } else {
         this.dateError = true;
-        if (this.isValidDate(newTime) && newTime > this.getMaxDate()) {
+        if (this.isValidDate(newTime) && newTime > this.maxDateTime) {
           this.dateErrorFeedback = 'Du kan ikke sette dato i fremtiden for observasjonen';
         } else if (!this.isValidDate(newTime)) {
           this.dateErrorFeedback = 'Feil datoformat';
