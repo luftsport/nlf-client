@@ -28,10 +28,22 @@
           </div>
 
           <table *ngIf="observation.e5x.audit.length>0" class="my-3 table table-striped table-sm">
+            <thead>
+              <th></th>
+              <th>Dato</th>
+              <th>Sent av</th>
+              <th>Versjon</th>
+              <th>Innsending</th>
+              <th>Prossesering</th>
+              <th>Status</th>
+              <th></th>
+            </thead>
             <tbody>
+              
               <tr *ngFor="let audit of observation.e5x.audit" [ngClass]="{'bg-info':observation._version==audit.version}">
                 <td>
-                  <nlf-ors-editor-tag-e5x-render classes="badge bg-secondary" [showLabel]="false" [items]="audit.status" path="E5X.Occurrence.ReportingHistory.ReportStatus"></nlf-ors-editor-tag-e5x-render>
+                  <nlf-ors-editor-tag-e5x-render classes="badge bg-secondary" [showLabel]="false" [items]="audit.status" path="E5X.Occurrence.ReportingHistory.ReportStatus">
+                  </nlf-ors-editor-tag-e5x-render>
                 </td>
                 <td>
                   {{ audit.date | date:'yyyy-MM-dd HH:mm'}}
@@ -43,8 +55,23 @@
                   v{{ audit.version }}
                 </td>
                 <td>
-                  <span *ngIf="audit.sent" class="badge bg-success">OK</span>
-                  <span *ngIf="!audit.sent" class="badge bg-info">Ikke sendt</span>
+                  <span *ngIf="audit.sent" class="badge bg-success"><fa-icon [icon]="faPaperPlane"></fa-icon> Sendt</span>
+                  <span *ngIf="!audit.sent" class="badge bg-info"><fa-icon [icon]="faBan"></fa-icon> Ikke sendt</span>
+                </td>
+                <td>
+                  <span *ngIf="!!audit?.eccairs2">
+                    <span *ngIf="!!audit?.eccairs2?.result" class="badge bg-success" title="Filen har blitt prosessert ferdig og er mottatt hos LT">
+                      <fa-icon [icon]="faCogs"></fa-icon> {{ audit?.eccairs2?.result?.migrationStatus || "?" }}
+                    </span>
+                  </span>
+                </td>
+                <td>
+                  <span *ngIf="audit?.eccairs2?.result?.migrationStatus==='Processed OK'&&audit.sent===true">
+                    <fa-icon [icon]="faCheck" class="text-success" title="Filen er levert LT"></fa-icon>
+                  </span>
+                  <span *ngIf="audit?.eccairs2?.result?.migrationStatus!='Processed OK'||audit.sent!=true">
+                    <fa-icon [icon]="faBan" class="text-danger" title="Det har skjedd en feil under sending"></fa-icon>
+                  </span>
                 </td>
                 <td class="text-end">
                   <a *ngIf="!!token" target="_blank" href="/api/v1/e5x/download/{{observation._model.type}}/{{observation.id}}/{{audit.version}}?token={{token}}">

@@ -14,7 +14,7 @@ import { ApiFilesService } from 'app/api/api-files.service';
 import { NlfAuthSubjectService } from 'app/services/auth/auth-subject.service';
 import { get, cleanE5XObject, deepCopy, pad } from 'app/interfaces/functions';
 import { environment } from 'environments/environment';
-import { faHistory, faDownload, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faHistory, faDownload, faCheck, faCogs, faBan } from '@fortawesome/free-solid-svg-icons';
 import { faFileAlt, faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 
 import {
@@ -54,7 +54,9 @@ export class NlfOrsE5xComponent implements OnInit {
   faCheck = faCheck;
   faFileAlt = faFileAlt;
   faPaperPlane = faPaperPlane;
-
+  faCogs = faCogs;
+  faBan = faBan;
+  
   /**
   report_status = [
     { id: 5, label: 'Initial notification', descr: 'Initial notification' },
