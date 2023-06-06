@@ -68,11 +68,7 @@ export class NlfOrsEditorWhenComponent implements OnInit {
   ngOnInit() { }
 
   public isValidDate(_date) {
-    console.log('Instanceofd', _date instanceof Date);
-    console.log('Momen', moment(_date).isValid());
-    console.log('Before', _date <= new Date())
     if (_date instanceof Date && moment(_date).isValid()) return true;
-
     return false;
   }
 
@@ -89,17 +85,12 @@ export class NlfOrsEditorWhenComponent implements OnInit {
   public update(event) {
     try {
       // this.observation.whenChange.emit(this.type);
-      console.log('WHEN EVENT', event);
-      console.log('this date', this.date);
-      console.log('this time', this.time);
       let newTime = undefined;
       if (this.tz === 'local') {
         newTime = new Date(this.date.year, this.date.month - 1, this.date.day, this.time.hour, this.time.minute, 0, 0);
       } else {
         newTime = new Date(Date.UTC(this.date.year, this.date.month - 1, this.date.day, this.time.hour, this.time.minute, 0, 0));
       }
-
-      console.log('NEWTIME', newTime, new Date(), newTime >= Date());
 
       if (this.isValidDate(newTime) && newTime <= this.getMaxDate()) {
         this.dateError = false;
