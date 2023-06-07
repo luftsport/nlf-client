@@ -366,13 +366,14 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
    */
   public getData(updateField: string = 'all') {
     console.log('Getting data');
-    this.dataReady = false;
-    this.subject.reset();
+    
+    // this.dataReady = false;
+   
     this.orsService.get(this.id).subscribe(
       data => {
-        console.log('[EDITOR GOT', data);
 
         if(updateField==='all') {
+          this.subject.reset();
           this.observation = data;
         } else {
           if(this.observation.hasOwnProperty(updateField)) {
@@ -393,7 +394,6 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
         if (this.observation._created === this.observation._updated) {
           this.alertService.success('Suksess! Du opprettet akkurat en ny observasjon og den fikk løpenummer #' + this.observation.id, false, true, 60);
         }
-        console.log('[DATA READY] True now it is ready');
         this.dataReady = true;
       },
       err => {
