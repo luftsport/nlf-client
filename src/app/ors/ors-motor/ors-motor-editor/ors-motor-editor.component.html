@@ -46,8 +46,7 @@
         </a>
 
         <!-- VERSION -->
-        <a class="badge bg-success mx-1 text-white pointer" (click)="openVersions(modalVersions)">v{{
-          observation._version }}</a>
+        <a class="badge bg-success mx-1 pointer" (click)="openDiff(diffModal)">v{{ observation._version }}</a>
 
         <!-- WORKFLOW -->
         <a class="pointer mx-1" *ngIf="observation.acl_user.x" (click)="openWorkflow()">
@@ -78,7 +77,8 @@
         <nlf-ors-editor-users *ngIf="observation.acl_user.x" [model]="observation._model.type" [_id]="observation._id"
           [observation]="observation"></nlf-ors-editor-users>
 
-        <a [routerLink]="['/ors', observation._model.type , 'report', observation.id]" class="badge bg-primary text-white mx-1">
+        <a [routerLink]="['/ors', observation._model.type , 'report', observation.id]"
+          class="badge bg-primary text-white mx-1">
           <fa-icon [icon]="faFile"></fa-icon> Report
         </a>
 
@@ -292,10 +292,10 @@
       <nlf-ors-editor-e5x-occurrence [disabled]="!observation.acl_user.w" [modal]="false"></nlf-ors-editor-e5x-occurrence>
     </div>
     -->
-    <div class="row">
-      <nlf-ors-editor-e5x-occurrence [showSimpleView]="showSimpleView()" [disabled]="!observation.acl_user.w"
-        [modal]="false"></nlf-ors-editor-e5x-occurrence>
-    </div>
+      <div class="row">
+        <nlf-ors-editor-e5x-occurrence [showSimpleView]="showSimpleView()" [disabled]="!observation.acl_user.w"
+          [modal]="false"></nlf-ors-editor-e5x-occurrence>
+      </div>
       <!-- CLASSIFICATION -->
       <!--
     <div class="nlf-ors-toolbar">
@@ -342,7 +342,7 @@
         [(reportingHistory)]="observation.occurrence.entities.reportingHistory"></nlf-ors-editor-e5x-reportinghistory>
 
       <!-- RISK ASSESSMENT -->
-      <nlf-ors-editor-e5x-risk  *ngIf="!showSimpleView()" [disabled]="!observation.acl_user.w" (change)="update()"
+      <nlf-ors-editor-e5x-risk *ngIf="!showSimpleView()" [disabled]="!observation.acl_user.w" (change)="update()"
         [(riskAssessment)]="observation.occurrence.entities.riskAssessment"></nlf-ors-editor-e5x-risk>
 
       <!-- NARRATIVE Moved top
@@ -727,6 +727,35 @@
   </div>
 </ng-template>
 <!-- //ACTIVITY -->
+
+<!-- DIFF MODAL --->
+<ng-template #diffModal>
+
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      #{{ observation.id }}
+      <nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type"
+        seperator="/"></nlf-resolve-observation-tags>
+    </h4>
+    <button type="button" class="close float-end" aria-label="Close" (click)="closeActivities()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <pre>
+    {{ getDiff() | json }}
+    </pre>
+    {{ this.shadow.when }} || {{ this.observation.when }}
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="closeActivities()">
+      <fa-icon [icon]="faTimes"></fa-icon> Lukk
+    </button>
+
+  </div>
+</ng-template>
 
 <div *ngIf="!!devDebug">
   <pre>{{observation | json}}</pre>
