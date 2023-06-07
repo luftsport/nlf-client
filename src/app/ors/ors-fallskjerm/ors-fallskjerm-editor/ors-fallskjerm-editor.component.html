@@ -40,7 +40,7 @@
         </a>
 
         <!-- VERSION -->
-        <span class="badge bg-success mx-1">v{{ observation._version }}</span>
+        <a class="badge bg-success mx-1 pointer" (click)="openDiff(diffModal)">v{{ observation._version }}</a>
 
         <!-- WORKFLOW -->
         <a class="pointer mx-1" *ngIf="observation.acl_user.x" (click)="openWorkflow()">
@@ -397,6 +397,7 @@
     <!-- BOTTOM TOOLBAR  DESKTOP ONLY -->
     <div *ngIf="observation.acl_user.x" class="nlf-toolbar fixed-bottom bg-dark d-none d-md-block">
       <div class="container">
+      
 
         <!--
         <span class="float-start" text="Her velger du visning om du vil ha forenklet eller alle felter" class="nav-item">
@@ -411,6 +412,7 @@
         -->
 
         <span class="float-end" text="Når du er ferdig med observasjonen så skal du sende den inn.">
+          
 
           <span class="me-4 lead">
             <nlf-help key="ors-editor-workflow"></nlf-help>
@@ -451,7 +453,7 @@
   </div><!-- /CONTAINMER-->
 
   <div class="container">
-    <div *ngIf="!!devDebug">{{ observation |json }}</div>
+    <div *ngIf="!!devDebug">{{ observation |json }}</div>
   </div>
 
 </div>
@@ -504,6 +506,35 @@
 
   <div class="modal-body">
     <nlf-ors-activities-timeline [observation]="observation"></nlf-ors-activities-timeline>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="closeActivities()">
+      <fa-icon [icon]="faTimes"></fa-icon> Lukk
+    </button>
+
+  </div>
+</ng-template>
+
+<!-- DIFF MODAL --->
+<ng-template #diffModal>
+
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      #{{ observation.id }}
+      <nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type"
+        seperator="/"></nlf-resolve-observation-tags>
+    </h4>
+    <button type="button" class="close float-end" aria-label="Close" (click)="closeActivities()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <pre>
+    {{ getDiff() | json }}
+    </pre>
+    {{ this.shadow.when }} || {{ this.observation.when }}
   </div>
 
   <div class="modal-footer">
