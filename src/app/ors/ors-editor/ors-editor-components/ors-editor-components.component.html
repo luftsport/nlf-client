@@ -101,7 +101,7 @@
           <fa-icon
             [ngClass]="!cause.hasOwnProperty('where') || !cause['where'].hasOwnProperty('at') || cause['where']['at']=='' ? 'text-danger' : 'text-success'"
             [icon]="faMapMarker"></fa-icon>
-          <fa-icon [ngClass]="!cause.hasOwnProperty('how') || cause['how'] =='' ? 'text-danger' : 'text-success'"
+          <fa-icon [ngClass]="!cause.hasOwnProperty('how') || cause['how'] =='' ? 'text-danger' : 'text-success'"
             [icon]="faComment"></fa-icon>
         </span>
 
@@ -184,7 +184,7 @@
     <div cdkDrag [cdkDragDisabled]="!observation.acl_user.w" *ngFor="let consequence of consequences; let i = index">
       <div class="input-group mb-3">
         <span cdkDragHandle class="input-group-text drag-handle" id="basic-addon2">
-          <fa-icon [ngClass]="{'text-muted': !observation.acl_user.w}" name="arrows-alt"></fa-icon>
+          <fa-icon [ngClass]="{'text-muted': !observation.acl_user.w}" [icon]="faArrowsAlt"></fa-icon>
         </span>
         <span class="input-group-text fw-bold bg-danger lead pointer"
           [ngClass]="{'component-barrier': consequence.flags.barrier}" id="basic-addon2" (click)="toggleBarrier('consequences', i)">
