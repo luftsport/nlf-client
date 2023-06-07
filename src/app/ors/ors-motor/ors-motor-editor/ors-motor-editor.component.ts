@@ -14,7 +14,6 @@ import { NlfOrsEditorDebugComponent } from 'app/ors/ors-editor/ors-editor-debug/
 import { NlfOrsEditorWorkflowComponent } from 'app/ors/ors-editor/ors-editor-workflow/ors-editor-workflow.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { cleanE5XObject, deepCopy, pad } from 'app/interfaces/functions';
-import { isEqual, cloneDeep } from 'lodash'
 import { environment } from 'environments/environment';
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
 import { forkJoin } from 'rxjs';
@@ -24,6 +23,11 @@ import { Observable } from 'rxjs/Observable';
 import { faSave, faQuestion, faFlag, faInfoCircle, faHistory, faFile, faExchange, faPaperPlane, faReply, faRepeat, faRandom, faUpload, faInfo, faLock, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import 'rxjs/add/operator/takeWhile';
 import { NlfEventQueueService, AppEventType } from 'app/nlf-event-queue.service';
+import { NlfAuthSubjectService } from 'app/services/auth/auth-subject.service';
+import { io } from "socket.io-client";
+import { isEqual, cloneDeep, mergeWith } from 'lodash'
+import { diff, addedDiff, deletedDiff, updatedDiff, detailedDiff } from 'deep-object-diff';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'nlf-ors-motor-editor',
@@ -54,6 +58,7 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
   // For simple view or not
   public userData: ApiUserDataSubjectItem;
   private subject_is_alive: boolean = true;
+  private socket;
 
   faSave = faSave;
   faQuestion = faQuestion;
@@ -84,7 +89,8 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
     private confirmService: ConfirmService,
     private sanitizer: DomSanitizer,
     private userDataSubject: NlfUserSubjectService,
-    private eventQueue: NlfEventQueueService
+    private eventQueue: NlfEventQueueService,
+    private authDataSubject: NlfAuthSubjectService
     // private differs: KeyValueDiffers
   ) {
 
@@ -95,7 +101,6 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
       // Instantiate our behavioursubject
       this.subject.observableObservation.takeWhile(() => this.subject_is_alive).subscribe(
         observation => {
-          console.log('OBSREG rxjs', observation);
           if (!!observation) {
             this.observation = observation;
 
@@ -123,6 +128,31 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
         err => console.log('Error getting user data: ', err)
       )
     ]);
+
+    this.authDataSubject.observableAuthData.subscribe(
+      data => {
+        if (!!data) {
+          if (!this.socket && !!data?.token) {
+            
+            //this.socket = io('/', { query: { token: data.token } });
+            this.socket = io('/', {auth: {token: data.token}});
+
+            this.socket.on('action', (message) => {
+              console.log('[SOCKET] message for action', message)
+              switch (message.action) {
+
+                case 'obsreg_e5x_finished_processing': {
+                  if (message.hasOwnProperty('link')) {
+                    if (message.link[0] === 'motorfly' && message.link[1] === this.observation.id) {
+                      this.getData('e5x');
+                    }
+                  }
+                }
+              }
+            });
+          }
+        }
+      });
 
     // Instantiate all hotkeys
     this.hotkeys.push(
@@ -209,7 +239,6 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
     return false;
   }
 
-
   public showSimpleView() {
 
     try {
@@ -237,8 +266,33 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
     } catch (e) { }
   }
 
+  paths(obj, parentKey) {
+    let result;
+    if (_.isArray(obj)) {
+      var idx = 0;
+      result = _.flatMap(obj, function (obj) {
+        return this.paths(obj, (parentKey || '') + '[' + idx++ + ']');
+      });
+    }
+    else if (_.isPlainObject(obj)) {
+      result = _.flatMap(_.keys(obj), function (key) {
+        return _.map(this.paths(obj[key], key), function (subkey) {
+          return (parentKey ? parentKey + '.' : '') + subkey;
+        });
+      });
+    }
+    else {
+      result = [];
+    }
+    return _.concat(result, parentKey || []);
+  }
+
   public update() {
     this.subject.update(this.observation);
+  }
+
+  public getDiff() {
+    return detailedDiff(this.shadow, this.observation);
   }
 
   /**
@@ -335,14 +389,21 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
 
     }
    */
-  public getData() {
+  public getData(updateField: string = 'all') {
     console.log('Getting data');
-    this.dataReady = false;
-    this.subject.reset();
+
     this.orsService.get(this.id).subscribe(
       data => {
-        console.log('[EDITOR GOT', data);
-        this.observation = data;
+
+        if(updateField==='all') {
+          this.subject.reset();
+          this.observation = data;
+        } else {
+          if(this.observation.hasOwnProperty(updateField)) {
+            this.observation[updateField] = data[updateField];
+          }
+        }
+        
         this.subject.update(this.observation);
         // Make some defaults:
         if (typeof this.observation.rating === 'undefined') {
@@ -356,7 +417,6 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
         if (this.observation._created === this.observation._updated) {
           this.alertService.success('Suksess! Du opprettet akkurat en ny observasjon og den fikk løpenummer #' + this.observation.id, false, true, 60);
         }
-        console.log('[DATA READY] True now it is ready');
         this.dataReady = true;
       },
       err => {
@@ -364,10 +424,16 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
         this.dataReady = true;
         this.alertService.error(err.message);
       },
-      () => {
-
-      }
+      () => {}
     );
+  }
+
+  openDiff(template) {
+    this.modalRef = this.modalService.open(template, { size: 'lg' });
+  }
+
+  closeDiff() {
+    this.modalRef.close();
   }
 
   openHelp() {

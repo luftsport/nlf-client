@@ -14,7 +14,6 @@ import { NlfOrsEditorDebugComponent } from 'app/ors/ors-editor/ors-editor-debug/
 import { NlfOrsEditorWorkflowComponent } from 'app/ors/ors-editor/ors-editor-workflow/ors-editor-workflow.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { cleanE5XObject, deepCopy, pad } from 'app/interfaces/functions';
-import { isEqual, cloneDeep } from 'lodash'
 import { environment } from 'environments/environment';
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
 import { forkJoin } from 'rxjs';
@@ -22,9 +21,14 @@ import { JoyrideService } from 'ngx-joyride';
 import { ComponentCanDeactivate } from 'app/pending-changes.guard';
 import { HostListener } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/takeWhile';
 import { faSave, faQuestion, faFlag, faInfoCircle, faHistory, faFile, faExchange, faPaperPlane, faReply, faRepeat, faRandom, faUpload, faInfo, faLock, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
+import 'rxjs/add/operator/takeWhile';
 import { NlfEventQueueService, AppEventType } from 'app/nlf-event-queue.service';
+import { NlfAuthSubjectService } from 'app/services/auth/auth-subject.service';
+import { io } from "socket.io-client";
+import { isEqual, cloneDeep, mergeWith } from 'lodash'
+import { diff, addedDiff, deletedDiff, updatedDiff, detailedDiff } from 'deep-object-diff';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'nlf-ors-sportsfly-editor',
@@ -72,6 +76,7 @@ export class NlfOrsSportsflyEditorComponent implements OnInit, OnDestroy, Compon
   // For simple view or not
   public userData: ApiUserDataSubjectItem;
   private subject_is_alive: boolean = true;
+  private socket;
 
 
   constructor(
@@ -87,7 +92,8 @@ export class NlfOrsSportsflyEditorComponent implements OnInit, OnDestroy, Compon
     private sanitizer: DomSanitizer,
     private userDataSubject: NlfUserSubjectService,
     private readonly joyrideService: JoyrideService,
-    private eventQueue: NlfEventQueueService
+    private eventQueue: NlfEventQueueService,
+    private authDataSubject: NlfAuthSubjectService
     // private differs: KeyValueDiffers
   ) {
 
@@ -116,7 +122,6 @@ export class NlfOrsSportsflyEditorComponent implements OnInit, OnDestroy, Compon
         () => { }
 
       ),
-
       this.userDataSubject.observable.subscribe(
         data => {
           if (!!data) {
@@ -126,6 +131,31 @@ export class NlfOrsSportsflyEditorComponent implements OnInit, OnDestroy, Compon
         err => console.log('Error getting user data: ', err)
       )
     ]);
+
+    this.authDataSubject.observableAuthData.subscribe(
+      data => {
+        if (!!data) {
+          if (!this.socket && !!data?.token) {
+            
+            //this.socket = io('/', { query: { token: data.token } });
+            this.socket = io('/', {auth: {token: data.token}});
+
+            this.socket.on('action', (message) => {
+              console.log('[SOCKET] message for action', message)
+              switch (message.action) {
+
+                case 'obsreg_e5x_finished_processing': {
+                  if (message.hasOwnProperty('link')) {
+                    if (message.link[0] === 'sportsfly' && message.link[1] === this.observation.id) {
+                      this.getData('e5x');
+                    }
+                  }
+                }
+              }
+            });
+          }
+        }
+      });
 
     // Instantiate all hotkeys
     this.hotkeys.push(
@@ -157,11 +187,12 @@ export class NlfOrsSportsflyEditorComponent implements OnInit, OnDestroy, Compon
     // Receive everything on Obsreg
     this.eventQueue.on(AppEventType.ObsregEvent).subscribe(event => this._handleEvent(event.payload));
 
-    this.route.params.subscribe(params => {
-      this.id = params['id'] ? params['id'] : 0;
-      this.app.setTitle('OBSREG Editor #' + this.id);
-      this.getData();
-    }
+    this.route.params.subscribe(
+      (params) => {
+        this.id = params['id'] ? params['id'] : 0;
+        this.app.setTitle('OBSREG Editor #' + this.id);
+        this.getData();
+      }
     );
   }
 
@@ -173,7 +204,6 @@ export class NlfOrsSportsflyEditorComponent implements OnInit, OnDestroy, Compon
       }
     }
   }
-
 
   hasFlag() {
 
@@ -191,15 +221,14 @@ export class NlfOrsSportsflyEditorComponent implements OnInit, OnDestroy, Compon
    */
   ngOnDestroy() {
 
-
     this.hotkeysService.remove(this.hotkeys);
-
-    //this.saveIfChanges();
-    //this.subject.unsubscribe();
     this.subject_is_alive = false;
 
+    this.subject.unsubscribe();
+    //this.saveIfChanges();
 
-    //this.subject.update(undefined);
+    this.subject.update(undefined);
+    this.subject.unsubscribe();
   }
 
   // @HostListener allows us to also guard against browser refresh, close, etc.
@@ -241,9 +270,33 @@ export class NlfOrsSportsflyEditorComponent implements OnInit, OnDestroy, Compon
     } catch (e) { }
   }
 
+  paths(obj, parentKey) {
+    let result;
+    if (_.isArray(obj)) {
+      var idx = 0;
+      result = _.flatMap(obj, function (obj) {
+        return this.paths(obj, (parentKey || '') + '[' + idx++ + ']');
+      });
+    }
+    else if (_.isPlainObject(obj)) {
+      result = _.flatMap(_.keys(obj), function (key) {
+        return _.map(this.paths(obj[key], key), function (subkey) {
+          return (parentKey ? parentKey + '.' : '') + subkey;
+        });
+      });
+    }
+    else {
+      result = [];
+    }
+    return _.concat(result, parentKey || []);
+  }
+
   public update() {
-    console.log('EDITOR Update', this.changes);
     this.subject.update(this.observation);
+  }
+
+  public getDiff() {
+    return detailedDiff(this.shadow, this.observation);
   }
 
   /**
@@ -340,14 +393,21 @@ export class NlfOrsSportsflyEditorComponent implements OnInit, OnDestroy, Compon
 
     }
    */
-  public getData() {
+  public getData(updateField: string = 'all') {
     console.log('Getting data');
-    this.dataReady = false;
 
     this.orsService.get(this.id).subscribe(
       data => {
 
-        this.observation = data;
+        if(updateField==='all') {
+          this.subject.reset();
+          this.observation = data;
+        } else {
+          if(this.observation.hasOwnProperty(updateField)) {
+            this.observation[updateField] = data[updateField];
+          }
+        }
+        
         this.subject.update(this.observation);
         // Make some defaults:
         if (typeof this.observation.rating === 'undefined') {
@@ -361,17 +421,23 @@ export class NlfOrsSportsflyEditorComponent implements OnInit, OnDestroy, Compon
         if (this.observation._created === this.observation._updated) {
           this.alertService.success('Suksess! Du opprettet akkurat en ny observasjon og den fikk løpenummer #' + this.observation.id, false, true, 60);
         }
-
+        this.dataReady = true;
       },
       err => {
         this.error = err;
         this.dataReady = true;
         this.alertService.error(err.message);
       },
-      () => {
-        this.dataReady = true;
-      }
+      () => {}
     );
+  }
+
+  openDiff(template) {
+    this.modalRef = this.modalService.open(template, { size: 'lg' });
+  }
+
+  closeDiff() {
+    this.modalRef.close();
   }
 
   openHelp() {

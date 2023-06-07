@@ -65,12 +65,14 @@ export class NlfOrsEditorE5xRiskComponent implements OnInit {
 
   constructor(private subject: NlfOrsEditorService) {
     this.subject.observableObservation.subscribe((observation) => {
-      this.observation = observation;
-      this.loadEventRiskClassification();
+      try {
+        this.observation = observation;
+        this.loadEventRiskClassification();
+      } catch { }
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   public update() {
     this.subject.update(this.observation);

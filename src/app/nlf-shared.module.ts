@@ -33,6 +33,7 @@ import { NgPipesModule } from 'angular-pipes'; // Angular pipes, love them!
 
 // Note: services in nlf.module
 import { NlfAlertComponent } from 'app/services/alert/alert.component';
+import { NlfToastComponent } from 'app/services/toast/toast.component';
 
 
 // Help system
@@ -127,6 +128,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     HighliteTextPipe,
     NlfOrsTypePipe,
     NlfAlertComponent,
+    NlfToastComponent,
     NlfUiPageSpinnerComponent,
     NlfUiComponentSpinnerComponent,
     NlfOrgSelectorComponent,
@@ -223,6 +225,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     ResolveLungoCountyComponent,
     // Common
     NlfAlertComponent,
+    NlfToastComponent,
     NgbModule,
     NlfBreadcrumbComponent,
     NlfUserFirstLoginComponent,
