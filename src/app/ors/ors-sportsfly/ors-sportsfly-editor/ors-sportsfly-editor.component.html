@@ -58,7 +58,7 @@
 
 
         <!-- VERSION -->
-        <a class="badge bg-success mx-1 text-white pointer" (click)="openVersions(modalVersions)"
+        <a class="badge bg-success mx-1 text-white pointer" (click)="openDiff(diffModal)"
           joyrideStep="step003" stepPosition="bottom" title="Versjon"
           text="Indikerer versjonen av observasjonen. Alle endringer lagres. Du kan se forskjeller og du kan gå tilbake/revertere om du angrer deg.">
           v{{ observation._version }}</a>
@@ -459,7 +459,7 @@
     </div>
 
     <!-- ASK -->
-    <div class="row bg-light py-2">
+    <div class="row bg-light" style="py-2">
 
       <!-- ASK TOGGLE -->
       <div class="col-md-4 col-sm-12">
@@ -807,6 +807,35 @@
   </div>
 </ng-template>
 <!-- //ACTIVITY -->
+
+<!-- DIFF MODAL --->
+<ng-template #diffModal>
+
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      #{{ observation.id }}
+      <nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type"
+        seperator="/"></nlf-resolve-observation-tags>
+    </h4>
+    <button type="button" class="close float-end" aria-label="Close" (click)="closeActivities()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <pre>
+    {{ getDiff() | json }}
+    </pre>
+    {{ this.shadow.when }} || {{ this.observation.when }}
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="closeActivities()">
+      <fa-icon [icon]="faTimes"></fa-icon> Lukk
+    </button>
+
+  </div>
+</ng-template>
 
 <div *ngIf="!!devDebug">
   <pre>{{observation | json}}</pre>

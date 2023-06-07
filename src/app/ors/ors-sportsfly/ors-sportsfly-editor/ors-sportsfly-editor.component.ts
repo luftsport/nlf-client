@@ -14,7 +14,6 @@ import { NlfOrsEditorDebugComponent } from 'app/ors/ors-editor/ors-editor-debug/
 import { NlfOrsEditorWorkflowComponent } from 'app/ors/ors-editor/ors-editor-workflow/ors-editor-workflow.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { cleanE5XObject, deepCopy, pad } from 'app/interfaces/functions';
-import { isEqual, cloneDeep } from 'lodash'
 import { environment } from 'environments/environment';
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
 import { forkJoin } from 'rxjs';
@@ -22,11 +21,14 @@ import { JoyrideService } from 'ngx-joyride';
 import { ComponentCanDeactivate } from 'app/pending-changes.guard';
 import { HostListener } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/takeWhile';
 import { faSave, faQuestion, faFlag, faInfoCircle, faHistory, faFile, faExchange, faPaperPlane, faReply, faRepeat, faRandom, faUpload, faInfo, faLock, faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
+import 'rxjs/add/operator/takeWhile';
 import { NlfEventQueueService, AppEventType } from 'app/nlf-event-queue.service';
 import { NlfAuthSubjectService } from 'app/services/auth/auth-subject.service';
 import { io } from "socket.io-client";
+import { isEqual, cloneDeep, mergeWith } from 'lodash'
+import { diff, addedDiff, deletedDiff, updatedDiff, detailedDiff } from 'deep-object-diff';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'nlf-ors-sportsfly-editor',
@@ -92,6 +94,7 @@ export class NlfOrsSportsflyEditorComponent implements OnInit, OnDestroy, Compon
     private readonly joyrideService: JoyrideService,
     private eventQueue: NlfEventQueueService,
     private authDataSubject: NlfAuthSubjectService
+    // private differs: KeyValueDiffers
   ) {
 
     // Instantiate diff checking:
@@ -119,7 +122,6 @@ export class NlfOrsSportsflyEditorComponent implements OnInit, OnDestroy, Compon
         () => { }
 
       ),
-
       this.userDataSubject.observable.subscribe(
         data => {
           if (!!data) {
@@ -203,7 +205,6 @@ export class NlfOrsSportsflyEditorComponent implements OnInit, OnDestroy, Compon
     }
   }
 
-
   hasFlag() {
 
     for (let key of Object.keys(this.observation.flags)) {
@@ -269,8 +270,33 @@ export class NlfOrsSportsflyEditorComponent implements OnInit, OnDestroy, Compon
     } catch (e) { }
   }
 
+  paths(obj, parentKey) {
+    let result;
+    if (_.isArray(obj)) {
+      var idx = 0;
+      result = _.flatMap(obj, function (obj) {
+        return this.paths(obj, (parentKey || '') + '[' + idx++ + ']');
+      });
+    }
+    else if (_.isPlainObject(obj)) {
+      result = _.flatMap(_.keys(obj), function (key) {
+        return _.map(this.paths(obj[key], key), function (subkey) {
+          return (parentKey ? parentKey + '.' : '') + subkey;
+        });
+      });
+    }
+    else {
+      result = [];
+    }
+    return _.concat(result, parentKey || []);
+  }
+
   public update() {
     this.subject.update(this.observation);
+  }
+
+  public getDiff() {
+    return detailedDiff(this.shadow, this.observation);
   }
 
   /**
@@ -369,9 +395,7 @@ export class NlfOrsSportsflyEditorComponent implements OnInit, OnDestroy, Compon
    */
   public getData(updateField: string = 'all') {
     console.log('Getting data');
-    
-    // this.dataReady = false;
-   
+
     this.orsService.get(this.id).subscribe(
       data => {
 
@@ -404,10 +428,16 @@ export class NlfOrsSportsflyEditorComponent implements OnInit, OnDestroy, Compon
         this.dataReady = true;
         this.alertService.error(err.message);
       },
-      () => {
-
-      }
+      () => {}
     );
+  }
+
+  openDiff(template) {
+    this.modalRef = this.modalService.open(template, { size: 'lg' });
+  }
+
+  closeDiff() {
+    this.modalRef.close();
   }
 
   openHelp() {
@@ -434,18 +464,18 @@ export class NlfOrsSportsflyEditorComponent implements OnInit, OnDestroy, Compon
     this.modalRef = this.modalService.open(template, { size: 'lg' });
   }
 
+
+  openDebugModal(template: TemplateRef<any>) {
+    this.openModal(template);
+
+  }
+
   openActivities(template) {
     this.modalRef = this.modalService.open(template, { size: 'lg' });
   }
 
   closeActivities() {
     this.modalRef.close();
-  }
-
-
-  openDebugModal(template: TemplateRef<any>) {
-    this.openModal(template);
-
   }
 
   openWorkflow() {
