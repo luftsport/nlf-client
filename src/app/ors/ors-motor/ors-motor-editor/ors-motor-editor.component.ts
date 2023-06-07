@@ -143,7 +143,7 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
                 case 'obsreg_e5x_finished_processing': {
                   if (message.hasOwnProperty('link')) {
                     if (message.link[0] === 'motorfly' && message.link[1] === this.observation.id) {
-                      this.getData();
+                      this.getData('e5x');
                     }
                   }
                 }
@@ -364,14 +364,22 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
 
     }
    */
-  public getData() {
+  public getData(updateField: string = 'all') {
     console.log('Getting data');
     this.dataReady = false;
     this.subject.reset();
     this.orsService.get(this.id).subscribe(
       data => {
         console.log('[EDITOR GOT', data);
-        this.observation = data;
+
+        if(updateField==='all') {
+          this.observation = data;
+        } else {
+          if(this.observation.hasOwnProperty(updateField)) {
+            this.observation[updateField] = data[updateField];
+          }
+        }
+        
         this.subject.update(this.observation);
         // Make some defaults:
         if (typeof this.observation.rating === 'undefined') {
