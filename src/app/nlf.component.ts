@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { NlfAuthSubjectService } from 'app/services/auth/auth-subject.service';
 import { NlfConfigService } from 'app/nlf-config.service';
 import { NlfConfigItem } from 'app/api/api.interface';
-
+import { NlfSocketService } from 'app/services/socket/socket.service';
 
 import { filter, map } from "rxjs/operators";
 
@@ -17,7 +17,6 @@ export class NlfComponent {
 
   readonly prefix_title = 'NLF';
   private config: NlfConfigItem;
-
   loggedInObservable;
 
   public constructor(
@@ -25,7 +24,8 @@ export class NlfComponent {
     private authSubject: NlfAuthSubjectService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private configService: NlfConfigService) {
+    private configService: NlfConfigService,
+    private socket: NlfSocketService) {
 
     this.loggedInObservable = this.authSubject.observableAuth;
 

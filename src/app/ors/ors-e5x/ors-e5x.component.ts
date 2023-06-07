@@ -233,8 +233,12 @@ export class NlfOrsE5xComponent implements OnInit {
       // moved to flags!
       let rdate = new Date();
       this.observation.occurrence.entities.reportingHistory[0].attributes.reportingDate.value = [rdate.getFullYear(), pad(rdate.getMonth() + 1), pad(rdate.getDate())].join('-'); //+ ' ' + [rdate.getHours(), rdate.getMinutes(), rdate.getSeconds()].join(':');
+
+      /**
+       * Report identification not to include version in ECCAIRS2, should not in ECCAIRS1 either.
+       */
       this.observation.occurrence.entities.reportingHistory[0].attributes.reportVersion.value = this.observation._version;
-      this.observation.occurrence.entities.reportingHistory[0].attributes.reportIdentification.value = 'nlf_' + this.observation._model.type + '_' + + this.observation.id + '_v' + this.observation._version;
+      this.observation.occurrence.entities.reportingHistory[0].attributes.reportIdentification.value = 'nlf_' + this.observation._model.type + '_' + + this.observation.id;
       this.observation.occurrence.entities.reportingHistory[0].attributes.reportSource.value = 2; // 2 er reportable, 3 er voluntary reports, media 4 osv.
       this.observation.occurrence.entities.reportingHistory[0].attributes.reportingFormType.value = 9823;
 
