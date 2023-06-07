@@ -66,8 +66,12 @@
                     title="Filen har blitt prosessert ferdig og er mottatt hos LT">
                     <fa-icon [icon]="faCogs"></fa-icon> {{ audit?.eccairs2?.result?.migrationStatus || "?" }}
                   </span>
-                  <span *ngIf="!audit?.eccairs2?.result" class="badge bg-danger"
-                    title="De var problemer med å prossessere filen">
+                  <span *ngIf="audit?.sent===true && audit?.eccairs2?.id>0 && !audit?.eccairs2?.result" class="badge bg-warning"
+                    title="Prossesserer filen">
+                    <fa-icon [icon]="faCogs"></fa-icon> {{ audit?.status }}
+                  </span>
+                  <span *ngIf="audit?.sent===true && audit?.eccairs2?.id>0 && !!audit?.eccairs2?.result && audit?.eccairs2?.result?.migrationStatus !='Processed OK'" class="badge bg-danger"
+                    title="Det var problemer med å prossessere filen">
                     <fa-icon [icon]="faCogs"></fa-icon> {{ audit?.eccairs2?.result?.migrationStatus || "Feilet" }}
                   </span>
                 </span>
@@ -77,7 +81,7 @@
                 <span *ngIf="audit?.eccairs2?.result?.migrationStatus==='Processed OK'&&audit.sent===true">
                   <fa-icon [icon]="faCheck" class="text-success" title="Filen er levert LT"></fa-icon>
                 </span>
-                <span *ngIf="audit?.eccairs2?.result?.migrationStatus!='Processed OK'||audit.sent!=true">
+                <span *ngIf="!!audit?.eccairs2?.result?.migrationStatus && (audit?.eccairs2?.result?.migrationStatus!='Processed OK'||audit.sent!=true)">
                   <fa-icon [icon]="faBan" class="text-danger" title="Det har skjedd en feil under sending"></fa-icon>
                 </span>
               </td>
