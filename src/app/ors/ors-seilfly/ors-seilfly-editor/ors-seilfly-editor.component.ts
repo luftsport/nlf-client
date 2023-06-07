@@ -136,7 +136,7 @@ export class NlfOrsSeilflyEditorComponent implements OnInit, OnDestroy, Componen
           if (!this.socket && !!data?.token) {
 
             //this.socket = io('/', { query: { token: data.token } });
-            this.socket = io('/', { auth: { token: data.token } });
+            this.socket = io('/', {auth: {token: data.token}});
 
             this.socket.on('action', (message) => {
               console.log('[SOCKET] message for action', message)
@@ -144,7 +144,7 @@ export class NlfOrsSeilflyEditorComponent implements OnInit, OnDestroy, Componen
 
                 case 'obsreg_e5x_finished_processing': {
                   if (message.hasOwnProperty('link')) {
-                    if (message.link[0] === 'motorfly' && message.link[1] === this.observation.id) {
+                    if (message.link[0] === 'seilfly' && message.link[1] === this.observation.id) {
                       this.getData('e5x');
                     }
                   }
@@ -240,7 +240,6 @@ export class NlfOrsSeilflyEditorComponent implements OnInit, OnDestroy, Componen
     }
     return false;
   }
-
 
   public showSimpleView() {
 
@@ -394,19 +393,19 @@ export class NlfOrsSeilflyEditorComponent implements OnInit, OnDestroy, Componen
    */
   public getData(updateField: string = 'all') {
     console.log('Getting data');
-    this.dataReady = false;
-    this.subject.reset();
+
     this.orsService.get(this.id).subscribe(
       data => {
 
-        if (updateField === 'all') {
+        if(updateField==='all') {
+          this.subject.reset();
           this.observation = data;
         } else {
-          if (this.observation.hasOwnProperty(updateField)) {
+          if(this.observation.hasOwnProperty(updateField)) {
             this.observation[updateField] = data[updateField];
           }
         }
-
+        
         this.subject.update(this.observation);
         // Make some defaults:
         if (typeof this.observation.rating === 'undefined') {

@@ -133,9 +133,9 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
       data => {
         if (!!data) {
           if (!this.socket && !!data?.token) {
-
+            
             //this.socket = io('/', { query: { token: data.token } });
-            this.socket = io('/', { auth: { token: data.token } });
+            this.socket = io('/', {auth: {token: data.token}});
 
             this.socket.on('action', (message) => {
               console.log('[SOCKET] message for action', message)
@@ -391,19 +391,19 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
    */
   public getData(updateField: string = 'all') {
     console.log('Getting data');
-    this.dataReady = false;
-    this.subject.reset();
+
     this.orsService.get(this.id).subscribe(
       data => {
 
-        if (updateField === 'all') {
+        if(updateField==='all') {
+          this.subject.reset();
           this.observation = data;
         } else {
-          if (this.observation.hasOwnProperty(updateField)) {
+          if(this.observation.hasOwnProperty(updateField)) {
             this.observation[updateField] = data[updateField];
           }
         }
-
+        
         this.subject.update(this.observation);
         // Make some defaults:
         if (typeof this.observation.rating === 'undefined') {
