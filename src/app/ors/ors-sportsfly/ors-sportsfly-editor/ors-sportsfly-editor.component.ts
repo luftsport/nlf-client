@@ -74,6 +74,7 @@ export class NlfOrsSportsflyEditorComponent implements OnInit, OnDestroy, Compon
   // For simple view or not
   public userData: ApiUserDataSubjectItem;
   private subject_is_alive: boolean = true;
+  private socket;
 
 
   constructor(
@@ -143,7 +144,7 @@ export class NlfOrsSportsflyEditorComponent implements OnInit, OnDestroy, Compon
 
                 case 'obsreg_e5x_finished_processing': {
                   if (message.hasOwnProperty('link')) {
-                    if (message.link[0] === 'motorfly' && message.link[1] === this.observation.id) {
+                    if (message.link[0] === 'sportsfly' && message.link[1] === this.observation.id) {
                       this.getData('e5x');
                     }
                   }

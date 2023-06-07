@@ -142,7 +142,7 @@ export class NlfOrsSeilflyEditorComponent implements OnInit, OnDestroy, Componen
 
                 case 'obsreg_e5x_finished_processing': {
                   if (message.hasOwnProperty('link')) {
-                    if (message.link[0] === 'motorfly' && message.link[1] === this.observation.id) {
+                    if (message.link[0] === 'seilfly' && message.link[1] === this.observation.id) {
                       this.getData('e5x');
                     }
                   }
