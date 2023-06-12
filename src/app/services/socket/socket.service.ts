@@ -22,7 +22,7 @@ export interface socketMessage {
 })
 export class NlfSocketService implements OnInit {
 
-  socket = undefined;
+  public socket = undefined;
   messages: socketMessage[] = [];
 
   typeClasses = {
