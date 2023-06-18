@@ -59,15 +59,19 @@ export class NlfOrsFallskjermEditorInvolvedComponent implements OnInit {
     Check if adding or removing - kkeping involved subject updated
     map array of objects to array of id's not in array of ids for the shorter array of objects
     **/
+   console.log('[EVETN] ' + event, this.involved);
     if (this.observation.involved.length > this.involved.length) { // Remove
       this.involvedService.remove(this.observation.involved.map(item => item.id).filter(x => this.involved.map(i => i.id).indexOf(x) < 0)[0]);
     } else if (this.observation.involved.length < this.involved.length) { // Add
-      this.involvedService.add(this.involved.map(item => item.id).filter(x => this.observation.involved.map(i => i.id).indexOf(x) < 0)[0]);
+      this.involvedService.add(
+        this.involved.map(item => item.id).filter(x => this.observation.involved.map(i => i.id).indexOf(x) < 0)[0],
+        this.involved.map(item => item.tmp_name || undefined).filter(x => this.observation.involved.map(i => i.tmp_name || undefined).indexOf(x) < 0)[0]
+      );
     }
     //.map(({ id }) => id)
 
     this.observation.involved = [...this.involved];
-    this.observation.involved = this.observation.involved.filter(function (props) {
+    this.observation.involved = this.observation.involved.filter((props) => {
       delete props.full_name;
       return true;
     });
