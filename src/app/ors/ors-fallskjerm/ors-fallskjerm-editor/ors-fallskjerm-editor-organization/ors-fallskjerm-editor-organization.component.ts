@@ -55,7 +55,7 @@ export class NlfOrsFallskjermEditorOrganizationComponent implements OnInit {
               if (Number.isInteger(person)) {
                 this.involvedSubject.add(person);
               } else {
-                this.involvedSubject.add(person['id']); //, person['full_name'] || person['tmp_name'] || undefined); // || person['tmp_name'] || undefined);
+                this.involvedSubject.add(person['id'], person['full_name'] || person['tmp_name'] || undefined); //, person['full_name'] || person['tmp_name'] || undefined); // || person['tmp_name'] || undefined);
               }
             }
           );
