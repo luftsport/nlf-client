@@ -33,7 +33,6 @@ export class NlfOrsEditorInvolvedService {
   ) { }
 
   public add(person_id: number, name?: string) {
-    console.log('[INVOLVED] Added', person_id, name);
     if (!!name && name.length > 3) {
       this.list.push({ id: person_id, full_name: name });
       this.changeArr(this.list);

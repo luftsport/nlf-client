@@ -331,14 +331,14 @@
               <span *ngIf="person.id > 0">
                 <nlf-resolve-lungo-person [person_id]="person.id"></nlf-resolve-lungo-person>
               </span>
-              <span *ngIf="person.id < 0">{{ person.tmp_name }}</span>
+              <span *ngIf="person.id < 0">{{ person.full_name }}</span>
             </button>
             <button [disabled]="!observation.acl_user.w" *ngIf="getModalInvolvedIndex(person.id) < 0"
               (click)="modalToggleInvolved(person)" class="btn btn-outline-secondary mx-1 my-1">
               <span *ngIf="person.id > 0">
                 <nlf-resolve-lungo-person [person_id]="person.id"></nlf-resolve-lungo-person>
               </span>
-              <span *ngIf="person.id < 0">{{ person.tmp_name }}</span>
+              <span *ngIf="person.id < 0">{{ person.full_name }}</span>
             </button>
           </span>
         </div>
