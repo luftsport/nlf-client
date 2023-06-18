@@ -44,7 +44,7 @@ export class NlfOrsFallskjermEditorInvolvedComponent implements OnInit {
         if (!this.involved) {
           this.involved = [...this.observation.involved];
           this.involved.forEach(person => {
-            this.involvedService.add(person.id);
+            this.involvedService.add(person.id, person.full_name || person.tmp_name || undefined);
           });
         }
       });
