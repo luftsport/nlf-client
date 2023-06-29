@@ -18,9 +18,12 @@
       </div>
     </div>
   </form>
-  <div>
-    <ngb-timepicker [readonlyInputs]="!observation.acl_user.w" [(ngModel)]="time"
-      (ngModelChange)="debouncedUpdate($event)"></ngb-timepicker>
+  <div class="row">
+    <div class="col-md-5">
+      <ngb-timepicker [readonlyInputs]="!observation.acl_user.w" [(ngModel)]="time"
+        (ngModelChange)="debouncedUpdate($event)"></ngb-timepicker>
+      </div>
+      <div class="col-md-4" style="align-self:'center';">UTC</div>
   </div>
   <!--
 <hr> {{ date | json }} og {{ time | json }}
