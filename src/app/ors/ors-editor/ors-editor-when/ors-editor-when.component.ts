@@ -13,7 +13,8 @@ import { NgbCalendar, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 })
 export class NlfOrsEditorWhenComponent implements OnInit {
 
-  @Input() tz: string = 'local';
+  @Input() tz: string = 'utc';
+
 
   debouncedUpdate = debounce(this.update, 1000);
 
@@ -36,7 +37,7 @@ export class NlfOrsEditorWhenComponent implements OnInit {
     private calendar: NgbCalendar
   ) {
 
-    this.maxDateTime = new Date(); //this.calendar.getToday();
+    this.maxDateTime = new Date();
 
     this.observationSubject.observableObservation.subscribe(
       observation => {
@@ -45,10 +46,12 @@ export class NlfOrsEditorWhenComponent implements OnInit {
 
         try {
           if (!(this.observation.when instanceof Date)) {
+            console.log("WHEN",this.observation.when);
             this.observation.when = new Date(this.observation.when);
+            console.log("WHEN",this.observation.when);
           }
-          // const now: Date = new Date(this.observation._created);
-          this.maxDateTime = new Date(this.observation._created); //now; //new Date(now.getFullYear(), now.getMonth() + 1,now.getDate(),now.getHours(),now.getMinutes());
+
+          this.maxDateTime = new Date(this.observation._created);
 
           //LOCAL TZ
           if (this.tz === 'local') {
@@ -90,9 +93,11 @@ export class NlfOrsEditorWhenComponent implements OnInit {
 
       if (this.isValidDate(newTime) && newTime <= this.maxDateTime) {
         this.dateError = false;
-        this.observation.when = newTime;
-        this.observationSubject.update(this.observation);
 
+        if (this.observation.when !== newTime) {
+          this.observation.when = newTime;
+          this.observationSubject.update(this.observation);
+        }
       } else {
         this.dateError = true;
         if (this.isValidDate(newTime) && newTime > this.maxDateTime) {
