@@ -15,12 +15,6 @@ import { NlfOrsEditorWorkflowComponent } from 'app/ors/ors-editor/ors-editor-wor
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { reloadCurrentRoute } from 'app/interfaces/functions';
-
-import { isEqual, cloneDeep, mergeWith } from 'lodash'
-import { diff, addedDiff, deletedDiff, updatedDiff, detailedDiff } from 'deep-object-diff';
-import * as _ from 'lodash';
-
-
 import { ComponentCanDeactivate } from 'app/pending-changes.guard';
 import { HostListener } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -28,6 +22,10 @@ import { forkJoin } from 'rxjs';
 import { faSave, faQuestion, faInfoCircle, faHistory, faFile, faEye, faExchange, faPaperPlane, faReply, faRepeat, faRandom, faTimes, faCheck, faLock } from '@fortawesome/free-solid-svg-icons';
 import 'rxjs/add/operator/takeWhile';
 import { NlfEventQueueService, AppEventType } from 'app/nlf-event-queue.service';
+import { NlfSocketService } from 'app/services/socket/socket.service';
+import { diff, addedDiff, deletedDiff, updatedDiff, detailedDiff } from 'deep-object-diff';
+import * as _ from 'lodash';
+import { isEqual, cloneDeep, mergeWith } from 'lodash'
 
 
 @Component({
@@ -82,7 +80,8 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy, Compo
     private confirmService: ConfirmService,
     private sanitizer: DomSanitizer,
     private userDataSubject: NlfUserSubjectService,
-    private eventQueue: NlfEventQueueService
+    private eventQueue: NlfEventQueueService,
+    private socketService: NlfSocketService
     // private differs: KeyValueDiffers
   ) {
 
@@ -131,6 +130,20 @@ export class NlfOrsFallskjermEditorComponent implements OnInit, OnDestroy, Compo
         err => console.log('Error getting user data: ', err)
       )
     ]);
+
+    this.socketService.socket.on('action', (message) => {
+      
+      switch (message.action) {
+
+        case 'obsreg_reload': {
+          if (message.hasOwnProperty('link')) {
+            if (message.link[0] === 'fallskjerm' && message.link[1] === this.observation.id) {
+              console.log('[socket.io] Server asked to reload obsreg');
+            }
+          }
+        }
+      }
+    });
 
 
     // Instantiate all hotkeys
