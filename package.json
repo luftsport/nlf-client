@@ -1,6 +1,6 @@
 {
   "name": "nlf-client",
-  "version": "0.13.4",
+  "version": "0.13.5",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -83,6 +83,7 @@
     "nemex-angular2-realtimegeolocation": "0.0.6",
     "ng-bootstrap": "^1.6.3",
     "ngx-chips": "^2.0.0-beta.0",
+    "ngx-device-detector": "^3.0.0",
     "ngx-easy-table": "^13.0.3",
     "ngx-echarts": "^8.0.1",
     "ngx-image-cropper": "^3.1.9",
