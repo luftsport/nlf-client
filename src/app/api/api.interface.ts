@@ -164,6 +164,7 @@ export interface ApiUserDefaultSettingsItem {
 }
 export interface ApiUserSettingsItem extends ApiUserDefaultSettingsItem {
   ors?: any; // ors: {has_reported?: boolean, cache?: {}, last_edited: [{activity:, id:}] }
+  device_info?: any;
 }
 
 export interface ApiUserDataSubjectItem {
@@ -1066,6 +1067,7 @@ export interface NlfConfigItem {
   hps?: NlfConfigOrgItem;
   modellfly?: NlfConfigOrgItem;
   apps?: NlfApps;
+  client_version?: string;
 }
 
 export interface NlfConfigRating {
