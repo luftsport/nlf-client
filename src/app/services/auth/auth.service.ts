@@ -11,6 +11,7 @@ import { Router } from '@angular/router'; // ActivatedRoute
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
 import { ApiUserDataSubjectItem, AuthDataSubjectInterface, NlfConfigItem } from 'app/api/api.interface';
 import { environment } from 'environments/environment';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Injectable()
 export class NlfAuthService {
@@ -44,7 +45,8 @@ export class NlfAuthService {
     private keepalive: Keepalive,
     private authSubject: NlfAuthSubjectService,
     private userSubject: NlfUserSubjectService,
-    private configSubject: NlfConfigService) {
+    private configSubject: NlfConfigService,
+    private deviceService: DeviceDetectorService) {
 
 
 
@@ -62,7 +64,6 @@ export class NlfAuthService {
         } catch (e) {
           this.id_token = null;
         }
-        
         
       },
       err => this.authData = null
@@ -95,7 +96,6 @@ export class NlfAuthService {
         if (!!data.success && data.success === true) {
 
 
-
           localStorage.setItem('auth-id', data.username);
           localStorage.setItem('auth-token', data.token64);
           localStorage.setItem('auth-valid', data.valid['$date']);
@@ -103,6 +103,7 @@ export class NlfAuthService {
           this.id_token = data.id_token;
           localStorage.setItem('auth-id-token', data.id_token);
 
+          data.settings['device_info'] = this.deviceService.getDeviceInfo()
 
           this.userData = {
             acl: data.acl,
@@ -126,6 +127,7 @@ export class NlfAuthService {
             id_token: data.id_token,
             valid: new Date(data.valid['$date'])
           });
+          
 
           this.userSubject.update(this.userData);
 
