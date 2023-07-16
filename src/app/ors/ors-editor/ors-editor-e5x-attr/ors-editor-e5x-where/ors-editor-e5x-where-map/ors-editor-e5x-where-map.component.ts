@@ -10,8 +10,8 @@ export class NlfOrsEditorE5XWhereMapComponent implements OnInit, OnChanges {
 
   /**
    * Input is aircraft top level list of aircraft from observation
-   * aircraft.flight holds a list of from-to's including path 
-   * 
+   * aircraft.flight holds a list of from-to's including path
+   *
    */
   @Input() aircraft: ApiObservationAircraftsItem[];
   @Input() lat: number;
@@ -95,24 +95,26 @@ export class NlfOrsEditorE5XWhereMapComponent implements OnInit, OnChanges {
     this.layer = featureGroup();
 
     this.aircraft.forEach((ac, index) => {
+      const aircraftPathStart = ac.flight.find(x => x !== undefined)?.path;
+      const aircraftPathEnd = ac.flight?.length >= 1 ? ac.flight[ac.flight.length - 1].path : undefined;
+      if (!!aircraftPathStart && !!aircraftPathEnd) {
+        let acColor = this._getColorFromAcIndex(Math.floor(Math.random() * 1000));
+        // iterate every flight path add polyline
+        ac.flight.forEach((el) => {
+          this.layer.addLayer(
+            polyline(this._path2LatLng(el.path), {
+              color: this._getColorFromAcIndex(index),
+              weight: 2,
+              opacity: 1,
+              smoothFactor: 1,
+            })
+          );
+        });
 
-      let acColor = this._getColorFromAcIndex(Math.floor(Math.random() * 1000));
-      // iterate every flight path add polyline
-      ac.flight.forEach((el) => {
-        this.layer.addLayer(
-          polyline(this._path2LatLng(el.path), {
-            color: this._getColorFromAcIndex(index),
-            weight: 2,
-            opacity: 1,
-            smoothFactor: 1,
-          })
-        );
-      });
-
-      // Add markers take-off and landing for each aircraft:
-      this.layer.addLayer(new Marker(latLng(ac.flight.find(x => x !== undefined)['path'][0][1], ac.flight.find(x => x !== undefined)['path'][0][0]), { icon: this._mkIcon(index) }).bindPopup('Take-off ' + ac.aircraft.callsign));
-      this.layer.addLayer(new Marker(latLng(ac.flight[(ac.flight.length - 1)]['path'][1][1], ac.flight[(ac.flight.length - 1)]['path'][1][0]), { icon: this._mkIcon(index) }).bindPopup('Landing ' + ac.aircraft.callsign));
-
+        // Add markers take-off and landing for each aircraft:
+        this.layer.addLayer(new Marker(latLng(aircraftPathStart[0][1], aircraftPathStart[0][0]), { icon: this._mkIcon(index) }).bindPopup('Take-off ' + ac.aircraft.callsign));
+        this.layer.addLayer(new Marker(latLng(aircraftPathEnd[1][1], aircraftPathEnd[1][0]), { icon: this._mkIcon(index) }).bindPopup('Landing ' + ac.aircraft.callsign));
+      }
     });
 
     if (!!this.lat && !!this.lng) {
