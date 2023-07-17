@@ -25,7 +25,8 @@ export class NlfOrsEditorWhenComponent implements OnInit {
   maxDate: { year: number, month: number, day: number };
   maxDateTime: Date;
   dateError = false;
-  dateErrorFeedback: string;
+  // dateErrorFeedback: string;
+  dateErrorType: string;
 
   dataReady = false;
   // Icons
@@ -46,12 +47,13 @@ export class NlfOrsEditorWhenComponent implements OnInit {
 
         try {
           if (!(this.observation.when instanceof Date)) {
-            console.log("WHEN",this.observation.when);
+            console.log("WHEN", this.observation.when);
             this.observation.when = new Date(this.observation.when);
-            console.log("WHEN",this.observation.when);
+            console.log("WHEN", this.observation.when);
           }
 
           this.maxDateTime = new Date(this.observation._created);
+          console.log('MAX DATETIME', this.maxDateTime, this.getMaxDate());
 
           //LOCAL TZ
           if (this.tz === 'local') {
@@ -78,7 +80,12 @@ export class NlfOrsEditorWhenComponent implements OnInit {
 
 
   private getMaxDate() {
-    return { year: this.maxDateTime.getFullYear(), month: this.maxDateTime.getMonth() - 1, day: this.maxDateTime.getDay() };
+    if (this.tz === 'local') {
+      return { year: this.maxDateTime.getFullYear(), month: this.maxDateTime.getMonth() + 1, day: this.maxDateTime.getDate() };
+    } else {
+      return { year: this.maxDateTime.getUTCFullYear(), month: this.maxDateTime.getUTCMonth() + 1, day: this.maxDateTime.getUTCDate() };
+
+    }
   }
 
   public update() {
@@ -101,9 +108,9 @@ export class NlfOrsEditorWhenComponent implements OnInit {
       } else {
         this.dateError = true;
         if (this.isValidDate(newTime) && newTime > this.maxDateTime) {
-          this.dateErrorFeedback = 'Du kan ikke sette dato i fremtiden for observasjonen';
+          this.dateErrorType = 'future'; //Du kan ikke sette dato i fremtiden for observasjonen';
         } else if (!this.isValidDate(newTime)) {
-          this.dateErrorFeedback = 'Feil datoformat';
+          this.dateErrorType = 'format'; //Feil datoformat';
         }
       }
 
