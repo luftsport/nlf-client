@@ -12,7 +12,13 @@
         </button>
 
         <div id="validationServerUsernameFeedback" class="invalid-feedback">
-          {{ dateErrorFeedback }}
+          <ng-container *ngIf="dateErrorType==='future'">
+            Du kan ikke sette dato i fremtiden for observasjonen den ble opprettet {{observation._created | date:'yyyy-MM-dd klokken HH:mm'}}
+          </ng-container>
+          <ng-container *ngIf="dateErrorType==='format'">
+            Feil datoformat, vennligst skriv inn på formen "yyyy-mm-dd" eller velg fra nedtrekksmenyen
+          </ng-container>
+
         </div>
 
       </div>

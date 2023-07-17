@@ -25,7 +25,8 @@ export class NlfOrsEditorWhenComponent implements OnInit {
   maxDate: { year: number, month: number, day: number };
   maxDateTime: Date;
   dateError = false;
-  dateErrorFeedback: string;
+  // dateErrorFeedback: string;
+  dateErrorType: string;
 
   dataReady = false;
   // Icons
@@ -107,9 +108,9 @@ export class NlfOrsEditorWhenComponent implements OnInit {
       } else {
         this.dateError = true;
         if (this.isValidDate(newTime) && newTime > this.maxDateTime) {
-          this.dateErrorFeedback = 'Du kan ikke sette dato i fremtiden for observasjonen';
+          this.dateErrorType = 'future'; //Du kan ikke sette dato i fremtiden for observasjonen';
         } else if (!this.isValidDate(newTime)) {
-          this.dateErrorFeedback = 'Feil datoformat';
+          this.dateErrorType = 'format'; //Feil datoformat';
         }
       }
 
