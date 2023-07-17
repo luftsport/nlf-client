@@ -5,5 +5,12 @@
 
 export const environment = {
   production: false,
-
+  _auth_service: '',
+  _logout_service: '',
+  _client_id: '',
+  _scope: 'read',
+  _shebang: 0,
+  _response_type: 'access_token',
+  _name: 'local',
+  _e5x_submission: false
 };
