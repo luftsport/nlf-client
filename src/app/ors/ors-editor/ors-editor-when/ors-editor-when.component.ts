@@ -46,12 +46,13 @@ export class NlfOrsEditorWhenComponent implements OnInit {
 
         try {
           if (!(this.observation.when instanceof Date)) {
-            console.log("WHEN",this.observation.when);
+            console.log("WHEN", this.observation.when);
             this.observation.when = new Date(this.observation.when);
-            console.log("WHEN",this.observation.when);
+            console.log("WHEN", this.observation.when);
           }
 
           this.maxDateTime = new Date(this.observation._created);
+          console.log('MAX DATETIME', this.maxDateTime, this.getMaxDate());
 
           //LOCAL TZ
           if (this.tz === 'local') {
@@ -78,7 +79,12 @@ export class NlfOrsEditorWhenComponent implements OnInit {
 
 
   private getMaxDate() {
-    return { year: this.maxDateTime.getFullYear(), month: this.maxDateTime.getMonth() - 1, day: this.maxDateTime.getDay() };
+    if (this.tz === 'local') {
+      return { year: this.maxDateTime.getFullYear(), month: this.maxDateTime.getMonth() + 1, day: this.maxDateTime.getDate() };
+    } else {
+      return { year: this.maxDateTime.getUTCFullYear(), month: this.maxDateTime.getUTCMonth() + 1, day: this.maxDateTime.getUTCDate() };
+
+    }
   }
 
   public update() {
