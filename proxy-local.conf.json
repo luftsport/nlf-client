@@ -4,5 +4,12 @@
     "changeOrigin": true,
     "logLevel": "debug",
     "secure": false
+  },
+  "/socket.io/*": {
+    "target": "https://dev.nlf.no/socket.io/",
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "secure": false
   }
+
 }
