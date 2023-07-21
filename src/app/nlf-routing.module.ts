@@ -49,6 +49,8 @@ let _routes: Routes = [
   { path: 'aip', loadChildren: () => import('app/aip/aip.module').then(m => m.NlfAipModule), data: { bc: 'AIP', preload: false, title: 'AIP', prod: true } },
   { path: 'organizations', loadChildren: () => import('app/organizations/organizations.module').then(m => m.NlfOrganizationsModule), data: { bc: 'Organizations', preload: false, title: 'Organizations', prod: true} },
   { path: 'aircraft', loadChildren: () => import('app/aircrafts/aircrafts.module').then(m => m.NlfAircraftsModule), data: { bc: 'Aircraft', preload: false, title: 'Aircraft', prod: true } },
+  
+  { path: 'fallskjerm', loadChildren: () => import('app/fallskjerm/fallskjerm.module').then(m => m.NlfFallskjermModule), data: { bc: 'Fallskjerm', preload: false, title: 'Fallskjerm', prod: true } },
 
   // Permalinks
   { path: 'app/obs', loadChildren: () => import('app/permalinks/permalinks.module').then(m => m.NlfPermalinksModule), data: { preload: false, prod: true } },

@@ -77,6 +77,7 @@ import { ApiHelpService } from 'app/api/api-help.service';
 import { ApiContentService } from 'app/api/api-content.service';
 import { ApiAirspacesService } from 'app/api/api-airspaces.service';
 import { ApiAircraftsService } from 'app/api/api-aircrafts.service';
+import { ApiFallskjermTandemService } from 'app/api/api-fallskjerm-tandem.service';
 // API NOTIFICATIONS
 import { ApiNotificationsService } from 'app/api/api-notifications.service';
 // API GEO
@@ -655,6 +656,7 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     // AIP
     ApiAirspacesService,
     ApiAircraftsService,
+    ApiFallskjermTandemService,
     // Notfications
     ApiNotificationsService,
     // RESOURCES
