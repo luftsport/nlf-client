@@ -106,4 +106,15 @@ export class NlfOrsEditorWorkflowComponent implements OnInit {
       data => this.graph = 'data:image/png;base64,' + data.graph
     );
   }
+
+  narrativeRequirementMet() {
+    switch(this.observation._model.type) {
+      case 'motorfly':
+        case 'sportsfly':
+          case 'seilfly':
+            return this.observation?.occurrence?.entities?.reportingHistory?.length > 0 && this.observation?.occurrence?.entities?.reportingHistory[0].attributes?.reporterSDescription?.plainText?.length > 0;
+      default:
+        return true;
+    }
+  }
 }

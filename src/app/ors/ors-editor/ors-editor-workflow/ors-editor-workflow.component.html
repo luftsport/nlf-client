@@ -81,6 +81,10 @@
       <fa-icon [icon]="faRandom"></fa-icon> Skjul skjema
     </button>
 
+    <div *ngIf="!narrativeRequirementMet()" class="alert alert-info mt-3 mb-0">
+      Du må beskrive hva som skjedde før du kan sende rapporten inn til behandling.
+    </div>
+
     <span *ngIf="!!processing" class="text-center">
       <nlf-ui-component-spinner size="5"></nlf-ui-component-spinner>
     </span>
@@ -95,10 +99,8 @@
 
 <!--FOOTER-->
 <div class="modal-footer">
-
-
   <span *ngIf="!!dataReady">
-    <button *ngFor="let a of workflow.actions" type="button" [disabled]="!a.permission" class="btn mx-1" [title]="a.title"
+    <button *ngFor="let a of workflow.actions" type="button" [disabled]="!a.permission || ((a.resource=='approve'||a.resource=='reopen'||a.resource=='ors'||a.resource=='obsreg') && !narrativeRequirementMet())" class="btn mx-1" [title]="a.title"
     [ngClass]="{
       'btn-danger':a.resource=='reject'||a.resource=='withdraw',
       'btn-success':a.resource=='approve'||a.resource=='reopen'||a.resource=='ors'||a.resource=='obsreg',
@@ -115,5 +117,4 @@
     </button>
   </span>
   <button [ngClass]="{'disabled': processing}" class="btn btn-outline-dark" (click)="activeModal.dismiss()">Avbryt</button>
-
 </div>
