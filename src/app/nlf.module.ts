@@ -178,6 +178,7 @@ import { NlfOrsEditorWhenComponent } from 'app/ors/ors-editor/ors-editor-when/or
 import { NlfOrsEditorRatingComponent } from 'app/ors/ors-editor/ors-editor-rating/ors-editor-rating.component';
 import { NlfOrsEditorPeopleComponent } from 'app/ors/ors-editor/ors-editor-people/ors-editor-people.component';
 import { NlfOrsEditorAlertComponent } from 'app/ors/ors-editor/ors-editor-alert/ors-editor-alert.component';
+import {NlfOrsEditorTestclubAlertComponent} from 'app/ors/ors-editor/ors-editor-testclub-alert/ors-editor-testclub-alert.component';
 import { NlfOrsEditorActionsComponent } from 'app/ors/ors-editor/ors-editor-actions/ors-editor-actions.component';
 import { NlfOrsEditorAskComponent } from 'app/ors/ors-editor/ors-editor-ask/ors-editor-ask.component';
 import { NlfOrsEditorAskTextComponent } from 'app/ors/ors-editor/ors-editor-ask-text/ors-editor-ask-text.component';
@@ -493,6 +494,7 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfOrsEditorRatingComponent,
     NlfOrsEditorPeopleComponent,
     NlfOrsEditorAlertComponent,
+    NlfOrsEditorTestclubAlertComponent,
     NlfOrsEditorActionsComponent,
     NlfOrsEditorAskComponent,
     NlfOrsEditorAskTextComponent,
