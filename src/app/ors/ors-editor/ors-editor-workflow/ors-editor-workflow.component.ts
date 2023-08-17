@@ -46,6 +46,7 @@ export class NlfOrsEditorWorkflowComponent implements OnInit {
 
     this.subject.observableObservation.subscribe(observation => {
       this.observation = observation;
+      console.log(observation);
 
       if (this.observation.workflow.state === 'pending_review_ors') {
         this.showCommentInput = true;
@@ -108,11 +109,14 @@ export class NlfOrsEditorWorkflowComponent implements OnInit {
   }
 
   narrativeRequirementMet() {
-    switch(this.observation._model.type) {
-      case 'motorfly':
-        case 'sportsfly':
-          case 'seilfly':
-            return this.observation?.occurrence?.entities?.reportingHistory?.length > 0 && this.observation?.occurrence?.entities?.reportingHistory[0].attributes?.reporterSDescription?.plainText?.length > 0;
+    switch (this.observation._model.type) {
+      case "motorfly":
+      case "sportsfly":
+      case "seilfly":
+        return (
+          (this.observation?.occurrence?.entities?.narrative?.length > 0 && this.observation?.occurrence?.entities?.narrative[0]?.attributes?.narrativeText?.plainText?.length > 0) ||
+          (this.observation?.occurrence?.entities?.reportingHistory?.length > 0 && this.observation?.occurrence?.entities?.reportingHistory[0].attributes?.reporterSDescription?.plainText?.length > 0)
+        );
       default:
         return true;
     }
