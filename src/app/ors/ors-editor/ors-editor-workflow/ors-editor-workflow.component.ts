@@ -46,7 +46,6 @@ export class NlfOrsEditorWorkflowComponent implements OnInit {
 
     this.subject.observableObservation.subscribe(observation => {
       this.observation = observation;
-      console.log(observation);
 
       if (this.observation.workflow.state === 'pending_review_ors') {
         this.showCommentInput = true;
