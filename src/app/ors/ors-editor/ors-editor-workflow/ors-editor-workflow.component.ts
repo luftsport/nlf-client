@@ -107,7 +107,7 @@ export class NlfOrsEditorWorkflowComponent implements OnInit {
     );
   }
 
-  narrativeRequirementMet() {
+  narrativeHasContent() {
     switch (this.observation._model.type) {
       case "motorfly":
       case "sportsfly":
