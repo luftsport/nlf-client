@@ -20,11 +20,18 @@ export class NlfOrsEditorWhenComponent implements OnInit {
 
   observation: ApiObservationsItem;
 
+  // ng-bootstrap format
   date: { year: number, month: number, day: number };
   time: { hour: number, minute: number, second?: number };
   maxDate: { year: number, month: number, day: number };
+
+  // Observation when!
+  curr_when: string;
+  when: Date;
+
   maxDateTime: Date;
   dateError = false;
+
   // dateErrorFeedback: string;
   dateErrorType: string;
 
@@ -36,33 +43,60 @@ export class NlfOrsEditorWhenComponent implements OnInit {
   constructor(
     private observationSubject: NlfOrsEditorService,
     private calendar: NgbCalendar
-  ) {
+  ) { }
 
+  ngOnInit() {
+
+    console.log('TZ in onInit', this.tz);
+
+    // Initial max date!
     this.maxDateTime = new Date();
 
     this.observationSubject.observableObservation.subscribe(
+
       observation => {
         this.observation = observation;
         this.dataReady = true;
 
         try {
-          if (!(this.observation.when instanceof Date)) {
-            console.log("WHEN", this.observation.when);
-            this.observation.when = new Date(this.observation.when);
-            console.log("WHEN", this.observation.when);
-          }
 
-          this.maxDateTime = new Date(this.observation._created);
-          console.log('MAX DATETIME', this.maxDateTime, this.getMaxDate());
+          if (!this.curr_when || this.curr_when != this.observation.when) {
+            /**
+            if (!(this.observation.when instanceof Date)) {
+              console.log("WHEN", this.observation.when);
+              this.observation.when = new Date(this.observation.when);
+              console.log("WHEN", this.observation.when);
+            }
+            **/
 
-          //LOCAL TZ
-          if (this.tz === 'local') {
-            this.date = { year: this.observation.when.getFullYear(), month: this.observation.when.getMonth() + 1, day: this.observation.when.getDate() };
-            this.time = { hour: this.observation.when.getHours(), minute: this.observation.when.getMinutes() };
-          } else {
-            // UTC TZ
-            this.date = { year: this.observation.when.getUTCFullYear(), month: this.observation.when.getUTCMonth() + 1, day: this.observation.when.getUTCDate() };
-            this.time = { hour: this.observation.when.getUTCHours(), minute: this.observation.when.getUTCMinutes() };
+            // Assign current when
+            this.curr_when = this.observation.when;
+
+            this.maxDateTime = new Date(this.observation._created);
+            console.log('MAX DATETIME', this.maxDateTime, this.getMaxDate());
+
+            console.log('Subscribe');
+            console.log('observation.when', this.observation.when);
+            console.log('type o.when', typeof this.observation.when);
+
+
+            //Make tz aware ng-bootstrap models
+            console.log('NG-B timeone is: ', this.tz);
+
+            this.when = new Date(this.curr_when);
+            if (this.tz === 'local') {
+              this.date = { year: this.when.getFullYear(), month: this.when.getMonth() + 1, day: this.when.getDate() };
+              this.time = { hour: this.when.getHours(), minute: this.when.getMinutes() };
+            } else {
+              // UTC TZ
+              this.date = { year: this.when.getUTCFullYear(), month: this.when.getUTCMonth() + 1, day: this.when.getUTCDate() };
+              this.time = { hour: this.when.getUTCHours(), minute: this.when.getUTCMinutes() };
+            }
+
+            console.log('Local tz-aware when', this.when);
+
+            console.log('NG-B tz-aware date', this.date);
+            console.log('NG-B tz-aware time', this.time);
           }
 
         } catch (e) { }
@@ -70,8 +104,6 @@ export class NlfOrsEditorWhenComponent implements OnInit {
       }
     );
   }
-
-  ngOnInit() { }
 
   public isValidDate(_date) {
     if (_date instanceof Date && moment(_date).isValid()) return true;
@@ -88,21 +120,39 @@ export class NlfOrsEditorWhenComponent implements OnInit {
     }
   }
 
+  private convertDateToUTC(date) {
+    return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()));
+  }
+
+  private convertJavascriptDateToEve(date) {
+    return date.toISOString().split('Z')[0] + "000Z"
+  }
+
   public update() {
     try {
       // this.observation.whenChange.emit(this.type);
+
+      console.log('UPDATE NG-B date', this.date);
+      console.log('UPDATE NG-time', this.time);
+
       let newTime = undefined;
       if (this.tz === 'local') {
         newTime = new Date(this.date.year, this.date.month - 1, this.date.day, this.time.hour, this.time.minute, 0, 0);
       } else {
-        newTime = new Date(Date.UTC(this.date.year, this.date.month - 1, this.date.day, this.time.hour, this.time.minute, 0, 0));
+        newTime = this.convertDateToUTC(new Date(this.date.year, this.date.month - 1, this.date.day, this.time.hour, this.time.minute, 0, 0));
+        //  new Date(Date.UTC(this.date.year, this.date.month - 1, this.date.day, this.time.hour, this.time.minute, 0, 0));
       }
 
       if (this.isValidDate(newTime) && newTime <= this.maxDateTime) {
         this.dateError = false;
 
-        if (this.observation.when !== newTime) {
-          this.observation.when = newTime;
+        console.log('NEWTIME', newTime);
+
+        console.log('String comp', this.observation.when, this.convertJavascriptDateToEve(newTime));
+
+        //let originalDateTime = new Date(this.observation.when);
+        if (this.observation.when != this.convertJavascriptDateToEve(newTime)) {
+          this.observation.when = this.convertJavascriptDateToEve(newTime);
           this.observationSubject.update(this.observation);
         }
       } else {
