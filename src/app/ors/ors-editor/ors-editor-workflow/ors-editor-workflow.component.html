@@ -81,6 +81,12 @@
       <fa-icon [icon]="faRandom"></fa-icon> Skjul skjema
     </button>
 
+    <div *ngIf="!narrativeHasContent()" class="alert alert-info mt-3 mb-0">
+      <strong>Har du husket alt?</strong> "Hva skjedde?" har ingen innhold.
+      <br /><br />
+      Husk å legge til all relevant informasjon før du sender videre til neste steg.
+    </div>
+
     <span *ngIf="!!processing" class="text-center">
       <nlf-ui-component-spinner size="5"></nlf-ui-component-spinner>
     </span>
@@ -95,8 +101,6 @@
 
 <!--FOOTER-->
 <div class="modal-footer">
-
-
   <span *ngIf="!!dataReady">
     <button *ngFor="let a of workflow.actions" type="button" [disabled]="!a.permission" class="btn mx-1" [title]="a.title"
     [ngClass]="{
@@ -115,5 +119,4 @@
     </button>
   </span>
   <button [ngClass]="{'disabled': processing}" class="btn btn-outline-dark" (click)="activeModal.dismiss()">Avbryt</button>
-
 </div>
