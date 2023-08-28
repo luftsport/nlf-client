@@ -279,7 +279,7 @@ export interface ApiObservationsItem extends ApiEveBaseItem {
   location?: ApiLocationItem;
   owner?: number;
   reporter?: number;
-  when?: Date;
+  when?: any; //Date | string;
 
   type?: string;
   flags?: ApiObservationFlagsInterface;
