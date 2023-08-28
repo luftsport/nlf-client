@@ -30,6 +30,10 @@ export class NlfOrsEditorMetComponent implements OnInit {
     private airportsService: ApiAirportsService,
     private modalService: NgbModal
   ) {
+
+  }
+
+  ngOnInit() {
     this.subject.observableObservation.subscribe(
       observation => {
         let changes = false;
@@ -75,9 +79,6 @@ export class NlfOrsEditorMetComponent implements OnInit {
           }
         }
       });
-  }
-
-  ngOnInit() {
   }
   private getStringDate(dateObj: Date | string) {
     dateObj = new Date(dateObj);
