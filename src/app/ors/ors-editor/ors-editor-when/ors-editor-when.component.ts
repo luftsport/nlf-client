@@ -125,7 +125,9 @@ export class NlfOrsEditorWhenComponent implements OnInit {
   }
 
   private convertJavascriptDateToEve(date) {
-    return date.toISOString().split('Z')[0] + "000Z"
+    let a = date.toISOString().split('.');
+    let b = a.split('Z');
+    return a[0] + b.padEnd(6,0) + "Z"
   }
 
   public update() {
