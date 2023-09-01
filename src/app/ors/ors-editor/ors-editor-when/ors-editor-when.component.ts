@@ -60,7 +60,7 @@ export class NlfOrsEditorWhenComponent implements OnInit {
 
         try {
 
-          if (!this.curr_when || this.curr_when != this.observation.when) {
+          if (!this.curr_when || (!!this.curr_when && this.curr_when != this.observation.when)) {
             /**
             if (!(this.observation.when instanceof Date)) {
               console.log("WHEN", this.observation.when);
@@ -70,7 +70,7 @@ export class NlfOrsEditorWhenComponent implements OnInit {
             **/
 
             // Assign current when
-            this.curr_when = this.observation.when;
+            this.curr_when = this.convertJavascriptDateToEve(new Date(this.observation.when));
 
             this.maxDateTime = new Date(this.observation._created);
             console.log('MAX DATETIME', this.maxDateTime, this.getMaxDate());
