@@ -2,9 +2,10 @@
   <form class="form-inline">
     <div class="form-group">
       <div class="input-group has-validation">
-        <input [ngClass]="{'is-invalid': dateError, 'is-valid': !dateError }" type="text" [disabled]="!observation.acl_user.w"
-          class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="date" [maxDate]="getMaxDate()"
-          (ngModelChange)="debouncedUpdate()" ngbDatepicker #d="ngbDatepicker">
+        <input [ngClass]="{'is-invalid': dateError, 'is-valid': !dateError }" type="text"
+          [disabled]="!observation.acl_user.w" class="form-control" placeholder="yyyy-mm-dd" name="dp"
+          [(ngModel)]="date" [maxDate]="getMaxDate()" (ngModelChange)="debouncedUpdate()" ngbDatepicker
+          #d="ngbDatepicker">
 
         <button [disabled]="!observation.acl_user.w" class="btn btn-outline-secondary" (click)="d.toggle()"
           type="button">
@@ -13,7 +14,8 @@
 
         <div id="validationServerUsernameFeedback" class="invalid-feedback">
           <ng-container *ngIf="dateErrorType==='future'">
-            Du kan ikke sette dato i fremtiden for observasjonen den ble opprettet {{observation._created | date:'yyyy-MM-dd klokken HH:mm'}}
+            Du kan ikke sette dato i fremtiden for observasjonen den ble opprettet {{observation._created |
+            date:'yyyy-MM-dd klokken HH:mm':tz}} {{ tz }}
           </ng-container>
           <ng-container *ngIf="dateErrorType==='format'">
             Feil datoformat, vennligst skriv inn på formen "yyyy-mm-dd" eller velg fra nedtrekksmenyen
@@ -28,8 +30,8 @@
     <div class="col-md-5">
       <ngb-timepicker [readonlyInputs]="!observation.acl_user.w" [(ngModel)]="time"
         (ngModelChange)="debouncedUpdate($event)"></ngb-timepicker>
-      </div>
-      <div class="col-md-4" style="align-self:'center';">{{ tz }}</div>
+    </div>
+    <div class="col-md-4" style="align-self:'center';">{{ tz }}</div>
   </div>
   <!--
 <hr> {{ date | json }} og {{ time | json }}
