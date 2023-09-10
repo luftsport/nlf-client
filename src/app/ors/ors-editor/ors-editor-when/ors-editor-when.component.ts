@@ -56,11 +56,11 @@ export class NlfOrsEditorWhenComponent implements OnInit {
 
       observation => {
         this.observation = observation;
-        this.dataReady = true;
+        
 
         try {
 
-          if (!this.curr_when || this.curr_when != this.observation.when) {
+          if (!this.curr_when || (!!this.curr_when && this.curr_when != this.observation.when)) {
             /**
             if (!(this.observation.when instanceof Date)) {
               console.log("WHEN", this.observation.when);
@@ -69,8 +69,8 @@ export class NlfOrsEditorWhenComponent implements OnInit {
             }
             **/
 
-            // Assign current when
-            this.curr_when = this.observation.when;
+            // Assign current when make sure to be backwards compatible!
+            this.curr_when = this.convertJavascriptDateToEve(new Date(this.observation.when));
 
             this.maxDateTime = new Date(this.observation._created);
             console.log('MAX DATETIME', this.maxDateTime, this.getMaxDate());
@@ -85,10 +85,12 @@ export class NlfOrsEditorWhenComponent implements OnInit {
 
             this.when = new Date(this.curr_when);
             if (this.tz === 'local') {
+              console.log('Just local tz normal get stuff');
               this.date = { year: this.when.getFullYear(), month: this.when.getMonth() + 1, day: this.when.getDate() };
               this.time = { hour: this.when.getHours(), minute: this.when.getMinutes() };
             } else {
               // UTC TZ
+              console.log('Is UTC get utc stuff');
               this.date = { year: this.when.getUTCFullYear(), month: this.when.getUTCMonth() + 1, day: this.when.getUTCDate() };
               this.time = { hour: this.when.getUTCHours(), minute: this.when.getUTCMinutes() };
             }
@@ -101,6 +103,7 @@ export class NlfOrsEditorWhenComponent implements OnInit {
 
         } catch (e) { }
 
+        this.dataReady = true;
       }
     );
   }
@@ -125,7 +128,9 @@ export class NlfOrsEditorWhenComponent implements OnInit {
   }
 
   private convertJavascriptDateToEve(date) {
-    return date.toISOString().split('Z')[0] + "000Z"
+    let a = date.toISOString().split('.');
+    let b = a[1].split('Z');
+    return a[0] + '.' + b[0].padEnd(6,0) + 'Z';
   }
 
   public update() {
@@ -134,13 +139,12 @@ export class NlfOrsEditorWhenComponent implements OnInit {
 
       console.log('UPDATE NG-B date', this.date);
       console.log('UPDATE NG-time', this.time);
-
+      
       let newTime = undefined;
       if (this.tz === 'local') {
         newTime = new Date(this.date.year, this.date.month - 1, this.date.day, this.time.hour, this.time.minute, 0, 0);
       } else {
-        newTime = this.convertDateToUTC(new Date(this.date.year, this.date.month - 1, this.date.day, this.time.hour, this.time.minute, 0, 0));
-        //  new Date(Date.UTC(this.date.year, this.date.month - 1, this.date.day, this.time.hour, this.time.minute, 0, 0));
+        newTime = new Date(Date.UTC(this.date.year, this.date.month - 1, this.date.day, this.time.hour, this.time.minute, 0, 0));
       }
 
       if (this.isValidDate(newTime) && newTime <= this.maxDateTime) {
@@ -152,6 +156,7 @@ export class NlfOrsEditorWhenComponent implements OnInit {
 
         //let originalDateTime = new Date(this.observation.when);
         if (this.observation.when != this.convertJavascriptDateToEve(newTime)) {
+          console.log('New Time!!!', newTime, 'som blir', this.convertJavascriptDateToEve(newTime) );
           this.observation.when = this.convertJavascriptDateToEve(newTime);
           this.observationSubject.update(this.observation);
         }
