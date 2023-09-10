@@ -24,12 +24,15 @@ import { TrackJsErrorHandler } from 'app/track-js.handler';
 import { PendingChangesGuard } from './pending-changes.guard';
 
 // ANGULAR
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from "@angular/core";
 import { Router } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { Title } from '@angular/platform-browser';
+
+// TrackJS
+import { TrackJsErrorHandler } from "./trackjs.handler";
 
 // APP CUSTOM
 import { NlfSharedModule } from 'app/nlf-shared.module';
@@ -692,6 +695,7 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
       useClass: NlfAuthInterceptor,
       multi: true
     },
+    { provide: ErrorHandler, useClass: TrackJsErrorHandler },
     /** TrackJs
     {
       provide: ErrorHandler,

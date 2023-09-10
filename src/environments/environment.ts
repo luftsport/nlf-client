@@ -12,5 +12,6 @@ export const environment = {
   _shebang: 0,
   _response_type: 'access_token',
   _name: 'local',
+  _top_level_name: '',
   _e5x_submission: false
 };

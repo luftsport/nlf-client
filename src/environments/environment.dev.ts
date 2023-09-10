@@ -7,5 +7,6 @@ export const environment = {
     _shebang: 0,
     _response_type: 'access_token',
     _name: 'dev',
+    _top_level_name: 'dev',
     _e5x_submission: true
 };
