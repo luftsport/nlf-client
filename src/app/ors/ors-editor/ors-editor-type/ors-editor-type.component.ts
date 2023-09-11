@@ -51,7 +51,7 @@ export class NlfOrsEditorTypeComponent implements OnInit {
         }
       )
     ]).subscribe(
-      () => { this.dataReady = true}
+      _ => { this.dataReady = true}
     );
 
   }
