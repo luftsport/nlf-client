@@ -6,8 +6,9 @@ import { ApiObservationsWorkflowService } from 'app/api/api-observations-workflo
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NlfAlertService } from 'app/services/alert/alert.service';
-import { faInfo, faInfoCircle, faComment, faRandom, faReply, faPaperPlane, faRepeat  } from '@fortawesome/free-solid-svg-icons';
+import { faInfo, faInfoCircle, faComment, faRandom, faReply, faPaperPlane, faRepeat } from '@fortawesome/free-solid-svg-icons';
 import { faPaperPlane as faPaperPlaneRegular } from '@fortawesome/free-regular-svg-icons';
+import { has as _has } from 'lodash';
 
 @Component({
   selector: 'nlf-ors-editor-workflow',
@@ -18,7 +19,7 @@ export class NlfOrsEditorWorkflowComponent implements OnInit {
 
   observation: ApiObservationsItem;
   processing = false;
-  public payload: ApiWorkflowPayloadInterface = {comment: ''};
+  public payload: ApiWorkflowPayloadInterface = { comment: '' };
   workflow;
   dataReady = false;
   graph;
@@ -47,21 +48,23 @@ export class NlfOrsEditorWorkflowComponent implements OnInit {
     this.subject.observableObservation.subscribe(observation => {
       this.observation = observation;
 
-      if (this.observation.workflow.state === 'pending_review_ors') {
+      if (_has(this.observation, 'workflow.state') && this.observation.workflow.state === 'pending_review_ors') {
         this.showCommentInput = true;
       }
 
-      if(this.observation._model.type==='motorfly' && this.observation._model.version>=3) {
-        if(this.observation.workflow.state === 'draft') {
+      if (_has(this.observation, '_model.type') && this.observation._model.type === 'motorfly' && this.observation._model.version >= 3) {
+        if (this.observation.workflow.state === 'draft') {
           this.payload['do_not_process_in_club'] = this.observation.workflow.settings.do_not_process_in_club;
         }
 
-        if(this.observation.workflow.state === 'pending_review_ors') {
+        if (_has(this.observation, 'workflow.state') && this.observation.workflow.state === 'pending_review_ors') {
           this.payload['do_not_publish'] = this.observation.workflow.settings.do_not_publish;
         }
       }
 
-      this.apiWorkflow.setActivity(observation._model.type);
+      try {
+        this.apiWorkflow.setActivity(observation._model.type);
+      } catch {}
 
       this.apiWorkflow.getWorkflowState(this.observation._id).subscribe(
         data => {
@@ -69,7 +72,7 @@ export class NlfOrsEditorWorkflowComponent implements OnInit {
           this.dataReady = true;
         },
         err => console.log(err),
-        () => {}
+        () => { }
       );
     }
     );
