@@ -8,6 +8,7 @@ import { NlfConfigService } from 'app/nlf-config.service';
 import { NlfConfigItem } from 'app/api/api.interface';
 import { faBan, faCheck, faRandom } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
+import { has as _has } from "lodash";
 
 @Component({
   selector: 'nlf-ors-editor-about',
@@ -46,7 +47,7 @@ export class NlfOrsEditorAboutComponent {
     this.subject.observableObservation.subscribe(observation => {
       this.observation = observation;
 
-      if (this.observation['workflow']['state'] != 'closed') {
+      if (_has(this.observation, 'workflow.state') && this.observation['workflow']['state'] != 'closed') {
         this.getAclUsers();
       }
     });
