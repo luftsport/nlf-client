@@ -77,7 +77,7 @@
         <a [routerLink]="['/ors', activity,'report', r.id]">#{{ r.id }} - <span *ngIf="!!r.rating" class="mx-1 badge bg-{{r.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ r.rating | nlfOrsRatingCalc }}</span> {{ r.tags | join: '/'}}</a>
 
         <span class="float-end mx-1">
-          <nlf-resolve-observation-state [activity]="r._model.type" [state]="r.workflow.state" icon="true"></nlf-resolve-observation-state>
+          <nlf-resolve-observation-state [activity]="r._model.type || 'fallskjerm'" [state]="r.workflow.state" icon="true"></nlf-resolve-observation-state>
 
         </span>
 
