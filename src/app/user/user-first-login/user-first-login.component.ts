@@ -73,6 +73,11 @@ export class NlfUserFirstLoginComponent implements OnInit {
       () => {
         this.userData.settings.default_discipline = role.org;
         this.userData.settings.default_activity = role.activity;
+        
+        if(!this.userData.settings.hasOwnProperty('ors') ) {
+          this.userData.settings['ors'] = {};
+        }
+        
         if (!this.userData.settings.ors.hasOwnProperty('first_report')) {
           this.userData.settings.ors = { first_report: undefined };
         }
