@@ -96,11 +96,11 @@ export abstract class ApiRestService {
   }
 
   protected getItem(relativeUrl: string, id: number | string, options: ApiOptionsInterface = {}): Observable<any> {
-    return this.http.get(this.baseUrl + relativeUrl + id.toString(), this.getOptions(options));
+    return this.http.get(this.baseUrl + relativeUrl + id.toString() || '', this.getOptions(options));
   }
 
   protected getItemById(relativeUrl: string, id: number, options: ApiOptionsInterface = {}): Observable<any> {
-    return this.http.get(this.baseUrl + relativeUrl + id.toString(), this.getOptions(options));
+    return this.http.get(this.baseUrl + relativeUrl + id.toString() || '', this.getOptions(options));
   }
 
   protected getList(relativeUrl: string, options: ApiOptionsInterface = {}): Observable<any> {
