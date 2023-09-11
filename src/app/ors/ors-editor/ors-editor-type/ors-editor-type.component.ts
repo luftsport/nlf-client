@@ -32,6 +32,7 @@ export class NlfOrsEditorTypeComponent implements OnInit {
 
   @Input() title: boolean = false;
   public config: NlfConfigItem;
+  public dataReady = false;
 
   constructor(
     private configService: NlfConfigService,
@@ -49,7 +50,9 @@ export class NlfOrsEditorTypeComponent implements OnInit {
           this.config = data;
         }
       )
-    ]);
+    ]).subscribe(
+      () => { this.dataReady = true}
+    );
 
   }
 
