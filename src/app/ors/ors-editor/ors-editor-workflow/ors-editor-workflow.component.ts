@@ -48,32 +48,34 @@ export class NlfOrsEditorWorkflowComponent implements OnInit {
     this.subject.observableObservation.subscribe(observation => {
       this.observation = observation;
 
-      if (_has(this.observation, 'workflow.state') && this.observation.workflow.state === 'pending_review_ors') {
-        this.showCommentInput = true;
-      }
-
-      if (_has(this.observation, '_model.type') && this.observation._model.type === 'motorfly' && this.observation._model.version >= 3) {
-        if (this.observation.workflow.state === 'draft') {
-          this.payload['do_not_process_in_club'] = this.observation.workflow.settings.do_not_process_in_club;
-        }
-
+      if (_has(this.observation, '_id') && !!this.observation._id) {
         if (_has(this.observation, 'workflow.state') && this.observation.workflow.state === 'pending_review_ors') {
-          this.payload['do_not_publish'] = this.observation.workflow.settings.do_not_publish;
+          this.showCommentInput = true;
         }
+
+        if (_has(this.observation, '_model.type') && this.observation._model.type === 'motorfly' && this.observation._model.version >= 3) {
+          if (this.observation.workflow.state === 'draft') {
+            this.payload['do_not_process_in_club'] = this.observation.workflow.settings.do_not_process_in_club;
+          }
+
+          if (_has(this.observation, 'workflow.state') && this.observation.workflow.state === 'pending_review_ors') {
+            this.payload['do_not_publish'] = this.observation.workflow.settings.do_not_publish;
+          }
+        }
+
+        try {
+          this.apiWorkflow.setActivity(observation._model.type);
+        } catch { }
+
+        this.apiWorkflow.getWorkflowState(this.observation._id).subscribe(
+          data => {
+            this.workflow = data;
+            this.dataReady = true;
+          },
+          err => console.log(err),
+          () => { }
+        );
       }
-
-      try {
-        this.apiWorkflow.setActivity(observation._model.type);
-      } catch {}
-
-      this.apiWorkflow.getWorkflowState(this.observation._id).subscribe(
-        data => {
-          this.workflow = data;
-          this.dataReady = true;
-        },
-        err => console.log(err),
-        () => { }
-      );
     }
     );
   }
