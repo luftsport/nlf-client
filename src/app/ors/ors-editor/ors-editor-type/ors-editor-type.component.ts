@@ -50,10 +50,7 @@ export class NlfOrsEditorTypeComponent implements OnInit {
           this.config = data;
         }
       )
-    ]).subscribe(
-      _ => { this.dataReady = true}
-    );
-
+    ]);
   }
 
   onChange(): void {
