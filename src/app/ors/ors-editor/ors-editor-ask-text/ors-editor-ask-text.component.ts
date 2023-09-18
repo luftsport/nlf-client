@@ -10,7 +10,7 @@ import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import Tribute from "tributejs";
 import TributeOptions from "tributejs";
 import { debounce } from 'ts-debounce';
-
+import { onPasteRemoveFormatting } from 'app/interfaces/functions';
 /**
 @todo need to fire event on Tribute insert
 https://stackoverflow.com/questions/45625049/contenteditable-how-to-completely-remove-span-when-pressing-del-or-backspace
@@ -36,6 +36,8 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
   elementAskModal;
 
   showAllASK = false;
+
+  public onPaste = onPasteRemoveFormatting;
 
   debouncedGetOrs = debounce(this.getOrs, 900);
   debouncedGetUsers = debounce(this.getUsers, 900);
@@ -63,7 +65,7 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
           // Need to convert badge-info to text-bg-info botstrap 4=>5
           try {
             this.observation.ask.text[key] = value.replaceAll('badge badge-', 'badge text-bg-');
-          } catch (e) { 
+          } catch (e) {
             console.log('Wee', e);
           }
         }
@@ -294,22 +296,6 @@ export class NlfOrsEditorAskTextComponent implements OnInit, AfterViewInit {
 
   format(event) {
     return '<macro contenteditable="false" class="badge text-bg-info" id="' + event.id + '">' + event.fullname + '</macro>';
-  }
-
-  intergalactic(event) {
-  }
-
-
-  onPaste(event) {
-    console.log(event);
-    event.preventDefault();
-
-    // get text representation of clipboard
-    const text = (event.originalEvent || event).clipboardData.getData('text/plain');
-
-    // insert text manually
-    document.execCommand("insertHTML", false, text);
-    //this.observation.ask.text[this.observation.workflow.state] = this.observation.ask.text[this.observation.workflow.state].replace(/\<(?!macro|br|p).*?\>/ig, "");
   }
 
   textChange() {

@@ -10,6 +10,7 @@ import { NlfComponent } from 'app/nlf.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { faBell, faComment, faExchange, faFloppyDisk, faPaperPlane, faPlus, faRepeat, faBan, faLongArrowRight, faUserPlus, faUserTimes, faRefresh, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faBell as faBellRegular, faCommenting, faComments, faPaperPlane as faPaperPlaneRegular, faClock  } from '@fortawesome/free-regular-svg-icons';
+import { onPasteRemoveFormatting } from 'app/interfaces/functions';
 
 @Component({
   selector: 'nlf-ors-activities-timeline',
@@ -54,6 +55,8 @@ export class NlfOrsActivitiesTimelineComponent implements OnInit {
 
   modalRef;
   modalRecepients = [];
+
+  public onPaste = onPasteRemoveFormatting;
 
   constructor(
     private ntfService: ApiNotificationsService,
@@ -184,4 +187,5 @@ export class NlfOrsActivitiesTimelineComponent implements OnInit {
     );
 
   }
+  
 }

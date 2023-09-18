@@ -251,3 +251,13 @@ export function isLatitude(lat) {
 export function isLongitude(lng) {
   return isFinite(lng) && Math.abs(lng) <= 180;
 }
+
+export function onPasteRemoveFormatting(event) {
+  event.preventDefault();
+  // get text representation of clipboard
+  const pastedText = (event.originalEvent || event).clipboardData.getData('text/plain');
+  //const clipboardData = event.clipboardData;
+  //const pastedText = clipboardData.getData('text');
+  window.document.execCommand('insertText', false, pastedText);
+  //navigator.clipboard.writeText(pastedText);
+}
