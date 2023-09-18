@@ -1,4 +1,4 @@
-<ng-container *ngIf="!!observation">
+<ng-container *ngIf="!!observation && !!config">
   <!--
 <div class="form-check">
   <input [disabled]="!observation.acl_user.w" class="form-check-input" type="checkbox" [(ngModel)]="observation.flags.insurance" (ngModelChange)="onChange($event)"

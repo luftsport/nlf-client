@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { ApiRestService } from './api-rest.service';
 import { ApiOptionsInterface, ApiFileItem, ApiFileList } from './api.interface';
 import { saveAs } from 'file-saver';
+import { has as _has } from 'lodash';
+
 // import { getFileNameFromResponseContentDisposition, saveFile } from './api-file-server.component';
 
 @Injectable()
@@ -53,9 +55,13 @@ export class ApiFilesService extends ApiRestService {
 
     this.getItem(this.relativeUrl, _id, options).subscribe(
       response => {
-        const blob = new Blob([response.file], { type: response.content_type });
-        saveAs(blob, response.name);
-        window.location.href = response.url;
+        if (_has(response, 'file')) {
+          const blob = new Blob([response.file], { type: response.content_type });
+          saveAs(blob, response.name);
+          window.location.href = response.url;
+        } else {
+          console.error('File response contains no file id', response);
+        }
       },
       err => console.log(err)
     );

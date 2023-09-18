@@ -1,4 +1,4 @@
-<div *ngIf="!!userData.person_id">
+<div *ngIf="!!userData && userData.hasOwnProperty('person_id')">
   <div class="modal-header">
     <h4 class="modal-title">
       Hei <nlf-resolve-lungo-person [person_id]="userData.person_id"></nlf-resolve-lungo-person>
@@ -17,17 +17,21 @@
       <div class="d-grid gap-2">
         <button class="btn btn-lg btn-success">
           <fa-icon [icon]="faCheck" [fixedWidth]="true"></fa-icon>
-          <nlf-resolve-lungo-activity [activity_id]="userData.settings.default_activity"></nlf-resolve-lungo-activity>&nbsp;/&nbsp;
-          <nlf-resolve-lungo-organization [organization_id]="userData.settings.default_discipline" [show_activity]="false"></nlf-resolve-lungo-organization>
+          <nlf-resolve-lungo-activity
+            [activity_id]="userData.settings.default_activity"></nlf-resolve-lungo-activity>&nbsp;/&nbsp;
+          <nlf-resolve-lungo-organization [organization_id]="userData.settings.default_discipline"
+            [show_activity]="false"></nlf-resolve-lungo-organization>
         </button>
       </div>
     </div>
     <div *ngIf="!success && !error">
       <p class="lead" *ngIf="!userData?.settings?.default_club">
-        Dette er første gangen systemet registrerer du logger inn. Vennligst velg en av dine klubber som hovedmedlemsskap.
+        Dette er første gangen systemet registrerer du logger inn. Vennligst velg en av dine klubber som
+        hovedmedlemsskap.
         Du kan senere endre dette under kontoinnstillinger.
       </p>
-      <p class="lead" *ngIf="!!userData?.settings?.default_club">Vennligst velg en av dine klubber som hovedmedlemsskap.
+      <p class="lead" *ngIf="!!userData?.settings?.default_club">Vennligst velg en av dine klubber som
+        hovedmedlemsskap.
         Du kan senere endre dette under kontoinnstillinger.
       </p>
       <span *ngIf="!!org">
@@ -37,7 +41,8 @@
             <button (click)="setDefaultClub(role)" class="btn btn-lg btn-primary">
               <fa-icon [icon]="faPlus" [fixedWidth]="true"></fa-icon>
               <nlf-resolve-lungo-activity [activity_id]="role.activity"></nlf-resolve-lungo-activity>&nbsp;/&nbsp;
-              <nlf-resolve-lungo-organization [organization_id]="role.org" [show_activity]="false"></nlf-resolve-lungo-organization>
+              <nlf-resolve-lungo-organization [organization_id]="role.org"
+                [show_activity]="false"></nlf-resolve-lungo-organization>
             </button>
           </span>
         </p>

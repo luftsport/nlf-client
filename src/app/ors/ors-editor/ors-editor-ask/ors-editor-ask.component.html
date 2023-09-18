@@ -1,4 +1,4 @@
-<ng-container *ngIf="!!observation">
+<ng-container *ngIf="!!observation && !!config">
   <div class="btn-group" role="group">
     <span *ngFor="let key of (config[observation._model.type].observation.ask | keys)">
       <button [disabled]="!observation.acl_user.w" type="button" [ngClass]="{'btn border':true, 'btn-danger': isNegative(key),

@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title pull-left">
+  <h4 *ngIf="!!observation" class="modal-title pull-left">
     #{{ observation.id }} Arbeidsflyt
 
     <!--<nlf-resolve-observation-tags [tags]="observation.tags" link="true" seperator="/"></nlf-resolve-observation-tags>-->
@@ -27,7 +27,7 @@
   -->
   <div *ngIf="!!dataReady">
 
-    <div *ngIf="observation._model.type==='motorfly' && observation._model.version>=3 && observation.workflow.state==='draft'" class="form-group">
+    <div *ngIf="!!observation && observation?._model?.type==='motorfly' && observation?._model?.version>=3 && observation?.workflow?.state==='draft'" class="form-group">
       <div class="form-check">
         <input [disabled]="!observation.acl_user.w" class="form-check-input" type="checkbox" [(ngModel)]="payload.do_not_process_in_club" [id]="do_not_process_in_club">
         <label class="form-check-label" for="do_not_process_in_club">
@@ -40,7 +40,7 @@
       </ngb-alert>
     </div>
 
-    <div *ngIf="observation._model.type==='motorfly' && observation._model.version>=3 && observation.workflow.state==='pending_review_ors'" class="form-group">
+    <div *ngIf="!!observation && observation?._model?.type==='motorfly' && observation?._model?.version>=3 && observation?.workflow?.state==='pending_review_ors'" class="form-group">
       <div class="form-check">
         <input [disabled]="!observation.acl_user.w" class="form-check-input" type="checkbox" [(ngModel)]="payload.do_not_publish" [id]="do_not_publish">
         <label class="form-check-label" for="do_not_publish">
@@ -52,7 +52,7 @@
         <fa-icon [icon]="faInfoCircle"></fa-icon> Denne observasjonen vil ikke bli allment tilgjengelig når denne observasjonen er ferdig behandlet og lukket.
       </ngb-alert>
 
-      <ngb-alert *ngIf="observation.workflow.settings.do_not_process_in_club" type="info" (close)="close()">
+      <ngb-alert *ngIf="observation?.workflow?.settings?.do_not_process_in_club" type="info" (close)="close()">
         <fa-icon [icon]="faInfoCircle"></fa-icon> Denne observasjonen skal <strong>ikke</strong> behandles i klubb
       </ngb-alert>
 
@@ -62,7 +62,7 @@
     <div class="form-group mt-4" [hidden]="!showCommentInput">
       <label for="comment" class="form-label">Melding til arbeidsflyten <small>(benyttes for kommentarer til behandlingen, ikke for vurdering av hendelsen)</small></label>
       <nlf-help key="ors-editor-workflow"></nlf-help>
-      <textarea [disabled]="!observation.acl_user.x" [ngClass]="{'disabled': processing}" placeholder="Melding som er relevant for saksgangen som at du trenger mer informasjon el. Vurderinger av observasjonen gjøres under vurderinger." [(ngModel)]="payload.comment" name="payload_comment" class="form-control" rows="5" id="comment"></textarea>
+      <textarea [disabled]="!observation?.acl_user?.x" [ngClass]="{'disabled': processing}" placeholder="Melding som er relevant for saksgangen som at du trenger mer informasjon el. Vurderinger av observasjonen gjøres under vurderinger." [(ngModel)]="payload.comment" name="payload_comment" class="form-control" rows="5" id="comment"></textarea>
     </div>
 
     <button type="button" class="btn btn-outline-dark me-auto mb-2 d-none d-sm-block" *ngIf="!showCommentInput" (click)="showCommentInput=true">

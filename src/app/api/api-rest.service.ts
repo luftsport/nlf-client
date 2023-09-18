@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 // import {RequestOptions, Request, RequestMethod} from '@angular/http';
 import { Observable } from 'rxjs';
 import { ApiOptionsInterface } from './api.interface';
-
+import { toString as _toString } from 'lodash';
 
 export abstract class ApiRestService {
 
@@ -95,12 +95,13 @@ export abstract class ApiRestService {
     return headers;
   }
 
+
   protected getItem(relativeUrl: string, id: number | string, options: ApiOptionsInterface = {}): Observable<any> {
-    return this.http.get(this.baseUrl + relativeUrl + id.toString(), this.getOptions(options));
+    return this.http.get(this.baseUrl + relativeUrl + _toString(id), this.getOptions(options));
   }
 
   protected getItemById(relativeUrl: string, id: number, options: ApiOptionsInterface = {}): Observable<any> {
-    return this.http.get(this.baseUrl + relativeUrl + id.toString(), this.getOptions(options));
+    return this.http.get(this.baseUrl + relativeUrl + _toString(id), this.getOptions(options));
   }
 
   protected getList(relativeUrl: string, options: ApiOptionsInterface = {}): Observable<any> {
