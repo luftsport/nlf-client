@@ -1,4 +1,4 @@
-<div class="radio">
+<div *ngIf="!!observation && !!config" class="radio">
   <span *ngFor="let t of config[observation._model.type].observation.typesArr">
 
     <div class="form-check">

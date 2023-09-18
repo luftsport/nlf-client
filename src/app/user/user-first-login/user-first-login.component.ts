@@ -5,6 +5,7 @@ import { NlfConfigService } from 'app/nlf-config.service';
 import { LungoOrganizationsService } from 'app/api/lungo-organizations.service';
 import { NlfConfigItem } from 'app/api/api.interface';
 import { faCheck, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { has as _has } from "lodash";
 
 @Component({
   selector: 'nlf-user-first-login',
@@ -65,7 +66,7 @@ export class NlfUserFirstLoginComponent implements OnInit {
 
     this.orgService.getOrganization(role.org).subscribe(
       data => {
-        if (data.hasOwnProperty('parent_id')) {
+        if (_has(data, 'parent_id')) {
           this.userData.settings.default_club = data['parent_id'];
         }
       },
@@ -73,7 +74,12 @@ export class NlfUserFirstLoginComponent implements OnInit {
       () => {
         this.userData.settings.default_discipline = role.org;
         this.userData.settings.default_activity = role.activity;
-        if (!this.userData.settings.ors.hasOwnProperty('first_report')) {
+        
+        if(!_has(this.userData, 'settings.ors')) {
+          this.userData.settings['ors'] = {};
+        }
+        
+        if (!_has(this.userData.settings, 'ors.first_report')) {
           this.userData.settings.ors = { first_report: undefined };
         }
         this.userSubject.update(this.userData);

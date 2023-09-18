@@ -81,7 +81,7 @@ export class NlfOrsE5xComponent implements OnInit {
 
     this.authSubject.observableAuthData.subscribe(
       data => {
-        this.person_id = data.person_id;
+        this.person_id = data?.person_id || undefined;
         console.log('Auth subject', data);
         try {
           this.token = data.token;

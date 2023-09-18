@@ -129,7 +129,6 @@ export class NlfOrsMotorReportComponent implements OnInit {
       };
 
     }
-
     this.orsService.getObservation(this.id, options).subscribe(
       data => {
         this.observation = data;

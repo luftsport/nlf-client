@@ -4,6 +4,8 @@ import { ApiOptionsInterface } from 'app/api/api.interface';
 import { TableEventObject, DefaultTableConfig } from 'app/interfaces/ngx-easy-table.interface';
 import { timeSince } from 'app/interfaces/functions';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
+import { isObject as _isObject, has as _has } from 'lodash';
+
 @Component({
   selector: 'nlf-ors-todo-table',
   templateUrl: './ors-todo-table.component.html',
@@ -70,7 +72,7 @@ export class NlfOrsTodoTableComponent implements OnInit {
     if (obj.event === 'onOrder') {
 
       // Limits which columns can order or not
-      if (this.columns[this.columns.findIndex(c => c.key === obj.value.key)].sort === true) {
+      if (_isObject(obj) && _has(obj, 'value.key') && this.columns[this.columns.findIndex(c => c.key === obj.value.key)].sort === true) {
         this.sort = [];
         let tmpSort = {};
 

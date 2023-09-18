@@ -120,14 +120,14 @@
                 >Lng:
                 {{
                   observation.occurrence.attributes.longitudeOfOcc.value
-                    | round : 4
+                    | number: '1.4-4'
                 }}</span
               >
               <span class="mx-2 badge bg-secondary float-end"
                 >Lat:
                 {{
                   observation.occurrence.attributes.latitudeOfOcc.value
-                    | round : 4
+                    | number: '1.4-4'
                 }}</span
               >
             </div>

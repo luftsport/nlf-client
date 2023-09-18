@@ -18,6 +18,7 @@ import {
   E5XRiskAssessmentClass
 } from 'app/interfaces/e5x.interface';
 import { faExclamationTriangle, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { has as _has, set as _set } from 'lodash';
 
 // import { ApiObservationsItem} from 'app/api/api.interface';
 
@@ -166,20 +167,35 @@ export class NlfOrsSportsflyCreateComponent implements OnInit {
 
           if (element.id == this.selected) {
             this.orsService.setActivity('sportsfly');
-            this.orsService.create({ discipline: this.selected, club: element.parent_id, occurrence: occurrence}).subscribe(
+            this.orsService.create({ discipline: this.selected, club: element.parent_id, occurrence: occurrence }).subscribe(
               data => {
                 this.subject.reset();
                 console.log('OBSREG Created', data);
                 if (!!data._id && !!data.id) {
 
                   // Assign
-                  if (!this.userData['settings']['ors'].hasOwnProperty(this.activity)) {
-                    this.userData['settings']['ors'][this.activity] = {};
+                  if (!_has(this.userData, ['settings', 'ors', this.activity, data.id])) {
+
+                    if (!_has(this.userData, ['settings', 'ors', this.activity])) {
+
+                      _set(this.userData, ['settings', 'ors', this.activity], {});
+                    }
+                    
+                    if (!_has(this.userData, ['settings', 'ors', 'first_report'])) {
+                      _set(this.userData, ['settings', 'ors', 'first_report'], true);
+                    }
+
                     this.userData['settings']['ors'][this.activity][data.id] = { simple_view: true };
+
                   }
-                  else if (!this.userData['settings']['ors'][this.activity].hasOwnProperty(data.id)) {
-                    this.userData['settings']['ors'][this.activity][data.id] = { simple_view: true };
+
+                  /**
+                  else if (!_has(this.userData, ['settings', 'ors', this.activity, data.id])) {
+                    //!this.userData['settings']['ors'][this.activity].hasOwnProperty(data.id)) {
+                    _set(this.userData, ['settings', 'ors', this.activity]);
+                    this.userData.settings.ors[this.activity][data.id] = { 'simple_view': true };
                   }
+                   */
 
                   this.userDataSubject.update(this.userData);
 

@@ -1,6 +1,8 @@
 import { Pipe, Input, PipeTransform } from '@angular/core';
 import { ApiObservationRatingInterface } from 'app/api/api.interface';
 import { calculateRating } from 'app/interfaces/functions';
+import { has as _has } from 'lodash';
+import { TrackJS } from "trackjs";
 @Pipe({
   name: 'nlfOrsRatingCalc',
   pure: false
@@ -9,8 +11,11 @@ export class NlfOrsRatingCalcPipe implements PipeTransform {
 
   transform(rating: ApiObservationRatingInterface): number {
 
-
-    return calculateRating(rating.actual, rating.potential);
+    try {
+      return calculateRating(rating.actual, rating.potential);
+    } catch {
+      return 1;
+    }
     const max = 7;  // 8 - 1 = 7
     const powa = 2; // Actual
     const powp = 3; // Potential

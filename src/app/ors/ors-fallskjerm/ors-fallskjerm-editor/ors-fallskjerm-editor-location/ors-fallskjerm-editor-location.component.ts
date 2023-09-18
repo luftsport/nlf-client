@@ -7,7 +7,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Map, Marker, MapOptions, LayerOptions, latLng, LatLng, marker, tileLayer } from 'leaflet';
 import { GeoLocationService } from 'app/services/geo/geo-location.service';
 import { forkJoin } from 'rxjs';
-import { isEqual } from 'lodash';
+import { isEqual, has as _has } from 'lodash';
 
 @Component({
   selector: 'nlf-ors-fallskjerm-editor-location',
@@ -78,33 +78,38 @@ export class NlfOrsFallskjermEditorLocationComponent implements OnInit, AfterVie
               this.isLocationICAOString = true;
             }
 
-            this.clubService.getClub(observation.discipline, getClubOptions).subscribe(
-              data => {
-                console.log('Club locations:');
-                console.log(data);
-                this.locations = data.locations;
+            if (_has(observation, 'discipline') && !!observation.discipline) {
+              this.clubService.getClub(observation.discipline, getClubOptions).subscribe(
+                data => {
+                  console.log('Club locations:');
+                  console.log(data);
+                  this.locations = data.locations;
 
-                // assign default if not in
-                if (!observation.location || !observation.location.nickname) {
-                  if (this.locations.length > 0) {
-                    this.observation.location = this.locations[0];
-                    this.subject.update(this.observation);
-                    this.selected = this.observation.location.nickname;
+                  // assign default if not in
+                  if (!observation.location || !observation.location.nickname) {
+                    if (this.locations.length > 0) {
+                      this.observation.location = this.locations[0];
+                      this.subject.update(this.observation);
+                      this.selected = this.observation.location.nickname;
+
+                    }
 
                   }
 
+                },
+                err => {
+                  console.log('ERROR doing clubservice', err);
+
+                },
+                () => {
+                  this.mapOptions.center = latLng(
+                    this.observation.location.geo.coordinates[0] || this.userGeo.geo.coordinates[0],
+                    this.observation.location.geo.coordinates[1] || this.userGeo.geo.coordinates[1]
+                  );
+
                 }
-
-              },
-              err => {
-                console.log('ERROR doing clubservice', err);
-
-              },
-              () => {
-                this.mapOptions.center = latLng(this.observation.location.geo.coordinates[0], this.observation.location.geo.coordinates[1]);
-
-              }
-            )
+              )
+            }
 
             try {
               this.selected = this.observation.location.nickname;

@@ -7,7 +7,7 @@ import { NlfAlertService } from 'app/services/alert/alert.service';
 import { NlfComponent } from 'app/nlf.component';
 import { NgStringPipesModule } from 'angular-pipes';
 import { ApiEveBaseList } from 'app/api/api-eve.interface';
-import { faEdit, faMapMarkerAlt, faRandom, faBolt, faDownload, faPlane, faFile, faStreetView, faCloud, faUsers, faRoad, faExternalLink } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faMapMarker, faRandom, faBolt, faDownload, faPlane, faFile, faStreetView, faCloud, faUsers, faRoad, faExternalLink } from '@fortawesome/free-solid-svg-icons';
 import { faCommenting, faComments } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
@@ -36,7 +36,7 @@ export class NlfOrsSportsflyReportComponent implements OnInit {
   isWorkflowTimelineCollapsed = true;
 
   faEdit = faEdit;
-  faMapMarkerAlt = faMapMarkerAlt;
+  faMapMarker = faMapMarker;
   faRandom = faRandom;
   faBolt = faBolt;
   faDownload = faDownload;

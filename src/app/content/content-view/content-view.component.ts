@@ -3,6 +3,7 @@ import { ApiContentService } from 'app/api/api-content.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiOptionsInterface, ApiContentItem } from 'app/api/api.interface';
 import { faEdit, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { has as _has } from 'lodash';
 
 @Component({
   selector: 'nlf-content-view',
@@ -48,7 +49,7 @@ export class NlfContentViewComponent implements OnInit, AfterContentChecked {
             // Need to convert badge-info to text-bg-info botstrap 4=>5
             try {
               this.content.body = this.content.body.replaceAll('badge badge-', 'badge text-bg-');
-            } catch (e) {}
+            } catch (e) { }
 
             this.getParents(data._id);
             this.getChildren(data._id);
@@ -95,7 +96,7 @@ export class NlfContentViewComponent implements OnInit, AfterContentChecked {
       obj[childrenAttr] = [];
     });
     list.forEach(function (obj) {
-      if (obj[parentAttr] != null) {
+      if (_has(obj, [parentAttr, childrenAttr]) && obj[parentAttr] != null) {
         lookup[obj[parentAttr]][childrenAttr].push(obj);
       } else {
         treeList.push(obj);

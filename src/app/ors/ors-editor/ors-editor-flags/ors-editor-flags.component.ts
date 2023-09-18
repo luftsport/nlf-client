@@ -3,7 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import { NlfConfigService } from 'app/nlf-config.service';
-
+import { forkJoin } from 'rxjs';
 import { ApiCacheService } from 'app/api/api-cache.service';
 import { LungoOrganizationsService } from 'app/api/lungo-organizations.service';
 import { ApiOptionsInterface } from 'app/api/api.interface';
@@ -17,6 +17,7 @@ export class NlfOrsEditorFlagsComponent implements OnInit {
 
   observation: ApiObservationsItem;
   public config: NlfConfigItem;
+  public dataReady = false;
 
   constructor(
     private configService: NlfConfigService,
@@ -24,22 +25,24 @@ export class NlfOrsEditorFlagsComponent implements OnInit {
     private orgService: LungoOrganizationsService,
     private apiCache: ApiCacheService) {
 
-    this.configService.observableConfig.subscribe(
-      data => {
-        this.config = data;
-      }
-    );
-    this.subject.observableObservation.subscribe(
-      observation => {
-        this.observation = observation;
+    forkJoin([
+      this.configService.observableConfig.subscribe(
+        data => {
+          this.config = data;
+        }
+      ),
+      this.subject.observableObservation.subscribe(
+        observation => {
+          this.observation = observation;
 
-        try {
-          if (!this.observation.hasOwnProperty('flags')) {
-            this.observation['flags'] = {};
-          }
-        } catch (e) { }
-      }
-    );
+          try {
+            if (!this.observation.hasOwnProperty('flags')) {
+              this.observation['flags'] = {};
+            }
+          } catch (e) { }
+        }
+      )
+    ]);
   }
 
   ngOnInit() {
