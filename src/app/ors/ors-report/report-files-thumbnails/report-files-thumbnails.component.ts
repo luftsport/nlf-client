@@ -4,6 +4,7 @@ import { ApiFilesService } from 'app/api/api-files.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { faChevronLeft, faChevronRight, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { has as _has } from 'lodash';
 
 @Component({
   selector: 'nlf-ors-report-files-thumbnails',
@@ -51,7 +52,7 @@ export class NlfOrsReportFilesThumbnailsComponent implements OnInit {
 
     this.filelist.forEach(file => {
 
-      if (file.content_type.match(/image/g) != null) {
+      if (_has(file, 'content_type') && file.content_type.match(/image/g) != null) {
 
         this.apiFile.getImage(file._id, this.size).subscribe(
 
