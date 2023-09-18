@@ -56,7 +56,7 @@
       <div [ngClass]="{'bg-secondary': !observation.acl_user.r}" [disabled]="!observation.acl_user.r"
         class="bg-white border mt-2"
         style="min-height:100px; width: 100%;display: inline-block;overflow: hidden;padding:2px;" contenteditable="true"
-        propValueAccessor="innerHTML" name="myAskDiv" [(ngModel)]="message_text">
+        propValueAccessor="innerHTML" name="myAskDiv" [(ngModel)]="message_text" (paste)="onPaste($event)">
         Send noe tekst her
       </div>
 
