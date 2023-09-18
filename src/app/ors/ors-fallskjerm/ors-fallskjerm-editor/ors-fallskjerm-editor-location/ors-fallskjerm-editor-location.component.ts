@@ -102,7 +102,10 @@ export class NlfOrsFallskjermEditorLocationComponent implements OnInit, AfterVie
 
                 },
                 () => {
-                  this.mapOptions.center = latLng(this.observation.location.geo.coordinates[0], this.observation.location.geo.coordinates[1]);
+                  this.mapOptions.center = latLng(
+                    this.observation.location.geo.coordinates[0] || this.userGeo.geo.coordinates[0],
+                    this.observation.location.geo.coordinates[1] || this.userGeo.geo.coordinates[1]
+                  );
 
                 }
               )
