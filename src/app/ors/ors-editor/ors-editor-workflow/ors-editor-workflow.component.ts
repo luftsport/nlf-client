@@ -65,7 +65,9 @@ export class NlfOrsEditorWorkflowComponent implements OnInit {
 
         try {
           this.apiWorkflow.setActivity(observation._model.type);
-        } catch { }
+        } catch (error) {
+          console.error(error);
+        }
 
         this.apiWorkflow.getWorkflowState(this.observation._id).subscribe(
           data => {
@@ -75,6 +77,8 @@ export class NlfOrsEditorWorkflowComponent implements OnInit {
           err => console.log(err),
           () => { }
         );
+      } else {
+        this.dataReady = false;
       }
     }
     );
