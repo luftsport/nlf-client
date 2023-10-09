@@ -37,6 +37,7 @@ export class NlfOrsEditorTagComponent implements OnInit {
   tagsInput$ = new Subject<string>();
   selectedTags: ApiTagItem[] = <any>[];
   currentTags: ApiTagItem[] = <any>[];
+  currentTerm: string;
 
   @Input() initialTags: string[];
   @Input() activity: string;
@@ -57,13 +58,13 @@ export class NlfOrsEditorTagComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-      if(typeof this.initialTags === 'undefined') {
-        this.initialTags = [];
-      }
-      this.initialTags.forEach(tag => {
-        this.selectedTags.push({ tag: tag });
-      });
-      this.currentTags = this.selectedTags;
+    if (typeof this.initialTags === 'undefined') {
+      this.initialTags = [];
+    }
+    this.initialTags.forEach(tag => {
+      this.selectedTags.push({ tag: tag });
+    });
+    this.currentTags = this.selectedTags;
 
     if (this.preload) {
       this.preloadTags();
@@ -81,6 +82,7 @@ export class NlfOrsEditorTagComponent implements OnInit {
     this.currentTags = this.selectedTags;
     this.initialTagsChange.emit(tags);
     this.change.emit(true);
+    this.currentTerm = undefined;
   }
 
   public onAdd(event) {
@@ -89,8 +91,8 @@ export class NlfOrsEditorTagComponent implements OnInit {
       this.tags.freq(event._id, 1).subscribe(() => { this.onChange(); });
     } else {
       let tag = '';
-      if(!!event && typeof event === 'object' && event.hasOwnProperty('tag')) {
-        tag=event.tag;
+      if (!!event && typeof event === 'object' && event.hasOwnProperty('tag')) {
+        tag = event.tag;
       } else {
         tag = event;
       }
@@ -99,7 +101,7 @@ export class NlfOrsEditorTagComponent implements OnInit {
           result => {
             this.selectedTags.forEach((t, idx) => {
               if (t.tag === tag) {
-                this.selectedTags.splice(idx,1);
+                this.selectedTags.splice(idx, 1);
               }
             });
             this.selectedTags = [...this.selectedTags, { _id: result._id, tag: tag, freq: 1, activity: this.activity, group: this.group }];
@@ -135,7 +137,21 @@ export class NlfOrsEditorTagComponent implements OnInit {
     //this.change.emit([]);
   }
 
+  public onFocusOut(event) {
+    if (!!this.currentTerm && this.currentTerm.trim().length != 0) { // this.currentTags.length===0 && 
+      this.onAdd(this.currentTerm.trim());
+      this.currentTerm = undefined;
+    }
+  }
 
+  /**
+   * Just keep updated param if only text and focus out!
+   * No debounce to avoid race with focus out
+   * @param event 
+   */
+  public onSearch(event) {
+    this.currentTerm = event.term;
+  }
 
   private preloadTags() {
     let a: ApiTagItem[];
@@ -163,22 +179,28 @@ export class NlfOrsEditorTagComponent implements OnInit {
       this.tagsInput$.pipe(
         debounceTime(400),
         distinctUntilChanged(),
-        tap(() => this.tagsLoading = true),
-        switchMap(term => this.tags.getTags({
-          query: {
-            where: {
-              activity: this.activity,
-              group: this.group,
-              freq: { $gte: 0 },
-              $text: { $search: term },
-            },
-            sort: [{ freq: -1 }]
+        tap((term) => {
+          this.currentTerm = term;
+          this.tagsLoading = true;
+        }
+        ),
+        switchMap(term =>
+          this.tags.getTags({
+            query: {
+              where: {
+                activity: this.activity,
+                group: this.group,
+                freq: { $gte: 0 },
+                $text: { $search: term },
+              },
+              sort: [{ freq: -1 }]
+            }
           }
-        }).pipe(
-          map((r) => a = r._items),
-          catchError(() => of([])), // empty list on error
-          tap(() => this.tagsLoading = false)
-        ))
+          ).pipe(
+            map((r) => a = r._items),
+            catchError(() => of([])), // empty list on error
+            tap(() => this.tagsLoading = false)
+          ))
       )
     );
   }
