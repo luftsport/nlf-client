@@ -138,8 +138,8 @@ export class NlfOrsEditorTagComponent implements OnInit {
   }
 
   public onFocusOut(event) {
-    if (!!this.currentTerm) { // this.currentTags.length===0 && 
-      this.onAdd(this.currentTerm);
+    if (!!this.currentTerm && this.currentTerm.trim().length != 0) { // this.currentTags.length===0 && 
+      this.onAdd(this.currentTerm.trim());
       this.currentTerm = undefined;
     }
   }
