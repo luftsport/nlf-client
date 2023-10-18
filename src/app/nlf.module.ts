@@ -32,7 +32,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { Title } from '@angular/platform-browser';
 
 // TrackJS
-import { TrackJsErrorHandler } from "./trackjs.handler";
+// import { TrackJsErrorHandler } from "./trackjs.handler";
 
 // APP CUSTOM
 import { NlfSharedModule } from 'app/nlf-shared.module';
@@ -167,6 +167,7 @@ import { NlfOrsFallskjermCreateComponent } from 'app/ors/ors-fallskjerm/ors-fall
 import { NlfOrsMotorCreateComponent } from 'app/ors/ors-motor/ors-motor-create/ors-motor-create.component';
 import { NlfOrsSeilflyCreateComponent } from 'app/ors/ors-seilfly/ors-seilfly-create/ors-seilfly-create.component';
 import { NlfOrsSportsflyCreateComponent } from 'app/ors/ors-sportsfly/ors-sportsfly-create/ors-sportsfly-create.component';
+import { NlfOrsModellflyCreateComponent } from 'app/ors/ors-modellfly/ors-modellfly-create/ors-modellfly-create.component';
 // Modal
 import { NlfOrsCreateModalComponent } from 'app/ors/ors-create-modal/ors-create-modal.component';
 
@@ -181,7 +182,7 @@ import { NlfOrsEditorWhenComponent } from 'app/ors/ors-editor/ors-editor-when/or
 import { NlfOrsEditorRatingComponent } from 'app/ors/ors-editor/ors-editor-rating/ors-editor-rating.component';
 import { NlfOrsEditorPeopleComponent } from 'app/ors/ors-editor/ors-editor-people/ors-editor-people.component';
 import { NlfOrsEditorAlertComponent } from 'app/ors/ors-editor/ors-editor-alert/ors-editor-alert.component';
-import {NlfOrsEditorTestclubAlertComponent} from 'app/ors/ors-editor/ors-editor-testclub-alert/ors-editor-testclub-alert.component';
+import { NlfOrsEditorTestclubAlertComponent} from 'app/ors/ors-editor/ors-editor-testclub-alert/ors-editor-testclub-alert.component';
 import { NlfOrsEditorActionsComponent } from 'app/ors/ors-editor/ors-editor-actions/ors-editor-actions.component';
 import { NlfOrsEditorAskComponent } from 'app/ors/ors-editor/ors-editor-ask/ors-editor-ask.component';
 import { NlfOrsEditorAskTextComponent } from 'app/ors/ors-editor/ors-editor-ask-text/ors-editor-ask-text.component';
@@ -236,6 +237,25 @@ import { NlfOrsFallskjermDashboardTableComponent } from 'app/ors/ors-fallskjerm/
 import { NlfOrsFallskjermReportInvolvedComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-report/report-involved/report-involved.component';
 import { NlfOrsFallskjermReportOrganizationComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-report/report-organization/report-organization.component';
 import { NlfOrsFallskjermReportSummaryComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-report/report-summary/report-summary.component';
+
+// OBSREG Modellfly
+import { NlfOrsModellflyEditorComponent } from 'app/ors/ors-modellfly/ors-modellfly-editor/ors-modellfly-editor.component';
+import { NlfOrsModellflyComponent } from 'app/ors/ors-modellfly/ors-modellfly.component';
+import { NlfOrsModellflyMainComponent } from 'app/ors/ors-modellfly/ors-modellfly-main/ors-modellfly-main.component';
+import { NlfOrsModellflyReportComponent } from 'app/ors/ors-modellfly/ors-modellfly-report/ors-modellfly-report.component';
+
+import { NlfOrsModellflyEditorLocationComponent } from 'app/ors/ors-modellfly/ors-modellfly-editor/ors-modellfly-editor-location/ors-modellfly-editor-location.component';
+import { NlfOrsModellflyEditorOrganizationComponent } from 'app/ors/ors-modellfly/ors-modellfly-editor/ors-modellfly-editor-organization/ors-modellfly-editor-organization.component';
+import { NlfOrsModellflyEditorInvolvedComponent } from 'app/ors/ors-modellfly/ors-modellfly-editor/ors-modellfly-editor-involved/ors-modellfly-editor-involved.component';
+import { NlfOrsModellflySearchComponent } from 'app/ors/ors-modellfly/ors-modellfly-search/ors-modellfly-search.component';
+import { NlfOrsModellflyDashboardComponent } from 'app/ors/ors-modellfly/ors-modellfly-dashboard/ors-modellfly-dashboard.component';
+import { NlfOrsModellflyDashboardTableComponent } from 'app/ors/ors-modellfly/ors-modellfly-dashboard/ors-modellfly-dashboard-table/ors-modellfly-dashboard-table.component';
+
+// FALLSKJERM REPORT
+import { NlfOrsModellflyReportInvolvedComponent } from 'app/ors/ors-modellfly/ors-modellfly-report/report-involved/report-involved.component';
+import { NlfOrsModellflyReportOrganizationComponent } from 'app/ors/ors-modellfly/ors-modellfly-report/report-organization/report-organization.component';
+import { NlfOrsModellflyReportSummaryComponent } from 'app/ors/ors-modellfly/ors-modellfly-report/report-summary/report-summary.component';
+
 
 // OBSREG MOTOR
 import { NlfOrsMotorComponent } from 'app/ors/ors-motor/ors-motor.component';
@@ -417,7 +437,8 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfUserAclComponent,
 
     NlfOrsComponent,
-    NlfOrsFallskjermCreateComponent,
+
+  
     NlfOrsMotorCreateComponent,
     NlfOrsSeilflyCreateComponent,
     NlfOrsSportsflyCreateComponent,
@@ -425,11 +446,40 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
 
     NlfOrsEditorFirstComponent,
     NlfOrsErrorComponent,
+
+    // FALLSKJERM OBSREG
+    NlfOrsFallskjermCreateComponent,
     NlfOrsFallskjermComponent,
     NlfOrsFallskjermSearchComponent,
     NlfOrsFallskjermDashboardComponent,
     NlfOrsFallskjermDashboardTableComponent,
     NlfOrsFallskjermReportSummaryComponent,
+    NlfOrsFallskjermMainComponent,
+    NlfOrsFallskjermReportComponent,
+    NlfOrsFallskjermReportInvolvedComponent,
+    NlfOrsFallskjermReportOrganizationComponent,
+    NlfOrsFallskjermEditorLocationComponent,
+    NlfOrsFallskjermEditorOrganizationComponent,
+    NlfOrsFallskjermEditorInvolvedComponent,
+    NlfOrsFallskjermEditorComponent,
+
+    // Modellfly
+    // FALLSKJERM OBSREG
+    NlfOrsModellflyCreateComponent,
+    NlfOrsModellflyComponent,
+    NlfOrsModellflySearchComponent,
+    NlfOrsModellflyDashboardComponent,
+    NlfOrsModellflyDashboardTableComponent,
+    NlfOrsModellflyReportSummaryComponent,
+    NlfOrsModellflyMainComponent,
+    NlfOrsModellflyReportComponent,
+    NlfOrsModellflyReportInvolvedComponent,
+    NlfOrsModellflyReportOrganizationComponent,
+    NlfOrsModellflyEditorLocationComponent,
+    NlfOrsModellflyEditorOrganizationComponent,
+    NlfOrsModellflyEditorInvolvedComponent,
+    NlfOrsModellflyEditorComponent,
+
 
     NlfOrsEditorPeopleMotorflyComponent,
 
@@ -456,8 +506,7 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfOrsAllTableComponent,
     NlfOrsLastComponent,
 
-    NlfOrsFallskjermMainComponent,
-    NlfOrsFallskjermReportComponent,
+
     NlfOrsReportWorkflowTimelineComponent,
 
 
@@ -468,8 +517,6 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfOrsReportAskComponent,
     NlfOrsReportComponentsTimelineComponent,
     NlfOrsReportAskTextComponent,
-    NlfOrsFallskjermReportInvolvedComponent,
-    NlfOrsFallskjermReportOrganizationComponent,
     NlfOrsReportActionsComponent,
     NlfOrsReportRelatedComponent,
     NlfOrsReportWeatherComponent,
@@ -518,11 +565,7 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfOrsEditorHelpComponent,
     NlfOrsEditorAboutComponent,
     NlfOrsEditorDebugComponent,
-    NlfOrsFallskjermEditorLocationComponent,
-    NlfOrsFallskjermEditorOrganizationComponent,
-    NlfOrsFallskjermEditorInvolvedComponent,
     NlfOrsEditorWorkflowComponent,
-    NlfOrsFallskjermEditorComponent,
     NlfOrsEditorComponentsComponent,
 
     NlfOrsEditorRouteComponent,
@@ -605,7 +648,6 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfConfigModule, // Config module
     NlfRoutingModule,
     BrowserModule,
-
     // REMOVE GenericTableModule,
     TableModule, // ngx-easy-table
     // REMOVE RTModule, // right-angled declarative tables
@@ -695,7 +737,7 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
       useClass: NlfAuthInterceptor,
       multi: true
     },
-    { provide: ErrorHandler, useClass: TrackJsErrorHandler },
+    // { provide: ErrorHandler, useClass: TrackJsErrorHandler },
     /** TrackJs
     {
       provide: ErrorHandler,
