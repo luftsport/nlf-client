@@ -279,6 +279,8 @@ export interface ApiObservationsItem extends ApiEveBaseItem {
   location?: ApiLocationItem;
   owner?: number;
   reporter?: number;
+  reporter_role?: string;
+  
   when?: any; //Date | string;
 
   type?: string;
@@ -288,6 +290,8 @@ export interface ApiObservationsItem extends ApiEveBaseItem {
   rating?: ApiObservationRatingInterface;
 
   components?: ApiObservationComponentInterface[];
+  description?: string;
+
   files?: ApiObservationFileInterface[];
   actions?: ApiObservationActionsInterface;
   involved?: ApiObservationFallskjermInvolvedInterface[];
@@ -360,6 +364,17 @@ export interface ApiObservationsSportsflyList extends ApiEveBaseList {
   _items: ApiObservationsSportsflyItem[];
 }
 
+export interface ApiObservationsModellflyItem extends ApiObservationsItem {
+  // Motor
+  aircrafts?: ApiObservationAircraftsItem[];
+  organization?: ApiObservationMotorflyOrganizationInterface;
+  // E5X
+  e5x?: any;
+  occurrence?: any;
+}
+export interface ApiObservationsModellflyList extends ApiEveBaseList {
+  _items: ApiObservationsModellflyItem[];
+}
 
 
 export interface ApiObservationsList extends ApiEveBaseList {
@@ -415,8 +430,6 @@ export interface ApiObservationFallskjermInvolvedInterface {
     private?: Object,
     gear?: Object
   };
-
-
 }
 
 export interface ApiObservationFallskjermInvolvedGearInterface {
@@ -442,6 +455,25 @@ export interface ApiObservationFallskjermOrganizationInterface {
   hl?: [{ id?: number, tmp_name?: string }];
   hi: number[];
 
+}
+
+export interface ApiObservationModellflyInvolvedInterface {
+  id: number;
+  tmp_name?: string;
+  full_name?: string;
+  data?: {
+    date?: Date,
+    licenses?: Object[],
+    memberships?: Object[],
+    clubs?: any[],
+    functions?: any[],
+    competences?: Object[],
+    private?: Object,
+  };
+}
+
+export interface ApiObservationModellflyOrganizationInterface {
+  pilot?: [{ id?: number, tmp_name?: string }];
 }
 
 export interface ApiObservationMotorflyOrganizationInterface {
