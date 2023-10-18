@@ -2,7 +2,7 @@ import { Pipe, Input, PipeTransform } from '@angular/core';
 import { ApiObservationRatingInterface } from 'app/api/api.interface';
 import { calculateRating } from 'app/interfaces/functions';
 import { has as _has } from 'lodash';
-import { TrackJS } from "trackjs";
+
 @Pipe({
   name: 'nlfOrsRatingCalc',
   pure: false
