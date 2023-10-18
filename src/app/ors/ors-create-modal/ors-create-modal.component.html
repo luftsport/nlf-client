@@ -41,6 +41,8 @@
         *ngIf="!!settings && canCreateDefault() && settings.default_activity==111"></nlf-ors-seilfly-create>
       <nlf-ors-sportsfly-create [defaultBtn]="true"
         *ngIf="!!settings && canCreateDefault() && settings.default_activity==237"></nlf-ors-sportsfly-create>
+        <nlf-ors-modellfly-create [defaultBtn]="true"
+        *ngIf="!!settings && canCreateDefault() && settings.default_activity==236"></nlf-ors-modellfly-create>
 
 
       <!-- MORE -->
@@ -58,6 +60,7 @@
         <nlf-ors-motor-create *ngIf="settings.default_activity==238"></nlf-ors-motor-create>
         <nlf-ors-seilfly-create *ngIf="settings.default_activity==111"></nlf-ors-seilfly-create>
         <nlf-ors-sportsfly-create *ngIf="settings.default_activity==237"></nlf-ors-sportsfly-create>
+        <nlf-ors-modellfly-create *ngIf="settings.default_activity==236"></nlf-ors-modellfly-create>
       </div>
       <div class="my-3 pointer lead">
         <a (click)="showAll=!showAll;showDefaultActivity=!showDefaultActivity" class="btn btn-link btn-lg">
@@ -84,13 +87,17 @@
         <p class="lead">Sportsfly</p>
         <nlf-ors-sportsfly-create></nlf-ors-sportsfly-create>
       </div>
+      <div class="my-3">
+        <p class="lead">Modellfly</p>
+        <nlf-ors-modellfly-create></nlf-ors-modellfly-create>
+      </div>
     </div>
 
 
   </div>
 
   <div class="modal-footer">
-    <ng-container *ngIf="[109, 111, 237, 238].indexOf(settings.default_activity)">
+    <ng-container *ngIf="[109, 111, 237, 236, 238].indexOf(settings.default_activity)">
       <a class="btn btn-link me-auto" [routerLink]="['/ors', getActivityName()]">
         <fa-icon [icon]="faLink"></fa-icon> OBSREG {{ getActivityName() }}
       </a>
