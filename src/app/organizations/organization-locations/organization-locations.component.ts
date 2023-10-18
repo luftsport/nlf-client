@@ -13,9 +13,10 @@ import { ConfirmService } from 'app/services/confirm/confirm.service';
 import { forkJoin } from 'rxjs';
 import { faArrowsAlt, faCrosshairs, faPlus, faRefresh, faMapMarker, faTimes, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { Map, Marker, MapOptions, LayerOptions, latLng, LatLng, marker, tileLayer } from 'leaflet';
-
-
+import { LungoOrganizationsService } from 'app/api/lungo-organizations.service';
+import { LungoOrganizationsItem } from 'app/api/lungo.interface';
 import { BarVerticalStackedComponent, HeatMapModule } from '@swimlane/ngx-charts';
+import { error } from 'console';
 
 @Component({
   selector: 'nlf-organization-locations',
@@ -41,6 +42,9 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
   modalRef;
   modalIndex: number = 0;
   modalValue: ApiLocationItem;
+
+  lungo: LungoOrganizationsItem;
+
 
   currentLocation: ApiLocationItem;
 
@@ -82,6 +86,8 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
     { key: 'taxi_way', val: 'Taxi bane' }
   ];
 
+  person_id: number;
+
   public config: NlfConfigItem;
 
   public debouncedSaveLocations = debounce(this.saveLocations, 3000);
@@ -96,7 +102,10 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
     private alertService: NlfAlertService,
     private confirmService: ConfirmService,
     private configService: NlfConfigService,
-    private zone: NgZone
+    private zone: NgZone,
+    private lungoOrgService: LungoOrganizationsService
+
+
   ) {
 
     forkJoin([
@@ -225,6 +234,42 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
     return parseFloat(arg);
   }
 
+  private createOrg() {
+    // get lungoOrg
+    // insert to legacy org!
+
+    this.lungoOrgService.getOrganization(this.org_id).subscribe(
+      data => {
+        this.lungo = data;
+
+        let payload = {
+            locations: [],
+            planes: {},
+            id: this.org_id,
+            url: "",
+            org: "nif.nlf.klubb",
+            active: true,
+            roles: {},
+            ot: 1,
+            name: this.lungo.name,
+            club: this.lungo.parent_id
+        }
+        this.orgService.create(payload).subscribe(
+          data => {
+            console.log('CREATE',data);
+            this.getOrg();
+          },
+          error => {},
+          () => {}
+        );
+      },
+      err => {
+        this.alertService.error(err.message);
+      },
+      () => {}
+    );
+  }
+
   private getOrg() {
     this.orgService.getClub(this.org_id).subscribe(
       data => {
@@ -238,7 +283,13 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
           console.error("Error setting coordinates", e);
         }
       },
-      err => console.log(err),
+      err => {
+        if(err.status == 404) {
+          console.log('404 40404040404040440');
+          this.createOrg();
+        }
+        console.log(err);
+      },
       () => { }
     );
   }
