@@ -128,6 +128,14 @@
       </p>
     </div>
   </div>
+
+  <div *ngIf="default_activity==236" class="py-5 nlf-bg-light">
+    <div class="container">
+      <p class="m-0 text-center text-white">
+        <nlf-ors-modellfly-create></nlf-ors-modellfly-create>
+      </p>
+    </div>
+  </div>
 </span>
 <!-- TESTS
 <div class="py-5 nlf-bg-purple">
@@ -340,6 +348,21 @@
             <div class="card-footer">
               <div class="d-grid gap-2">
                 <a class="btn btn-secondary" [routerLink]="['/ors', 'seilfly']" role="button">Seilfly OBSREG
+                  &raquo;</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card mb-3 obsreg-card">
+            <div class="card-header">
+              <i class="nlf nlf-modell nlf-fw"></i> Modellfly OBSREG
+            </div>
+            <nlf-ors-last activity="modellfly" number="8">Ingen registrerte</nlf-ors-last>
+            <div class="card-footer">
+              <div class="d-grid gap-2">
+                <a class="btn btn-secondary" [routerLink]="['/ors', 'modellfly']" role="button">Modellfly OBSREG
                   &raquo;</a>
               </div>
             </div>
