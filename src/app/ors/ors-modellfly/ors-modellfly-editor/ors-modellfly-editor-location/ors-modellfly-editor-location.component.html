@@ -1,0 +1,46 @@
+<ng-container *ngIf="!!observation">
+
+  <div class="row">
+
+    <div *ngIf="!!locations" class="col-xs-12 col-md-4 d-flex flex-column">
+      <!-- Select location -->
+      <select *ngIf="locations.length>0" [attr.disabled]="!observation.acl_user.w ? '' : null" class="form-control mt-3"
+        [formControl]="locationChooser" [(ngModel)]="selected">
+        <option *ngFor="let location of locations;let i = index" [ngValue]="location.nickname">
+          {{ location.nickname }} ({{ location.name }}) <ng-container *ngIf="i===0">*</ng-container>
+        </option>
+      </select>
+
+      <!-- Alert if no location -->
+      <ngb-alert *ngIf="locations.length==0 && dataReady" type="warning" [dismissible]="false">
+        <strong>Ingen steder definert for klubben</strong>. Opprett minst ett sted ved å velge &quot;Rediger&quot;
+        under.
+      </ngb-alert>
+
+      <!-- Always show button -->
+      <div class="d-grid gap-2">
+        <a class="btn btn-secondary mt-auto" [routerLink]="['/organizations', observation.discipline, 'locations']"
+          [queryParams]="{returl: '/ors/'+observation._model.type+'/edit/'+observation.id}">
+          <fa-icon [icon]="faEdit"></fa-icon> Rediger
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Map column -->
+    <div class="col-xs-12 col-md-8 d-flex flex-column">
+      <div style="height: 300px" *ngIf="dataReady && hasMapCoordinates()" id="location-map" leaflet [leafletOptions]="mapOptions"
+        (leafletMapReady)="onMapReady($event)" [(leafletCenter)]="mapCenter">
+      </div>
+      <!--
+      <agm-map *ngIf="dataReady && locations.length>0" [latitude]="toFloat(observation.location.geo.coordinates[0])"
+        [mapTypeControl]="true" [longitude]="toFloat(observation.location.geo.coordinates[1])" [zoom]="15">
+        <agm-marker [markerDraggable]="observation.acl_user.w" (dragEnd)="markerMoved($event)"
+          [latitude]="toFloat(observation.location.geo.coordinates[0])"
+          [longitude]="toFloat(observation.location.geo.coordinates[1])">
+        </agm-marker>
+      </agm-map>
+      -->
+    </div>
+  </div>
+</ng-container>

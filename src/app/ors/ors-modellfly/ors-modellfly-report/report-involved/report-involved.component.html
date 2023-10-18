@@ -1,0 +1,120 @@
+<div *ngIf="involved" class="overflow-auto">
+  <table class="table table-condensed table-hover ">
+    <tr>
+      <th></th>
+      <th>Kompetanser</th>
+      <th>Erfaring</th>
+      <th>Hopp</th>
+      <th>Kjennelse</th>
+      <th>Utstyr</th>
+    </tr>
+    <tr *ngFor="let p of involved">
+      <td>
+        <nlf-resolve-lungo-person link="true" [person_id]="p.id" [tmp_name]="p.tmp_name"></nlf-resolve-lungo-person>
+        <!--  {{$index+1}}-->
+      </td>
+      <td>
+        <!-- COMPETENCES -->
+
+        <!-- MELWIN -->
+        <span *ngIf="p?.legacy && !!p.licenses">
+          <small>
+            <div *ngFor="let l of p.licenses.rights">
+              <nlf-resolve-license *ngIf="model.version==2" [licenseid]="l"></nlf-resolve-license>
+            </div>
+          </small>
+        </span>
+
+
+      </td>
+      <td>
+        <!-- Experience (Data) -->
+        <span *ngIf="!!p?.data?.total_jumps">
+          <label>Antall hopp:&nbsp;</label>
+          <span>{{ p?.data?.total_jumps }}</span>
+        </span>
+        <br>
+        <span *ngIf="!!p?.data?.years_of_experience">
+          <label>År i sporten:&nbsp;</label>
+          <span>{{ p?.data?.years_of_experience }}</span>
+          <!--? p?.data?.years_of_experience : '?'-->
+          <br>
+        </span>
+      </td>
+
+      <td>
+        <!-- Jump (Data) -->
+        <span *ngIf="!!p?.data?.jump_type">
+          <label>Hopptype:&nbsp;</label>
+          <span>{{ p?.data?.jump_type }}</span>
+          <br>
+        </span>
+        <span *ngIf="!!p?.data?.activity">
+          <label>Aktivitet:&nbsp;</label>
+          <span>{{ p?.data?.activity.join(', ') }}</span>
+          <br>
+        </span>
+        <span *ngIf="!!p?.data?.aircraft">
+          <label>Flytype:&nbsp;</label>
+          <span>{{ p?.data?.aircraft }}</span>
+          <br>
+        </span>
+        <span *ngIf="!!p?.data?.jump_altitude">
+          <label>Utsprangshøyde:&nbsp;</label>
+          <span>{{ p?.data?.jump_altitude }}</span>
+          <br>
+        </span>
+      </td>
+      <td>
+        <!-- Verdict (Data) -->
+        <div *ngIf="!!p.verdict">
+          <div *ngIf="!!p.verdict.fu">
+            <span class="badge bg-warning">Farlig Ukontrollert</span>
+          </div>
+          <div *ngIf="!!p.verdict.ph">
+            <span class="badge bg-danger">Permanent Hoppforbud</span>
+          </div>
+          <div *ngIf="!!p.verdict.mh">
+            <span class="badge bg-danger">Midlertidig Hoppforbud</span>
+          </div>
+        </div>
+      </td>
+
+      <td>
+        <!-- Gear (Data) -->
+        <div *ngIf="!!p.gear">
+          <label *ngIf="!!p?.data?.gear.harness_type || !!p?.data?.gear.harness_experience">Seletøy: </label>
+          <span *ngIf="!!p?.data?.gear.harness_type">{{p?.data?.gear.harness_type}}</span>
+          <span *ngIf="!!p?.data?.gear.harness_experience">{{p?.data?.gear.harness_experience}} hopp</span>
+          <br *ngIf="!!p?.data?.gear.harness_type || !!p?.data?.gear.harness_experience">
+
+          <label *ngIf="!!p?.data?.gear.main_canopy_type|| !!p?.data?.gear.main_canopy_experience|| !!p?.data?.gear.main_canopySize">Hovedskjerm: </label>
+          <span *ngIf="!!p?.data?.gear.main_canopy_type">{{p?.data?.gear.main_canopy_type}}</span>
+          <span *ngIf="!!p?.data?.gear.main_canopy_size">{{p?.data?.gear.main_canopy_size}} sqft</span>
+          <span *ngIf="!!p?.data?.gear.main_canopy_experience">{{p?.data?.gear.main_canopy_experience}} hopp</span>
+          <br *ngIf="!!p?.data?.gear.main_canopy_type||p?.data?.gear.main_canopy_experience||p?.data?.gear.main_canopy_size">
+
+          <label *ngIf="!!p?.data?.gear.reserve_canopy_type ||p?.data?.gear.reserve_canopy_size">Reserveskjerm: </label>
+          <span *ngIf="!!p?.data?.gear.reserve_canopy_type">{{p?.data?.gear.reserve_canopy_type}}</span>
+          <span *ngIf="!!p?.data?.gear.reserve_canopy_size">{{p?.data?.gear.reserve_canopy_size}}</span>
+          <br *ngIf="!!p?.data?.gear.reserve_canopy_type || !!p?.data?.gear.reserve_canopy_size">
+
+          <label *ngIf="!!p?.data?.gear.rigger">MK: </label>
+          <span *ngIf="!!p?.data?.gear.rigger">
+
+            <nlf-resolve-lungo-person [person_id]="p?.data?.gear.rigger.id" [tmp_name]="p?.data?.gear.rigger.tmp_name" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
+          </span>
+          <br *ngIf="!!p?.data?.gear.rigger">
+
+          <label *ngIf="!!p?.data?.gear.rigger">Pakkedato: </label>
+          <span *ngIf="!!p?.data?.gear.rigger">{{ p?.data?.gear.rigger_date | date:'yyyy-MM-dd' }}</span>
+          <br *ngIf="!!p?.data?.gear.rigger_date">
+
+          <label *ngIf="!!p?.data?.gear.other">Annet utstyr:</label>
+          <span class="ms-1" *ngIf="!!p?.data?.gear.other">{{ p?.data?.gear.other | join: ', ' }}</span>
+          <br *ngIf="!!p?.data?.gear.other">
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>

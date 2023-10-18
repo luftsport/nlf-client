@@ -1,0 +1,162 @@
+<span *ngIf="!!dataReady">
+
+  <ngx-table class="table table-flush" [id]="'ors-dashboard-table'" [configuration]="tableConf" [data]="data" [columns]="columns" [(pagination)]="pagination" [filtersTemplate]="filtersTemplate" (event)="eventEmitted($event)">
+
+    <!-- ROWS -->
+    <ng-template let-row>
+      <td class="ngx-easy-table-small">
+        <a *ngIf="row.workflow.state!=='closed'" [routerLink]="['/ors', row._model.type, 'edit', row.id]">{{ row.id }}</a>
+        <a *ngIf="row.workflow.state==='closed'" [routerLink]="['/ors', row._model.type, 'report', row.id]">{{ row.id }}</a>
+      </td>
+      <td class="ngx-easy-table-small">
+        {{ row.when | date:"yyyy-MM-dd HH:mm" }}
+      </td>
+      <td class="ngx-easy-table-small">
+        <a *ngIf="row.workflow.state!=='closed'" [routerLink]="['/ors', row._model.type, 'edit', row.id]">{{ row.tags | nlfOrsTags: seperator:' / ' }}</a>
+        <a *ngIf="row.workflow.state==='closed'" [routerLink]="['/ors', row._model.type, 'report', row.id]">{{ row.tags | nlfOrsTags: seperator:' / ' }}</a>
+
+      </td>
+      <td class="ngx-easy-table-small">
+        <nlf-resolve-lungo-person [person_id]="row.reporter" [avatar]="true"></nlf-resolve-lungo-person>
+      </td>
+      <td class="ngx-easy-table-small">
+        <span *ngIf="!!row.rating">
+          <ngb-progressbar class="progress-striped active" [value]="row.rating | nlfOrsRatingCalc" [type]="row.rating | nlfOrsRatingCalc | nlfDynamicColor">{{ row.rating | nlfOrsRatingCalc }}</ngb-progressbar>
+        </span>
+      </td>
+      <td class="ngx-easy-table-small text-end">
+        <span *ngIf="!!row.workflow.state">
+          {{ row.workflow.state | nlfOrsState: row._model.type }}
+        </span>
+      </td>
+      <!--<td [innerHTML]="row.type | nlfOrsType: row._model.type" class="ngx-easy-table-small">-->
+      <td class="ngx-easy-table-small text-end">
+        <nlf-resolve-observation-types [type]="row.type" [activity]="row._model.type" [badge]="true"></nlf-resolve-observation-types>
+      </td>
+      <td class="text-end">
+        <fa-icon title="Aktivitet" *ngIf="['withdrawn', 'closed'].indexOf(row.workflow.state)<0" class="mx-2 pointer" (click)="openModal(activityModal, row)" [icon]="faCommenting"></fa-icon>
+
+        <fa-icon title="Purring" *ngIf="['withdrawn', 'closed'].indexOf(row.workflow.state)<0" class="mx-2 text-danger pointer" (click)="notify(row)" [icon]="faBell"></fa-icon>
+
+        <fa-icon title="Vurderinger" *ngIf="row.workflow.state!='withdrawn'" class="me-3 pointer" (click)="openModal(askModal, row)" [icon]="faComments"></fa-icon>
+        <!-- && row.acl_user.x-->
+        <fa-icon title="Arbeidsflyt" *ngIf="row.workflow.state!='withdrawn'" class="me-3 pointer" (click)="openModal(workflowModal, row)" [icon]="faExchange"></fa-icon>
+
+      </td>
+
+    </ng-template>
+  </ngx-table>
+  <!--<button class="btn btn-link" (click)="exportToCSV()">Eksporter</button>-->
+
+  <!--FILTERS-->
+  <ng-template #filtersTemplate>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <!--STATUS-->
+    <th>
+      <select class="form-control form-control-sm" (change)="stateChooser($event)">
+        <option [value]=""></option>
+        <option *ngFor="let status of config[activity].observation.state | keyvalue" [value]="status.key">
+          {{ status.value.label }}
+        </option>
+      </select>
+    </th>
+    <!--TYPE-->
+    <th>
+      <select class="form-control form-control-sm" (change)="typeChooser($event)">
+        <option [value]=""></option>
+        <option *ngFor="let type of config[activity].observation.types | keyvalue" [value]="type.key">
+          {{ type.value.label }}
+        </option>
+      </select>
+    </th>
+    <th>
+    </th>
+  </ng-template>
+</span>
+<span *ngIf="!dataReady">
+  <p class="align-middle text-center  text-secondary">
+    <nlf-ui-component-spinner size="3"></nlf-ui-component-spinner>
+  </p>
+</span>
+
+<!-- ACTIVITY MODAL --->
+<ng-template #activityModal>
+
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      #{{ modalObservation.id }}
+      <nlf-resolve-observation-tags [tags]="modalObservation.tags" [activity]="modalObservation._model.type" seperator="/"></nlf-resolve-observation-tags>
+    </h4>
+    <button type="button" class="close float-end" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <nlf-ors-activities-timeline [observation]="modalObservation"></nlf-ors-activities-timeline>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="closeModal()">
+      <fa-icon [icon]="faTimes"></fa-icon> Lukk
+    </button>
+
+  </div>
+</ng-template>
+
+
+
+<!-- ASK MODAL --->
+<ng-template #askModal>
+
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      Vurderinger #{{ modalObservation.id }}
+      <nlf-resolve-observation-tags [tags]="modalObservation.tags" [activity]="modalObservation._model.type" seperator="/"></nlf-resolve-observation-tags>
+    </h4>
+    <button type="button" class="close float-end" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <nlf-ors-report-ask-text [comments]="modalObservation.ask?.text" [audit]="modalObservation.workflow.audit" [activity]="modalObservation._model.type"></nlf-ors-report-ask-text>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="closeModal()">
+      <fa-icon [icon]="faTimes"></fa-icon> Lukk
+    </button>
+
+  </div>
+</ng-template>
+
+
+<!-- WORKFLOW MODAL --->
+<ng-template #workflowModal>
+
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      Arbeidsflyt #{{ modalObservation.id }}
+      <nlf-resolve-observation-tags [tags]="modalObservation.tags" [activity]="modalObservation._model.type" seperator="/"></nlf-resolve-observation-tags>
+    </h4>
+    <button type="button" class="close float-end" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <nlf-ors-report-workflow-timeline [activity]="modalObservation._model.type" [_id]="modalObservation._id" [workflow]="modalObservation.workflow"></nlf-ors-report-workflow-timeline>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-outline-dark" (click)="closeModal()">
+      <fa-icon [icon]="faTimes"></fa-icon> Lukk
+    </button>
+
+  </div>
+</ng-template>
