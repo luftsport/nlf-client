@@ -47,7 +47,7 @@
           <fa-icon [icon]="faInfoCircle"></fa-icon>
           <fa-icon *ngIf="!observation.acl_user.w" [icon]="faLock" class="text-danger"
             title="Ingen skrivetilgang"></fa-icon>
-          {{ observation._updated | amTimeAgo }}
+          {{ observation._updated  }}
         </a>
         <!-- TOUR
         <a class="badge bg-success mx-1 text-white pointer"
@@ -461,7 +461,7 @@
     </div>
 
     <!-- ASK -->
-    <div class="row bg-light" style="py-2">
+    <div class="row bg-light py-2">
 
       <!-- ASK TOGGLE -->
       <div class="col-md-4 col-sm-12">
