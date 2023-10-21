@@ -47,7 +47,8 @@ export class NlfOrsE5xComponent implements OnInit {
   public config: NlfConfigItem;
 
 
-  allowedReportStatus: number[] = [2, 3]; // 2=open, 3=closed
+  allowedReportStatus = {2: 'open', 3: 'closed'}; // 2=open, 3=closed
+
 
   faHistory = faHistory;
   faDownload = faDownload;
@@ -369,7 +370,10 @@ export class NlfOrsE5xComponent implements OnInit {
     });
   }
 
+ public getAllowedKeys(what) {
 
+  return Object.keys(this.allowedReportStatus);
+ }
 
   public openModal(template) {
     this.modalRef = this.modalService.open(template, { size: 'lg', backdrop: 'static', keyboard: false });

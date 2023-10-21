@@ -32,6 +32,7 @@
             <th></th>
             <th>Dato</th>
             <th>Sent av</th>
+            <th>Sent som</th>
             <th>Versjon</th>
             <th>Innsending</th>
             <th>Prossesering</th>
@@ -50,6 +51,9 @@
               </td>
               <td>
                 <nlf-resolve-lungo-person [person_id]="audit.person_id"></nlf-resolve-lungo-person>
+              </td>
+              <td>
+                {{ allowedReportStatus[audit.status] }}
               </td>
               <td>
                 v{{ audit.version }}
@@ -175,7 +179,7 @@
             <div class="col-md-12">
               <nlf-ors-editor-tag-e5x
                 [(items)]="observation.occurrence.entities.reportingHistory[0].attributes.reportStatus.value"
-                path="E5X.Occurrence.ReportingHistory.ReportStatus" [allowed]="allowedReportStatus" id="ReportStatus">
+                path="E5X.Occurrence.ReportingHistory.ReportStatus" [allowed]="getAllowedKeys('reportStatus')" id="ReportStatus">
               </nlf-ors-editor-tag-e5x>
             </div>
 
