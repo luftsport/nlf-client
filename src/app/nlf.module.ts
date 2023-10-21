@@ -32,7 +32,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { Title } from '@angular/platform-browser';
 
 // TrackJS
-import { TrackJsErrorHandler } from "./trackjs.handler";
+//import { TrackJsErrorHandler } from "./trackjs.handler";
 
 // APP CUSTOM
 import { NlfSharedModule } from 'app/nlf-shared.module';
@@ -695,7 +695,7 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
       useClass: NlfAuthInterceptor,
       multi: true
     },
-    { provide: ErrorHandler, useClass: TrackJsErrorHandler },
+   // { provide: ErrorHandler, useClass: TrackJsErrorHandler },
     /** TrackJs
     {
       provide: ErrorHandler,
