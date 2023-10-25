@@ -83,6 +83,8 @@ import { NlfOrsEditorTagStaticComponent } from 'app/ors/ors-editor/ors-editor-ta
 import { NlfOrsE5xComponent } from 'app/ors/ors-e5x/ors-e5x.component';
 import { NlfOrsEditorTagE5XComponent } from 'app/ors/ors-editor/ors-editor-tag-e5x/ors-editor-tag-e5x.component';
 import { NlfOrsEditorTagE5xRenderComponent } from 'app/ors/ors-editor/ors-editor-tag-e5x-render/ors-editor-tag-e5x-render.component';
+import { NlfOrsEditorTagE5xRenderVersionComponent } from 'app/ors/ors-editor/ors-editor-tag-e5x-render-version/ors-editor-tag-e5x-render-version.component';
+
 // Date normalized
 import { NlfOrsEditorDateComponent } from 'app/ors/ors-editor/ors-editor-date/ors-editor-date.component';
 // Go to specified ors by id!
@@ -166,6 +168,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     NlfOrsEditorTagStaticComponent,
     NlfOrsEditorDateComponent,
     NlfOrsGoComponent,
+    NlfOrsEditorTagE5xRenderVersionComponent,
     // Aircrafts
     NlfAircraftsAddComponent,
     NlfAircraftsEditComponent,
