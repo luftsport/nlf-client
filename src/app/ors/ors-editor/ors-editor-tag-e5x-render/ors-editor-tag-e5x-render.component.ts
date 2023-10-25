@@ -3,7 +3,8 @@ import { ApiOptionsInterface, NlfConfigItem } from 'app/api/api.interface';
 import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
 import { ApiE5XAttributesService } from 'app/api/api-e5x-attributes.service';
 import { e5xParseLabel } from 'app/interfaces/functions';
-import {  NlfConfigService } from 'app/nlf-config.service';
+import { NlfConfigService } from 'app/nlf-config.service';
+import { ApiCacheService } from 'app/api/api-cache.service';
 // import { forkJoin } from 'rxjs';
 
 @Component({
@@ -28,7 +29,8 @@ export class NlfOrsEditorTagE5xRenderComponent implements OnInit {
   constructor(
     private attributeService: ApiE5XAttributesService,
     private choicesService: ApiE5XChoicesService,
-    private configService: NlfConfigService) {
+    private configService: NlfConfigService,
+    private apiCache: ApiCacheService) {
 
 
     this.configService.observableConfig.subscribe(
@@ -57,8 +59,12 @@ export class NlfOrsEditorTagE5xRenderComponent implements OnInit {
         }
       }
     }
-    this.attributeService.getAttributes(options).subscribe(
+    
+    this.apiCache.get(
+      ['e5x-attribute', this.activity, options.query],
+      this.attributeService.getAttributes(options)).subscribe(
       data => {
+        console.log('Dadadadada',this.path);
         if (data._items.length > 0) {
 
           if (!!data._items[0].choices_key) {
@@ -90,6 +96,7 @@ export class NlfOrsEditorTagE5xRenderComponent implements OnInit {
         this.arr = this.items;
       },
     )
+    
   }
 
 }

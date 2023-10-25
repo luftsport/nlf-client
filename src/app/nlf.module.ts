@@ -32,7 +32,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { Title } from '@angular/platform-browser';
 
 // TrackJS
-import { TrackJsErrorHandler } from "./trackjs.handler";
+//import { TrackJsErrorHandler } from "./trackjs.handler";
 
 // APP CUSTOM
 import { NlfSharedModule } from 'app/nlf-shared.module';
@@ -181,7 +181,7 @@ import { NlfOrsEditorWhenComponent } from 'app/ors/ors-editor/ors-editor-when/or
 import { NlfOrsEditorRatingComponent } from 'app/ors/ors-editor/ors-editor-rating/ors-editor-rating.component';
 import { NlfOrsEditorPeopleComponent } from 'app/ors/ors-editor/ors-editor-people/ors-editor-people.component';
 import { NlfOrsEditorAlertComponent } from 'app/ors/ors-editor/ors-editor-alert/ors-editor-alert.component';
-import {NlfOrsEditorTestclubAlertComponent} from 'app/ors/ors-editor/ors-editor-testclub-alert/ors-editor-testclub-alert.component';
+import { NlfOrsEditorTestclubAlertComponent} from 'app/ors/ors-editor/ors-editor-testclub-alert/ors-editor-testclub-alert.component';
 import { NlfOrsEditorActionsComponent } from 'app/ors/ors-editor/ors-editor-actions/ors-editor-actions.component';
 import { NlfOrsEditorAskComponent } from 'app/ors/ors-editor/ors-editor-ask/ors-editor-ask.component';
 import { NlfOrsEditorAskTextComponent } from 'app/ors/ors-editor/ors-editor-ask-text/ors-editor-ask-text.component';
@@ -303,6 +303,7 @@ import { NlfOrsEditorE5xReportinghistoryReportersDescriptionComponent } from 'ap
 import { NlfOrsEditorE5xAssessmentComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-assessment/ors-editor-e5x-assessment.component';
 import { NlfOrsEditorE5xRiskComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-risk/ors-editor-e5x-risk.component';
 import { NlfOrsEditorE5xSeparationComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-separation/ors-editor-e5x-separation.component';
+
 
 // OBSREG EDITOR *FLY ONLY
 import { NlfOrsEditorFlightComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-aircraft/ors-editor-flight/ors-editor-flight.component';
@@ -513,7 +514,6 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     // USER ACLS
     NlfOrsEditorUsersComponent,
 
-
     // modals
     NlfOrsEditorHelpComponent,
     NlfOrsEditorAboutComponent,
@@ -695,7 +695,7 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
       useClass: NlfAuthInterceptor,
       multi: true
     },
-    { provide: ErrorHandler, useClass: TrackJsErrorHandler },
+   // { provide: ErrorHandler, useClass: TrackJsErrorHandler },
     /** TrackJs
     {
       provide: ErrorHandler,
