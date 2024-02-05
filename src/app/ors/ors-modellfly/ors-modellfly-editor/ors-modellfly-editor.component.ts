@@ -64,9 +64,15 @@ export class NlfOrsModellflyEditorComponent implements OnInit, OnDestroy, Compon
   modalRef;
   workflowRef;
 
+  // Narrative/ReportersDescription et al
+  allowedLanguages = [16, 43, 55, 13, 54, 23, 20, 31];
+
   involved;
 
   tabActive = 1;
+
+  a = [];
+  b = 'Stringish';
   
   debouncedUpdate = debounce(this.changed, 900);
 

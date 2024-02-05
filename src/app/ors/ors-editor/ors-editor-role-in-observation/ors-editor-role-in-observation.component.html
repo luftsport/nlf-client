@@ -1,0 +1,12 @@
+<div class="form-group">
+    <select class="form-select" placeholder="Velg rolle i observasjonen"
+        name="reporter-role" 
+        id="reporter-role-id" 
+        class="form-control"
+        [(ngModel)]="role"
+        (ngModelChange)="update($event)"
+        [disabled]="disable">
+        <option value="" disabled>--Velg--</option>
+        <option *ngFor="let role of config[activity].observation.roles_in_observation" [value]="role.key">{{ role.label }}</option>
+    </select>
+</div>

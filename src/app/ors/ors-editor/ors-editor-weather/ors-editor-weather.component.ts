@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
@@ -12,6 +12,8 @@ import { faCheck, faClose, faCloud } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./ors-editor-weather.component.css']
 })
 export class NlfOrsEditorWeatherComponent implements OnInit {
+
+  @Input() activity: string;
 
   observation: ApiObservationsItem;
   modalRef;
@@ -48,6 +50,11 @@ export class NlfOrsEditorWeatherComponent implements OnInit {
 
 
   ngOnInit() {
+    console.error(this.activity);
+    if(!this.activity) {
+      console.error('Nubile fandens arkefaen');
+      this.activity = 'fallskjerm';
+    }
 
   }
 

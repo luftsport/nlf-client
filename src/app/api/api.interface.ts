@@ -286,6 +286,7 @@ export interface ApiObservationsItem extends ApiEveBaseItem {
   type?: string;
   flags?: ApiObservationFlagsInterface;
   tags?: string[];
+  title?: string;
   ask?: ApiObservationAskInterface;
   rating?: ApiObservationRatingInterface;
 
@@ -367,10 +368,11 @@ export interface ApiObservationsSportsflyList extends ApiEveBaseList {
 export interface ApiObservationsModellflyItem extends ApiObservationsItem {
   // Motor
   aircrafts?: ApiObservationAircraftsItem[];
-  organization?: ApiObservationMotorflyOrganizationInterface;
+  organization?: ApiObservationModellflyOrganizationInterface;
   // E5X
   e5x?: any;
   occurrence?: any;
+  rpas_type?: string;
 }
 export interface ApiObservationsModellflyList extends ApiEveBaseList {
   _items: ApiObservationsModellflyItem[];
@@ -473,7 +475,11 @@ export interface ApiObservationModellflyInvolvedInterface {
 }
 
 export interface ApiObservationModellflyOrganizationInterface {
-  pilot?: [{ id?: number, tmp_name?: string }];
+  pilot?: ApiPersonInterface[];
+  ors?: ApiPersonInterface[];
+  club_president: ApiPersonInterface[];
+  fsj?: ApiPersonInterface[];
+
 }
 
 export interface ApiObservationMotorflyOrganizationInterface {
@@ -1052,7 +1058,7 @@ export interface NlfConfigOrgItem {
   org_id?: number;
 
   observation?: {
-    create?: {local?: boolean, dev?: boolean, beta?: boolean, prod?: boolean},
+    create?: {local?: boolean, dev?: boolean, beta?: boolean, prod?: boolean}
     components?: { attributes: Object, flags: Object },
     flagsArr?: Array<string>,
     flags?: Object,
@@ -1068,6 +1074,9 @@ export interface NlfConfigOrgItem {
       rit_version?: string,
       //submission?: boolean
     },
+    rpas_type?: string,
+    rpas_flight_type?: string,
+    role_in_observation?: string,
     categories?: Array<string>,
     operational?: {club?: boolean, op?: boolean, jumping?: boolean, flying?: boolean};
   };

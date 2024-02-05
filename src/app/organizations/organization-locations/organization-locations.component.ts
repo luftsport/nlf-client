@@ -174,39 +174,42 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
 
   public goTo(location) {
     console.log('LOCATION', location);
-    const options = { title: location.name, riseOnHover: true };
 
-    try {
-      this.currentLocation = location;
-      this.mapCenter = latLng(location.geo.coordinates[0], location.geo.coordinates[1]);
-    } catch (e) {
-      this.currentLocation = this.userGeo;
-      this.mapCenter = latLng(this.userGeo.geo.coordinates[0], this.userGeo.geo.coordinates[1]);
-    }
-    try {
-      this.currentMarkerLayer.remove();
-    } catch (e) { }
+    if (!!location) {
+      const options = { title: location.name, riseOnHover: true };
 
-    this.currentMarkerLayer = new Marker(this.mapCenter, options);
-    console.log(this.currentMarkerLayer);
-
-    // Edit?
-    this.currentMarkerLayer.addTo(this.map);
-    /**
-    .on('click',
-    (event) => {
-      for (let i = 0; i < this.org.locations.length; i++) {
-        console.log(this.org.locations[i].name, location.name);
-        if (this.org.locations[i].name == location.name) {
-          console.log('VALUE', this._template);
-          this.openModal(this._template, i);
-          break;
-        }
+      try {
+        this.currentLocation = location;
+        this.mapCenter = latLng(location.geo.coordinates[0], location.geo.coordinates[1]);
+      } catch (e) {
+        this.currentLocation = this.userGeo;
+        this.mapCenter = latLng(this.userGeo.geo.coordinates[0], this.userGeo.geo.coordinates[1]);
       }
-    });**/
-    //.on('click', function(e) {
-    // 
-    //});
+      try {
+        this.currentMarkerLayer.remove();
+      } catch (e) { }
+
+      this.currentMarkerLayer = new Marker(this.mapCenter, options);
+      console.log(this.currentMarkerLayer);
+
+      // Edit?
+      this.currentMarkerLayer.addTo(this.map);
+      /**
+      .on('click',
+      (event) => {
+        for (let i = 0; i < this.org.locations.length; i++) {
+          console.log(this.org.locations[i].name, location.name);
+          if (this.org.locations[i].name == location.name) {
+            console.log('VALUE', this._template);
+            this.openModal(this._template, i);
+            break;
+          }
+        }
+      });**/
+      //.on('click', function(e) {
+      // 
+      //});
+    }
   }
 
   public mapReset() {
@@ -243,30 +246,30 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
         this.lungo = data;
 
         let payload = {
-            locations: [],
-            planes: {},
-            id: this.org_id,
-            url: "",
-            org: "nif.nlf.klubb",
-            active: true,
-            roles: {},
-            ot: 1,
-            name: this.lungo.name,
-            club: this.lungo.parent_id
+          locations: [],
+          planes: {},
+          id: this.org_id,
+          url: "",
+          org: "nif.nlf.klubb",
+          active: true,
+          roles: {},
+          ot: 1,
+          name: this.lungo.name,
+          club: this.lungo.parent_id
         }
         this.orgService.create(payload).subscribe(
           data => {
-            console.log('CREATE',data);
+            console.log('CREATE', data);
             this.getOrg();
           },
-          error => {},
-          () => {}
+          error => { },
+          () => { }
         );
       },
       err => {
         this.alertService.error(err.message);
       },
-      () => {}
+      () => { }
     );
   }
 
@@ -284,8 +287,7 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
         }
       },
       err => {
-        if(err.status == 404) {
-          console.log('404 40404040404040440');
+        if (err.status == 404) {
           this.createOrg();
         }
         console.log(err);

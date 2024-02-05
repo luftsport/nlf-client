@@ -3,35 +3,46 @@
     <tr style="border-top: none !important">
       <td style="border-top: none !important">Klubb</td>
       <td style="border-top: none !important">
-        <nlf-resolve-lungo-organization [organization_id]="observation.club" link="true"></nlf-resolve-lungo-organization>
+        <nlf-resolve-lungo-organization [organization_id]="observation.club"
+          link="true"></nlf-resolve-lungo-organization>
       </td>
     </tr>
     <tr>
       <td>Gren</td>
       <td>
-        <nlf-resolve-lungo-organization [organization_id]="observation.discipline" link="true" show_activity="true"></nlf-resolve-lungo-organization>
+        <nlf-resolve-lungo-organization [organization_id]="observation.discipline" link="true"
+          show_activity="true"></nlf-resolve-lungo-organization>
       </td>
     </tr>
     <tr>
       <td>Observatør</td>
       <td>
-        <nlf-resolve-lungo-person [avatar]="true" [link]="true" [person_id]="observation.reporter"></nlf-resolve-lungo-person>
+        <nlf-resolve-lungo-person [avatar]="true" [link]="true"
+          [person_id]="observation.reporter"></nlf-resolve-lungo-person>&nbsp;&nbsp;{{ observation.reporter_role }}
       </td>
     </tr>
-<!--
     <tr>
-      <td>Hovedinstruktør</td>
+      <td>OBSREG-Koordinator</td>
       <td>
-        <div *ngFor="let person of observation.organization.hi">
-          <nlf-resolve-lungo-person [avatar]="true" [link]="true" [person_id]="person"></nlf-resolve-lungo-person>
+        <div *ngFor="let ors of observation.organization.ors">
+          <nlf-resolve-lungo-person [person_id]="ors" [avatar]="true" [link]="true"></nlf-resolve-lungo-person>
         </div>
       </td>
     </tr>
--->
     <tr>
+      <td>Fagsjef</td>
+      <td>
+        <div *ngFor="let fsj of observation.organization.fsj">
+          <nlf-resolve-lungo-person [person_id]="fsj" [avatar]="true" [link]="true"></nlf-resolve-lungo-person>
+        </div>
+      </td>
+    </tr>
+    <tr>
+
       <td>Type</td>
       <td>
-        <nlf-resolve-observation-types [activity]="observation._model.type" [type]="observation.type" badge="true"></nlf-resolve-observation-types>
+        <nlf-resolve-observation-types [activity]="observation._model.type" [type]="observation.type"
+          badge="true"></nlf-resolve-observation-types>
         <span class="float-end">
           <nlf-ors-report-ask [ask]="observation.ask" [verbose]="false"></nlf-ors-report-ask>
         </span>
@@ -44,10 +55,12 @@
       <td>
         <div *ngIf="!!observation.flags">
           <span *ngIf="!!observation.flags.insurance">
-            <nlf-resolve-observation-flags [activity]="observation._model.type" flag="insurance"></nlf-resolve-observation-flags>
+            <nlf-resolve-observation-flags [activity]="observation._model.type"
+              flag="insurance"></nlf-resolve-observation-flags>
           </span>
           <span *ngIf="!!observation.flags.aviation">
-            <nlf-resolve-observation-flags [activity]="observation._model.type" flag="aviation"></nlf-resolve-observation-flags>
+            <nlf-resolve-observation-flags [activity]="observation._model.type"
+              flag="aviation"></nlf-resolve-observation-flags>
           </span>
 
         </div>
@@ -59,7 +72,10 @@
 
     <tr *ngIf="!!observation.rating">
       <td>Alvorlighetsgrad</td>
-      <td>{{ observation.rating.actual }} av {{ observation.rating.potential }} <span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body" class="float-end badge bg-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating | nlfOrsRatingCalc }}</span></td>
+      <td>{{ observation.rating.actual }} av {{ observation.rating.potential }} <span
+          ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body"
+          class="float-end badge bg-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ observation.rating |
+          nlfOrsRatingCalc }}</span></td>
     </tr>
 
 
@@ -73,17 +89,20 @@
     </tr>
     <tr>
       <td>Lukket</td>
-      <td *ngIf="observation.workflow.state==('closed' || 'withdrawn')">{{ observation.workflow.last_transition | date:'yyyy-MM-dd HH:mm' }}</td>
+      <td *ngIf="observation.workflow.state==('closed' || 'withdrawn')">{{ observation.workflow.last_transition |
+        date:'yyyy-MM-dd HH:mm' }}</td>
       <td *ngIf="observation.workflow.state!=('closed' || 'withdrawn')">
         <span class="text-danger">Under behandling</span>
       </td>
 
     </tr>
     <tr>
-      <td>Versjon</td> <!-- @TODO: Generate list of versions and link to them /report/:id?v=1 or /report/:id/:version -->
+      <td>Versjon</td>
+      <!-- @TODO: Generate list of versions and link to them /report/:id?v=1 or /report/:id/:version -->
       <td>
         {{ observation._version }} <span *ngIf="observation._version !== observation._latest_version">
-          av <a [routerLink]="['/ors', observation._model.type, 'report', observation.id]">{{ observation._latest_version }}</a></span>
+          av <a [routerLink]="['/ors', observation._model.type, 'report', observation.id]">{{
+            observation._latest_version }}</a></span>
       </td>
     </tr>
     <tr>

@@ -195,6 +195,7 @@ import { NlfOrsEditorAboutComponent } from 'app/ors/ors-editor/ors-editor-about/
 import { NlfOrsEditorDebugComponent } from 'app/ors/ors-editor/ors-editor-debug/ors-editor-debug.component';
 import { NlfOrsEditorMetComponent } from 'app/ors/ors-editor/ors-editor-met/ors-editor-met.component';
 import { NlfOrsEditorWeatherComponent } from 'app/ors/ors-editor/ors-editor-weather/ors-editor-weather.component';
+import { NlfOrsEditorRoleInObservationComponent } from 'app/ors/ors-editor/ors-editor-role-in-observation/ors-editor-role-in-observation.component';
 
 import { NlfOrsEditorOperationalComponent } from 'app/ors/ors-editor/ors-editor-operational/ors-editor-operational.component';
 import { NlfOrsEditorCategoriesComponent } from 'app/ors/ors-editor/ors-editor-categories/ors-editor-categories.component';
@@ -250,7 +251,8 @@ import { NlfOrsModellflyEditorInvolvedComponent } from 'app/ors/ors-modellfly/or
 import { NlfOrsModellflySearchComponent } from 'app/ors/ors-modellfly/ors-modellfly-search/ors-modellfly-search.component';
 import { NlfOrsModellflyDashboardComponent } from 'app/ors/ors-modellfly/ors-modellfly-dashboard/ors-modellfly-dashboard.component';
 import { NlfOrsModellflyDashboardTableComponent } from 'app/ors/ors-modellfly/ors-modellfly-dashboard/ors-modellfly-dashboard-table/ors-modellfly-dashboard-table.component';
-
+import { NlfOrsModellflyEditorRpasTypeComponent } from 'app/ors/ors-modellfly/ors-modellfly-editor/ors-modellfly-editor-rpas-type/ors-modellfly-editor-rpas-type.component';
+import { NlfOrsModellflyEditorRpasFlightTypeComponent } from 'app/ors/ors-modellfly/ors-modellfly-editor/ors-modellfly-editor-rpas-flight-type/ors-modellfly-editor-rpas-flight-type.component';
 // FALLSKJERM REPORT
 import { NlfOrsModellflyReportInvolvedComponent } from 'app/ors/ors-modellfly/ors-modellfly-report/report-involved/report-involved.component';
 import { NlfOrsModellflyReportOrganizationComponent } from 'app/ors/ors-modellfly/ors-modellfly-report/report-organization/report-organization.component';
@@ -574,6 +576,9 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfOrsEditorMetComponent,
     NlfOrsEditorWeatherComponent,
 
+    NlfOrsEditorRoleInObservationComponent,
+    NlfOrsModellflyEditorRpasTypeComponent,
+    NlfOrsModellflyEditorRpasFlightTypeComponent,
     // Aircraft
     NlfOrsEditorAircraftPersonComponent,
     // Aircraft attributes

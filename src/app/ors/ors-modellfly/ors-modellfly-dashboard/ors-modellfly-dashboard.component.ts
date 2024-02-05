@@ -367,6 +367,7 @@ export class NlfOrsModellflyDashboardComponent implements OnInit {
 
         } catch (e) {
           console.log('AVG Err discipline', e);
+          this.stats['avg_ratings_discipline'] = 'NA';
         }
 
         try {

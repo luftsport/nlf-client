@@ -1,0 +1,12 @@
+<div class="form-group">
+    <select class="form-select" placeholder="Velg rpas type"
+        name="reporter-rpas_flight_type" 
+        id="reporter-rpas_flight_type-id" 
+        class="form-control"
+        [(ngModel)]="rpasFlightType"
+        (ngModelChange)="onChange($event)"
+        [disabled]="disable">
+        <option value="" disabled>--Velg--</option>
+        <option *ngFor="let flight_type of config.modellfly.observation.rpas_flight_type" [value]="flight_type.key">{{ flight_type.label }}</option>
+    </select>
+</div>

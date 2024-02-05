@@ -13,6 +13,7 @@ export class NlfOrsEditorE5xReportinghistoryReportersDescriptionComponent implem
   @Input() language: any;
   @Output() languageChange: EventEmitter<any> = new EventEmitter(true);
   @Output() change: EventEmitter<boolean> = new EventEmitter(true);
+  @Input() languages: [];
   @Input() disabled: boolean = false;
   @Input() showLang: boolean = true;
   @Input() capitalize: boolean = false;

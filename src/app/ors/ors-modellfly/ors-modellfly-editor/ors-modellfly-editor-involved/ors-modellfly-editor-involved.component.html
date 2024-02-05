@@ -85,6 +85,7 @@
 
   <div class="modal-body">
 
+    <!-- Sjekkbokser
     <div class="row mb-3">
       <div class="col-xs-12 col-md-12">
         <div class="form-check">
@@ -101,17 +102,20 @@
         </div>
       </div>
     </div>
-    <!--Hopptype, år i sporten og antall hopp-->
+    -->
+
+
+    <!--Data -->
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-12">
         <div class="form-group">
-          <label for="whereAt">Hopptype</label>
-          <nlf-ors-editor-tag-string fc="true" allowAdd="true" preload="false" group="jump_types" activity="modellfly"
-            [(tagString)]="modalPerson.data.jump_type" [disabled]="disabled">
-          </nlf-ors-editor-tag-string>
+          <label>Rolle</label>
+          <nlf-ors-editor-role-in-observation [(role)]="modalPerson.data.role" activity="modellfly"
+            (change)="update($event)"></nlf-ors-editor-role-in-observation>
         </div>
       </div>
 
+      <!--
       <div class="col-md-6">
         <div class="form-group">
           <label for="activity">Aktivitet</label>
@@ -120,42 +124,60 @@
           </nlf-ors-editor-tag>
         </div>
       </div>
+       -->
     </div>
 
-    <!--Aktivitet, Flytype, utsprangshøyde -->
+
+    <!--Modell osv -->
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-6">
         <div class="form-group">
-          <label for="years_of_experience">År i sporten</label>
-          <input [disabled]="disabled" class="form-control" type="number" min="0" id="years_of_experience"
-            [(ngModel)]="modalPerson.data.years_of_experience">
+          <label>Modell benyttet</label>
+          <nlf-ors-modellfly-editor-rpas-type [(rpasType)]="modalPerson.data.rpas_type"
+            (change)="onChange($event)"></nlf-ors-modellfly-editor-rpas-type>
         </div>
       </div>
-      <div class="col-md-3">
+
+      <div class="col-md-6">
         <div class="form-group">
-          <label for="jups">Antall hopp</label>
-          <input [disabled]="disabled" class="form-control" type="number" min="0" id="jups"
-            [(ngModel)]="modalPerson.data.total_jumps">
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="form-group">
-          <label for="aircraft">Flytype</label>
-          <nlf-ors-editor-tag-string fc="true" preload="true" group="aircraft_types" activity="modellfly"
-            [(tagString)]="modalPerson.data.aircraft" [disabled]="disabled">
-          </nlf-ors-editor-tag-string>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="form-group">
-          <label for="altitude">Utsprangshøyde</label>
-          <input [disabled]="disabled" class="form-control" type="number" min="0" id="altitude"
-            [(ngModel)]="modalPerson.data.altitude">
+          <label for="activity">Type flygning</label>
+          <nlf-ors-modellfly-editor-rpas-flight-type [(rpasFlightType)]="modalPerson.data.rpas_flight_type"
+            (change)="onChange($event)"></nlf-ors-modellfly-editor-rpas-flight-type>
         </div>
       </div>
     </div>
 
-    <!-- Hovedskjerm, størrelse, erfaring -->
+    <!--Placeholders -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label>Datapunkt 1</label>
+          <nlf-ors-editor-tag fc="true" preload="true" group="test_1" activity="modellfly"
+            [(initialTags)]="modalPerson.data.test_1" [disabled]="disabled"></nlf-ors-editor-tag>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="activity">Datapunkt 2</label>
+          <nlf-ors-editor-tag fc="true" preload="true" group="test_2" activity="modellfly"
+            [(initialTags)]="modalPerson.data.test_2" [disabled]="disabled">
+          </nlf-ors-editor-tag>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Datapunkt 3</label>
+          <nlf-ors-editor-tag fc="true" preload="true" group="test_3" activity="modellfly"
+            [(initialTags)]="modalPerson.data.test_3" [disabled]="disabled"></nlf-ors-editor-tag>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hovedskjerm, størrelse, erfaring 
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
@@ -180,8 +202,8 @@
         </div>
       </div>
     </div>
-
-    <!-- Reserve, størrelse mk, pakkedato -->
+    -->
+    <!-- Reserve, størrelse mk, pakkedato 
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
@@ -202,8 +224,6 @@
     <div class="row">
       <div class="col-md-6">
         <label for="rigger">MK</label>
-        <!--<input class="form-control" type="text" id="rigger" [(ngModel)]="modalPerson.data.gear.rigger">-->
-        <!--<nlf-ors-editor-people id="rigger" [maxItems]="1" [who]="modalPerson.data.gear.rigger" [details]="false" path="involved.{{modalIndex}}.data.gear.rigger" [disabled]="disabled"></nlf-ors-editor-people>-->
         <nlf-ors-editor-tag-persons [disabled]="!observation.acl_user.w" [(persons)]="modalPerson.data.gear.rigger"
           [activity]="observation._model.type" (change)="onChange($event)"></nlf-ors-editor-tag-persons>
 
@@ -213,7 +233,6 @@
         <div class="form-group">
           <label for="riggerDate">Pakkedato</label>
           <div class="input-group">
-            <!--<nlf-ors-editor-date [disabled]="disabled" id="riggerDate" [(date)]="modalPerson.data.gear.rigger_date"></nlf-ors-editor-date>-->
             <input class="form-control" placeholder="yyyy-mm-dd" name="dp"
               [(ngModel)]="modalPerson.data.gear.riggerDate" ngbDatepicker #d="ngbDatepicker" [maxDate]="today">
             <button [disabled]="disabled" class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
@@ -223,7 +242,8 @@
         </div>
       </div>
     </div>
-    <!-- Seletøy, erfaring, nødåpner -->
+    -->
+    <!-- Seletøy, erfaring, nødåpner 
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
@@ -249,7 +269,7 @@
         </div>
       </div>
     </div>
-
+-->
     <!-- Annet -->
     <div class="row">
       <div class="col-md-12">
