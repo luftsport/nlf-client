@@ -6,64 +6,111 @@
   <!-- {{ involved | json }} -->
 
   <table class="table table-striped table-hover mt-2">
+    <thead></thead>
+    <tbody>
+      <tr *ngFor="let p of involved; let idx = index">
 
-    <tr *ngFor="let p of involved; let idx = index">
+        <td class="">
+          <fa-icon *ngIf="p.id>0" [icon]="faCheck" class="text-success me-2"
+            title="Hentet fra medlemssystemet"></fa-icon>
+          <fa-icon *ngIf="p.id<1" [icon]="faExclamation" class="text-danger me-2" title="Ukjent person"></fa-icon>
+          <strong>
+            <nlf-resolve-lungo-person [person_id]="p.id" [tmp_name]="p.tmp_name" [link]="false"
+              [avatar]="true"></nlf-resolve-lungo-person>
+          </strong>
 
-      <td class="">
-        <fa-icon *ngIf="p.id>0" [icon]="faCheck" class="text-success me-2" title="Hentet fra medlemssystemet"></fa-icon>
-        <fa-icon *ngIf="p.id<1" [icon]="faExclamation" class="text-danger me-2" title="Ukjent person"></fa-icon>
-        <strong>
-          <nlf-resolve-lungo-person [person_id]="p.id" [tmp_name]="p.tmp_name" [link]="false"
-            [avatar]="true"></nlf-resolve-lungo-person>
-        </strong>
 
-      </td>
+        </td>
+        <td>
+          <fa-icon title="Personskade" class="ml-3" *ngIf="p.data?.injury==='injury'" [icon]="faTruckMedical"></fa-icon>
+          <fa-icon title="Alvorlig skade med men eller død" class="ml-3 text-danger"
+            *ngIf="p.data?.injury==='serious_or_fatal'" [icon]="faHouseMedicalCircleExclamation"></fa-icon>
+        </td>
+
+        <td>
+          <ng-container *ngFor="let role of config.modellfly.observation.roles_in_observation">
+            <ng-container *ngIf="p?.data?.role==role.key">{{ role.label }}</ng-container>
+          </ng-container>
+          <button *ngIf="!p?.data?.role" type="button" class="btn btn-link btn-sm"
+            (click)="openPersonModal(involvedModal, idx)"><fa-icon [icon]="faPencil"></fa-icon> Legg til rolle</button>
+
+          <!--
+          <div class="form-group">
+            <label>Rolle</label>
+            <nlf-ors-editor-role-in-observation [(role)]="involved[idx].data.role" activity="modellfly"
+              (change)="onChange($event)"></nlf-ors-editor-role-in-observation>
+          </div> -->
+        </td>
+        <!-- FLAGG
       <td>
-
         <fa-icon *ngIf="!!p.ph" [icon]="faBan" title="Permanent Hoppforbud" [fixedWidth]="true"
           class="text-danger mx-1"></fa-icon>
         <fa-icon *ngIf="!!p.fu" [icon]="faExclamation" title="Farlig Ukontrollert" [fixedWidth]="true"
           class="text-warning mx-1"></fa-icon>
-
       </td>
-      <td>
-
-        <div>
-          <span *ngFor="let license of p?.data?.licenses" class="mx-1">
-            <nlf-resolve-lungo-license [license_id]="license.id"></nlf-resolve-lungo-license>
-            <!--{{license.type_name}}-->
+      -->
+        <!--
+        <td>
+          <span *ngIf="!!p?.data && 1==9" class="text-small">
+            <nlf-resolve-lungo-license *ngFor="let l of p.data?.licenses" [license_id]="l.id" link="false"
+              long="false"></nlf-resolve-lungo-license>
+            <nlf-resolve-lungo-function *ngFor="let fid of p.data?.functions" [function_id]="fid" show_org="true"
+              link="false" long="false"></nlf-resolve-lungo-function>
           </span>
-        </div>
-        <div>
-          <span *ngFor="let competence of p?.data?.competences" class="mx-1">
-            {{competence._code}}
-          </span>
-        </div>
-        <div>
-          <span *ngIf="!!p?.data?.years_of_experience" class="mx-1 badge bg-secondary">{{p.data.years_of_experience}}
-            år</span>
-          <span *ngIf="!!p?.data?.total_jumps" class="mx-1 badge bg-secondary">{{p.data.total_jumps}} hopp</span>
-          <span *ngIf="!!p?.data?.jump_type" class="mx-1 badge bg-secondary">{{p.data.jump_type}} hopp</span>
-          <span *ngIf="!!p?.data?.activity && p.data.activity.length>0"
-            class="mx-1 badge bg-secondary">{{p.data.activity | join: '/'}}</span>
-        </div>
-      </td>
-      <td>
-        <span *ngIf="!!p?.data && 1==9" class="text-small">
-          <nlf-resolve-lungo-license *ngFor="let l of p.data?.licenses" [license_id]="l.id" link="false"
-            long="false"></nlf-resolve-lungo-license>
-          <nlf-resolve-lungo-function *ngFor="let fid of p.data?.functions" [function_id]="fid" show_org="true"
-            link="false" long="false"></nlf-resolve-lungo-function>
-        </span>
-      </td>
-      <td class="text-end">
-        <button (click)="openPersonModal(involvedModal, idx)" type="button" class="btn btn-sm btn-warning"><fa-icon
-            [icon]="faEdit"></fa-icon>Edit</button>
-        <fa-icon *ngIf="!disabled" class="pointer ms-3" title="Slett person" (click)="onRemove(idx)"
-          [icon]="faTimes"></fa-icon>
-      </td>
-    </tr>
+        </td>
+      -->
+        <td>
 
+          <ng-container *ngFor="let rpas of config.modellfly.observation.rpas_types">
+            <span *ngIf="p?.data?.rpas_type==rpas.key" class="mr-2">{{ rpas.label }}</span>
+          </ng-container>
+          <button *ngIf="!p?.data?.rpas_type" type="button" class="btn btn-link btn-sm" (click)="openPersonModal(involvedModal, idx)">
+            <fa-icon [icon]="faPencil"></fa-icon> Legg til RPAS
+          </button>
+          <!--
+          <div class="form-group">
+            <label>Modell benyttet</label>
+            <nlf-ors-modellfly-editor-rpas-type [(rpasType)]="involved[idx].data.rpas_type"
+              (change)="onChange($event)"></nlf-ors-modellfly-editor-rpas-type>
+          </div>-->
+
+
+          <ng-container *ngFor="let rpas_flight_type of config.modellfly.observation.rpas_flight_type">
+            <ng-container *ngIf="p?.data?.rpas_flight_type==rpas_flight_type.key">
+              <span class="badge bg-info text-dark ml-2 p-1">{{ rpas_flight_type.label }}</span>
+            </ng-container>
+          </ng-container>
+          <!--
+          <div class="form-group">
+            <label for="activity">Type flygning</label>
+            <nlf-ors-modellfly-editor-rpas-flight-type [(rpasFlightType)]="involved[idx].data.rpas_flight_type"
+              (change)="onChange($event)"></nlf-ors-modellfly-editor-rpas-flight-type>
+          </div>-->
+        </td>
+
+        <td>
+          <div>
+            <span *ngFor="let license of p?.data?.licenses" class="mx-1">
+              <nlf-resolve-lungo-license [license_id]="license.id"></nlf-resolve-lungo-license>
+              <!--{{license.type_name}}-->
+            </span>
+          </div>
+          <div>
+            <span *ngFor="let competence of p?.data?.competences" class="mx-1">
+              {{competence._code}}
+            </span>
+          </div>
+          <div *ngIf="!!p?.tmp_name">(ikke medlem)</div>
+        </td>
+
+        <td class="text-end">
+          <button (click)="openPersonModal(involvedModal, idx)" type="button" class="btn btn-sm btn-warning"><fa-icon
+              [icon]="faEdit"></fa-icon>Edit</button>
+          <fa-icon *ngIf="!disabled" class="pointer ms-3" title="Slett person" (click)="onRemove(idx)"
+            [icon]="faTimes"></fa-icon>
+        </td>
+      </tr>
+    </tbody>
   </table>
 
   <!--<fa-icon (click)="openPersonModal(involvedModal, idx)" [icon]="id-card-o" [fixedWidth]="true"></fa-icon>-->
@@ -106,12 +153,12 @@
 
 
     <!--Data -->
-    <div class="row">
+    <div class="row my-3">
       <div class="col-md-12">
         <div class="form-group">
           <label>Rolle</label>
           <nlf-ors-editor-role-in-observation [(role)]="modalPerson.data.role" activity="modellfly"
-            (change)="update($event)"></nlf-ors-editor-role-in-observation>
+            (change)="onChange($event)"></nlf-ors-editor-role-in-observation>
         </div>
       </div>
 
@@ -129,7 +176,7 @@
 
 
     <!--Modell osv -->
-    <div class="row">
+    <div class="row my-3">
       <div class="col-md-6">
         <div class="form-group">
           <label>Modell benyttet</label>
@@ -148,6 +195,8 @@
     </div>
 
     <!--Placeholders -->
+
+    <!--
     <div class="row">
       <div class="col-md-12">
         <div class="form-group">
@@ -176,6 +225,7 @@
         </div>
       </div>
     </div>
+  -->
 
     <!-- Hovedskjerm, størrelse, erfaring 
     <div class="row">
@@ -270,7 +320,40 @@
       </div>
     </div>
 -->
-    <!-- Annet -->
+
+
+    <!-- Skade og død! -->
+    <div class="row my-3">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="other">Personskade</label>
+
+          <div class="form-check">
+            <input class="form-check-input" [(ngModel)]="modalPerson.data.injury" value="none" type="radio"
+              name="flexRadioDefault" id="flexRadioDefault1" checked>
+            <label class="form-check-label" for="flexRadioDefault1">
+              Ingen personskade
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" [(ngModel)]="modalPerson.data.injury" value="injury" type="radio"
+              name="flexRadioDefault" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">
+              Personskade
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" [(ngModel)]="modalPerson.data.injury" value="serious_or_fatal" type="radio"
+              name="flexRadioDefault" id="flexRadioDefault2">
+            <label class="form-check-label" for="flexRadioDefault2">
+              Varige men eller død
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Annet 
     <div class="row">
       <div class="col-md-12">
         <div class="form-group">
@@ -280,6 +363,8 @@
         </div>
       </div>
     </div>
+    -->
+
     <div *ngIf="devDebug" class="row">
       Person: {{ modalPerson | json }}
     </div>

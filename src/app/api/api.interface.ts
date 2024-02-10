@@ -317,6 +317,7 @@ export interface ApiObservationsItem extends ApiEveBaseItem {
   // E5X
   e5x?: any;
   occurrence?: any;
+  eccairs2?: any;
 
 }
 
@@ -1074,7 +1075,7 @@ export interface NlfConfigOrgItem {
       rit_version?: string,
       //submission?: boolean
     },
-    rpas_type?: string,
+    rpas_types?: string,
     rpas_flight_type?: string,
     role_in_observation?: string,
     categories?: Array<string>,

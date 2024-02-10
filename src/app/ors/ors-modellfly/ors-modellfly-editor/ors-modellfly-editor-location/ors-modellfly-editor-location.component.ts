@@ -217,6 +217,18 @@ export class NlfOrsModellflyEditorLocationComponent implements OnInit, AfterView
     this.marker.on('dragend', (event) => {
       this.onDragEnd(event, options);
     });
+
+    this.map.on('click', (event) => {
+      console.log(event);
+      this.marker.remove();
+      this.marker = new Marker(event.latlng, options);
+      this.marker.on('dragend', (event) => {
+        this.onDragEnd(event, options);
+      });
+      this.marker.addTo(this.map);
+
+    });
+
     this.marker.addTo(this.map);
     //this.map.options.layers[1](marker(this.org.locations[0].geo.coordinates[0], this.org.locations[0].geo.coordinates[1]));
   }
@@ -237,6 +249,7 @@ export class NlfOrsModellflyEditorLocationComponent implements OnInit, AfterView
     });
     this.marker.addTo(this.map);
   }
+
 
 
 }

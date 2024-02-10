@@ -3,7 +3,7 @@ import { ApiOptionsInterface, NlfConfigItem } from 'app/api/api.interface';
 import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
 import { ApiE5XAttributesService } from 'app/api/api-e5x-attributes.service';
 import { e5xParseLabel } from 'app/interfaces/functions';
-import {  NlfConfigService } from 'app/nlf-config.service';
+import { NlfConfigService } from 'app/nlf-config.service';
 // import { forkJoin } from 'rxjs';
 
 @Component({

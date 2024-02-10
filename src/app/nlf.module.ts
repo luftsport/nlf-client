@@ -287,8 +287,8 @@ import { NlfOrsSportsflyReportSummaryComponent } from 'app/ors/ors-sportsfly/ors
 
 
 // OBSREG EDITOR
-import { NlfOrsEditorTagComponent } from 'app/ors/ors-editor/ors-editor-tag/ors-editor-tag.component';
-import { NlfOrsEditorTagStringComponent } from 'app/ors/ors-editor/ors-editor-tag-string/ors-editor-tag-string.component';
+// ShARED import { NlfOrsEditorTagComponent } from 'app/ors/ors-editor/ors-editor-tag/ors-editor-tag.component';
+// SHARED import { NlfOrsEditorTagStringComponent } from 'app/ors/ors-editor/ors-editor-tag-string/ors-editor-tag-string.component';
 import { NlfOrsEditorTagPersonComponent } from 'app/ors/ors-editor/ors-editor-tag-person/ors-editor-tag-person.component';
 import { NlfOrsEditorTagPersonsComponent } from 'app/ors/ors-editor/ors-editor-tag-persons/ors-editor-tag-persons.component';
 
@@ -616,8 +616,8 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfOrsEditorE5xRiskComponent,
 
     // OBSREG TAG
-    NlfOrsEditorTagComponent,
-    NlfOrsEditorTagStringComponent,
+    //NlfOrsEditorTagComponent,
+    //NlfOrsEditorTagStringComponent,
     NlfOrsEditorTagPersonComponent,
     NlfOrsEditorTagPersonsComponent,
 

@@ -1,6 +1,6 @@
-import { ApiObservationsItem, ApiUserDataSubjectItem } from 'app/api/api.interface';
+import { ApiObservationsItem, ApiOptionsInterface, ApiUserDataSubjectItem } from 'app/api/api.interface';
 import { ApiObservationsService } from 'app/api/api-observations.service';
-import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { NlfAlertService } from 'app/services/alert/alert.service';
 import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
 import { NlfComponent } from 'app/nlf.component';
@@ -19,7 +19,7 @@ import { ComponentCanDeactivate } from 'app/pending-changes.guard';
 import { HostListener } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { forkJoin } from 'rxjs';
-import { faSave, faQuestion, faInfoCircle, faHistory, faFile, faEye, faExchange, faPaperPlane, faReply, faRepeat, faRandom, faTimes, faCheck, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faQuestion, faInfoCircle, faHistory, faUserEdit, faFile, faEye, faExchange, faPaperPlane, faReply, faRepeat, faRandom, faTimes, faCheck, faLock } from '@fortawesome/free-solid-svg-icons';
 import 'rxjs/add/operator/takeWhile';
 import { NlfEventQueueService, AppEventType } from 'app/nlf-event-queue.service';
 import { NlfSocketService } from 'app/services/socket/socket.service';
@@ -28,7 +28,15 @@ import * as _ from 'lodash';
 import { isEqual, cloneDeep, mergeWith } from 'lodash'
 import { debounce } from 'ts-debounce';
 import { NlfOrsEditorInvolvedService, NlfOrsEditorInvolvedInterface } from 'app/ors/ors-editor/ors-editor-involved.service';
+import { pad, cleanObject } from 'app/interfaces/functions';
+import { ApiGeoAdminService } from 'app/api/api-geo-admin.service';
+import {
+  E5XClass,
+  E5XAircraftClass,
+  E5XReportingHistoryClass,
+  E5XRiskAssessmentClass,
 
+} from 'app/interfaces/e5x.interface';
 
 @Component({
   selector: 'nlf-ors-modellfly-editor',
@@ -51,6 +59,7 @@ export class NlfOrsModellflyEditorComponent implements OnInit, OnDestroy, Compon
   faTimes = faTimes;
   faCheck = faCheck;
   faLock = faLock;
+  faUserEdit = faUserEdit;
 
   error;
   id: number | string;
@@ -63,6 +72,9 @@ export class NlfOrsModellflyEditorComponent implements OnInit, OnDestroy, Compon
   preview = {};
   modalRef;
   workflowRef;
+  eccairsModalOpen = false;
+
+  eccairs2: any;
 
   // Narrative/ReportersDescription et al
   allowedLanguages = [16, 43, 55, 13, 54, 23, 20, 31];
@@ -73,8 +85,10 @@ export class NlfOrsModellflyEditorComponent implements OnInit, OnDestroy, Compon
 
   a = [];
   b = 'Stringish';
-  
+
   debouncedUpdate = debounce(this.changed, 900);
+
+  @ViewChild('modalEccairs', { static: false }) modalEccairsTemplate: any;
 
 
   shadow;
@@ -98,6 +112,7 @@ export class NlfOrsModellflyEditorComponent implements OnInit, OnDestroy, Compon
     private eventQueue: NlfEventQueueService,
     private socketService: NlfSocketService,
     private involvedService: NlfOrsEditorInvolvedService,
+    private geoAdminService: ApiGeoAdminService,
 
     // private differs: KeyValueDiffers
   ) {
@@ -119,14 +134,14 @@ export class NlfOrsModellflyEditorComponent implements OnInit, OnDestroy, Compon
             }
           }
 
-          
+
           if (!!observation) {
             this.observation = observation;
             if (!this.involved) {
               this.involvedService.add(observation.reporter, 'Meg selv');
               this.involved = [observation.reporter];
             }
-  
+
             // Check if reset
             if (this.observation.id === 0) {
               this.dataReady = false;
@@ -154,7 +169,7 @@ export class NlfOrsModellflyEditorComponent implements OnInit, OnDestroy, Compon
     ]);
 
     this.socketService.socket.on('action', (message) => {
-      
+
       switch (message.action) {
 
         case 'obsreg_reload': {
@@ -188,7 +203,12 @@ export class NlfOrsModellflyEditorComponent implements OnInit, OnDestroy, Compon
         return false; // Prevent bubbling
       }))
     );
-
+    this.hotkeys.push(
+      this.hotkeysService.add(new Hotkey(['command+e', 'ctrl+e'], (event: KeyboardEvent, combo: string): boolean => {
+        this.openEccairs(this.modalEccairsTemplate);
+        return false; // Prevent bubbling
+      }))
+    );
 
   }
 
@@ -448,6 +468,129 @@ export class NlfOrsModellflyEditorComponent implements OnInit, OnDestroy, Compon
     this.modalRef = this.modalService.open(template, { size: 'lg' });
   }
 
+  openEccairs(template) {
+    this.eccairsModalOpen = true;
+
+    if (!this.observation.hasOwnProperty('eccairs2') || _.isEmpty(this.observation?.eccairs2)) { // Create once!
+      this.observation.eccairs2 = new E5XClass().occurrence;
+      this.observation.eccairs2.attributes.responsibleEntity.value = 2133;
+
+      this.observation.eccairs2.entities.reportingHistory[0] = new E5XReportingHistoryClass().reportingHistory;
+      this.observation.eccairs2.entities.reportingHistory[0].attributes.reportIdentification.value = 'nlf_' + this.observation._model.type + '_' + + this.observation.id;
+      this.observation.eccairs2.entities.reportingHistory[0].attributes.reportingFormType.value = 9823;
+
+      this.observation.eccairs2.entities.aircraft[0] = new E5XAircraftClass().aircraft;
+      this.observation.eccairs2.entities.aircraft[0].attributes.annex2ACType.value = [9]; // 
+      this.observation.eccairs2.entities.aircraft[0].attributes.aircraftCategory.value = 6; // RPAS
+      this.observation.eccairs2.entities.aircraft[0].attributes.massGroup.value = 1; // 0-2250kg
+      this.observation.eccairs2.entities.aircraft[0].attributes.operator.value = 10003891; // 
+
+
+    } else {
+      console.log('SPREAD');
+
+      this.observation.eccairs2 = { ...new E5XClass().occurrence, ...this.observation.eccairs2 };
+      this.observation.eccairs2.attributes = { ...new E5XClass().occurrence.attributes, ...this.observation.eccairs2?.attributes };
+      this.observation.eccairs2.attributes.responsibleEntity.value = 2133;
+      this.observation.eccairs2.entities = { ...new E5XClass().occurrence.entities, ...this.observation.eccairs2?.entities };
+      this.observation.eccairs2.entities.reportingHistory[0] = { ...new E5XReportingHistoryClass().reportingHistory, ...this.observation.eccairs2.entities.reportingHistory[0] };
+      this.observation.eccairs2.entities.reportingHistory[0].attributes = { ...new E5XReportingHistoryClass().reportingHistory.attributes, ...this.observation.eccairs2.entities.reportingHistory[0].attributes };
+      this.observation.eccairs2.entities.reportingHistory[0].entities = { ...new E5XReportingHistoryClass().reportingHistory, ...this.observation.eccairs2.entities.reportingHistory[0].entities };
+      this.observation.eccairs2.entities.riskAssessment = { ...new E5XRiskAssessmentClass().riskAssessment, ...this.observation.eccairs2.entities.riskAssessment };
+
+      console.log(this.observation.eccairs2.entities.reportingHistory[0]);
+      this.observation.eccairs2.entities.aircraft[0] = { ...new E5XAircraftClass().aircraft, ...this.observation.eccairs2.entities.aircraft[0] };
+      this.observation.eccairs2.entities.aircraft[0].attributes = { ...new E5XAircraftClass().aircraft.attributes, ...this.observation.eccairs2.entities.aircraft[0].attributes };
+      this.observation.eccairs2.entities.aircraft[0].entities = { ...new E5XAircraftClass().aircraft.entities, ...this.observation.eccairs2.entities.aircraft[0].entities };
+      this.observation.eccairs2.entities.reportingHistory[0].attributes.reportIdentification.value = 'nlf_' + this.observation._model.type + '_' + + this.observation.id;
+
+    }
+    console.log('After spread', this.observation.eccairs2);
+    // Always update!
+
+    this.observation.eccairs2.attributes.headline = this.observation?.tags.join(' ') || this.observation?.title || '';
+
+    // Times this.currentWhen.toISOString().substr(0,10)
+    let t = new Date(this.observation.when);
+    this.observation.eccairs2.attributes.utcDate.value = [t.getUTCFullYear(), pad(t.getUTCMonth() + 1), pad(t.getUTCDate())].join('-');
+    this.observation.eccairs2.attributes.utcTime.value = [pad(t.getUTCHours()), pad(t.getUTCMinutes()), pad(t.getUTCSeconds())].join(':');
+    this.observation.eccairs2.attributes.localDate.value = [t.getFullYear(), pad(t.getMonth() + 1), pad(t.getDate())].join('-');
+    this.observation.eccairs2.attributes.localTime.value = [pad(t.getHours()), pad(t.getMinutes()), pad(t.getSeconds())].join(':');
+
+    this.observation.eccairs2.attributes.longitudeOfOcc.value = this.observation.location.geo.coordinates[1] || undefined;
+    this.observation.eccairs2.attributes.latitudeOfOcc.value = this.observation.location.geo.coordinates[0] || undefined;
+
+    this.observation.eccairs2.entities.reportingHistory[0].attributes.reporterSDescription = this.observation.description;
+
+
+
+    //state of occ
+    try {
+      this.observation.eccairs2.attributes.locationName.value = this.observation.location.name || '';
+      const options: ApiOptionsInterface = {
+        query: {
+          where: {
+            type: 'county',
+            geometry: {
+              $geoIntersects: {
+                $geometry: {
+                  type: "Point",
+                  coordinates: [
+                    this.observation.eccairs2.attributes.longitudeOfOcc.value,
+                    this.observation.eccairs2.attributes.latitudeOfOcc.value
+                  ]
+                }
+              }
+            }
+          },
+          projection: { e5x: 1 }
+        }
+      }
+      this.geoAdminService.get(options).subscribe(
+        data => {
+          if (data._items.length == 1) {
+            console.log('UPDATE AREA', data._items[0].e5x);
+            this.observation.eccairs2.attributes.stateAreaOfOcc.value = data._items[0].e5x;
+          } else {
+            this.observation.eccairs2.attributes.stateAreaOfOcc.value = '';
+          }
+        },
+        err => {
+          this.observation.eccairs2.attributes.stateAreaOfOcc.value = '';
+        },
+        () => { }
+      );
+    }
+    catch { }
+
+
+
+    if (!!this.observation.actions) {
+      let lokale = '';
+      let sentrale = '';
+      if (this.observation.actions.local.length > 0) {
+        '\nLokale:\n' + this.observation.actions.local.join('\n');
+      }
+      if (this.observation.actions.central.length > 0) {
+        '\nSentrale:\n' + this.observation.actions.central.join('\n');
+      }
+      //'Lokale:\n' + this.observation.actions.local.join('\n') + '\n\nSentrale\n' + this.observation.actions.central.join('\n');
+
+      this.observation.eccairs2.entities.reportingHistory[0].attributes.correctiveActions.plainText = lokale || 'Ingen' + sentrale || 'Ingen';
+
+      //{...object1, ...object2} -> 
+
+    }
+
+    this.modalRef = this.modalService.open(template, { fullscreen: true });
+  }
+
+  closeEccairs2() {
+    this.eccairsModalOpen = false;
+    this.modalRef.close();
+    this.observation.eccairs2 = this.cleanObject(this.observation.eccairs2);
+    this.subject.update(this.observation);
+  }
 
   openDebugModal(template: TemplateRef<any>) {
     this.openModal(template);
@@ -472,5 +615,63 @@ export class NlfOrsModellflyEditorComponent implements OnInit, OnDestroy, Compon
 
     return this.sanitizer.bypassSecurityTrustUrl("data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.observation, null, 2)));
   }
+
+  cleanObject(obj) {
+    let that = this;
+    Object.keys(obj).forEach(function (key) {
+      // Get this value and its type
+      let value = obj[key];
+      const type = typeof value;
+      if (type === "object") {
+
+        if (value.hasOwnProperty('unit')) {
+          if (value.hasOwnProperty('value')) {
+            if (value['value'] === 'NaN' || value['value'] === '' || typeof value['value'] === 'undefined') {
+              delete obj[key];
+            }
+
+          } else if (!value.hasOwnProperty('value')) {
+            delete obj[key];
+          }
+        } else if (value.hasOwnProperty('value')) {
+          if (value['value'] === 'NaN' || value['value'] === '' || typeof value['value'] === 'undefined') {
+            delete obj[key];
+          }
+        } else if (value.hasOwnProperty('plainText')) {
+          if (value['plainText'] === 'NaN' || value['plainText'] === '' || typeof value['plainText'] === 'undefined') {
+            delete obj[key];
+          }
+        } else if (!value.hasOwnProperty('value') && !value.hasOwnProperty('plainText') && !value.hasOwnProperty('additionalText')) {
+          if (value.hasOwnProperty('additionalTextEncoding') || value.hasOwnProperty('textEncoding')) {
+            delete obj[key];
+          } else {
+            that.cleanObject(value);
+          }
+        } else {
+          // Recurse...
+          that.cleanObject(value);
+        }
+
+        // ...and remove if now "empty" (NOTE: insert your definition of "empty" here)
+        if (!Object.keys(value).length) {
+          delete obj[key]
+        }
+      }
+      else if (type === "undefined") {
+        // Undefined, remove it
+        delete obj[key];
+      }
+      else if (["string", "number", "bigint", "boolean", "symbol", "function"].indexOf(type) < 0 && obj[key].length === 0) {
+        console.log('array');
+        delete obj[key];
+      }
+    });
+
+    return obj;
+  }
+
+
+
+
 
 }

@@ -10,8 +10,8 @@
                 {{ row.when | amTimeAgo }}
             </td>
             <td class="ngx-easy-table-small">
-                <a *ngIf="row.workflow.state==='closed'" [routerLink]="['/ors', row._model.type, 'report', row.id]">{{ row.tags | nlfOrsTags: '/':23:'..' }}</a>
-                <a *ngIf="row.workflow.state!=='closed'" [routerLink]="['/ors', row._model.type, 'edit', row.id]">{{ row.tags | nlfOrsTags: '/':23:'..' }}</a>
+                <a *ngIf="row.workflow.state==='closed'" [routerLink]="['/ors', row._model.type, 'report', row.id]">{{ row.title || (row.tags | nlfOrsTags: '/':23:'..') }}</a>
+                <a *ngIf="row.workflow.state!=='closed'" [routerLink]="['/ors', row._model.type, 'edit', row.id]">{{ row.title || (row.tags | nlfOrsTags: '/':23:'..') }}</a>
             </td>
             <td class="ngx-easy-table-small">
                 <ng-container *ngIf="['closed', 'withdrawn'].indexOf(row.workflow.state)<0">

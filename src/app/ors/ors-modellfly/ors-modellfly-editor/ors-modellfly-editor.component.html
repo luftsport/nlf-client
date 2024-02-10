@@ -10,8 +10,15 @@
       <!-- {{ data.tags | nlfOrsTags: ' / '}} -->
       <span class="overflow-hidden">
         <a [routerLink]="['/ors', 'modellfly']">OBSREG</a>#{{ observation.id }}
-        <nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type" link="true"
+
+        <!-- TITLE OR TAGS -->
+        <ng-container *ngIf="(!observation.tags||observation.tags.length==0)&&!!observation.title">
+          {{observation.title}}
+        </ng-container>
+        <nlf-resolve-observation-tags *ngIf="(!!observation.tags||observation.tags.length>0)&&!observation.title"
+          [tags]="observation.tags" [activity]="observation._model.type" link="true"
           seperator="/"></nlf-resolve-observation-tags>&nbsp;
+
         <span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body"
           *ngIf="!!observation.rating" class="badge bg-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{
           observation.rating | nlfOrsRatingCalc }}</span>
@@ -80,26 +87,6 @@
   <div class="container">
 
     <!-- TITLE/TAGS-->
-    <div class="row my-3">
-      <div class="col-sm-12 col-md-12">
-
-        <!-- WELCOME FIRST TIME -->
-        <nlf-ors-editor-first *ngIf="observation.acl_user.w"></nlf-ors-editor-first>
-
-        <div class="nlf-ors-toolbar">
-          Tittel <nlf-help class="float-end" key="ors-editor-modellfly-title"></nlf-help>
-        </div>
-        <nlf-ors-editor-tag [disabled]="!observation.acl_user.w" limit="15" preload="true" details="true"
-          group="observation" [activity]="observation._model.type" [(initialTags)]="observation.tags"
-          (change)="update($event)"></nlf-ors-editor-tag>
-        <!--<nlf-ors-editor-title></nlf-ors-editor-title>-->
-        <!--<input class="form-control" type="text" (keyup)="debouncedUpdate()" [(ngModel)]="observation.title" />-->
-        <div *ngIf="!!devDebug">
-          <code>{{ observation.tags | json}} </code>
-        </div>
-      </div>
-    </div>
-
     <div class="row my-3">
       <div class="col-sm-12 col-md-12">
 
@@ -246,8 +233,8 @@
       </div>
       <div class="col-xs-12 col-md-12">
         <!--
-        <nlf-ors-editor-tag-persons [disabled]="!observation.acl_user.w" [persons]="observation.involved" [activity]="observation._model.type"></nlf-ors-editor-tag-persons>
-        <nlf-ors-editor-people [disabled]="!observation.acl_user.w" [who]="observation.involved" path="involved"></nlf-ors-editor-people>-->
+        <nlf-ors-editor-tag-persons  [persons]="observation.involved" [activity]="observation._model.type"></nlf-ors-editor-tag-persons>
+        <nlf-ors-editor-people  [who]="observation.involved" path="involved"></nlf-ors-editor-people>-->
 
         <nlf-ors-modellfly-editor-involved></nlf-ors-modellfly-editor-involved>
       </div>
@@ -365,6 +352,15 @@
         <p>
           <nlf-ors-editor-ask-text></nlf-ors-editor-ask-text>
         </p>
+        <div *ngIf="observation.workflow.state=='draft'" class="form-group row">
+          <label class="col-sm-4 col-form-label">Min rolle i observasjonen</label>
+          <div class="col-sm-8">
+
+            <!-- if not draft and not set - set it to "ingen rolle i observasjonen" as default -->
+            <nlf-ors-editor-role-in-observation [(role)]="observation.reporter_role" activity="modellfly"
+              (change)="onChange($event, true);"></nlf-ors-editor-role-in-observation>
+          </div>
+        </div>
       </div>
     </div>
     <!-- //VURDERINGER -->
@@ -501,6 +497,13 @@
               <fa-icon [icon]="faRepeat"></fa-icon> Gjenåpne
             </button>
           </ng-container>
+
+          <button *ngIf="observation.workflow.state==='pending_review_obsreg'" type="button"
+            class="btn btn-warning mx-3" (click)="openEccairs(modalEccairs)">
+            <fa-icon [icon]="faUserEdit"></fa-icon> Eccairs
+          </button>
+
+
           <ng-container *ngIf="['withdrawn','draft'].indexOf(observation.workflow.state)<0">
             <button class="btn btn-primary me-2" (click)="openWorkflow()" title="Behandle" text="Behandle ">
               <fa-icon [icon]="faRandom"></fa-icon> Arbeidsflyt
@@ -597,7 +600,7 @@
     <pre>
     {{ getDiff() | json }}
     </pre>
-    {{ this.shadow.when }} || {{ this.observation.when }}
+    {{ shadow.when }} || {{ observation.when }}
   </div>
 
   <div class="modal-footer">
@@ -607,3 +610,204 @@
 
   </div>
 </ng-template>
+
+<!-- MODAL ECCAIRS2 -->
+<ng-template #modalEccairs>
+  <div class="modal-header">
+    <h4 class="modal-title">
+      #{{ observation.id }} {{ observation?.tags.join(' ') || observation?.title || '(ingen tittel)' }} </h4>
+    <span class="float-end h4"><span class="badge bg-success">Eccairs2 (E5X)</span>
+      <button type="button" class="close" aria-label="Close" (click)="modalRef.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </span>
+  </div>
+  <div class="modal-body">
+    <ng-container *ngIf="eccairsModalOpen" class="px-3">
+
+      <!-- HEADER ROW -->
+      <div class="row">
+        <div class="col-md-4">
+          <!--HC Responsible entity -->
+          <nlf-ors-editor-tag-e5x-render [showLabel]="true" classes="badge bg-primary"
+            [items]="observation.eccairs2.attributes.responsibleEntity.value" path="E5X.Occurrence.ResponsibleEntity">
+          </nlf-ors-editor-tag-e5x-render>
+        </div>
+        <div class="col-md-4">
+          <!--HC Report identification -->
+          <nlf-ors-editor-tag-e5x-render classes="badge bg-secondary" [showLabel]="true"
+            [items]="observation.eccairs2.entities.reportingHistory[0].attributes.reportIdentification.value"
+            path="E5X.Occurrence.ReportIdentification">
+          </nlf-ors-editor-tag-e5x-render>
+        </div>
+        <div class="col-md-4">
+          <!-- UTC date occurrence -->
+          <nlf-ors-editor-tag-e5x-render classes="badge bg-secondary" [showLabel]="true"
+            [items]="observation.eccairs2.attributes.utcDate.value" path="E5X.Occurrence.UtcDate">
+          </nlf-ors-editor-tag-e5x-render>
+          <nlf-ors-editor-tag-e5x-render classes="badge bg-secondary" [showLabel]="true"
+            [items]="observation.eccairs2.attributes.utcTime.value" path="E5X.Occurrence.UtcTime">
+          </nlf-ors-editor-tag-e5x-render>
+        </div>
+      </div>
+      <!-- Headline -->
+
+      <!-- REPORT STATUS -->
+      <div class="row my-3">
+        <!-- Report status (former Occurrence status) -->
+        <nlf-ors-editor-tag-e5x
+          [(items)]="observation.eccairs2.entities.reportingHistory[0].attributes.reportStatus.value"
+          path="E5X.Occurrence.ReportingHistory.ReportStatus" [allowed]="[2, 3]" id="ReportStatus">
+        </nlf-ors-editor-tag-e5x>
+      </div>
+
+      <!-- Aircraft -->
+      <!--<nlf-ors-editor-tag-e5x [(items)]="observation.eccairs2.entities.aircraft[0].attributes.manufacturerModel.value"
+          path="E5X.Occurrence.Aircraft.ManufacturerModel" id="ManufacturerModel"></nlf-ors-editor-tag-e5x>-->
+      <div class="row my-3">
+
+        <div class="col-md-4">
+          <nlf-ors-editor-tag-e5x [(items)]="observation.eccairs2.entities.aircraft[0].attributes.propulsionType.value"
+            path="E5X.Occurrence.Aircraft.PropulsionType" id="PropulsionType"></nlf-ors-editor-tag-e5x>
+        </div>
+
+        <div class="col-md-4">
+          <nlf-ors-editor-tag-e5x
+            [(items)]="observation.eccairs2.entities.aircraft[0].attributes.aircraftCategory.value"
+            path="E5X.Occurrence.Aircraft.AircraftCategory" id="AircraftCategory"></nlf-ors-editor-tag-e5x>
+        </div>
+        <div class="col-md-4">
+          <nlf-ors-editor-tag-e5x [allowed]="[9,10,16]"
+            [(items)]="observation.eccairs2.entities.aircraft[0].attributes.annex2ACType.value"
+            path="E5X.Occurrence.Aircraft.Annex2ACType" id="Annex2ACType"></nlf-ors-editor-tag-e5x>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <nlf-ors-editor-tag-e5x [(items)]="observation.eccairs2.entities.aircraft[0].attributes.operator.value"
+            path="E5X.Occurrence.Aircraft.Operator" id="Operator"></nlf-ors-editor-tag-e5x>
+        </div>
+        <div class="col-md-4">
+          <nlf-ors-editor-tag-e5x [(items)]="observation.eccairs2.entities.aircraft[0].attributes.massGroup.value"
+            path="E5X.Occurrence.Aircraft.MassGroup" id="MassGroup"></nlf-ors-editor-tag-e5x>
+        </div>
+      </div>
+
+      <!-- State/Area of occurrence -->
+      <!-- Location name -->
+      <div class="row my-3">
+        <div class="col-md-8">
+          <nlf-ors-editor-tag-e5x [showLabel]="false" [(items)]="observation.eccairs2.attributes.locationName.value"
+            path="E5X.Occurrence.LocationName" id="locationName"></nlf-ors-editor-tag-e5x>
+        </div>
+        <div class="col-md-2">
+          <nlf-ors-editor-tag-e5x-render classes="badge bg-secondary" [showLabel]="true"
+            [items]="observation.eccairs2.attributes.longitudeOfOcc.value" path="E5X.Occurrence.LatitudeOfOcc">
+          </nlf-ors-editor-tag-e5x-render>
+        </div>
+        <div class="col-md-2">
+          <nlf-ors-editor-tag-e5x-render classes="badge bg-secondary" [showLabel]="true"
+            [items]="observation.eccairs2.attributes.latitudeOfOcc.value" path="E5X.Occurrence.LongitudeOfOcc">
+          </nlf-ors-editor-tag-e5x-render>
+        </div>
+      </div>
+
+      <div class="row my-3">
+        <div class="col-md-12">
+          <nlf-ors-editor-tag-e5x [showLabel]="false" [disabled]="1==2&&!observation.acl_user.w"
+            [(items)]="observation.eccairs2.attributes.stateAreaOfOcc.value" path="E5X.Occurrence.StateAreaOfOcc"
+            id="stateAreaOfOcc"></nlf-ors-editor-tag-e5x>
+        </div>
+      </div>
+
+      <!-- Occurrence class -->
+      <!-- Occurrence category -->
+      <div class="row my-3">
+        <div class="nlf-ors-toolbar">
+          Klassifiser hendelsen
+          <nlf-help class="float-end" key="ors-editor-e5x-classification"></nlf-help>
+        </div>
+
+        <div class="p-3 bg-warning col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <nlf-ors-editor-tag-e5x [(items)]="observation.eccairs2.attributes.injuryLevel.value"
+                path="E5X.Occurrence.InjuryLevel" id="injuryLevel"></nlf-ors-editor-tag-e5x>
+            </div>
+            <div class="col-md-2">
+              <label>Ytterligere info</label>
+              <nlf-ors-editor-e5x-injuries [(attr)]="observation.eccairs2.attributes"></nlf-ors-editor-e5x-injuries>
+            </div>
+            <div class="col-md-4">
+              <nlf-ors-editor-tag-e5x [(items)]="observation.eccairs2.attributes.highestDamage.value"
+                path="E5X.Occurrence.HighestDamage" id="highestDamage"></nlf-ors-editor-tag-e5x>
+            </div>
+            <div class="col-md-2">
+              <label>Ytterligere info</label>
+              <nlf-ors-editor-e5x-damage [(attr)]="observation.eccairs2.attributes"></nlf-ors-editor-e5x-damage>
+            </div>
+
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <nlf-ors-editor-tag-e5x [(items)]="observation.eccairs2.attributes.occurrenceClass.value"
+                path="E5X.Occurrence.OccurrenceClass" id="OccurrenceClass"></nlf-ors-editor-tag-e5x>
+            </div>
+
+            <div class="col-md-6">
+              <nlf-ors-editor-tag-e5x [(items)]="observation.eccairs2.attributes.detectionPhase.value"
+                path="E5X.Occurrence.DetectionPhase" id="DetectionPhase">
+              </nlf-ors-editor-tag-e5x>
+            </div>
+
+            <div class="col-md-12 mt-3">
+              <nlf-ors-editor-tag-e5x [(items)]="observation.eccairs2.attributes.occurrenceCategory.value"
+                path="E5X.Occurrence.OccurrenceCategory" id="OccurrenceCategory">
+              </nlf-ors-editor-tag-e5x>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Narrative lang + text-->
+
+      <!-- event type > legg til -->
+      <div class="row my-3">
+        <nlf-ors-editor-e5x-events [(events)]="observation.eccairs2.entities.events"></nlf-ors-editor-e5x-events>
+      </div>
+
+      <!-- REPORTING HISTORY -->
+      <div class="row my-3">
+        <nlf-ors-editor-e5x-reportinghistory
+          [(reportingHistory)]="observation.eccairs2.entities.reportingHistory"></nlf-ors-editor-e5x-reportinghistory>
+      </div>
+
+      <!-- RISK ASSESSMENT -->
+      <div class="row my-3">
+        <nlf-ors-editor-e5x-risk (change)="update($event)"
+          [(occurrence)]="observation.eccairs2"></nlf-ors-editor-e5x-risk>
+      </div>
+      <!-- -->
+      <!-- Aircraft description State of registry Operator Operation type Aircraft category Propulsion type Aircraft mass group Rotorcraft mass group Flight phase Weather relevant-->
+      <div class="row my-3">
+        <div *ngIf="observation.files.length>0" class="nlf-ors-toolbar">
+          Vedlegg som blir med i rapporten
+          <nlf-help class="float-end" key="ors-editor-files"></nlf-help>
+        </div>
+        <!--Reporting entity. Reporting date Report version Report source Attachments (kun de som er read)-->
+        <nlf-ors-report-files [files]="observation.files" [state]="observation.workflow.state"
+          [doNotShowRestricted]="true"></nlf-ors-report-files>
+      </div>
+
+    </ng-container>
+  </div>
+  
+  <div class="modal-footer">
+    <nlf-help class="mr-3" key="ors-editor-modellfly-eccairs2"></nlf-help>
+    <button class="btn btn-outline-dark" (click)="closeEccairs2()">Ferdig</button>
+  </div>
+</ng-template>
+<!-- /MODAL PREVIEW -->

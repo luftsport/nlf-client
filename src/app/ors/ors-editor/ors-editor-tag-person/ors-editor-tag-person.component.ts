@@ -119,7 +119,7 @@ export class NlfOrsEditorTagPersonComponent implements OnInit {
       } else if (event.hasOwnProperty('id')) {
         this._person = { id: event.id };
       } else if (typeof event === 'string') {
-        this._person = { id: -1 * Math.floor(Math.random() * 100000), tmp_name:  titleCase(event) };
+        this._person = { id: -1 * Math.floor(Math.random() * 100000), tmp_name: titleCase(event) };
       } else if (event.hasOwnProperty('full_name')) {
         this._person = { id: -1 * Math.floor(Math.random() * 100000), tmp_name: event.full_name };
       }

@@ -1,9 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ApiObservationsItem, ApiOptionsInterface, ApiObservationModellflyOrganizationInterface } from 'app/api/api.interface';
+import { ApiObservationsItem, ApiOptionsInterface, ApiObservationModellflyOrganizationInterface, NlfConfigItem } from 'app/api/api.interface';
 import { NlfOrsEditorInvolvedService, NlfOrsEditorInvolvedInterface } from 'app/ors/ors-editor/ors-editor-involved.service';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
 import { NgbModal, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
-import { faCalendar, faBan, faCheck, faExclamation, faTimes, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faPencil, faCalendar, faBan, faCheck, faExclamation, faTimes, faEdit, faTruckMedical, faHouseMedicalCircleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { NlfConfigService } from 'app/nlf-config.service';
+import { forkJoin } from 'rxjs';
 
 
 @Component({
@@ -22,6 +24,7 @@ export class NlfOrsModellflyEditorInvolvedComponent implements OnInit {
 
   deleteExternal = false;
 
+  public config: NlfConfigItem;
 
   faCheck = faCheck;
   faExclamation = faExclamation;
@@ -29,25 +32,37 @@ export class NlfOrsModellflyEditorInvolvedComponent implements OnInit {
   faTimes = faTimes;
   faEdit = faEdit;
   faCalendar = faCalendar;
-
+  faTruckMedical = faTruckMedical;
+  faHouseMedicalCircleExclamation = faHouseMedicalCircleExclamation;
+  faPencil = faPencil;
+  
   constructor(
     private subject: NlfOrsEditorService,
     private involvedService: NlfOrsEditorInvolvedService,
     private modalService: NgbModal,
-    private calendar: NgbCalendar) {
+    private calendar: NgbCalendar,
+    private configService: NlfConfigService) {
 
-      this.today = this.calendar.getToday();
+    this.today = this.calendar.getToday();
 
-    this.subject.observableObservation.subscribe(
-      (observation) => {
-        this.observation = observation;
-        if (!this.involved) {
-          this.involved = [...this.observation.involved];
-          this.involved.forEach(person => {
-            this.involvedService.add(person.id, person.full_name || person.tmp_name || undefined);
-          });
+    forkJoin([
+      this.configService.observableConfig.subscribe(
+        data => {
+          this.config = data;
         }
-      });
+      ),
+
+      this.subject.observableObservation.subscribe(
+        (observation) => {
+          this.observation = observation;
+          if (!this.involved) {
+            this.involved = [...this.observation.involved];
+            this.involved.forEach(person => {
+              this.involvedService.add(person.id, person.full_name || person.tmp_name || undefined);
+            });
+          }
+        })
+    ]);
   }
 
 
@@ -66,6 +81,9 @@ export class NlfOrsModellflyEditorInvolvedComponent implements OnInit {
         this.involved.map(item => item.id).filter(x => this.observation.involved.map(i => i.id).indexOf(x) < 0)[0],
         this.involved.map(item => item.tmp_name || undefined).filter(x => this.observation.involved.map(i => i.tmp_name || undefined).indexOf(x) < 0)[0]
       );
+      if(!this.involved?.data) {
+        this.involved['data'] = {};
+      }
     }
     //.map(({ id }) => id)
 

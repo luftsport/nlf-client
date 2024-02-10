@@ -61,8 +61,9 @@ export class NlfOrgSelectorComponent implements OnInit {
         projection: { id: 1, _id: 1, parent_id: 1, name: 1 }
       }
     };
+    console.log('Main avc', options);
 
-    this.apiCache.get(['get-lungo-person', this.activity, this.org_type, this.is_active, options.query],
+    this.apiCache.get(['get-select-organizations', this.activity, this.org_type, this.is_active, options.query],
       this.orgService.getOrganizations(options))
       .subscribe(
         data => {

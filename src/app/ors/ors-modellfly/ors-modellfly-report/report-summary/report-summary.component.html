@@ -113,20 +113,5 @@
       <td>Involverte</td>
       <td>{{ observation.involved | count }}</td>
     </tr>
-    <tr>
-      <td>Kjennelser</td>
-      <td>
-        <div *ngIf="numberOfInvolved > 0">
-          <div *ngFor="let v of observation.involved">
-            <div *ngIf="!!v.verdict">
-              <div *ngIf="!!v.verdict.fu" class="badge bg-warning me-1">Farlig Ukontrollert </div>
-              <div *ngIf="!!v.verdict.ph" class="badge bg-danger me-1">Permanent Hoppforbud </div>
-              <div *ngIf="!!v.verdict.mh" class="badge bg-danger">Midlertidig Hoppforbud</div>
-            </div>
-          </div>
-        </div>
-        <div *ngIf="numberOfInvolved === 0">Ingen</div>
-      </td>
-    </tr>
   </tbody>
 </table>

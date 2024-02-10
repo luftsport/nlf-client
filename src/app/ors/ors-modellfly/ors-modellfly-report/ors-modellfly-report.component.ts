@@ -2,14 +2,15 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { JsonPipe } from '@angular/common';
 import { ApiObservationsService } from 'app/api/api-observations.service';
-import { ApiOptionsInterface, ApiObservationsModellflyItem } from 'app/api/api.interface';
+import { ApiOptionsInterface, ApiObservationsModellflyItem, NlfConfigItem } from 'app/api/api.interface';
 import { NlfAlertService } from 'app/services/alert/alert.service';
 import { NlfComponent } from 'app/nlf.component';
 import { NgStringPipesModule } from 'angular-pipes';
 import { ApiEveBaseList } from 'app/api/api-eve.interface';
-import { faEdit, faMapMarker, faRandom, faUsers, faFile, faCloud, faBolt, faExternalLink } from '@fortawesome/free-solid-svg-icons';
-import { faFileAlt, faComments } from '@fortawesome/free-regular-svg-icons';
+import { faEdit, faMapMarker, faRandom, faBolt, faPlane, faFile, faStreetView, faCloud, faUsers, faRoad, faExternalLink, faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faFileAlt, faCommenting, faComments } from '@fortawesome/free-regular-svg-icons';
 import { MapOptions, Layer, latLng, marker, Marker, tileLayer, Map } from 'leaflet';
+import { NlfConfigService } from 'app/nlf-config.service';
 
 @Component({
   selector: 'nlf-ors-modellfly-report',
@@ -36,25 +37,42 @@ export class NlfOrsModellflyReportComponent implements OnInit {
 
   isWorkflowTimelineCollapsed = true;
 
+
   faEdit = faEdit;
   faMapMarker = faMapMarker;
   faRandom = faRandom;
-  faUsers = faUsers;
-  faFile = faFile;
-  faCloud = faCloud;
   faBolt = faBolt;
+  faPlane = faPlane;
+  faFile = faFile;
+  faStreetView = faStreetView;
+  faCloud = faCloud;
+  faUsers = faUsers;
+  faRoad = faRoad;
   faExternalLink = faExternalLink;
+  faDownload = faDownload;
   faFileAlt = faFileAlt;
+  faCommenting = faCommenting;
   faComments = faComments;
 
   map: Map;
   mapOptions: MapOptions;
   marker: Marker;
 
+  public config: NlfConfigItem;
+
+
   constructor(private route: ActivatedRoute,
-              private orsService: ApiObservationsService,
-              private alertService: NlfAlertService,
-              private app: NlfComponent) {
+    private orsService: ApiObservationsService,
+    private alertService: NlfAlertService,
+    private app: NlfComponent,
+    private configService: NlfConfigService) {
+
+    this.configService.observableConfig.subscribe(
+      data => {
+        this.config = data;
+      }
+    );
+
 
   }
 
@@ -99,10 +117,10 @@ export class NlfOrsModellflyReportComponent implements OnInit {
 
         ],
         zoom: 7,
-        center: latLng(59,10)
+        center: latLng(59, 10)
       }
 
-    } catch (e) {}
+    } catch (e) { }
 
 
 

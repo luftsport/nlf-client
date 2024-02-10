@@ -422,6 +422,23 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
     this.currentModalMarkerLayer.on('dragend', (event) => {
       this.onDragEnd(event, options);
     });
+
+
+    this.modalMap.on('click', (event) => {
+      console.log(event);
+      const { lat, lng } = event.latlng;
+      this.modalValue.geo = { type: 'Point', coordinates: [lat, lng] };
+      
+
+      this.currentModalMarkerLayer.remove();
+      this.currentModalMarkerLayer = new Marker(event.latlng, options);
+      this.currentModalMarkerLayer.on('dragend', (event) => {
+        this.onDragEnd(event, options);
+      });
+      this.currentModalMarkerLayer.addTo(this.modalMap);
+      this.modalMap.panTo(latLng(lat, lng));
+    });
+
     this.currentModalMarkerLayer.addTo(this.modalMap);
     //this.map.options.layers[1](marker(this.org.locations[0].geo.coordinates[0], this.org.locations[0].geo.coordinates[1]));
   }

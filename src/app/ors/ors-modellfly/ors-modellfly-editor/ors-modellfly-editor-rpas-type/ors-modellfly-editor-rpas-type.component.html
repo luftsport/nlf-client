@@ -1,12 +1,12 @@
 <div class="form-group">
-    <select class="form-select" placeholder="Velg rpas type"
+    <select class="form-select" placeholder="Velg rpas type" aria-label="Velg rpas type"
         name="reporter-role" 
         id="reporter-role-id" 
         class="form-control"
         [(ngModel)]="rpasType"
         (ngModelChange)="onChange($event)"
         [disabled]="disable">
-        <option value="" disabled>--Velg--</option>
-        <option *ngFor="let role of config.modellfly.observation.rpas_types" [value]="role.key">{{ role.label }}</option>
+        <option value="" [disabled]="true" [selected]="true">--Velg RPAS type--</option>
+        <option *ngFor="let rpas_type of config.modellfly.observation.rpas_types" [value]="rpas_type.key">{{ rpas_type.label }}</option>
     </select>
 </div>

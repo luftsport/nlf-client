@@ -82,7 +82,6 @@ export class NlfOrsE5xComponent implements OnInit {
     this.authSubject.observableAuthData.subscribe(
       data => {
         this.person_id = data?.person_id || undefined;
-        console.log('Auth subject', data);
         try {
           this.token = data.token;
         } catch {
@@ -94,7 +93,6 @@ export class NlfOrsE5xComponent implements OnInit {
     this.subject.observableObservation.subscribe(
       observation => {
         this.observation = observation;
-        console.log('E5X in E5X NOW!!!!', observation);
         this.configService.observableConfig.subscribe(
           data => {
             this.config = data;
@@ -160,7 +158,7 @@ export class NlfOrsE5xComponent implements OnInit {
 
     //DEFAULTS
     // Title
-    this.observation.occurrence.attributes.headline = this.observation.tags.join(' ') || '';
+    this.observation.occurrence.attributes.headline = this.observation?.tags.join(' ') || this.observation?.title || '';
 
     /**
     Norwegian CAA needs "TEST" for test reports

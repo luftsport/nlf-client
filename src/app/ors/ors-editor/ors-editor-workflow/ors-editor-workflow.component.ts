@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NlfOrsEditorService } from 'app/ors/ors-editor/ors-editor.service';
+import { ApiObservationsService } from 'app/api/api-observations.service';
 import { ApiObservationsItem, ApiWorkflowPayloadInterface } from 'app/api/api.interface';
 import { ApiObservationsWorkflowService } from 'app/api/api-observations-workflow.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -41,7 +42,9 @@ export class NlfOrsEditorWorkflowComponent implements OnInit {
     private route: ActivatedRoute,
     public domSanitizer: DomSanitizer,
     public activeModal: NgbActiveModal,
-    private alertService: NlfAlertService) { }
+    private alertService: NlfAlertService,
+    private orsService: ApiObservationsService,
+    ) { }
 
   ngOnInit() {
 
@@ -84,6 +87,24 @@ export class NlfOrsEditorWorkflowComponent implements OnInit {
     );
   }
 
+  _save() {
+    console.log('JIkes');
+    this.orsService.save(this.observation._id, {reporter_role: this.observation.reporter_role}, this.observation._etag).subscribe(
+      data => {
+        this.observation._etag = data._etag;
+        this.observation._updated = data._updated;
+        this.observation._version = data._version;
+        this.observation._latest_version = data._latest_version;
+      },
+      err => {
+        console.log(err);
+        this.alertService.error('En feil oppstod under lagring: ' + JSON.stringify(err));
+      }
+    );
+
+  }
+
+
   workflowChange(action: string, text: string = '') {
     this.processing = true;
 
@@ -106,8 +127,11 @@ export class NlfOrsEditorWorkflowComponent implements OnInit {
 
   }
 
-  onChange(event): void {
+  onChange(event, save?): void {
     this.subject.update(this.observation);
+    if(save) {
+     this._save();
+    }
   }
 
   getGraph() {

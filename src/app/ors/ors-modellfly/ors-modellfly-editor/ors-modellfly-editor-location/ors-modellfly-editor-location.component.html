@@ -29,8 +29,12 @@
 
     <!-- Map column -->
     <div class="col-xs-12 col-md-8 d-flex flex-column">
+      
       <div style="height: 300px" *ngIf="dataReady && hasMapCoordinates()" id="location-map" leaflet [leafletOptions]="mapOptions"
-        (leafletMapReady)="onMapReady($event)" [(leafletCenter)]="mapCenter">
+      (leafletMapReady)="onMapReady($event)" [(leafletCenter)]="mapCenter">
+      </div>
+      <div *ngIf="dataReady && hasMapCoordinates()">
+        lat: {{ observation.location.geo.coordinates[1] }}, lng: {{ observation.location.geo.coordinates[0] }}
       </div>
       <!--
       <agm-map *ngIf="dataReady && locations.length>0" [latitude]="toFloat(observation.location.geo.coordinates[0])"
