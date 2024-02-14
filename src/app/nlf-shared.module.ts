@@ -83,6 +83,7 @@ import { NlfOrsEditorTagStaticComponent } from 'app/ors/ors-editor/ors-editor-ta
 import { NlfOrsE5xComponent } from 'app/ors/ors-e5x/ors-e5x.component';
 import { NlfOrsEditorTagE5XComponent } from 'app/ors/ors-editor/ors-editor-tag-e5x/ors-editor-tag-e5x.component';
 import { NlfOrsEditorTagE5xRenderComponent } from 'app/ors/ors-editor/ors-editor-tag-e5x-render/ors-editor-tag-e5x-render.component';
+import { NlfOrsEditorTagE5xRenderVersionComponent } from 'app/ors/ors-editor/ors-editor-tag-e5x-render-version/ors-editor-tag-e5x-render-version.component';
 // ORS tag string
 import { NlfOrsEditorTagStringComponent } from 'app/ors/ors-editor/ors-editor-tag-string/ors-editor-tag-string.component';
 import { NlfOrsEditorTagComponent } from 'app/ors/ors-editor/ors-editor-tag/ors-editor-tag.component';
@@ -172,6 +173,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     NlfOrsGoComponent,
     NlfOrsEditorTagStringComponent,
     NlfOrsEditorTagComponent,
+    NlfOrsEditorTagE5xRenderVersionComponent,
     // Aircrafts
     NlfAircraftsAddComponent,
     NlfAircraftsEditComponent,
