@@ -71,7 +71,8 @@ import { ResolveLungoCountyComponent } from 'app/services/resolve/resolve-lungo-
 import { NlfResolveAvatarsComponent } from 'app/services/resolve/resolve-avatars/resolve-avatars.component';
 import { NlfResolveAvatarComponent } from 'app/services/resolve/resolve-avatar/resolve-avatar.component';
 import { NlfResolveAvatarLetterComponent } from 'app/services/resolve/resolve-avatar-letter/resolve-avatar-letter.component';
-
+// Resolve config items
+import { NlfResolveConfigComponent } from 'app/services/resolve/resolve-config/resolve-config.component';
 // First login
 import { NlfUserFirstLoginComponent } from 'app/user/user-first-login/user-first-login.component';
 
@@ -149,6 +150,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     NlfResolveAvatarsComponent,
     NlfResolveAvatarComponent,
     NlfResolveAvatarLetterComponent,
+    NlfResolveConfigComponent,
     // Lungo
     NlfResolveLungoPersonComponent,
     NlfResolveLungoOrganizationComponent,
@@ -219,6 +221,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     NlfResolveAvatarsComponent,
     NlfResolveAvatarComponent,
     NlfResolveAvatarLetterComponent,
+    NlfResolveConfigComponent,
     // Lungo
     NlfResolveLungoPersonComponent,
     NlfResolveLungoOrganizationComponent,

@@ -18,7 +18,11 @@
       <td>Observatør</td>
       <td>
         <nlf-resolve-lungo-person [avatar]="true" [link]="true"
-          [person_id]="observation.reporter"></nlf-resolve-lungo-person>&nbsp;&nbsp;{{ observation.reporter_role }}
+          [person_id]="observation.reporter"></nlf-resolve-lungo-person>
+        <span class="float-end badge bg-secondary">
+          <nlf-resolve-config activity="modellfly" category="observation" key="roles_in_observation"
+            [value]="observation.reporter_role" itemKey="key" itemLabel="label"></nlf-resolve-config>
+        </span>
       </td>
     </tr>
     <tr>
