@@ -59,7 +59,6 @@ export class NlfOrsEditorTagE5xRenderComponent implements OnInit {
         }
       }
     }
-
     this.apiCache.get(
       ['e5x-attribute', this.activity, options.query],
       this.attributeService.getAttributes(options)).subscribe(
@@ -86,15 +85,15 @@ export class NlfOrsEditorTagE5xRenderComponent implements OnInit {
             } else {
               this.arr = this.items;
             }
-          } else {
-            this.arr = this.items;
-          }
-        },
-        err => {
-          console.log('Error getting choices', err);
+        } else {
           this.arr = this.items;
-        },
-      )
+        }
+      },
+      err => {
+        console.log('Error getting choices', err);
+        this.arr = this.items;
+      },
+    )
   }
 
 }

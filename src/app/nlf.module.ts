@@ -439,8 +439,7 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfUserAclComponent,
 
     NlfOrsComponent,
-
-  
+    NlfOrsFallskjermCreateComponent,
     NlfOrsMotorCreateComponent,
     NlfOrsSeilflyCreateComponent,
     NlfOrsSportsflyCreateComponent,
@@ -508,7 +507,8 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfOrsAllTableComponent,
     NlfOrsLastComponent,
 
-
+    NlfOrsFallskjermMainComponent,
+    NlfOrsFallskjermReportComponent,
     NlfOrsReportWorkflowTimelineComponent,
 
 
@@ -519,6 +519,8 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfOrsReportAskComponent,
     NlfOrsReportComponentsTimelineComponent,
     NlfOrsReportAskTextComponent,
+    NlfOrsFallskjermReportInvolvedComponent,
+    NlfOrsFallskjermReportOrganizationComponent,
     NlfOrsReportActionsComponent,
     NlfOrsReportRelatedComponent,
     NlfOrsReportWeatherComponent,
@@ -567,7 +569,11 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfOrsEditorHelpComponent,
     NlfOrsEditorAboutComponent,
     NlfOrsEditorDebugComponent,
+    NlfOrsFallskjermEditorLocationComponent,
+    NlfOrsFallskjermEditorOrganizationComponent,
+    NlfOrsFallskjermEditorInvolvedComponent,
     NlfOrsEditorWorkflowComponent,
+    NlfOrsFallskjermEditorComponent,
     NlfOrsEditorComponentsComponent,
 
     NlfOrsEditorRouteComponent,
@@ -653,6 +659,7 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfConfigModule, // Config module
     NlfRoutingModule,
     BrowserModule,
+
     // REMOVE GenericTableModule,
     TableModule, // ngx-easy-table
     // REMOVE RTModule, // right-angled declarative tables
