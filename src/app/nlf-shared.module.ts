@@ -249,6 +249,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     NlfOrsGoComponent,
     NlfOrsEditorTagStringComponent,
     NlfOrsEditorTagComponent,
+    NlfOrsEditorTagE5xRenderVersionComponent,
     // Other
     NlfAircraftsAddComponent,
     NlfAircraftsEditComponent,

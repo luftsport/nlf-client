@@ -219,7 +219,7 @@ import { NlfOrsReportFilesComponent } from 'app/ors/ors-report/report-files/repo
 import { NlfOrsReportComponentsTimelineComponent } from 'app/ors/ors-report/report-components-timeline/report-components-timeline.component';
 import { NlfOrsReportFilesThumbnailsComponent } from 'app/ors/ors-report/report-files-thumbnails/report-files-thumbnails.component';
 import { NlfOrsReportFlightMapComponent } from 'app/ors/ors-report/report-flight-map/report-flight-map.component';
-import { NlfOrsReportE5xComponent } from './ors/ors-report/report-e5x/report-e5x.component';
+import { NlfOrsReportE5xComponent } from 'app/ors/ors-report/report-e5x/report-e5x.component';
 
 // OBSREG FALLSKJERM
 import { NlfOrsFallskjermEditorComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-editor/ors-fallskjerm-editor.component';
@@ -257,7 +257,8 @@ import { NlfOrsModellflyEditorRpasFlightTypeComponent } from 'app/ors/ors-modell
 import { NlfOrsModellflyReportInvolvedComponent } from 'app/ors/ors-modellfly/ors-modellfly-report/report-involved/report-involved.component';
 import { NlfOrsModellflyReportOrganizationComponent } from 'app/ors/ors-modellfly/ors-modellfly-report/report-organization/report-organization.component';
 import { NlfOrsModellflyReportSummaryComponent } from 'app/ors/ors-modellfly/ors-modellfly-report/report-summary/report-summary.component';
-
+import { NlfOrsModellflyEccairs2Component } from 'app/ors/ors-modellfly/ors-modellfly-eccairs2/ors-modellfly-eccairs2.component';
+import { NlfOrsModellflyEccairs2AuditComponent } from 'app/ors/ors-modellfly/ors-modellfly-eccairs2/ors-modellfly-eccairs2-audit/ors-modellfly-eccairs2-audit.component';
 
 // OBSREG MOTOR
 import { NlfOrsMotorComponent } from 'app/ors/ors-motor/ors-motor.component';
@@ -480,7 +481,8 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfOrsModellflyEditorOrganizationComponent,
     NlfOrsModellflyEditorInvolvedComponent,
     NlfOrsModellflyEditorComponent,
-
+    NlfOrsModellflyEccairs2Component,
+    NlfOrsModellflyEccairs2AuditComponent,
 
     NlfOrsEditorPeopleMotorflyComponent,
 
@@ -620,7 +622,6 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfOrsEditorE5XEventsComponent,
     NlfOrsEditorE5xReportinghistoryComponent,
     NlfOrsEditorE5xRiskComponent,
-
     // OBSREG TAG
     //NlfOrsEditorTagComponent,
     //NlfOrsEditorTagStringComponent,

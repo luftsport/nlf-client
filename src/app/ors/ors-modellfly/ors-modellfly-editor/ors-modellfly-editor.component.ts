@@ -179,9 +179,15 @@ export class NlfOrsModellflyEditorComponent implements OnInit, OnDestroy, Compon
             }
           }
         }
+        case 'obsreg_e5x_finished_processing': {
+          if (message.hasOwnProperty('link')) {
+            if (message.link[0] === 'modellfly' && message.link[1] === this.observation.id) {
+              this.getData('e5x');
+            }
+          }
+        }
       }
     });
-
 
     // Instantiate all hotkeys
     this.hotkeys.push(
@@ -206,6 +212,12 @@ export class NlfOrsModellflyEditorComponent implements OnInit, OnDestroy, Compon
     this.hotkeys.push(
       this.hotkeysService.add(new Hotkey(['command+e', 'ctrl+e'], (event: KeyboardEvent, combo: string): boolean => {
         this.openEccairs(this.modalEccairsTemplate);
+        return false; // Prevent bubbling
+      }))
+    );
+    this.hotkeys.push(
+      this.hotkeysService.add(new Hotkey(['command+b', 'ctrl+b'], (event: KeyboardEvent, combo: string): boolean => {
+        this.openWorkflow();
         return false; // Prevent bubbling
       }))
     );
@@ -396,14 +408,23 @@ export class NlfOrsModellflyEditorComponent implements OnInit, OnDestroy, Compon
 
     }
    */
-  public getData() {
+
+
+  public getData(updateField: string = 'all') {
     console.log('Getting data');
     this.dataReady = false;
 
     this.orsService.get(this.id).subscribe(
       data => {
 
-        this.observation = data;
+        if (updateField === 'all') {
+          this.subject.reset();
+          this.observation = data;
+        } else {
+          if (this.observation.hasOwnProperty(updateField)) {
+            this.observation[updateField] = data[updateField];
+          }
+        }
         this.subject.update(this.observation);
         // Make some defaults:
         if (typeof this.observation.rating === 'undefined') {
@@ -475,11 +496,13 @@ export class NlfOrsModellflyEditorComponent implements OnInit, OnDestroy, Compon
       this.observation.eccairs2 = new E5XClass().occurrence;
       this.observation.eccairs2.attributes.responsibleEntity.value = 2133;
 
-      this.observation.eccairs2.entities.reportingHistory[0] = new E5XReportingHistoryClass().reportingHistory;
-      this.observation.eccairs2.entities.reportingHistory[0].attributes.reportIdentification.value = 'nlf_' + this.observation._model.type + '_' + + this.observation.id;
+      this.observation.eccairs2.entities.reportingHistory = [new E5XReportingHistoryClass().reportingHistory];
+      this.observation.eccairs2.entities.reportingHistory[0].attributes.reportingEntity = { value: 101311 };
+      this.observation.eccairs2.entities.reportingHistory[0].attributes.reportIdentification.value = 'nlf_' + this.observation._model.type + '_' + + this.observation.id + '_v' + this.observation._version;
       this.observation.eccairs2.entities.reportingHistory[0].attributes.reportingFormType.value = 9823;
+      this.observation.eccairs2.entities.reportingHistory[0].attributes.reportStatus.value = 2; // open
 
-      this.observation.eccairs2.entities.aircraft[0] = new E5XAircraftClass().aircraft;
+      this.observation.eccairs2.entities.aircraft = [new E5XAircraftClass().aircraft];
       this.observation.eccairs2.entities.aircraft[0].attributes.annex2ACType.value = [9]; // 
       this.observation.eccairs2.entities.aircraft[0].attributes.aircraftCategory.value = 6; // RPAS
       this.observation.eccairs2.entities.aircraft[0].attributes.massGroup.value = 1; // 0-2250kg
@@ -487,22 +510,22 @@ export class NlfOrsModellflyEditorComponent implements OnInit, OnDestroy, Compon
 
 
     } else {
-      console.log('SPREAD');
-
       this.observation.eccairs2 = { ...new E5XClass().occurrence, ...this.observation.eccairs2 };
       this.observation.eccairs2.attributes = { ...new E5XClass().occurrence.attributes, ...this.observation.eccairs2?.attributes };
       this.observation.eccairs2.attributes.responsibleEntity.value = 2133;
+      this.observation.eccairs2.entities.reportingHistory = [{ ...new E5XReportingHistoryClass().reportingHistory, ...this.observation.eccairs2.entities.reportingHistory[0] }];
+      this.observation.eccairs2.entities.reportingHistory[0].attributes.reportingEntity = { value: 101311 };
+
       this.observation.eccairs2.entities = { ...new E5XClass().occurrence.entities, ...this.observation.eccairs2?.entities };
       this.observation.eccairs2.entities.reportingHistory[0] = { ...new E5XReportingHistoryClass().reportingHistory, ...this.observation.eccairs2.entities.reportingHistory[0] };
       this.observation.eccairs2.entities.reportingHistory[0].attributes = { ...new E5XReportingHistoryClass().reportingHistory.attributes, ...this.observation.eccairs2.entities.reportingHistory[0].attributes };
       this.observation.eccairs2.entities.reportingHistory[0].entities = { ...new E5XReportingHistoryClass().reportingHistory, ...this.observation.eccairs2.entities.reportingHistory[0].entities };
       this.observation.eccairs2.entities.riskAssessment = { ...new E5XRiskAssessmentClass().riskAssessment, ...this.observation.eccairs2.entities.riskAssessment };
 
-      console.log(this.observation.eccairs2.entities.reportingHistory[0]);
       this.observation.eccairs2.entities.aircraft[0] = { ...new E5XAircraftClass().aircraft, ...this.observation.eccairs2.entities.aircraft[0] };
       this.observation.eccairs2.entities.aircraft[0].attributes = { ...new E5XAircraftClass().aircraft.attributes, ...this.observation.eccairs2.entities.aircraft[0].attributes };
       this.observation.eccairs2.entities.aircraft[0].entities = { ...new E5XAircraftClass().aircraft.entities, ...this.observation.eccairs2.entities.aircraft[0].entities };
-      this.observation.eccairs2.entities.reportingHistory[0].attributes.reportIdentification.value = 'nlf_' + this.observation._model.type + '_' + + this.observation.id;
+      this.observation.eccairs2.entities.reportingHistory[0].attributes.reportIdentification.value = 'nlf_' + this.observation._model.type + '_' + + this.observation.id + '_v' + this.observation._version;
 
     }
     console.log('After spread', this.observation.eccairs2);
@@ -582,7 +605,7 @@ export class NlfOrsModellflyEditorComponent implements OnInit, OnDestroy, Compon
 
     }
 
-    this.modalRef = this.modalService.open(template, { fullscreen: true });
+    this.modalRef = this.modalService.open(template, { size: 'xl', fullscreen: 'xl' });
   }
 
   closeEccairs2() {
@@ -590,6 +613,7 @@ export class NlfOrsModellflyEditorComponent implements OnInit, OnDestroy, Compon
     this.modalRef.close();
     this.observation.eccairs2 = this.cleanObject(this.observation.eccairs2);
     this.subject.update(this.observation);
+    this.saveIfChanges();
   }
 
   openDebugModal(template: TemplateRef<any>) {

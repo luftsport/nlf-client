@@ -52,7 +52,6 @@ export class NlfOrsEditorWeatherComponent implements OnInit {
   ngOnInit() {
     console.error(this.activity);
     if(!this.activity) {
-      console.error('Nubile fandens arkefaen');
       this.activity = 'fallskjerm';
     }
 

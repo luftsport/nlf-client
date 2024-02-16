@@ -16,8 +16,11 @@
           {{observation.title}}
         </ng-container>
         <nlf-resolve-observation-tags *ngIf="(!!observation.tags||observation.tags.length>0)&&!observation.title"
-          [tags]="observation.tags" [activity]="observation._model.type" link="true"
-          seperator="/"></nlf-resolve-observation-tags>&nbsp;
+          [tags]="modalObservation.tags" [activity]="modalObservation._model.type" [link]="true"
+          seperator="/"></nlf-resolve-observation-tags>
+        <ng-container *ngIf="(!observation.tags||observation.tags.length==0)&&!!observation.title">
+          {{ observation.title }}
+        </ng-container>
 
         <span ngbTooltip="{{ observation.rating.actual }} av {{ observation.rating.potential }}" container="body"
           *ngIf="!!observation.rating" class="badge bg-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{
@@ -48,6 +51,9 @@
 
         <!-- VERSION -->
         <a class="badge bg-success mx-1 pointer" (click)="openDiff(diffModal)">v{{ observation._version }}</a>
+
+        <!-- ECCAIRS2 Audit -->
+        <nlf-ors-modellfly-eccairs2-audit></nlf-ors-modellfly-eccairs2-audit>
 
         <!-- WORKFLOW -->
         <a class="pointer mx-1" *ngIf="observation.acl_user.x" (click)="openWorkflow()">
@@ -358,7 +364,7 @@
 
             <!-- if not draft and not set - set it to "ingen rolle i observasjonen" as default -->
             <nlf-ors-editor-role-in-observation [(role)]="observation.reporter_role" activity="modellfly"
-              (change)="onChange($event, true);"></nlf-ors-editor-role-in-observation>
+              (change)="update($event);"></nlf-ors-editor-role-in-observation>
           </div>
         </div>
       </div>
@@ -425,7 +431,7 @@
             </div>
             -->
           </ng-container>
-
+          <!--
           <ng-container *ngIf="['draft', 'withdrawn', 'closed'].indexOf(observation.workflow.state)==-1">
             <p>Observasjonen har status
               <span><a class="pointer mx-1" (click)="openWorkflow()">
@@ -448,13 +454,14 @@
               </button>
             </div>
           </ng-container>
+        -->
         </div>
       </div>
     </ng-container>
     <!-- //WORKFLOW ACTIONS IN PAGE -->
 
     <!-- BOTTOM TOOLBAR  DESKTOP ONLY -->
-    <div *ngIf="observation.acl_user.x" class="nlf-toolbar fixed-bottom bg-dark d-none d-md-block">
+    <div *ngIf="observation.acl_user.x" class="nlf-toolbar fixed-bottom bg-dark">
       <div class="container">
 
 
@@ -476,6 +483,8 @@
           <span class="me-4 lead">
             <nlf-help key="ors-editor-workflow"></nlf-help>
           </span>
+
+
 
           <ng-container *ngIf="observation.workflow.state==='draft'">
 
@@ -562,8 +571,12 @@
   <div class="modal-header">
     <h4 class="modal-title pull-left">
       #{{ observation.id }}
-      <nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type"
+      <nlf-resolve-observation-tags *ngIf="(!!observation.tags||observation.tags.length>0)&&!observation.title"
+        [tags]="modalObservation.tags" [activity]="modalObservation._model.type"
         seperator="/"></nlf-resolve-observation-tags>
+      <ng-container *ngIf="(!observation.tags||observation.tags.length==0)&&!!observation.title">
+        {{ observation.title }}
+      </ng-container>
     </h4>
     <button type="button" class="close float-end" aria-label="Close" (click)="closeActivities()">
       <span aria-hidden="true">&times;</span>
@@ -588,8 +601,12 @@
   <div class="modal-header">
     <h4 class="modal-title pull-left">
       #{{ observation.id }}
-      <nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type"
+      <nlf-resolve-observation-tags *ngIf="(!!observation.tags||observation.tags.length>0)&&!observation.title"
+        [tags]="modalObservation.tags" [activity]="modalObservation._model.type"
         seperator="/"></nlf-resolve-observation-tags>
+      <ng-container *ngIf="(!observation.tags||observation.tags.length==0)&&!!observation.title">
+        {{ observation.title }}
+      </ng-container>
     </h4>
     <button type="button" class="close float-end" aria-label="Close" (click)="closeActivities()">
       <span aria-hidden="true">&times;</span>
@@ -617,7 +634,7 @@
     <h4 class="modal-title">
       #{{ observation.id }} {{ observation?.tags.join(' ') || observation?.title || '(ingen tittel)' }} </h4>
     <span class="float-end h4"><span class="badge bg-success">Eccairs2 (E5X)</span>
-      <button type="button" class="close" aria-label="Close" (click)="modalRef.dismiss()">
+      <button type="button" class="close" aria-label="Close" (click)="closeEccairs2();modalRef.dismiss()">
         <span aria-hidden="true">&times;</span>
       </button>
     </span>
@@ -804,9 +821,11 @@
 
     </ng-container>
   </div>
-  
+
   <div class="modal-footer">
+
     <nlf-help class="mr-3" key="ors-editor-modellfly-eccairs2"></nlf-help>
+    <nlf-ors-modellfly-eccairs2></nlf-ors-modellfly-eccairs2>
     <button class="btn btn-outline-dark" (click)="closeEccairs2()">Ferdig</button>
   </div>
 </ng-template>

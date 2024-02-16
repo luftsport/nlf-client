@@ -15,8 +15,12 @@
 				{{observation.title}}
 			</ng-container>
 			<nlf-resolve-observation-tags *ngIf="(!!observation.tags||observation.tags.length>0)&&!observation.title"
-				[tags]="observation.tags" [activity]="observation._model.type" link="true"
-				seperator="/"></nlf-resolve-observation-tags>&nbsp;
+				[tags]="modalObservation.tags" [activity]="modalObservation._model.type" [link]="true"
+				seperator="/"></nlf-resolve-observation-tags>
+			  <ng-container *ngIf="(!observation.tags||observation.tags.length==0)&&!!observation.title">
+				{{ observation.title }}
+			  </ng-container>
+			  &nbsp;
 
 			<!-- /TITLE -->
 			<!-- RATING -->

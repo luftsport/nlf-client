@@ -54,21 +54,21 @@
       </td>
     </tr>
 
-    <tr>
+    <tr *ngIf="!!observation.flags && (!!observation.flags.aviation || !!observation.flags.insurance)">
       <td>Flagg</td>
       <td>
         <div *ngIf="!!observation.flags">
           <span *ngIf="!!observation.flags.insurance">
             <nlf-resolve-observation-flags [activity]="observation._model.type"
-              flag="insurance"></nlf-resolve-observation-flags>
+              flag="insurance" [icon]="true"></nlf-resolve-observation-flags>
           </span>
           <span *ngIf="!!observation.flags.aviation">
             <nlf-resolve-observation-flags [activity]="observation._model.type"
-              flag="aviation"></nlf-resolve-observation-flags>
+              flag="aviation" [icon]="true"></nlf-resolve-observation-flags>
           </span>
 
         </div>
-        <span *ngIf="!observation.flags || (!observation.flags.aviation && !observation.flags.insurance)">Ingen</span>
+        <!--<span *ngIf="!observation.flags || (!observation.flags.aviation && !observation.flags.insurance)">Ingen</span>-->
       </td>
 
     </tr>
