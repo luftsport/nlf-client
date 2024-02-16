@@ -71,7 +71,8 @@ import { ResolveLungoCountyComponent } from 'app/services/resolve/resolve-lungo-
 import { NlfResolveAvatarsComponent } from 'app/services/resolve/resolve-avatars/resolve-avatars.component';
 import { NlfResolveAvatarComponent } from 'app/services/resolve/resolve-avatar/resolve-avatar.component';
 import { NlfResolveAvatarLetterComponent } from 'app/services/resolve/resolve-avatar-letter/resolve-avatar-letter.component';
-
+// Resolve config items
+import { NlfResolveConfigComponent } from 'app/services/resolve/resolve-config/resolve-config.component';
 // First login
 import { NlfUserFirstLoginComponent } from 'app/user/user-first-login/user-first-login.component';
 
@@ -84,6 +85,9 @@ import { NlfOrsE5xComponent } from 'app/ors/ors-e5x/ors-e5x.component';
 import { NlfOrsEditorTagE5XComponent } from 'app/ors/ors-editor/ors-editor-tag-e5x/ors-editor-tag-e5x.component';
 import { NlfOrsEditorTagE5xRenderComponent } from 'app/ors/ors-editor/ors-editor-tag-e5x-render/ors-editor-tag-e5x-render.component';
 import { NlfOrsEditorTagE5xRenderVersionComponent } from 'app/ors/ors-editor/ors-editor-tag-e5x-render-version/ors-editor-tag-e5x-render-version.component';
+// ORS tag string
+import { NlfOrsEditorTagStringComponent } from 'app/ors/ors-editor/ors-editor-tag-string/ors-editor-tag-string.component';
+import { NlfOrsEditorTagComponent } from 'app/ors/ors-editor/ors-editor-tag/ors-editor-tag.component';
 
 // Date normalized
 import { NlfOrsEditorDateComponent } from 'app/ors/ors-editor/ors-editor-date/ors-editor-date.component';
@@ -146,6 +150,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     NlfResolveAvatarsComponent,
     NlfResolveAvatarComponent,
     NlfResolveAvatarLetterComponent,
+    NlfResolveConfigComponent,
     // Lungo
     NlfResolveLungoPersonComponent,
     NlfResolveLungoOrganizationComponent,
@@ -168,6 +173,8 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     NlfOrsEditorTagStaticComponent,
     NlfOrsEditorDateComponent,
     NlfOrsGoComponent,
+    NlfOrsEditorTagStringComponent,
+    NlfOrsEditorTagComponent,
     NlfOrsEditorTagE5xRenderVersionComponent,
     // Aircrafts
     NlfAircraftsAddComponent,
@@ -214,6 +221,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     NlfResolveAvatarsComponent,
     NlfResolveAvatarComponent,
     NlfResolveAvatarLetterComponent,
+    NlfResolveConfigComponent,
     // Lungo
     NlfResolveLungoPersonComponent,
     NlfResolveLungoOrganizationComponent,
@@ -239,6 +247,9 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     NlfOrsEditorTagStaticComponent,
     NlfOrsEditorDateComponent,
     NlfOrsGoComponent,
+    NlfOrsEditorTagStringComponent,
+    NlfOrsEditorTagComponent,
+    NlfOrsEditorTagE5xRenderVersionComponent,
     // Other
     NlfAircraftsAddComponent,
     NlfAircraftsEditComponent,

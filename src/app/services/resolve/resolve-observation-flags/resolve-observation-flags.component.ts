@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Inject } from '@angular/core';
 import { NlfConfigService } from 'app/nlf-config.service';
 import { NlfConfigItem } from 'app/api/api.interface';
-import { faPlane, faWheelchair } from '@fortawesome/free-solid-svg-icons';
+import { faFlag } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'nlf-resolve-observation-flags',
@@ -18,22 +18,23 @@ export class NlfResolveObservationFlagsComponent implements OnInit {
   name: string;
   public config: NlfConfigItem;
 
-  constructor(private configService: NlfConfigService) {
+  faFlag = faFlag;
 
+  constructor(private configService: NlfConfigService) {
+  }
+
+  ngOnInit() {
     this.configService.observableConfig.subscribe(
       data => {
         this.config = data;
         try {
           this.name = this.config[this.activity].observation.flags[this.flag]['label'];
         } catch (e) {
+          console.error(this.activity, this.config); //[this.activity].observation.flags);
           this.name = 'Ukjent';
         }
       }
     );
-  }
-
-  ngOnInit() {
-
   }
 
 }

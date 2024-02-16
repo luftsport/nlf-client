@@ -7,9 +7,15 @@
 
       <!-- <fa-icon [icon]="faFileAlt""></fa-icon>&nbsp;-->
       <!-- {{ data.tags | nlfOrsTags: ' / '}} -->
+      <!-- TITLE OR TAGS -->
+ 
+
       <span class="overflow-hidden">
         <a [routerLink]="['/ors', observation._model.type]">OBSREG</a>#<a [routerLink]="['/ors', observation._model.type, 'edit', observation.id]">{{ observation.id }}
-          <nlf-resolve-observation-tags [tags]="observation.tags" [activity]="observation._model.type" [link]="false" seperator="/"></nlf-resolve-observation-tags>
+          <nlf-resolve-observation-tags *ngIf="(!!observation.tags||observation.tags.length>0)&&!observation.title" [tags]="observation.tags" [activity]="observation._model.type" [link]="false" seperator="/"></nlf-resolve-observation-tags>
+          <ng-container *ngIf="(!observation.tags||observation.tags.length==0)&&!!observation.title">
+            {{ observation.title }}
+          </ng-container>
         </a>
         &nbsp;
         <span *ngIf="!!observation.rating" class="badge bg-{{observation.rating | nlfOrsRatingCalc | nlfDynamicColor}}">

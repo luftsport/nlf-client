@@ -13,9 +13,10 @@ import { ConfirmService } from 'app/services/confirm/confirm.service';
 import { forkJoin } from 'rxjs';
 import { faArrowsAlt, faCrosshairs, faPlus, faRefresh, faMapMarker, faTimes, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { Map, Marker, MapOptions, LayerOptions, latLng, LatLng, marker, tileLayer } from 'leaflet';
-
-
+import { LungoOrganizationsService } from 'app/api/lungo-organizations.service';
+import { LungoOrganizationsItem } from 'app/api/lungo.interface';
 import { BarVerticalStackedComponent, HeatMapModule } from '@swimlane/ngx-charts';
+import { error } from 'console';
 
 @Component({
   selector: 'nlf-organization-locations',
@@ -41,6 +42,9 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
   modalRef;
   modalIndex: number = 0;
   modalValue: ApiLocationItem;
+
+  lungo: LungoOrganizationsItem;
+
 
   currentLocation: ApiLocationItem;
 
@@ -82,6 +86,8 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
     { key: 'taxi_way', val: 'Taxi bane' }
   ];
 
+  person_id: number;
+
   public config: NlfConfigItem;
 
   public debouncedSaveLocations = debounce(this.saveLocations, 3000);
@@ -96,7 +102,10 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
     private alertService: NlfAlertService,
     private confirmService: ConfirmService,
     private configService: NlfConfigService,
-    private zone: NgZone
+    private zone: NgZone,
+    private lungoOrgService: LungoOrganizationsService
+
+
   ) {
 
     forkJoin([
@@ -165,39 +174,42 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
 
   public goTo(location) {
     console.log('LOCATION', location);
-    const options = { title: location.name, riseOnHover: true };
 
-    try {
-      this.currentLocation = location;
-      this.mapCenter = latLng(location.geo.coordinates[0], location.geo.coordinates[1]);
-    } catch (e) {
-      this.currentLocation = this.userGeo;
-      this.mapCenter = latLng(this.userGeo.geo.coordinates[0], this.userGeo.geo.coordinates[1]);
-    }
-    try {
-      this.currentMarkerLayer.remove();
-    } catch (e) { }
+    if (!!location) {
+      const options = { title: location.name, riseOnHover: true };
 
-    this.currentMarkerLayer = new Marker(this.mapCenter, options);
-    console.log(this.currentMarkerLayer);
-
-    // Edit?
-    this.currentMarkerLayer.addTo(this.map);
-    /**
-    .on('click',
-    (event) => {
-      for (let i = 0; i < this.org.locations.length; i++) {
-        console.log(this.org.locations[i].name, location.name);
-        if (this.org.locations[i].name == location.name) {
-          console.log('VALUE', this._template);
-          this.openModal(this._template, i);
-          break;
-        }
+      try {
+        this.currentLocation = location;
+        this.mapCenter = latLng(location.geo.coordinates[0], location.geo.coordinates[1]);
+      } catch (e) {
+        this.currentLocation = this.userGeo;
+        this.mapCenter = latLng(this.userGeo.geo.coordinates[0], this.userGeo.geo.coordinates[1]);
       }
-    });**/
-    //.on('click', function(e) {
-    // 
-    //});
+      try {
+        this.currentMarkerLayer.remove();
+      } catch (e) { }
+
+      this.currentMarkerLayer = new Marker(this.mapCenter, options);
+      console.log(this.currentMarkerLayer);
+
+      // Edit?
+      this.currentMarkerLayer.addTo(this.map);
+      /**
+      .on('click',
+      (event) => {
+        for (let i = 0; i < this.org.locations.length; i++) {
+          console.log(this.org.locations[i].name, location.name);
+          if (this.org.locations[i].name == location.name) {
+            console.log('VALUE', this._template);
+            this.openModal(this._template, i);
+            break;
+          }
+        }
+      });**/
+      //.on('click', function(e) {
+      // 
+      //});
+    }
   }
 
   public mapReset() {
@@ -225,6 +237,42 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
     return parseFloat(arg);
   }
 
+  private createOrg() {
+    // get lungoOrg
+    // insert to legacy org!
+
+    this.lungoOrgService.getOrganization(this.org_id).subscribe(
+      data => {
+        this.lungo = data;
+
+        let payload = {
+          locations: [],
+          planes: {},
+          id: this.org_id,
+          url: "",
+          org: "nif.nlf.klubb",
+          active: true,
+          roles: {},
+          ot: 1,
+          name: this.lungo.name,
+          club: this.lungo.parent_id
+        }
+        this.orgService.create(payload).subscribe(
+          data => {
+            console.log('CREATE', data);
+            this.getOrg();
+          },
+          error => { },
+          () => { }
+        );
+      },
+      err => {
+        this.alertService.error(err.message);
+      },
+      () => { }
+    );
+  }
+
   private getOrg() {
     this.orgService.getClub(this.org_id).subscribe(
       data => {
@@ -238,7 +286,12 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
           console.error("Error setting coordinates", e);
         }
       },
-      err => console.log(err),
+      err => {
+        if (err.status == 404) {
+          this.createOrg();
+        }
+        console.log(err);
+      },
       () => { }
     );
   }
@@ -369,6 +422,23 @@ export class NlfOrganizationLocationsComponent implements OnInit, OnDestroy, Aft
     this.currentModalMarkerLayer.on('dragend', (event) => {
       this.onDragEnd(event, options);
     });
+
+
+    this.modalMap.on('click', (event) => {
+      console.log(event);
+      const { lat, lng } = event.latlng;
+      this.modalValue.geo = { type: 'Point', coordinates: [lat, lng] };
+      
+
+      this.currentModalMarkerLayer.remove();
+      this.currentModalMarkerLayer = new Marker(event.latlng, options);
+      this.currentModalMarkerLayer.on('dragend', (event) => {
+        this.onDragEnd(event, options);
+      });
+      this.currentModalMarkerLayer.addTo(this.modalMap);
+      this.modalMap.panTo(latLng(lat, lng));
+    });
+
     this.currentModalMarkerLayer.addTo(this.modalMap);
     //this.map.options.layers[1](marker(this.org.locations[0].geo.coordinates[0], this.org.locations[0].geo.coordinates[1]));
   }

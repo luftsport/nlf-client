@@ -1,10 +1,6 @@
 <!-- NARRATIVE -->
 <div class="form-group">
-  <nlf-ors-editor-tag-e5x *ngIf="showLang" [disabled]="disabled"
-    [(items)]="language.value"
-    customLabel="Språk benyttet"
-    path="E5X.Occurrence.ReportingHistory.ReporterSLanguage">
-  </nlf-ors-editor-tag-e5x>
+
   <textarea [disabled]="disabled"
     placeholder="Beskriv med egne ord hva som skjedde eller kunne ha skjedd - kortfattet og presist hendelsesforløp med konsekvenser"
     class="form-control mt-2"
@@ -13,4 +9,10 @@
     (ngModelChange)="debouncedUpdate()"
     [(ngModel)]="narrative.plainText">
   </textarea>
+  <nlf-ors-editor-tag-e5x *ngIf="showLang" [disabled]="disabled"
+    [allowed]="languages" [(items)]="language.value"
+    customLabel="Språk benyttet"
+    path="E5X.Occurrence.ReportingHistory.ReporterSLanguage">
+  </nlf-ors-editor-tag-e5x>
+
 </div>

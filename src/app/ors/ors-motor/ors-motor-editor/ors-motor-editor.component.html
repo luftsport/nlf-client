@@ -345,7 +345,7 @@
 
       <!-- RISK ASSESSMENT -->
       <nlf-ors-editor-e5x-risk *ngIf="!showSimpleView()" [disabled]="!observation.acl_user.w" (change)="update()"
-        [(riskAssessment)]="observation.occurrence.entities.riskAssessment"></nlf-ors-editor-e5x-risk>
+        [(occurrence)]="observation.occurrence"></nlf-ors-editor-e5x-risk>
 
       <!-- NARRATIVE Moved top
     <div class="row my-3">

@@ -12,8 +12,9 @@ export class NlfOrsEditorTagE5xRenderVersionComponent implements OnInit {
 
   @Input() _id: string;
   @Input() version: number;
-  @Input() path: string;
-  @Input() e5xPath: string;
+  @Input() path: string; // path in observation
+  @Input() key: string = 'value';
+  @Input() e5xPath: string; // path in E5X taxonomy
   @Input() unit: string;
   @Input() customLabel: string;
   @Input() showLabel = false;
@@ -34,14 +35,15 @@ export class NlfOrsEditorTagE5xRenderVersionComponent implements OnInit {
     options['query'][projection] = 1;
     this.orsService.get(this._id+'?version='+this.version, options).subscribe(
       data => {
+        console.log('Data', data, 'Path', this.path, this.e5xPath)
         try {
-        this.value = +_get(data, this.path)['value']; //['occurrence']['entities']['reportingHistory'][0]['attributes']['reportStatus']['value'];
+        this.value = +(_get(data, this.path+'.'+this.key)); //['occurrence']['entities']['reportingHistory'][0]['attributes']['reportStatus']['value'];
         } catch(err) {
-          console.log(err);
-          this.value = 0;
+          console.log('ERR',err);
+          this.value = undefined;
         }
       },
-      err => console.log(err),
+      err => console.log('ERR PIPE', err),
       () => {}
     )
   }

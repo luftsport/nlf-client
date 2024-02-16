@@ -1,6 +1,6 @@
 {
   "name": "nlf-client",
-  "version": "0.13.10",
+  "version": "0.14.1",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -79,7 +79,7 @@
     "leaflet-geometryutil": "^0.10.1",
     "leaflet.heat": "^0.2.0",
     "leaflet.markercluster": "^1.5.3",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "nemex-angular2-realtimegeolocation": "0.0.6",
     "ng-bootstrap": "^1.6.3",
@@ -120,6 +120,7 @@
     "@angular/localize": "^13.3.12",
     "@types/jasmine": "~3.6.0",
     "@types/jasminewd2": "^2.0.6",
+    "@types/lodash": "^4.14.202",
     "@types/node": "^10.12.21",
     "acorn": "^8.8.2",
     "codelyzer": "^6.0.0",

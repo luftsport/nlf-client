@@ -1,0 +1,49 @@
+<div *ngIf="!!organization" class="row pt-2 overflow-auto">
+
+  <div class="col-md-6 col-xs-12">
+
+    <dl>
+      <span *ngIf="!!organization.hl">
+        <dt class="col-md-3">HL</dt>
+        <dd class="col-md-9">
+          <span *ngFor="let hl of organization.hl">
+            <nlf-resolve-lungo-person link="true" [person_id]="hl.id"></nlf-resolve-lungo-person>
+          </span>
+        </dd>
+      </span>
+
+      <span *ngIf="!!organization?.hfl">
+        <dt class="col-md-3">HFL</dt>
+        <dd class="col-md-9">
+          <span *ngFor="let hfl of organization.hfl">
+            <nlf-resolve-lungo-person link="true" [person_id]="hfl.id" [tmp_name]="hfl.tmp_name"></nlf-resolve-lungo-person>
+          </span>
+        </dd>
+      </span>
+    </dl>
+  </div>
+
+  <div class="col-md-6 col-xs-12">
+    <dl>
+      <span *ngIf="!!organization.hm">
+        <dt class="col-md-3">HM</dt>
+        <dd class="col-md-9">
+          <span *ngFor="let hm of organization.hm">
+            <nlf-resolve-lungo-person link="true" [person_id]="hm.id" [tmp_name]="hm.tmp_name"></nlf-resolve-lungo-person>
+          </span>
+        </dd>
+      </span>
+
+      <span *ngIf="!!organization.pilot">
+        <dt class="col-md-3">Pilot</dt>
+        <dd class="col-md-9">
+          <span *ngFor="let pilot of organization.pilot">
+            <nlf-resolve-lungo-person link="true" [person_id]="pilot.id" [tmp_name]="pilot.tmp_name"></nlf-resolve-lungo-person>
+          </span>
+        </dd>
+      </span>
+
+    </dl>
+
+  </div>
+</div>

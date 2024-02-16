@@ -58,7 +58,7 @@
       </div>
 
 
-      <div class="d-grid gap-2">
+      <div class="d-grid mt-2 gap-2">
         <button [disabled]="!observation.acl_user.w" (click)="wx.wind.turbulence=!wx.wind.turbulence;debouncedUpdate()"
           class="btn" [ngClass]="!!wx.wind.turbulence ? 'btn-secondary' : 'btn-outline-dark'" id="turbulence">
           <i class="wi wi-tornado"></i> Turbulens
@@ -79,7 +79,7 @@
           (ngModelChange)="debouncedUpdate()" [(ngModel)]="wx.clouds.base">
       </div>
 
-      <div class="d-grid gap-2">
+      <div class="d-grid mt-2 gap-2">
         <button [disabled]="!observation.acl_user.w" (click)="wx.clouds.rain=!wx.clouds.rain;debouncedUpdate()"
           class="btn" [ngClass]="!!wx.clouds.rain ? 'btn-secondary' : 'btn-outline-dark'">
           <i class="wi wi-rain"></i> Regn
@@ -111,7 +111,7 @@
         <input [disabled]="!observation.acl_user.w" class="form-control" type="number" id="tempground"
           (ngModelChange)="debouncedUpdate()" [(ngModel)]="wx.temp.ground">
       </div>
-      <div class="form-group">
+      <div *ngIf="activity=='fallskjerm'" class="form-group">
         <label for="tempexit">Utsprangshøyde</label>
         <input [disabled]="!observation.acl_user.w" class="form-control" type="number" id="tempexit"
           (ngModelChange)="debouncedUpdate()" [(ngModel)]="wx.temp.altitude">
@@ -217,7 +217,7 @@
           <input [disabled]="!observation.acl_user.w" class="form-control" type="number" id="tempground"
             [(ngModel)]="wx.temp.ground">
         </div>
-        <div class="form-group">
+        <div *ngIf="!!activity && activity==='fallskjerm'" class="form-group">
           <label for="tempexit">På utsprangshøyde (&deg;C)</label>
           <input [disabled]="!observation.acl_user.w" class="form-control" type="number" id="tempexit"
             [(ngModel)]="wx.temp.altitude">

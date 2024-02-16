@@ -32,7 +32,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { Title } from '@angular/platform-browser';
 
 // TrackJS
-//import { TrackJsErrorHandler } from "./trackjs.handler";
+// import { TrackJsErrorHandler } from "./trackjs.handler";
 
 // APP CUSTOM
 import { NlfSharedModule } from 'app/nlf-shared.module';
@@ -167,6 +167,7 @@ import { NlfOrsFallskjermCreateComponent } from 'app/ors/ors-fallskjerm/ors-fall
 import { NlfOrsMotorCreateComponent } from 'app/ors/ors-motor/ors-motor-create/ors-motor-create.component';
 import { NlfOrsSeilflyCreateComponent } from 'app/ors/ors-seilfly/ors-seilfly-create/ors-seilfly-create.component';
 import { NlfOrsSportsflyCreateComponent } from 'app/ors/ors-sportsfly/ors-sportsfly-create/ors-sportsfly-create.component';
+import { NlfOrsModellflyCreateComponent } from 'app/ors/ors-modellfly/ors-modellfly-create/ors-modellfly-create.component';
 // Modal
 import { NlfOrsCreateModalComponent } from 'app/ors/ors-create-modal/ors-create-modal.component';
 
@@ -194,6 +195,7 @@ import { NlfOrsEditorAboutComponent } from 'app/ors/ors-editor/ors-editor-about/
 import { NlfOrsEditorDebugComponent } from 'app/ors/ors-editor/ors-editor-debug/ors-editor-debug.component';
 import { NlfOrsEditorMetComponent } from 'app/ors/ors-editor/ors-editor-met/ors-editor-met.component';
 import { NlfOrsEditorWeatherComponent } from 'app/ors/ors-editor/ors-editor-weather/ors-editor-weather.component';
+import { NlfOrsEditorRoleInObservationComponent } from 'app/ors/ors-editor/ors-editor-role-in-observation/ors-editor-role-in-observation.component';
 
 import { NlfOrsEditorOperationalComponent } from 'app/ors/ors-editor/ors-editor-operational/ors-editor-operational.component';
 import { NlfOrsEditorCategoriesComponent } from 'app/ors/ors-editor/ors-editor-categories/ors-editor-categories.component';
@@ -217,7 +219,7 @@ import { NlfOrsReportFilesComponent } from 'app/ors/ors-report/report-files/repo
 import { NlfOrsReportComponentsTimelineComponent } from 'app/ors/ors-report/report-components-timeline/report-components-timeline.component';
 import { NlfOrsReportFilesThumbnailsComponent } from 'app/ors/ors-report/report-files-thumbnails/report-files-thumbnails.component';
 import { NlfOrsReportFlightMapComponent } from 'app/ors/ors-report/report-flight-map/report-flight-map.component';
-import { NlfOrsReportE5xComponent } from './ors/ors-report/report-e5x/report-e5x.component';
+import { NlfOrsReportE5xComponent } from 'app/ors/ors-report/report-e5x/report-e5x.component';
 
 // OBSREG FALLSKJERM
 import { NlfOrsFallskjermEditorComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-editor/ors-fallskjerm-editor.component';
@@ -236,6 +238,27 @@ import { NlfOrsFallskjermDashboardTableComponent } from 'app/ors/ors-fallskjerm/
 import { NlfOrsFallskjermReportInvolvedComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-report/report-involved/report-involved.component';
 import { NlfOrsFallskjermReportOrganizationComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-report/report-organization/report-organization.component';
 import { NlfOrsFallskjermReportSummaryComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-report/report-summary/report-summary.component';
+
+// OBSREG Modellfly
+import { NlfOrsModellflyEditorComponent } from 'app/ors/ors-modellfly/ors-modellfly-editor/ors-modellfly-editor.component';
+import { NlfOrsModellflyComponent } from 'app/ors/ors-modellfly/ors-modellfly.component';
+import { NlfOrsModellflyMainComponent } from 'app/ors/ors-modellfly/ors-modellfly-main/ors-modellfly-main.component';
+import { NlfOrsModellflyReportComponent } from 'app/ors/ors-modellfly/ors-modellfly-report/ors-modellfly-report.component';
+
+import { NlfOrsModellflyEditorLocationComponent } from 'app/ors/ors-modellfly/ors-modellfly-editor/ors-modellfly-editor-location/ors-modellfly-editor-location.component';
+import { NlfOrsModellflyEditorOrganizationComponent } from 'app/ors/ors-modellfly/ors-modellfly-editor/ors-modellfly-editor-organization/ors-modellfly-editor-organization.component';
+import { NlfOrsModellflyEditorInvolvedComponent } from 'app/ors/ors-modellfly/ors-modellfly-editor/ors-modellfly-editor-involved/ors-modellfly-editor-involved.component';
+import { NlfOrsModellflySearchComponent } from 'app/ors/ors-modellfly/ors-modellfly-search/ors-modellfly-search.component';
+import { NlfOrsModellflyDashboardComponent } from 'app/ors/ors-modellfly/ors-modellfly-dashboard/ors-modellfly-dashboard.component';
+import { NlfOrsModellflyDashboardTableComponent } from 'app/ors/ors-modellfly/ors-modellfly-dashboard/ors-modellfly-dashboard-table/ors-modellfly-dashboard-table.component';
+import { NlfOrsModellflyEditorRpasTypeComponent } from 'app/ors/ors-modellfly/ors-modellfly-editor/ors-modellfly-editor-rpas-type/ors-modellfly-editor-rpas-type.component';
+import { NlfOrsModellflyEditorRpasFlightTypeComponent } from 'app/ors/ors-modellfly/ors-modellfly-editor/ors-modellfly-editor-rpas-flight-type/ors-modellfly-editor-rpas-flight-type.component';
+// FALLSKJERM REPORT
+import { NlfOrsModellflyReportInvolvedComponent } from 'app/ors/ors-modellfly/ors-modellfly-report/report-involved/report-involved.component';
+import { NlfOrsModellflyReportOrganizationComponent } from 'app/ors/ors-modellfly/ors-modellfly-report/report-organization/report-organization.component';
+import { NlfOrsModellflyReportSummaryComponent } from 'app/ors/ors-modellfly/ors-modellfly-report/report-summary/report-summary.component';
+import { NlfOrsModellflyEccairs2Component } from 'app/ors/ors-modellfly/ors-modellfly-eccairs2/ors-modellfly-eccairs2.component';
+import { NlfOrsModellflyEccairs2AuditComponent } from 'app/ors/ors-modellfly/ors-modellfly-eccairs2/ors-modellfly-eccairs2-audit/ors-modellfly-eccairs2-audit.component';
 
 // OBSREG MOTOR
 import { NlfOrsMotorComponent } from 'app/ors/ors-motor/ors-motor.component';
@@ -265,8 +288,8 @@ import { NlfOrsSportsflyReportSummaryComponent } from 'app/ors/ors-sportsfly/ors
 
 
 // OBSREG EDITOR
-import { NlfOrsEditorTagComponent } from 'app/ors/ors-editor/ors-editor-tag/ors-editor-tag.component';
-import { NlfOrsEditorTagStringComponent } from 'app/ors/ors-editor/ors-editor-tag-string/ors-editor-tag-string.component';
+// ShARED import { NlfOrsEditorTagComponent } from 'app/ors/ors-editor/ors-editor-tag/ors-editor-tag.component';
+// SHARED import { NlfOrsEditorTagStringComponent } from 'app/ors/ors-editor/ors-editor-tag-string/ors-editor-tag-string.component';
 import { NlfOrsEditorTagPersonComponent } from 'app/ors/ors-editor/ors-editor-tag-person/ors-editor-tag-person.component';
 import { NlfOrsEditorTagPersonsComponent } from 'app/ors/ors-editor/ors-editor-tag-persons/ors-editor-tag-persons.component';
 
@@ -303,7 +326,6 @@ import { NlfOrsEditorE5xReportinghistoryReportersDescriptionComponent } from 'ap
 import { NlfOrsEditorE5xAssessmentComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-assessment/ors-editor-e5x-assessment.component';
 import { NlfOrsEditorE5xRiskComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-risk/ors-editor-e5x-risk.component';
 import { NlfOrsEditorE5xSeparationComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-separation/ors-editor-e5x-separation.component';
-
 
 // OBSREG EDITOR *FLY ONLY
 import { NlfOrsEditorFlightComponent } from 'app/ors/ors-editor/ors-editor-e5x-entities/ors-editor-e5x-aircraft/ors-editor-flight/ors-editor-flight.component';
@@ -426,11 +448,41 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
 
     NlfOrsEditorFirstComponent,
     NlfOrsErrorComponent,
+
+    // FALLSKJERM OBSREG
+    NlfOrsFallskjermCreateComponent,
     NlfOrsFallskjermComponent,
     NlfOrsFallskjermSearchComponent,
     NlfOrsFallskjermDashboardComponent,
     NlfOrsFallskjermDashboardTableComponent,
     NlfOrsFallskjermReportSummaryComponent,
+    NlfOrsFallskjermMainComponent,
+    NlfOrsFallskjermReportComponent,
+    NlfOrsFallskjermReportInvolvedComponent,
+    NlfOrsFallskjermReportOrganizationComponent,
+    NlfOrsFallskjermEditorLocationComponent,
+    NlfOrsFallskjermEditorOrganizationComponent,
+    NlfOrsFallskjermEditorInvolvedComponent,
+    NlfOrsFallskjermEditorComponent,
+
+    // Modellfly
+    // FALLSKJERM OBSREG
+    NlfOrsModellflyCreateComponent,
+    NlfOrsModellflyComponent,
+    NlfOrsModellflySearchComponent,
+    NlfOrsModellflyDashboardComponent,
+    NlfOrsModellflyDashboardTableComponent,
+    NlfOrsModellflyReportSummaryComponent,
+    NlfOrsModellflyMainComponent,
+    NlfOrsModellflyReportComponent,
+    NlfOrsModellflyReportInvolvedComponent,
+    NlfOrsModellflyReportOrganizationComponent,
+    NlfOrsModellflyEditorLocationComponent,
+    NlfOrsModellflyEditorOrganizationComponent,
+    NlfOrsModellflyEditorInvolvedComponent,
+    NlfOrsModellflyEditorComponent,
+    NlfOrsModellflyEccairs2Component,
+    NlfOrsModellflyEccairs2AuditComponent,
 
     NlfOrsEditorPeopleMotorflyComponent,
 
@@ -514,6 +566,7 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     // USER ACLS
     NlfOrsEditorUsersComponent,
 
+
     // modals
     NlfOrsEditorHelpComponent,
     NlfOrsEditorAboutComponent,
@@ -531,6 +584,9 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfOrsEditorMetComponent,
     NlfOrsEditorWeatherComponent,
 
+    NlfOrsEditorRoleInObservationComponent,
+    NlfOrsModellflyEditorRpasTypeComponent,
+    NlfOrsModellflyEditorRpasFlightTypeComponent,
     // Aircraft
     NlfOrsEditorAircraftPersonComponent,
     // Aircraft attributes
@@ -566,10 +622,9 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfOrsEditorE5XEventsComponent,
     NlfOrsEditorE5xReportinghistoryComponent,
     NlfOrsEditorE5xRiskComponent,
-
     // OBSREG TAG
-    NlfOrsEditorTagComponent,
-    NlfOrsEditorTagStringComponent,
+    //NlfOrsEditorTagComponent,
+    //NlfOrsEditorTagStringComponent,
     NlfOrsEditorTagPersonComponent,
     NlfOrsEditorTagPersonsComponent,
 
@@ -695,7 +750,7 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
       useClass: NlfAuthInterceptor,
       multi: true
     },
-   // { provide: ErrorHandler, useClass: TrackJsErrorHandler },
+    // { provide: ErrorHandler, useClass: TrackJsErrorHandler },
     /** TrackJs
     {
       provide: ErrorHandler,

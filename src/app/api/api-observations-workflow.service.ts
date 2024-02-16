@@ -30,6 +30,12 @@ export class ApiObservationsWorkflowService extends ApiRestService {
     return this.getItem(this.relativeUrl + objectId, '/graph/' + state, options);
   }
 
+  public getMapping(objectId: string, options?: ApiOptionsInterface): Observable<any> {
+
+    return this.getItem(this.relativeUrl + objectId, '/mapping', options);
+  }
+
+
   /**
    * Change workflow by action
    * @param objectId Mongodb _id

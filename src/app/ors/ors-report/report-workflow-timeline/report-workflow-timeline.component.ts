@@ -1,6 +1,7 @@
 import { ApiWorkflowInterface } from 'app/api/api.interface';
 import { Component, Input, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { ApiObservationsWorkflowService } from 'app/api/api-observations-workflow.service';
 
 @Component({
   selector: 'nlf-ors-report-workflow-timeline',
@@ -15,7 +16,9 @@ export class NlfOrsReportWorkflowTimelineComponent implements OnInit {
   @Input() vlink?: boolean;
 
 
-  public workflowActions = {
+  public workflowActions;
+  
+  /**= {
     init: 'Opprettet',
     send_to_hi: 'Sendt til HI',
     approve_hi: 'Godkjent av HI',
@@ -28,6 +31,8 @@ export class NlfOrsReportWorkflowTimelineComponent implements OnInit {
     reopen: 'Gjenåpnet',
     reopen_su: 'Gjenåpnet av SU'
   };
+   */
+
 
   public workflowColors = {
     init: 'b-primary',
@@ -44,9 +49,18 @@ export class NlfOrsReportWorkflowTimelineComponent implements OnInit {
   };
 
 
-  constructor() { }
+  constructor(private apiWorkflow: ApiObservationsWorkflowService) { }
 
   ngOnInit() {
+
+    this.apiWorkflow.setActivity(this.activity);
+    this.apiWorkflow.getMapping(this._id).subscribe(
+      data => {
+        this.workflowActions = data;
+      },
+      err => console.log(err),
+      () => { }
+    );
 
     if (!this.vlink) {
       this.vlink = true;

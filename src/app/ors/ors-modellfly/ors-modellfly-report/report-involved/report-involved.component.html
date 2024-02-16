@@ -1,0 +1,62 @@
+<div *ngIf="involved" class="overflow-auto">
+  <table class="table table-condensed table-hover table-striped">
+    <tr>
+      <th></th>
+      <th></th>
+      <th>Rolle</th>
+      <th>RPAS</th>
+      <th>Kompetanser</th>
+    </tr>
+    <tr *ngFor="let p of involved">
+
+      <td>
+        <nlf-resolve-lungo-person link="true" [person_id]="p.id" [tmp_name]="p.tmp_name"></nlf-resolve-lungo-person>
+        <!--  {{$index+1}}-->
+      </td>
+      <td>
+        <fa-icon title="Personskade" class="ml-3" *ngIf="p.data.injury==='injury'" [icon]="faTruckMedical"></fa-icon>
+        <fa-icon title="Alvorlig skade med men eller død" class="ml-3 text-danger" *ngIf="p.data.injury==='serious_or_fatal'" [icon]="faHouseMedicalCircleExclamation"></fa-icon>
+      </td>
+
+      <td>
+        <ng-container *ngIf="!!config">
+          <ng-container *ngFor="let role of config.modellfly.observation.roles_in_observation">
+            <ng-container *ngIf="p.data.role==role.key">{{ role.label }}</ng-container>
+          </ng-container>
+        </ng-container>
+      </td>
+
+      <td>
+        <ng-container *ngIf="!!config">
+
+          <ng-container *ngFor="let rpas of config.modellfly.observation.rpas_types">
+            <span *ngIf="p.data.rpas_type==rpas.key">{{ rpas.label }}</span>
+          </ng-container>
+
+          <ng-container *ngFor="let rpas_flight_type of config.modellfly.observation.rpas_flight_type">
+            <ng-container *ngIf="p.data.rpas_flight_type==rpas_flight_type.key">
+              <span class="badge bg-info text-dark ml-2 p-1">{{ rpas_flight_type.label }}</span>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </td>
+
+      <td>
+        <span *ngFor="let license of p?.data?.licenses" class="mx-1">
+          <nlf-resolve-lungo-license [license_id]="license.id"></nlf-resolve-lungo-license>
+          <!--{{license.type_name}}-->
+        </span>
+        <div>
+          <span *ngFor="let competence of p?.data?.competences" class="mx-1">
+            {{competence._code}}
+          </span>
+        </div>
+
+
+      </td>
+
+
+
+    </tr>
+  </table>
+</div>

@@ -59,34 +59,32 @@ export class NlfOrsEditorTagE5xRenderComponent implements OnInit {
         }
       }
     }
-    
     this.apiCache.get(
       ['e5x-attribute', this.activity, options.query],
       this.attributeService.getAttributes(options)).subscribe(
-      data => {
-        console.log('Dadadadada',this.path);
-        if (data._items.length > 0) {
+        data => {
+          if (data._items.length > 0) {
 
-          if (!!data._items[0].choices_key) {
-            const coptions: ApiOptionsInterface = {
-              query: {
-                where: {
-                  key: data._items[0].choices_key,
-                  id: { $in: this.items },
-                  rit_version: this.rit_version
+            if (!!data._items[0].choices_key) {
+              const coptions: ApiOptionsInterface = {
+                query: {
+                  where: {
+                    key: data._items[0].choices_key,
+                    id: { $in: this.items },
+                    rit_version: this.rit_version
+                  }
                 }
               }
+              this.choicesService.getChoices(coptions).subscribe(
+                data => {
+                  data._items.forEach(row => {
+                    this.arr.push(row.label);
+                  })
+                }
+              )
+            } else {
+              this.arr = this.items;
             }
-            this.choicesService.getChoices(coptions).subscribe(
-              data => {
-                data._items.forEach(row => {
-                  this.arr.push(row.label);
-                })
-              }
-            )
-          } else {
-            this.arr = this.items;
-          }
         } else {
           this.arr = this.items;
         }
@@ -96,7 +94,6 @@ export class NlfOrsEditorTagE5xRenderComponent implements OnInit {
         this.arr = this.items;
       },
     )
-    
   }
 
 }

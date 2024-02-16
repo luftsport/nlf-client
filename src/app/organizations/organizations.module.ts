@@ -27,7 +27,7 @@ import { NlfOrganizationStatsPopulationPyramidComponent } from './organization-s
 
 
 // SELECTERS @TODO move to seperate universal
-import { NlfLocationSelectComponent } from 'app/organizations/organization-locations/location-select/location-select.component';
+import { NlfLocationSelectComponent } from 'app/organizations/organization-locations/location-select/location-select.component';
 
 //import { NlfOrsEditorTagComponent } from 'app/ors/ors-editor/ors-editor-tag/ors-editor-tag.component';
 // Not working yet (v3...)

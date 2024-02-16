@@ -12,6 +12,7 @@ export class NlfOrsReportFilesComponent implements OnInit {
 
   @Input() files: ApiObservationFileInterface[]; // [{f: string, r: boolean}]
   @Input() state: string;
+  @Input() doNotShowRestricted: boolean = false;
   filelist = []; // : ApiFileItem[] = []; // Not list since list is Eve, we build our own list
   dataReady = false;
 
@@ -22,6 +23,11 @@ export class NlfOrsReportFilesComponent implements OnInit {
   constructor(private apiFile: ApiFilesService) { }
 
   ngOnInit() {
+
+    if(this.doNotShowRestricted) {
+      console.log('Onlypublic');
+      this.files = this.files.filter(x => x['r']===false)
+    }
 
     if (this.files.length > 0) {
       this.getFiles();

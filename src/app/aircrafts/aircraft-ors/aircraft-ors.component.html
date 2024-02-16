@@ -2,7 +2,7 @@
 
   <div class="list-group list-group-flush">
     <a [routerLink]="['/ors', ors._model.type, 'report', ors.id]" *ngFor="let ors of observations" class="list-group-item list-group-item-action">
-      <span>#{{ ors.id }} {{ ors.tags | join: '/' }}</span>
+      <span>#{{ ors.id }} {{ ors.tags | join: '/' }}</span>
       <fa-icon *ngIf="ors.files?.length > 0" [icon]="faPaperclip"></fa-icon>
       <!--<span class="badge bg-{{ors.rating | nlfOrsRatingCalc | nlfDynamicColor}} rounded-pill">{{ ors.rating | nlfOrsRatingCalc }}</span>-->
     </a>
