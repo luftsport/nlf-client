@@ -1,0 +1,65 @@
+<div *ngIf="deltaCompetences.length>0&&!!competencesToUpdate&&competencesToUpdate.length>0&&generate"
+    class="alert alert-danger" role="alert">
+
+    <h4 class="alert-heading"><fa-icon [icon]="faExclamationTriangle"></fa-icon> Oppdaterer manglende data</h4>
+    <div *ngFor="let competence of competencesToUpdate">
+
+        <fa-icon [icon]="faCheck" class="text-success" *ngIf="!!competence.ready"></fa-icon>
+        <!--<span [ngClass]="{'text-success':!!competence.CompetenceId}">{{ competence.CompetenceId }} {{ competence.CompetenceName }}</span>-->
+        {{ competence.CompetenceId }}: {{ competence.CompetenceName }}
+    </div>
+</div>
+
+<!-- 5. om alt fint suksess  -->
+<div *ngIf="showSuccess&&status=='finished'&&competencesToUpdate.length==0" class="alert alert-success" role="alert">
+    <h4 class="alert-heading"><fa-icon [icon]="faCheck"></fa-icon> Data stemmer med Klubbadmin </h4>
+    <div *ngIf="deltaCompetences>0">Til informasjon så vises ikke kurs eller ugyldige kompetanser/lisenser her, det kan
+        derfor være avvik med det du ser i Klubbadmin under kompetanser.</div>
+</div>
+<!-- 5. om alt fint suksess  -->
+
+<!-- 1. Sjekker -->
+<div *ngIf="['loading', 'comparing', 'generate', 'reloading'].indexOf(status)>-1" class="row text-center">
+    <div class="col-md-12 text-center">
+        <nlf-ui-component-spinner size="3"></nlf-ui-component-spinner>
+    </div>
+    <div *ngIf="status=='loading'" class="col-md-12 text-center">
+        Henter og sjekker data fra Klubbadmin...
+    </div>
+    <div *ngIf="status=='comparing'" class="col-md-12 text-center">
+        Sammenligner med data fra Klubbadmin...
+    </div>
+    <div *ngIf="status=='generate'" class="col-md-12 text-center">
+        Genererer endringsmeldinger...
+    </div>
+    <div *ngIf="status=='reloading'" class="col-md-12 text-center">
+        Endringsmeldinger sendt, laster personen på nytt...
+    </div>
+</div>
+
+<div *ngIf="!generate&&status=='finished'&&deltaCompetences.length>0&&!!competencesToUpdate&&competencesToUpdate.length>0"
+    class="alert alert-danger" role="alert">
+
+    <h4 class="alert-heading"><fa-icon [icon]="faExclamationTriangle"></fa-icon> Endringer ennå ikke mottatt</h4>
+    <div *ngFor="let competence of competencesToUpdate">
+        <fa-icon [icon]="faClock" class="text-success"></fa-icon>
+        {{ competence.CompetenceId }}: {{ competence.CompetenceName }}
+    </div>
+    <hr>
+    <div>
+        Du kan vente litt for å oppdatere personen manuellt ved å klikke på knappen under for å hente data på nytt.
+    </div>
+    <div class="text-center">
+        <button class="btn btn-primary" (click)="personChanged.next(true);"><fa-icon [icon]="faRefresh"></fa-icon>
+            Oppdater personen</button>
+    </div>
+</div>
+
+<!-- 4. Reload modal -->
+
+<!-- ERRORS -->
+<div *ngIf="status=='error'" class="alert alert-danger" role="alert">
+    <h4 class="alert-heading"><fa-icon [icon]="faExclamationTriangle"></fa-icon> Det oppstod en feil </h4>
+    <hr>
+    {{ error | json }}
+</div>

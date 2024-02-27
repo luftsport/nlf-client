@@ -44,7 +44,9 @@ export class NlfMemberComponent implements OnInit {
 
   public ENV = environment;
 
-  deboucedSearch = debounce(this._search, 700);
+  public generateChangeMessages = true;
+
+  deboucedSearch = debounce(this._search, 800);
 
   faUsers = faUsers;
   faSave = faSave;
@@ -245,10 +247,13 @@ export class NlfMemberComponent implements OnInit {
     this.personsService.getUser(person_id).subscribe(
       data => {
         this.modalPerson = data;
-        if (this.modalPerson.activities.includes(109)) {
-          this.getLicenseFromPayment(person_id);
-        }
-        this.modalRef = this.modalService.open(this.personModalTemplate, { size: 'lg' });
+        try {
+          if (this.modalPerson.activities.includes(109)) {
+            this.getLicenseFromPayment(person_id);
+          }
+        } catch (e) { }
+
+        this.modalRef = this.modalService.open(this.personModalTemplate, { size: 'lg', fullscreen: 'xl' });
       },
       err => console.log(err),
       () => { }
@@ -259,10 +264,17 @@ export class NlfMemberComponent implements OnInit {
   closeModal(event) {
     this.modalRef.close();
     this.justClosedModal = true;
+    this.generateChangeMessages = true;
     try {
       event.stopPropagation();
     } catch { }
     this.setFocus("memberSearchInput");
+  }
+
+  reloadModal(event) {
+    this.modalRef.close();
+    this.generateChangeMessages = false;
+    this.openModal(this.person_id);
   }
 
 

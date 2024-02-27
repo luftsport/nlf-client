@@ -76,6 +76,7 @@ import { NlfResolveConfigComponent } from 'app/services/resolve/resolve-config/r
 // First login
 import { NlfUserFirstLoginComponent } from 'app/user/user-first-login/user-first-login.component';
 
+import { NlfNifCompareComponent } from 'app/member/nif-compare/nif-compare.component';
 // ng-bootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -163,6 +164,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     ResolveLungoCompetenceComponent,
     ResolveLungoCountryComponent,
     ResolveLungoCountyComponent,
+    NlfNifCompareComponent,
     // Breadcrumb
     NlfBreadcrumbComponent,
     NlfUserFirstLoginComponent,
@@ -234,6 +236,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     ResolveLungoCompetenceComponent,
     ResolveLungoCountryComponent,
     ResolveLungoCountyComponent,
+    NlfNifCompareComponent,
     // Common
     NlfAlertComponent,
     NlfToastComponent,

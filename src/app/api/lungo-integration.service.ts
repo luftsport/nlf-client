@@ -77,4 +77,16 @@ export class LungoIntegrationService extends ApiRestService {
     return this.post(this.relativeUrl + 'syncdaemon/worker/reboot/' + index, null);
   }
 
+  public getNifCompetences(person_id: number, options?: ApiOptionsInterface): Observable<any>{
+    return this.getList(this.relativeUrl + 'nif/competences/'+person_id);
+  }
+
+  public getNifLicenses(person_id: number, options?: ApiOptionsInterface): Observable<any>{
+    return this.getList(this.relativeUrl + 'nif/licenses/'+person_id);
+  }
+
+  public generateChangeMessage(entity_id: number, entity_type: string, options?: ApiOptionsInterface): Observable<any>{
+    return this.post(this.relativeUrl + 'nif/change/', {entity_id: entity_id, entity_type: entity_type}, options);
+  }
+
 }
