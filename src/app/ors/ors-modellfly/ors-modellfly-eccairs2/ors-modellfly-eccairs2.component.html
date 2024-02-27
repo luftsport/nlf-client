@@ -1,0 +1,252 @@
+<span *ngIf="e5x_enabled && !!observation">
+    <!-- make a eccairs2 audit in top!
+        <span (click)="openModal(modalTemplate)" class="pointer badge mx-1"
+        [ngClass]="{'bg-success':observation.e5x.status=='sent', 'bg-secondary': !observation.e5x.status}">
+        <fa-icon [icon]="faFileAlt"></fa-icon> LT
+    </span>-->
+    <button *ngIf="!!observation.eccairs2 && observation.eccairs2.hasOwnProperty('attributes')"
+        (click)="openModal(modalTemplate)" class="pointer btn btn-primary mx-1"
+        [ngClass]="{'bg-success':observation.e5x.status=='sent', 'bg-secondary': !observation.e5x.status}">
+        <fa-icon [icon]="faPaperPlane"></fa-icon> Send til LT
+    </button>
+</span>
+<!-- MODAL PREVIEW -->
+<ng-template #modalTemplate>
+
+    <div *ngIf="!!observation" class="modal-header">
+        <h4 class="modal-title pull-left">
+            Innsending av #{{ observation.id }} {{ observation._model.type }} v{{ observation._version }} til LT</h4>
+        <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div *ngIf="!!observation" class="modal-body">
+
+        <div class="row">
+            <div class="col-md-12">
+                <p class="lead">
+                    <fa-icon [icon]="faHistory"></fa-icon>Historikk
+                </p>
+
+                <div *ngIf="observation.e5x.audit.length==0" class="alert alert-info">
+                    <strong>Ingen historikk</strong> hvilket betyr at denne observasjonen ikke har blitt sendt LT
+                    tidligere.
+                </div>
+
+                <table *ngIf="observation.e5x.audit.length>0" class="my-3 table table-striped table-sm">
+                    <thead>
+                        <th></th>
+                        <th>Dato</th>
+                        <th>Sent av</th>
+                        <th>Sent som</th>
+                        <th>Versjon</th>
+                        <th>Innsending</th>
+                        <th>Prossesering</th>
+                        <th>Status</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let audit of observation.e5x.audit"
+                            [ngClass]="{'bg-info':observation._version==audit.version}">
+                            <td>
+                            </td>
+                            <td>
+                                {{ audit.date | date:'yyyy-MM-dd HH:mm'}}
+                            </td>
+                            <td>
+                                <nlf-resolve-lungo-person [person_id]="audit.person_id"></nlf-resolve-lungo-person>
+                            </td>
+                            <td>
+                                <nlf-ors-editor-tag-e5x-render *ngIf="observation._model.version<4"
+                                    classes="badge badge-secondary" [showLabel]="false" [items]="audit.status"
+                                    path="E5X.Occurrence.ReportingHistory.ReportStatus"></nlf-ors-editor-tag-e5x-render>
+
+                                <nlf-ors-editor-tag-e5x-render-version *ngIf="observation._model.version>=4"
+                                    [_id]="observation['_id']" [version]="audit.version"
+                                    path="eccairs2.entities.reportingHistory.0.attributes.reportStatus"
+                                    e5xPath="E5X.Occurrence.ReportingHistory.ReportStatus" classes="badge bg-info">
+                                </nlf-ors-editor-tag-e5x-render-version>
+
+                            </td>
+                            <td>
+                                v{{ audit.version }}
+                            </td>
+                            <td>
+                                <span *ngIf="audit.sent" class="badge bg-success"><fa-icon
+                                        [icon]="faPaperPlane"></fa-icon>
+                                    Sendt</span>
+                                <span *ngIf="!audit.sent" class="badge bg-info"><fa-icon [icon]="faBan"></fa-icon>
+                                    Ikke sendt</span>
+                            </td>
+                            <!-- Prossesering-->
+                            <td>
+                                <span *ngIf="!!audit?.eccairs2">
+                                    <span *ngIf="!!audit?.eccairs2?.result" class="badge bg-success"
+                                        title="Filen har blitt prosessert ferdig og er mottatt hos LT">
+                                        <fa-icon [icon]="faCogs"></fa-icon> {{
+                                        audit?.eccairs2?.result?.migrationStatus || "?" }}
+                                    </span>
+                                    <span
+                                        *ngIf="audit?.sent===true && audit?.eccairs2?.id>0 && !audit?.eccairs2?.result"
+                                        class="badge bg-warning" title="Prossesserer filen">
+                                        <fa-icon [icon]="faCogs"></fa-icon> {{ audit?.status }}
+                                    </span>
+                                    <span
+                                        *ngIf="audit?.sent===true && audit?.eccairs2?.id>0 && !!audit?.eccairs2?.result && audit?.eccairs2?.result?.migrationStatus !='Processed OK'"
+                                        class="badge bg-danger" title="Det var problemer med å prossessere filen">
+                                        <fa-icon [icon]="faCogs"></fa-icon> {{
+                                        audit?.eccairs2?.result?.migrationStatus || "Feilet" }}
+                                    </span>
+                                </span>
+                            </td>
+                            <!--Status -->
+                            <td>
+                                <span
+                                    *ngIf="audit?.eccairs2?.result?.migrationStatus==='Processed OK'&&audit.sent===true">
+                                    <fa-icon [icon]="faCheck" class="text-success" title="Filen er levert LT"></fa-icon>
+                                </span>
+                                <span
+                                    *ngIf="!!audit?.eccairs2?.result?.migrationStatus && (audit?.eccairs2?.result?.migrationStatus!='Processed OK'||audit.sent!=true)">
+                                    <fa-icon [icon]="faBan" class="text-danger"
+                                        title="Det har skjedd en feil under sending"></fa-icon>
+                                </span>
+                            </td>
+                            <td class="text-end">
+                                <a *ngIf="!!token" target="_blank"
+                                    href="/api/v1/e5x/download/{{observation._model.type}}/{{observation.id}}/{{audit.version}}?token={{token}}">
+                                    <fa-icon [icon]="faDownload"></fa-icon>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- NO ACCESS -->
+        <div *ngIf="!observation.acl_user.x && observation.workflow.state=='pending_review_obsreg'">
+            <div class="alert alert-danger m-3" role="alert">
+                <strong>Ingen tilgang</strong> Kun OBSREG koordinator har tilgang til å sende inn rapporten til LT.
+            </div>
+        </div>
+
+        <!-- THIS VERSION ALLREADY REPORTED -->
+        <div *ngIf="!e5xResult && !!observation.e5x.latest_version && observation._version==observation.e5x.latest_version"
+            class="alert alert-info m-3">
+            <strong>Denne versionen, version {{ observation._version }}, er allerede sendt inn.</strong> Det er
+            ingen
+            endringer i observasjonen siden
+            innsendelse og du kan dermed ikke sende denne inn på nytt før eventuelle endringer.
+        </div>
+
+        <!-- HAS ACCESS -->
+
+        <div *ngIf="!!observation.acl_user.x && observation.workflow.state=='pending_review_obsreg'">
+            <!-- GENERATE -->
+            <div *ngIf="!generating">
+                <div *ngIf="!observation.e5x.latest_version || observation._version!=observation.e5x.latest_version"
+                    class="my-3 mx-3">
+
+                    <!-- WARNING SEND YOURSELF? -->
+                    <div *ngIf="ENV._name!='prod' && !ENV._e5x_submission" class="alert alert-warning m-3" role="alert">
+                        <strong>Viktig!</strong> Dette er <span class="badge bg-danger">{{ ENV._name | uppercase
+                            }}</span> som er
+                        en
+                        test instans og innsendelse til LT er derfor ikke aktivert. Kun skarpe rapporter altså
+                        registrert i
+                        produksjonssystemet https://app.nlf.no kan sendes LT.
+                        Her kan du generere E5X filen som er en zipped fil med rapporten i xml format samt
+                        eventuelle vedlegg.
+                        Denne kan du laste ned om du ønsker.
+                    </div>
+
+                    <div *ngIf="ENV._name=='prod' && !ENV._e5x_submission" class="alert alert-warning m-3" role="alert">
+                        <strong>Viktig!</strong> Innsendelse til LT er ikke aktivert for <span
+                            class="badge bg-danger">{{
+                            ENV._name | uppercase }}</span>
+                    </div>
+
+                    <div *ngIf="ENV._name=='dev' && ENV._e5x_submission" class="alert alert-info m-3" role="alert">
+                        <strong>Viktig!</strong> Dette er <span class="badge bg-danger">{{ ENV._name | uppercase
+                            }}</span> som er
+                        en
+                        test instans <strong>med innsendelse til LT sitt testmiljø</strong>. Innsendelse her blir
+                        gjennomført på
+                        samme måte som i produksjonssystemet men havner
+                        altså som testfiler hos LT hvor de behandler filene i sitt testmiljø.
+                    </div>
+
+
+                    <div class="row">
+                        <div class="nlf-ors-toolbar">
+                            Innsending
+                            <nlf-help class="float-end" key="ors-e5x-generate"></nlf-help>
+                        </div>
+
+                        <dl class="row m-3">
+                            <dt class="col-sm-4">Rapportert av</dt>
+                            <dd class="col-sm-8">
+                                <nlf-resolve-lungo-person [person_id]="observation.reporter"></nlf-resolve-lungo-person>
+                            </dd>
+
+                            <dt class="col-sm-4">Sendes inn av</dt>
+                            <dd class="col-sm-8">
+                                <nlf-resolve-lungo-person [person_id]="person_id"></nlf-resolve-lungo-person>
+                            </dd>
+                        </dl>
+
+                        <div class="alert alert-info m-3">
+                            <strong>Anonymisert rapport;</strong> ingen navn sendes med i rapporten til LT, den er
+                            fullstendig
+                            anonymisert.
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <nlf-ors-editor-tag-e5x
+                                [(items)]="observation.eccairs2.entities.reportingHistory[0].attributes.reportStatus.value"
+                                path="E5X.Occurrence.ReportingHistory.ReportStatus" [allowed]="allowedStatusKeys"
+                                id="ReportStatus">
+                            </nlf-ors-editor-tag-e5x>
+                        </div>
+
+                        <div class="col-md-12 mt-3">
+                            <div class="d-grid gap-2">
+                                <button
+                                    [disabled]="!observation.eccairs2.entities.reportingHistory[0].attributes.reportStatus.value"
+                                    class="btn btn-primary btn-lg" (click)="send()">
+                                    <fa-icon [icon]="faPaperPlane"></fa-icon> Send rapport
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div *ngIf="!generating && !!e5xResult">
+                <div class="alert alert-success">
+                    <p class="lead">
+                        <fa-icon [icon]="faCheck"></fa-icon>E5X rapport fil ble generert
+                    </p>
+                    <p>Filen kan om ønskelig lastes ned ovenfor</p>
+                </div>
+            </div>
+
+            <div *ngIf="generating" class="text-center my-3">
+                <nlf-ui-component-spinner></nlf-ui-component-spinner>
+                <h4>E5X GENERATING....</h4>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-outline-dark" (click)="closeModal()">Ferdig</button>
+    </div>
+</ng-template>
+<!-- /MODAL PREVIEW -->
