@@ -8,7 +8,7 @@
           <!-- <div class="d-block mb-4 h-100">-->
 
           <div class="card pointer" (click)="openModal(modalEditorImage, i)">
-            <img class="card-img-top" [src]="domSanitizer.bypassSecurityTrustUrl(thumb.src)" alt="{{ thumb.filename }}">
+            <img class="card-img-top object-fit-cover" [src]="domSanitizer.bypassSecurityTrustUrl(thumb.src)" alt="{{ thumb.filename }}">
             <fa-icon [icon]="faLock" *ngIf="thumb.r===true" class="text-danger fa fa-3x card-img-overlay opacity-50"></fa-icon>
             <fa-icon [icon]="faUnlock" *ngIf="thumb.r===false" class="text-success fa fa-3x card-img-overlay opacity-50"></fa-icon>
           </div>
