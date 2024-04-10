@@ -1,0 +1,14 @@
+<h4>Antall rapporter som involvert</h4>
+<ngx-table *ngIf="dataReady" [id]="table_id" [configuration]="tableConf" [data]="data" [columns]="columns"
+    [(pagination)]="pagination" (event)="parseEvent($event)">
+    <ng-template let-row>
+        <td class="ngx-easy-table-small">
+            {{ row.i }}. <nlf-resolve-lungo-person [person_id]="row._id"></nlf-resolve-lungo-person>
+        </td>
+
+        <td class="ngx-easy-table-small">
+            {{ row.total }}
+        </td>
+
+    </ng-template>
+</ngx-table>

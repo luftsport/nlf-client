@@ -57,8 +57,7 @@ import { JoditAngularModule } from 'jodit-angular';
 import { ImageCropperModule } from 'ngx-image-cropper';
 // DIFF
 import { DiffMatchPatchModule } from 'ng-diff-match-patch';
-// TIME
-import { MomentModule } from 'ngx-moment'; // optional, provides moment-style pipes for date formatting
+
 
 
 // API
@@ -141,26 +140,6 @@ import { NlfOrsTodoTableComponent } from 'app/ors/ors-brief/ors-todo-table/ors-t
 import { NlfOrsSelfTableComponent } from 'app/ors/ors-brief/ors-self-table/ors-self-table.component';
 import { NlfOrsAllTableComponent } from 'app/ors/ors-brief/ors-all-table/ors-all-table.component';
 import { NlfOrsLastComponent } from 'app/ors/ors-brief/ors-last/ors-last.component';
-
-
-// OBSREG Resolvers
-import { NlfResolveObservationFlagsComponent } from 'app/services/resolve/resolve-observation-flags/resolve-observation-flags.component';
-import { NlfResolveObservationTypesComponent } from 'app/services/resolve/resolve-observation-types/resolve-observation-types.component';
-import { NlfResolveObservationComponent } from 'app/services/resolve/resolve-observation/resolve-observation.component';
-import { NlfResolveObservationStateComponent } from 'app/services/resolve/resolve-observation-state/resolve-observation-state.component';
-import { NlfResolveObservationComponentAttributesComponent } from 'app/services/resolve/resolve-observation-component-attributes/resolve-observation-component-attributes.component';
-import { NlfResolveObservationTagsComponent } from 'app/services/resolve/resolve-observation-tags/resolve-observation-tags.component';
-import { NlfResolveObservationRatingComponent } from 'app/services/resolve/resolve-observation-rating/resolve-observation-rating.component';
-
-// OBSREG PIPES
-import { NlfOrsTagsPipe } from 'app/pipes/ors-tags.pipe';
-import { NlfOrsComponentAttributesPipe } from 'app/pipes/ors-component-attributes.pipe';
-import { NlfOrsRatingPipe } from 'app/pipes/ors-rating.pipe';
-import { NlfOrsRatingCalcPipe } from 'app/pipes/ors-rating-calc.pipe';
-import { NlfDynamicColorPipe } from 'app/pipes/dynamic-color.pipe';
-import { NlfDynamicColorErcPipe } from 'app/pipes/dynamic-color-erc.pipe';
-import { NlfActivityPipe } from 'app/pipes/activity.pipe';
-
 
 // OBSREG CREATE
 import { NlfOrsFallskjermCreateComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-create/ors-fallskjerm-create.component';
@@ -357,7 +336,6 @@ import { NlfUserMembershipComponent } from 'app/user/user-membership/user-member
 import { NlfUserSettingsComponent } from 'app/user/user-settings/user-settings.component';
 import { NlfUserNotificationsComponent } from 'app/user/user-notifications/user-notifications.component';
 import { NlfUserClubSelectorComponent } from 'app/user/user-club-selector/user-club-selector.component';
-import { NlfUserOrsComponent } from 'app/user/user-ors/user-ors.component';
 import { NlfUserComponent } from 'app/user/user.component';
 import { NlfUserTableComponent } from 'app/user/user-table/user-table.component';
 
@@ -391,7 +369,7 @@ import { ConfirmService, ConfirmState, ConfirmModalComponent, ConfirmTemplateDir
 
 // ALERT AND ERRORS
 import { NlfAlertService } from 'app/services/alert/alert.service';
-import { NlfToastService } from 'app/services/toast/toast.service';
+import { NlfToastService } from 'app/services/toast/toast.service';
 import { NlfErrorComponent } from 'app/error/error.component';
 
 // Socket.io
@@ -433,7 +411,6 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfUserMembershipComponent,
     NlfUserSettingsComponent,
     NlfUserNotificationsComponent,
-    NlfUserOrsComponent,
 
     NlfUserClubSelectorComponent,
 
@@ -516,8 +493,8 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
 
     NlfOrsStatsHeatmapComponent,
     NlfOrsStatsComponent,
-    NlfResolveObservationFlagsComponent,
-    NlfResolveObservationTypesComponent,
+
+
     NlfOrsReportAskComponent,
     NlfOrsReportComponentsTimelineComponent,
     NlfOrsReportAskTextComponent,
@@ -526,21 +503,12 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfOrsReportActionsComponent,
     NlfOrsReportRelatedComponent,
     NlfOrsReportWeatherComponent,
-    NlfResolveObservationComponent,
+
+
     NlfUserProfileComponent,
     NlfOrsReportFilesComponent,
     NlfOrsReportE5xComponent,
-    NlfOrsTagsPipe,
-    NlfOrsComponentAttributesPipe,
-    NlfResolveObservationStateComponent,
-    NlfResolveObservationComponentAttributesComponent,
-    NlfResolveObservationTagsComponent,
-    NlfResolveObservationRatingComponent,
-    NlfOrsRatingPipe,
-    NlfOrsRatingCalcPipe,
-    NlfDynamicColorPipe,
-    NlfDynamicColorErcPipe,
-    NlfActivityPipe,
+    
     ConfirmTemplateDirective,
     NlfOrsReportFilesThumbnailsComponent,
 
@@ -669,7 +637,6 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     // NgxDatatableModule,
 
     NgIdleKeepaliveModule.forRoot(),
-    MomentModule,
     TagInputModule, // ngx-chips
     BrowserAnimationsModule,
     NgxUploaderModule,

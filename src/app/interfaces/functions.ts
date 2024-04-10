@@ -244,6 +244,32 @@ export function timeSince(_updated: string) {
 
 }
 
+export function checkExpiryYear(year) {
+  try {
+
+    let now = new Date().getFullYear();
+    if (+year >= +now) {
+      return true;
+    }
+  } catch (e) { console.log(e) }
+
+  return false
+}
+
+export function checkExpiry(expiry) {
+  try {
+
+    if (Date.parse(expiry) > Date.now()) {
+      return true;
+    }
+
+
+  } catch (e) { console.log(e) }
+
+  return false;
+
+}
+
 export function isLatitude(lat) {
   return isFinite(lat) && Math.abs(lat) <= 90;
 }

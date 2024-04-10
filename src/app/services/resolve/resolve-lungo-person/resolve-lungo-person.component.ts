@@ -25,6 +25,7 @@ export class NlfResolveLungoPersonComponent implements OnInit {
   @Input() highlite?: string;
 
   dataReady = false;
+  dataErr = false;
 
   full_name = '';
 
@@ -37,6 +38,7 @@ export class NlfResolveLungoPersonComponent implements OnInit {
      }
 
   ngOnInit() {
+
     if (!this.avatar) { this.avatar = false; }
     if (!this.link) { this.link = false; }
     // if (!this.tmp_name ) { this.tmp_name = ''; }
@@ -52,10 +54,17 @@ export class NlfResolveLungoPersonComponent implements OnInit {
       this.full_name = 'Housekeeping (bot)';
       this.dataReady = true;
     } else if (!!this.tmp_name && this.person_id <= 0) {
-
+      
       this.avatar = false;
       this.link = false;
       this.full_name = this.tmp_name;
+      this.dataReady = true;
+
+    } else if(!this.tmp_name && this.person_id <=0) {
+      console.log('HEiehehehehehehehehehe', this.person_id);
+      this.avatar = false;
+      this.link = false;
+      this.full_name = 'Ukjent person';
       this.dataReady = true;
 
     } else if (typeof this.person_id === 'undefined') {
@@ -64,6 +73,7 @@ export class NlfResolveLungoPersonComponent implements OnInit {
       this.dataReady = true;
 
     } else {
+      
 
       /**
        * We do need to check if the user exists locally too
@@ -130,10 +140,13 @@ export class NlfResolveLungoPersonComponent implements OnInit {
                 this.full_name = 'Ukjent person';
                 this.link = false;
               }
-              this.dataReady = true;
+              
             },
-            err => console.log(err),
-            () => {}
+            err => {
+              this.full_name = 'Ukjent person';
+              console.log(err);
+            },
+            () => this.dataReady = true
           );
       }
     }

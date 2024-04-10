@@ -1,0 +1,46 @@
+<header class="nlf-sticky-toolbar">
+    <div class="container">
+
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active">
+                Fallskjerm
+            </li>
+        </ol>
+
+        <a [routerLink]="['/fallskjerm', 'tandem']" class="float-end btn btn-sm btn-primary mx-1">
+            <fa-icon [icon]="faUpload"></fa-icon>Tandemregistrering
+        </a>
+
+    </div>
+</header>
+
+<div class="container">
+    <div class="row mt-6">
+        <div class="mt-4 p-5 mb-4 bg-light rounded-3">
+            <h1 class="display-5 fw-bold">Tandem registrering</h1>
+            <p class="col-md-8 fs-4">Last opp exportfil fra manifestsystemet og få automatisk registrert tandemene
+                på
+                riktig bruker på riktig måte!</p>
+            <button [routerLink]="['/fallskjerm', 'tandem']" class="btn btn-primary btn-lg" type="button"><fa-icon [icon]="faUpload"></fa-icon> Tandem
+                Registrering</button>
+        </div>
+    </div>
+
+    <div class="row align-items-md-stretch">
+        <div class="col-md-6">
+            <div class="h-100 p-5 text-white bg-dark rounded-3">
+                <h2>Hopplogger</h2>
+                <p>Last opp hopplogger fra manifestsystemet og la hopperene få direkte tilgang til sine gjennomførte hopp, OBSREG for statistikk</p>
+                <button class="btn btn-outline-light" type="button"><fa-icon [icon]="faUpload"></fa-icon> Hopplogg</button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="h-100 p-5 bg-light border rounded-3">
+                <h2>DZ sjekk</h2>
+                <p>Sjekk været, webkamera, rapporter, manifest med mere</p>
+                <button class="btn btn-outline-secondary" type="button"><fa-icon [icon]="faSearch"></fa-icon> DZ sjekk</button>
+            </div>
+        </div>
+    </div>
+</div>
+

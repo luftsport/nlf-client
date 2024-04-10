@@ -1,0 +1,210 @@
+<header class="nlf-sticky-toolbar">
+    <div class="container">
+
+        <span class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a [routerLink]="['/fallskjerm']">Fallskjerm</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a [routerLink]="['/fallskjerm', 'obsreg']">obsreg</a>
+            </li>
+            <li class="breadcrumb-item">
+                user
+            </li>
+            <li class="breadcrumb-item">
+                reports
+            <li class="breadcrumb-item">
+                <nlf-resolve-lungo-person [person_id]="person_id"></nlf-resolve-lungo-person><sup
+                    class="text-danger mx-1" title="Applikasjonen er ikke ferdig utviklet">beta</sup>
+            </li>
+        </span>
+        <nlf-help class="float-end mx-1" key="ors-dashboard-fallskjerm"></nlf-help>
+        <span class="float-end mx-1 col-2">
+        </span>
+
+
+    </div>
+</header>
+
+<div class="container">
+    <div class="row mt-2">
+        <h2><nlf-resolve-lungo-person [person_id]="person_id"></nlf-resolve-lungo-person></h2>
+        flagg | sett på varslingsliste | kommenter | klubber hoppet | antall hopp
+    </div>
+    <div class="row mt-2">
+
+        <ngx-table *ngIf="dataReady" [id]="'table_id'" [configuration]="tableConf" [data]="data" [columns]="columns"
+            [(pagination)]="pagination" (event)="parseEvent($event)">
+            <ng-template let-row>
+                <td class="ngx-easy-table-small">
+                    <span class="text-success pointer" *ngIf="person_id==row.reporter" placement="top"
+                        ngbTooltip="Rapportert selv">*</span>
+                    <a [routerLink]="['/ors', activity, 'report', row.id]">{{ row.id }}</a>
+                </td>
+                <td class="ngx-easy-table-small">
+                    <a [routerLink]="['/ors', activity, 'report', row.id]">{{ row.tags | nlfOrsTags: '/':23:'..' ||
+                        row.title || ''}}</a>
+                </td>
+
+                <td class="ngx-easy-table-small">
+                    <div *ngFor="let person of row.involved">
+                        <nlf-resolve-lungo-person [person_id]="person.id"></nlf-resolve-lungo-person>
+                    </div>
+                </td>
+
+                <td class="ngx-easy-table-small">
+                    {{ row.when | amTimeAgo }}
+                </td>
+
+                <td class="ngx-easy-table-small">
+                    {{ row.location.name || '' }}
+                </td>
+
+                <td class="text-end ngx-easy-table-small text-end">
+                    <nlf-resolve-lungo-organization [organization_id]="row.discipline"></nlf-resolve-lungo-organization>
+                </td>
+
+                <td class="text-end ngx-easy-table-small text-end">
+                    <nlf-resolve-observation-rating [rating]="row.rating||0"></nlf-resolve-observation-rating>
+                </td>
+
+            </ng-template>
+        </ngx-table>
+
+        <span *ngIf="!dataReady">
+            <p class="align-middle text-center  text-secondary">
+                <nlf-ui-component-spinner size="3"></nlf-ui-component-spinner>
+            </p>
+        </span>
+
+        <div *ngIf="!!person" class="row">
+            <h4>Seksjonsmedlemsskap</h4>
+            <div *ngFor="let federation of person.federation" class="overflow-hidden">
+
+                <ng-container *ngIf="checkExpiryYear(federation.year)">
+                    <fa-icon [icon]="faCheck" class="text-success me-1"></fa-icon>
+                    {{ federation.name }} {{ federation.type }}
+                    <nlf-resolve-lungo-activity [activity_id]="federation.activity"></nlf-resolve-lungo-activity>
+                    {{ federation.year }} <span *ngIf="!!federation.exception">{{federation.exception}}</span>
+                </ng-container>
+
+                <ng-container *ngIf="showExpired && !checkExpiryYear(federation.year)">
+                    <fa-icon [icon]="faRemove" class="text-danger me-1"></fa-icon>
+                    {{ federation.name }} {{ federation.type }}
+                    <nlf-resolve-lungo-activity [activity_id]="federation.activity"></nlf-resolve-lungo-activity>
+                    {{ federation.year }} <span *ngIf="!!federation.exception">{{federation.exception}}</span>
+                </ng-container>
+
+            </div>
+            <div *ngIf="!person.federation||person.federation.length==0">
+                <fa-icon [icon]="faRemove" class="text-danger me-1"></fa-icon>Ingen seksjonsmedlemsskap registrert
+            </div>
+
+
+            <h4>Klubbmedlemsskap</h4>
+            <div *ngFor="let membership of person.memberships" class="overflow-hidden">
+
+                <ng-container *ngIf="!!membership.payment && checkExpiryYear(membership.payment.year)">
+                    <fa-icon [icon]="faCheck" class="text-success me-1"></fa-icon>
+                    <nlf-resolve-lungo-organization [organization_id]="membership.discipline" [link]="false"
+                        [long]="true" [show_activity]="true">
+                    </nlf-resolve-lungo-organization>
+                    <span *ngIf="!!membership.payment">{{ membership.payment.exception || '' }} {{
+                        membership.payment.type || 'Ukjent' }}</span>
+                </ng-container>
+
+                <ng-container *ngIf="showExpired && (!membership.payment || !checkExpiryYear(membership.payment.year))">
+                    <fa-icon [icon]="faRemove" class="text-danger me-1"></fa-icon>
+                    <nlf-resolve-lungo-organization [organization_id]="membership.discipline" [link]="false"
+                        [long]="true" [show_activity]="true">
+                    </nlf-resolve-lungo-organization>
+                    <span *ngIf="!!membership.payment">{{ membership.payment.exception || '' }} {{
+                        membership.payment.type || 'Ukjent' }}</span>
+                </ng-container>
+
+            </div>
+            <div *ngIf="!person.memberships||person.memberships.length==0">
+                <fa-icon [icon]="faRemove" class="text-danger me-1"></fa-icon>Ingen klubbmedlemsskap registrert
+            </div>
+
+            <h4 class="mt-1">Lisenser</h4>
+            <div *ngFor="let license of person.licenses" class="overflow-hidden">
+                <ng-container *ngIf="checkExpiry(license.expiry) && license.status_id===3">
+                    <fa-icon [icon]="faCheck" class="text-success me-1"></fa-icon>
+                    <nlf-resolve-lungo-license [license_id]="license.id" [link]="false"
+                        [long]="true"></nlf-resolve-lungo-license>
+                </ng-container>
+
+                <ng-container *ngIf="showExpired && (!checkExpiry(license.expiry) || license.status_id!=3)">
+                    <fa-icon *ngIf="" [icon]="faRemove" class="text-danger me-1"></fa-icon>
+                    <nlf-resolve-lungo-license [license_id]="license.id" [link]="false"
+                        [long]="true"></nlf-resolve-lungo-license>
+                </ng-container>
+
+            </div>
+
+            <div *ngFor="let payment of fallskjermLicenses" class="overflow-hidden">
+                <fa-icon [icon]="faCheck" class="text-success me-1"></fa-icon>
+                {{ payment.product_name }} (betalt {{ payment.paid_date | date }})
+            </div>
+
+            <div *ngIf="(!person.licenses||person.licenses.length==0) && fallskjermLicenses.length==0">
+                <fa-icon [icon]="faRemove" class="text-danger me-1"></fa-icon>Ingen lisenser registrert
+            </div>
+
+
+
+            <h4 class="mt-1">Kompetanser</h4>
+            <div *ngFor="let competence of person.competences" class="overflow-hidden">
+
+                <ng-container *ngIf="checkExpiry(competence.expiry)">
+                    <fa-icon [icon]="faCheck" class="text-success me-1"></fa-icon>
+                    {{ competence._code }} {{ competence.expiry | date:'yyyy-MM-dd':'+0000' }}
+                </ng-container>
+
+                <ng-container *ngIf="showExpired && !checkExpiry(competence.expiry)">
+                    <fa-icon [icon]="faRemove" class="text-danger me-1"></fa-icon>
+                    {{ competence._code }} {{ competence.expiry | date:'yyyy-MM-dd':'+0000' }}
+                </ng-container>
+
+            </div>
+            <div *ngIf="!person.competences||person.competences.length==0">
+                <fa-icon [icon]="faRemove" class="text-danger me-1"></fa-icon>Ingen kompetanser registrert
+            </div>
+
+            <div class="alert alert-dark mt-3" role="alert">
+                Sist oppdatert {{ person._updated | amTimeAgo }} / {{ person._updated | date:'yyyy-MM-dd HH:mm'}} ({{
+                person_id }})
+            </div>
+
+            <hr>
+            <nlf-user-ors activity="fallskjerm" [person_id]="person_id"></nlf-user-ors>
+        </div>
+
+    </div>
+
+
+    <!--
+        <div *ngFor="let report of reports;let i=index">
+            {{ i+1 }}. <span class="text-success" *ngIf="person_id==report.reporter">*</span>
+            <nlf-resolve-observation [id]="report.id" activity="fallskjerm"></nlf-resolve-observation>
+            &nbsp;
+            &nbsp;afffa
+            &nbsp;
+            <nlf-resolve-lungo-person [person_id]="person_id"></nlf-resolve-lungo-person>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <nlf-resolve-lungo-organization [organization_id]="report.discipline"></nlf-resolve-lungo-organization>
+            {{ report['location']['name']}}
+
+            {{ report['when'] }}
+            <span ngbTooltip="{{ report.rating.actual }} av {{ report.rating.potential }}" container="body"
+                *ngIf="!!report.rating"
+                class="pointer badge bg-{{report.rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{ report.rating |
+                nlfOrsRatingCalc }}</span>
+
+        </div>
+        -->
+
+</div>

@@ -12,6 +12,7 @@ import { forkJoin } from 'rxjs';
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
 import { ApiUserDataSubjectItem, NlfConfigItem, ApiOptionsInterface } from 'app/api/api.interface';
 import { faUsers, faSave, faTable, faSearch, faSpinner, faCheck, faRemove } from '@fortawesome/free-solid-svg-icons';
+import { checkExpiry, checkExpiryYear } from 'app/interfaces/functions';
 
 @Component({
   selector: 'nlf-member',
@@ -28,6 +29,9 @@ export class NlfMemberComponent implements OnInit {
   person_id: number;
   MINLENGTH = 3;
   results: LungoPersonsSearchItem[] = [];
+  
+  checkExpiry = checkExpiry;
+  checkExpiryYear = checkExpiryYear;
 
   activity: string = undefined;
   searchTerm: string;
@@ -161,31 +165,7 @@ export class NlfMemberComponent implements OnInit {
     return hashString(String(person_id));
   }
 
-  checkExpiryYear(year) {
-    try {
-
-      let now = new Date().getFullYear();
-      if (+year >= +now) {
-        return true;
-      }
-    } catch (e) { console.log(e) }
-
-    return false
-  }
-
-  checkExpiry(expiry) {
-    try {
-
-      if (Date.parse(expiry) > Date.now()) {
-        return true;
-      }
-
-
-    } catch (e) { console.log(e) }
-
-    return false;
-
-  }
+ 
 
   moveUp() {
     if (this.arrowkeyLocation > 0) {
