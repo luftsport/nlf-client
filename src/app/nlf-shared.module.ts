@@ -75,6 +75,8 @@ import { ResolveLungoCountyComponent } from 'app/services/resolve/resolve-lungo-
 import { NlfResolveAvatarsComponent } from 'app/services/resolve/resolve-avatars/resolve-avatars.component';
 import { NlfResolveAvatarComponent } from 'app/services/resolve/resolve-avatar/resolve-avatar.component';
 import { NlfResolveAvatarLetterComponent } from 'app/services/resolve/resolve-avatar-letter/resolve-avatar-letter.component';
+// Resolve config items
+import { NlfResolveConfigComponent } from 'app/services/resolve/resolve-config/resolve-config.component';
 // OBSREG Resolvers
 import { NlfResolveObservationFlagsComponent } from 'app/services/resolve/resolve-observation-flags/resolve-observation-flags.component';
 import { NlfResolveObservationTypesComponent } from 'app/services/resolve/resolve-observation-types/resolve-observation-types.component';
@@ -101,6 +103,8 @@ import { MomentModule } from 'ngx-moment'; // optional, provides moment-style pi
 // First login
 import { NlfUserFirstLoginComponent } from 'app/user/user-first-login/user-first-login.component';
 
+import { NlfNifCompareComponent } from 'app/member/nif-compare/nif-compare.component';
+
 // ng-bootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -109,6 +113,12 @@ import { NlfOrsEditorTagStaticComponent } from 'app/ors/ors-editor/ors-editor-ta
 import { NlfOrsE5xComponent } from 'app/ors/ors-e5x/ors-e5x.component';
 import { NlfOrsEditorTagE5XComponent } from 'app/ors/ors-editor/ors-editor-tag-e5x/ors-editor-tag-e5x.component';
 import { NlfOrsEditorTagE5xRenderComponent } from 'app/ors/ors-editor/ors-editor-tag-e5x-render/ors-editor-tag-e5x-render.component';
+import { NlfOrsEditorTagE5xRenderVersionComponent } from 'app/ors/ors-editor/ors-editor-tag-e5x-render-version/ors-editor-tag-e5x-render-version.component';
+// ORS tag string
+import { NlfOrsEditorTagStringComponent } from 'app/ors/ors-editor/ors-editor-tag-string/ors-editor-tag-string.component';
+import { NlfOrsEditorTagComponent } from 'app/ors/ors-editor/ors-editor-tag/ors-editor-tag.component';
+
+
 // Date normalized
 import { NlfOrsEditorDateComponent } from 'app/ors/ors-editor/ors-editor-date/ors-editor-date.component';
 // Go to specified ors by id!
@@ -146,7 +156,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')
     })
-    
+
   ],
   declarations: [
     NlfHelpComponent,
@@ -172,6 +182,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     NlfResolveAvatarsComponent,
     NlfResolveAvatarComponent,
     NlfResolveAvatarLetterComponent,
+    NlfResolveConfigComponent,
     // Lungo
     NlfResolveLungoPersonComponent,
     NlfResolveLungoOrganizationComponent,
@@ -184,6 +195,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     ResolveLungoCompetenceComponent,
     ResolveLungoCountryComponent,
     ResolveLungoCountyComponent,
+    NlfNifCompareComponent,
     // Breadcrumb
     NlfBreadcrumbComponent,
     NlfUserFirstLoginComponent,
@@ -194,6 +206,9 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     NlfOrsEditorTagStaticComponent,
     NlfOrsEditorDateComponent,
     NlfOrsGoComponent,
+    NlfOrsEditorTagStringComponent,
+    NlfOrsEditorTagComponent,
+    NlfOrsEditorTagE5xRenderVersionComponent,
     // Aircrafts
     NlfAircraftsAddComponent,
     NlfAircraftsEditComponent,
@@ -239,6 +254,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     NlfResolveAvatarsComponent,
     NlfResolveAvatarComponent,
     NlfResolveAvatarLetterComponent,
+    NlfResolveConfigComponent,
     // Lungo
     NlfResolveLungoPersonComponent,
     NlfResolveLungoOrganizationComponent,
@@ -251,6 +267,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     ResolveLungoCompetenceComponent,
     ResolveLungoCountryComponent,
     ResolveLungoCountyComponent,
+    NlfNifCompareComponent,
     // Common
     NlfAlertComponent,
     NlfToastComponent,
@@ -264,6 +281,9 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     NlfOrsEditorTagStaticComponent,
     NlfOrsEditorDateComponent,
     NlfOrsGoComponent,
+    NlfOrsEditorTagStringComponent,
+    NlfOrsEditorTagComponent,
+    NlfOrsEditorTagE5xRenderVersionComponent,
     // Other
     NlfAircraftsAddComponent,
     NlfAircraftsEditComponent,

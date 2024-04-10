@@ -1,3 +1,4 @@
-<p>
-  resolve-lungo-competence works!
-</p>
+<!-- type_id id title approved_by_person_id _code _name date valid_until -->
+<ng-container *ngIf="dataReady">
+  <span>{{ competence?._code || '' }} {{ competence._name || competence.title }}</span>
+</ng-container>

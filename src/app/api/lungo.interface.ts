@@ -148,9 +148,63 @@ export interface LungoCompetencesItem extends ApiEveBaseItem {
     passed?: boolean;
     sald?: number;
     additional_title?: string;
+    _code?: string;
+    _name?: string;
 }
 export interface LungoCompetencesList extends ApiEveBaseList {
     _items: LungoCompetencesItem[];
+}
+
+//LungoCompetencesTypesItem, LungoCompetencesTypesList
+export interface LungoCompetencesTypesItem extends ApiEveBaseItem {
+
+    children?: any[];
+    colorcode?: string;
+    description?: string;
+    languages_available?: any[];
+    modified?: Date;
+    organisations: any[];
+    sports?: any[];
+    title?: string;
+    valid_for?: string;
+    weight?: number;
+    id: number;
+    meta_type?: string;
+    type_sa_id?: number;
+    attributes?: Object;
+    prequisites_text?: string;
+    pre_requisites?: any[];
+    durations?: any[];
+    categories?: any[];
+    instructors?: any[];
+}
+export interface LungoCompetencesTypesList extends ApiEveBaseList {
+    _items: LungoCompetencesTypesItem[];
+}
+
+// NIF vanilla from KA
+export interface LungoNIFCompetencesItem extends ApiEveBaseItem {
+    CompetenceId: number;
+    CompetenceName: string;
+    ApprovedByOrg: string;
+    FromDate: Date;
+    ToDate: Date;
+}
+export interface LungoNIFCompetencesList extends ApiEveBaseList {
+    _items: LungoNIFCompetencesItem[];
+}
+export interface LungoNIFLicensesItem extends ApiEveBaseItem {
+    Functions: Object[];
+    LicenseId: number;
+    PersonId: number;
+    LicensePeriodId: number;
+    LicensePeriodName: string;
+    LicenseTypeName: string;
+    LicenseStatusText: string;
+    IsActive: boolean;
+}
+export interface LungoNIFLicensesList extends ApiEveBaseList {
+    _items: LungoNIFCompetencesItem[];
 }
 
 /**

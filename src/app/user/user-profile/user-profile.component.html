@@ -88,6 +88,14 @@
 						</div>
 					</div>
 				</div>
+				<div class="my-3">
+					<h4>Mine kompetanser</h4>
+					<div *ngIf="!user.hasOwnProperty('competences')||user.competences.length===0">Ingen kompetanser registrert</div>
+					<div *ngFor="let competence of user.competences">
+						<nlf-resolve-lungo-competence [competence_id]="competence.id"></nlf-resolve-lungo-competence>
+					</div>
+					<nlf-nif-compare [person_id]="person_id" [generate]="true" [showSuccess]="false"></nlf-nif-compare>
+				</div>
 
 				<!--
 				<div class="my-3">
