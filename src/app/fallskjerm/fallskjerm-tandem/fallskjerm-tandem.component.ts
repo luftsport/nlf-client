@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgxCsvParser, NgxCSVParserError } from 'ngx-csv-parser';
+//import { NgxCsvParser, NgxCSVParserError } from 'ngx-csv-parser';
 import { Columns, Config, STYLE } from 'ngx-easy-table';
 import { DefaultTableConfig } from 'app/interfaces/ngx-easy-table.interface';
 import { ApiOptionsInterface, NlfConfigItem, ApiUserDataSubjectItem } from 'app/api/api.interface';
@@ -82,7 +82,7 @@ export class NlfFallskjermTandemComponent implements OnInit {
     faPersonCircleCheck = faPersonCircleCheck;
 
     constructor(
-        private csvParser: NgxCsvParser,
+        //private csvParser: NgxCsvParser,
         private orgService: LungoOrganizationsService,
         private tandemService: ApiFallskjermTandemService
     ) {
@@ -112,7 +112,7 @@ export class NlfFallskjermTandemComponent implements OnInit {
         this.header =
             (this.header as unknown as string) === 'true' ||
             this.header === true;
-
+        /**+    static ɵcmp: i0.ɵɵComponentDeclaration<NgxCsvParserComponent, "lib-ngx-csv-parser", never, {}, {}, never, never, false>;
         this.csvParser
             .parse(files[0], {
                 header: this.header,
@@ -166,6 +166,7 @@ export class NlfFallskjermTandemComponent implements OnInit {
             );
 
         console.log(this.csvRecords);
+         */
 
 
 
