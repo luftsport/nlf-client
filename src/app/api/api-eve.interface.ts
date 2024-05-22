@@ -23,6 +23,7 @@ export interface ApiEveBaseList {
 
 export interface ApiEveList extends ApiEveBaseList {
   _items: ApiEveItem[];
+  _export?: any;
 
 }
 
@@ -58,6 +59,7 @@ export interface ApiEveQueryInterface {
   projection?: any;
   version?: number | string; // 4 for v4 or 'DIFFS' for all diffs
   embedded?: any;
+  export?: string;
 }
 
 
