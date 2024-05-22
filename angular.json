@@ -88,7 +88,7 @@
               "optimization": true,
               "outputHashing": "all",
               "namedChunks": false,
-              "aot": true,
+              "aot": false,
               "extractLicenses": true,
               "vendorChunk": false,
               "sourceMap": true,

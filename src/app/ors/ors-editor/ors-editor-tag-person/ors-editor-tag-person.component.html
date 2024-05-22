@@ -16,8 +16,8 @@ bindLabel="full_name"
 [groupValue]="group"
 autoCapitalize="on"
 addTagText="+Legg til midlertidig navn"
-placeholder="Skriv for å søke"
-notFoundText="Fant ikke noe">
+[placeholder]="placeholder"
+[notFoundText]="notFoundText">
   <ng-template *ngIf="details" ng-option-tmp let-item="item" let-search="searchTerm">
     <div>
       <span [ngOptionHighlight]="search">{{item.full_name}}</span>

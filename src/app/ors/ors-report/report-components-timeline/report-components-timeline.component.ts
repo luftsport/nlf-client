@@ -13,8 +13,7 @@ export class NlfOrsReportComponentsTimelineComponent implements OnInit {
 
   @Input() components: ApiObservationComponentInterface[];
   @Input() activity: string;
-
-  public componentCollapsed = false;
+  @Input() componentCollapsed = false;
 
   faRandom = faRandom;
   faAmbulance = faAmbulance;
