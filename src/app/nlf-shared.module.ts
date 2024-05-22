@@ -48,6 +48,7 @@ import { NlfUiPageSpinnerComponent } from 'app/ui/page-spinner/page-spinner.comp
 import { NlfUiComponentSpinnerComponent } from 'app/ui/component-spinner/component-spinner.component';
 import { NlfOrgSelectorComponent } from 'app/ui/org-selector/org-selector.component';
 import { NlfBreadcrumbComponent } from 'app/ui/breadcrumb/breadcrumb.component';
+import { NlfUiDatepickerComponent } from './ui/datepicker/datepicker.component';
 
 // Resolvers
 import { NlfResolveComponent } from 'app/services/resolve/resolve.component';
@@ -86,6 +87,7 @@ import { NlfResolveObservationComponentAttributesComponent } from 'app/services/
 import { NlfResolveObservationTagsComponent } from 'app/services/resolve/resolve-observation-tags/resolve-observation-tags.component';
 import { NlfResolveObservationRatingComponent } from 'app/services/resolve/resolve-observation-rating/resolve-observation-rating.component';
 
+
 // OBSREG PIPES
 import { NlfOrsTagsPipe } from 'app/pipes/ors-tags.pipe';
 import { NlfOrsComponentAttributesPipe } from 'app/pipes/ors-component-attributes.pipe';
@@ -117,7 +119,8 @@ import { NlfOrsEditorTagE5xRenderVersionComponent } from 'app/ors/ors-editor/ors
 // ORS tag string
 import { NlfOrsEditorTagStringComponent } from 'app/ors/ors-editor/ors-editor-tag-string/ors-editor-tag-string.component';
 import { NlfOrsEditorTagComponent } from 'app/ors/ors-editor/ors-editor-tag/ors-editor-tag.component';
-
+import { NlfOrsEditorTagPersonComponent } from 'app/ors/ors-editor/ors-editor-tag-person/ors-editor-tag-person.component';
+import { NlfOrsEditorTagPersonsComponent } from 'app/ors/ors-editor/ors-editor-tag-persons/ors-editor-tag-persons.component';
 
 // Date normalized
 import { NlfOrsEditorDateComponent } from 'app/ors/ors-editor/ors-editor-date/ors-editor-date.component';
@@ -131,6 +134,8 @@ import { NlfAircraftSummaryComponent } from 'app/aircrafts/aircraft-summary/airc
 
 // SELECTERS @TODO move to seperate universal
 import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-tag-airport/ors-editor-tag-airport.component';
+
+
 
 
 @NgModule({
@@ -170,6 +175,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     NlfToastComponent,
     NlfUiPageSpinnerComponent,
     NlfUiComponentSpinnerComponent,
+    NlfUiDatepickerComponent,
     NlfOrgSelectorComponent,
     NlfResolveComponent,
     NlfResolveUserComponent,
@@ -185,6 +191,14 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     NlfResolveAvatarLetterComponent,
     NlfResolveConfigComponent,
     NlfResolveObservationTypesComponent,
+    NlfOrsRatingPipe,
+    NlfOrsComponentAttributesPipe,
+    NlfResolveObservationFlagsComponent,
+    NlfResolveObservationComponent,
+    NlfResolveObservationStateComponent,
+    NlfResolveObservationComponentAttributesComponent,
+    NlfResolveObservationTagsComponent,
+    NlfResolveObservationRatingComponent,
     NlfOrsRatingCalcPipe,
     NlfDynamicColorPipe,
     NlfDynamicColorErcPipe,
@@ -214,6 +228,8 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     NlfOrsGoComponent,
     NlfOrsEditorTagStringComponent,
     NlfOrsEditorTagComponent,
+    NlfOrsEditorTagPersonComponent,
+    NlfOrsEditorTagPersonsComponent,
     NlfOrsEditorTagE5xRenderVersionComponent,
     // Aircrafts
     NlfAircraftsAddComponent,
@@ -242,6 +258,7 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     NgProgressHttpModule,
     NlfUiPageSpinnerComponent,
     NlfUiComponentSpinnerComponent,
+    NlfUiDatepickerComponent,
     NlfOrgSelectorComponent,
     NgPipesModule,
     NlfOrsStatePipe,
@@ -264,6 +281,14 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     NlfResolveAvatarLetterComponent,
     NlfResolveConfigComponent,
     NlfResolveObservationTypesComponent,
+    NlfOrsRatingPipe,
+    NlfOrsComponentAttributesPipe,
+    NlfResolveObservationFlagsComponent,
+    NlfResolveObservationComponent,
+    NlfResolveObservationStateComponent,
+    NlfResolveObservationComponentAttributesComponent,
+    NlfResolveObservationTagsComponent,
+    NlfResolveObservationRatingComponent,
     NlfOrsRatingCalcPipe,
     NlfDynamicColorPipe,
     NlfDynamicColorErcPipe,
@@ -296,6 +321,8 @@ import { NlfOrsEditorTagAirportComponent } from 'app/ors/ors-editor/ors-editor-t
     NlfOrsGoComponent,
     NlfOrsEditorTagStringComponent,
     NlfOrsEditorTagComponent,
+    NlfOrsEditorTagPersonComponent,
+    NlfOrsEditorTagPersonsComponent,
     NlfOrsEditorTagE5xRenderVersionComponent,
     // Other
     NlfAircraftsAddComponent,

@@ -200,6 +200,9 @@ import { NlfOrsReportFilesThumbnailsComponent } from 'app/ors/ors-report/report-
 import { NlfOrsReportFlightMapComponent } from 'app/ors/ors-report/report-flight-map/report-flight-map.component';
 import { NlfOrsReportE5xComponent } from 'app/ors/ors-report/report-e5x/report-e5x.component';
 
+// OBSREG SEARCH
+import { NlfOrsSearchComponent } from 'app/ors/ors-search/ors-search.component';
+
 // OBSREG FALLSKJERM
 import { NlfOrsFallskjermEditorComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-editor/ors-fallskjerm-editor.component';
 import { NlfOrsFallskjermComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm.component';
@@ -269,8 +272,8 @@ import { NlfOrsSportsflyReportSummaryComponent } from 'app/ors/ors-sportsfly/ors
 // OBSREG EDITOR
 // ShARED import { NlfOrsEditorTagComponent } from 'app/ors/ors-editor/ors-editor-tag/ors-editor-tag.component';
 // SHARED import { NlfOrsEditorTagStringComponent } from 'app/ors/ors-editor/ors-editor-tag-string/ors-editor-tag-string.component';
-import { NlfOrsEditorTagPersonComponent } from 'app/ors/ors-editor/ors-editor-tag-person/ors-editor-tag-person.component';
-import { NlfOrsEditorTagPersonsComponent } from 'app/ors/ors-editor/ors-editor-tag-persons/ors-editor-tag-persons.component';
+// SHARED import { NlfOrsEditorTagPersonComponent } from 'app/ors/ors-editor/ors-editor-tag-person/ors-editor-tag-person.component';
+// SHARED import { NlfOrsEditorTagPersonsComponent } from 'app/ors/ors-editor/ors-editor-tag-persons/ors-editor-tag-persons.component';
 
 // Aircraft ATTRIBUTES
 import { NlfOrsEditorE5XAcWildlifeComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-ac-wildlife/ors-editor-e5x-ac-wildlife.component';
@@ -319,7 +322,8 @@ import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
 // import { NlfAircraftsAddComponent } from 'app/aircrafts/aircrafts-add/aircrafts-add.component';
 // import { NlfAircraftsEditComponent } from 'app/aircrafts/aircrafts-edit/aircrafts-edit.component';
 
-
+// Distinct field values in collection
+import { ApiDistinctService } from 'app/api/api-distinct.service';
 
 // LUNGO Services
 import { LungoIntegrationService } from 'app/api/lungo-integration.service';
@@ -387,6 +391,10 @@ import { NlfSocketService } from 'app/services/socket/socket.service';
 // GEO
 import { GeoLocationService } from 'app/services/geo/geo-location.service';
 
+// Query builder
+import { NgxAngularQueryBuilderModule } from "ngx-angular-query-builder";
+import { ApiSearchService } from 'app/api/api-search.service';
+
 @NgModule({
   declarations: [
     NlfComponent,
@@ -425,6 +433,9 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
 
     NlfOrsEditorFirstComponent,
     NlfOrsErrorComponent,
+
+    // ORS SEARCH
+    NlfOrsSearchComponent,
 
     // FALLSKJERM OBSREG
     NlfOrsFallskjermCreateComponent,
@@ -591,10 +602,10 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfOrsEditorE5xReportinghistoryComponent,
     NlfOrsEditorE5xRiskComponent,
     // OBSREG TAG
-    //NlfOrsEditorTagComponent,
-    //NlfOrsEditorTagStringComponent,
-    NlfOrsEditorTagPersonComponent,
-    NlfOrsEditorTagPersonsComponent,
+    // shared NlfOrsEditorTagComponent,
+    // shared NlfOrsEditorTagStringComponent,
+    // shared NlfOrsEditorTagPersonComponent,
+    // shared NlfOrsEditorTagPersonsComponent,
 
     // COMMON
     NlfErrorComponent,
@@ -624,11 +635,11 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     DragDropModule,
     NlfSharedModule,
     //NlfAircraftsSharedModule,
-
+    
     NlfConfigModule, // Config module
     NlfRoutingModule,
     BrowserModule,
-
+    NgxAngularQueryBuilderModule,
     // REMOVE GenericTableModule,
     TableModule, // ngx-easy-table
     // REMOVE RTModule, // right-angled declarative tables
@@ -653,7 +664,8 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     //  VgOverlayPlayModule,
     //  VgBufferingModule,
     JoditAngularModule, // Jodit editor
-
+    
+    
   ],
   providers: [
     PendingChangesGuard,
@@ -699,6 +711,9 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     // E5X
     ApiE5XAttributesService,
     ApiE5XChoicesService,
+    // Distinct
+    ApiDistinctService,
+    ApiSearchService,
     // Common Services
     NlfAlertService,
     NlfToastService,
