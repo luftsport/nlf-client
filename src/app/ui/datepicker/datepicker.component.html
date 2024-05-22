@@ -1,0 +1,11 @@
+<div class="input-group">
+    <input
+        class="form-control"
+        placeholder="yyyy-mm-dd"
+        name="dp"
+        [(ngModel)]="model"
+        ngbDatepicker
+        (change)="onUpdate()"
+        #d="ngbDatepicker"/>
+    <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()" type="button"><fa-icon [icon]="faCalendar"></fa-icon></button>
+</div>
