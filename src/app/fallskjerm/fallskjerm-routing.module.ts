@@ -6,13 +6,14 @@ import { NlfFallskjermObsregQueryComponent } from './fallskjerm-obsreg-query/fal
 import { NlfFallskjermObsregComponent } from './fallskjerm-obsreg/fallskjerm-obsreg.component';
 import { NlfFallskjermObsregUserComponent } from './fallskjerm-obsreg/fallskjerm-obsreg-user/fallskjerm-obsreg-user.component';
 import { NlfAuthGuard } from 'app/services/auth/auth.guard';
+import { NlfRoleGuard } from 'app/services/auth/role.guard';
 
 const nlfFallskjermRoutes: Routes = [
   { path: '', component: NlfFallskjermComponent, canActivate: [NlfAuthGuard], data: { label: 'Fallskjerm', title: 'Fallskjerm' } },
   { path: 'tandem', component: NlfFallskjermTandemComponent, canActivate: [NlfAuthGuard], data: { label: 'Fallskjerm | Tandem rapportering' , title: 'Fallskjerm - tandem rapportering' } },
-  { path: 'obsreg/hi', component: NlfFallskjermObsregComponent, canActivate: [NlfAuthGuard], data: { label: 'Fallskjerm | Tandem rapportering' , title: 'Fallskjerm - søk etter person' } },
-  { path: 'obsreg/user/reports/:person_id', component: NlfFallskjermObsregUserComponent, canActivate: [NlfAuthGuard], data: { label: 'Fallskjerm | Tandem rapportering' , title: 'Fallskjerm - søk etter person' } },  
-  { path: 'obsreg/query', component: NlfFallskjermObsregQueryComponent, canActivate: [NlfAuthGuard], data: { label: 'Fallskjerm | Tandem rapportering' , title: 'Fallskjerm - søk etter person' } },
+  { path: 'obsreg/hi', component: NlfFallskjermObsregComponent, canActivate: [NlfRoleGuard], data: { roles: [201120, 202692, 202659], label: 'Fallskjerm | Tandem rapportering' , title: 'Fallskjerm - HI' } },
+  { path: 'obsreg/user/reports/:person_id', component: NlfFallskjermObsregUserComponent, canActivate: [NlfRoleGuard], data: { roles: [201120, 202692, 202659], label: 'Fallskjerm | Hopper' , title: 'Fallskjerm - søk etter person' } },  
+  { path: 'obsreg/query', component: NlfFallskjermObsregQueryComponent, canActivate: [NlfRoleGuard], data: { roles: [201120, 202692, 202659], label: 'Fallskjerm | OBSREG query' , title: 'Fallskjerm - søk i obsreg' } },
   { path: '**',  redirectTo: ''}
 
 ];

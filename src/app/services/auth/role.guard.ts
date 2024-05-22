@@ -25,8 +25,6 @@ export class NlfRoleGuard implements CanActivate {
     return this.checkUserRole(route, url);
   }
 
-  
- 
   checkUserRole(route: ActivatedRouteSnapshot, url: any){
     let userRoles = this.userData.acl.map((v) => v.role);
     const includesAny = route.data.roles.some(v=>userRoles.includes(v));
