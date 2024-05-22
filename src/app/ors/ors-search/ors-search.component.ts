@@ -399,6 +399,7 @@ export class NlfOrsSearchComponent implements OnInit {
         max_results: this.pagination.limit,
         sort: this.sort,*/
       },
+      collection: 'fallskjerm_observations',
       meta: {
         results: {
           when: new Date(),
@@ -506,7 +507,7 @@ export class NlfOrsSearchComponent implements OnInit {
 
     let options: ApiOptionsInterface = {
       query: {
-        //where: {},
+        where: {collection: 'fallskjerm_observations'},
         //page: this.pagination.offset,
         //max_results: this.pagination.limit,
         sort: [{ _updated: -1 }]
