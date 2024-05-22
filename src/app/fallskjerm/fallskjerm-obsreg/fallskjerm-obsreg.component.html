@@ -6,7 +6,7 @@
                 <a [routerLink]="['/fallskjerm']">Falskjerm</a>
             </li>
             <li class="breadcrumb-item">
-                <a [routerLink]="['/fallskjerm', 'obsreg']">obsreg</a>
+                <a [routerLink]="['/fallskjerm', 'obsreg', 'hi']">obsreg</a>
             </li>
             <li class="breadcrumb-item">
                 <nlf-resolve-lungo-organization [organization_id]="discipline"
@@ -25,6 +25,10 @@
 </header>
 
 <div class="container">
+    <div class="row mt-2">
+        <nlf-ors-editor-tag-person id="personSearch" [(person)]="person" [activity]="activity" [fc]="true" [allowAdd]="false" (change)="goToPerson($event)"></nlf-ors-editor-tag-person>
+    </div>
+
     <div class="row mt-2">
         <nlf-fallskjerm-obsreg-members-other [discipline]="discipline"></nlf-fallskjerm-obsreg-members-other>
 

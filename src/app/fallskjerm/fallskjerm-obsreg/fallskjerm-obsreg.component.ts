@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiObservationsAggService } from 'app/api/api-observations-agg.service';
 import { forkJoin } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'nlf-fallskjerm-obsreg',
@@ -15,13 +16,22 @@ export class NlfFallskjermObsregComponent implements OnInit {
   usersReportingCount = [];
 
   discipline = 812296;
+  activity = 'fallskjerm';
+  person;
 
   constructor(
     private aggService: ApiObservationsAggService,
+    private router: Router,
+
   ) { }
 
   ngOnInit(): void {
     this.aggService.setActivity('fallskjerm');
+
+    setTimeout(() => {
+      const focusEl: any = document.querySelector('#personSearch').querySelector('input');
+      focusEl.focus();
+    }, 250);
 
     forkJoin([
       this.aggService.getUsersForeign(this.discipline),
@@ -39,6 +49,11 @@ export class NlfFallskjermObsregComponent implements OnInit {
     )
 
 
+  }
+
+  goToPerson($event) {
+    console.log(this.person.id);
+    this.router.navigateByUrl('/' + this.activity + '/obsreg/user/reports/' + this.person.id);
   }
 
 }

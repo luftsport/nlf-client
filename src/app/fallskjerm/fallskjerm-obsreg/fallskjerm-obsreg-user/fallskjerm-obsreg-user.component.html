@@ -6,7 +6,7 @@
                 <a [routerLink]="['/fallskjerm']">Fallskjerm</a>
             </li>
             <li class="breadcrumb-item">
-                <a [routerLink]="['/fallskjerm', 'obsreg']">obsreg</a>
+                <a [routerLink]="['/fallskjerm', 'obsreg', 'hi']">obsreg</a>
             </li>
             <li class="breadcrumb-item">
                 user
@@ -32,7 +32,7 @@
         flagg | sett på varslingsliste | kommenter | klubber hoppet | antall hopp
     </div>
     <div class="row mt-2">
-
+        <!--<div *ngIf="dataReady&&data.length===0">Ingen OBSREG med <nlf-resolve-lungo-person [person_id]="person_id"></nlf-resolve-lungo-person> funnet</div>-->
         <ngx-table *ngIf="dataReady" [id]="'table_id'" [configuration]="tableConf" [data]="data" [columns]="columns"
             [(pagination)]="pagination" (event)="parseEvent($event)">
             <ng-template let-row>
@@ -178,7 +178,8 @@
             </div>
 
             <hr>
-            <nlf-user-ors activity="fallskjerm" [person_id]="person_id"></nlf-user-ors>
+            <!-- TODO include via shared modules-->
+            <!--<nlf-user-ors activity="fallskjerm" [person_id]="person_id"></nlf-user-ors>-->
         </div>
 
     </div>
