@@ -1,0 +1,221 @@
+<header class="nlf-sticky-toolbar">
+  <div class="container">
+
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active">
+        <!--<fa-icon [icon]=""></fa-icon>-->
+        <a [routerLink]="['/fallskjerm']">Fallskjerm</a>
+      </li>
+      <li class="breadcrumb-item active">Tandem Registrering <span *ngIf="!!selectedClub">for
+          <nlf-resolve-lungo-organization [organization_id]="selectedClub" link="false"
+            long="true"></nlf-resolve-lungo-organization></span></li>
+    </ol>
+
+    <!--<a [routerLink]="['/admin/help/create']" class="float-end btn btn-sm btn-primary mx-1">
+      <fa-icon [icon]="faPlus"></fa-icon>Ny hjelpetekst
+    </a>
+  -->
+
+  </div>
+</header>
+
+
+<div class="container">
+
+  <div class="row flex">
+
+    <div *ngIf="!csvRecords" class="csv-file-chooser-section">
+
+
+
+      <!--
+        <label>
+        Parse Headers?
+      </label>
+      <select aria-placeholder="Parse headers?" [(ngModel)]="header">
+        <option [value]="true">Yes</option>
+        <option [value]="false">No</option>
+      </select>
+    -->
+      <div *ngIf="!selectedClub || !manifestSystem" class="col">
+
+        <div class="toggle-group">
+          <label class="form-label">Velg manifestsystem</label>
+          <div *ngFor="let choice of manifestSystems">
+            <input type="radio" id="{{ choice }}" value="{{ choice }}" [checked]="choice === defaultManifestSystem"
+              [(ngModel)]="manifestSystem" />
+            <label class="toggle-button" for="{{ choice }}">{{ choice }}</label>
+          </div>
+        </div>
+
+        <div>
+          <label for="fallskjermklubb" class="form-label">Velg klubb det registreres på</label>
+          <select class="form-select" id="fallskjermklubb" [(ngModel)]="selectedClub">
+            <option [ngValue]="null" disabled selected>Velg klubb</option>
+            <option *ngFor="let club of clubs" [ngValue]="club.id">
+              {{ club.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div *ngIf="!!selectedClub && !!manifestSystem">
+        <label for="formFile" class="form-label">Last opp CSV fil fra manifestsystemet</label>
+        <input class="form-control" id="formFile" type="file" #fileImportInput name="File Upload" id="csvFileUpload"
+          (change)="fileChangeListener($event)" accept=".csv" />
+      </div>
+
+
+    </div>
+
+    <div *ngIf="!!csvRecords">
+
+      <p>
+        Registrerer tandemelever på klubb: <nlf-resolve-lungo-organization [organization_id]="selectedClub" link="false"
+          long="true"></nlf-resolve-lungo-organization>
+      </p>
+
+      <div class="csv-result-table">
+
+
+        <ngx-table #tandemTable id="tandemTable" [configuration]="tableConf" [data]="csvRecords" [columns]="columns">
+          <ng-template let-row let-index="index">
+            <td>
+              <div class="form-check">
+                <input class="form-check-input" [(ngModel)]="csvRecords[index]['checked']" type="checkbox" value=""
+                  id="check_{{index+1}}" checked>
+              </div>
+              <!--{{index+1}}-->
+            </td>
+            <td>
+              {{row["First Name"]}}
+            </td>
+            <td>
+              {{row["Last Name"]}}
+            </td>
+            <td>
+              {{row["Email"]}}
+            </td>
+            <td>
+              {{row["Gender"]}}
+            </td>
+            <td>
+              {{row["Age"]}}
+            </td>
+            <td>
+              {{row["Weight"]}}
+            </td>
+            <td>
+              {{row["Date Of Birth"]}}
+            </td>
+            <td>
+              {{row["Address"]}}
+            </td>
+            <td>
+              {{row["Phone"]}}
+            </td>
+            <td>
+              {{row["Last Jump Date"]}}
+            </td>
+            <td>
+              {{row["Zip/Postal"]}}
+            </td>
+            <td>
+              {{row["City"]}}
+            </td>
+            <td>
+              {{row["Land"]}}
+            </td>
+            <td>
+              {{row["Statsborgerskap"]}}
+            </td>
+
+            <!--<fa-icon class="text-danger" [icon]="faClose"></fa-icon>{{ (row["search"] | json) || '' }}-->
+
+
+            <ng-container *ngIf="!row['type']">
+              <td>
+                <span *ngIf="!!row['state']&&row['state']==='searching'">Søker hos NIF....<nlf-ui-component-spinner
+                    size="1"></nlf-ui-component-spinner></span>
+              </td>
+              <td></td>
+            </ng-container>
+
+            <ng-container *ngIf="!!row['type']">
+
+              <!-- Ny bruker/eksisterer ikke -->
+              <ng-container *ngIf="row['type']==='none'">
+                <td>
+                  <fa-icon size="2x" class="text-success" title="Ny bruker vil bli opprettet"
+                    [icon]="faPersonCirclePlus"></fa-icon>
+                </td>
+                <td>
+                  <button class="btn btn-secondary btn-sm"
+                    title="Gjør et avansert søk manuelt om du lurer på om personen likevel er registrert i NIF">Avansert
+                    søk</button>
+                </td>
+              </ng-container>
+
+              <!-- Flere brukere funnet -->
+              <ng-container *ngIf="row['type']==='multiple'">
+                <td>
+                  <fa-icon size="2x" class="text-error" title="Flere brukere, du må velge en"
+                    [icon]="faPersonCircleQuestion">{{setRowClass('table-danger')}}</fa-icon>
+                </td>
+                <td>
+                  <button class="btn btn-danger btn-sm">Velg person</button>
+                </td>
+              </ng-container>
+
+              <!-- Kun EN bruker yess! -->
+              <ng-container *ngIf="row['type']==='single'">
+                <td>
+                  <ng-container *ngIf="!!isRegisteredList">
+                    
+                    <ng-container *ngIf="isRegisteredList[row['person_id']]">
+                      <fa-icon size="2x" class="text-success" title="Brukeren er allerede registrert på klubben"
+                        [icon]="faCheck"></fa-icon>
+                    
+                      </ng-container> <ng-container *ngIf="!isRegisteredList[row['person_id']]">
+                      <fa-icon size="2x" class="text-success" title="Det eksisterer kun en bruker"
+                        [icon]="faPersonCircleCheck"></fa-icon>
+                    </ng-container>
+                  
+                  </ng-container>
+                </td>
+                <td>
+
+                  <ng-container *ngIf="!!isRegisteredList">
+                    <ng-container *ngIf="isRegisteredList[row['person_id']]"><button
+                        title="Allerede registrert med tandem" class="btn btn-success btn-sm">Se
+                        person</button></ng-container>
+                    <ng-container *ngIf="!isRegisteredList[row['person_id']]"><button title="Ikke tidligere registrert"
+                        class="btn btn-success btn-sm">Se person</button></ng-container>
+                  </ng-container>
+                </td>
+              </ng-container>
+            </ng-container>
+          </ng-template>
+        </ngx-table>
+
+
+
+        <hr />
+        <!-- {{ csvRecords | json }}-->
+      </div>
+
+      <div class="row">
+        <div class="d-flex align-items-end justify-content-end">
+          <button (click)="csvRecords=undefined;selectedClub=undefined;manifestSystem=undefined;"
+            class="btn btn-outline-secondary" type="button"><fa-icon [icon]="faClose"></fa-icon> Avbryt</button>
+
+          <button (click)="canRegisterTable()" class="btn btn-success">
+            <fa-icon [icon]="faCheck"></fa-icon>Opprett registreringer for {{ getNumberOfChecked() }} personer av {{
+            csvRecords.length }}
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

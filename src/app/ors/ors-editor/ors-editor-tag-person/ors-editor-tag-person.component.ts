@@ -5,7 +5,7 @@ import { ApiOptionsInterface, ApiTagList, ApiTagItem } from 'app/api/api.interfa
 import { LungoPersonsSearchItem, LungoPersonsSearchList } from 'app/api/lungo.interface';
 import { distinctUntilChanged, debounceTime, switchMap, tap, catchError, map } from 'rxjs/operators';
 import { Subject, Observable, of, concat } from 'rxjs';
-import { titleCase } from 'app/interfaces/functions';
+import { titleCase } from 'app/interfaces/functions';
 
 /**
 Groups of tags activity: fallskjerm:
@@ -60,6 +60,9 @@ export class NlfOrsEditorTagPersonComponent implements OnInit {
   @Input() disabled = false;
   @Input() allowAdd = true;
   @Input() fc = false;
+  @Input() placeholder="Skriv for å søke"
+  @Input() notFoundText="Fant ikke noe"
+  
   @Output() personChange: EventEmitter<{ id: number; tmp_name?: string; full_name?: string; }> = new EventEmitter();
   @Output() change: EventEmitter<boolean> = new EventEmitter();
 

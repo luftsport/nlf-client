@@ -1,6 +1,8 @@
 /**
 * Calculates the rating by model
 **/
+import { isEmpty as _isEmpty } from 'lodash';
+
 export function calculateRating<int>(actual, potential) {
   try {
     const max = 7;  // 8 - 1 = 7
@@ -18,6 +20,9 @@ export function calculateRating<int>(actual, potential) {
 }
 
 export function isObjEmpty<bool>(obj) {
+
+  return _isEmpty(obj);
+
   for (let key in obj) {
     if (obj.hasOwnProperty(key))
       return false;
@@ -59,11 +64,11 @@ export function cleanObject<Object>(obj, trim?: boolean) {
     // Get this value and its type
     let value = obj[key];
     const type = typeof value;
-    console.log('Clean it ', type, key, value);
+    //console.log('Clean it ', type, key, value);
     if (type === "object") {
 
       // ...and remove if now "empty" (NOTE: insert your definition of "empty" here)
-      if (isObjEmpty(value)) {
+      if (_isEmpty(value)) {
         delete obj[key];
       } else {
         // Recurse...
@@ -78,7 +83,6 @@ export function cleanObject<Object>(obj, trim?: boolean) {
       delete obj[key];
     }
     else if (type === "string" && (value.length === 0 || value.replace(/\W/g, "") === "")) { ///\s/g
-      console.log('IN FUNCTIONS weeee', key, value)
       delete obj[key];
     }
   });
@@ -241,6 +245,32 @@ export function timeSince(_updated: string) {
   const now = new Date();
 
   return (+now - (+updated)) / 1000;
+
+}
+
+export function checkExpiryYear(year) {
+  try {
+
+    let now = new Date().getFullYear();
+    if (+year >= +now) {
+      return true;
+    }
+  } catch (e) { console.log(e) }
+
+  return false
+}
+
+export function checkExpiry(expiry) {
+  try {
+
+    if (Date.parse(expiry) > Date.now()) {
+      return true;
+    }
+
+
+  } catch (e) { console.log(e) }
+
+  return false;
 
 }
 

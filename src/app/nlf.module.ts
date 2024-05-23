@@ -57,8 +57,7 @@ import { JoditAngularModule } from 'jodit-angular';
 import { ImageCropperModule } from 'ngx-image-cropper';
 // DIFF
 import { DiffMatchPatchModule } from 'ng-diff-match-patch';
-// TIME
-import { MomentModule } from 'ngx-moment'; // optional, provides moment-style pipes for date formatting
+
 
 
 // API
@@ -142,26 +141,6 @@ import { NlfOrsSelfTableComponent } from 'app/ors/ors-brief/ors-self-table/ors-s
 import { NlfOrsAllTableComponent } from 'app/ors/ors-brief/ors-all-table/ors-all-table.component';
 import { NlfOrsLastComponent } from 'app/ors/ors-brief/ors-last/ors-last.component';
 
-
-// OBSREG Resolvers
-import { NlfResolveObservationFlagsComponent } from 'app/services/resolve/resolve-observation-flags/resolve-observation-flags.component';
-import { NlfResolveObservationTypesComponent } from 'app/services/resolve/resolve-observation-types/resolve-observation-types.component';
-import { NlfResolveObservationComponent } from 'app/services/resolve/resolve-observation/resolve-observation.component';
-import { NlfResolveObservationStateComponent } from 'app/services/resolve/resolve-observation-state/resolve-observation-state.component';
-import { NlfResolveObservationComponentAttributesComponent } from 'app/services/resolve/resolve-observation-component-attributes/resolve-observation-component-attributes.component';
-import { NlfResolveObservationTagsComponent } from 'app/services/resolve/resolve-observation-tags/resolve-observation-tags.component';
-import { NlfResolveObservationRatingComponent } from 'app/services/resolve/resolve-observation-rating/resolve-observation-rating.component';
-
-// OBSREG PIPES
-import { NlfOrsTagsPipe } from 'app/pipes/ors-tags.pipe';
-import { NlfOrsComponentAttributesPipe } from 'app/pipes/ors-component-attributes.pipe';
-import { NlfOrsRatingPipe } from 'app/pipes/ors-rating.pipe';
-import { NlfOrsRatingCalcPipe } from 'app/pipes/ors-rating-calc.pipe';
-import { NlfDynamicColorPipe } from 'app/pipes/dynamic-color.pipe';
-import { NlfDynamicColorErcPipe } from 'app/pipes/dynamic-color-erc.pipe';
-import { NlfActivityPipe } from 'app/pipes/activity.pipe';
-
-
 // OBSREG CREATE
 import { NlfOrsFallskjermCreateComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-create/ors-fallskjerm-create.component';
 import { NlfOrsMotorCreateComponent } from 'app/ors/ors-motor/ors-motor-create/ors-motor-create.component';
@@ -220,6 +199,9 @@ import { NlfOrsReportComponentsTimelineComponent } from 'app/ors/ors-report/repo
 import { NlfOrsReportFilesThumbnailsComponent } from 'app/ors/ors-report/report-files-thumbnails/report-files-thumbnails.component';
 import { NlfOrsReportFlightMapComponent } from 'app/ors/ors-report/report-flight-map/report-flight-map.component';
 import { NlfOrsReportE5xComponent } from 'app/ors/ors-report/report-e5x/report-e5x.component';
+
+// OBSREG SEARCH
+import { NlfOrsSearchComponent } from 'app/ors/ors-search/ors-search.component';
 
 // OBSREG FALLSKJERM
 import { NlfOrsFallskjermEditorComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-editor/ors-fallskjerm-editor.component';
@@ -290,8 +272,8 @@ import { NlfOrsSportsflyReportSummaryComponent } from 'app/ors/ors-sportsfly/ors
 // OBSREG EDITOR
 // ShARED import { NlfOrsEditorTagComponent } from 'app/ors/ors-editor/ors-editor-tag/ors-editor-tag.component';
 // SHARED import { NlfOrsEditorTagStringComponent } from 'app/ors/ors-editor/ors-editor-tag-string/ors-editor-tag-string.component';
-import { NlfOrsEditorTagPersonComponent } from 'app/ors/ors-editor/ors-editor-tag-person/ors-editor-tag-person.component';
-import { NlfOrsEditorTagPersonsComponent } from 'app/ors/ors-editor/ors-editor-tag-persons/ors-editor-tag-persons.component';
+// SHARED import { NlfOrsEditorTagPersonComponent } from 'app/ors/ors-editor/ors-editor-tag-person/ors-editor-tag-person.component';
+// SHARED import { NlfOrsEditorTagPersonsComponent } from 'app/ors/ors-editor/ors-editor-tag-persons/ors-editor-tag-persons.component';
 
 // Aircraft ATTRIBUTES
 import { NlfOrsEditorE5XAcWildlifeComponent } from 'app/ors/ors-editor/ors-editor-e5x-attr/ors-editor-e5x-ac-wildlife/ors-editor-e5x-ac-wildlife.component';
@@ -340,7 +322,8 @@ import { ApiE5XChoicesService } from 'app/api/api-e5x-choices.service';
 // import { NlfAircraftsAddComponent } from 'app/aircrafts/aircrafts-add/aircrafts-add.component';
 // import { NlfAircraftsEditComponent } from 'app/aircrafts/aircrafts-edit/aircrafts-edit.component';
 
-
+// Distinct field values in collection
+import { ApiDistinctService } from 'app/api/api-distinct.service';
 
 // LUNGO Services
 import { LungoIntegrationService } from 'app/api/lungo-integration.service';
@@ -357,7 +340,6 @@ import { NlfUserMembershipComponent } from 'app/user/user-membership/user-member
 import { NlfUserSettingsComponent } from 'app/user/user-settings/user-settings.component';
 import { NlfUserNotificationsComponent } from 'app/user/user-notifications/user-notifications.component';
 import { NlfUserClubSelectorComponent } from 'app/user/user-club-selector/user-club-selector.component';
-import { NlfUserOrsComponent } from 'app/user/user-ors/user-ors.component';
 import { NlfUserComponent } from 'app/user/user.component';
 import { NlfUserTableComponent } from 'app/user/user-table/user-table.component';
 
@@ -391,7 +373,7 @@ import { ConfirmService, ConfirmState, ConfirmModalComponent, ConfirmTemplateDir
 
 // ALERT AND ERRORS
 import { NlfAlertService } from 'app/services/alert/alert.service';
-import { NlfToastService } from 'app/services/toast/toast.service';
+import { NlfToastService } from 'app/services/toast/toast.service';
 import { NlfErrorComponent } from 'app/error/error.component';
 
 // Socket.io
@@ -408,6 +390,10 @@ import { NlfSocketService } from 'app/services/socket/socket.service';
 
 // GEO
 import { GeoLocationService } from 'app/services/geo/geo-location.service';
+
+// Query builder
+import { NgxAngularQueryBuilderModule } from "ngx-angular-query-builder";
+import { ApiSearchService } from 'app/api/api-search.service';
 
 @NgModule({
   declarations: [
@@ -433,7 +419,6 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfUserMembershipComponent,
     NlfUserSettingsComponent,
     NlfUserNotificationsComponent,
-    NlfUserOrsComponent,
 
     NlfUserClubSelectorComponent,
 
@@ -448,6 +433,9 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
 
     NlfOrsEditorFirstComponent,
     NlfOrsErrorComponent,
+
+    // ORS SEARCH
+    NlfOrsSearchComponent,
 
     // FALLSKJERM OBSREG
     NlfOrsFallskjermCreateComponent,
@@ -516,8 +504,8 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
 
     NlfOrsStatsHeatmapComponent,
     NlfOrsStatsComponent,
-    NlfResolveObservationFlagsComponent,
-    NlfResolveObservationTypesComponent,
+
+
     NlfOrsReportAskComponent,
     NlfOrsReportComponentsTimelineComponent,
     NlfOrsReportAskTextComponent,
@@ -526,21 +514,12 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfOrsReportActionsComponent,
     NlfOrsReportRelatedComponent,
     NlfOrsReportWeatherComponent,
-    NlfResolveObservationComponent,
+
+
     NlfUserProfileComponent,
     NlfOrsReportFilesComponent,
     NlfOrsReportE5xComponent,
-    NlfOrsTagsPipe,
-    NlfOrsComponentAttributesPipe,
-    NlfResolveObservationStateComponent,
-    NlfResolveObservationComponentAttributesComponent,
-    NlfResolveObservationTagsComponent,
-    NlfResolveObservationRatingComponent,
-    NlfOrsRatingPipe,
-    NlfOrsRatingCalcPipe,
-    NlfDynamicColorPipe,
-    NlfDynamicColorErcPipe,
-    NlfActivityPipe,
+    
     ConfirmTemplateDirective,
     NlfOrsReportFilesThumbnailsComponent,
 
@@ -623,10 +602,10 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     NlfOrsEditorE5xReportinghistoryComponent,
     NlfOrsEditorE5xRiskComponent,
     // OBSREG TAG
-    //NlfOrsEditorTagComponent,
-    //NlfOrsEditorTagStringComponent,
-    NlfOrsEditorTagPersonComponent,
-    NlfOrsEditorTagPersonsComponent,
+    // shared NlfOrsEditorTagComponent,
+    // shared NlfOrsEditorTagStringComponent,
+    // shared NlfOrsEditorTagPersonComponent,
+    // shared NlfOrsEditorTagPersonsComponent,
 
     // COMMON
     NlfErrorComponent,
@@ -656,11 +635,11 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     DragDropModule,
     NlfSharedModule,
     //NlfAircraftsSharedModule,
-
+    
     NlfConfigModule, // Config module
     NlfRoutingModule,
     BrowserModule,
-
+    NgxAngularQueryBuilderModule,
     // REMOVE GenericTableModule,
     TableModule, // ngx-easy-table
     // REMOVE RTModule, // right-angled declarative tables
@@ -669,7 +648,6 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     // NgxDatatableModule,
 
     NgIdleKeepaliveModule.forRoot(),
-    MomentModule,
     TagInputModule, // ngx-chips
     BrowserAnimationsModule,
     NgxUploaderModule,
@@ -686,7 +664,8 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     //  VgOverlayPlayModule,
     //  VgBufferingModule,
     JoditAngularModule, // Jodit editor
-
+    
+    
   ],
   providers: [
     PendingChangesGuard,
@@ -732,6 +711,9 @@ import { GeoLocationService } from 'app/services/geo/geo-location.service';
     // E5X
     ApiE5XAttributesService,
     ApiE5XChoicesService,
+    // Distinct
+    ApiDistinctService,
+    ApiSearchService,
     // Common Services
     NlfAlertService,
     NlfToastService,

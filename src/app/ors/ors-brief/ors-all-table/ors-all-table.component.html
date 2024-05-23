@@ -1,6 +1,6 @@
 <span *ngIf="!!dataReady">
 
-  <ngx-table class="table table-flush" [id]="'ors-all-table'" [configuration]="tableConf" [data]="data" [columns]="columns" [(pagination)]="pagination" [filtersTemplate]="filtersTemplate" (event)="eventEmitted($event)">
+  <ngx-table class="table table-flush" [id]="'ors-all-table'" [configuration]="tableConf" [data]="data" [columns]="columns" [(pagination)]="pagination" [filtersTemplate]="filtersTemplate" (event)="parseEvent($event)">
 
     <!-- ROWS -->
     <ng-template let-row>

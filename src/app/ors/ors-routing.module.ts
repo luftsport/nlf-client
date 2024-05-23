@@ -40,6 +40,8 @@ import { NlfOrsSeilflyEditorComponent } from 'app/ors/ors-seilfly/ors-seilfly-ed
 import { NlfOrsSeilflyReportComponent } from 'app/ors/ors-seilfly/ors-seilfly-report/ors-seilfly-report.component';
 import { NlfOrsSeilflySearchComponent } from 'app/ors/ors-seilfly/ors-seilfly-search/ors-seilfly-search.component';
 
+import { NlfOrsSearchComponent } from 'app/ors/ors-search/ors-search.component';
+
 import { NlfOrsStatsHeatmapComponent } from 'app/ors/ors-stats/ors-stats-heatmap/ors-stats-heatmap.component';
 
 import { NlfAuthGuard } from 'app/services/auth/auth.guard';
@@ -52,7 +54,7 @@ const nlfOrsRoutes: Routes = [
   { path: 'ors/fallskjerm/report/:id', component: NlfOrsFallskjermReportComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Fallskjerm rapportvisning' } },
   { path: 'ors/fallskjerm/report/:id/version/:version', component: NlfOrsFallskjermReportComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Fallskjerm viser versjon' } },
   { path: 'ors/fallskjerm/edit/:id', component: NlfOrsFallskjermEditorComponent, canActivate: [NlfAuthGuard], canDeactivate: [PendingChangesGuard], data: { title: 'OBSREG - Fallskjerm editor' } },
-  { path: 'ors/fallskjerm/search', component: NlfOrsFallskjermSearchComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Fallskjerm søk' } },
+  //{ path: 'ors/fallskjerm/search', component: NlfOrsFallskjermSearchComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Fallskjerm søk' } },
   { path: 'ors/fallskjerm/dashboard/:id', component: NlfOrsFallskjermDashboardComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Fallskjerm dashboard' } },
 
   { path: 'ors/:activity/stats', component: NlfOrsStatsHeatmapComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - statistikk' } },
@@ -90,8 +92,9 @@ const nlfOrsRoutes: Routes = [
   { path: 'ors/seilfly/search', component: NlfOrsSeilflySearchComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Seilfly søk' } },
 
   // Standalones
-  { path: 'ors/:activity/activities/:id', component: NlfOrsActivitiesComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Aktivitet' } }
-  ,
+  { path: 'ors/:activity/activities/:id', component: NlfOrsActivitiesComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Aktivitet' } },
+  { path: 'ors/:activity/search', component: NlfOrsSearchComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Søk' } },
+
   { path: 'ors/**', redirectTo: 'ors/' }
 
   //{ path: 'ors/fallskjerm/edit/workflow/:id', component: NlfOrsEditorWorkflowComponent, canActivate: [NlfAuthGuard]},

@@ -33,6 +33,9 @@ export class NlfResolveObservationComponent implements OnInit {
     };
 
     this.orsService.getObservation(this.id, options).subscribe(**/
+
+    this.orsService.setActivity(this.activity);
+    
     this.apiCache.get(
       ['observation-component', this.id, {}],
       this.orsService.getObservation(this.id)

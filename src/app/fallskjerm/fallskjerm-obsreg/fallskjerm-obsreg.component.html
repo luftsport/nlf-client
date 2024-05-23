@@ -1,0 +1,70 @@
+<header class="nlf-sticky-toolbar">
+    <div class="container">
+
+        <span class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a [routerLink]="['/fallskjerm']">Falskjerm</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a [routerLink]="['/fallskjerm', 'obsreg', 'hi']">obsreg</a>
+            </li>
+            <li class="breadcrumb-item">
+                <nlf-resolve-lungo-organization [organization_id]="discipline"
+                    [link]="true"></nlf-resolve-lungo-organization>
+            </li>
+            <li class="breadcrumb-item active">
+                HI/SU/FSJ <sup class="text-danger mx-1" title="Applikasjonen er ikke ferdig utviklet">beta</sup>
+            </li>
+        </span>
+        <nlf-help class="float-end mx-1" key="ors-dashboard-fallskjerm"></nlf-help>
+        <span class="float-end mx-1 col-2">
+        </span>
+
+
+    </div>
+</header>
+
+<div class="container">
+    <div class="row mt-2">
+        <nlf-ors-editor-tag-person id="personSearch" [(person)]="person" [activity]="activity" [fc]="true" [allowAdd]="false" (change)="goToPerson($event)"></nlf-ors-editor-tag-person>
+    </div>
+
+    <div class="row mt-2">
+        <nlf-fallskjerm-obsreg-members-other [discipline]="discipline"></nlf-fallskjerm-obsreg-members-other>
+
+    </div>
+    <div class="row">
+        <div class="col-md-6"><nlf-fallskjerm-obsreg-member-reports [discipline]="discipline"></nlf-fallskjerm-obsreg-member-reports></div>
+        <div class="col-md-6"><nlf-fallskjerm-obsreg-member-reporter [discipline]="discipline"></nlf-fallskjerm-obsreg-member-reporter></div>
+
+    </div>
+
+
+
+    <!--
+            <h3>Rapporter med mine medlemmer men i andre klubber</h3>
+        <div *ngFor="let user of foreigners;let i=index">
+            <a [routerLink]="['/fallskjerm/obsreg/user/reports', user['involved']['id']]"><nlf-resolve-lungo-person
+                    [person_id]="user['involved']['id']"></nlf-resolve-lungo-person></a>
+            <nlf-resolve-observation [id]="user['id']" activity="fallskjerm"></nlf-resolve-observation>
+            <nlf-resolve-lungo-organization [organization_id]="user['discipline']"></nlf-resolve-lungo-organization>
+            {{ user['location']['name']}}
+
+            {{ user['when']}}
+        </div>
+
+        <h3>Antall rapporter som involvert</h3>
+        <div *ngFor="let user of userCount;let i=index">
+            {{i+1}}. <nlf-resolve-lungo-person [person_id]="user['_id']"></nlf-resolve-lungo-person> <strong>{{
+                user['total']}}</strong>
+        </div>
+
+        <h3>Antall rapporter rapportert av hoppere</h3>
+        <div *ngFor="let user of usersReportingCount;let i=index">
+            {{i+1}}. <nlf-resolve-lungo-person [person_id]="user['_id']"></nlf-resolve-lungo-person> <strong>{{
+                user['total']}}</strong>
+
+        </div>
+    -->
+
+</div>

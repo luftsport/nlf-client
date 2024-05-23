@@ -58,6 +58,10 @@ let _routes: Routes = [
   { path: 'medlem', component: NlfMemberComponent, data: { bc: 'Medlemssjekk', title: 'Medlemssjekk', prod: false } },
   { path: 'medlem/kompetanse', component: NlfCompetenceTableComponent, data: { bc: 'Kompetanser', title: 'Kompetanser', prod: false } },
   
+  // Fallskjerm
+  { path: 'fallskjerm', loadChildren: () => import('app/fallskjerm/fallskjerm.module').then(m => m.NlfFallskjermModule), data: { bc: 'Fallskjerm', preload: false, title: 'Fallskjerm', prod: true } },
+
+  
   // Catch all
   { path: '**', component: NlfUiDummyComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' }

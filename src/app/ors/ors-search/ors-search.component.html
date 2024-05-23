@@ -1,0 +1,444 @@
+<header class="nlf-sticky-toolbar">
+    <div class="container">
+
+        <span class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a [routerLink]="['/ors', activity]">OBSREG<span class="hidden-sm-down"> {{ activity }}</span></a>
+                <!--[routerLink]="['/organizations', '376']"-->
+            </li>
+            <li class="breadcrumb-item">
+
+                <a>Søk</a>
+                <!--[routerLink]="['/organizations', '376']"-->
+            </li>
+            <li class="breadcrumb-item active">
+                {{ loadedApiSearchItem?.title || text || '' }}
+            </li>
+
+        </span>
+
+
+
+        <button *ngIf="!!query&&!loadedApiSearchItem" class="btn btn-primary btn-sm float-end mx-1"
+            (click)="openModal(saveTemplate)">
+            <fa-icon [icon]="faSave"></fa-icon> Lagre søk
+        </button>
+        <button *ngIf="!!query&&!!loadedApiSearchItem" class="btn btn-secondary btn-sm float-end mx-1" (click)="save()">
+            <fa-icon [icon]="faSave"></fa-icon> Lagre endringer
+        </button>
+        <button *ngIf="!!query" class="btn btn-link btn-sm float-end mx-1"
+            (click)="getSearches();openModal(loadFilterTemplate)">
+            <fa-icon [icon]="faFolderOpen"></fa-icon> Åpne søk
+        </button>
+
+        <nlf-help class="float-end mx-1" key="ors-search-fallskjerm"></nlf-help>
+
+        <span *ngIf="!!result&&result._meta.total>0" class="float-end mx-1">
+            {{ result._meta.total }} resultater
+        </span>
+
+    </div>
+</header>
+
+<div class="container">
+    <ng-container *ngIf="!!activity">
+        <div class="row mt-3">
+
+            <!-- FILTER -->
+            <div class="col-md-3 bg-light p-2">
+                <label class="lead">
+                    <fa-icon [icon]="faFilter"></fa-icon> Filter
+                </label>
+                <div class="row">
+                    <div class="d-grid gap-2">
+                        <!--<label>Fritekst:</label>-->
+                        <input placeholder="Fritekst" class="form-control" type="text"
+                            (ngModelChange)="debouncedUpdate()" [(ngModel)]="text">
+                    </div>
+                </div>
+
+                <div class="row">
+                </div>
+
+                <!-- FILTER SECTIONS -->
+                <div class="row mt-3">
+                    <div class="d-grid gap-2 mt-1">
+                        <div class="form-check form-switch">
+                            <input (change)="useOr($event)" class="form-check-input" type="checkbox" role="switch"
+                                id="flexSwitchCheckChecked">
+                            <label class="form-check-label" for="flexSwitchCheckChecked">Bruk eller (or)</label>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!!filterSections">
+
+                        <ng-container *ngFor="let section of filterSections">
+                            <!--*ngIf="filterRules.hasOwnProperty()"openFilterModal -->
+                            <div *ngIf="!!section&&getNumFilters(section['section'])==0" class="d-grid gap-2 mt-1">
+                                <button (click)="openFilterModal(filterTemplate, section['section'])"
+                                    class="btn btn-secondary"><fa-icon [icon]="faPlus"></fa-icon> {{ section['label']
+                                    }}</button>
+                            </div>
+                            <div *ngIf="!!section&&getNumFilters(section['section'])>0" class="d-grid gap-2 mt-1">
+                                <button (click)="openFilterModal(filterTemplate, section['section'])"
+                                    class="btn btn-primary"><fa-icon [icon]="faEdit"></fa-icon> {{ section['label'] }}
+                                    <span class="badge text-bg-secondary float-end">{{ getNumFilters(section['section'])
+                                        }}&nbsp;{{ filterRules.sections[section['section']]['condition'] }} </span>
+                                </button>
+                            </div>
+
+                        </ng-container>
+                    </div>
+
+
+                    <div class="d-grid gap-2 mt-3">
+                        <button (click)="reset()" class="btn btn-secondary"><fa-icon [icon]="faRemove"></fa-icon> Reset
+                            filter</button>
+                    </div>
+                </div>
+
+                <!--
+                <div *ngIf="dataReady && !!result._items" class="mt-3">
+                    <div class="d-grid gap-2">
+                        <button (click)="exportTojson()" class="btn btn-secondary"><fa-icon
+                                [icon]="faDownload"></fa-icon> Last ned</button>
+                    </div>
+                </div>
+                -->
+
+                <!-- Split btn -->
+                <div class="dropdown show d-grid gap-2 mt-3"
+                    *ngIf="dataReady && !!result._items && result?._meta?.total > 0">
+
+                    <div ngbDropdown class="d-inline-block">
+                        <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+                            <fa-icon [icon]="faDownload"></fa-icon> Last ned resultater
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                            <button (click)="export('json')" ngbDropdownItem>Rådata (JSON)</button>
+                            <!--<button ngbDropdownItem>Formatert data (JSON)</button>-->
+                            <button (click)="export('csv')" ngbDropdownItem>Formatert data (CSV)</button>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- //Split btn -->
+
+            </div>
+            <!-- SEARCH RESULTS -->
+            <div class="col-md-9">
+                <div class="lead">
+                    <span *ngIf="dataReady && !!result && result._meta.total > 0 !searching">
+                        Fant {{ result._meta.total }} resultater<span
+                            *ngIf="pagination.offset>0&&result._meta.total>pagination.limit">, side
+                            {{pagination.offset}}</span>
+                    </span>
+
+                    <span *ngIf="dataReady && (!result || result._meta.total == 0) && !searching">
+                        Fant ingen resultater
+                    </span>
+
+                    <span *ngIf="searching">
+                        Søker...
+                    </span>
+
+                    <span class="float-end p-1">
+                        <select name="sort" *ngIf="dataReady" class="form-control form-control-sm" id="sort"
+                            [(ngModel)]="sort" (change)="debouncedUpdate()">
+                            <option *ngFor="let item of sortAlternatives | keyvalue" [ngValue]="item.value"
+                                [selected]="isSort(item.value)" [innerHTML]="item.key | safe: 'html'">
+                                <!-- - {{ item.value | json}} {{ sort | json }}-->
+                            </option>
+                        </select>
+                    </span>
+                </div>
+                <div>
+
+                    <!--
+                        <query-builder [(ngModel)]="_query" [config]="config" (ngModelChange)="onChange($event)"
+                        [allowRuleset]="false"></query-builder>
+                    
+                    <pre class="list-group-item-text">filter rules: {{ filterRules | json }}</pre>
+
+                    <pre class="list-group-item-text">query: {{query | json }}</pre>
+                    -->
+                    <!-- Result table -->
+                    <ngx-table class="table table-flush" [id]="'ors-search-table'" [configuration]="tableConf"
+                        [data]="result?._items" [columns]="columns" [(pagination)]="pagination"
+                        [filtersTemplate]="filterTableConfig" (event)="parseEvent($event)">
+
+                        <!-- ROWS -->
+                        <ng-template let-i="index" let-row>
+                            <!-- Preview index!! -->
+                            <td class="pointer" (click)="openPreviewModal(previewTemplate, i)">
+                                #{{ row.id }} - <nlf-resolve-observation-types [activity]="row._model.type"
+                                    [type]="row.type" badge="true"></nlf-resolve-observation-types>
+                                <span *ngIf="!!row.rating"
+                                    class="mx-1 badge bg-{{row.rating | nlfOrsRatingCalc | nlfDynamicColor}}">
+                                    {{ row.rating | nlfOrsRatingCalc }}</span> {{ row.tags | nlfOrsTags }}
+
+                                <span *ngIf="!!row?.components&&row.components.length>2">(<small>{{
+                                        row.components[0]['what'] }}&rarr;{{
+                                        getIncident(row.components)['what'] }}&rarr;{{
+                                        row.components[row.components.length-1]['what'] }})</small></span>
+                                <span class="float-end">
+                                    <nlf-ors-report-ask [ask]="row.ask" [verbose]="false"></nlf-ors-report-ask>
+                                </span>
+
+                                <span class="float-end mx-1">
+                                    <nlf-resolve-observation-state [activity]="row._model.type || 'fallskjerm'"
+                                        [state]="row.workflow.state" icon="true"></nlf-resolve-observation-state>
+                                </span>
+                            </td>
+
+                        </ng-template>
+                    </ngx-table>
+                </div>
+
+            </div>
+
+        </div>
+    </ng-container>
+</div>
+
+<!-- SAVE -->
+<ng-template #saveTemplate>
+
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">
+            Lagre søket
+        </h4>
+        <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <div class="form-group">
+            <label>Navn på søket:</label>
+            <input class="form-control" type="text" [(ngModel)]="newFilter.title" [disabled]="false">
+        </div>
+
+        <div></div>
+
+        <div class="form-group my-3">
+            <div class="form-check">
+                <input [disabled]="false" class="form-check-input" type="checkbox" [(ngModel)]="newFilter.notifications"
+                    id="defaultCheck1">
+                <label class="form-check-label" for="defaultCheck1">
+                    Varsle meg ved nye resultater
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            
+            <label>Søket ga {{ result?._meta.total || 'ukjent' }} resultater</label>
+        </div>
+        <hr class="my-1"/>
+        <div class="form-group mt-3">
+            <label>Søketekst:</label>
+            <input class="form-control" type="text" [value]="text||''" [disabled]="true">
+        </div>
+
+        <div class="form-group">
+            <label>Søkefilter:</label>
+            
+            <textarea [disabled]="true" class="form-control" [value]="cleanFilterSectionRules(filterRules) | json"
+                rows="3"></textarea>
+            
+        </div>
+
+        <div class="form-group">
+            <label>Query som ble sendt:</label>
+            <textarea [disabled]="true" class="form-control" [value]="query | json" rows="3"></textarea>
+        </div>
+        <!--{{ loadedApiSearchItem | json }}-->
+
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-outline-dark float-left" (click)="modalRef.close()">Avbryt</button>
+        <button *ngIf="!loadedApiSearchItem" class="btn btn-primary" (click)="create()">Lagre nytt søk</button>
+        <button *ngIf="!!loadedApiSearchItem" class="btn btn-primary" (click)="save()">Lagre endringer</button>
+    </div>
+</ng-template>
+<!-- /SAVE -->
+
+<!-- PREVIEW -->
+<ng-template #previewTemplate>
+
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">
+            #{{ result._items[previewModalIndex].id }} {{ result._items[previewModalIndex].tags | nlfOrsTags }}
+            <span *ngIf="!!result._items[previewModalIndex].rating"
+                class="float-end badge bg-{{result._items[previewModalIndex].rating | nlfOrsRatingCalc | nlfDynamicColor}}">{{
+                result._items[previewModalIndex].rating | nlfOrsRatingCalc }}</span>
+        </h4>
+        <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <nlf-ors-fallskjerm-report-summary
+            [observation]="result._items[previewModalIndex]"></nlf-ors-fallskjerm-report-summary>
+
+        <nlf-ors-fallskjerm-report-involved *ngIf="result._items[previewModalIndex]?.involved"
+            [model]="result._items[previewModalIndex]._model"
+            [involved]="result._items[previewModalIndex].involved"></nlf-ors-fallskjerm-report-involved>
+
+        <nlf-ors-report-actions *ngIf="!!result?._items[previewModalIndex]?.actions"
+            [actions]="result._items[previewModalIndex].actions"></nlf-ors-report-actions>
+
+        <nlf-report-components-timeline *ngIf="!!result._items[previewModalIndex]?.components"
+            [activity]="result._items[previewModalIndex]._model.type"
+            [components]="result._items[previewModalIndex].components"
+            [componentCollapsed]="true"></nlf-report-components-timeline>
+
+        <nlf-ors-report-ask *ngIf="!!result._items[previewModalIndex]?.ask" [ask]="result._items[previewModalIndex].ask"
+            [verbose]="true"></nlf-ors-report-ask>
+        <nlf-ors-report-ask-text *ngIf="!!result._items[previewModalIndex]?.ask?.text"
+            [comments]="result._items[previewModalIndex].ask.text"
+            [audit]="result._items[previewModalIndex].workflow.audit"
+            [activity]="result._items[previewModalIndex]._model.type"></nlf-ors-report-ask-text>
+        <!-- Search result browse -->
+        <div class="row">
+            <div class="col-md-6">
+                <button *ngIf="previewModalIndex==0&&pagination.offset>1" (click)="nextPage(pagination.offset-1)"
+                    class="float-start btn btn-outline-dark">
+                    &lt;&lt; Previous page</button>
+                <button *ngIf="previewModalIndex>0" (click)="previewModalIndex=previewModalIndex-1"
+                    class="float-start btn btn-outline-dark">
+                    &lt; Previous</button>
+            </div>
+            <div class="col-md-6">
+                <button *ngIf="previewModalIndex<pagination.limit-1" (click)="previewModalIndex=previewModalIndex+1"
+                    class="float-end btn btn-outline-dark">Next &gt;</button>
+                <button
+                    *ngIf="previewModalIndex==pagination.limit-1&&pagination.count/pagination.limit<pagination.offset"
+                    (click)="nextPage(pagination.offset+1)" class="float-end btn btn-outline-dark">Next page
+                    &gt;&gt;</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+
+        <!-- Lenke til observasjonen -->
+        <a class="btn btn-secondary" *ngIf="result._items[previewModalIndex].workflow.state!=='closed'"
+            [routerLink]="['/ors', result._items[previewModalIndex]._model.type, 'edit', result._items[previewModalIndex].id]">Åpne
+            observasjonen</a>
+
+        <a class="btn btn-secondary" *ngIf="result._items[previewModalIndex].workflow.state==='closed'"
+            [routerLink]="['/ors', result._items[previewModalIndex]._model.type, 'report', result._items[previewModalIndex].id]">Åpne
+            observasjonen</a>
+
+        <button class="btn btn-outline-dark" (click)="modalRef.close()">Avbryt</button>
+    </div>
+</ng-template>
+<!-- /PREVIEW -->
+
+<!-- FILTER -->
+<ng-template #filterTemplate>
+
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">
+            Filter for {{ getFilterSectionLabel(modalFilterSection) }}
+        </h4>
+        <span class="lead close float-end">
+            <div *ngIf="dataReady && !!result && result._meta.total > 0 !searching">
+                Fant {{ result._meta.total }} resultater
+            </div>
+
+            <div *ngIf="searching">
+                Søker...
+            </div>
+        </span>
+
+        <button type="button" class="close float-end" aria-label="Close" (click)="closeFilterModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+
+    <div class="modal-body">
+
+        <nlf-ui-component-spinner *ngIf="!modalFilterConfig&&!modalFilterRules"></nlf-ui-component-spinner>
+
+        <div *ngIf="!!modalFilterConfig&&!!modalFilterRules">
+            <query-builder [(ngModel)]="modalFilterRules" [config]="modalFilterConfig"
+                (ngModelChange)="onModalFilterChange($event)" [allowRuleset]="false">
+
+                <ng-container *queryInput="let rule; type: 'date'">
+                    <span class="input-group">
+                        <input type="text" class="form-control" placeholder="yyyy-mm-dd" [(ngModel)]="rule.value"
+                            ngbDatepicker #d="ngbDatepicker">
+                        <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()"
+                            type="button"><fa-icon [icon]="faCalendar"></fa-icon></button>
+
+                        <!--<nlf-datepicker [(date)]="rule.value"></nlf-datepicker>-->
+                    </span>
+                </ng-container>
+            </query-builder>
+
+        </div>
+        <!--<button class="btn btn-success" (click)="debouncedUpdate();">Søk</button>-->
+        <!--
+        <pre *ngIf="modalFilterRules" class="list-group-item-text">modalFilterRules: {{ modalFilterRules | json }}</pre>
+
+        <pre *ngIf="!!modalFilterConfig" class="list-group-item-text">query: {{ modalFilterConfig | json }}</pre>
+        -->
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-outline-dark" (click)="closeFilterModal()">Ferdig</button>
+    </div>
+</ng-template>
+<!-- /FILTER -->
+
+<!-- BROWSE -->
+<ng-template #loadFilterTemplate>
+
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">
+            Åpne lagrede søk
+        </h4>
+        <span class="lead close float-end">
+            <div *ngIf="!!loadedApiSearchList">
+                Fant {{ loadedApiSearchList._meta.total }} lagrede søk
+            </div>
+        </span>
+
+        <button type="button" class="close float-end" aria-label="Close" (click)="modalRef.close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+
+    </div>
+
+    <div class="modal-body">
+
+        <nlf-ui-component-spinner *ngIf="!loadedApiSearchList"></nlf-ui-component-spinner>
+        <ng-container *ngIf="!!loadedApiSearchList">
+            <div class="my-1 row" *ngFor="let search of loadedApiSearchList._items">
+                <span>
+                    <strong>{{search['title'] }}</strong> ({{ search['meta']['results']['num'] }} resultater) {{
+                    search._updated |
+                    amTimeAgo }} <nlf-resolve-lungo-person [avatar]="true" [link]="false"
+                        [person_id]="search['owner']"></nlf-resolve-lungo-person>
+
+                    <button [title]="search['title']" class="btn btn-primary btn-sm float-end mx-1" (click)="text=search.text;pagination.offset=search.options.page;pagination.limit=search.options.max_results;sort=search.options.sort;filterRules=search['rules'];loadSavedSearch(search);modalRef.close();update();">
+                        <fa-icon [icon]="faSearch"></fa-icon>
+                        Bruk</button>
+                    <button [title]="search['title']" class="btn btn-link text-danger btn-sm float-end mx-1" (click)="delete(search['_id'], search['title'], search['_etag'])">
+                        <fa-icon [icon]="faRemove"></fa-icon>
+                        Slett</button>
+                </span>
+            </div>
+        </ng-container>
+
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-outline-dark" (click)="modalRef.close()">Ferdig</button>
+    </div>
+</ng-template>

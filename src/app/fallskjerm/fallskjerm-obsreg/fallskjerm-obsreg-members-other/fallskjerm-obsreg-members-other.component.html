@@ -1,0 +1,42 @@
+<h3 class="my-3">Rapporter med mine medlemmer men i andre klubber</h3>
+<ngx-table *ngIf="dataReady" [id]="table_id" [configuration]="tableConf" [data]="data" [columns]="columns"
+    [(pagination)]="pagination" (event)="parseEvent($event)">
+    <ng-template let-row>
+        <td class="ngx-easy-table-small">
+            <a [routerLink]="['/ors', activity, 'report', row.id]">{{ row.id }}</a>
+        </td>
+
+        <td class="ngx-easy-table-small">
+            <a [routerLink]="['/ors', activity, 'report', row.id]">{{ row.tags | nlfOrsTags: '/':23:'..' || row.title ||
+                ''}}</a>
+        </td>
+
+        <td class="ngx-easy-table-small">
+            <a [routerLink]="['/', activity, 'obsreg', 'user', 'reports', row.involved.id]">
+                <nlf-resolve-lungo-person [person_id]="row.involved.id"></nlf-resolve-lungo-person>
+            </a>
+        </td>
+        <td class="ngx-easy-table-small">
+            {{ row.when | amTimeAgo }}
+        </td>
+
+        <td class="ngx-easy-table-small">
+            {{ row.location.name || '' }}
+        </td>
+
+        <td class="ngx-easy-table-small">
+            <nlf-resolve-lungo-organization [organization_id]="row.discipline"></nlf-resolve-lungo-organization>
+        </td>
+
+        <td class="ngx-easy-table-small text-end">
+            <nlf-resolve-observation-rating [rating]="row.rating"></nlf-resolve-observation-rating>
+        </td>
+
+    </ng-template>
+</ngx-table>
+
+<span *ngIf="!dataReady">
+    <p class="align-middle text-center  text-secondary">
+        <nlf-ui-component-spinner size="3"></nlf-ui-component-spinner>
+    </p>
+</span>

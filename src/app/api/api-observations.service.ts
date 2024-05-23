@@ -50,4 +50,5 @@ export class ApiObservationsService extends ApiRestService {
   public removeAclUser(_id: string, right: string, person_id: number, options?: ApiOptionsInterface): Observable<any> {
     return this.delete('/acl/observations/'+this.activity+'/'+_id +'/' +right +'/', ''+person_id, options);
   }
+
 }

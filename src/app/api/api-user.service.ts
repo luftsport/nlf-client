@@ -44,7 +44,11 @@ export class ApiUserService extends ApiRestService {
    */
   public getUserObservations(activity: string, options?: ApiOptionsInterface): Observable<ApiUserORSList> {
 
-    return this.getList(this.relativeUrl + 'observations/' + activity, options);
+    return this.getList('/'+activity+'/observations/user', options);
+  }
+
+  public getObservationsForUser(activity: string, person_id: number, options?: ApiOptionsInterface, ): Observable<ApiUserORSList> {
+    return this.getList('/'+activity+'/observations/aggregate/user/reports?aggregate={"$person_id": '+person_id+'}', options);
   }
 
 }

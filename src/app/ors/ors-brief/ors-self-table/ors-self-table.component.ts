@@ -4,7 +4,7 @@ import { ApiOptionsInterface, ApiUserDataSubjectItem } from 'app/api/api.interfa
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
 import { Columns, Config, STYLE } from 'ngx-easy-table';
 import { TableEventObject, DefaultTableConfig } from 'app/interfaces/ngx-easy-table.interface';
-import { timeSince } from 'app/interfaces/functions';
+import { timeSince } from 'app/interfaces/functions';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
 //import { clone } from 'lodash';
 
