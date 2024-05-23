@@ -147,7 +147,7 @@ export class NlfOrsEditorTagE5XComponent implements OnInit {
                 },
               }
 
-              if (this.allowed.length > 0) {
+              if (!!this.allowed && this.allowed.length > 0) {
                 coptions.query.where['id'] = { $in: this.allowed };
               }
               this.apiCache.get(

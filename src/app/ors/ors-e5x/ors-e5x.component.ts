@@ -47,7 +47,9 @@ export class NlfOrsE5xComponent implements OnInit {
   public config: NlfConfigItem;
 
 
-  allowedReportStatus: number[] = [2, 3]; // 2=open, 3=closed
+  allowedReportStatus = { 2: 'open', 3: 'closed' }; // 2=open, 3=closed
+  allowedStatusKeys = [];
+
 
   faHistory = faHistory;
   faDownload = faDownload;
@@ -56,7 +58,7 @@ export class NlfOrsE5xComponent implements OnInit {
   faPaperPlane = faPaperPlane;
   faCogs = faCogs;
   faBan = faBan;
-  
+
   /**
   report_status = [
     { id: 5, label: 'Initial notification', descr: 'Initial notification' },
@@ -79,10 +81,11 @@ export class NlfOrsE5xComponent implements OnInit {
     private configService: NlfConfigService
   ) {
 
+    this.allowedStatusKeys = Object.keys(this.allowedReportStatus).map(Number);
+
     this.authSubject.observableAuthData.subscribe(
       data => {
         this.person_id = data?.person_id || undefined;
-        console.log('Auth subject', data);
         try {
           this.token = data.token;
         } catch {
@@ -94,7 +97,6 @@ export class NlfOrsE5xComponent implements OnInit {
     this.subject.observableObservation.subscribe(
       observation => {
         this.observation = observation;
-        console.log('E5X in E5X NOW!!!!', observation);
         this.configService.observableConfig.subscribe(
           data => {
             this.config = data;
@@ -102,7 +104,7 @@ export class NlfOrsE5xComponent implements OnInit {
               this.e5x_enabled = this.config[this.observation._model.type]['observation']['e5x']['enabled'];
               if (!!this.config[this.observation._model.type]['observation']['e5x']['enabled'] && !this.observation.hasOwnProperty('e5x')) {
                 this.observation['e5x'] = {};
-                this.observation.e5x._status = 2; //2=open, 3=closed
+                this.observation.e5x._status = this.allowedReportStatus[Object.keys(this.allowedReportStatus)[0]];
                 if (!this.observation.e5x.hasOwnProperty('audit')) {
                   this.observation.e5x['audit'] = [];
                 }
@@ -114,8 +116,7 @@ export class NlfOrsE5xComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   private _send() {
 
@@ -160,7 +161,7 @@ export class NlfOrsE5xComponent implements OnInit {
 
     //DEFAULTS
     // Title
-    this.observation.occurrence.attributes.headline = this.observation.tags.join(' ') || '';
+    this.observation.occurrence.attributes.headline = this.observation?.tags.join(' ') || this.observation?.title || '';
 
     /**
     Norwegian CAA needs "TEST" for test reports
@@ -368,8 +369,6 @@ export class NlfOrsE5xComponent implements OnInit {
 
     });
   }
-
-
 
   public openModal(template) {
     this.modalRef = this.modalService.open(template, { size: 'lg', backdrop: 'static', keyboard: false });

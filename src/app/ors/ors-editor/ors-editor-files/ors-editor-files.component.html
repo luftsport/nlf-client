@@ -3,18 +3,22 @@
     <!-- THUMBNAILS -->
     <div class="row text-center text-lg-left mb-2">
 
-      <div *ngFor="let thumb of filelist; let i = index">
+      <div *ngFor="let thumb of filelist; let i = index" class="col-lg-3 col-md-3 col-xs-6">
         <div *ngIf="thumb.isImage">
-
           <!-- <div class="d-block mb-4 h-100">-->
-          <span (click)="openModal(modalEditorImage, i)"
-            class="pointer fa-thumbnail text-center col-lg-3 col-md-4 col-xs-6">
 
+          <div class="card pointer" (click)="openModal(modalEditorImage, i)">
+            <img class="card-img-top object-fit-cover" [src]="domSanitizer.bypassSecurityTrustUrl(thumb.src)" alt="{{ thumb.filename }}">
+            <fa-icon [icon]="faLock" *ngIf="thumb.r===true" class="text-danger fa fa-3x card-img-overlay opacity-50"></fa-icon>
+            <fa-icon [icon]="faUnlock" *ngIf="thumb.r===false" class="text-success fa fa-3x card-img-overlay opacity-50"></fa-icon>
+          </div>
+
+          <!--
+          <span (click)="openModal(modalEditorImage, i)" class="pointer fa-thumbnail text-center">
             <img class="img-fluid img-thumbnail" [src]="domSanitizer.bypassSecurityTrustUrl(thumb.src)"
               alt="{{ thumb.filename }}">
-            <i class="fa fa-3x" [ngClass]="thumb.r ? 'fa-lock text-danger' : 'fa-unlock text-success'"></i>
-
           </span>
+        -->
           <!--</div>-->
         </div>
       </div>
@@ -31,10 +35,10 @@
             <tr *ngFor="let f of filelist; let i = index">
 
               <td>
-                <fa-icon (click)="setRestricted(false, f._id, i)" *ngIf="!!f.r" class="text-danger pointer" [icon]="faLock"
-                 ></fa-icon>
-                <fa-icon (click)="setRestricted(true, f._id, i)" *ngIf="!f.r" class="text-success pointer" [icon]="faUnlock"
-                 ></fa-icon>
+                <fa-icon (click)="setRestricted(false, f._id, i)" *ngIf="!!f.r" class="text-danger pointer"
+                  [icon]="faLock"></fa-icon>
+                <fa-icon (click)="setRestricted(true, f._id, i)" *ngIf="!f.r" class="text-success pointer"
+                  [icon]="faUnlock"></fa-icon>
 
                 <a target="_blank" *ngIf="!f.isImage" href="{{ f.download }}">{{f.name}}</a>
                 <a *ngIf="!!f.isImage" (click)="openModal(modalEditorImage, i)" class="pointer">{{f.name}}</a>
@@ -96,16 +100,16 @@
 
         <!-- UPLOAD PROGRESS -->
         <div class="upload-items">
-            <div class="upload-item" *ngFor="let f of ngxfiles; let i = index;">
-              <span class="filename">
-                <span>{{ f.name }} ({{ f.id }}) - {{ f.progress?.data?.percentage }}%</span>
-                <span>uploading with {{ f.progress?.data?.speedHuman }}</span>
-                <span>ETA {{ f.progress?.data?.etaHuman }}</span>
-              </span>
-              <div class="progress">
-                <span class="bar" [style.width]="f?.progress?.data?.percentage + '%'"></span>
-              </div>
+          <div class="upload-item" *ngFor="let f of ngxfiles; let i = index;">
+            <span class="filename">
+              <span>{{ f.name }} ({{ f.id }}) - {{ f.progress?.data?.percentage }}%</span>
+              <span>uploading with {{ f.progress?.data?.speedHuman }}</span>
+              <span>ETA {{ f.progress?.data?.etaHuman }}</span>
+            </span>
+            <div class="progress">
+              <span class="bar" [style.width]="f?.progress?.data?.percentage + '%'"></span>
             </div>
+          </div>
         </div>
         <!-- /UPLOAD PROGRESS -->
       </div>
@@ -199,8 +203,8 @@
       <nlf-resolve-lungo-person [person_id]="filelist[viewimage.index]['owner']"></nlf-resolve-lungo-person>
 
       <fa-icon *ngIf="observation.acl_user.w" class="pointer"
-        (click)="removeFromFilelist(filelist[viewimage.index]['_id'], viewimage.index);modalRef.close()" [icon]="faTimes"
-       ></fa-icon>
+        (click)="removeFromFilelist(filelist[viewimage.index]['_id'], viewimage.index);modalRef.close()"
+        [icon]="faTimes"></fa-icon>
     </div>
     <span *ngIf="!!viewImageLoading" class="text-center">
       <nlf-ui-component-spinner></nlf-ui-component-spinner>

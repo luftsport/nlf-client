@@ -343,6 +343,7 @@ export class NlfOrsMotorEditorComponent implements OnInit, OnDestroy, ComponentC
         // Deep clone
         this.shadow = cloneDeep(this.observation);
         this.changes = false;
+        this.update();
 
       },
       err => {

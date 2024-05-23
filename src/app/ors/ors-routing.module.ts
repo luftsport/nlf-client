@@ -14,6 +14,13 @@ import { NlfOrsFallskjermEditorComponent } from 'app/ors/ors-fallskjerm/ors-fall
 import { NlfOrsFallskjermSearchComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-search/ors-fallskjerm-search.component';
 import { NlfOrsFallskjermDashboardComponent } from 'app/ors/ors-fallskjerm/ors-fallskjerm-dashboard/ors-fallskjerm-dashboard.component';
 
+// Modellfly
+import { NlfOrsModellflyComponent } from 'app/ors/ors-modellfly/ors-modellfly.component';
+import { NlfOrsModellflyReportComponent } from 'app/ors/ors-modellfly/ors-modellfly-report/ors-modellfly-report.component';
+import { NlfOrsModellflyEditorComponent } from 'app/ors/ors-modellfly/ors-modellfly-editor/ors-modellfly-editor.component';
+import { NlfOrsModellflySearchComponent } from 'app/ors/ors-modellfly/ors-modellfly-search/ors-modellfly-search.component';
+import { NlfOrsModellflyDashboardComponent } from 'app/ors/ors-modellfly/ors-modellfly-dashboard/ors-modellfly-dashboard.component';
+
 // Motorfly
 import { NlfOrsMotorComponent } from 'app/ors/ors-motor/ors-motor.component';
 import { NlfOrsMotorEditorComponent } from 'app/ors/ors-motor/ors-motor-editor/ors-motor-editor.component';
@@ -33,6 +40,8 @@ import { NlfOrsSeilflyEditorComponent } from 'app/ors/ors-seilfly/ors-seilfly-ed
 import { NlfOrsSeilflyReportComponent } from 'app/ors/ors-seilfly/ors-seilfly-report/ors-seilfly-report.component';
 import { NlfOrsSeilflySearchComponent } from 'app/ors/ors-seilfly/ors-seilfly-search/ors-seilfly-search.component';
 
+import { NlfOrsSearchComponent } from 'app/ors/ors-search/ors-search.component';
+
 import { NlfOrsStatsHeatmapComponent } from 'app/ors/ors-stats/ors-stats-heatmap/ors-stats-heatmap.component';
 
 import { NlfAuthGuard } from 'app/services/auth/auth.guard';
@@ -45,13 +54,20 @@ const nlfOrsRoutes: Routes = [
   { path: 'ors/fallskjerm/report/:id', component: NlfOrsFallskjermReportComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Fallskjerm rapportvisning' } },
   { path: 'ors/fallskjerm/report/:id/version/:version', component: NlfOrsFallskjermReportComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Fallskjerm viser versjon' } },
   { path: 'ors/fallskjerm/edit/:id', component: NlfOrsFallskjermEditorComponent, canActivate: [NlfAuthGuard], canDeactivate: [PendingChangesGuard], data: { title: 'OBSREG - Fallskjerm editor' } },
-  { path: 'ors/fallskjerm/search', component: NlfOrsFallskjermSearchComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Fallskjerm søk' } },
+  //{ path: 'ors/fallskjerm/search', component: NlfOrsFallskjermSearchComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Fallskjerm søk' } },
   { path: 'ors/fallskjerm/dashboard/:id', component: NlfOrsFallskjermDashboardComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Fallskjerm dashboard' } },
 
   { path: 'ors/:activity/stats', component: NlfOrsStatsHeatmapComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - statistikk' } },
   { path: 'ors/:activity/stats/:id', component: NlfOrsStatsHeatmapComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - statistikk' } },
 
   //{ path: 'ors/fallskjerm/edit/workflow/:id', component: NlfOrsEditorWorkflowComponent, canActivate: [NlfAuthGuard]},
+ // Modellfly
+ { path: 'ors/modellfly', component: NlfOrsModellflyComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Modellfly oversikt' } },
+ { path: 'ors/modellfly/report/:id', component: NlfOrsModellflyReportComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Modellfly rapportvisning' } },
+ { path: 'ors/modellfly/report/:id/version/:version', component: NlfOrsModellflyReportComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Modellfly viser versjon' } },
+ { path: 'ors/modellfly/edit/:id', component: NlfOrsModellflyEditorComponent, canActivate: [NlfAuthGuard], canDeactivate: [PendingChangesGuard], data: { title: 'OBSREG - Modellfly editor' } },
+ { path: 'ors/modellfly/search', component: NlfOrsModellflySearchComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Modellfly søk' } },
+ { path: 'ors/modellfly/dashboard/:id', component: NlfOrsModellflyDashboardComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Modellfly dashboard' } },
 
 
   // Motorfly
@@ -76,8 +92,9 @@ const nlfOrsRoutes: Routes = [
   { path: 'ors/seilfly/search', component: NlfOrsSeilflySearchComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Seilfly søk' } },
 
   // Standalones
-  { path: 'ors/:activity/activities/:id', component: NlfOrsActivitiesComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Aktivitet' } }
-  ,
+  { path: 'ors/:activity/activities/:id', component: NlfOrsActivitiesComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Aktivitet' } },
+  { path: 'ors/:activity/search', component: NlfOrsSearchComponent, canActivate: [NlfAuthGuard], data: { title: 'OBSREG - Søk' } },
+
   { path: 'ors/**', redirectTo: 'ors/' }
 
   //{ path: 'ors/fallskjerm/edit/workflow/:id', component: NlfOrsEditorWorkflowComponent, canActivate: [NlfAuthGuard]},

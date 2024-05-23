@@ -9,12 +9,16 @@
 
       <td>
         <a [routerLink]="['/ors', activity, 'report', ors.id]">
-          #{{ ors.id }} {{ ors.title }}
+          #{{ ors.id }} <nlf-resolve-observation-tags [tags]="ors.tags" [activity]="activity" link="true" seperator="/"></nlf-resolve-observation-tags>
         </a>
       </td>
 
       <td class=".d-none .d-sm-block">
         <a [routerLink]="['/ors', activity]">{{ activity }}</a>
+      </td>
+      
+      <td class=".d-none .d-sm-block">
+        <nlf-resolve-lungo-organization [organization_id]="ors.discipline"></nlf-resolve-lungo-organization>
       </td>
 
       <td>
@@ -22,7 +26,7 @@
       </td>
 
       <td class="text-center">
-        <span class="badge bg-{{ors.rating | nlfOrsRatingCalc | nlfDynamicColor}} rounded-pill">{{ ors.rating | nlfOrsRatingCalc }}</span>
+        <nlf-resolve-observation-rating [rating]="ors.rating"></nlf-resolve-observation-rating>
       </td>
 
     </tr>

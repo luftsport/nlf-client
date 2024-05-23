@@ -1,0 +1,240 @@
+<header class="nlf-sticky-toolbar">
+  <div class="container">
+
+    <span class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a [routerLink]="['/ors', 'modellfly']">OBSREG<span class="hidden-sm-down"> {{ activity |
+            titlecase}}</span></a>
+        <!--[routerLink]="['/organizations', '376']"-->
+      </li>
+      <li *ngIf="isDataReady()" class="breadcrumb-item">
+        <nlf-resolve-lungo-organization [organization_id]="discipline_id"
+          [link]="true"></nlf-resolve-lungo-organization>
+      </li>
+      <li class="breadcrumb-item active">
+        Dashboard <sup class="text-danger mx-1" title="Applikasjonen er ikke ferdig utviklet">beta</sup>
+      </li>
+    </span>
+
+    <!--
+    <button *ngIf="!!query" class="btn btn-primary btn-sm float-end mx-1" (click)="openModal(saveTemplate)" title="Funksjonen kommer snart" disabled>
+      <fa-icon [icon]="faSave"></fa-icon> Lagre søk
+    </button>
+    -->
+    <nlf-help class="float-end mx-1" key="ors-dashboard-modellfly"></nlf-help>
+    <span class="float-end mx-1 col-2">
+      <nlf-org-selector activity="modellfly" [(selected)]="discipline_id" (change)="onOrgChange($event)"
+        size="sm"></nlf-org-selector>
+    </span>
+
+
+  </div>
+</header>
+
+<div class="container">
+  <div class="row mt-2">
+    viser data fra {{ d1 | date:"yyyy-MM-dd" }} til {{ d2 | date:"yyyy-MM-dd" }}
+  </div>
+
+  <div class="row mt-2 py-3">
+
+    <!-- opprettede -->
+    <div class="col-md-6 chart-wrapper">
+      <ng-container *ngIf="pieStatesReady">
+        <div class="col-md-3">
+          <div echarts class="w-140 h-100 align-top" [loading]="true" [options]="statesChartOption">
+          </div>
+        </div>
+        <div class="col-md-9">
+
+          <div class="row">
+            <h2 class="mt-4">{{ getStatesTotalValue() | number }}</h2>
+            <h4 class="text-secondary">opprettede</h4>
+          </div>
+
+          <div class="row">
+
+            <div class="col" *ngFor="let item of pieStates">
+              <div class="p-0 m-0">
+                <div style="border-left: 3px solid {{ item.itemStyle.color }} !important">
+                  <h4 class="my-1 mx-1 p-0 mt-o text-dark">{{ item.value | number }}</h4>
+                  <p class="mb-0 mx-1 p-0 text-secondary">{{ item.name }}</p>
+                </div>
+                <p class="h4 mb-0 mx-2 p-0 font-20 mb-0 text-secondary">{{ item.value/getStatesTotalValue() | percent }}
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </ng-container>
+      <span *ngIf="!pieStatesReady">
+        <nlf-ui-component-spinner></nlf-ui-component-spinner>
+      </span>
+    </div>
+    <!--
+    <div class="col-md-6 col-xs-12 overflow-hidden">
+      <ngx-charts-advanced-pie-chart *ngIf="pieTypesReady" [scheme]="colorScheme" [label]="pieTypesLabel" [results]="pieTypes" [gradient]="gradient">
+      </ngx-charts-advanced-pie-chart>
+      <span *ngIf="!pieTypesReady">
+        <nlf-ui-component-spinner></nlf-ui-component-spinner>
+      </span>
+
+    </div>
+  -->
+
+
+    <!-- behandlede/types -->
+    <div class="col-md-6 chart-wrapper">
+      <ng-container *ngIf="pieTypesReady">
+
+        <div class="col-md-3">
+          <div echarts class="w-140 h-100 align-top" [loading]="true" [options]="typesChartOption">
+          </div>
+        </div>
+        <div class="col-md-9">
+
+          <div class="row">
+            <h2 class="mt-4">{{ getTypesTotalValue() | number }}</h2>
+            <h4 class="text-secondary">behandlede</h4>
+          </div>
+
+          <div class="row">
+
+            <div class="col" *ngFor="let item of pieTypes">
+              <div class="p-0 m-0">
+                <div style="border-left: 3px solid {{ item.itemStyle.color }} !important">
+                  <h4 class="my-1 mx-1 p-0 mt-o text-dark">{{ item.value | number }}</h4>
+                  <p class="mb-0 mx-1 p-0 text-secondary">{{ item.name }}</p>
+                </div>
+                <p class="h4 mb-0 mx-2 p-0 font-20 mb-0 text-secondary">{{ item.value/getTypesTotalValue() | percent }}
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </ng-container>
+      <span *ngIf="!pieTypesReady">
+        <nlf-ui-component-spinner></nlf-ui-component-spinner>
+      </span>
+    </div>
+    <!--
+      <ngx-charts-advanced-pie-chart *ngIf="pieStatesReady" [scheme]="colorScheme" [label]="pieStatesLabel"
+        [results]="pieStates" [gradient]="gradient">
+      </ngx-charts-advanced-pie-chart>
+      <span *ngIf="!pieStatesReady">
+        <nlf-ui-component-spinner></nlf-ui-component-spinner>
+      </span>
+    -->
+  </div>
+
+  <!-- Date range selector -->
+  <div class="row my-1">
+    <div class="col-md-6 col-xs-12">
+
+      <form class="form-inline">
+        <div class="form-group hidden">
+          <div class="input-group">
+
+            <input name="datepicker" class="form-control" ngbDatepicker #datepicker="ngbDatepicker"
+              [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
+              outsideDays="hidden" [startDate]="fromDate!">
+            <ng-template #t let-date let-focused="focused">
+              <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+                [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+                (mouseleave)="hoveredDate = null">
+                {{ date.day }}
+              </span>
+            </ng-template>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="input-group">
+            <input #dpFromDate class="form-control" placeholder="yyyy-mm-dd" name="dpFromDate"
+              [value]="formatter.format(fromDate)" (input)="fromDate">
+            <button class="btn btn-outline-secondary calendar" (click)="datepicker.toggle()" type="button">
+              <fa-icon [icon]="faCalendar"></fa-icon>
+            </button>
+          </div>
+        </div>
+        <div class="form-group ms-1">
+          <div class="input-group">
+            <input #dpToDate class="form-control" placeholder="yyyy-mm-dd" name="dpToDate"
+              [value]="formatter.format(toDate)" (input)="toDate">
+            <button class="btn btn-outline-secondary" (click)="datepicker.toggle()" type="button">
+              <fa-icon [icon]="faCalendar"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+    <div class="col-md-6 col-xs-12">
+      <button class="btn btn-link btn-sm ms-1" (click)="resetDate()">alle</button>
+      <ng-container *ngFor="let quarter of quarts">
+        <!--<button class="btn btn-primary mx-1" (click)="setDatesFromQuarter(quarter)">{{ quarter.label }}</button>-->
+        <button class="btn btn-link btn-sm ms-1" (click)="setDatesFromQuarter(quarter)">{{ quarter.label }}</button>
+      </ng-container>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- STATUSBAR -->
+<div *ngIf="pieTypesReady && pieStatesReady" class="col-xs-12 clearfix my-3 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2 text-center bg-danger text-white">
+        <h2>{{ ((stats.total_injury / stats.total_ors) | number:'1.2-2') || '-'}}</h2>
+        <h5>skade per ors</h5><!-- Heller antall ors'er per skade -->
+      </div>
+
+      <div class="col-md-2 text-center bg-secondary text-white">
+        <h2>{{ stats.total_processing || '-' }}</h2>
+        <h5>ubehandlede</h5>
+      </div>
+
+      <div class="col-md-2 text-center text-white bg-secondary"
+        [ngClass]="{'bg-success': stats.avg_ratings_discipline<stats.avg_ratings, 'bg-danger': stats.avg_ratings_discipline>stats.avg_ratings}">
+        <!--<h2>-</h2>-->
+        <h2>{{ (stats.avg_ratings_discipline | number: '1.0-0') || '-' }}/{{ (stats.avg_ratings | number:'1.0-0') || '-'
+          }}</h2>
+        <!--<h5>hopp {{ current_year }}</h5>-->
+        <h5>rating</h5>
+      </div>
+
+      <div class="col-md-2 text-center bg-success text-white">
+        <h2>-</h2>
+        <h5>skade</h5>
+      </div>
+
+      <div class="col-md-2 text-center bg-danger text-white">
+        <h2>-</h2>
+        <h5>skade elev</h5>
+      </div>
+
+      <div class="col-md-2 text-center bg-success text-white">
+        <h2>-</h2>
+        <h5>ulykke</h5>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="row my-4">
+    <div class="col-md-12 col-xs-12 overflow-auto">
+      <nlf-ors-modellfly-dashboard-table *ngIf="isDataReady() && !!discipline_id && dateRangeReady"
+        activity="modellfly" [discipline]="discipline_id" [dateRange]="dateRange"></nlf-ors-modellfly-dashboard-table>
+    </div>
+  </div>
+</div>

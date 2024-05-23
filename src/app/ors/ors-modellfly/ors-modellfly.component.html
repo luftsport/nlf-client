@@ -1,0 +1,97 @@
+<header class="nlf-sticky-toolbar">
+  <div class="container lead">
+    OBSREG Modellfly
+
+    <!--
+    <button [routerLink]="['/ors', 'modellfly', 'dashboard']" type="button" class="btn btn-sm btn-link float-end mx-1">
+      <fa-icon [icon]="faDashboard"></fa-icon> Dash
+    </button>
+    <button [routerLink]="['/ors', 'modellfly', 'stats']" type="button" class="btn btn-sm btn-link float-end mx-1">
+      <fa-icon [icon]="faPieChart"></fa-icon> Stats
+    </button>
+  -->
+
+    <button [routerLink]="['/ors', 'modellfly', 'search']" type="button" class="btn btn-sm btn-primary float-end mx-1">
+      <fa-icon [icon]="faSearch"></fa-icon> Søk
+    </button>
+
+    <button [routerLink]="['/ors', 'modellfly', 'dashboard', user_settings?.settings?.default_discipline || 802139]" type="button" class="btn btn-sm btn-primary float-end mx-1">
+      <fa-icon [icon]="faDashboard"></fa-icon> Dashboard
+    </button>
+
+    <nlf-ors-go activity="modellfly" class="float-end mx-1" title="Hurtigvalg, skriv inn OBSREG nummer etterfulgt av enter for å gå til OBSREG"></nlf-ors-go>
+    <!--
+    <span class="input-group input-group-sm float-end mx-1" style="max-width: 100px !important">
+      <span class="input-group-text bg-transparent">
+        <fa-icon [icon]="faHashtag" class="text-secondary"></fa-icon>
+      </span>
+      <input id="orsGO" #orsGO type="search" (keyup.enter)="orsGOTO(orsGO.value)" class="form-control form-control-sm border-start-0">
+    </span>
+  -->
+
+    <nlf-help class="float-end mx-1" key="ors-modellfly"></nlf-help>
+
+  </div>
+
+
+</header>
+
+<div class="container">
+
+  <div class="row">
+
+    <div class="col-md-6 col-xs-12 overflow-auto">
+      <div class="nlf-ors-toolbar">
+        <fa-icon [icon]="faUser" class="text-secondary"></fa-icon> Mine observasjoner
+      </div>
+      <nlf-ors-self-table activity="modellfly"></nlf-ors-self-table>
+    </div>
+    <div class="col-md-6 col-xs-12 overflow-auto">
+      <div class="nlf-ors-toolbar">
+        <fa-icon [icon]="faExchange" class="text-secondary"></fa-icon> Til min behandling
+      </div>
+      <nlf-ors-todo-table activity="modellfly"></nlf-ors-todo-table>
+    </div>
+
+    <!-- Group = tight, with padding deck = spacing, no padding card-body style="padding: 0;"
+      <div class="card-deck">
+
+        <div class="card mb-3 me-1">
+          <h5 class="card-header">
+            <fa-icon [icon]="faUser"></fa-icon>Mine observasjoner</h5>
+          <div class="card-body table-responsive" style="padding: 0;">
+
+          </div>
+        </div>
+
+        <div class="card mb-3 ms-1">
+          <h5 class="card-header">
+            <fa-icon [icon]="faRandom"></fa-icon>Til min behandling</h5>
+          <div class="card-body" style="padding: 0;">
+            <nlf-ors-todo-table  activity="modellfly"></nlf-ors-todo-table>
+          </div>
+        </div>
+      </div>
+      -->
+  </div>
+</div>
+
+<div class="py-5 nlf-bg-blue col-md-12 col-xs-12">
+  <div class="container">
+    <p class="m-0 text-center text-white">
+      <nlf-ors-modellfly-create></nlf-ors-modellfly-create>
+    </p>
+  </div>
+</div>
+
+<!-- ALL OBSREG -->
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 col-xs-12 overflow-auto">
+      <div class="nlf-ors-toolbar">
+        <fa-icon [icon]="faList" class="text-secondary"></fa-icon> Alle observasjoner
+      </div>
+      <nlf-ors-all-table activity="modellfly"></nlf-ors-all-table>
+    </div>
+  </div>
+</div>

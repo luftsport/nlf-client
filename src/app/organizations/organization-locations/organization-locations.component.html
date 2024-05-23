@@ -126,35 +126,24 @@
           <input class="form-control" type="string" id="nickname" [(ngModel)]="modalValue.nickname">
         </div>
 
-        <div class="form-group col-md-6">
+
+        <div class="form-group col-md-5">
           <label for="type">Type sted</label>
-          <!--[attr.disabled]="!observation.acl_user.w ? '' : null"-->
-          <select id="type" class="form-control" [(ngModel)]="modalValue.type">
-            <option *ngFor="let type of types" [ngValue]="type.key">
-              {{ type.val }}
-            </option>
-          </select>
+          <nlf-ors-editor-tag-string fc="true" preload="true" group="location" activity="modellfly"
+            [(tagString)]="modalValue.type" [disabled]="disabled">
+          </nlf-ors-editor-tag-string>
         </div>
 
       </div>
 
       <div class="row w-100">
         <div class="form-group w-100">
-          <label for="icao">Søk etter flyplass</label>
+          <label for="icao">Nærmeste flyplass</label>
           <nlf-ors-editor-tag-airport [(airport)]="modalValue.icao" id="icao"></nlf-ors-editor-tag-airport>
         </div>
       </div>
 
-      <div class="row w-100 mt-2">
-        <div class="form-group col-md-6">
-          <label for="latitude">Latitude:</label>
-          {{ modalValue.geo.coordinates[1] }}
-        </div>
-        <div class="form-group col-md-6">
-          <label for="longitude">Longitude:</label>
-          {{ modalValue.geo.coordinates[0] }}
-        </div>
-      </div>
+      
 
       <!--
       @Input() airport: ApiAirport;
@@ -205,6 +194,12 @@
   </div>
 
   <div class="modal-footer">
+
+    <span class="me-auto">
+        Lat: {{ modalValue.geo.coordinates[1] }} Lng: {{ modalValue.geo.coordinates[0] }}
+    </span>
+
+
     <button class="btn btn-outline-dark" (click)="modalRef.close()">
       <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>Avbryt
     </button>

@@ -12,6 +12,7 @@ import { forkJoin } from 'rxjs';
 import { NlfUserSubjectService } from 'app/user/user-subject.service';
 import { ApiUserDataSubjectItem, NlfConfigItem, ApiOptionsInterface } from 'app/api/api.interface';
 import { faUsers, faSave, faTable, faSearch, faSpinner, faCheck, faRemove } from '@fortawesome/free-solid-svg-icons';
+import { checkExpiry, checkExpiryYear } from 'app/interfaces/functions';
 
 @Component({
   selector: 'nlf-member',
@@ -29,6 +30,9 @@ export class NlfMemberComponent implements OnInit {
   MINLENGTH = 3;
   results: LungoPersonsSearchItem[] = [];
 
+  checkExpiry = checkExpiry;
+  checkExpiryYear = checkExpiryYear;
+
   activity: string = undefined;
   searchTerm: string;
   arrowkeyLocation = -1;
@@ -44,7 +48,9 @@ export class NlfMemberComponent implements OnInit {
 
   public ENV = environment;
 
-  deboucedSearch = debounce(this._search, 700);
+  public generateChangeMessages = true;
+
+  deboucedSearch = debounce(this._search, 800);
 
   faUsers = faUsers;
   faSave = faSave;
@@ -161,31 +167,7 @@ export class NlfMemberComponent implements OnInit {
     return hashString(String(person_id));
   }
 
-  checkExpiryYear(year) {
-    try {
 
-      let now = new Date().getFullYear();
-      if (+year >= +now) {
-        return true;
-      }
-    } catch (e) { console.log(e) }
-
-    return false
-  }
-
-  checkExpiry(expiry) {
-    try {
-
-      if (Date.parse(expiry) > Date.now()) {
-        return true;
-      }
-
-
-    } catch (e) { console.log(e) }
-
-    return false;
-
-  }
 
   moveUp() {
     if (this.arrowkeyLocation > 0) {
@@ -245,10 +227,13 @@ export class NlfMemberComponent implements OnInit {
     this.personsService.getUser(person_id).subscribe(
       data => {
         this.modalPerson = data;
-        if (this.modalPerson.activities.includes(109)) {
-          this.getLicenseFromPayment(person_id);
-        }
-        this.modalRef = this.modalService.open(this.personModalTemplate, { size: 'lg' });
+        try {
+          if (this.modalPerson.activities.includes(109)) {
+            this.getLicenseFromPayment(person_id);
+          }
+        } catch (e) { }
+
+        this.modalRef = this.modalService.open(this.personModalTemplate, { size: 'lg', fullscreen: 'xl' });
       },
       err => console.log(err),
       () => { }
@@ -259,10 +244,17 @@ export class NlfMemberComponent implements OnInit {
   closeModal(event) {
     this.modalRef.close();
     this.justClosedModal = true;
+    this.generateChangeMessages = true;
     try {
       event.stopPropagation();
     } catch { }
     this.setFocus("memberSearchInput");
+  }
+
+  reloadModal(event) {
+    this.modalRef.close();
+    this.generateChangeMessages = false;
+    this.openModal(this.person_id);
   }
 
 

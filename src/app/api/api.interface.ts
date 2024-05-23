@@ -279,15 +279,20 @@ export interface ApiObservationsItem extends ApiEveBaseItem {
   location?: ApiLocationItem;
   owner?: number;
   reporter?: number;
+  reporter_role?: string;
+  
   when?: any; //Date | string;
 
   type?: string;
   flags?: ApiObservationFlagsInterface;
   tags?: string[];
+  title?: string;
   ask?: ApiObservationAskInterface;
   rating?: ApiObservationRatingInterface;
 
   components?: ApiObservationComponentInterface[];
+  description?: string;
+
   files?: ApiObservationFileInterface[];
   actions?: ApiObservationActionsInterface;
   involved?: ApiObservationFallskjermInvolvedInterface[];
@@ -312,6 +317,7 @@ export interface ApiObservationsItem extends ApiEveBaseItem {
   // E5X
   e5x?: any;
   occurrence?: any;
+  eccairs2?: any;
 
 }
 
@@ -360,6 +366,18 @@ export interface ApiObservationsSportsflyList extends ApiEveBaseList {
   _items: ApiObservationsSportsflyItem[];
 }
 
+export interface ApiObservationsModellflyItem extends ApiObservationsItem {
+  // Motor
+  aircrafts?: ApiObservationAircraftsItem[];
+  organization?: ApiObservationModellflyOrganizationInterface;
+  // E5X
+  e5x?: any;
+  occurrence?: any;
+  rpas_type?: string;
+}
+export interface ApiObservationsModellflyList extends ApiEveBaseList {
+  _items: ApiObservationsModellflyItem[];
+}
 
 
 export interface ApiObservationsList extends ApiEveBaseList {
@@ -415,8 +433,6 @@ export interface ApiObservationFallskjermInvolvedInterface {
     private?: Object,
     gear?: Object
   };
-
-
 }
 
 export interface ApiObservationFallskjermInvolvedGearInterface {
@@ -441,6 +457,29 @@ export interface ApiObservationFallskjermOrganizationInterface {
   hfl?: [{ id?: number, tmp_name?: string }];
   hl?: [{ id?: number, tmp_name?: string }];
   hi: number[];
+
+}
+
+export interface ApiObservationModellflyInvolvedInterface {
+  id: number;
+  tmp_name?: string;
+  full_name?: string;
+  data?: {
+    date?: Date,
+    licenses?: Object[],
+    memberships?: Object[],
+    clubs?: any[],
+    functions?: any[],
+    competences?: Object[],
+    private?: Object,
+  };
+}
+
+export interface ApiObservationModellflyOrganizationInterface {
+  pilot?: ApiPersonInterface[];
+  ors?: ApiPersonInterface[];
+  club_president: ApiPersonInterface[];
+  fsj?: ApiPersonInterface[];
 
 }
 
@@ -1020,7 +1059,7 @@ export interface NlfConfigOrgItem {
   org_id?: number;
 
   observation?: {
-    create?: {local?: boolean, dev?: boolean, beta?: boolean, prod?: boolean},
+    create?: {local?: boolean, dev?: boolean, beta?: boolean, prod?: boolean}
     components?: { attributes: Object, flags: Object },
     flagsArr?: Array<string>,
     flags?: Object,
@@ -1036,6 +1075,9 @@ export interface NlfConfigOrgItem {
       rit_version?: string,
       //submission?: boolean
     },
+    rpas_types?: string,
+    rpas_flight_type?: string,
+    role_in_observation?: string,
     categories?: Array<string>,
     operational?: {club?: boolean, op?: boolean, jumping?: boolean, flying?: boolean};
   };

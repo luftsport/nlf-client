@@ -13,6 +13,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./ors-editor-met.component.css']
 })
 export class NlfOrsEditorMetComponent implements OnInit {
+
+
   observation: ApiObservationsItem;
   public tafmetar; //: ApiObservationWeatherAutoInterface;
   when;

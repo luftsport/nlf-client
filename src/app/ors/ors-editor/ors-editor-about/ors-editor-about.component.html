@@ -66,6 +66,23 @@
       </dd>
     </ng-container>
 
+    <ng-container *ngIf="observation.organization.hasOwnProperty('fsj')">
+      <dt class="col-sm-3">Fagsjef</dt>
+      <dd class="col-sm-9">
+        <div *ngFor="let fsj of observation.organization.fsj">
+          <nlf-resolve-lungo-person [person_id]="fsj" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
+        </div>
+      </dd>
+    </ng-container>
+    <ng-container *ngIf="observation.organization.hasOwnProperty('club_president')">
+      <dt class="col-sm-3">Leder i klubb</dt>
+      <dd class="col-sm-9">
+        <div *ngFor="let leder of observation.organization.club_president">
+          <nlf-resolve-lungo-person [person_id]="leder" [link]="true" [avatar]="true"></nlf-resolve-lungo-person>
+        </div>
+      </dd>
+    </ng-container>
+
     <ng-container *ngIf="observation.organization.hasOwnProperty('ftl')">
       <dt *ngIf="observation._model.type=='motorfly'" class="col-sm-3">FTL i klubb</dt>
       <dd *ngIf="observation._model.type=='motorfly'" class="col-sm-9">

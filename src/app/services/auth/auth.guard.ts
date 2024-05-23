@@ -11,9 +11,9 @@ export class NlfAuthGuard implements CanActivate {
     isLoggedIn: boolean;
 
     constructor(private router: Router,
-                private alertService: NlfAlertService,
-                private authService: NlfAuthService,
-                private authSubject: NlfAuthSubjectService) {
+        private alertService: NlfAlertService,
+        private authService: NlfAuthService,
+        private authSubject: NlfAuthSubjectService) {
 
         this.authSubject.observableAuth.subscribe(
             auth => this.isLoggedIn = auth,
@@ -26,11 +26,11 @@ export class NlfAuthGuard implements CanActivate {
     Should be checking acl's instead
     **/
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-            return true;
+        
+        return true;
         if (this.isLoggedIn) { // do not validate token
             return true;
         } else {
-
             this.alertService.warning('Du har ikke tilgang til denne ressursen');
             this.authService.logout();
             return false;

@@ -166,7 +166,7 @@ export class NlfOrsFallskjermEditorLocationComponent implements OnInit, AfterVie
 
   public hasMapCoordinates() {
     try {
-      if (!!this.observation.location.geo.coordinates) {
+      if (!!this.observation.location.geo.coordinates && this.observation.location.geo.coordinates.length>0) {
         return true;
       }
     } catch (e) { }

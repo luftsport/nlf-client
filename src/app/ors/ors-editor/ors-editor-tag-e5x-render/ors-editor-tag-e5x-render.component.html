@@ -1,3 +1,3 @@
-<span *ngIf="(!!label || !!customLabel) && showLabel">{{ customLabel || label }}: </span>
+<span *ngIf="(!!label || !!customLabel) && showLabel">{{ customLabel || label }}: </span>
 <span *ngFor="let l of arr" class="me-1" [ngClass]="classes">{{ l }}</span>
 <span *ngIf="!!unit">{{ unit }}</span>

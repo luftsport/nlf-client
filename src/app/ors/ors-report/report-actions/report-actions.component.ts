@@ -9,9 +9,12 @@ import { ApiObservationActionsInterface } from 'app/api/api.interface';
 export class NlfOrsReportActionsComponent implements OnInit {
 
   @Input() actions: ApiObservationActionsInterface;
+  @Input() format: string = "horizontal"; // horizontal vertical
+  
   constructor() { }
 
   ngOnInit() {
+    
   }
 
 }

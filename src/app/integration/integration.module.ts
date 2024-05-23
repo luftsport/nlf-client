@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { NlfSharedModule } from 'app/nlf-shared.module';
 
 import { NlfIntegrationRoutingModule } from './integration-routing.module';
@@ -24,7 +23,6 @@ import { WorkerLogComponent } from './worker-log/worker-log.component';
     WorkerLogComponent,
   ],
   imports: [
-    CommonModule,
     NlfSharedModule,
     NlfIntegrationRoutingModule,
     TableModule,

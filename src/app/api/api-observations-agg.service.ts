@@ -41,5 +41,21 @@ export class ApiObservationsAggService extends ApiRestService {
     return this.getList(this.relativeUrl + '/ratings', options);
   }
 
+  public getUsersForeign(discipline: number, options?: ApiOptionsInterface): Observable<any> {
+    return this.getList(this.relativeUrl + '/users/foreign?aggregate={"$discipline":'+discipline+'}', options);
+  }
+
+  public getUserCount(discipline: number, options?: ApiOptionsInterface): Observable<any> {
+    return this.getList(this.relativeUrl + '/users/reports/count?aggregate={"$discipline":'+discipline+'}', options);
+  }
+
+  public getUserReports(person_id: number, options?: ApiOptionsInterface): Observable<any> {
+    return this.getList(this.relativeUrl + '/user/reports?aggregate={"$person_id":'+person_id+'}', options);
+  }
+
+  public getUsersCreatedReports(discipline: number, options?: ApiOptionsInterface): Observable<any> {
+    return this.getList(this.relativeUrl + '/users/reports/created/count?aggregate={"$discipline":'+discipline+'}', options);
+  }
+  
 
 }

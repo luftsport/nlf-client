@@ -1,4 +1,5 @@
-<div *ngIf="!!actions" class="row">
+<div *ngIf="!!actions&&format=='horizontal'" class="row">
+
   <div class="col-xs-12 col-md-6" *ngIf="!!actions.local">
     <strong>Lokale:</strong>
     <ol>
@@ -21,5 +22,35 @@
         </li>
       </div>
     </ol>
+  </div>
+
+</div>
+
+<div *ngIf="!!actions&&format=='vertical'">
+  <div class="row">
+    <div class="col-xs-12" *ngIf="!!actions.local">
+      <strong>Lokale:</strong>
+      <ol>
+        <div *ngIf="actions.local?.length == 0">Ingen</div>
+        <div *ngIf="actions.local?.length > 0">
+          <li *ngFor="let l of actions.local">
+            {{ l }}
+          </li>
+        </div>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12" *ngIf="!!actions.central">
+      <strong>Sentrale:</strong>
+      <ol>
+        <div *ngIf="actions.central?.length == 0">Ingen</div>
+        <div *ngIf="actions.central?.length > 0">
+          <li *ngFor="let c of actions.central">
+            {{ c }}
+          </li>
+        </div>
+      </ol>
+    </div>
   </div>
 </div>

@@ -1,6 +1,6 @@
 <span *ngIf="!!dataReady">
 
-  <ngx-table class="table table-flush" [id]="'ors-all-table'" [configuration]="tableConf" [data]="data" [columns]="columns" [(pagination)]="pagination" [filtersTemplate]="filtersTemplate" (event)="eventEmitted($event)">
+  <ngx-table class="table table-flush" [id]="'ors-all-table'" [configuration]="tableConf" [data]="data" [columns]="columns" [(pagination)]="pagination" [filtersTemplate]="filtersTemplate" (event)="parseEvent($event)">
 
     <!-- ROWS -->
     <ng-template let-row>
@@ -12,8 +12,8 @@
         {{ row.when | date:"yyyy-MM-dd HH:mm" }}
       </td>
       <td class="ngx-easy-table-small">
-        <a *ngIf="row.workflow.state!=='closed'" [routerLink]="['/ors', row._model.type, 'edit', row.id]">{{ row.tags | nlfOrsTags: seperator:' / ' }}</a>
-        <a *ngIf="row.workflow.state==='closed'" [routerLink]="['/ors', row._model.type, 'report', row.id]">{{ row.tags | nlfOrsTags: seperator:' / ' }}</a>
+        <a *ngIf="row.workflow.state!=='closed'" [routerLink]="['/ors', row._model.type, 'edit', row.id]">{{ row.title || (row.tags | nlfOrsTags: seperator:' / ') }}</a>
+        <a *ngIf="row.workflow.state==='closed'" [routerLink]="['/ors', row._model.type, 'report', row.id]">{{ row.title || (row.tags | nlfOrsTags: seperator:' / ') }}</a>
 
       </td>
       <td class="ngx-easy-table-small">

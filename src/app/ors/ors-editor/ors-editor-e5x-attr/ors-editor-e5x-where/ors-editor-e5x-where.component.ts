@@ -50,8 +50,14 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
     private subject: NlfOrsEditorService
   ) {
 
+
+  }
+
+  ngOnInit() {
+
     this.subject.observableObservation.subscribe(
       observation => {
+        console.log('[Observer] Got obseraviton update!', observation._etag);
         this.observation = observation;
         this.observation = { ...this.observation };
       }
@@ -82,9 +88,7 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
       }
     );
 
-  }
 
-  ngOnInit() {
 
   }
 
@@ -143,7 +147,10 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
       err => {
         this.observation.occurrence.attributes.stateAreaOfOcc.value = undefined;
       },
-      () => this.subject.update(this.observation)
+      () => {
+        console.log('UPDATING subject now...');
+        this.subject.update(this.observation);
+      }
     );
   }
 
@@ -164,7 +171,7 @@ export class NlfOrsEditorE5XWhereComponent implements OnInit {
   }
   modalUpdate() {
 
-    this.update();
+    //this.update();
     this.modalRef.close();
   }
 

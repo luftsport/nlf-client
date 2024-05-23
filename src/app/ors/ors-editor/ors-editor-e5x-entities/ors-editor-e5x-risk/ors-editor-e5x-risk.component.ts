@@ -8,7 +8,8 @@ import { E5XRiskAssessmentClass } from "app/interfaces/e5x.interface";
   styleUrls: ["./ors-editor-e5x-risk.component.css"],
 })
 export class NlfOrsEditorE5xRiskComponent implements OnInit {
-  @Output() riskAssessmentChange: EventEmitter<any> = new EventEmitter();
+  @Input() occurrence: any;
+  @Output() occurrenceChange: EventEmitter<any> = new EventEmitter();
   @Output() change: EventEmitter<boolean> = new EventEmitter();
   @Input() disabled: boolean = false;
 
@@ -63,23 +64,31 @@ export class NlfOrsEditorE5xRiskComponent implements OnInit {
 
   observation: ApiObservationsItem;
 
-  constructor(private subject: NlfOrsEditorService) {
-    this.subject.observableObservation.subscribe((observation) => {
-      try {
-        this.observation = observation;
-        this.loadEventRiskClassification();
-      } catch { }
-    });
+  dataReady = false;
+
+  constructor() {
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+
+    if (!this.occurrence.entities.reportingHistory[0].attributes?.riskClassification?.value) {
+      try {
+        this.occurrence.entities.reportingHistory[0].attributes.riskClassification.value = undefined;
+      } catch { }
+    }
+
+    this.loadEventRiskClassification();
+
+  }
 
   public update() {
-    this.subject.update(this.observation);
+    //this.subject.update(this.observation);
+    this.occurrenceChange.emit(this.occurrence);
+    this.change.emit(true);
   }
 
   setRisk(value) {
-    if (!this.observation.acl_user.w) {
+    if (this.disabled) {
       return;
     }
 
@@ -88,7 +97,7 @@ export class NlfOrsEditorE5xRiskComponent implements OnInit {
   }
 
   setEffectiveness(value) {
-    if (!this.observation.acl_user.w) {
+    if (this.disabled) {
       return;
     }
 
@@ -97,7 +106,7 @@ export class NlfOrsEditorE5xRiskComponent implements OnInit {
   }
 
   updateEventRiskClassification() {
-    if (!this.observation.acl_user.w) {
+    if (this.disabled) {
       return;
     }
 
@@ -111,28 +120,34 @@ export class NlfOrsEditorE5xRiskComponent implements OnInit {
       this.effectivenessValue = 'effective';
     }
 
-    this.observation.occurrence.entities.reportingHistory[0].attributes.riskClassification.value = risk[this.effectivenessValue];
-    this.observation.occurrence.entities.reportingHistory[0].attributes.riskMethodology.value = "Event Risk Classification";
+    this.occurrence.entities.reportingHistory[0].attributes.riskClassification.value = risk[this.effectivenessValue];
+    this.occurrence.entities.reportingHistory[0].attributes.riskMethodology.value = "Event Risk Classification";
     this.update();
   }
 
   loadEventRiskClassification() {
-    if (this.observation.occurrence.entities.riskAssessment.length === 0) {
+    console.log('Loading...');
+    if (this.occurrence.entities.riskAssessment.length === 0) {
       const riskAssessment = new E5XRiskAssessmentClass().riskAssessment;
-      this.observation.occurrence.entities.riskAssessment.push(riskAssessment);
+      this.occurrence.entities.riskAssessment.push(riskAssessment);
     }
 
-    if (!this.observation.occurrence.entities.riskAssessment[0].attributes.riskLevel) {
+    //if (!this.occurrence.entities.riskAssessment[0].attributes.riskLevel) {
+    if (!this.occurrence.entities.reportingHistory[0].attributes.riskClassification.value) {
+      console.log('No riskClassification value set');
+      this.dataReady = true;
       return;
     }
 
-    const riskLevel = this.observation.occurrence.entities.reportingHistory[0].attributes.riskClassification.value;
-
+    const riskLevel = this.occurrence.entities.reportingHistory[0].attributes.riskClassification.value;
+    console.log('RISK LEVEL', riskLevel);
     const matchingRisk = this.riskMatrix.filter((r) => r.effective === riskLevel || r.limited === riskLevel || r.minimal === riskLevel || r.notEffective === riskLevel);
     if (!matchingRisk || matchingRisk.length === 0) {
+      console.log('No matching risk?');
+
       return;
     }
-
+    console.log('MATCHING RISK LEVEL', matchingRisk);
     this.riskValue = matchingRisk[0].key;
     if (matchingRisk[0].effective === riskLevel) {
       this.effectivenessValue = "effective";
@@ -146,5 +161,9 @@ export class NlfOrsEditorE5xRiskComponent implements OnInit {
     if (matchingRisk[0].notEffective === riskLevel) {
       this.effectivenessValue = "notEffective";
     }
+
+    console.log('EFFECTIVE', this.effectivenessValue);
+
+    this.dataReady = true;
   }
 }

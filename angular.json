@@ -88,9 +88,10 @@
               "optimization": true,
               "outputHashing": "all",
               "namedChunks": false,
-              "aot": true,
+              "aot": false,
               "extractLicenses": true,
               "vendorChunk": false,
+              "sourceMap": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -99,10 +100,12 @@
               ]
             },
             "localhost": {
+              "optimization": false,
               "outputHashing": "all",
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
+              "sourceMap": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

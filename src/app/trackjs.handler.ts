@@ -4,7 +4,7 @@ import { environment } from '../environments/environment';
 
 TrackJS.install({
     token: "",
-    forwardingDomain: environment._top_level_name + ".nlf.no",
+    //forwardingDomain: environment._top_level_name + ".nlf.no",
     version: ""
     // for more configuration options, see https://docs.trackjs.com
 });
