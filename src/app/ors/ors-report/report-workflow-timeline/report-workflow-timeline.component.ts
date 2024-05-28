@@ -57,6 +57,10 @@ export class NlfOrsReportWorkflowTimelineComponent implements OnInit {
     this.apiWorkflow.getMapping(this._id).subscribe(
       data => {
         this.workflowActions = data;
+        // Make sure we have init!
+        if(!this.workflowActions.hasOwnProperty('init')) {
+          this.workflowActions['init'] = {title: 'Opprettet', 'descr': 'Ble Opprettet'};
+        }
       },
       err => console.log(err),
       () => { }
