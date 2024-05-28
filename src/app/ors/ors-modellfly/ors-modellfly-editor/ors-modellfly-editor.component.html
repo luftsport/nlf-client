@@ -16,7 +16,7 @@
           {{observation.title}}
         </ng-container>
         <nlf-resolve-observation-tags *ngIf="(!!observation.tags||observation.tags.length>0)&&!observation.title"
-          [tags]="modalObservation.tags" [activity]="modalObservation._model.type" [link]="true"
+          [tags]="observation.tags" [activity]="observation._model.type" [link]="true"
           seperator="/"></nlf-resolve-observation-tags>
         <ng-container *ngIf="(!observation.tags||observation.tags.length==0)&&!!observation.title">
           {{ observation.title }}
@@ -572,7 +572,7 @@
     <h4 class="modal-title pull-left">
       #{{ observation.id }}
       <nlf-resolve-observation-tags *ngIf="(!!observation.tags||observation.tags.length>0)&&!observation.title"
-        [tags]="modalObservation.tags" [activity]="modalObservation._model.type"
+        [tags]="observation.tags" [activity]="observation._model.type"
         seperator="/"></nlf-resolve-observation-tags>
       <ng-container *ngIf="(!observation.tags||observation.tags.length==0)&&!!observation.title">
         {{ observation.title }}
@@ -602,7 +602,7 @@
     <h4 class="modal-title pull-left">
       #{{ observation.id }}
       <nlf-resolve-observation-tags *ngIf="(!!observation.tags||observation.tags.length>0)&&!observation.title"
-        [tags]="modalObservation.tags" [activity]="modalObservation._model.type"
+        [tags]="observation.tags" [activity]="observation._model.type"
         seperator="/"></nlf-resolve-observation-tags>
       <ng-container *ngIf="(!observation.tags||observation.tags.length==0)&&!!observation.title">
         {{ observation.title }}
