@@ -105,8 +105,8 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="whereAt">Hopptype</label>
-          <nlf-ors-editor-tag-string fc="true" allowAdd="true" preload="false" group="jump_types" activity="fallskjerm"
+          <label for="whereAt">Hopptypete</label>
+          <nlf-ors-editor-tag-string [fc]="true" [allowAdd]="false" [preload]="true" group="jump_types" activity="fallskjerm"
             [(tagString)]="modalPerson.data.jump_type" [disabled]="disabled">
           </nlf-ors-editor-tag-string>
         </div>
@@ -115,7 +115,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="activity">Aktivitet</label>
-          <nlf-ors-editor-tag fc="true" preload="true" group="jump_activity" activity="fallskjerm"
+          <nlf-ors-editor-tag [fc]="true" [preload]="true" group="jump_activity" activity="fallskjerm"
             [(initialTags)]="modalPerson.data.activity" [disabled]="disabled">
           </nlf-ors-editor-tag>
         </div>
