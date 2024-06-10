@@ -2,6 +2,7 @@ import { ApiFilesService } from 'app/api/api-files.service';
 import { ApiObservationFileInterface, ApiFileItem, ApiOptionsInterface } from 'app/api/api.interface';
 import { Component, Input, OnInit } from '@angular/core';
 import { faDownload, faLock, faUnlock } from '@fortawesome/free-solid-svg-icons';
+import { NlfAuthSubjectService } from 'app/services/auth/auth-subject.service';
 
 @Component({
   selector: 'nlf-ors-report-files',
@@ -19,14 +20,28 @@ export class NlfOrsReportFilesComponent implements OnInit {
   faDownload = faDownload;
   faLock = faLock;
   faUnlock = faUnlock;
+  token: string;
 
-  constructor(private apiFile: ApiFilesService) { }
+  constructor(
+    private apiFile: ApiFilesService,
+    private authDataSubject: NlfAuthSubjectService
+  ) {
+
+    this.authDataSubject.observableAuthData.subscribe(
+      data => {
+        if (!!data) {
+          this.token = data.token;
+        }
+      },
+      err => console.log('Problem getting token: ', err)
+    );
+  }
 
   ngOnInit() {
 
-    if(this.doNotShowRestricted) {
+    if (this.doNotShowRestricted) {
       console.log('Onlypublic');
-      this.files = this.files.filter(x => x['r']===false)
+      this.files = this.files.filter(x => x['r'] === false)
     }
 
     if (this.files.length > 0) {
@@ -57,6 +72,7 @@ export class NlfOrsReportFilesComponent implements OnInit {
       this.apiFile.getFile(f.f, options).subscribe(
         data => {
           data['r'] = f.r;
+          data['download'] = this.apiFile.getDirectLink(data._id) + '?token=' + this.token;
           this.filelist.push(data);
         },
         err => processed++,
