@@ -45,9 +45,11 @@ export class NlfOrsEditorTagE5xRenderComponent implements OnInit {
 
     if (!Array.isArray(this.items)) {
       console.log('ERR', 'Not array in render', this.items);
-      this.items = [this.items];
-
     }
+
+    this.items = this.items.map(function (x) { 
+      return parseInt(x, 10); 
+    });
 
     this.label = e5xParseLabel(this.path);
 
