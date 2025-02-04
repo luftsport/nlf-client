@@ -62,7 +62,7 @@
 <div *ngIf="status=='error'&&error['status']==404" class="alert alert-warning" role="alert">
     <h4 class="alert-heading"><fa-icon [icon]="faExclamationTriangle"></fa-icon> Vi fikk ikke sjekket kompetansene </h4>
     <hr>
-    <div>Ingen kompetanser funnet i NIF pga manglende person. Personen skal ikke ha noen gyldige kompetanser. </div>
+    <div>Ingen kompetanser funnet i NIF pga manglende person. Personen skal <strong>ikke inneha noen gyldige kompetanser</strong>. </div>
 </div>
 <div *ngIf="status=='error'&&error['status']!=404" class="alert alert-danger" role="alert">
     <h4 class="alert-heading"><fa-icon [icon]="faExclamationTriangle"></fa-icon> Det oppstod en feil </h4>
