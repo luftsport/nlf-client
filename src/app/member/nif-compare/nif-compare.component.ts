@@ -60,22 +60,23 @@ export class NlfNifCompareComponent implements OnInit {
     forkJoin(
       [
         this.integrationService.getNifCompetences(this.person_id),
-        this.integrationService.getNifLicenses(this.person_id),
+        //this.integrationService.getNifLicenses(this.person_id),
         this.personService.getUser(this.person_id)
       ]
     ).subscribe(
       data => {
         this.nifCompetences = data[0]['_items']; //.map(x=>x.CompetenceId);
-        this.nifLicenses = data[1]['_items'].filter((x) => { return x.IsActive }); //.map(x=>x.LicenseId);
+        //this.nifLicenses = data[1]['_items'].filter((x) => { return x.IsActive }); //.map(x=>x.LicenseId);
         this.apiData = {
-          competences: data[2].competences, //.map(x=>x.id), 
-          licenses: data[2].licenses, //.map(x=>x.id)
+          competences: data[1].competences, //.map(x=>x.id), 
+          licenses: data[1].licenses, //.map(x=>x.id)
         };
       },
       err => {
         console.error(err);
         this.status = 'error';
         this.error = err;
+        this.nifCompetences = [];
       },
       () => {
         this.compare()
@@ -92,13 +93,13 @@ export class NlfNifCompareComponent implements OnInit {
 
   getCompetencesToUpdate() {
 
-    let toUpdate = this.nifCompetences.filter(x => !this.apiData.competences.map(x => x.id).includes(x.CompetenceId));
+    let toUpdate = this.nifCompetences.filter(x => !this.apiData.competences.map(x => x.id).includes(x.id));
 
     const options: ApiOptionsInterface = {
       query: {
         where: {
           person_id: this.person_id,
-          id: { $in: toUpdate.map(x => x.CompetenceId) }
+          id: { $in: toUpdate.map(x => x.id) }
         }
       }
     };
@@ -106,7 +107,7 @@ export class NlfNifCompareComponent implements OnInit {
     this.competencesService.getCompetences(options).subscribe(
 
       data => {
-        this.competencesToUpdate = toUpdate.filter(x => !data._items.map(x => x.id).includes(x.CompetenceId));
+        this.competencesToUpdate = toUpdate.filter(x => !data._items.map(x => x.id).includes(x.id));
 
         if (this.competencesToUpdate.length > 0 && this.generate) {
           this.generateChangeMessages();
@@ -135,7 +136,7 @@ export class NlfNifCompareComponent implements OnInit {
     // this.integrationService.
     this.status = 'generate';
     this.competencesToUpdate.forEach((key, index) => {
-      this.integrationService.generateChangeMessage(this.competencesToUpdate[index]['CompetenceId'], 'Competence').subscribe(
+      this.integrationService.generateChangeMessage(this.competencesToUpdate[index]['id'], 'Competence').subscribe(
         (result) => {
           this.competencesToUpdate[index]['ready'] = true;
         },
