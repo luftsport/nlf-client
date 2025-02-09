@@ -2,6 +2,9 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { NlfOrsEditorService } from "app/ors/ors-editor/ors-editor.service";
 import { ApiObservationsItem } from "app/api/api.interface";
 import { E5XRiskAssessmentClass } from "app/interfaces/e5x.interface";
+import { NlfUserSubjectService } from 'app/user/user-subject.service';
+import { ApiUserDataSubjectItem } from 'app/api/api.interface';
+
 @Component({
   selector: "nlf-ors-editor-e5x-risk",
   templateUrl: "./ors-editor-e5x-risk.component.html",
@@ -63,10 +66,12 @@ export class NlfOrsEditorE5xRiskComponent implements OnInit {
   effectivenessValue;
 
   observation: ApiObservationsItem;
+  userData: ApiUserDataSubjectItem;
 
   dataReady = false;
 
-  constructor() {
+  constructor(private userSubject: NlfUserSubjectService) {
+      this.userSubject.observable.subscribe(data => this.userData = data);
   }
 
   ngOnInit() {
@@ -79,6 +84,15 @@ export class NlfOrsEditorE5xRiskComponent implements OnInit {
 
     this.loadEventRiskClassification();
 
+  }
+
+  public hasRole(role) {
+    if(this.userData.acl.map((v) => v.role).indexOf(role)>-1) {
+      return true;
+    }
+
+    return false;
+    
   }
 
   public update() {
