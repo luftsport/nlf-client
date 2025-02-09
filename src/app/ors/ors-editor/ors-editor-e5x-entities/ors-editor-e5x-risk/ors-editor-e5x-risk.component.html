@@ -1,55 +1,57 @@
-<div class="nlf-ors-toolbar">
-  Event Risk Classification
-  <nlf-help class="float-end" key="ors-editor-e5x-risk"></nlf-help>
-</div>
+<ng-container *ngIf="hasRole(202656)">
+  <div class="nlf-ors-toolbar">
+    Event Risk Classification
+    <nlf-help class="float-end" key="ors-editor-e5x-risk"></nlf-help>
+  </div>
 
 
-<ng-container *ngIf="dataReady">
-  <h6 class="mt-3">
-    If this event had escalated into an accident, what would have been the most
-    probable outcome?
-  </h6>
+  <ng-container *ngIf="dataReady">
+    <h6 class="mt-3">
+      If this event had escalated into an accident, what would have been the most
+      probable outcome?
+    </h6>
 
-  <div class="row">
-    <div *ngFor="let value of riskMatrix" class="col-md-3 col-xs-12">
-      <div class="risk-option card"
-        [ngClass]="{ 'text-white bg-secondary': riskValue === value.key,'bg-light': riskValue != value.key, 'risk-option-disabled': disabled }"
-        (click)="setRisk(value)">
-        <div class="card-body text-center">
-          <h6 class="card-title text-center">
-            {{ value.name }}
-          </h6>
-          <div class="card-text">
-            {{ value.description }}
+    <div class="row">
+      <div *ngFor="let value of riskMatrix" class="col-md-3 col-xs-12">
+        <div class="risk-option card"
+          [ngClass]="{ 'text-white bg-secondary': riskValue === value.key,'bg-light': riskValue != value.key, 'risk-option-disabled': disabled }"
+          (click)="setRisk(value)">
+          <div class="card-body text-center">
+            <h6 class="card-title text-center">
+              {{ value.name }}
+            </h6>
+            <div class="card-text">
+              {{ value.description }}
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <h6 class="mt-3" *ngIf="riskValue !== 'none'">
-    What was the effectiveness of the remaining barriers between this event and
-    the most probable accident scenario?
-  </h6>
+    <h6 class="mt-3" *ngIf="riskValue !== 'none'">
+      What was the effectiveness of the remaining barriers between this event and
+      the most probable accident scenario?
+    </h6>
 
-  <div class="row" *ngIf="riskValue !== 'none'">
-    <div *ngFor="let value of effectivenessMatrix" class="col-md-3 col-xs-12">
-      <div class="second-risk-option card bg-light"
-        [ngClass]="{ 'text-white bg-secondary': effectivenessValue === value.key, 'bg-light': effectivenessValue != value.key, 'risk-option-disabled': disabled }"
-        (click)="setEffectiveness(value)">
-        <div class="card-body text-center">
-          {{ value.name }}
+    <div class="row" *ngIf="riskValue !== 'none'">
+      <div *ngFor="let value of effectivenessMatrix" class="col-md-3 col-xs-12">
+        <div class="second-risk-option card bg-light"
+          [ngClass]="{ 'text-white bg-secondary': effectivenessValue === value.key, 'bg-light': effectivenessValue != value.key, 'risk-option-disabled': disabled }"
+          (click)="setEffectiveness(value)">
+          <div class="card-body text-center">
+            {{ value.name }}
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div *ngIf="occurrence.entities.reportingHistory[0].attributes?.riskClassification?.value"
-      class="card risk-score text-white bg-{{occurrence.entities.reportingHistory[0].attributes.riskClassification.value | nlfDynamicColorErc}}">
-      <div class="card-body p-0">
-        {{ occurrence.entities.reportingHistory[0].attributes.riskClassification.value }}
+    <div class="row">
+      <div *ngIf="occurrence.entities.reportingHistory[0].attributes?.riskClassification?.value"
+        class="card risk-score text-white bg-{{occurrence.entities.reportingHistory[0].attributes.riskClassification.value | nlfDynamicColorErc}}">
+        <div class="card-body p-0">
+          {{ occurrence.entities.reportingHistory[0].attributes.riskClassification.value }}
+        </div>
       </div>
     </div>
-  </div>
+  </ng-container>
 </ng-container>
